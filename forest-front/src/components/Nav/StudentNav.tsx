@@ -1,7 +1,5 @@
-import styled, { css } from "styled-components";
 import logo from "@/assets/Forest_Logo.png";
 import { AiOutlineHome, AiOutlineTeam } from "react-icons/ai";
-import { flexBox } from "@/styles/theme";
 import { useRouter } from "next/router";
 import { StyledNav, StudentNavDiv, NavInner } from "./NavStyle";
 

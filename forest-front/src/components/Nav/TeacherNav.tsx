@@ -1,4 +1,3 @@
-import styled, { css } from "styled-components";
 import logo from "@/assets/Forest_Logo.png";
 import {
   AiOutlineHome,
