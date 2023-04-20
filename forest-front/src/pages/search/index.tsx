@@ -1,7 +1,9 @@
+import TeacherNav from "@/components/Nav/TeacherNav";
+
 export default function Search() {
   return (
     <>
-      <h1>탐색</h1>
+      <TeacherNav nowLocation={"search"} />
     </>
   );
 }

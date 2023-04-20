@@ -25,25 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/class": [
+    "/student/class": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/class.js"
-    ],
-    "/dashboard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/dashboard.js"
-    ],
-    "/editor": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/editor.js"
-    ],
-    "/workbook": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/workbook.js"
+      "static/chunks/pages/student/class.js"
     ]
   },
   "ampFirstPages": []
