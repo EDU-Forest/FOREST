@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 16px;
     min-width: 320px;
+    background-color:  ${({ theme }) => theme.colors.Gray[50]}};
   }
   
   a { cursor: pointer; text-decoration: none; }

@@ -1,7 +1,10 @@
+import TeacherNav from "@/components/Nav/TeacherNav";
+
 export default function Workbook() {
   return (
     <>
-      <h1>문제</h1>
+      <TeacherNav nowLocation={"workbook"} />
+      <span>문제</span>
     </>
   );
 }

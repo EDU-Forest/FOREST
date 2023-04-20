@@ -6,6 +6,7 @@ import HashTag from "@/components/HashTag/HashTag";
 import CommonInput from "@/components/Input/CommonInput";
 import SearchInput from "@/components/Input/SearchInput";
 import Label from "@/components/Label/Label";
+import WorkbookStatus from "@/components/Status/WorkbookStatus";
 import { useState } from "react";
 
 export default function Home() {
@@ -44,6 +45,9 @@ export default function Home() {
       <Label children={"N자 이상 N자 이하"} status={"pass"} />
       <Label children={"N자 이상 N자 이하"} status={"fail"} />
       <HashTag children="검색어" />
+      <WorkbookStatus status="progress" />
+      <WorkbookStatus status="loading" />
+      <WorkbookStatus status="completed" />
     </>
   );
 }
