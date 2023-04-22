@@ -75,8 +75,6 @@ const StyledEditorNav = styled.div`
 
 const ArrowDiv = styled.div`
   padding: 1rem;
-  font-size: 2rem;
-  color:  ${({ theme }) => theme.colors.Lime[900]}};
 `;
 
 const EditorNavDivTitle = styled.div<{ isObject: boolean }>`

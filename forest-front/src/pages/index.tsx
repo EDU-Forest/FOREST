@@ -1,39 +1,29 @@
-import ClassBtn from "@/components/Button/ClassBtn";
-import CommonBtn from "@/components/Button/CommonBtn";
-import RadioBtn from "@/components/Button/RadioBtn";
-import StartBtn from "@/components/Button/StartBtn";
+import ExportBtn from "@/components/Button/ExportBtn";
+import ProblemResultBtn from "@/components/Button/ProblemResultBtn";
+import RoleBtn from "@/components/Button/RoleBtn";
+import ClassInfoCard from "@/components/Card/ClassInfoCard";
+import StudentInfoCard from "@/components/Card/StudentInfoCard";
 import HashTag from "@/components/HashTag/HashTag";
 import CommonInput from "@/components/Input/CommonInput";
-import SearchInput from "@/components/Input/SearchInput";
 import Label from "@/components/Label/Label";
 import WorkbookStatus from "@/components/Status/WorkbookStatus";
+import WorkbookTab from "@/components/Tab/WorkbookTab";
 import { useState } from "react";
 
 export default function Home() {
-  const [inputSearch, setInputSearch] = useState<string>("");
   const [inputText, setInputText] = useState<string>("");
-  const changeSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputSearch(event.target.value);
-  };
+
   const changeInputText = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(event.target.value);
   };
   return (
     <>
       <h1>규림바보</h1>
-
-      <CommonBtn children={"BUTTON"} colored={false} />
-      <CommonBtn children={"BUTTON"} colored={true} />
-      <StartBtn children={"시작하기"} />
       <br />
-      <ClassBtn children={"싸피 고등학교 3학년"} selected={false} />
-      <br />
-      <ClassBtn children={"싸피 고등학교 3학년"} selected={true} />
-      <br />
-      <RadioBtn selected={false} />
-      <RadioBtn selected={true} />
-      <br />
-      <SearchInput inputText={inputSearch} onChange={changeSearchText} />
+      {/* <RadioBtn selected={false} color={"green"} />
+      <RadioBtn selected color={"green"} />
+      <RadioBtn selected={false} color={"orange"} />
+      <RadioBtn selected color={"orange"} /> */}
       <br />
       <CommonInput
         placeholder={"아이디를 입력하세요"}
@@ -44,10 +34,25 @@ export default function Home() {
       <Label children={"N자 이상 N자 이하"} status={""} />
       <Label children={"N자 이상 N자 이하"} status={"pass"} />
       <Label children={"N자 이상 N자 이하"} status={"fail"} />
-      <HashTag children="검색어" />
       <WorkbookStatus status="progress" />
       <WorkbookStatus status="loading" />
       <WorkbookStatus status="completed" />
+      <br />
+      <RoleBtn role={"teacher"} selected={false} />
+      <RoleBtn role={"student"} selected />
+      <br />
+      <ProblemResultBtn value={"1"} isCorrect />
+      <ProblemResultBtn value={"2"} isCorrect={false} />
+      <br />
+      {/* <ExportBtn type={"make"} selected={false} />
+      <ExportBtn type={"release"} selected />
+      <ExportBtn type={"pdf"} selected /> */}
+      <ClassInfoCard children="킹규림쌤 영어" />
+      <StudentInfoCard />
+      <br />
+      <WorkbookTab children="좋아하는 문제집" selected space={80} />
+      <WorkbookTab children="사용한 문제집" selected={false} space={80} />
+      <WorkbookTab children="내가 만든 문제집" selected={false} space={80} />
     </>
   );
 }

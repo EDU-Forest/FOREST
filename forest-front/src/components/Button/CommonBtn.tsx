@@ -3,6 +3,7 @@ import styled from "styled-components";
 interface Iprops {
   children: string;
   colored: boolean;
+  onClick: () => void;
 }
 
 const StyledCommonBtn = styled.button<{ colored: boolean }>`
@@ -16,6 +17,10 @@ const StyledCommonBtn = styled.button<{ colored: boolean }>`
   color: ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[600])};
 `;
 
-export default function CommonBtn({ children, colored }: Iprops) {
-  return <StyledCommonBtn colored={colored}>{children}</StyledCommonBtn>;
+export default function CommonBtn({ children, colored, onClick }: Iprops) {
+  return (
+    <StyledCommonBtn colored={colored} onClick={onClick}>
+      {children}
+    </StyledCommonBtn>
+  );
 }

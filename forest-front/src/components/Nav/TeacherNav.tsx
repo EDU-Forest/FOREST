@@ -1,4 +1,4 @@
-import logo from "@/assets/Forest_Logo.png";
+// import logo from "@/assets/Forest_Logo.png";
 import {
   AiOutlineHome,
   AiOutlineTeam,
@@ -32,7 +32,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   return (
     <StyledNav>
-      <img src={logo.src} className="logo-img" />
+      <img src={"/images/Forest_Logo.png"} className="logo-img" />
       <TeacherNavDiv>
         <NavInner
           selected={checkSelection("dashboard")}

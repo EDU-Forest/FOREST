@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface Iprops {
   children: string;
+  onClick: () => void;
 }
 
 const StyledStartBtn = styled.button`
@@ -15,6 +16,6 @@ const StyledStartBtn = styled.button`
   color: white;
 `;
 
-export default function StartBtn({ children }: Iprops) {
-  return <StyledStartBtn>{children}</StyledStartBtn>;
+export default function StartBtn({ children, onClick }: Iprops) {
+  return <StyledStartBtn onClick={onClick}>{children}</StyledStartBtn>;
 }

@@ -1,8 +1,8 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 interface Iprops {
-  children: string;
-  selected: boolean;
+  value: string;
 }
 
 const StyledClassBtn = styled.button<{ selected: boolean }>`
@@ -18,6 +18,14 @@ const StyledClassBtn = styled.button<{ selected: boolean }>`
   color: ${({ selected }) => (selected ? "white" : "black")};
 `;
 
-export default function ClassBtn({ children, selected }: Iprops) {
-  return <StyledClassBtn selected={selected}>{children}</StyledClassBtn>;
+export default function ClassBtn({ value }: Iprops) {
+  const [selected, setSelected] = useState<boolean>(false);
+  const selectClass = () => {
+    setSelected(!selected);
+  };
+  return (
+    <StyledClassBtn selected={selected} onClick={selectClass}>
+      {value}
+    </StyledClassBtn>
+  );
 }

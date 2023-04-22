@@ -8,9 +8,8 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: Pretendard;
     box-sizing: border-box;
-    font-size: 16px;
-    min-width: 320px;
-    background-color:  ${({ theme }) => theme.colors.Gray[50]}};
+    font-size: 1rem;
+    min-width: 20rem;
   }
   
   a { cursor: pointer; text-decoration: none; }

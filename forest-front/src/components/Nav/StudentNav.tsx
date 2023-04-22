@@ -1,4 +1,4 @@
-import logo from "@/assets/Forest_Logo.png";
+// import logo from "@/assets/Forest_Logo.png";
 import { AiOutlineHome, AiOutlineTeam } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { StyledNav, StudentNavDiv, NavInner } from "./NavStyle";
@@ -26,7 +26,7 @@ export default function StudentNav({ nowLocation }: Iprops) {
 
   return (
     <StyledNav>
-      <img src={logo.src} className="logo-img" />
+      <img src={"/images/Forest_Logo.png"} className="logo-img" />
       <StudentNavDiv>
         <NavInner
           selected={checkSelection("dashboard")}

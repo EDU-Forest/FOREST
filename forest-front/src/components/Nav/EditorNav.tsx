@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import {
   StyledEditorNav,
   ArrowDiv,
@@ -11,12 +12,18 @@ import {
   MdOutlinePowerInput,
   MdOutlineLineStyle,
 } from "react-icons/md";
+import ArrowLeft from "../Arrow/ArrowLeft";
 
 export default function EditorNav() {
+  const router = useRouter();
+
+  const goToDashboard = () => {
+    router.push("/teacher/dashboard");
+  };
   return (
     <StyledEditorNav>
       <ArrowDiv>
-        <AiOutlineArrowLeft />
+        <ArrowLeft onClick={goToDashboard} />
       </ArrowDiv>
       <EditorNavDivTitle isObject={false}>새로 만들기</EditorNavDivTitle>
       <EditorNavDiv>
