@@ -3,13 +3,13 @@ import { GrSearch } from "react-icons/gr";
 
 const StyledSearchInput = styled.input`
   width: calc(100% - 7.5rem);
-  height: 2rem;
+  height: 1.8rem;
   font-size: 1.25rem;
   padding: 1rem 5rem 1rem 2.5rem;
 
   @media ${({ theme }) => theme.tablet} {
     width: calc(100% - 6rem);
-    height: 2rem;
+    height: 1.8rem;
     font-size: 1rem;
     padding: 0.5rem 4rem 0.5rem 2rem;
   }

@@ -12,6 +12,8 @@ const StyledhashTag = styled.div`
   border-radius: 2.5rem;
   color: white;
   cursor: pointer;
+  margin-top: .75rem;
+  margin-right: 1rem;
 `;
 
 export default function HashTag({ value, onClick }: Iprops) {
