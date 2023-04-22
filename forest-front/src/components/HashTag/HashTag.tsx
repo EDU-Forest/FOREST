@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 interface Iprops {
-  children: string;
+  value: string;
+  onClick: (value: string) => void;
 }
 
 const StyledhashTag = styled.div`
@@ -12,6 +13,6 @@ border-radius: 2.5rem;
 color: white;
 `;
 
-export default function HashTag({ children }: Iprops) {
-  return <StyledhashTag># {children}</StyledhashTag>;
+export default function HashTag({ value, onClick }: Iprops) {
+  return <StyledhashTag onClick={() => onClick(value)}># {value}</StyledhashTag>;
 }
