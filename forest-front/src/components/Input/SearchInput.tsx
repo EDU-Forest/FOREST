@@ -2,15 +2,13 @@ import styled from "styled-components";
 import { GrSearch } from "react-icons/gr";
 
 const StyledSearchInput = styled.input`
-  @media ${({ theme }) => theme.desktop} {
-    width: 52.5rem;
-    height: 2rem;
-    font-size: 1.25rem;
-    padding: 1rem 5rem 1rem 2.5rem;
-  }
+  width: calc(100% - 7.5rem);
+  height: 2rem;
+  font-size: 1.25rem;
+  padding: 1rem 5rem 1rem 2.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: 31.5rem;
+    width: calc(100% - 6rem);
     height: 2rem;
     font-size: 1rem;
     padding: 0.5rem 4rem 0.5rem 2rem;
@@ -29,19 +27,16 @@ const StyledSearchInput = styled.input`
 
 const SearchInputDiv = styled.div`
   position: relative;
-  @media ${({ theme }) => theme.desktop} {
-    width: 60rem;
-
-    .search-icon {
-      font-size: 2rem;
-      position: absolute;
-      top: 1.125rem;
-      right: 2.5rem;
-    }
+  width: 100%;
+  .search-icon {
+    font-size: 2rem;
+    position: absolute;
+    top: 1.125rem;
+    right: 2.5rem;
   }
 
   @media ${({ theme }) => theme.tablet} {
-    width: 37.5rem;
+    width: 100%;
 
     .search-icon {
       font-size: 1.5rem;
