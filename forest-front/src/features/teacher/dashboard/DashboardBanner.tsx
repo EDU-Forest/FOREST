@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { Title } from "@/styles/text";
-import { StyledDashboardBanner } from "./Banner.style";
+import { StyledDashboardBanner } from "./DashboardBanner.style";
 
 import StudentImg from "/public/images/Banner_Student.png";
 import TeacherImg from "/public/images/Banner_Teacher.png";
