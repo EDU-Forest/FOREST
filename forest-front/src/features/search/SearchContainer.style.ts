@@ -28,9 +28,4 @@ const SearchContainerInput = styled.div`
   }
 `;
 
-const SearchTitle = styled.p`
-  font-size: 20px;
-  font-weight: 700;
-`;
-
 export { SearchContainerWrapper, SearchContainerInput };

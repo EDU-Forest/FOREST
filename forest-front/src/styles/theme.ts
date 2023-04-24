@@ -40,7 +40,7 @@ export const theme: DefaultTheme = {
     },
   },
   mobile: `(max-width: 768px)`,
-  tablet: `(max-width: 768px)`,
+  tablet: `(min-width: 768px; max-width: 1440px)`,
   desktop: `(min-width: 1440px)`,
 };
 

@@ -3,6 +3,7 @@ import { SearchContainerInput, SearchContainerWrapper } from "./SearchContainer.
 import { useState } from "react";
 import SearchInput from "@/components/Input/SearchInput";
 import HashTag from "@/components/HashTag/HashTag";
+import SearchList from "./SearchList";
 
 export default function SearchContainer() {
   const [inputSearch, setInputSearch] = useState<string>("");
@@ -22,6 +23,7 @@ export default function SearchContainer() {
         <HashTag value="영어" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="한국사" onClick={(value: string) => searchKeyword(value)} />
       </SearchContainerInput>
+      <SearchList />
     </SearchContainerWrapper>
   );
 }
