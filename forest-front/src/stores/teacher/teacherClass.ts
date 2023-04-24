@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface teacherClassState {
-  class: string;
+  nowClassName: string;
+  nowClassId: number;
 }
 
 const initialState: teacherClassState = {
-  class: "싸피 고등학교 3반", // 나중에 query로 받아올 때, 첫 번째 클래스로 바꿔주기
+  nowClassName: "싸피 고등학교 3반", // 나중에 query로 받아올 때, 첫 번째 클래스로 바꿔주기
+  nowClassId: 1,
 };
 
 const teacherClassSlice = createSlice({
@@ -13,7 +15,8 @@ const teacherClassSlice = createSlice({
   initialState,
   reducers: {
     setClass(state, action) {
-      state.class = action.payload;
+      state.nowClassName = action.payload.className;
+      state.nowClassId = action.payload.classId;
     },
   },
 });

@@ -2,9 +2,14 @@ import { StyledSmallBtn } from "./Btn.style";
 
 interface Iprops {
   children: string;
-  colored: boolean;
+  colored?: boolean;
+  onClick: () => void;
 }
 
-export default function SmallBtn({ children, colored }: Iprops) {
-  return <StyledSmallBtn colored={colored}>{children}</StyledSmallBtn>;
+export default function SmallBtn({ children, colored, onClick }: Iprops) {
+  return (
+    <StyledSmallBtn colored={colored} onClick={onClick}>
+      {children}
+    </StyledSmallBtn>
+  );
 }

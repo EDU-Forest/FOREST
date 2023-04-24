@@ -2,7 +2,7 @@ import { StyledCommonBtn } from "./Btn.style";
 
 interface Iprops {
   children: string;
-  colored: boolean;
+  colored?: boolean;
   onClick: () => void;
 }
 
