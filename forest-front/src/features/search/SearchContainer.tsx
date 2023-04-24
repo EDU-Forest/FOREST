@@ -17,8 +17,6 @@ export default function SearchContainer() {
   };
   return (
     <SearchContainerWrapper>
-      <Title>문제은행</Title>
-
       <SearchContainerInput>
         <SearchInput inputText={inputSearch} onChange={changeSearchText} />
         <HashTag value="수능대비" onClick={(value: string) => searchKeyword(value)} />

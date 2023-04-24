@@ -39,8 +39,8 @@ export const theme: DefaultTheme = {
       900: "#212529",
     },
   },
-  mobile: `(max-width: 768px)`,
-  tablet: `(min-width: 768px; max-width: 1440px)`,
+  // mobile: `(max-width: 767px)`,
+  tablet: `(max-width: 1440px)`,
   desktop: `(min-width: 1440px)`,
 };
 

@@ -16,9 +16,9 @@ export const Container = styled.div<{ isEditor?: boolean }>`
     css`
       width: calc(100% - 10.75rem);
     `};
-    
+
   height: 100vh;
-  background-color:  ${({ theme }) => theme.colors.Gray[50]}};
+  background-color: ${({ theme }) => theme.colors.Gray[50]};
   overflow-x: hidden;
   overflow-y: auto;
 
@@ -27,17 +27,17 @@ export const Container = styled.div<{ isEditor?: boolean }>`
   }
 
   &::-webkit-scrollbar {
-    width: .625rem;
+    width: 0.5rem;
   }
 
   &::-webkit-scrollbar-thumb {
     background-clip: padding-box;
     border: 1px solid transparent;
     border-radius: 3rem;
-    background-color: ${({ theme }) => theme.colors.Lime[300]}};
+    background-color: ${({ theme }) => theme.colors.Lime[300]};
   }
 
   ::-webkit-scrollbar-track {
-    background-color:${({ theme }) => theme.colors.Gray[200]}};
+    background-color: ${({ theme }) => theme.colors.Gray[200]};
   }
 `;
