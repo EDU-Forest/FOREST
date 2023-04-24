@@ -1,33 +1,36 @@
 import styled from "styled-components";
 
 const WorkbookCard = styled.div`
-  //   width: 160px;
+  width: 100%;
+  padding: 0.5rem;
+  align-items: center;
   display: inline-block;
 `;
 
 const WorkbookImg = styled.img`
-  width: 160px;
-  height: 216px;
+  width: 90%;
   object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0rem 0.4375rem 0.125rem rgba(0, 0, 0, 0.2);
 `;
 
 const WorkbookTitle = styled.p`
   font-weight: 600;
-  margin: 0;
-  margin-top: 12px;
-  margin-bottom: 8px;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
 `;
 
 const WorkbookContentWrapper = styled.div``;
 
 const WorkbookIcon = styled.span`
-  margin-right: 8px;
+  margin-right: 0.5rem;
 `;
 
 const WorkbookContent = styled.span`
-  margin-right: 16px;
+  margin-right: 1rem;
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.Gray[700]};
 `;
 
 export {
