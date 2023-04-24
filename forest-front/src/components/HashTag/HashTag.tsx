@@ -12,12 +12,17 @@ const StyledhashTag = styled.div`
   border-radius: 2.5rem;
   color: white;
   cursor: pointer;
+<<<<<<< HEAD
 
   @media ${({ theme }) => theme.tablet} {
   padding: .25rem .625rem;
   font-size: .875rem;
   }
 
+=======
+  margin-top: .75rem;
+  margin-right: 1rem;
+>>>>>>> c42e8bc92880763a276f3c6d48c37d2eb49a7fad
 `;
 
 export default function HashTag({ value, onClick }: Iprops) {

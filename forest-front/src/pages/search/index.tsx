@@ -7,7 +7,7 @@ export default function Search() {
     <FullScreen>
       <TeacherNav nowLocation={"search"} />
       <Container>
-        <SearchContainer></SearchContainer>
+        <SearchContainer />
       </Container>
     </FullScreen>
   );
