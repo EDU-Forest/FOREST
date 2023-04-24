@@ -1,6 +1,7 @@
 package com.ssafy.forestauth.errorhandling.exception.resolver;
 
 import com.ssafy.forestauth.dto.common.response.ResponseErrorDto;
+import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
 import com.ssafy.forestauth.mattermost.NotificationManager;
 import com.ssafy.forestauth.util.ResponseUtil;
@@ -33,37 +34,7 @@ public class ServiceExceptionResolver {
     @ExceptionHandler(value = EntityIsNullException.class)
     public ResponseErrorDto<?> handle(EntityIsNullException e, HttpServletRequest request) {
         notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseErrorDto<?> handle(MethodArgumentNotValidException e, HttpServletRequest request) {
-        ObjectError objectError = e.getBindingResult().getAllErrors().stream().findFirst().get();
-        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, objectError.getDefaultMessage(), request.getRequestURI());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = DataIntegrityViolationException.class)
-    public ResponseErrorDto<?> handle(DataIntegrityViolationException e, HttpServletRequest request) {
-        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseErrorDto<?> handle(ConstraintViolationException e, HttpServletRequest request) {
-        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
-    }
-
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = Exception.class)
-    public ResponseErrorDto<?> handle(Exception e, HttpServletRequest request) {
-        e.printStackTrace();
-        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getRequestURI());
+        return responseUtil.buildErrorResponse(ErrorCode.FOREST_USER_NOT_FOUND, e.getMessage(), request.getRequestURI());
     }
 
     private String getParams(HttpServletRequest req) {
