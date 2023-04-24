@@ -1,8 +1,10 @@
+import Image from "next/image";
+
 import { Title } from "@/styles/text";
 import { StyledDashboardBanner } from "./Banner.style";
 
-// import StudentImg from "/public/images/Banner_Student.png";
-// import TeacherImg from "/public/images/Banner_Teacher.png";
+import StudentImg from "/public/images/Banner_Student.png";
+import TeacherImg from "/public/images/Banner_Teacher.png";
 
 function DashboardBanner() {
   // 더미
@@ -13,11 +15,13 @@ function DashboardBanner() {
   return (
     <div>
       <StyledDashboardBanner>
-        <Title>
-          안녕하세요 {name} {role}
-        </Title>
-        <span>{text}</span>
-        {/* <img src={role === "선생님" ? TeacherImg : StudentImg} alt="role" /> */}
+        <div>
+          <Title>
+            안녕하세요 {name} {role}
+          </Title>
+          <span>{text}</span>
+        </div>
+        <Image src={role === "선생님" ? TeacherImg : StudentImg} alt="role" />
       </StyledDashboardBanner>
     </div>
   );
