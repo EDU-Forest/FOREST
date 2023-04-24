@@ -4,6 +4,7 @@ package com.ssafy.forestauth.util;
 import com.ssafy.forestauth.dto.common.response.ErrorContentDto;
 import com.ssafy.forestauth.dto.common.response.ResponseErrorDto;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
+import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.ForestStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,7 @@ public class ResponseUtil<T> {
         return res;
     }
 
-    public ResponseErrorDto<ErrorContentDto> buildErrorResponse(HttpStatus httpStatus, String message, String path) {
+    public ResponseErrorDto<ErrorContentDto> buildErrorResponse(ErrorCode errorCode, String message, String path) {
         ErrorContentDto errorContentDto = ErrorContentDto.builder()
                 .message(message)
                 .build();
@@ -32,8 +33,8 @@ public class ResponseUtil<T> {
         return ResponseErrorDto
                 .<ErrorContentDto>builder()
                 .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
-                .code(httpStatus.value())
-                .status(httpStatus.name())
+                .code(errorCode.getStatus().value())
+                .status(errorCode.getStatus().name())
                 .path(path)
                 .error(errorContentDto)
                 .build();
