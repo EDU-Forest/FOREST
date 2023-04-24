@@ -7,7 +7,7 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { StyledNav, TeacherNavDiv, NavInner } from "./NavStyle";
+import { StyledNav, TeacherNavDiv, NavInner } from "./Nav.style";
 
 interface Iprops {
   nowLocation: string;

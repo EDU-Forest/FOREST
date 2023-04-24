@@ -5,7 +5,7 @@ import {
   EditorNavDivTitle,
   EditorNavDiv,
   EditorNavDivInner,
-} from "./NavStyle";
+} from "./Nav.style";
 import { AiOutlineArrowLeft, AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
 import {
   MdOutlineFormatListNumbered,

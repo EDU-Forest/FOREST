@@ -1,23 +1,10 @@
-import styled from "styled-components";
 import { BsCheckCircleFill } from "react-icons/bs";
+import { StyledLabel } from "./Label.style";
 
 interface Iprops {
   children: string;
   status: string;
 }
-
-const StyledLabel = styled.p<{ status: string }>`
-  color: ${({ status, theme }) => {
-    if (status === "pass") return theme.colors.Lime[600];
-    else if (status === "fail") return theme.colors.Orange[500];
-    else return theme.colors.Gray[500];
-  }};
-
-  .icon {
-    font-size: 0.75rem;
-    margin-right: 0.25rem;
-  }
-`;
 
 export default function Label({ children, status }: Iprops) {
   return (

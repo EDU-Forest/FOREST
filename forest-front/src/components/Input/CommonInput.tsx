@@ -1,21 +1,4 @@
-import styled from "styled-components";
-
-const StyledCommonInput = styled.input`
-  width: 15rem;
-  font-weight: 400;
-  border-radius: 8px;
-  border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
-  padding: 0.5rem 1rem;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.colors.Gray[500]};
-  }
-
-  &:focus {
-    outline: none;
-    border: 1px solid ${({ theme }) => theme.colors.Lime[500]};
-  }
-`;
+import { StyledCommonInput } from "./Input.style";
 
 interface Iprops {
   placeholder: string;
