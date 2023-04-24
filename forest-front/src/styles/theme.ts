@@ -66,3 +66,23 @@ export const positionCenter = (type = "absolute") => {
             transform: translate(-50%, -50%);
           `;
 };
+
+export const scrollBar = (width: number) => {
+  return `
+  &::-webkit-scrollbar {
+    width: ${width}rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 3rem;
+    background-color: #D8F5A2;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 3rem;
+    background-color: #F1F3F5;
+  }
+  `;
+};
