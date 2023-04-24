@@ -1,5 +1,5 @@
-import DashboardBanner from "@/components/Banner/DashboardBanner";
 import TeacherNav from "@/components/Nav/TeacherNav";
+import DashboardBanner from "@/features/teacher/dashboard/DashboardBanner";
 import { Container, FullScreen } from "@/styles/container";
 
 export default function TeacherDashBoard() {
