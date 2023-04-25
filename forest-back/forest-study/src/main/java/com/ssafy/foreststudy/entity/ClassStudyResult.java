@@ -1,9 +1,9 @@
 package com.ssafy.foreststudy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "class_study_results")
+@Where(clause = "is_deleted = false")
 public class ClassStudyResult {
 
     @Id
@@ -29,13 +29,13 @@ public class ClassStudyResult {
     private int takeRate;
 
     /* double? decimal? */
-    @Column(name = "average", columnDefinition = "DECIMAL")
+    @Column(name = "average", columnDefinition = "double")
     private double average;
 
-    @Column(name = "standard_deviation", columnDefinition = "DECIMAL")
+    @Column(name = "standard_deviation", columnDefinition = "double")
     private double standardDeviation;
 
-    @Column(name = "average_solving_time")
+    @Column(name = "average_solving_time", columnDefinition = "timestamp")
     private LocalDateTime averageSolvingTime;
 
     @Column(name = "correct_answer_rate", columnDefinition = "int")

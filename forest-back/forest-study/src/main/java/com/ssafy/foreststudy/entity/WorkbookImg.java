@@ -1,16 +1,16 @@
 package com.ssafy.foreststudy.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "workbook_imgs")
+@Where(clause = "is_deleted = false")
 public class WorkbookImg {
 
     @Id

@@ -2,17 +2,17 @@ package com.ssafy.foreststudy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "problems")
+@Where(clause = "is_deleted = false")
 public class Problem {
 
     @Id
@@ -21,9 +21,9 @@ public class Problem {
     private Long id;
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id", nullable = false)
-    private ProblemImg image;
+    private ProblemImg img;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", columnDefinition = "varchar(10)", nullable = false)

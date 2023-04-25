@@ -1,8 +1,8 @@
 package com.ssafy.foreststudy.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Table(name = "cheering_msgs")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
+@Where(clause = "is_deleted = false")
 public class CheeringMsg {
 
     @Id

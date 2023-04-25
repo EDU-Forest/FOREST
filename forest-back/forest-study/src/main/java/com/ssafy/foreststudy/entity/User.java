@@ -3,9 +3,9 @@ package com.ssafy.foreststudy.entity;
 
 import com.ssafy.foreststudy.enumeration.EnumUserProviderStatus;
 import com.ssafy.foreststudy.enumeration.EnumUserRoleStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "is_deleted = false")
 public class User {
 
     @Id
@@ -37,7 +37,7 @@ public class User {
     @Column(name = "phone", columnDefinition = "varchar(20)")
     private String phone;
 
-    @Column(name = "birth")
+    @Column(name = "birth", columnDefinition = "timestamp")
     private LocalDateTime birth;
 
     @Enumerated(EnumType.STRING)

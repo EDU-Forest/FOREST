@@ -2,11 +2,10 @@ package com.ssafy.foreststudy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.foreststudy.enumeration.EnumStudyTypeStatus;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -15,9 +14,9 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "studies")
 @EntityListeners(AuditingEntityListener.class)
+@Where(clause = "is_deleted = false")
 public class Study {
 
     @Id
@@ -47,10 +46,10 @@ public class Study {
     @Column(name = "type", columnDefinition = "varchar(10) default 'SELF'")
     private EnumStudyTypeStatus type;
 
-    @Column(name = "start_time")
+    @Column(name = "start_time", columnDefinition = "timestamp")
     private LocalDateTime startTime;
 
-    @Column(name = "end_time")
+    @Column(name = "end_time", columnDefinition = "timestamp")
     private LocalDateTime endTime;
 
     @CreatedDate
