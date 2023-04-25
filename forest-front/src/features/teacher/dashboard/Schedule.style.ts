@@ -1,13 +1,5 @@
 import styled from "styled-components";
 
-export const StyledSchedule = styled.div`
-  padding: 1.5rem;
-
-  background: #ffffff;
-  box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
-  border-radius: 1.5rem;
-`;
-
 export const StyledScheduleTop = styled.div`
   display: flex;
   justify-content: space-between;
