@@ -16,7 +16,7 @@ public class ResponseUtil<T> {
     public ResponseSuccessDto<T> successResponse(T data, ForestStatus status) {
         ResponseSuccessDto<T> res = ResponseSuccessDto
                 .<T>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
                 .code(HttpStatus.OK.value())
                 .status(status.name())
                 .data(data)
@@ -31,7 +31,7 @@ public class ResponseUtil<T> {
 
         return ResponseErrorDto
                 .<ErrorContentDto>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
                 .code(httpStatus.value())
                 .status(httpStatus.name())
                 .path(path)
