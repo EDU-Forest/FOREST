@@ -32,6 +32,8 @@
 		"styled-components": "^5.3.9",
 		"styled-normalize": "^8.0.7",
 		"styled-reset": "^4.4.6",
+		"sweetalert2": "^11.7.3",
+		"sweetalert2-react-content": "^5.0.7",
 		"swiper": "^9.2.4",
 		"typescript": "5.0.4"
 	},

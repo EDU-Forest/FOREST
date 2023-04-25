@@ -35,9 +35,19 @@ const StyledStudentInfoCard = styled.div`
   color: white;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   border-radius: 1rem;
-  width: 30.5rem;
   height: 3rem;
   padding: 1rem 1.5rem;
+  margin: 0.5rem 0;
+  @media ${({ theme }) => theme.tablet} {
+    width: 100%;
+  }
+
+  @media (min-width: 67.5rem) {
+    width: 44%;
+  }
+  @media (min-width: 108rem) {
+    width: 30%;
+  }
 `;
 
 const StudentInfoCardInner = styled.div`
@@ -46,6 +56,7 @@ const StudentInfoCardInner = styled.div`
 
   .close-icon {
     font-size: 1.1875rem;
+    cursor: pointer;
   }
 `;
 

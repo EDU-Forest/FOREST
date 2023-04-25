@@ -86,3 +86,24 @@ export const scrollBar = (width: number) => {
   }
   `;
 };
+
+export const breakpoints = {
+  768: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
+    spaceBetween: 20,
+    loopFillGroupWithBlank: true,
+  },
+  1220: {
+    slidesPerView: 5,
+    slidesPerGroup: 5,
+    spaceBetween: 40,
+    loopFillGroupWithBlank: true,
+  },
+  1440: {
+    slidesPerView: 5,
+    slidesPerGroup: 5,
+    spaceBetween: 68,
+    loopFillGroupWithBlank: true,
+  },
+};

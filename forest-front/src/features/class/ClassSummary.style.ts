@@ -16,9 +16,10 @@ const ClassSummaryWrapper = styled.div`
   border-radius: 1.5rem;
   margin-top: 1.5rem;
   padding: 2rem;
+  margin-bottom: 2.25rem;
 
   @media ${({ theme }) => theme.tablet} {
-    height: 600px;
+    height: 37.5rem;
   }
 `;
 
@@ -28,7 +29,7 @@ const ClassSummaryItemWrapper = styled.div`
   @media ${({ theme }) => theme.tablet} {
     ${flexBox("column", "center", "center")}
     width: 50%;
-    height: calc(100% - 65px);
+    height: calc(100% - 4.0625rem);
     flex-wrap: wrap;
   }
 `;
