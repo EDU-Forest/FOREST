@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
-import ClassSelectModal from "./ClassSelectModal";
+import ClassSelectDropdown from "./ClassSelectDropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { ClassSelectedTitle } from "./ClassSelect.style";
+import { ClassSelectWrapper, ClassSelectedTitle } from "./ClassSelect.style";
 
 const classList = [
   {
@@ -41,12 +41,12 @@ export default function ClassSelect() {
   const { nowClassName, nowClassId } = useSelector((state: RootState) => state.teacherClass);
 
   return (
-    <>
+    <ClassSelectWrapper>
       <ClassSelectedTitle>
         {nowClassName}
         <AiFillCaretDown onClick={handleDropdown} className="icon" />
       </ClassSelectedTitle>
-      {isOpen && <ClassSelectModal classList={classList} nowClassId={nowClassId} />}
-    </>
+      {isOpen && <ClassSelectDropdown classList={classList} nowClassId={nowClassId} />}
+    </ClassSelectWrapper>
   );
 }
