@@ -1,7 +1,7 @@
 package com.ssafy.forestauth.mattermost;
 
 import com.google.gson.Gson;
-import com.ssafy.herenotification.mattermost.dto.MatterMostMessageDto;
+import com.ssafy.forestauth.mattermost.dto.MatterMostMessageDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +17,9 @@ import org.springframework.web.client.RestTemplate;
 public class MatterMostSender {
     private Logger logger = LoggerFactory.getLogger(MatterMostSender.class);
 
-    @Value("${notification.mattermost.enabled}")
+    @Value("${auth.mattermost.enabled}")
     private boolean mmEnabled;
-    @Value("${notification.mattermost.webhook-url}")
+    @Value("${auth.mattermost.webhook-url}")
     private String webhookUrl;
 
     private final RestTemplate restTemplate;
