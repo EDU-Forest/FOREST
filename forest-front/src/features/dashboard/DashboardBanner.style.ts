@@ -28,8 +28,8 @@ export const StyledDashboardBanner = styled.div`
 
   img {
     position: absolute;
-    width: 144px;
-    height: auto;
+    width: auto;
+    height: 172px;
     right: 40px;
     top: -18px;
   }
