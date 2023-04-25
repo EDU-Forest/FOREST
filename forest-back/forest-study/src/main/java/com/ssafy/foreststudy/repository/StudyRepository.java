@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface StudyRepository extends JpaRepository<Study, Long> {
 
-    @Query("select s from Study s where s.id= :classId")
-    List<Study> findAllByClassId(Long classId);
+    @Query("select s from Study s where s.classes.id = :classId")
+    List<Study> findAllListByClassId(Long classId);
+    @Query("select s from Study s where s.classes.id = :classId")
+    Study findAllByClassId(Long classId);
 }
