@@ -1,5 +1,6 @@
 import TeacherNav from "@/components/Nav/TeacherNav";
-import ClassSelect from "@/features/teacher/class/ClassSelect";
+import ClassSelect from "@/features/class/ClassSelect";
+import ClassSummary from "@/features/class/ClassSummary";
 import { Container, FullScreen } from "@/styles/container";
 
 export default function TeacherClass() {
@@ -8,6 +9,7 @@ export default function TeacherClass() {
       <TeacherNav nowLocation={"class"} />
       <Container padding={3}>
         <ClassSelect />
+        <ClassSummary />
       </Container>
     </FullScreen>
   );

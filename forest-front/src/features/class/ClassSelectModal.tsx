@@ -8,7 +8,7 @@ import {
 } from "./ClassSelect.style";
 import { setClass } from "@/stores/teacher/teacherClass";
 import { useState } from "react";
-import ClassAddModal from "./ClassAddModal";
+import ClassAddModal from "./teacher/ClassAddModal";
 
 interface ClassList {
   classId: number;
