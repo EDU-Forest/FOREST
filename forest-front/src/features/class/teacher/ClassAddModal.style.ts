@@ -47,7 +47,7 @@ const ClassInput = styled.input`
   }
 `;
 
-const ClassInputMessage = styled.div`
+const ClassInputMsg = styled.div`
   font-weight: 700;
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.Orange[400]};
@@ -67,6 +67,6 @@ export {
   ClassInputWrapper,
   ClassInputCheck,
   ClassInput,
-  ClassInputMessage,
+  ClassInputMsg,
   ClassInputBtnWrapper,
 };

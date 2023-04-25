@@ -1,11 +1,10 @@
 import {
-  SummarySubWrapper,
   SummaryItemWrapper,
   ClassSummarySubTitle,
   WorkbookInfo,
   ClassSummaryTextWrapper,
   ClassSummaryText,
-} from "./ClassSummary.style";
+} from "../ClassSummary.style";
 export default function ClassSummaryWorkbook() {
   return (
     <SummaryItemWrapper>

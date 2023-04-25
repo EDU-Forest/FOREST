@@ -4,7 +4,7 @@ import {
   ClassInputCheck,
   ClassInputWrapper,
   ClassInput,
-  ClassInputMessage,
+  ClassInputMsg,
   ClassInputBtnWrapper,
 } from "./ClassAddModal.style";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function ClassAddModal({ handleModal }: Iprops) {
           maxLength={14}
         />
         <ClassInputCheck isSuccess />
-        <ClassInputMessage>이미 존재하는 클래스 이름입니다. </ClassInputMessage>
+        <ClassInputMsg>이미 존재하는 클래스 이름입니다. </ClassInputMsg>
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
         <SmallBtn children="확인" colored onClick={confirm} />
