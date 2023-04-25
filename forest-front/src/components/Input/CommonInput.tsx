@@ -5,16 +5,8 @@ interface Iprops {
   inputText: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-  width?: number;
 }
 
-export default function CommonInput({ placeholder, inputText, onChange, width }: Iprops) {
-  return (
-    <StyledCommonInput
-      width={width}
-      placeholder={placeholder}
-      value={inputText}
-      onChange={onChange}
-    />
-  );
+export default function CommonInput({ placeholder, inputText, onChange }: Iprops) {
+  return <StyledCommonInput placeholder={placeholder} value={inputText} onChange={onChange} />;
 }

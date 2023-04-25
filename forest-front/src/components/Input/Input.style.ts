@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-const StyledCommonInput = styled.input<{ width?: number }>`
-  width: ${({ width }) => (width ? width : 13)}rem;
+const StyledCommonInput = styled.input`
+  width: 13rem;
   font-weight: 400;
   border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
