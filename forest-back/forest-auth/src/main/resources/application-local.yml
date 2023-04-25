@@ -23,7 +23,7 @@ spring:
     username: root
     password: 1234
 
-study:
+auth:
   mattermost:
     enabled: true
     webhook-url: https://meeting.ssafy.com/hooks/j85wn7zntjbnjper47prr5icic
