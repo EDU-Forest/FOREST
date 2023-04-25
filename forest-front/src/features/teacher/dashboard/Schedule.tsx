@@ -1,13 +1,13 @@
-import { StyledSchedule } from "./Schedule.style";
+import { StyledSectionBox } from "./Dashboard.style";
 import ScheduleList from "./ScheduleList";
 import ScheduleTop from "./ScheduleTop";
 
 function Schedule() {
   return (
-    <StyledSchedule>
+    <StyledSectionBox>
       <ScheduleTop />
       <ScheduleList />
-    </StyledSchedule>
+    </StyledSectionBox>
   );
 }
 
