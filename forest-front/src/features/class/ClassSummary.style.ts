@@ -1,6 +1,6 @@
 import { Title } from "@/styles/text";
 import { flexBox } from "@/styles/theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const ClassSummaryTitle = styled(Title)`
   display: inline-block;
@@ -60,8 +60,17 @@ const SummaryItemWrapper = styled.div`
   /* height: 14rem; */
 `;
 
-const SummaryChartWrapper = styled(SummaryItemWrapper)`
+const SummaryChartWrapper = styled(SummaryItemWrapper)<{ isStudent?: boolean }>`
   ${flexBox("column", "center", "center")}
+
+  @media ${({ theme }) => theme.tablet} {
+    ${({ isStudent }) =>
+      isStudent &&
+      css`
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+      `}
+  }
 `;
 
 const WorkbookInfo = styled.div`
@@ -87,8 +96,7 @@ const ResultInfoItem = styled.div`
   padding: 1rem;
 
   .wrapper {
-    ${flexBox("row", "center", "space-between")}
-    width: 6.5rem;
+    ${flexBox("row", "center", "start")}
   }
 `;
 
@@ -99,7 +107,7 @@ const ClassSummaryText = styled.p<{ isGray?: boolean; isGreen?: boolean }>`
     isGray ? theme.colors.Gray[500] : isGreen ? theme.colors.Lime[600] : "Black"};
   text-align: left;
   margin: 0.875rem 0;
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
 
   .icon {
     font-size: 1.125rem;
@@ -114,6 +122,7 @@ const ClassSummaryIcon = styled.div`
   height: 1.75rem;
   border-radius: 100%;
   background-color: ${({ theme }) => theme.colors.Lime[50]};
+  margin-right: 0.5rem;
 
   .icon {
     font-size: 1rem;

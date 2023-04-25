@@ -94,7 +94,7 @@ export default function ClassStudentList() {
       {isOpen && <ClassStudentAddModal handleModal={handleModal} />}
 
       <StudentListWrapper>
-        {studentList.map((item) => (
+        {studentList?.map((item) => (
           <StudentInfoCard studentInfo={item} />
         ))}
       </StudentListWrapper>

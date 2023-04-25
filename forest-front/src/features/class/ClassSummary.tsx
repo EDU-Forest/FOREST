@@ -10,10 +10,16 @@ import {
 import WorkbookStatus from "@/components/Status/WorkbookStatus";
 import ClassSummaryWorkbook from "./teacher/ClassSummaryWorkbook";
 import ClassSummaryResult from "./ClassSummaryResult";
-import ClassSummaryChart from "./ClassSummaryChart";
+import ClassSummaryTeacherChart from "./teacher/ClassSummaryTeacherChart";
 import { AiOutlineRight } from "react-icons/ai";
+import ClassSummaryScoreChart from "./student/ClassSummaryScoreChart";
+import ClassSummaryMyResult from "./student/ClassSummaryMyResult";
 
-export default function ClassSummary() {
+interface Iprops {
+  isStudent?: boolean;
+}
+
+export default function ClassSummary({ isStudent }: Iprops) {
   return (
     <ClassSummaryWrapper>
       <ClassSummaryTextWrapper>
@@ -28,9 +34,19 @@ export default function ClassSummary() {
       </ClassSummaryTextWrapper>
       <ClassSummaryDeadline>~ 2023.04.16 16:00</ClassSummaryDeadline>
       <ClassSummaryItemWrapper>
-        <ClassSummaryWorkbook />
-        <ClassSummaryResult />
-        <ClassSummaryChart totalStudent={15} participantStudent={12} takeRate={80} />
+        {isStudent ? (
+          <>
+            <ClassSummaryScoreChart score={80} />
+            <ClassSummaryMyResult />
+            <ClassSummaryResult />
+          </>
+        ) : (
+          <>
+            <ClassSummaryWorkbook />
+            <ClassSummaryResult />
+            <ClassSummaryTeacherChart totalStudent={15} participantStudent={12} takeRate={80} />
+          </>
+        )}
       </ClassSummaryItemWrapper>
     </ClassSummaryWrapper>
   );

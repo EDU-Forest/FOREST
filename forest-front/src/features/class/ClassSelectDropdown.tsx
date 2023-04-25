@@ -17,9 +17,10 @@ interface ClassList {
 interface Iprops {
   classList: ClassList[];
   nowClassId: number;
+  isStudent?: boolean;
 }
 
-export default function ClassSelectDropdown({ classList, nowClassId }: Iprops) {
+export default function ClassSelectDropdown({ classList, nowClassId, isStudent }: Iprops) {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const changeClass = (item: ClassList) => {
@@ -37,8 +38,12 @@ export default function ClassSelectDropdown({ classList, nowClassId }: Iprops) {
           </ClassSelectDropdownEachItem>
         ))}
       </ClassSelectDropdownEach>
-      <ClassSelectDropdownAdd onClick={handleModal}>+ 새 클래스 추가</ClassSelectDropdownAdd>
-      {isOpen && <ClassAddModal handleModal={handleModal} />}
+      {!isStudent && (
+        <>
+          <ClassSelectDropdownAdd onClick={handleModal}>+ 새 클래스 추가</ClassSelectDropdownAdd>
+          {isOpen && <ClassAddModal handleModal={handleModal} />}
+        </>
+      )}
     </ClassSelectDropdownContainer>
   );
 }

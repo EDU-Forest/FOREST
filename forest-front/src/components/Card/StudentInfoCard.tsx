@@ -33,15 +33,15 @@ export default function StudentInfoCard({ studentInfo }: Iprops) {
     <StyledStudentInfoCard>
       <StudentInfoCardInner>
         <div>
-          <StudentInfoCardName>{studentInfo.name}</StudentInfoCardName>
-          <StudentInfoCardText>{studentInfo.age}세</StudentInfoCardText>
+          <StudentInfoCardName>{studentInfo?.name}</StudentInfoCardName>
+          <StudentInfoCardText>{studentInfo?.age}세</StudentInfoCardText>
         </div>
         <MdClose className="close-icon" onClick={deleteStudent} />
       </StudentInfoCardInner>
       <div>
-        <StudentInfoCardText>{studentInfo.email}</StudentInfoCardText>
+        <StudentInfoCardText>{studentInfo?.email}</StudentInfoCardText>
         <StudentInfoCardText>|</StudentInfoCardText>
-        <StudentInfoCardText>{studentInfo.phone}</StudentInfoCardText>
+        <StudentInfoCardText>{studentInfo?.phone}</StudentInfoCardText>
       </div>
     </StyledStudentInfoCard>
   );

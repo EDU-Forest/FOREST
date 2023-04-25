@@ -1,5 +1,5 @@
 import { PieChart } from "react-minimal-pie-chart";
-import { ClassSummarySubTitle, ClassSummaryText, SummaryChartWrapper } from "./ClassSummary.style";
+import { ClassSummarySubTitle, ClassSummaryText, SummaryChartWrapper } from "../ClassSummary.style";
 
 interface Iprops {
   totalStudent: number;
@@ -7,7 +7,11 @@ interface Iprops {
   takeRate: number;
 }
 
-export default function ClassSummaryChart({ totalStudent, participantStudent, takeRate }: Iprops) {
+export default function ClassSummaryTeacherChart({
+  totalStudent,
+  participantStudent,
+  takeRate,
+}: Iprops) {
   return (
     <SummaryChartWrapper>
       <ClassSummarySubTitle>응시율</ClassSummarySubTitle>

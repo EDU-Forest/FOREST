@@ -32,7 +32,11 @@ const classList = [
   },
 ];
 
-export default function ClassSelect() {
+interface Iprops {
+  isStudent?: boolean;
+}
+
+export default function ClassSelect({ isStudent }: Iprops) {
   // 모든 클래스 받아오기 -> classList
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleDropdown = () => {
@@ -46,7 +50,9 @@ export default function ClassSelect() {
         {nowClassName}
         <AiFillCaretDown onClick={handleDropdown} className="icon" />
       </ClassSelectedTitle>
-      {isOpen && <ClassSelectDropdown classList={classList} nowClassId={nowClassId} />}
+      {isOpen && (
+        <ClassSelectDropdown classList={classList} nowClassId={nowClassId} isStudent={isStudent} />
+      )}
     </ClassSelectWrapper>
   );
 }
