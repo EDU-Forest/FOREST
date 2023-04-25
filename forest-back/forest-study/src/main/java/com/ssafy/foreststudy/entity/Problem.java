@@ -21,7 +21,7 @@ public class Problem {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "image_id", nullable = false)
     private ProblemImg img;
 

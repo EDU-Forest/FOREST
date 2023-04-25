@@ -25,20 +25,20 @@ public class Workbook {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "workbook_imgs_id", nullable = false)
     private WorkbookImg workbookImg;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
 
     @Column(name = "title", columnDefinition = "varchar(30)", nullable = false)
     private String title;
 
-    @Column(name = "desc", columnDefinition = "varchar(255)")
-    private String desc;
+    @Column(name = "description", columnDefinition = "varchar(255)")
+    private String description;
 
     @Column(name = "volume", columnDefinition = "int default 0", nullable = false)
     private int volume;
