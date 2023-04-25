@@ -1,9 +1,12 @@
 import TeacherNav from "@/components/Nav/TeacherNav";
-import { StyledDashboardContainer, StyledDashboardSectionFlexBox } from "@/features/teacher/dashboard/Dashboard.style";
-import DashboardBanner from "@/features/teacher/dashboard/DashboardBanner";
-import Memo from "@/features/teacher/dashboard/Memo";
-import Schedule from "@/features/teacher/dashboard/Schedule";
-import { Container, FullScreen } from "@/styles/container";
+import {
+  StyledDashboardContainer,
+  StyledDashboardSectionFlexBox,
+} from "@/features/dashboard/Dashboard.style";
+import DashboardBanner from "@/features/dashboard/DashboardBanner";
+import Schedule from "@/features/dashboard/Schedule";
+import Memo from "@/features/dashboard/teacher/Memo";
+import { FullScreen } from "@/styles/container";
 
 export default function TeacherDashBoard() {
   return (

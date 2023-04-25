@@ -1,4 +1,4 @@
-import { StyledSectionBox } from "./Dashboard.style";
+import { StyledSectionBox } from "../../dashboard/Dashboard.style";
 import MemoList from "./MemoList";
 import MemoUploadInput from "./MemoUploadInput";
 

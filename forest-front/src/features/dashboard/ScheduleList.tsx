@@ -1,4 +1,4 @@
-import ClassLabel from "@/features/teacher/dashboard/ClassLabel";
+import ClassLabel from "@/features/dashboard/ScheduleClassLabel";
 import {
   StyledScheduleItem,
   StyledScheduleItemTop,

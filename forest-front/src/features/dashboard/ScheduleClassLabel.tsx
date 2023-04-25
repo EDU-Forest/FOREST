@@ -4,7 +4,7 @@ interface PropsType {
   classTitle: string;
 }
 
-function ClassLabel({ classTitle }: PropsType) {
+function ScheduleClassLabel({ classTitle }: PropsType) {
   return (
     <StyledClassLabel>
       <span>{classTitle}</span>
@@ -12,4 +12,4 @@ function ClassLabel({ classTitle }: PropsType) {
   );
 }
 
-export default ClassLabel;
+export default ScheduleClassLabel;
