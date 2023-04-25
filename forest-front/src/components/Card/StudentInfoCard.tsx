@@ -7,23 +7,23 @@ import {
 } from "./Card.style";
 
 interface Iprops {
-  children: string;
+  studentInfo: Student;
 }
 
-export default function StudentInfoCard() {
+export default function StudentInfoCard({ studentInfo }: Iprops) {
   return (
     <StyledStudentInfoCard>
       <StudentInfoCardInner>
         <div>
-          <StudentInfoCardName>양희제</StudentInfoCardName>
-          <StudentInfoCardText>27세</StudentInfoCardText>
+          <StudentInfoCardName>{studentInfo.name}</StudentInfoCardName>
+          <StudentInfoCardText>{studentInfo.age}세</StudentInfoCardText>
         </div>
         <MdClose className="close-icon" />
       </StudentInfoCardInner>
       <div>
-        <StudentInfoCardText>abc@gmail.com</StudentInfoCardText>
+        <StudentInfoCardText>{studentInfo.email}</StudentInfoCardText>
         <StudentInfoCardText>|</StudentInfoCardText>
-        <StudentInfoCardText>010-1234-5678</StudentInfoCardText>
+        <StudentInfoCardText>{studentInfo.phone}</StudentInfoCardText>
       </div>
     </StyledStudentInfoCard>
   );
