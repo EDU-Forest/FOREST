@@ -54,6 +54,8 @@ export const StyledStatusNotification = styled.div`
 `;
 
 export const StyledScheduleItem = styled.div`
+  margin: 0px 8px;
+
   // 기간
   > span {
     color: ${({ theme }) => theme.colors.Gray[500]};
@@ -64,14 +66,40 @@ export const StyledScheduleItemTop = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   > div:first-child {
     display: flex;
   }
 
-  // 일정 제목
-  > span {
+  span {
     font-weight: 600;
   }
+`;
+
+export const StyledScheduleListBox = styled.div`
+  margin-top: 2rem;
+
+  hr {
+    height: 0.5008px;
+
+    margin: 1rem 0;
+
+    border: none;
+    background-color: ${({ theme }) => theme.colors.Gray[400]};
+  }
+
+  hr:last-child {
+    display: none;
+  }
+`;
+
+export const StyledClassLabel = styled.div`
+  padding: 0.25rem 0.5rem;
+
+  background-color: ${({ theme }) => theme.colors.Orange[50]};
+  border-radius: 4px;
+  color: ${({ theme }) => theme.colors.Orange[600]};
+  font-size: 14px;
+  font-weight: 600;
 `;

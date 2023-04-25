@@ -1,7 +1,8 @@
-import ClassLabel from "@/components/Label/ClassLabel";
+import ClassLabel from "@/features/teacher/dashboard/ClassLabel";
 import {
   StyledScheduleItem,
   StyledScheduleItemTop,
+  StyledScheduleListBox,
   StyledScheduleStatusCircle,
 } from "./Schedule.style";
 
@@ -36,23 +37,25 @@ function ScheduleList() {
   ];
 
   return (
-    <div>
+    <StyledScheduleListBox>
       {list.map((item) => {
         return (
-          <StyledScheduleItem>
-            <StyledScheduleItemTop>
-              <div>
-                <StyledScheduleStatusCircle status={item?.status} />
-                <span>{item?.title}</span>
-              </div>
-              <ClassLabel classTitle={item.class} />
-            </StyledScheduleItemTop>
-            <span>{item?.period}</span>
+          <>
+            <StyledScheduleItem>
+              <StyledScheduleItemTop>
+                <div>
+                  <StyledScheduleStatusCircle status={item?.status} />
+                  <span>{item?.title}</span>
+                </div>
+                <ClassLabel classTitle={item.class} />
+              </StyledScheduleItemTop>
+              <span>{item?.period}</span>
+            </StyledScheduleItem>
             <hr />
-          </StyledScheduleItem>
+          </>
         );
       })}
-    </div>
+    </StyledScheduleListBox>
   );
 }
 
