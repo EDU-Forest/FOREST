@@ -33,8 +33,9 @@ public class ServiceExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = EntityIsNullException.class)
     public ResponseErrorDto<?> handle(EntityIsNullException e, HttpServletRequest request) {
+        ErrorCode errorCode = e.getErrorCode();
         notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(ErrorCode.FOREST_USER_NOT_FOUND, e.getMessage(), request.getRequestURI());
+        return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
     }
 
     private String getParams(HttpServletRequest req) {
