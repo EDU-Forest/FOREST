@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 public enum SuccessCode {
-    FOREST_USER_SUCCESS(HttpStatus.NOT_FOUND, "유저를 찾을 수 없습니다.");
+    AUTH_SIGN_UP_SUCCESS(HttpStatus.CREATED, "회원가입 성공");
 
     private final HttpStatus status;
     private final String message;

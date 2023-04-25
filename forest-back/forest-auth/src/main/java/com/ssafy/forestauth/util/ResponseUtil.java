@@ -6,7 +6,6 @@ import com.ssafy.forestauth.dto.common.response.ResponseErrorDto;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
