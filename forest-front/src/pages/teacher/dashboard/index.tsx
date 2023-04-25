@@ -13,7 +13,7 @@ export default function TeacherDashBoard() {
     <FullScreen>
       <TeacherNav nowLocation={"dashboard"} />
       <StyledDashboardContainer padding={2}>
-        <DashboardBanner />
+      <DashboardBanner role="선생님" />
         <StyledDashboardSectionFlexBox>
           <Schedule />
           <Memo />
