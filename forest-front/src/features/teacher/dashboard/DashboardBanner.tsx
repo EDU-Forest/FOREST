@@ -17,7 +17,7 @@ function DashboardBanner() {
       <StyledDashboardBanner>
         <div>
           <Title>
-            안녕하세요 {name} {role}
+            안녕하세요, {name} {role}!
           </Title>
           <span>{text}</span>
         </div>

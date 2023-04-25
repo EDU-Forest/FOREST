@@ -28,9 +28,9 @@ export const StyledDashboardBanner = styled.div`
 
   img {
     position: absolute;
-    width: 154px;
+    width: 144px;
     height: auto;
     right: 40px;
-    top: -20px;
+    top: -18px;
   }
 `;
