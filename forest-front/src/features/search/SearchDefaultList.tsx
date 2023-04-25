@@ -3,6 +3,7 @@ import { SearchTitle, SearchDefaultWrapper, SearchDefalutListWrapper } from "./S
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 import "swiper/swiper.min.css";
+import { breakpoints } from "@/styles/theme";
 
 const popularList = [
   {
@@ -46,27 +47,6 @@ const popularList = [
     used: 7,
   },
 ];
-
-const breakpoints = {
-  768: {
-    slidesPerView: 4,
-    slidesPerGroup: 4,
-    spaceBetween: 20,
-    loopFillGroupWithBlank: true,
-  },
-  1220: {
-    slidesPerView: 5,
-    slidesPerGroup: 5,
-    spaceBetween: 40,
-    loopFillGroupWithBlank: true,
-  },
-  1440: {
-    slidesPerView: 5,
-    slidesPerGroup: 5,
-    spaceBetween: 68,
-    loopFillGroupWithBlank: true,
-  },
-};
 
 export default function SearchDefaultList() {
   return (
