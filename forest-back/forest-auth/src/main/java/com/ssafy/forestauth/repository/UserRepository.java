@@ -1,4 +1,7 @@
 package com.ssafy.forestauth.repository;
 
-public interface UserRepository {
+import com.ssafy.forestauth.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Long> {
 }
