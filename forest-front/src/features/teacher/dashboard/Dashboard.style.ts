@@ -11,7 +11,19 @@ export const StyledDashboardSectionFlexBox = styled.div`
   gap: 1.5rem;
   flex: 1;
 
-  margin-top: 24px;
+  // 각 섹션에 마진 => 마진 관련 반응형 대응 따로 할 필요 X
+  > div {
+    margin-top: 24px;
+  }
+
+  @media (${({ theme }) => theme.tablet}) {
+    display: block;
+
+    > div {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
 `;
 
 export const StyledSectionBox = styled.div`
