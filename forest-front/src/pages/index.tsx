@@ -47,12 +47,6 @@ export default function Home() {
       {/* <ExportBtn type={"make"} selected={false} />
       <ExportBtn type={"release"} selected />
       <ExportBtn type={"pdf"} selected /> */}
-      <ClassInfoCard children="킹규림쌤 영어" />
-      <StudentInfoCard />
-      <br />
-      <WorkbookTab children="좋아하는 문제집" selected space={80} />
-      <WorkbookTab children="사용한 문제집" selected={false} space={80} />
-      <WorkbookTab children="내가 만든 문제집" selected={false} space={80} />
     </>
   );
 }
