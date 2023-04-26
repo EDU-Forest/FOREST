@@ -64,9 +64,15 @@ public class StudyController {
         return ResponseEntity.ok(studyService.getStudyResultStudent(studyId));
     }
 
-    @ApiOperation(value = "(개인) 문항별 정답 여부 조회", notes = "(개인) 문항별 정답 여부를  조회합니다.")
-    @GetMapping("/student/result/question/{studyId}")
-    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>>> getStudentResultQuestion(@PathVariable("studyId") Long studyId) {
-        return ResponseEntity.ok(studyService.getStudentResultQuestion(studyId));
+    @ApiOperation(value = "(개인) 문항별 정답 여부 조회", notes = "(개인) 문항별 정답 여부를 조회합니다.")
+    @GetMapping("/student/result/question/{studyId}/{userId}")
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>>> getStudentResultQuestion(@PathVariable("studyId") Long studyId,@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentResultQuestion(studyId,userId));
+    }
+
+    @ApiOperation(value = "(개인) 시험 결과 조회", notes = "(개인) 시험 결과를 조회합니다.")
+    @GetMapping("/student/result/{studyId}/{userId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudentResultResponseDto>> getStudentResult(@PathVariable("studyId") Long studyId,@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentResult(studyId,userId));
     }
 }

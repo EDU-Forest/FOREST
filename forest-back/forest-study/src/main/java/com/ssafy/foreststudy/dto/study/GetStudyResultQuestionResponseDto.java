@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class GetStudyResultQuestionResponseDto {
-    private Long classAnswerRateListId;
     private int problemNum;
     private int correctRate;
 }
