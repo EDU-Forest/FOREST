@@ -13,38 +13,36 @@ import {
   SignupTitleBox,
 } from "./SignupModal.style";
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
-import { CommonInput } from "@/components/Input/Input.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useState } from "react";
 import SignupInput from "./SignupInput";
 import RoleBtn from "@/components/Button/RoleBtn";
+import { checkEmail } from "@/utils";
 
 interface Iprops {
   onClose: () => void;
 }
 
 export default function SignupModal({ onClose }: Iprops) {
-  const [emailValidation, setEmailValidation] = useState({
-    "이메일 형식": "",
-    중복체크: "",
-  });
-  const [usernameValidation, setUsernameValidation] = useState({
-    "N자 이상 N자 이하": "",
-  });
-  const [phoneNumberValidation, setPhoneNumberValidation] = useState({
-    "전화번호 형식": "",
-    중복체크: "",
-  });
-  const [passwordValidation, setPasswordValidation] = useState({
-    "N자 이상 N자 이하": "",
-    "특정 형식 포함": "",
-  });
-  const [checkPasswordValidation, setCheckPasswordValidation] = useState({
-    "비밀번호 일치": "",
-  });
-  const [birthValidation, setBirthValidation] = useState({
-    "생년월일 선택": "",
-  });
+  // 이메일
+  const [emailValidation, setEmailValidation] = useState("");
+  const [emailDuplicateValidation, setEmailDuplicateValidation] = useState("");
+
+  // 이름
+  const [usernameValidation, setUsernameValidation] = useState("");
+
+  // 전화번호
+  const [phoneNumberValidation, setPhoneNumberValidation] = useState("");
+  const [phoneNumberDuplicateValidation, setPhoneNumberDuplicateValidation] = useState("");
+
+  // 비밀번호
+  const [passwordValidation, setPasswordValidation] = useState("");
+
+  // 비밀번호 확인
+  const [checkPasswordValidation, setCheckPasswordValidation] = useState("");
+
+  // 생일
+  const [birthValidation, setBirthValidation] = useState("");
 
   const [userData, setUserData] = useState({
     email: "",
@@ -64,7 +62,10 @@ export default function SignupModal({ onClose }: Iprops) {
       type: "email",
       placeholder: "이메일을 입력하세요",
       value: userData.email,
-      validations: emailValidation,
+      validations: {
+        "이메일 형식": emailValidation,
+        중복체크: emailDuplicateValidation,
+      },
     },
     {
       label: "이름",
@@ -72,7 +73,9 @@ export default function SignupModal({ onClose }: Iprops) {
       type: "text",
       placeholder: "이름을 입력하세요",
       value: userData.username,
-      validations: usernameValidation,
+      validations: {
+        "2자 이상 8자 이하": usernameValidation,
+      },
     },
     {
       label: "전화번호",
@@ -80,7 +83,10 @@ export default function SignupModal({ onClose }: Iprops) {
       type: "number",
       placeholder: "- 없이 숫자만 입력하세요",
       value: userData.phoneNumber,
-      validations: phoneNumberValidation,
+      validations: {
+        "전화번호 형식": phoneNumberValidation,
+        중복체크: phoneNumberDuplicateValidation,
+      },
     },
   ];
 
@@ -91,7 +97,9 @@ export default function SignupModal({ onClose }: Iprops) {
       type: "password",
       placeholder: "비밀번호를 입력하세요",
       value: userData.password,
-      validations: passwordValidation,
+      validations: {
+        "8자 이상 16자 이하": passwordValidation,
+      },
     },
     {
       label: "비밀번호 확인",
@@ -99,7 +107,9 @@ export default function SignupModal({ onClose }: Iprops) {
       type: "password",
       placeholder: "비밀번호를 입력하세요",
       value: userData.checkPassword,
-      validations: checkPasswordValidation,
+      validations: {
+        "비밀번호 일치": checkPasswordValidation,
+      },
     },
     // {
     //   label: "생년월일",
@@ -117,12 +127,22 @@ export default function SignupModal({ onClose }: Iprops) {
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(userData);
     const { name, value } = e.target;
     setUserData({
       ...userData,
       [name]: value,
     });
+  };
+
+  const blurHandler = (e: React.FocusEvent<HTMLElement>) => {
+    console.log(e);
+    // if (name === "email") {
+    //   if (checkEmail(userData.email)) {
+    //     setEmailValidation("pass");
+    //   } else {
+    //     setEmailValidation("fail");
+    //   }
+    // }
   };
 
   return (
@@ -143,6 +163,7 @@ export default function SignupModal({ onClose }: Iprops) {
               value={data.value}
               onChange={onChange}
               validations={data.validations}
+              onBlur={blurHandler}
             />
           ))}
           <SignupInputRowBox>
@@ -156,6 +177,7 @@ export default function SignupModal({ onClose }: Iprops) {
                 value={data.value}
                 onChange={onChange}
                 validations={data.validations}
+                onBlur={blurHandler}
               />
             ))}
           </SignupInputRowBox>
@@ -167,7 +189,8 @@ export default function SignupModal({ onClose }: Iprops) {
             placeholder="생년월일을 입력하세요"
             value={userData.birth}
             onChange={onChange}
-            validations={birthValidation}
+            validations={{ "생년월일 선택": birthValidation }}
+            onBlur={blurHandler}
           />
         </SignupContentBox>
         <SignupRoleBox>
