@@ -43,4 +43,10 @@ public class ClassStudyResult {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    @Column(name = "total_student", columnDefinition = "int")
+    private int totalStudent;
+
+    @Column(name = "participant_student", columnDefinition = "int")
+    private int participantStudent;
 }

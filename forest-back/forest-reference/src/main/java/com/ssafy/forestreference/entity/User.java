@@ -31,13 +31,13 @@ public class User {
     @Column(name = "name", columnDefinition = "varchar(20)", nullable = false)
     private String name;
 
-    @Column(name = "password", columnDefinition = "varchar(20)")
+    @Column(name = "password", columnDefinition = "varchar(60)")
     private String password;
 
     @Column(name = "phone", columnDefinition = "varchar(20)")
     private String phone;
 
-    @Column(name = "birth", columnDefinition = "timestamp")
+    @Column(name = "birth", columnDefinition = "date")
     private LocalDateTime birth;
 
     @Enumerated(EnumType.STRING)
