@@ -1,12 +1,5 @@
+import { WorkbookType } from "@/types/Workbook";
 import WorkbookList from "./WorkbookList";
-
-export interface WorkbookType {
-  id: number;
-  cover: string;
-  title: string;
-  likeCnt: number;
-  usedCnt: number;
-}
 
 function LikeWorkbook() {
   // 더미
