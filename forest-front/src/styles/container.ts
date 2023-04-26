@@ -3,7 +3,7 @@ import { flexBox } from "./theme";
 
 export const FullScreen = styled.div<{ isColumn?: boolean }>`
   ${(isColumn) => flexBox(isColumn ? "column" : "row", "center", "center")}
-  background-color: ${({ theme }) => theme.colors.Gray[50]};
+  /* background-color: ${({ theme }) => theme.colors.Gray[50]}; */
   flex-wrap: wrap;
   width: 100vw;
   height: 100vh;

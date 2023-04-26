@@ -15,6 +15,10 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     min-width: 20rem;
   }
+
+  body {
+    background-color: ${({ theme }) => theme.colors.Gray[50]}
+  }
   
   a { cursor: pointer; text-decoration: none; }
   button { cursor: pointer }

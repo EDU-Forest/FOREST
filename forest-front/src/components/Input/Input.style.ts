@@ -22,8 +22,14 @@ const CommonInput = styled.input<{ isShort: boolean }>`
     border: 1px solid ${({ theme }) => theme.colors.Lime[500]};
   }
 
-  /* &[type="date"]:valid {
-    color: ${({ theme }) => theme.colors.Gray[500]};
+  /* &[type="date"]::before {
+    content: attr(data-placeholder);
+    width: 100%;
+  }
+
+  &[type="date"]:focus::before,
+  &[type="date"]:valid::before {
+    display: none;
   } */
 `;
 
