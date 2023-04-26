@@ -32,7 +32,7 @@ public class User {
     @Column(name = "name", columnDefinition = "varchar(20)", nullable = false)
     private String name;
 
-    @Column(name = "password", columnDefinition = "varchar(20)")
+    @Column(name = "password", columnDefinition = "varchar(60)")
     private String password;
 
     @Column(name = "phone", columnDefinition = "varchar(20)")
@@ -67,5 +67,9 @@ public class User {
         this.birth = signupRequestDto.getBirth();
         this.role = signupRequestDto.getRole();
         this.authProvider = signupRequestDto.getProvider();
+    }
+
+    public void encodePassword(String encodedPw) {
+        this.password = encodedPw;
     }
 }
