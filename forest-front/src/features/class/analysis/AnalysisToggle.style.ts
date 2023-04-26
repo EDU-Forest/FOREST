@@ -36,14 +36,18 @@ const ToggleCircle = styled.div<{ isSummary: boolean }>`
   transition: 0.5s;
 
   @media ${({ theme }) => theme.desktop} {
-    width: calc((25% - 1.5rem) / 2);
+    width: calc((25% - 1rem) / 2);
   }
 
   ${({ isSummary }) =>
     !isSummary &&
     css`
-      left: 140px;
+      left: calc((50% - 0.75rem) / 2);
       transition: 0.5s;
+
+      @media ${({ theme }) => theme.desktop} {
+        left: calc((25% - 2rem) / 2);
+      }
     `}
 `;
 

@@ -1,6 +1,6 @@
 import { PieChart } from "react-minimal-pie-chart";
-import { ClassSummaryText, SummaryChartWrapper } from "../ClassSummary.style";
-import { LabelCircle } from "./StudyAnalysis.style";
+import { SummaryChartWrapper } from "../ClassSummary.style";
+import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
 
 interface Iprops {
   correctAnswerRate: number;
@@ -34,9 +34,9 @@ export default function CorrectRateDonut({ correctAnswerRate }: Iprops) {
       />
       <div>
         <LabelCircle isCorrect />
-        <ClassSummaryText isGray> 정답</ClassSummaryText>
+        <AnalysisText isGray> 정답</AnalysisText>
         <LabelCircle />
-        <ClassSummaryText isGray> 오답</ClassSummaryText>
+        <AnalysisText isGray> 오답</AnalysisText>
       </div>
     </SummaryChartWrapper>
   );

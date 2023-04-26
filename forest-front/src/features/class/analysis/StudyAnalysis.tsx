@@ -16,6 +16,7 @@ import ClassSummaryWorkbook from "../teacher/ClassSummaryWorkbook";
 import TakeRateChart from "../TakeRateChart";
 import CorrectRateDonut from "./CorrectRateDonut";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
+import QuestionCorrectRate from "./QuestionCorrectRate";
 
 interface Iprops {
   studyId: number;
@@ -58,37 +59,44 @@ export default function StudyAnalysis({ studyId }: Iprops) {
       </AnalysisTitle>
       <AnalysisContent>
         <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
-        <AnalysisUpper>
-          <AnalysisUpperItem>
-            <AnalysisSubTitle>정답률</AnalysisSubTitle>
-            <CorrectRateDonut correctAnswerRate={dummyCorrectRate.correctAnswerRate} />
-            <div style={{ textAlign: "center" }}>
-              <StyledWorkbookStatus status="loading">
-                학생들이 평균적으로 {dummyData.average}%의 문제를 맞췄습니다
-              </StyledWorkbookStatus>
-            </div>
-          </AnalysisUpperItem>
-          <AnalysisUpperItem>
-            <ClassSummaryResult noMargin />
-          </AnalysisUpperItem>
-          <AnalysisUpperItem>
-            <AnalysisSubTitle>응시율</AnalysisSubTitle>
-            <TakeRateChart
-              noTitle
-              totalStudent={dummyData.totalStudent}
-              participantStudent={dummyData.participantStudent}
-              takeRate={dummyData.takeRate}
-            />
-            <div style={{ textAlign: "center" }}>
-              <StyledWorkbookStatus status="progress">
-                {dummyData.participantStudent}명의 학생이 응시하였습니다
-              </StyledWorkbookStatus>
-            </div>
-          </AnalysisUpperItem>
-          <AnalysisUpperItem>
-            <ClassSummaryWorkbook noMargin />
-          </AnalysisUpperItem>
-        </AnalysisUpper>
+        {isSummary ? (
+          <>
+            <AnalysisUpper>
+              <AnalysisUpperItem>
+                <AnalysisSubTitle>정답률</AnalysisSubTitle>
+                <CorrectRateDonut correctAnswerRate={dummyCorrectRate.correctAnswerRate} />
+                <div style={{ textAlign: "center" }}>
+                  <StyledWorkbookStatus status="loading">
+                    학생들이 평균적으로 {dummyData.average}%의 문제를 맞췄습니다
+                  </StyledWorkbookStatus>
+                </div>
+              </AnalysisUpperItem>
+              <AnalysisUpperItem>
+                <ClassSummaryResult noMargin />
+              </AnalysisUpperItem>
+              <AnalysisUpperItem>
+                <AnalysisSubTitle>응시율</AnalysisSubTitle>
+                <TakeRateChart
+                  noTitle
+                  totalStudent={dummyData.totalStudent}
+                  participantStudent={dummyData.participantStudent}
+                  takeRate={dummyData.takeRate}
+                />
+                <div style={{ textAlign: "center" }}>
+                  <StyledWorkbookStatus status="progress">
+                    {dummyData.participantStudent}명의 학생이 응시하였습니다
+                  </StyledWorkbookStatus>
+                </div>
+              </AnalysisUpperItem>
+              <AnalysisUpperItem>
+                <ClassSummaryWorkbook noMargin />
+              </AnalysisUpperItem>
+            </AnalysisUpper>
+            <QuestionCorrectRate studyId={studyId} />
+          </>
+        ) : (
+          <></>
+        )}
       </AnalysisContent>
     </>
   );

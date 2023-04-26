@@ -1,6 +1,7 @@
 import { FullScreen } from "@/styles/container";
 import { flexBox, scrollBar } from "@/styles/theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { ClassSummaryText } from "../ClassSummary.style";
 
 const AnalysisFullScreen = styled(FullScreen)`
   ${flexBox("column", "start", "start")}
@@ -47,8 +48,23 @@ const AnalysisUpperItem = styled.div`
 `;
 
 const AnalysisSubTitle = styled.p`
+  display: inline-block;
   font-weight: 700;
   margin-bottom: 0.5rem;
+`;
+
+const AnalysisText = styled(ClassSummaryText)<{
+  isGray?: boolean;
+  isGreen?: boolean;
+  noMargin?: boolean;
+}>`
+  font-weight: 400;
+  ${({ noMargin }) =>
+    noMargin &&
+    css`
+      margin-top: 0;
+      margin-bottom: 0;
+    `}
 `;
 
 const LabelCircle = styled.div<{ isCorrect?: boolean }>`
@@ -70,5 +86,6 @@ export {
   AnalysisUpper,
   AnalysisUpperItem,
   AnalysisSubTitle,
+  AnalysisText,
   LabelCircle,
 };
