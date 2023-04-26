@@ -37,7 +37,7 @@ export default function ClassWorkbookList() {
       <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
         {workbookList.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <CommonWorkbook title={item.title} />
+            <CommonWorkbook id={idx} title={item.title} />
           </SwiperSlide>
         ))}
       </Swiper>

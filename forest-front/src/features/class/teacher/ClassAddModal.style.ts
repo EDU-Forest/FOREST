@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const ClassAddModalContainer = styled.div`
   ${positionCenter("fixed")}
-  width: 30rem;
-  height: 15rem;
+  width: 37.5rem;
+  height: 20rem;
   background-color: white;
   box-shadow: 0rem 0.25rem 1.25rem rgba(0, 0, 0, 0.25);
   border-radius: 1rem;
@@ -23,13 +23,13 @@ const ClassInputCheck = styled.div<{ isSuccess: boolean }>`
   border-radius: 100%;
   border: 2px solid #d9d9d9;
   position: absolute;
-  top: 0.75rem;
-  right: 1.125rem;
+  top: 0.875rem;
+  right: 1rem;
   background-color: ${({ isSuccess, theme }) => (isSuccess ? theme.colors.Lime[400] : "white")};
 `;
 
 const ClassInput = styled.input`
-  width: 28rem;
+  width: 30rem;
   font-weight: 400;
   border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};

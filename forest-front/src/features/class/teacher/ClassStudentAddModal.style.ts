@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { ClassAddModalContainer, ClassInputBtnWrapper } from "./ClassAddModal.style";
-import { StyledCommonInput } from "@/components/Input/Input.style";
+import { CommonInput } from "@/components/Input/Input.style";
 import {
   ClassSelectDropdownContainer,
   ClassSelectDropdownEach,
@@ -9,12 +9,12 @@ import {
 
 const ClassStudentAddModalContainer = styled(ClassAddModalContainer)`
   z-index: 10;
-  height: 30.625rem;
+  height: 37.5rem;
   padding-top: 4.375rem;
 `;
 
-const ClassStudentAddInput = styled(StyledCommonInput)`
-  width: 28rem;
+const ClassStudentAddInput = styled(CommonInput)`
+  width: 30rem;
   margin-top: 1.5rem;
 `;
 

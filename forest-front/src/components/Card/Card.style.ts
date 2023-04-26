@@ -35,7 +35,7 @@ const StyledStudentInfoCard = styled.div`
   color: white;
   box-shadow: 0 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.25);
   border-radius: 1rem;
-  height: 3rem;
+  height: 5rem;
   padding: 1rem 1.5rem;
   margin: 0.5rem 0;
   @media ${({ theme }) => theme.tablet} {
@@ -43,10 +43,10 @@ const StyledStudentInfoCard = styled.div`
   }
 
   @media (min-width: 67.5rem) {
-    width: 44%;
+    width: 48%;
   }
   @media (min-width: 108rem) {
-    width: 30%;
+    width: 31%;
   }
 `;
 

@@ -10,8 +10,8 @@ const ClassSummaryTitle = styled(Title)`
 `;
 
 const ClassSummaryWrapper = styled.div`
-  width: calc(100% - 4rem);
-  height: 20.625rem;
+  width: 100%;
+  height: 23.875rem;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
   margin-top: 1.5rem;
@@ -19,7 +19,7 @@ const ClassSummaryWrapper = styled.div`
   margin-bottom: 2.25rem;
 
   @media ${({ theme }) => theme.tablet} {
-    height: 37.5rem;
+    height: 41rem;
   }
 `;
 
@@ -45,6 +45,7 @@ const ClassSummaryTextItem = styled.div`
 const ClassSummaryDeadline = styled.p`
   color: ${({ theme }) => theme.colors.Gray[500]};
   margin: 0;
+  margin-top: 0.25rem;
 `;
 
 const ClassSummarySubTitle = styled.p`
@@ -76,8 +77,8 @@ const SummaryChartWrapper = styled(SummaryItemWrapper)<{ isStudent?: boolean }>`
 const WorkbookInfo = styled.div`
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[300]};
   border-radius: 0.5rem;
-  width: calc(100% - 3rem);
-  height: 11.75rem;
+  width: 100%;
+  height: 12.75rem;
   padding: 0.5rem 1.5rem;
 `;
 
@@ -91,8 +92,8 @@ const ResultInfoItem = styled.div`
   ${flexBox("row", "center", "space-between")};
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[300]};
   border-radius: 0.5rem;
-  width: calc(100% - 2rem);
-  height: 1.75rem;
+  width: 100%;
+  height: 3.75rem;
   padding: 1rem;
 
   .wrapper {
