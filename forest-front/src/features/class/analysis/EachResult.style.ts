@@ -30,6 +30,7 @@ const ResultTableItemSmall = styled(ResultTableItemBig)`
 
   .icon {
     font-size: 24px;
+    cursor: pointer;
   }
 `;
 

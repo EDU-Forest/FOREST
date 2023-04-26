@@ -55,6 +55,12 @@ const studentStudyResultList = [
 ];
 
 export default function EachResult({ studyId }: StudyId) {
+  const goToAnswer = () => {
+    // 개인 답안으로 이동
+  };
+  const goToGrade = () => {
+    // 상세 성적으로 이동
+  };
   return (
     <EachResultWrapper>
       <AnalysisSubTitle>응시자별 성취도</AnalysisSubTitle>
@@ -81,10 +87,10 @@ export default function EachResult({ studyId }: StudyId) {
             <ResultTableItemSmall>{item.correctNum}</ResultTableItemSmall>
             <ResultTableItemSmall>{item.correctRate}</ResultTableItemSmall>
             <ResultTableItemSmall>
-              <AiOutlineBars className="icon" />
+              <AiOutlineBars className="icon" onClick={goToAnswer} />
             </ResultTableItemSmall>
             <ResultTableItemSmall>
-              <MdEqualizer className="icon" />
+              <MdEqualizer className="icon" onClick={goToGrade} />
             </ResultTableItemSmall>
           </ResultTableList>
         ))}
