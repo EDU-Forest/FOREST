@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Getter
 public class SignupRequestDto {
-    private String name;
+    private String name; // 2~8자 길이 제한 두기
     private String email;
     private String phone;
     private String pw;
