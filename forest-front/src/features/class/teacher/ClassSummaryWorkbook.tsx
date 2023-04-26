@@ -5,10 +5,15 @@ import {
   ClassSummaryTextWrapper,
   ClassSummaryText,
 } from "../ClassSummary.style";
-export default function ClassSummaryWorkbook() {
+
+interface Iprops {
+  noMargin?: boolean;
+}
+
+export default function ClassSummaryWorkbook({ noMargin }: Iprops) {
   return (
     <SummaryItemWrapper>
-      <ClassSummarySubTitle>문제집 정보</ClassSummarySubTitle>
+      <ClassSummarySubTitle noMargin={noMargin}>문제집 정보</ClassSummarySubTitle>
       <WorkbookInfo>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>출판</ClassSummaryText>

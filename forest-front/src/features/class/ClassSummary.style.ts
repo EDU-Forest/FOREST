@@ -48,10 +48,17 @@ const ClassSummaryDeadline = styled.p`
   margin-top: 0.25rem;
 `;
 
-const ClassSummarySubTitle = styled.p`
+const ClassSummarySubTitle = styled.p<{ noMargin?: boolean }>`
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 0.5rem;
+
+  ${({ noMargin }) =>
+    noMargin &&
+    css`
+      margin-top: 0rem;
+      margin-bottom: 2rem;
+    `}
 `;
 
 const SummaryItemWrapper = styled.div`

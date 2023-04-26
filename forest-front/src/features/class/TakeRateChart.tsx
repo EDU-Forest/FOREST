@@ -1,20 +1,22 @@
 import { PieChart } from "react-minimal-pie-chart";
-import { ClassSummarySubTitle, ClassSummaryText, SummaryChartWrapper } from "../ClassSummary.style";
+import { ClassSummarySubTitle, ClassSummaryText, SummaryChartWrapper } from "./ClassSummary.style";
 
 interface Iprops {
+  noTitle?: boolean;
   totalStudent: number;
   participantStudent: number;
   takeRate: number;
 }
 
-export default function ClassSummaryTeacherChart({
+export default function TakeRateChart({
+  noTitle,
   totalStudent,
   participantStudent,
   takeRate,
 }: Iprops) {
   return (
     <SummaryChartWrapper>
-      <ClassSummarySubTitle>응시율</ClassSummarySubTitle>
+      {!noTitle && <ClassSummarySubTitle>응시율</ClassSummarySubTitle>}
       <PieChart
         data={[
           {
@@ -28,6 +30,7 @@ export default function ClassSummaryTeacherChart({
         lineWidth={18}
         background="#f3f3f3"
         lengthAngle={360}
+        startAngle={270}
         rounded
         animate
         label={({ dataEntry }) => dataEntry.value + "%"}

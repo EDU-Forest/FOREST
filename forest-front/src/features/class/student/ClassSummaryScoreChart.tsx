@@ -22,6 +22,7 @@ export default function ClassSummaryScoreChart({ score }: Iprops) {
         lineWidth={20}
         background="#f3f3f3"
         lengthAngle={360}
+        startAngle={270}
         rounded
         animate
         label={({ dataEntry }) => dataEntry.value + "점"}

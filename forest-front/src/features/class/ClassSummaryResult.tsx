@@ -8,10 +8,13 @@ import {
 } from "./ClassSummary.style";
 import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-icons/md";
 
-export default function ClassSummaryResult() {
+interface Iprops {
+  noMargin?: boolean;
+}
+export default function ClassSummaryResult({ noMargin }: Iprops) {
   return (
     <SummaryItemWrapper>
-      <ClassSummarySubTitle>전체 결과</ClassSummarySubTitle>
+      <ClassSummarySubTitle noMargin={noMargin}>전체 결과</ClassSummarySubTitle>
       <SummaryResultWrapper>
         <ResultInfoItem>
           <div className="wrapper">

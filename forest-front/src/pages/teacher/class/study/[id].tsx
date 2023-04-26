@@ -1,9 +1,5 @@
-import ArrowLeft from "@/components/Arrow/ArrowLeft";
-import {
-  AnalysisFullScreen,
-  StudyAnalysisTitle,
-} from "@/features/class/analysis/StudyAnalysis.style";
-import { useRouter } from "next/router";
+import StudyAnalysis from "@/features/class/analysis/StudyAnalysis";
+import { AnalysisFullScreen } from "@/features/class/analysis/StudyAnalysis.style";
 
 interface ServerProps {
   query: {
@@ -15,18 +11,10 @@ interface Iprops {
   studyId: number;
 }
 
-export default function StudyAnalysis({ studyId }: Iprops) {
-  const router = useRouter();
-  const goToBack = () => {
-    router.back();
-  };
-
+export default function StudyAnalysisPage({ studyId }: Iprops) {
   return (
     <AnalysisFullScreen>
-      <StudyAnalysisTitle>
-        <ArrowLeft onClick={goToBack} />
-        {studyId}
-      </StudyAnalysisTitle>
+      <StudyAnalysis studyId={studyId} />
     </AnalysisFullScreen>
   );
 }

@@ -8,7 +8,7 @@ const WorkbookCard = styled.div`
 `;
 
 const WorkbookImg = styled.img`
-  width: 90%;
+  width: 100%;
   object-fit: cover;
   border-radius: 0.5rem;
   box-shadow: 0rem 0rem 0.4375rem 0.125rem rgba(0, 0, 0, 0.2);

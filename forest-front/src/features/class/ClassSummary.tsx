@@ -10,7 +10,7 @@ import {
 import WorkbookStatus from "@/components/Status/WorkbookStatus";
 import ClassSummaryWorkbook from "./teacher/ClassSummaryWorkbook";
 import ClassSummaryResult from "./ClassSummaryResult";
-import ClassSummaryTeacherChart from "./teacher/ClassSummaryTeacherChart";
+import TakeRateChart from "./TakeRateChart";
 import { AiOutlineRight } from "react-icons/ai";
 import ClassSummaryScoreChart from "./student/ClassSummaryScoreChart";
 import ClassSummaryMyResult from "./student/ClassSummaryMyResult";
@@ -59,7 +59,7 @@ export default function ClassSummary({ isStudent }: Iprops) {
           <>
             <ClassSummaryWorkbook />
             <ClassSummaryResult />
-            <ClassSummaryTeacherChart totalStudent={15} participantStudent={12} takeRate={80} />
+            <TakeRateChart totalStudent={15} participantStudent={12} takeRate={80} />
           </>
         )}
       </ClassSummaryItemWrapper>
