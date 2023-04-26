@@ -46,8 +46,6 @@ export const StyledMemoListBox = styled.div`
 
   display: grid;
   grid-template-columns: 1fr 1fr;
-
-  grid-template-areas: "col1 col2";
 `;
 
 export const StyledMemoListItemBox = styled.div`
