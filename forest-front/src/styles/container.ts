@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 import { flexBox } from "./theme";
 
-export const FullScreen = styled.div`
-  ${flexBox("row", "center", "center")}
+export const FullScreen = styled.div<{ isColumn?: boolean }>`
+  ${(isColumn) => flexBox(isColumn ? "column" : "row", "center", "center")}
   flex-wrap: wrap;
   width: 100vw;
   height: 100vh;
@@ -23,7 +23,7 @@ export const Container = styled.div<{ isEditor?: boolean; padding?: number }>`
   overflow-y: auto;
   box-sizing: border-box;
 
-  padding: ${(props) => props.padding && props.padding}rem; 
+  padding: ${(props) => props.padding && props.padding}rem;
 
   @media ${({ theme }) => theme.tablet} {
     width: calc(100% - 5rem);
