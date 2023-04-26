@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
 export const StyledDashboardBanner = styled.div`
+  display: flex;
+  position: relative;
+  justify-content: space-between;
   padding: 40px;
+  margin-top: 24px;
 
   background: linear-gradient(
     90.92deg,
@@ -20,5 +24,13 @@ export const StyledDashboardBanner = styled.div`
   span {
     color: white;
     font-size: 14px;
+  }
+
+  img {
+    position: absolute;
+    width: auto;
+    height: 172px;
+    right: 40px;
+    top: -18px;
   }
 `;

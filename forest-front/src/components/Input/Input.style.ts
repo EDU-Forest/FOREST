@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const StyledCommonInput = styled.input`
-  width: 15rem;
+  width: 13rem;
   font-weight: 400;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
   padding: 0.5rem 1rem;
 

@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
   
   a { cursor: pointer; text-decoration: none; }
   button { cursor: pointer }
-
+  p { margin: 0 }
 
   @font-face {
     font-family: "Pretendard";
