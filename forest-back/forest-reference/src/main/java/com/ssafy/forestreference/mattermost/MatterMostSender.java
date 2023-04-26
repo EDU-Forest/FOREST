@@ -1,7 +1,7 @@
-package com.ssafy.foreststudy.mattermost;
+package com.ssafy.forestreference.mattermost;
 
 import com.google.gson.Gson;
-import com.ssafy.foreststudy.mattermost.dto.MatterMostMessageDto;
+import com.ssafy.forestreference.mattermost.dto.MatterMostMessageDto;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
