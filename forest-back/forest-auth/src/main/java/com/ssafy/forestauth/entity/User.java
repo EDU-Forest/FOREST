@@ -38,7 +38,7 @@ public class User {
     @Column(name = "phone", columnDefinition = "varchar(20)")
     private String phone;
 
-    @Column(name = "birth", columnDefinition = "timestamp")
+    @Column(name = "birth", columnDefinition = "date")
     private LocalDate birth;
 
     @Enumerated(EnumType.STRING)
