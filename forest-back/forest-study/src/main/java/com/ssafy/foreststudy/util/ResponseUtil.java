@@ -4,7 +4,8 @@ package com.ssafy.foreststudy.util;
 import com.ssafy.foreststudy.dto.common.response.ErrorContentDto;
 import com.ssafy.foreststudy.dto.common.response.ResponseErrorDto;
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
-import com.ssafy.foreststudy.enumeration.response.ForestStatus;
+import com.ssafy.foreststudy.enumeration.response.ErrorCode;
+import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.util.TimeZone;
 
 @Component
 public class ResponseUtil<T> {
-    public ResponseSuccessDto<T> successResponse(T data, ForestStatus status) {
+    public ResponseSuccessDto<T> successResponse(T data, SuccessCode status) {
         ResponseSuccessDto<T> res = ResponseSuccessDto
                 .<T>builder()
                 .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
@@ -24,16 +25,16 @@ public class ResponseUtil<T> {
         return res;
     }
 
-    public ResponseErrorDto<ErrorContentDto> buildErrorResponse(HttpStatus httpStatus, String message, String path) {
+    public ResponseErrorDto<ErrorContentDto> buildErrorResponse(ErrorCode errorCode, String path) {
         ErrorContentDto errorContentDto = ErrorContentDto.builder()
-                .message(message)
+                .message(errorCode.getMessage())
                 .build();
 
         return ResponseErrorDto
                 .<ErrorContentDto>builder()
                 .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
-                .code(httpStatus.value())
-                .status(httpStatus.name())
+                .code(errorCode.getStatus().value())
+                .status(errorCode.getStatus().name())
                 .path(path)
                 .error(errorContentDto)
                 .build();
