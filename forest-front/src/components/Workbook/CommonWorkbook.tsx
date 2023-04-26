@@ -8,14 +8,16 @@ import {
 } from "./Workbook.style";
 
 interface Iprops {
+  id: number;
   title: string;
   likes?: number;
   used?: number;
+  clickAction?: (id: number) => void;
 }
 
-export default function CommonWorkbook({ title, likes, used }: Iprops) {
+export default function CommonWorkbook({ id, title, likes, used, clickAction }: Iprops) {
   return (
-    <WorkbookCard>
+    <WorkbookCard onClick={() => clickAction && clickAction(id)}>
       <WorkbookImg src="/images/workbook.png" />
       <WorkbookTitle>{title}</WorkbookTitle>
       {likes && (
