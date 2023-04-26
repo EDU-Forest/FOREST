@@ -1,8 +1,7 @@
 package com.ssafy.foreststudy.controller;
 
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
-import com.ssafy.foreststudy.dto.study.GetScheduleResponseDto;
-import com.ssafy.foreststudy.dto.study.GetStudyRecentResponseDto;
+import com.ssafy.foreststudy.dto.study.*;
 import com.ssafy.foreststudy.service.StudyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,9 +34,39 @@ public class StudyController {
         return ResponseEntity.ok(studyService.getScheduleList(classId));
     }
 
-    @ApiOperation(value = "최근 진행한 시험 정보 조회", notes = "최근 진행한 시험 정보를 조회합니다.")
+    @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/recent/{classId}")
     public ResponseEntity<ResponseSuccessDto<GetStudyRecentResponseDto>> getStudyRecent(@PathVariable("classId") Long classId) {
         return ResponseEntity.ok(studyService.getStudyRecent(classId));
+    }
+
+    @ApiOperation(value = "시험 결과 조회", notes = "클릭한 클래스 시험 결과를 조회합니다.")
+    @GetMapping("/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<?>> getStudyResult(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyResult(studyId));
+    }
+
+    @ApiOperation(value = "(클래스) 문항별 정답률 조회", notes = "(클래스) 문항별 정답률을 조회합니다.")
+    @GetMapping("/class/result/question/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudyResultQuestionResponseDto>>>> getStudyResultQuestion(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyResultQuestion(studyId));
+    }
+
+    @ApiOperation(value = "(클래스) 전체 정답률 조회", notes = "(클래스) 전체 정답률을 조회합니다.")
+    @GetMapping("/class/result/all/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudyResultAllResponseDto>> getStudyResultAll(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyResultAll(studyId));
+    }
+
+    @ApiOperation(value = "(클래스) 응시자별 성취도 조회", notes = "(클래스) 응시자별 성취도를 조회합니다.")
+    @GetMapping("/class/result/student/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudyResultStudentResponseDto>>>> getStudyResultStudent(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyResultStudent(studyId));
+    }
+
+    @ApiOperation(value = "(개인) 문항별 정답 여부 조회", notes = "(개인) 문항별 정답 여부를  조회합니다.")
+    @GetMapping("/student/result/question/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>>> getStudentResultQuestion(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudentResultQuestion(studyId));
     }
 }
