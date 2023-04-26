@@ -16,7 +16,7 @@ public class ResponseUtil<T> {
     public ResponseSuccessDto<T> successResponse(T data, SuccessCode status) {
         ResponseSuccessDto<T> res = ResponseSuccessDto
                 .<T>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
                 .code(status.getStatus().value())
                 .status(status.name())
                 .data(data)
@@ -31,7 +31,7 @@ public class ResponseUtil<T> {
 
         return ResponseErrorDto
                 .<ErrorContentDto>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
                 .code(errorCode.getStatus().value())
                 .status(errorCode.getStatus().name())
                 .path(path)
