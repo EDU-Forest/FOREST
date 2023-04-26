@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const TestInfoWrapper = styled.div`
-  width: 520px;
-  padding: 32px, 56px;
+  width: 32.5rem;
+  padding: 1rem, 3.5rem;
   background-color: ${({ theme }) => theme.colors.Lime[100]};
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(157, 157, 157, 0.25);
-  border-radius: 24px;
+  border-radius: 1.5rem;
 `;
 
 const StyledTestInfoContainer = styled.div`
