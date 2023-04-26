@@ -1,11 +1,13 @@
 import { StyledRoleBtn } from "./Btn.style";
+import { AiOutlineCheck } from "react-icons/ai";
 
 interface Iprops {
   role: string;
-  selected: boolean;
+  selectedRole: string;
+  setSelectedRole: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function RoleBtn({ role, selected }: Iprops) {
+export default function RoleBtn({ role, selectedRole, setSelectedRole }: Iprops) {
   const roleName = (role: string) => {
     if (role === "teacher") {
       return "선생님";
@@ -20,10 +22,16 @@ export default function RoleBtn({ role, selected }: Iprops) {
       return "출제되거나 배포된 문제를 풀 수 있어요";
     }
   };
+
+  const roleClickHandler = () => {
+    setSelectedRole(role);
+  };
+
   return (
-    <StyledRoleBtn selected={selected}>
+    <StyledRoleBtn type="button" onClick={roleClickHandler} selected={selectedRole === role}>
       <span className="role-name">{roleName(role)}</span>
       <span className="role-detail">{roleDetail(role)}</span>
+      {selectedRole === role && <AiOutlineCheck className="icon" />}
     </StyledRoleBtn>
   );
 }

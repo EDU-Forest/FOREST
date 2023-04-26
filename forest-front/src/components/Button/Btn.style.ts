@@ -105,6 +105,7 @@ const RadioInner = styled.div<{ color: string }>`
 `;
 
 const StyledRoleBtn = styled.button<{ selected: boolean }>`
+  margin-top: 0.5rem;
   width: 32rem;
   padding: 0.5rem 1rem;
   background-color: ${({ theme }) => theme.colors.Lime[50]};
@@ -112,6 +113,7 @@ const StyledRoleBtn = styled.button<{ selected: boolean }>`
   border-radius: 0.5rem;
   font-weight: 600;
   text-align: start;
+  position: relative;
 
   .role-name {
     color: ${({ theme }) => theme.colors.Lime[600]};
@@ -135,6 +137,14 @@ const StyledRoleBtn = styled.button<{ selected: boolean }>`
 
       .role-detail {
         color: ${({ theme }) => theme.colors.Lime[100]};
+      }
+
+      .icon {
+        position: absolute;
+        top: 50%;
+        left: 95%;
+        transform: translate(-50%, -50%);
+        color: ${({ theme }) => theme.colors.Lime[900]};
       }
     `}
 `;
