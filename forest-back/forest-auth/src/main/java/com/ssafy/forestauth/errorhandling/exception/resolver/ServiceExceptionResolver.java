@@ -3,6 +3,7 @@ package com.ssafy.forestauth.errorhandling.exception.resolver;
 import com.ssafy.forestauth.dto.common.response.ResponseErrorDto;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
+import com.ssafy.forestauth.errorhandling.exception.service.InvalidPasswordException;
 import com.ssafy.forestauth.mattermost.NotificationManager;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,14 @@ public class ServiceExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = EntityIsNullException.class)
     public ResponseErrorDto<?> handle(EntityIsNullException e, HttpServletRequest request) {
+        ErrorCode errorCode = e.getErrorCode();
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidPasswordException.class)
+    public ResponseErrorDto<?> handle(InvalidPasswordException e, HttpServletRequest request) {
         ErrorCode errorCode = e.getErrorCode();
         notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
         return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
