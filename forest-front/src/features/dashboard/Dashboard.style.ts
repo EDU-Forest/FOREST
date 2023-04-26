@@ -26,11 +26,20 @@ export const StyledDashboardSectionFlexBox = styled.div`
   }
 `;
 
-export const StyledSectionBox = styled.div`
+export const StyledSectionBox = styled.div<{ padding?: number; tabletPadding?: number }>`
   width: 50%;
-  padding: 24px;
+  padding: ${({ padding }) => (padding ? padding : 24)}px;
 
   background: #ffffff;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
+  box-sizing: border-box;
+
+  @media (${({ theme }) => theme.tablet}) {
+    padding: ${({ tabletPadding }) => (tabletPadding ? tabletPadding : 24)}px;
+  }
+`;
+
+export const StyledFullSectionBox = styled(StyledSectionBox)`
+  width: 100%;
 `;
