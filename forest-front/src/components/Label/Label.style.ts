@@ -4,6 +4,7 @@ const StyledLabel = styled.p<{ status: string }>`
   margin: 0;
   padding-top: 0.5rem;
   padding-right: 1rem;
+  font-size: 0.875rem;
   color: ${({ status, theme }) => {
     if (status === "pass") return theme.colors.Lime[600];
     else if (status === "fail") return theme.colors.Orange[500];
