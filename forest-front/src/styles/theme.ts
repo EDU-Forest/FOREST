@@ -66,3 +66,44 @@ export const positionCenter = (type = "absolute") => {
             transform: translate(-50%, -50%);
           `;
 };
+
+export const scrollBar = (width: number) => {
+  return `
+  &::-webkit-scrollbar {
+    width: ${width}rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 3rem;
+    background-color: #D8F5A2;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 3rem;
+    background-color: #F1F3F5;
+  }
+  `;
+};
+
+export const breakpoints = {
+  768: {
+    slidesPerView: 4,
+    slidesPerGroup: 4,
+    spaceBetween: 20,
+    loopFillGroupWithBlank: true,
+  },
+  1220: {
+    slidesPerView: 5,
+    slidesPerGroup: 5,
+    spaceBetween: 40,
+    loopFillGroupWithBlank: true,
+  },
+  1440: {
+    slidesPerView: 5,
+    slidesPerGroup: 5,
+    spaceBetween: 68,
+    loopFillGroupWithBlank: true,
+  },
+};

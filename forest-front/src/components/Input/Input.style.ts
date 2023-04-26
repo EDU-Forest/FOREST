@@ -5,7 +5,7 @@ const CommonInput = styled.input<{ isShort: boolean }>`
   /* width: 15rem; */
   width: ${({ isShort }) => isShort && "15rem"};
   font-weight: 400;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
   padding: 0.5rem 1rem;
 

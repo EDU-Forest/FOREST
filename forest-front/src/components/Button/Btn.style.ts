@@ -15,7 +15,7 @@ const StyledClassBtn = styled.button<{ selected: boolean }>`
   color: ${({ selected }) => (selected ? "white" : "black")};
 `;
 
-const StyledCommonBtn = styled.button<{ colored: boolean }>`
+const StyledCommonBtn = styled.button<{ colored?: boolean }>`
   display: inline-block;
   font-size: 1rem;
   font-weight: 700;
@@ -149,13 +149,14 @@ const StyledRoleBtn = styled.button<{ selected: boolean }>`
     `}
 `;
 
-const StyledSmallBtn = styled.button<{ colored: boolean }>`
+const StyledSmallBtn = styled.button<{ colored?: boolean }>`
   display: inline-block;
   font-size: 1rem;
   font-weight: 700;
   padding: 0.5rem;
   border-radius: 0.5rem;
   width: 5rem;
+  height: 2.5rem;
   border: 2px solid ${({ theme }) => theme.colors.Lime[700]};
   background-color: ${({ colored, theme }) => (colored ? theme.colors.Lime[700] : "white")};
   color: ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[700])};
