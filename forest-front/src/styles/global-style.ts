@@ -3,11 +3,15 @@ import { normalize } from "styled-normalize";
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
-  html {
+  * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
+  }
+
+  html {
     font-family: Pretendard;
-    box-sizing: border-box;
     font-size: 1rem;
     min-width: 20rem;
   }

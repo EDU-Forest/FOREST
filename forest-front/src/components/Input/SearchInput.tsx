@@ -4,7 +4,7 @@ import { SearchInputDiv, StyledSearchInput } from "./Input.style";
 interface Iprops {
   inputText: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  // onKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
+  // onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
 }
 
 export default function SearchInput({ inputText, onChange }: Iprops) {

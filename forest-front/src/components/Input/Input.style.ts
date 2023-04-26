@@ -1,11 +1,17 @@
+import { Iprops } from "@/features/home/SignupInput";
 import styled from "styled-components";
 
-const StyledCommonInput = styled.input`
-  width: 13rem;
+const CommonInput = styled.input<{ isShort: boolean }>`
+  /* width: 15rem; */
+  width: ${({ isShort }) => isShort && "15rem"};
   font-weight: 400;
   border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
   padding: 0.5rem 1rem;
+
+  /* &:invalid {
+    background-color: red;
+  } */
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.Gray[500]};
@@ -15,6 +21,10 @@ const StyledCommonInput = styled.input`
     outline: none;
     border: 1px solid ${({ theme }) => theme.colors.Lime[500]};
   }
+
+  /* &[type="date"]:valid {
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  } */
 `;
 
 const StyledSearchInput = styled.input`
@@ -63,4 +73,4 @@ const SearchInputDiv = styled.div`
   }
 `;
 
-export { StyledCommonInput, StyledSearchInput, SearchInputDiv };
+export { CommonInput, StyledSearchInput, SearchInputDiv };

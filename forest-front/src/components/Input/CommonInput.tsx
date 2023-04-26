@@ -1,12 +1,31 @@
-import { StyledCommonInput } from "./Input.style";
+// import { StyledCommonInput } from "./Input.style";
 
-interface Iprops {
-  placeholder: string;
-  inputText: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onKeyDown?: (event: React.KeyboardEvent<HTMLDivElement>) => void;
-}
+// interface Iprops {
+//   id: string;
+//   name: string;
+//   type?: string;
+//   placeholder: string;
+//   inputText: string;
+//   onChange: React.ChangeEventHandler<HTMLInputElement>;
+//   // onKeyDown: (e: React.KeyboardEvent<HTMLDivElement>) => void;
+// }
 
-export default function CommonInput({ placeholder, inputText, onChange }: Iprops) {
-  return <StyledCommonInput placeholder={placeholder} value={inputText} onChange={onChange} />;
-}
+// export default function CommonInput({
+//   id,
+//   name,
+//   type = "text",
+//   placeholder,
+//   inputText,
+//   onChange,
+// }: Iprops) {
+//   return (
+//     <StyledCommonInput
+//       id={id}
+//       name={name}
+//       type={type}
+//       placeholder={placeholder}
+//       value={inputText}
+//       onChange={onChange}
+//     />
+//   );
+// }

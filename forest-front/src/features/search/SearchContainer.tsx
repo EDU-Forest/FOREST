@@ -9,8 +9,8 @@ import SearchList from "./SearchList";
 
 export default function SearchContainer() {
   const [inputSearch, setInputSearch] = useState<string>("");
-  const changeSearchText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputSearch(event.target.value);
+  const changeSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputSearch(e.target.value);
   };
 
   const [keyword, setKeyword] = useState<string>("");
