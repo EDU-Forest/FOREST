@@ -17,10 +17,7 @@ import TakeRateChart from "../TakeRateChart";
 import CorrectRateDonut from "./CorrectRateDonut";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
 import QuestionCorrectRate from "./QuestionCorrectRate";
-
-interface Iprops {
-  studyId: number;
-}
+import EachResult from "./EachResult";
 
 const dummyData = {
   studyId: 1,
@@ -44,7 +41,7 @@ const dummyData = {
 const dummyCorrectRate = {
   correctAnswerRate: 80,
 };
-export default function StudyAnalysis({ studyId }: Iprops) {
+export default function StudyAnalysis({ studyId }: StudyId) {
   const router = useRouter();
   const goToBack = () => {
     router.back();
@@ -92,7 +89,10 @@ export default function StudyAnalysis({ studyId }: Iprops) {
                 <ClassSummaryWorkbook noMargin />
               </AnalysisUpperItem>
             </AnalysisUpper>
+            {/* 문항별 정답률 */}
             <QuestionCorrectRate studyId={studyId} />
+            {/* 응시자별 성취도 */}
+            <EachResult studyId={studyId} />
           </>
         ) : (
           <></>

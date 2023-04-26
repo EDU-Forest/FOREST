@@ -19,7 +19,8 @@ const BarWrapper = styled.div`
   margin-top: 1.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: 80%;
+    width: 95%;
+    margin-right: 5%;
   }
 `;
 

@@ -18,10 +18,6 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-interface Iprops {
-  studyId: number;
-}
-
 const classAnswerRateList = [
   {
     problemNum: 1,
@@ -85,7 +81,7 @@ const classAnswerRateList = [
   //   },
 ];
 
-export default function QuestionCorrectRate({ studyId }: Iprops) {
+export default function QuestionCorrectRate({ studyId }: StudyId) {
   const options = {
     responsive: true,
     interaction: {
