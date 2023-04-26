@@ -4,6 +4,8 @@ import {
   SignupForm,
   SignupHr,
   SignupInputRowBox,
+  SignupLabel,
+  SignupRoleBox,
   // SignupInputBox,
   // SignupLabel,
   SignupSubmitBox,
@@ -15,6 +17,7 @@ import { CommonInput } from "@/components/Input/Input.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useState } from "react";
 import SignupInput from "./SignupInput";
+import RoleBtn from "@/components/Button/RoleBtn";
 
 interface Iprops {
   onClose: () => void;
@@ -50,8 +53,9 @@ export default function SignupModal({ onClose }: Iprops) {
     password: "",
     checkPassword: "",
     birth: "",
-    role: "student",
   });
+
+  const [selectedRole, setSelectedRole] = useState("student");
 
   const columnDataList = [
     {
@@ -64,7 +68,7 @@ export default function SignupModal({ onClose }: Iprops) {
     },
     {
       label: "이름",
-      name: "name",
+      name: "username",
       type: "text",
       placeholder: "이름을 입력하세요",
       value: userData.username,
@@ -73,35 +77,11 @@ export default function SignupModal({ onClose }: Iprops) {
     {
       label: "전화번호",
       name: "phoneNumber",
-      type: "text",
+      type: "number",
       placeholder: "- 없이 숫자만 입력하세요",
       value: userData.phoneNumber,
-      validations: emailValidation,
+      validations: phoneNumberValidation,
     },
-    // {
-    //   label: "비밀번호",
-    //   name: "password",
-    //   type: "password",
-    //   placeholder: "비밀번호를 입력하세요",
-    //   value: userData.password,
-    //   validations: passwordValidation,
-    // },
-    // {
-    //   label: "비밀번호 확인",
-    //   name: "checkPassword",
-    //   type: "password",
-    //   placeholder: "비밀번호를 입력하세요",
-    //   value: userData.checkPassword,
-    //   validations: checkPasswordValidation,
-    // },
-    // {
-    //   label: "생년월일",
-    //   name: "birth",
-    //   type: "date",
-    //   placeholder: "생년월일을 선택하세요",
-    //   value: userData.birth,
-    //   validations: birthValidation,
-    // },
   ];
 
   const rowDataList = [
@@ -121,21 +101,23 @@ export default function SignupModal({ onClose }: Iprops) {
       value: userData.checkPassword,
       validations: checkPasswordValidation,
     },
-    {
-      label: "생년월일",
-      name: "birth",
-      type: "date",
-      placeholder: "생년월일을 선택하세요",
-      value: userData.birth,
-      validations: birthValidation,
-    },
+    // {
+    //   label: "생년월일",
+    //   name: "birth",
+    //   type: "date",
+    //   placeholder: "생년월일을 선택하세요",
+    //   value: userData.birth,
+    //   validations: birthValidation,
+    // },
   ];
 
-  const signupHandler = () => {
+  const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     return null;
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(userData);
     const { name, value } = e.target;
     setUserData({
       ...userData,
@@ -177,7 +159,8 @@ export default function SignupModal({ onClose }: Iprops) {
               />
             ))}
           </SignupInputRowBox>
-          {/* <SignupInput
+          <SignupInput
+            isShort={true}
             label="생년월일"
             name="birth"
             type="date"
@@ -185,8 +168,13 @@ export default function SignupModal({ onClose }: Iprops) {
             value={userData.birth}
             onChange={onChange}
             validations={birthValidation}
-          /> */}
+          />
         </SignupContentBox>
+        <SignupRoleBox>
+          <SignupLabel>역할</SignupLabel>
+          <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+          <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        </SignupRoleBox>
         <SignupHr />
         <SignupSubmitBox>
           <SmallBtn colored>확인</SmallBtn>

@@ -10,7 +10,7 @@ interface validations {
 export interface Iprops {
   label: string;
   name: string;
-  isShort?: any;
+  isShort?: boolean;
   type: string;
   placeholder: string;
   validations: validations;
@@ -39,6 +39,7 @@ export default function SignupInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        isShort={isShort}
       />
       <SignupLabelBox>
         {Object.entries(validations).map(([key, value]) => (

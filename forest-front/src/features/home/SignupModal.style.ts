@@ -58,7 +58,7 @@ const SignupInputBox = styled.div`
 
 const SignupLabel = styled.label`
   color: ${({ theme }) => theme.colors.Gray[500]};
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 0.5rem;
 
   &:focus {
@@ -73,7 +73,11 @@ const SignupErrorMsg = styled.div`
 
 const SignupInputRowBox = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
+const SignupRoleBox = styled.div`
+  margin-top: 1rem;
 `;
 
 export {
@@ -87,4 +91,5 @@ export {
   SignupHr,
   SignupLabel,
   SignupErrorMsg,
+  SignupRoleBox,
 };
