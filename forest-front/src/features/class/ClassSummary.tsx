@@ -25,7 +25,11 @@ export default function ClassSummary({ isStudent }: Iprops) {
   const id = 1; // 임시
   const goToDetail = (studyId: number) => {
     // 분석 페이지로 이동
-    router.push(`/teacher/class/study/${studyId}`);
+    if (isStudent) {
+      router.push(`/student/class/study/${studyId}`);
+    } else {
+      router.push(`/teacher/class/study/${studyId}`);
+    }
   };
   return (
     <ClassSummaryWrapper>
