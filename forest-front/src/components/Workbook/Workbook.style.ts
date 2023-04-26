@@ -23,11 +23,11 @@ const WorkbookTitle = styled.p`
 const WorkbookContentWrapper = styled.div``;
 
 const WorkbookIcon = styled.span`
-  margin-right: 0.5rem;
+  margin-right: 0.25rem;
 `;
 
 const WorkbookContent = styled.span`
-  margin-right: 1rem;
+  margin-right: 0.75rem;
   font-weight: 300;
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.Gray[700]};
