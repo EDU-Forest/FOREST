@@ -1,7 +1,10 @@
+import TestInfoContainer from "@/features/test/testInfo/TestInfoContainer";
+import { FullScreen } from "@/styles/container";
+
 export default function Test() {
   return (
-    <>
-      <h1>문제풀이</h1>
-    </>
+    <FullScreen>
+      <TestInfoContainer />
+    </FullScreen>
   );
 }
