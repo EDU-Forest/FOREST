@@ -1,6 +1,8 @@
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
-import { StudyAnalysisTitle } from "@/features/class/analysis/StudyAnalysis.style";
-import { FullScreen } from "@/styles/container";
+import {
+  AnalysisFullScreen,
+  StudyAnalysisTitle,
+} from "@/features/class/analysis/StudyAnalysis.style";
 import { useRouter } from "next/router";
 
 interface ServerProps {
@@ -20,12 +22,12 @@ export default function StudyAnalysis({ studyId }: Iprops) {
   };
 
   return (
-    <FullScreen>
+    <AnalysisFullScreen>
       <StudyAnalysisTitle>
         <ArrowLeft onClick={goToBack} />
         {studyId}
       </StudyAnalysisTitle>
-    </FullScreen>
+    </AnalysisFullScreen>
   );
 }
 

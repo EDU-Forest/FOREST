@@ -34,14 +34,14 @@ const CommonInput = styled.input<{ isShort: boolean }>`
 `;
 
 const StyledSearchInput = styled.input`
-  width: calc(100% - 7.5rem);
-  height: 1.8rem;
+  width: 100%;
+  height: 4rem;
   font-size: 1.25rem;
   padding: 1rem 5rem 1rem 2.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: calc(100% - 6rem);
-    height: 1.8rem;
+    width: 100%;
+    height: 3rem;
     font-size: 1rem;
     padding: 1rem 4rem 1rem 2rem;
   }

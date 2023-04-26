@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const SearchContainerWrapper = styled.div`
   margin: 2rem;
-  width: calc(100% - 8rem);
-  min-height: calc(100% - 8rem);
+  width: calc(100% - 4rem);
+  min-height: calc(100% - 4rem);
   padding: 2rem;
 
   background: white;
@@ -11,8 +11,8 @@ const SearchContainerWrapper = styled.div`
   border-radius: 1.5rem;
 
   @media ${({ theme }) => theme.tablet} {
-    width: calc(100% - 7rem);
-    min-height: calc(100% - 7rem);
+    width: calc(100% - 4rem);
+    min-height: calc(100% - 4rem);
     padding: 1.5rem;
   }
 `;

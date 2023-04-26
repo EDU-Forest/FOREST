@@ -53,7 +53,7 @@ export default function SearchList({ keyword }: Iprops) {
     <SearchListWrapper>
       {searchList.map((item, idx) => (
         <SearchListItem>
-          <CommonWorkbook title={item.title} likes={item.likes} used={item.used} />
+          <CommonWorkbook id={idx} title={item.title} likes={item.likes} used={item.used} />
         </SearchListItem>
       ))}
     </SearchListWrapper>
