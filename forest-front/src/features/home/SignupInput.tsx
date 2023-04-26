@@ -4,7 +4,7 @@ import Label from "@/components/Label/Label";
 import { SignupLabelBox } from "./SignupInput.style";
 
 interface validations {
-  [key: string]: string;
+  [key: string]: string | undefined;
 }
 
 export interface Iprops {
@@ -15,8 +15,8 @@ export interface Iprops {
   placeholder: string;
   validations: validations;
   value: string;
-  abcde?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLElement>, name: string) => void;
 }
 
 export default function SignupInput({
@@ -27,6 +27,7 @@ export default function SignupInput({
   placeholder,
   value,
   onChange,
+  onBlur,
   validations,
 }: Iprops) {
   return (
@@ -43,7 +44,7 @@ export default function SignupInput({
       />
       <SignupLabelBox>
         {Object.entries(validations).map(([key, value]) => (
-          <Label status={value}>{key}</Label>
+          <Label status={value ? value : ""}>{key}</Label>
         ))}
       </SignupLabelBox>
     </SignupInputBox>
