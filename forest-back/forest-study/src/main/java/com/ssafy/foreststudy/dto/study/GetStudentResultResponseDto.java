@@ -7,11 +7,12 @@ import java.time.LocalDateTime;
 
 @Getter
 @Builder
-public class GetStudyResultStudentResponseDto {
-    private String name;
-    private String email;
-    private LocalDateTime enterTime;
-    private LocalDateTime exitTime;
+public class GetStudentResultResponseDto {
+    private int score;
     private int correctNum;
+    private Long solvingTime;
     private int correctRate;
+    private int volume;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 }

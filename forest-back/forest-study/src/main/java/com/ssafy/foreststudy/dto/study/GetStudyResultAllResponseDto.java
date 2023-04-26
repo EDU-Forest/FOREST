@@ -6,6 +6,5 @@ import lombok.Getter;
 @Getter
 @Builder
 public class GetStudyResultAllResponseDto {
-    private Long classStudyResultId;
     private int correctAnswerRate;
 }

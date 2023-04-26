@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -26,6 +27,7 @@ public class StudyService {
     private final ResponseUtil responseUtil;
     private final StudyRepository studyRepository;
     private final ClassRepository classRepository;
+    private final UserRepository userRepository;
     private final ClassStudyResultRepository classStudyResultRepository;
     private final ClassAnswerRateRepository classAnswerRateRepository;
     private final StudentStudyResultRepository studentStudyResultRepository;
@@ -203,14 +205,13 @@ public class StudyService {
         result.put("classAnswerRateList", new ArrayList<>());
         for (ClassAnswerRate classAnswerRate : ca) {
             GetStudyResultQuestionResponseDto getStudyResultQuestionResponseDtoList = GetStudyResultQuestionResponseDto.builder()
-                    .classAnswerRateListId(classAnswerRate.getId())
                     .problemNum(classAnswerRate.getProblemList().getProblemNum())
                     .correctRate(classAnswerRate.getCorrectRate())
                     .build();
             result.get("classAnswerRateList").add(getStudyResultQuestionResponseDtoList);
         }
 
-        ResponseSuccessDto<Map<String,List<GetStudyResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION);
+        ResponseSuccessDto<Map<String, List<GetStudyResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION);
         return res;
     }
 
@@ -222,9 +223,8 @@ public class StudyService {
         ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
         GetStudyResultAllResponseDto result = GetStudyResultAllResponseDto.builder()
-                    .classStudyResultId(cs.getId())
-                    .correctAnswerRate(cs.getCorrectAnswerRate())
-                    .build();
+                .correctAnswerRate(cs.getCorrectAnswerRate())
+                .build();
 
         ResponseSuccessDto<GetStudyResultAllResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ALL);
         return res;
@@ -241,7 +241,6 @@ public class StudyService {
 
         for (StudentStudyResult studentStudyResult : ssr) {
             GetStudyResultStudentResponseDto getStudyResultQuestionResponseDtoList = GetStudyResultStudentResponseDto.builder()
-                    .studentStudyResultId(studentStudyResult.getId())
                     .name(studentStudyResult.getUser().getName())
                     .email(studentStudyResult.getUser().getEmail())
                     .enterTime(studentStudyResult.getEnterTime())
@@ -253,22 +252,24 @@ public class StudyService {
             result.get("studentStudyResultList").add(getStudyResultQuestionResponseDtoList);
         }
 
-        ResponseSuccessDto<Map<String,List<GetStudyResultStudentResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ACHIEVEMENT);
+        ResponseSuccessDto<Map<String, List<GetStudyResultStudentResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ACHIEVEMENT);
         return res;
     }
 
     /* (개인) 문항별 정답 여부 조회 */
-    public ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> getStudentResultQuestion(Long studyId) {
+    public ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> getStudentResultQuestion(Long studyId, Long userId) {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
 
-        List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudy(study);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndUser(study,user);
         Map<String, List<GetStudentResultQuestionResponseDto>> result = new HashMap<>();
         result.put("studentStudyProblemResultList", new ArrayList<>());
 
         for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
             GetStudentResultQuestionResponseDto getStudyResultQuestionResponseDtoList = GetStudentResultQuestionResponseDto.builder()
-                    .studentStudyProblemResultId(studentStudyProblemResult.getId())
                     .problemNum(studentStudyProblemResult.getProblemList().getProblemNum())
                     .isCorrected(studentStudyProblemResult.getIsCorrected())
                     .build();
@@ -276,7 +277,33 @@ public class StudyService {
             result.get("studentStudyProblemResultList").add(getStudyResultQuestionResponseDtoList);
         }
 
-        ResponseSuccessDto<Map<String,List<GetStudentResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION_USER);
+        ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION_USER);
+        return res;
+    }
+
+    /* (개인) 시험 결과 조회 */
+    public ResponseSuccessDto<GetStudentResultResponseDto> getStudentResult(Long studyId, Long userId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        StudentStudyResult cs = studentStudyResultRepository.findAllByStudyAndUser(study, user).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        Duration duration = Duration.between(cs.getEnterTime(), cs.getExitTime());
+
+        GetStudentResultResponseDto result = GetStudentResultResponseDto.builder()
+                .score(cs.getScore())
+                .correctNum(cs.getCorrectNum())
+                .solvingTime(duration.getSeconds())
+                .correctRate(cs.getCorrectRate())
+                .volume(cs.getStudy().getWorkbook().getVolume())
+                .startTime(cs.getStudy().getStartTime())
+                .endTime(cs.getStudy().getEndTime())
+                .build();
+
+        ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ALL);
         return res;
     }
 }
