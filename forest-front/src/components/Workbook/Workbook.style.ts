@@ -12,12 +12,16 @@ const WorkbookImg = styled.img`
   object-fit: cover;
   border-radius: 0.5rem;
   box-shadow: 0rem 0rem 0.4375rem 0.125rem rgba(0, 0, 0, 0.2);
+
+  cursor: pointer;
 `;
 
 const WorkbookTitle = styled.p`
   font-weight: 600;
   margin-top: 1rem;
   margin-bottom: 0.5rem;
+
+  cursor: pointer;
 `;
 
 const WorkbookContentWrapper = styled.div``;
