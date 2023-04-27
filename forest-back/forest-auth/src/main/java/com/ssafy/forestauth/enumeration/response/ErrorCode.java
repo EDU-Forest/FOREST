@@ -8,6 +8,16 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
     /**
+     * JWT
+     */
+    AUTH_NOT_VALID_TOKEN(HttpStatus.UNAUTHORIZED, "우효하지 않은 토큰입니다"),
+    AUTH_WRONG_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 토큰입니다."),
+    AUTH_UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "지원하지 않는 토큰입니다."),
+    AUTH_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token 기한이 만료되었습니다."),
+    AUTH_REFRESH_NOT_VALID(HttpStatus.UNAUTHORIZED, "Refresh Token이 유효하지 않습니다."),
+
+
+    /**
      * 이메일 중복 검사
      * 회원가입(일반)
      * 회원가입 여부 확인(소셜 로그인)
