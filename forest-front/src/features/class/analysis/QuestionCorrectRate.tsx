@@ -134,8 +134,13 @@ export default function QuestionCorrectRate() {
       },
       {
         label: "오답",
-        data: classAnswerRateList.map((item) => 100 - item.correctRate),
+        data: classAnswerRateList.map((item) => (100 - item.correctRate) / 2),
         backgroundColor: "#FF922B",
+      },
+      {
+        label: "미채점",
+        data: classAnswerRateList.map((item) => (100 - item.correctRate) / 2),
+        backgroundColor: "#DEE2E6",
       },
     ],
   };
@@ -151,6 +156,10 @@ export default function QuestionCorrectRate() {
         <LabelCircle />
         <AnalysisText isGray noMargin>
           오답
+        </AnalysisText>
+        <LabelCircle notYet />
+        <AnalysisText isGray noMargin>
+          미채점
         </AnalysisText>
       </CorrectRateLabelWrapper>
       <BarWrapper>

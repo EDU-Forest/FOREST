@@ -26,6 +26,11 @@ const AnalysisContent = styled.div`
   ${scrollBar(0.75)}
 `;
 
+const AnalysisTopMenuWrapper = styled.div`
+  ${flexBox("row", "center", "space-between")};
+  width: 100%;
+`;
+
 const AnalysisUpper = styled.div`
   ${flexBox("row", "center", "space-between")}
   flex-wrap: wrap;
@@ -47,10 +52,10 @@ const AnalysisUpperItem = styled.div`
   }
 `;
 
-const AnalysisSubTitle = styled.p`
+const AnalysisSubTitle = styled.p<{ noMargin?: boolean }>`
   display: inline-block;
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: ${({ noMargin }) => (noMargin ? "0" : "0.5rem")};
 `;
 
 const AnalysisText = styled(ClassSummaryText)<{
@@ -67,14 +72,18 @@ const AnalysisText = styled(ClassSummaryText)<{
     `}
 `;
 
-const LabelCircle = styled.div<{ isCorrect?: boolean }>`
+const LabelCircle = styled.div<{ isCorrect?: boolean; notYet?: boolean }>`
   display: inline-block;
   width: 0.875rem;
   height: 0.875rem;
   vertical-align: baseline;
   border-radius: 100%;
-  background-color: ${({ isCorrect, theme }) =>
-    isCorrect ? theme.colors.Lime[700] : theme.colors.Orange[400]};
+  background-color: ${({ isCorrect, notYet, theme }) =>
+    isCorrect
+      ? theme.colors.Lime[700]
+      : notYet
+      ? theme.colors.Gray[500]
+      : theme.colors.Orange[400]};
   margin-left: 1rem;
   margin-right: 0.25rem;
 `;
@@ -83,6 +92,7 @@ export {
   AnalysisFullScreen,
   AnalysisTitle,
   AnalysisContent,
+  AnalysisTopMenuWrapper,
   AnalysisUpper,
   AnalysisUpperItem,
   AnalysisSubTitle,

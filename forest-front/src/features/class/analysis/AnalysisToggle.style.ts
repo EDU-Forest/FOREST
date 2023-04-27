@@ -7,11 +7,11 @@ const ToggleWrapper = styled.div`
 
 const ToggleContainer = styled.div<{ isSummary: boolean }>`
   ${flexBox("row", "center", "center")}
-  width: calc(50% - 0.75rem);
-  height: 64px;
-  border-radius: 24px;
+  width: calc(50% - .75rem);
+  height: 4rem;
+  border-radius: 1.5rem;
   background-color: white;
-  box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0rem 0.125rem 1.25rem rgba(0, 0, 0, 0.25);
   cursor: pointer;
 
   @media ${({ theme }) => theme.desktop} {
@@ -27,11 +27,11 @@ const ToggleContainer = styled.div<{ isSummary: boolean }>`
 
 const ToggleCircle = styled.div<{ isSummary: boolean }>`
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0rem;
+  left: 0rem;
   width: calc((50% - 0.75rem) / 2);
-  height: 64px;
-  border-radius: 24px;
+  height: 4rem;
+  border-radius: 1.5rem;
   background-color: ${({ theme }) => theme.colors.Lime[300]};
   transition: 0.5s;
 
