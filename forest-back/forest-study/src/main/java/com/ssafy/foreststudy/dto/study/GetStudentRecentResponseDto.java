@@ -4,10 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Builder
-public class GetStudyBeforeAndOngoingResponseDto {
+public class GetStudentRecentResponseDto {
     private Long studyId;
     private String title;
     private LocalDateTime startTime;
@@ -15,4 +16,6 @@ public class GetStudyBeforeAndOngoingResponseDto {
     private String userName;
     private String studyType;
     private String scheduleType;
+    private GetStudentScoreResponseDto studentResult;
+    private GetClassScoreResponseDto classResult;
 }

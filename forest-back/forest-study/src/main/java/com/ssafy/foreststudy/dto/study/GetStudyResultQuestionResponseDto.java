@@ -10,4 +10,6 @@ import java.time.LocalDateTime;
 public class GetStudyResultQuestionResponseDto {
     private int problemNum;
     private int correctRate;
+    private int incorrectRate;
+    private int ungradedRate;
 }

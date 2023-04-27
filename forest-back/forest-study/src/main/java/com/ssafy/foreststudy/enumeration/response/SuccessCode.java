@@ -19,7 +19,7 @@ public enum SuccessCode {
     STUDY_SUCCESS_RESULT_QUESTION(HttpStatus.OK,"시험 문항별 정답률 조회 성공"),
     STUDY_SUCCESS_RESULT_ALL(HttpStatus.OK,"시험 전체 정답률 조회 성공"),
     STUDY_SUCCESS_RESULT_ACHIEVEMENT(HttpStatus.OK,"시험 응시자별 성취도 조회 성공"),
-    STUDY_SUCCESS_RESULT_QUESTION_USER(HttpStatus.OK,"개인 문항별 정답 여부 조회 성공");
+    STUDY_SUCCESS_RESULT_QUESTION_USER(HttpStatus.OK,"학생 문항별 정답 여부 조회 성공");
 
 
     private final HttpStatus status;

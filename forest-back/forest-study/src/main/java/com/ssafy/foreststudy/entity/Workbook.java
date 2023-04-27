@@ -54,7 +54,7 @@ public class Workbook {
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "updated_date", updatable = false, nullable = false)
+    @Column(name = "updated_date", nullable = false)
     private LocalDateTime updatedDate;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
