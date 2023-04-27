@@ -1,8 +1,10 @@
 package com.ssafy.forestauth.entity;
 
 import com.ssafy.forestauth.dto.user.SignupRequestDto;
+import com.ssafy.forestauth.dto.user.SignupSocialRequestDto;
 import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -59,6 +61,13 @@ public class User {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
+    @Builder
+    public User(String email, EnumUserProviderStatus authProvider, String refreshToken) {
+        this.email = email;
+        this.authProvider = authProvider;
+        this.refreshToken = refreshToken;
+    }
+
     public void createUser(SignupRequestDto signupRequestDto) {
         this.name = signupRequestDto.getName();
         this.email = signupRequestDto.getEmail();
@@ -71,5 +80,17 @@ public class User {
 
     public void encodePassword(String encodedPw) {
         this.password = encodedPw;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public void updateUserInfo(SignupSocialRequestDto signupSocialRequestDto) {
+        this.name = signupSocialRequestDto.getName();
+        this.phone = signupSocialRequestDto.getPhone();
+        this.birth = signupSocialRequestDto.getBirth();
+        this.role = signupSocialRequestDto.getRole();
+        this.authProvider = signupSocialRequestDto.getProvider();
     }
 }

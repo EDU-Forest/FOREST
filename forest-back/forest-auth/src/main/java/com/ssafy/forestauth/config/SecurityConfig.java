@@ -1,5 +1,10 @@
 package com.ssafy.forestauth.config;
 
+import com.ssafy.forestauth.auth.CustomOAuth2UserService;
+import com.ssafy.forestauth.auth.OAuth2LoginSuccessHandler;
+import com.ssafy.forestauth.auth.jwt.JwtAccessDeniedHandler;
+import com.ssafy.forestauth.auth.jwt.JwtAuthenticationEntryPoint;
+import com.ssafy.forestauth.auth.jwt.JwtFilter;
 import com.ssafy.forestauth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,33 +26,48 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig implements WebMvcConfigurer {
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final JwtFilter jwtFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
-    private final UserService userService;
-    @Value("${jwt.token.secretKey}")
-    private String secretKey;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
+        http
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(
-                        "/api/user/check",
-                        "/api/user/common",
-                        "/api/user/social",
-                        "/api/user/login",
-                        "/api/msg",
-                        "/api/class/search").permitAll()
+                .httpBasic().disable()
+                .formLogin().disable()
+
+                // 요청 URL 권한
+                .authorizeRequests().antMatchers("/api/user/check", "/api/user/common", "/api/user/social", "/api/user/login", "/api/msg", "/api/class/search")
+                .permitAll()
                 .antMatchers("/api/**").authenticated()
-//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
+
+                // JWT
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+
+                // 예외 처리
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+
+                // 세션 사용 X
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
-                .build();
+
+                // 소셜 로그인 설정
+                .and().oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler)
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
+        return http.build();
     }
 
     @Bean
