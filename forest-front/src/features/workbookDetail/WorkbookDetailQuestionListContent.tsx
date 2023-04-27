@@ -1,20 +1,18 @@
+import { QuestionSummType } from "@/types/Workbook";
 import { StyledWorkbookDetailQuestionListContentBox } from "./WorkbookDetail.style";
 import WorkbookQuestionMoveBar from "./WorkbookQuestionMoveBar";
+import WorkbookQuestionMoveBarList from "./WorkbookQuestionMoveBarList";
 
 interface IProps {
   questionCnt: number;
-  questionSumm: object[];
+  questionSumm: QuestionSummType[];
 }
 
 function WorkbookDetailQuestionListContent({ questionCnt, questionSumm }: IProps) {
   return (
     <StyledWorkbookDetailQuestionListContentBox>
       <p>문제 ({questionCnt})</p>
-      <div>
-        {questionSumm.map((question) => (
-          <WorkbookQuestionMoveBar question={question} />
-        ))}
-      </div>
+      <WorkbookQuestionMoveBarList questionSumm={questionSumm}/>
     </StyledWorkbookDetailQuestionListContentBox>
   );
 }

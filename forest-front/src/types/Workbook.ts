@@ -5,3 +5,8 @@ export interface WorkbookType {
   likeCnt: number;
   usedCnt: number;
 }
+
+export interface QuestionSummType {
+  id: number;
+  title: string;
+}
