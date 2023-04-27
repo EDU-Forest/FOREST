@@ -228,12 +228,12 @@ export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>
     white-space: nowrap;
 
     // 문제 번호
-    :nth-child(2) {
+    :nth-of-type(1) {
       font-weight: 600;
     }
 
     // 문제 제목
-    :nth-child(3) {
+    :nth-of-type(2) {
       max-width: 10.5rem;
       overflow: hidden;
       text-overflow: ellipsis;
