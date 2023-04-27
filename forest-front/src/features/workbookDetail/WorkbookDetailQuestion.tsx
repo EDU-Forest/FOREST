@@ -1,3 +1,4 @@
+import { StyledTextBtn } from "@/components/Button/Btn.style";
 import { QuestionType } from "@/types/Workbook";
 import {
   StyledQuestionChoiceNumBox,
@@ -22,6 +23,7 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion }: IProp
       <StyledQuestionDetailTitleBox>
         <StyledQuestionDetailNumBox>{question?.problemNum}</StyledQuestionDetailNumBox>
         <span>{question?.title}</span>
+        <StyledTextBtn>수정</StyledTextBtn>
       </StyledQuestionDetailTitleBox>
 
       {/* 지문이 있다면 지문 렌더링 */}

@@ -1,10 +1,11 @@
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import { WorkbookDetailSideReturnBtnBox } from "./WorkbookDetail.style";
 
 function WorkbookDetailSideReturn() {
   return (
-    <div>
+    <WorkbookDetailSideReturnBtnBox>
       <AiOutlineArrowLeft />
-    </div>
+    </WorkbookDetailSideReturnBtnBox>
   );
 }
 
