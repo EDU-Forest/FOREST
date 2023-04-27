@@ -1,10 +1,11 @@
+import { QuestionSummType } from "@/types/Workbook";
 import { StyledWorkbookDetailQuestionListBox } from "./WorkbookDetail.style";
 import WorkbookDetailQuestionListContent from "./WorkbookDetailQuestionListContent";
 import WorkbookDetailQuestionVisibility from "./WorkbookDetailQuestionVisibility";
 
 interface IProps {
   questionCnt: number;
-  questionSumm: object[];
+  questionSumm: QuestionSummType[];
 }
 
 function WorkbookDetailQuestionList({ questionCnt, questionSumm }: IProps) {
