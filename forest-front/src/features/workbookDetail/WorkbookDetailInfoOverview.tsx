@@ -1,7 +1,10 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
-import { WorkbookIcon, WorkbookImg } from "@/components/Workbook/Workbook.style";
+import { WorkbookIcon } from "@/components/Workbook/Workbook.style";
+import { useState } from "react";
 import {
   StyledWorkbookBtnsBox,
+  StyledWorkbookDetailCoverBox,
+  StyledWorkbookDetailDescBox,
   StyledWorkbookDetailInfoOverviewBox,
   StyledWorkbookReactionBtnsBox,
 } from "./WorkbookDetail.style";
@@ -16,6 +19,14 @@ interface IProps {
 }
 
 function WorkbookDetailInfoOverview({ id, cover, title, desc, likeCnt, usedCnt }: IProps) {
+  // true(접혀있는 상태)라면 '펼치기' 문구
+  // false(펼쳐져있는 상태)라면 '접기' 문구
+  const [isFolded, setIsFolded] = useState(true);
+
+  const handleClickFold = () => {
+    setIsFolded(!isFolded);
+  };
+
   return (
     <StyledWorkbookDetailInfoOverviewBox>
       <div>
@@ -37,11 +48,11 @@ function WorkbookDetailInfoOverview({ id, cover, title, desc, likeCnt, usedCnt }
             <StyledTextBtn>삭제</StyledTextBtn>
           </div>
         </StyledWorkbookBtnsBox>
-        <div>{desc}</div>
+        <StyledWorkbookDetailDescBox isFolded={isFolded}>{desc}</StyledWorkbookDetailDescBox>
       </div>
       <div>
-        <WorkbookImg src="/images/workbook.png" />
-        <StyledTextBtn>접기</StyledTextBtn>
+        <StyledWorkbookDetailCoverBox src="/images/workbook.png" isFolded={isFolded} />
+        <StyledTextBtn onClick={handleClickFold}>{isFolded ? "펼치기" : "접기"}</StyledTextBtn>
       </div>
     </StyledWorkbookDetailInfoOverviewBox>
   );
