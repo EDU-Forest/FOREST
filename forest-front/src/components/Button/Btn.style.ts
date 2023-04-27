@@ -195,7 +195,7 @@ const StyledRoundSolid600Btn = styled.button`
   align-items: center;
 
   padding: 0.5rem 1rem;
-  gap: 1rem;
+  gap: 0.5rem;
 
   background-color: ${({ theme }) => theme.colors.Lime[600]};
   border-radius: 1.25rem;
@@ -208,12 +208,26 @@ const StyledRoundSolid600Btn = styled.button`
     width: 1.5rem;
     height: 1.5rem;
   }
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.Lime[700]};
+  }
+  :active {
+    background-color: ${({ theme }) => theme.colors.Lime[800]};
+  }
 `;
 
 const StyledRoundGhostBtn = styled(StyledRoundSolid600Btn)`
   background-color: white;
   border: 2px solid ${({ theme }) => theme.colors.Lime[600]};
   color: ${({ theme }) => theme.colors.Lime[600]};
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.Lime[100]};
+  }
+  :active {
+    background-color: ${({ theme }) => theme.colors.Lime[200]};
+  }
 `;
 
 export {
