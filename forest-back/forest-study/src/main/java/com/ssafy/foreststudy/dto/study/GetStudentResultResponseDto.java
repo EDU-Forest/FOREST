@@ -12,6 +12,7 @@ public class GetStudentResultResponseDto {
     private int correctNum;
     private Long solvingTime;
     private int correctRate;
+    private Boolean isGraded;
     private int volume;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
