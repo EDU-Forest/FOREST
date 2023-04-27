@@ -186,7 +186,7 @@ function WorkbookDetail() {
         <WorkbookDetailQuestionList
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
-          questionCnt={workbook?.problemCount}
+          questionCnt={questions.length}
           questionSumm={getQuestionSummary()}
         />
       </WorkbookDetailQuestionBtnAndVisibilityBox>
