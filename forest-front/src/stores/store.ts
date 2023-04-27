@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import teacherClassSlice from "./teacher/teacherClass";
+import analysisSlice from "./analysis/analysis";
 
 const reducers = combineReducers({
   teacherClass: teacherClassSlice,
+  analysis: analysisSlice,
 });
 
 const persistConfig = {

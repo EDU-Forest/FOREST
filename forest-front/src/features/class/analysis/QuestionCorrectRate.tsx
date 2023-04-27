@@ -15,6 +15,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -81,7 +83,8 @@ const classAnswerRateList = [
   //   },
 ];
 
-export default function QuestionCorrectRate({ studyId }: StudyId) {
+export default function QuestionCorrectRate() {
+  const { studyId } = useSelector((state: RootState) => state.analysis);
   const options = {
     responsive: true,
     interaction: {

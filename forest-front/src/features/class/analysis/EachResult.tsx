@@ -10,6 +10,8 @@ import {
   ResultTableName,
 } from "./EachResult.style";
 import { AnalysisSubTitle } from "./StudyAnalysis.style";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 const studentStudyResultList = [
   {
@@ -54,7 +56,8 @@ const studentStudyResultList = [
   },
 ];
 
-export default function EachResult({ studyId }: StudyId) {
+export default function EachResult() {
+  const { studyId } = useSelector((state: RootState) => state.analysis);
   const goToAnswer = () => {
     // 개인 답안으로 이동
   };
