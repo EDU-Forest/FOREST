@@ -1,5 +1,6 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
-import { QuestionType } from "@/types/Workbook";
+import { QuestionSummType, QuestionType } from "@/types/Workbook";
+import { useEffect, useState } from "react";
 import {
   StyledQuestionChoiceNumBox,
   StyledQuestionDetailChoiceBox,
@@ -14,14 +15,34 @@ interface IProps {
   question: QuestionType;
   curQuestion: number;
   setCurQuestion: React.Dispatch<React.SetStateAction<number>>;
+  questionSumm: QuestionSummType[];
 }
 
-function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion }: IProps) {
+function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questionSumm }: IProps) {
+  const [curQuestionNum, setCurQuestionNum] = useState(1);
+
+  const getQuestionNum = (): void => {
+    for (let i = 0; i < questionSumm.length; i++) {
+      if (questionSumm[i].id === curQuestion) {
+        setCurQuestionNum(i + 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getQuestionNum();
+  }, [questionSumm]);
+  
+  useEffect(() => {
+    console.log(curQuestionNum);
+  }, [curQuestionNum]);
+
   return (
     // 객관식
     <StyledWorkbookDetailQuestionBox>
       <StyledQuestionDetailTitleBox>
-        <StyledQuestionDetailNumBox>{question?.problemNum}</StyledQuestionDetailNumBox>
+        <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
+        {/* <StyledQuestionDetailNumBox>{question?.problemNum}</StyledQuestionDetailNumBox> */}
         <span>{question?.title}</span>
         <StyledTextBtn>수정</StyledTextBtn>
       </StyledQuestionDetailTitleBox>

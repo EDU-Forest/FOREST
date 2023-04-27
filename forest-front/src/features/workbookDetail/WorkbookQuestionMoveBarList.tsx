@@ -16,8 +16,8 @@ function WorkbookQuestionMoveBarList({
   curQuestion,
   setCurQuestion,
 }: IProps) {
-  const handleClickMoveBar = (num: number) => {
-    setCurQuestion(num);
+  const handleClickMoveBar = (id: number) => {
+    setCurQuestion(id);
   };
 
   // 드래그
@@ -39,11 +39,6 @@ function WorkbookQuestionMoveBarList({
     copyListItems.splice(draggingItemIndex.current, 1); //3
     copyListItems.splice(draggingOverItemIndex.current, 0, dragItemContent); // 4
 
-    // 현재 문제를 집었다면, 현재 문제는 바뀌고 있는 순서에 반영됨
-    if (curQuestion === draggingItemIndex.current + 1) {
-      setCurQuestion(draggingOverItemIndex.current + 1);
-    }
-
     draggingItemIndex.current = draggingOverItemIndex.current;
     draggingOverItemIndex.current = -1; //5
     setQuestionSum(copyListItems);
@@ -54,7 +49,7 @@ function WorkbookQuestionMoveBarList({
       {questionSumm.map((question, i) => (
         <div
           key={question.id}
-          onClick={() => handleClickMoveBar(i + 1)}
+          onClick={() => handleClickMoveBar(question.id)}
           onDragStart={(e) => onDragStart(e, i)}
           onDragEnter={(e) => onDragEnter(e, i)}
           draggable
@@ -63,7 +58,7 @@ function WorkbookQuestionMoveBarList({
             key={question?.id}
             num={i + 1}
             question={question}
-            isSelected={i + 1 === curQuestion}
+            isSelected={question.id === curQuestion}
           />
         </div>
       ))}

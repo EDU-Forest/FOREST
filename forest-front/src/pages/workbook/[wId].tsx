@@ -154,8 +154,8 @@ function WorkbookDetail() {
   ];
 
   // 현재 문제
-  // 문제집 내에 문제가 없는 경우에는
-  const [curQuestion, setCurQuestion] = useState(questions.length === 0 ? 0 : 1);
+  // 문제집 내에 문제가 없는 경우에는 첫 문제를 세팅
+  const [curQuestion, setCurQuestion] = useState(questions.length === 0 ? 0 : questions[0].id);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question) => {
@@ -181,6 +181,7 @@ function WorkbookDetail() {
           question={questions[curQuestion - 1]} /* 현재 선택된 문제 */
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
+          questionSumm={questionSummary}
         />
       </WorkbookDetailQuestionOverviewAndContentBox>
       <WorkbookDetailQuestionBtnAndVisibilityBox>
