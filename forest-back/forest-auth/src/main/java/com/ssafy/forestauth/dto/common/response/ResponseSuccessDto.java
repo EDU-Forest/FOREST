@@ -1,4 +1,4 @@
-package com.ssafy.forestreference.dto.common.response;
+package com.ssafy.forestauth.dto.common.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
