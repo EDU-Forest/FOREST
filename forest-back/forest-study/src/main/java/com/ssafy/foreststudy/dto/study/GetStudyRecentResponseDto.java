@@ -22,7 +22,7 @@ public class GetStudyRecentResponseDto {
     private Boolean isPublic;
     private double average;
     private double standardDeviation;
-    private LocalDateTime averageSolvingTime;
+    private Long averageSolvingTime;
     private int totalStudent;
     private int participantStudent;
     private int takeRate;

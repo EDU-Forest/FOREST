@@ -3,6 +3,7 @@ package com.ssafy.foreststudy.service;
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
 import com.ssafy.foreststudy.dto.study.*;
 import com.ssafy.foreststudy.entity.*;
+import com.ssafy.foreststudy.entity.Class;
 import com.ssafy.foreststudy.enumeration.response.ErrorCode;
 import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import com.ssafy.foreststudy.errorhandling.exception.service.EntityIsNullException;
@@ -73,6 +74,51 @@ public class StudyService {
         }
 
         return schedule;
+    }
+
+    /* duplicate Extract */
+    private GetStudentRecentResponseDto GetStudentStudyResult(User user, ClassStudyResult cs, String schedule) {
+        StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(cs.getStudy(), user)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudyAndUser(cs.getStudy(), user);
+        int totalScore = 0;
+        int percentage = 0;
+        for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
+            totalScore += studentStudyProblemResult.getProblemList().getProblem().getPoint();
+        }
+        if (totalScore != 0) {
+            percentage = ssr.getScore() * 100 / totalScore;
+        }
+
+        Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
+        GetStudentScoreResponseDto student = GetStudentScoreResponseDto.builder()
+                .totalScore(totalScore)
+                .studentScore(ssr.getScore())
+                .percentage(percentage)
+                .correctNum(ssr.getCorrectNum())
+                .solvingTime(duration.getSeconds() / 60)
+                .build();
+
+
+        GetClassScoreResponseDto classScore = GetClassScoreResponseDto.builder()
+                .average(cs.getAverage())
+                .standardDeviation(cs.getStandardDeviation())
+                .averageSolvingTime(cs.getAverageSolvingTime())
+                .build();
+        GetStudentRecentResponseDto result = GetStudentRecentResponseDto.builder()
+                .studyId(cs.getStudy().getId())
+                .title(cs.getStudy().getName())
+                .startTime(cs.getStudy().getStartTime())
+                .endTime(cs.getStudy().getEndTime())
+                .userName(cs.getStudy().getUser().getName())
+                .studyType(cs.getStudy().getType().toString())
+                .scheduleType(schedule)
+                .studentResult(student)
+                .classResult(classScore)
+                .build();
+
+        return result;
     }
 
     /* 대시보드 일정(캘린더) 목록 조회 */
@@ -150,7 +196,7 @@ public class StudyService {
         classRepository.findById(classId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
 
-        ClassStudyResult cs = classStudyResultRepository.findAllByClassIdOrderByEndTime(classId);
+        ClassStudyResult cs = classStudyResultRepository.findTopByClassIdOrderByEndTime(classId);
 
         if (cs == null)
             return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
@@ -183,7 +229,6 @@ public class StudyService {
                     .userName(cs.getStudy().getUser().getName())
                     .studyType(cs.getStudy().getType().toString())
                     .scheduleType(schedule)
-                    .volume(cs.getStudy().getWorkbook().getVolume())
                     .build();
             res = responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_SUCCESS_INFO_BEFORE);
         } else {
@@ -204,9 +249,13 @@ public class StudyService {
         Map<String, List<GetStudyResultQuestionResponseDto>> result = new HashMap<>();
         result.put("classAnswerRateList", new ArrayList<>());
         for (ClassAnswerRate classAnswerRate : ca) {
+            int incorrect = 100 - classAnswerRate.getCorrectRate() - classAnswerRate.getUngradedRate();
+
             GetStudyResultQuestionResponseDto getStudyResultQuestionResponseDtoList = GetStudyResultQuestionResponseDto.builder()
                     .problemNum(classAnswerRate.getProblemList().getProblemNum())
                     .correctRate(classAnswerRate.getCorrectRate())
+                    .incorrectRate(incorrect)
+                    .ungradedRate(classAnswerRate.getUngradedRate())
                     .build();
             result.get("classAnswerRateList").add(getStudyResultQuestionResponseDtoList);
         }
@@ -222,8 +271,12 @@ public class StudyService {
 
         ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
+        int incorrect = 100 - cs.getCorrectAnswerRate() - cs.getUngradedAnswerRate();
+
         GetStudyResultAllResponseDto result = GetStudyResultAllResponseDto.builder()
                 .correctAnswerRate(cs.getCorrectAnswerRate())
+                .incorrectAnswerRate(incorrect)
+                .ungradedAnswerRate(cs.getUngradedAnswerRate())
                 .build();
 
         ResponseSuccessDto<GetStudyResultAllResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ALL);
@@ -264,7 +317,7 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndUser(study,user);
+        List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndUser(study, user);
         Map<String, List<GetStudentResultQuestionResponseDto>> result = new HashMap<>();
         result.put("studentStudyProblemResultList", new ArrayList<>());
 
@@ -296,8 +349,9 @@ public class StudyService {
         GetStudentResultResponseDto result = GetStudentResultResponseDto.builder()
                 .score(cs.getScore())
                 .correctNum(cs.getCorrectNum())
-                .solvingTime(duration.getSeconds())
+                .solvingTime(duration.getSeconds() / 60) // 소요 풀이 시간 분 단위로 보냄
                 .correctRate(cs.getCorrectRate())
+                .isGraded(cs.getIsGraded())
                 .volume(cs.getStudy().getWorkbook().getVolume())
                 .startTime(cs.getStudy().getStartTime())
                 .endTime(cs.getStudy().getEndTime())
@@ -305,5 +359,59 @@ public class StudyService {
 
         ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ALL);
         return res;
+    }
+
+    /* (학생) 최근 진행한 문제집 성적 조회 */
+    public ResponseSuccessDto<GetStudentRecentResponseDto> getStudentRecent(Long classId, Long userId) {
+
+        classRepository.findById(classId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdAndUserIdOrderByEndTime(classId, userId);
+        if (csList.size() == 0)
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
+
+        ClassStudyResult cs = csList.get(0);
+        String schedule = getScheduleType(cs);
+
+        GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
+        ResponseSuccessDto<GetStudentRecentResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RECENT);
+
+        return res;
+    }
+
+    /* (학생) 선택한 문제집 성적 조회 */
+    public ResponseSuccessDto<?> getStudentWorkbookResult(Long studyId, Long userId) {
+
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+
+        String schedule = getScheduleType(cs);
+
+
+        if (schedule.equals("BEFORE") || schedule.equals("ONGOING")) {
+            GetStudyBeforeAndOngoingResponseDto getStudyBeforeAndOngoingResponseDto = GetStudyBeforeAndOngoingResponseDto.builder()
+                    .studyId(cs.getStudy().getId())
+                    .title(cs.getStudy().getName())
+                    .startTime(cs.getStudy().getStartTime())
+                    .endTime(cs.getStudy().getEndTime())
+                    .userName(cs.getStudy().getUser().getName())
+                    .studyType(cs.getStudy().getType().toString())
+                    .scheduleType(schedule)
+                    .build();
+            return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_SUCCESS_INFO_BEFORE);
+        } else {
+            GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
+
+            return responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO_AFTER);
+        }
     }
 }

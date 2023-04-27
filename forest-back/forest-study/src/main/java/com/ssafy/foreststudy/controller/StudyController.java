@@ -29,7 +29,6 @@ public class StudyController {
 
     @ApiOperation(value = "클래스 일정 목록 조회", notes = "클래스의 일정 목록을 조회합니다.")
     @GetMapping("/calendar/{classId}")
-    //public ResponseEntity<ResponseSuccessDto<List<GetScheduleResponseDto>>> getScheduleList(@PathVariable("classId") Long classId) {
     public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("classId") Long classId) {
         return ResponseEntity.ok(studyService.getScheduleList(classId));
     }
@@ -64,15 +63,27 @@ public class StudyController {
         return ResponseEntity.ok(studyService.getStudyResultStudent(studyId));
     }
 
-    @ApiOperation(value = "(개인) 문항별 정답 여부 조회", notes = "(개인) 문항별 정답 여부를 조회합니다.")
+    @ApiOperation(value = "(학생) 문항별 정답 여부 조회", notes = "(학생) 문항별 정답 여부를 조회합니다.")
     @GetMapping("/student/result/question/{studyId}/{userId}")
-    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>>> getStudentResultQuestion(@PathVariable("studyId") Long studyId,@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok(studyService.getStudentResultQuestion(studyId,userId));
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>>> getStudentResultQuestion(@PathVariable("studyId") Long studyId, @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentResultQuestion(studyId, userId));
     }
 
-    @ApiOperation(value = "(개인) 시험 결과 조회", notes = "(개인) 시험 결과를 조회합니다.")
+    @ApiOperation(value = "(학생) 시험 결과 조회", notes = "(학생) 시험 결과를 조회합니다.")
     @GetMapping("/student/result/{studyId}/{userId}")
-    public ResponseEntity<ResponseSuccessDto<GetStudentResultResponseDto>> getStudentResult(@PathVariable("studyId") Long studyId,@PathVariable("userId") Long userId) {
-        return ResponseEntity.ok(studyService.getStudentResult(studyId,userId));
+    public ResponseEntity<ResponseSuccessDto<GetStudentResultResponseDto>> getStudentResult(@PathVariable("studyId") Long studyId, @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentResult(studyId, userId));
+    }
+
+    @ApiOperation(value = "(학생) 최근 진행한 문제집 성적 조회", notes = "(학생) 최근 진행한 문제집 성적을 조회합니다.")
+    @GetMapping("/student/recent/{classId}/{userId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudentRecentResponseDto>> getStudentRecent(@PathVariable("classId") Long classId, @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentRecent(classId, userId));
+    }
+
+    @ApiOperation(value = "(학생) 선택한 문제집 성적 조회", notes = "(학생) 선택한 문제집 성적을 조회합니다.")
+    @GetMapping("/student/{studyId}/{userId}")
+    public ResponseEntity<ResponseSuccessDto<?>> getStudentWorkbookResult(@PathVariable("studyId") Long studyId, @PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getStudentWorkbookResult(studyId, userId));
     }
 }

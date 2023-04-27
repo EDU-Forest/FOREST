@@ -7,4 +7,6 @@ import lombok.Getter;
 @Builder
 public class GetStudyResultAllResponseDto {
     private int correctAnswerRate;
+    private int incorrectAnswerRate;
+    private int ungradedAnswerRate;
 }
