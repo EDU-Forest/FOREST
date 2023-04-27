@@ -11,7 +11,7 @@ interface IProps {
 
 function WorkbookQuestionMoveBar({ num, question, isSelected }: IProps) {
   return (
-    <StyledWorkbookQuestionMoveBar isSelected={isSelected}>
+    <StyledWorkbookQuestionMoveBar isSelected={isSelected} draggable>
       <AiOutlineHolder />
       <span>{num}.&nbsp;</span>
       <span>{question?.title}</span>

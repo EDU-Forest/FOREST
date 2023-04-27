@@ -5,6 +5,7 @@ import WorkbookQuestionMoveBarList from "./WorkbookQuestionMoveBarList";
 interface IProps {
   questionCnt: number;
   questionSumm: QuestionSummType[];
+  setQuestionSum: React.Dispatch<React.SetStateAction<QuestionSummType[]>>;
   curQuestion: number;
   setCurQuestion: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -12,6 +13,7 @@ interface IProps {
 function WorkbookDetailQuestionListContent({
   questionCnt,
   questionSumm,
+  setQuestionSum,
   curQuestion,
   setCurQuestion,
 }: IProps) {
@@ -20,6 +22,7 @@ function WorkbookDetailQuestionListContent({
       <p>문제 ({questionCnt})</p>
       <WorkbookQuestionMoveBarList
         questionSumm={questionSumm}
+        setQuestionSum={setQuestionSum}
         curQuestion={curQuestion}
         setCurQuestion={setCurQuestion}
       />

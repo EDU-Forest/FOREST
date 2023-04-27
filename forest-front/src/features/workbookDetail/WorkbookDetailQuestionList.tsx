@@ -6,6 +6,7 @@ import WorkbookDetailQuestionVisibility from "./WorkbookDetailQuestionVisibility
 interface IProps {
   questionCnt: number;
   questionSumm: QuestionSummType[];
+  setQuestionSum: React.Dispatch<React.SetStateAction<QuestionSummType[]>>;
   curQuestion: number;
   setCurQuestion: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -13,6 +14,7 @@ interface IProps {
 function WorkbookDetailQuestionList({
   questionCnt,
   questionSumm,
+  setQuestionSum,
   curQuestion,
   setCurQuestion,
 }: IProps) {
@@ -22,6 +24,7 @@ function WorkbookDetailQuestionList({
       <WorkbookDetailQuestionListContent
         questionCnt={questionCnt}
         questionSumm={questionSumm}
+        setQuestionSum={setQuestionSum}
         curQuestion={curQuestion}
         setCurQuestion={setCurQuestion}
       />

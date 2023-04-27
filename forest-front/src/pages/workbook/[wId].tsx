@@ -45,7 +45,7 @@ function WorkbookDetail() {
     problemCount: 4,
   };
 
-  const questions: QuestionType[] = [
+  let questions: QuestionType[] = [
     {
       id: 1,
       problemNum: 1,
@@ -163,6 +163,8 @@ function WorkbookDetail() {
     });
   };
 
+  const [questionSummary, setQuestionSummary] = useState(getQuestionSummary());
+
   return (
     <StyledWorkbookDetailBox>
       <WorkbookSideReturn />
@@ -187,7 +189,8 @@ function WorkbookDetail() {
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
           questionCnt={questions.length}
-          questionSumm={getQuestionSummary()}
+          questionSumm={questionSummary}
+          setQuestionSum={setQuestionSummary}
         />
       </WorkbookDetailQuestionBtnAndVisibilityBox>
     </StyledWorkbookDetailBox>
