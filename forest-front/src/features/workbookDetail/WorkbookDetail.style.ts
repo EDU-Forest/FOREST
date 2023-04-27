@@ -1,3 +1,4 @@
+import { WorkbookImg } from "@/components/Workbook/Workbook.style";
 import styled from "styled-components";
 
 export const StyledWorkbookDetailBox = styled.div`
@@ -5,12 +6,17 @@ export const StyledWorkbookDetailBox = styled.div`
 
   display: flex;
 
+  padding: 32px;
+  gap: 24px;
+
   background-color: ${({ theme }) => theme.colors.Gray[50]};
 `;
 
 export const StyledWorkbookDetailInfoOverviewBox = styled.div`
   display: flex;
+  justify-content: space-between;
 
+  margin-bottom: 24px;
   padding: 1.5rem 32px;
 
   background: ${({ theme }) => theme.colors.Lime[50]};
@@ -40,6 +46,9 @@ export const StyledWorkbookDetailInfoOverviewBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
+    margin-left: 24px;
+    gap: 24px;
   }
 
   img {
@@ -67,18 +76,38 @@ export const StyledWorkbookReactionBtnsBox = styled.div`
   gap: 16px;
 `;
 
+export const StyledWorkbookDetailDescBox = styled.div<{ isFolded: boolean }>`
+  display: ${({ isFolded }) => isFolded && "none"};
+`;
+
+export const StyledWorkbookDetailCoverBox = styled(WorkbookImg)<{ isFolded: boolean }>`
+  display: ${({ isFolded }) => isFolded && "none"};
+`;
+
 export const StyledWorkbookDetailBtnsBox = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  min-width: 344px;
+
+  display: flex;
+
+  margin-bottom: 24px;
   gap: 16px;
 `;
 
 export const StyledWorkbookDetailQuestionListBox = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
   padding: 24px;
 
   background: ${({ theme }) => theme.colors.Gray[100]};
   border: 0.0625rem solid ${({ theme }) => theme.colors.Gray[500]};
   border-radius: 1.5rem;
+`;
+
+export const WorkbookDetailQuestionBtnAndVisibilityBox = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const StyledToggleBtn = styled.button`
@@ -130,6 +159,7 @@ export const ToggleBox = styled.div`
 
 export const StyledWorkbookDetailQuestionListContentBox = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
 
   margin-top: 1rem;
@@ -186,4 +216,67 @@ export const StyledWorkbookQuestionMoveBar = styled.div`
     margin-left: auto;
     fill: ${({ theme }) => theme.colors.Gray[600]};
   }
+`;
+
+// 문제 스타일
+export const StyledWorkbookDetailQuestionBox = styled.div`
+  padding: 40px 2rem;
+
+  background: #ffffff;
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
+  border-radius: 24px;
+`;
+
+// 문제 숫자, 제목
+export const StyledQuestionDetailTitleBox = styled.div`
+  display: flex;
+
+  // 제목
+  > span:last-child {
+    font-size: 1.375rem;
+    font-weight: bold;
+  }
+`;
+
+export const StyledQuestionDetailNumBox = styled.div`
+  padding: 4px 1.5rem;
+  margin-right: 1.5rem;
+
+  background: ${({ theme }) => theme.colors.Lime[600]};
+  border-radius: 0.25rem;
+  color: white;
+`;
+
+export const StyledQuestionDetailTextBox = styled.div`
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.Lime[600]};
+  border-radius: 4px;
+  line-height: 28px;
+`;
+export const StyledQuestionDetailChoiceListBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 2.5rem;
+  gap: 1rem;
+`;
+
+export const StyledQuestionDetailChoiceBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+`;
+
+export const StyledQuestionChoiceNumBox = styled.div`
+  padding: 4px 8px;
+
+  background: ${({ theme }) => theme.colors.Lime[50]};
+  border: 0.8px solid ${({ theme }) => theme.colors.Lime[600]};
+  border-radius: 50%;
+  color: ${({ theme }) => theme.colors.Lime[600]};
+  font-size: 0.875rem;
+  font-weight: bold;
 `;
