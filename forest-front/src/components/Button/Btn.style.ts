@@ -198,7 +198,7 @@ const StyledRoundSolid600Btn = styled.button`
   gap: 0.5rem;
 
   background-color: ${({ theme }) => theme.colors.Lime[600]};
-  border-radius: 1.25rem;
+  border-radius: 24px;
   border: none;
   color: white;
   font-weight: bold;
