@@ -9,7 +9,6 @@ import com.ssafy.forestauth.enumeration.response.SuccessCode;
 import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
 import com.ssafy.forestauth.errorhandling.exception.service.InvalidPasswordException;
 import com.ssafy.forestauth.repository.UserRepository;
-import com.ssafy.forestauth.util.JwtTokenUtil;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +29,6 @@ public class UserService {
     private final ResponseUtil responseUtil;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    @Value("${jwt.token.secretKey}")
-    private String secretKey;
     private Long expireTimeMs = 1000 * 60 * 60L;
 
     // 일반 회원가입
@@ -48,27 +45,20 @@ public class UserService {
         return res;
     }
 
-    public ResponseSuccessDto<LoginResponseDto> login(LoginRequestDto loginRequestDto) {
-        // email 존재하지 않은 경우
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+    // 소셜 회원 정보 추가
+    public ResponseSuccessDto<SignupResponseDto> signupSocial(Long userId, SignupSocialRequestDto signupSocialRequestDto) {
+        User findUserById = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+        findUserById.updateUserInfo(signupSocialRequestDto);
 
-        // pw 일치하지 않은 경우, (순서 중요)
-        if(!encoder.matches(loginRequestDto.getPw(), user.getPassword())) {
-            throw new InvalidPasswordException(ErrorCode.AUTH_PW_NOT_EQUAL);
-        }
-
-        String token = JwtTokenUtil.createToken(user.getEmail(), secretKey, expireTimeMs);
-
-        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
-                .token(token)
+        SignupResponseDto signupResponseDto = SignupResponseDto.builder()
+                .message(SuccessCode.AUTH_SIGN_UP_SUCCESS.getMessage())
                 .build();
-        ResponseSuccessDto<LoginResponseDto> res = responseUtil.successResponse(loginResponseDto, SuccessCode.AUTH_LOGIN_SUCCESS);
+        ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
         return res;
     }
 
     public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(String userName) {
-        System.out.println("userName = " + userName);
         List<User> userList = userRepository.findByNameStartsWithAndRole(userName, EnumUserRoleStatus.STUDENT);
 
         List<SearchStudentResponseDto> dtoList = new ArrayList<>();
@@ -83,6 +73,15 @@ public class UserService {
         }
 
         ResponseSuccessDto<List<SearchStudentResponseDto>> res = responseUtil.successResponse(dtoList, SuccessCode.AUTH_SEARCH_STUDENT);
+        return res;
+    }
+
+    public ResponseSuccessDto<LoginResponseDto> getUserInfo(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
+                .token("test")
+                .build();
+        ResponseSuccessDto<LoginResponseDto> res = responseUtil.successResponse(loginResponseDto, SuccessCode.AUTH_LOGIN_SUCCESS);
         return res;
     }
 }

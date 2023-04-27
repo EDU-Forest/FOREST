@@ -7,6 +7,8 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,21 +23,17 @@ public class UserController {
 
     private final UserService userService;
 
-    /**
-     * 회원가입
-     */
-    @PostMapping("/common")
-    public ResponseEntity<ResponseSuccessDto<SignupResponseDto>> signupCommon(@RequestBody @Valid SignupRequestDto signupRequestDto) {
-        return ResponseEntity.ok(userService.signupCommon(signupRequestDto));
+    // 소셜 회원, 정보 추기
+    @PostMapping("/social")
+    public ResponseEntity<ResponseSuccessDto<SignupResponseDto>> signupSocial(
+            @RequestBody SignupSocialRequestDto signupSocialRequestDto,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return ResponseEntity.ok(userService.signupSocial(userId, signupSocialRequestDto));
     }
 
-    /**
-     * 일반 로그인
-     */
-    @PostMapping("/login")
-    public ResponseEntity<ResponseSuccessDto<LoginResponseDto>> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
-        return ResponseEntity.ok(userService.login(loginRequestDto));
-    }
+
 
     /**
      * 이름으로 학생 검색
