@@ -2,6 +2,23 @@ import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 import { AnalysisUpper } from "./StudyAnalysis.style";
 
+const DescriptiveFormWrapper = styled.div`
+  position: relative;
+`;
+
+const DescriptiveFormBtn = styled.div`
+  position: absolute;
+  right: 0;
+  top: -4rem;
+
+  span {
+    font-weight: 700;
+    font-size: 22px;
+    color: ${({ theme }) => theme.colors.Lime[900]};
+    margin-right: 16px;
+  }
+`;
+
 const DescriptiveFormUpper = styled(AnalysisUpper)`
   align-items: stretch;
 
@@ -59,6 +76,8 @@ const DescriptiveFormUpperScore = styled.div`
 `;
 
 export {
+  DescriptiveFormWrapper,
+  DescriptiveFormBtn,
   DescriptiveFormUpper,
   DescriptiveFormUpperBox,
   DescriptiveFormUpperTitle,

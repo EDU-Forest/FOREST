@@ -26,11 +26,6 @@ const AnalysisContent = styled.div`
   ${scrollBar(0.75)}
 `;
 
-const AnalysisTopMenuWrapper = styled.div`
-  ${flexBox("row", "center", "space-between")};
-  width: 100%;
-`;
-
 const AnalysisUpper = styled.div`
   ${flexBox("row", "center", "space-between")}
   flex-wrap: wrap;
@@ -92,7 +87,6 @@ export {
   AnalysisFullScreen,
   AnalysisTitle,
   AnalysisContent,
-  AnalysisTopMenuWrapper,
   AnalysisUpper,
   AnalysisUpperItem,
   AnalysisSubTitle,

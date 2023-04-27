@@ -6,7 +6,6 @@ import {
   AnalysisUpper,
   AnalysisUpperItem,
   AnalysisSubTitle,
-  AnalysisTopMenuWrapper,
 } from "@/features/class/analysis/StudyAnalysis.style";
 import { useRouter } from "next/router";
 
@@ -22,7 +21,6 @@ import EachResult from "./EachResult";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import DescriptiveForm from "./DescriptiveForm";
-import SmallBtn from "@/components/Button/SmallBtn";
 
 const dummyData = {
   studyId: 1,
@@ -61,15 +59,8 @@ export default function StudyAnalysis() {
         <p style={{ marginLeft: "2rem" }}>{dummyData.title}</p>
       </AnalysisTitle>
       <AnalysisContent>
-        {/* <AnalysisTopMenuWrapper> */}
         <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
-        {/* <SmallBtn
-          children={"다음"}
-          onClick={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        /> */}
-        {/* </AnalysisTopMenuWrapper> */}
+
         {isSummary ? (
           <>
             <AnalysisUpper>
@@ -109,7 +100,7 @@ export default function StudyAnalysis() {
             <EachResult />
           </>
         ) : (
-          <DescriptiveForm></DescriptiveForm>
+          <DescriptiveForm />
         )}
       </AnalysisContent>
     </>
