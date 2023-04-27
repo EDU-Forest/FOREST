@@ -6,11 +6,12 @@ import { StyledWorkbookQuestionMoveBar } from "./WorkbookDetail.style";
 interface IProps {
   num: number;
   question: QuestionSummType;
+  isSelected: boolean;
 }
 
-function WorkbookQuestionMoveBar({ num, question }: IProps) {
+function WorkbookQuestionMoveBar({ num, question, isSelected }: IProps) {
   return (
-    <StyledWorkbookQuestionMoveBar>
+    <StyledWorkbookQuestionMoveBar isSelected={isSelected}>
       <AiOutlineHolder />
       <span>{num}.&nbsp;</span>
       <span>{question?.title}</span>

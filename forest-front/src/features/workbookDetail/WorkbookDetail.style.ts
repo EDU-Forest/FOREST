@@ -12,6 +12,23 @@ export const StyledWorkbookDetailBox = styled.div`
   background-color: ${({ theme }) => theme.colors.Gray[50]};
 `;
 
+export const WorkbookDetailSideReturnBtnBox = styled.button`
+  height: fit-content;
+
+  margin-right: 8px;
+  display: flex;
+
+  background-color: transparent;
+  border: none;
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    fill: ${({ theme }) => theme.colors.Lime[900]};
+  }
+`;
+
 export const StyledWorkbookDetailInfoOverviewBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -105,6 +122,10 @@ export const StyledWorkbookDetailQuestionListBox = styled.div`
   border-radius: 1.5rem;
 `;
 
+export const WorkbookDetailQuestionOverviewAndContentBox = styled.div`
+  flex: 1;
+`;
+
 export const WorkbookDetailQuestionBtnAndVisibilityBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -181,21 +202,42 @@ export const StyledWorkbookQuestionMoveBarListBox = styled.div`
   gap: 1rem;
 `;
 
-export const StyledWorkbookQuestionMoveBar = styled.div`
+export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
 
   padding: 0.5rem 0.75rem;
 
-  background-color: ${({ theme }) => theme.colors.Gray[100]};
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.Lime[200] : theme.colors.Gray[100]};
   border-radius: 0.5rem;
-  color: ${({ theme }) => theme.colors.Gray[800]};
+  color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.Lime[800] : theme.colors.Gray[800]};
+  font-weight: ${({ isSelected }) => isSelected && "bold"};
 
-  cursor: pointer;
+  cursor: ${({ isSelected }) => !isSelected && "pointer"};
 
-  // 문제 번호
-  > span:first-child {
-    font-weight: 600;
+  :hover {
+    background-color: ${({ isSelected, theme }) => !isSelected && theme.colors.Gray[200]};
+  }
+  :active {
+    background-color: ${({ isSelected, theme }) => !isSelected && theme.colors.Gray[300]};
+  }
+
+  span {
+    white-space: nowrap;
+
+    // 문제 번호
+    :nth-child(2) {
+      font-weight: 600;
+    }
+
+    // 문제 제목
+    :nth-child(3) {
+      max-width: 10.5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   // move icon
@@ -204,7 +246,8 @@ export const StyledWorkbookQuestionMoveBar = styled.div`
     height: 20px;
 
     margin-right: 0.25rem;
-    fill: ${({ theme }) => theme.colors.Gray[800]};
+    fill: ${({ isSelected, theme }) =>
+      isSelected ? theme.colors.Lime[800] : theme.colors.Gray[800]};
   }
 
   // delete icon
@@ -214,7 +257,8 @@ export const StyledWorkbookQuestionMoveBar = styled.div`
 
     display: flex;
     margin-left: auto;
-    fill: ${({ theme }) => theme.colors.Gray[600]};
+    fill: ${({ isSelected, theme }) =>
+      isSelected ? theme.colors.Lime[800] : theme.colors.Gray[600]};
   }
 `;
 
@@ -230,11 +274,17 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
 // 문제 숫자, 제목
 export const StyledQuestionDetailTitleBox = styled.div`
   display: flex;
+  align-items: center;
 
   // 제목
-  > span:last-child {
+  > span {
     font-size: 1.375rem;
     font-weight: bold;
+  }
+
+  // 수정 버튼
+  button {
+    margin-left: auto;
   }
 `;
 
