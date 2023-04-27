@@ -1,9 +1,14 @@
 import styled, { css } from "styled-components";
 import { CorrectRateWrapper } from "./QuestionCorrectRate.style";
-import { flexBox } from "@/styles/theme";
+import { flexBox, scrollBar } from "@/styles/theme";
 
 const EachResultWrapper = styled(CorrectRateWrapper)`
   margin-top: 1.5rem;
+  background-color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+  ${scrollBar(0.75)};
+  height: 700px;
 `;
 
 const ResultTable = styled.div``;

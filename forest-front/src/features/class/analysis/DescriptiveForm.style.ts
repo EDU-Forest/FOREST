@@ -1,6 +1,7 @@
 import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 import { AnalysisUpper } from "./StudyAnalysis.style";
+import { ResultTableItemBig } from "./EachResult.style";
 
 const DescriptiveFormWrapper = styled.div`
   position: relative;
@@ -75,6 +76,10 @@ const DescriptiveFormUpperScore = styled.div`
   color: ${({ theme }) => theme.colors.Lime[700]};
 `;
 
+const TableItemAnswer = styled(ResultTableItemBig)`
+  width: 40%;
+`;
+
 export {
   DescriptiveFormWrapper,
   DescriptiveFormBtn,
@@ -83,4 +88,5 @@ export {
   DescriptiveFormUpperTitle,
   DescriptiveFormUpperItem,
   DescriptiveFormUpperScore,
+  TableItemAnswer,
 };

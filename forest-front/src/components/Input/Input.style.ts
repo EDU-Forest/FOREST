@@ -1,9 +1,9 @@
 import { Iprops } from "@/features/home/SignupInput";
 import styled from "styled-components";
 
-const CommonInput = styled.input<{ isShort: boolean }>`
+const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
   /* width: 15rem; */
-  width: ${({ isShort }) => isShort && "15rem"};
+  width: ${({ isShort, isScore }) => (isShort ? "15rem" : isScore && "5rem")};
   font-weight: 400;
   border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
