@@ -36,8 +36,8 @@ export default function ClassAddModal({ handleModal }: Iprops) {
         <ClassInputMsg>이미 존재하는 클래스 이름입니다. </ClassInputMsg>
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
-        <SmallBtn children="확인" colored onClick={confirm} />
         <SmallBtn children="취소" onClick={handleModal} />
+        <SmallBtn children="확인" colored onClick={confirm} />
       </ClassInputBtnWrapper>
     </ClassAddModalContainer>
   );

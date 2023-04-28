@@ -83,8 +83,8 @@ export default function ClassStudentAddModal({ handleModal }: Iprops) {
       </ClassStudentAddDropdown>
       <ClassStudentAddList />
       <ClassStudentAddBtnWrapper>
-        <SmallBtn children="확인" colored onClick={confirm} />
         <SmallBtn children="취소" onClick={handleModal} />
+        <SmallBtn children="확인" colored onClick={confirm} />
       </ClassStudentAddBtnWrapper>
     </ClassStudentAddModalContainer>
   );
