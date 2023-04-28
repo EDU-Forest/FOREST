@@ -45,3 +45,15 @@ export const WorkbookExportRadioLabel = styled.label<{ isChecked: boolean }>`
     margin-bottom: 8px;
   }
 `;
+
+export const WorkbookClassBtn = styled.button<{ isSelected: boolean }>`
+  width: 100%;
+
+  padding: 12px 1rem;
+
+  background: ${({ theme, isSelected }) => (isSelected ? theme.colors.Lime[700] : "white")};
+  border: 2px solid ${({ theme }) => theme.colors.Lime[700]};
+  border-radius: 24px;
+  font-weight: 600;
+  color: ${({ theme, isSelected }) => (isSelected ? "white" : theme.colors.Lime[700])};
+`;

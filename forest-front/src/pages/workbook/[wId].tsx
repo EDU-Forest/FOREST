@@ -9,6 +9,7 @@ import WorkbookDetailQuestion from "@/features/workbookDetail/WorkbookDetailQues
 import WorkbookDetailQuestionList from "@/features/workbookDetail/WorkbookDetailQuestionList";
 import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideReturn";
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
+import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useState } from "react";
 
@@ -159,6 +160,7 @@ function WorkbookDetail() {
   const [curQuestion, setCurQuestion] = useState(questions.length === 0 ? 0 : questions[0].id);
   // modal open/close
   const [isExportOpen, setIsExportOpen] = useState(false);
+  const [isSelectClassOpen, setIsSelectClassOpen] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question) => {
@@ -199,7 +201,9 @@ function WorkbookDetail() {
       </WorkbookDetailQuestionBtnAndVisibilityBox>
 
       {/* 내보내기 모달 */}
-      {isExportOpen && <WorkbookExportModal setIsOpen={setIsExportOpen} />}
+      {isExportOpen && <WorkbookExportModal setIsOpen={setIsExportOpen} setIsSelectClassOpen={setIsSelectClassOpen}/>}
+      {/* 내보내기 모달 */}
+      {isSelectClassOpen && <WorkbookSelectClassModal setIsOpen={setIsSelectClassOpen} />}
     </StyledWorkbookDetailBox>
   );
 }

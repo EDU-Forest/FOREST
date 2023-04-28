@@ -1,12 +1,13 @@
 import SmallBtn from "@/components/Button/SmallBtn";
 import { ModalBtnsBox } from "@/styles/modal";
 import { useState } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/ai";
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
 import { WorkbookExportModalBox } from "./WorkbookModal.style";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSelectClassOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ExportType {
   value: string;
@@ -15,9 +16,12 @@ interface ExportType {
   action: () => void;
 }
 
-function WorkbookExportModal({ setIsOpen }: IProps) {
+function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   const chosenSet = () => {
     console.log("출제한다");
+
+    setIsOpen(false);
+    setIsSelectClassOpen(true);
   };
 
   const chosenRelease = () => {
@@ -30,8 +34,8 @@ function WorkbookExportModal({ setIsOpen }: IProps) {
 
   const exports: ExportType[] = [
     { value: "set", text: "출제", img: <AiOutlineEdit />, action: chosenSet },
-    { value: "release", text: "배포", img: <AiOutlineEdit />, action: chosenRelease },
-    { value: "pdf", text: "PDF", img: <AiOutlineEdit />, action: chosenPdf },
+    { value: "release", text: "배포", img: <AiOutlineShareAlt />, action: chosenRelease },
+    { value: "pdf", text: "PDF", img: <AiOutlineFilePdf />, action: chosenPdf },
   ];
 
   const [value, setValue] = useState(exports[0].value);
@@ -50,7 +54,7 @@ function WorkbookExportModal({ setIsOpen }: IProps) {
   return (
     <WorkbookExportModalBox>
       <p>내보내기 방식을 선택해주세요.</p>
-      <WorkbookExportRadioGroup exports={exports} setValue={setValue} />
+      <WorkbookExportRadioGroup exports={exports} value={value} setValue={setValue} />
       <ModalBtnsBox>
         <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
         <SmallBtn onClick={handleClickChoose} colored={true}>
