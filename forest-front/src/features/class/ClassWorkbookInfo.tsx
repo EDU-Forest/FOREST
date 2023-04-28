@@ -4,13 +4,14 @@ import {
   WorkbookInfo,
   ClassSummaryTextWrapper,
   ClassSummaryText,
-} from "../ClassSummary.style";
+} from "./ClassSummary.style";
 
 interface Iprops {
   noMargin?: boolean;
 }
 
-export default function ClassSummaryWorkbook({ noMargin }: Iprops) {
+// 문제집 정보 - 클래스(T), 분석
+export default function ClassWorkbookInfo({ noMargin }: Iprops) {
   return (
     <SummaryItemWrapper>
       <ClassSummarySubTitle noMargin={noMargin}>문제집 정보</ClassSummarySubTitle>

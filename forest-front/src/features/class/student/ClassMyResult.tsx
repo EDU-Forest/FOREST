@@ -8,7 +8,13 @@ import {
 } from "../ClassSummary.style";
 import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-icons/md";
 
-export default function ClassSummaryMyResult() {
+interface Iprops {
+  percentage: number;
+  correctNum: number;
+  solvingTime: number;
+}
+
+export default function ClassMyResult({ percentage, correctNum, solvingTime }: Iprops) {
   return (
     <SummaryItemWrapper>
       <ClassSummarySubTitle>나의 결과</ClassSummarySubTitle>
@@ -21,7 +27,7 @@ export default function ClassSummaryMyResult() {
             <ClassSummaryText>백분율 환산</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>80</ClassSummaryText>
+            <ClassSummaryText>{percentage}</ClassSummaryText>
             <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -33,7 +39,7 @@ export default function ClassSummaryMyResult() {
             <ClassSummaryText>정답 문항수</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>8</ClassSummaryText>
+            <ClassSummaryText>{correctNum}</ClassSummaryText>
             <ClassSummaryText isGray>개</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -45,10 +51,8 @@ export default function ClassSummaryMyResult() {
             <ClassSummaryText>풀이 시간</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>23</ClassSummaryText>
+            <ClassSummaryText>{solvingTime}</ClassSummaryText>
             <ClassSummaryText isGray>분</ClassSummaryText>
-            <ClassSummaryText>23</ClassSummaryText>
-            <ClassSummaryText isGray>초</ClassSummaryText>
           </div>
         </ResultInfoItem>
       </SummaryResultWrapper>

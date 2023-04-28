@@ -11,8 +11,8 @@ import { useRouter } from "next/router";
 
 import { useState } from "react";
 import AnalysisToggle from "./AnalysisToggle";
-import ClassSummaryResult from "../ClassSummaryResult";
-import ClassSummaryWorkbook from "../teacher/ClassSummaryWorkbook";
+import ClassSummaryResult from "../TotalResult";
+import ClassSummaryWorkbook from "../ClassWorkbookInfo";
 import TakeRateChart from "../TakeRateChart";
 import CorrectRateDonut from "./CorrectRateDonut";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";

@@ -15,7 +15,8 @@ interface Iprops {
   averageSolvingTime: number;
 }
 
-export default function ClassSummaryResult({
+// 전체 결과 - 클래스(T, S), 분석
+export default function TotalResult({
   noMargin,
   average,
   standardDeviation,
