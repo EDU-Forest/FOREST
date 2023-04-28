@@ -21,7 +21,7 @@ export const WorkbookExportRadioCircle = styled.div`
   border: 1px solid #ccc;
 `;
 
-export const WorkbookExportRadioLabel = styled.label`
+export const WorkbookExportRadioLabel = styled.label<{ isChecked: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,11 +29,19 @@ export const WorkbookExportRadioLabel = styled.label`
 
   padding: 1rem 2rem;
 
-  background: ${({ theme }) => theme.colors.Lime[50]};
-  /* background: ${({ theme }) => theme.colors.Gray[500]};; */
-  border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[700]};
-  /* border: 0.0625rem solid ${({ theme }) => theme.colors.Gray[500]}; */
-  color: ${({ theme }) => theme.colors.Lime[700]};
+  background: ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[50] : "white")};
+  border: 0.0625rem solid
+    ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[700] : theme.colors.Gray[500])};
+  color: ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[700] : theme.colors.Gray[500])};
   font-weight: bold;
   border-radius: 1rem;
+
+  cursor: pointer;
+
+  svg {
+    width: 32px;
+    height: 32px;
+
+    margin-bottom: 8px;
+  }
 `;

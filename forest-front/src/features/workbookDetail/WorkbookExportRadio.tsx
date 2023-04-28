@@ -2,23 +2,24 @@ import { WorkbookExportRadioLabel } from "./WorkbookModal.style";
 
 interface IProps {
   isDefault?: boolean;
-  value: string;
+  thisValue: string;
   text: string;
   img: any;
-  setValue: React.Dispatch<React.SetStateAction<any>>;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function WorkbookExportRadio({ isDefault, value, text, img, setValue }: IProps) {
+function WorkbookExportRadio({ isDefault, thisValue, text, img, value, setValue }: IProps) {
   const handleChange = (e: any) => {
     setValue(e.target.value);
   };
 
   return (
-    <WorkbookExportRadioLabel>
+    <WorkbookExportRadioLabel isChecked={thisValue === value}>
       <input
         type="radio"
         name="export"
-        value={value}
+        value={thisValue}
         defaultChecked={isDefault}
         onChange={handleChange}
       />
