@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface teacherClassState {
   studyId: number | null;
+  maxScore: number;
 }
 
 const initialState: teacherClassState = {
   studyId: null,
+  maxScore: 0,
 };
 
 const analysisSlice = createSlice({
@@ -15,9 +17,12 @@ const analysisSlice = createSlice({
     setStudyId(state, action) {
       state.studyId = action.payload;
     },
+    setMaxScore(state, action) {
+      state.maxScore = action.payload;
+    },
   },
 });
 
-export const { setStudyId } = analysisSlice.actions;
+export const { setStudyId, setMaxScore } = analysisSlice.actions;
 
 export default analysisSlice.reducer;

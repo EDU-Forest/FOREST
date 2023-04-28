@@ -55,7 +55,7 @@ const DescriptiveFormUpperBox = styled.div`
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
 `;
 
 const DescriptiveFormUpperTitle = styled.div`

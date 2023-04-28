@@ -22,6 +22,12 @@ const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
     border: 1px solid ${({ theme }) => theme.colors.Lime[500]};
   }
 
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   /* &[type="date"]::before {
     content: attr(data-placeholder);
     width: 100%;

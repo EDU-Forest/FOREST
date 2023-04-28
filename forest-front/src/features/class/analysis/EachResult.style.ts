@@ -2,13 +2,10 @@ import styled, { css } from "styled-components";
 import { CorrectRateWrapper } from "./QuestionCorrectRate.style";
 import { flexBox, scrollBar } from "@/styles/theme";
 
-const EachResultWrapper = styled(CorrectRateWrapper)`
+const EachResultWrapper = styled(CorrectRateWrapper)<{ height?: number }>`
   margin-top: 1.5rem;
   background-color: white;
-  overflow-y: auto;
-  overflow-x: hidden;
-  ${scrollBar(0.75)};
-  height: 632px;
+  height: ${({ height }) => (height ? `${height}rem` : "39.5rem")};
 `;
 
 const ResultTableList = styled.div<{ isLabel?: boolean }>`
@@ -75,7 +72,7 @@ const ResultTableEmail = styled.p`
   color: ${({ theme }) => theme.colors.Gray[500]};
   margin-top: 0.25rem;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
 `;
 export {
   EachResultWrapper,
