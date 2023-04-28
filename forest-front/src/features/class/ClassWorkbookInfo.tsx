@@ -1,3 +1,4 @@
+import { changeStudyType } from "@/utils/changeStudyType";
 import {
   SummaryItemWrapper,
   ClassSummarySubTitle,
@@ -8,8 +9,8 @@ import {
 
 interface Iprops {
   noMargin?: boolean;
-  workbookCreatedDate: string;
   studyCreatedDate: string;
+  studyType: string;
   volume: number;
   isPublic: boolean;
 }
@@ -17,8 +18,8 @@ interface Iprops {
 // 문제집 정보 - 클래스(T), 분석
 export default function ClassWorkbookInfo({
   noMargin,
-  workbookCreatedDate,
   studyCreatedDate,
+  studyType,
   volume,
   isPublic,
 }: Iprops) {
@@ -34,12 +35,12 @@ export default function ClassWorkbookInfo({
       <ClassSummarySubTitle noMargin={noMargin}>문제집 정보</ClassSummarySubTitle>
       <WorkbookInfo>
         <ClassSummaryTextWrapper>
-          <ClassSummaryText isGray>출판</ClassSummaryText>
-          {workbookCreatedDate}
+          <ClassSummaryText isGray>출제일</ClassSummaryText>
+          {studyCreatedDate}
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
-          <ClassSummaryText isGray>제작일</ClassSummaryText>
-          {studyCreatedDate}
+          <ClassSummaryText isGray>속성</ClassSummaryText>
+          {changeStudyType(studyType)}
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>문항 수</ClassSummaryText>

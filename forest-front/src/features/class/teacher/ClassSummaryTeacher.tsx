@@ -60,8 +60,8 @@ export default function ClassSummaryTeacher() {
       <ClassSummaryDeadline>{examResult.endTime}</ClassSummaryDeadline>
       <ClassSummaryItemWrapper>
         <ClassWorkbookInfo
-          workbookCreatedDate={examResult.workbookCreatedDate}
           studyCreatedDate={examResult.studyCreatedDate}
+          studyType={examResult.studyType}
           volume={examResult.volume}
           isPublic={examResult.isPublic}
         />

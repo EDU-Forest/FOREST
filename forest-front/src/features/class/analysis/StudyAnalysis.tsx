@@ -102,8 +102,8 @@ export default function StudyAnalysis() {
               <AnalysisUpperItem>
                 <ClassWorkbookInfo
                   noMargin
-                  workbookCreatedDate={examResult.workbookCreatedDate}
                   studyCreatedDate={examResult.studyCreatedDate}
+                  studyType={examResult.studyType}
                   volume={examResult.volume}
                   isPublic={examResult.isPublic}
                 />
