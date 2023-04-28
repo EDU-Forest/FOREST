@@ -3,22 +3,22 @@ import { SummaryChartWrapper } from "../ClassSummary.style";
 import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
 
 interface Iprops {
-  correctAnswerRate: number;
+  answerRate: AnswerRate;
 }
 
-export default function CorrectRateDonut({ correctAnswerRate }: Iprops) {
+export default function CorrectRateDonut({ answerRate }: Iprops) {
   return (
     <SummaryChartWrapper>
       <PieChart
         data={[
           {
-            value: correctAnswerRate,
+            value: answerRate.correctAnswerRate,
             color: "#74B816",
             name: "chart",
           },
         ]}
         style={{ width: "152px" }}
-        reveal={correctAnswerRate}
+        reveal={answerRate.correctAnswerRate}
         lineWidth={18}
         background="#FFA94D"
         lengthAngle={360}

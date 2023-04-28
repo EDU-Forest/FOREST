@@ -24,63 +24,63 @@ const classAnswerRateList = [
   {
     problemNum: 1,
     correctRate: 80,
+    incorrectRate: 20,
+    ungradedRate: 0,
   },
   {
     problemNum: 2,
-    correctRate: 40,
+    correctRate: 70,
+    incorrectRate: 30,
+    ungradedRate: 0,
   },
   {
     problemNum: 3,
-    correctRate: 50,
+    correctRate: 0,
+    incorrectRate: 0,
+    ungradedRate: 100,
   },
   {
     problemNum: 4,
-    correctRate: 30,
+    correctRate: 40,
+    incorrectRate: 60,
+    ungradedRate: 0,
   },
   {
     problemNum: 5,
     correctRate: 90,
+    incorrectRate: 10,
+    ungradedRate: 0,
   },
   {
     problemNum: 6,
     correctRate: 100,
+    incorrectRate: 0,
+    ungradedRate: 0,
   },
   {
     problemNum: 7,
-    correctRate: 10,
+    correctRate: 0,
+    incorrectRate: 100,
+    ungradedRate: 0,
   },
   {
-    problemNum: 4,
-    correctRate: 30,
+    problemNum: 8,
+    correctRate: 80,
+    incorrectRate: 20,
+    ungradedRate: 0,
   },
   {
-    problemNum: 5,
-    correctRate: 90,
+    problemNum: 9,
+    correctRate: 0,
+    incorrectRate: 0,
+    ungradedRate: 100,
   },
   {
-    problemNum: 6,
-    correctRate: 100,
+    problemNum: 10,
+    correctRate: 50,
+    incorrectRate: 50,
+    ungradedRate: 0,
   },
-  //   {
-  //     problemNum: 7,
-  //     correctRate: 10,
-  //   },
-  //   {
-  //     problemNum: 4,
-  //     correctRate: 30,
-  //   },
-  //   {
-  //     problemNum: 5,
-  //     correctRate: 90,
-  //   },
-  //   {
-  //     problemNum: 6,
-  //     correctRate: 100,
-  //   },
-  //   {
-  //     problemNum: 7,
-  //     correctRate: 10,
-  //   },
 ];
 
 export default function QuestionCorrectRate() {
@@ -134,12 +134,12 @@ export default function QuestionCorrectRate() {
       },
       {
         label: "오답",
-        data: classAnswerRateList.map((item) => (100 - item.correctRate) / 2),
+        data: classAnswerRateList.map((item) => item.incorrectRate),
         backgroundColor: "#FF922B",
       },
       {
         label: "미채점",
-        data: classAnswerRateList.map((item) => (100 - item.correctRate) / 2),
+        data: classAnswerRateList.map((item) => item.ungradedRate),
         backgroundColor: "#DEE2E6",
       },
     ],

@@ -42,8 +42,10 @@ const examResult: TeacherExamResult = {
   takeRate: 80,
 };
 
-const dummyCorrectRate = {
+const answerRate: AnswerRate = {
   correctAnswerRate: 80,
+  incorrectAnswerRate: 20,
+  ungradedAnswerRate: 0,
 };
 
 export default function StudyAnalysis() {
@@ -68,7 +70,7 @@ export default function StudyAnalysis() {
             <AnalysisUpper>
               <AnalysisUpperItem>
                 <AnalysisSubTitle>정답률</AnalysisSubTitle>
-                <CorrectRateDonut correctAnswerRate={dummyCorrectRate.correctAnswerRate} />
+                <CorrectRateDonut answerRate={answerRate} />
                 <div style={{ textAlign: "center" }}>
                   <StyledWorkbookStatus status="loading">
                     학생들이 평균적으로 {examResult.average}%의 문제를 맞췄습니다
