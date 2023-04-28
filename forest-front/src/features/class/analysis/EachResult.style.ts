@@ -8,17 +8,43 @@ const EachResultWrapper = styled(CorrectRateWrapper)`
   overflow-y: auto;
   overflow-x: hidden;
   ${scrollBar(0.75)};
-  height: 700px;
+  height: 632px;
 `;
-
-const ResultTable = styled.div``;
 
 const ResultTableList = styled.div<{ isLabel?: boolean }>`
   ${flexBox("row", "center", "space-between")}
   width: 100%;
   padding: 1rem 0;
-  border-top: 0.0625rem solid
-    ${({ isLabel, theme }) => (isLabel ? "white" : theme.colors.Gray[400])};
+  border-top: 0.0625rem solid ${({ theme }) => theme.colors.Gray[400]};
+
+  ${({ isLabel }) =>
+    isLabel &&
+    css`
+      border-top: none;
+      padding-right: 0.5rem;
+    `}
+`;
+
+const ResultTableContent = styled.div`
+  height: 500px;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    border: 1px solid transparent;
+    border-radius: 3rem;
+    background-color: #ced4da;
+  }
+
+  ::-webkit-scrollbar-track {
+    border-radius: 3rem;
+    /* background-color: #f1f3f5; */
+    background-color: #ffffff;
+  }
 `;
 
 const ResultTableItemBig = styled.div<{ isLabel?: boolean }>`
@@ -28,7 +54,7 @@ const ResultTableItemBig = styled.div<{ isLabel?: boolean }>`
       font-weight: 600;
       color: ${({ theme }) => theme.colors.Gray[500]};
     `}
-  width: 20%;
+  width: 22%;
   text-align: center;
 `;
 const ResultTableItemSmall = styled(ResultTableItemBig)`
@@ -49,10 +75,11 @@ const ResultTableEmail = styled.p`
   color: ${({ theme }) => theme.colors.Gray[500]};
   margin-top: 0.25rem;
   font-weight: 400;
+  font-size: 14px;
 `;
 export {
   EachResultWrapper,
-  ResultTable,
+  ResultTableContent,
   ResultTableList,
   ResultTableItemBig,
   ResultTableItemSmall,
