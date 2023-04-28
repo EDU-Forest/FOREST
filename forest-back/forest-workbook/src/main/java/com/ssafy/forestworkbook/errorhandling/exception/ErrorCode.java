@@ -7,7 +7,7 @@ public enum ErrorCode implements Codable {
 
     AUTH_USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "회원 정보를 찾을 수 없습니다.", false),
     WORKBOOK_FAIL_GET_LIST(HttpStatus.BAD_REQUEST, "문제집 목록을 불러올 수 없습니다.", true),
-    WORKBOOK_PARAM_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 parameter입니다.", false)
+    WORKBOOK_PARAM_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 parameter입니다.", true)
     ;
 
     private final String message;

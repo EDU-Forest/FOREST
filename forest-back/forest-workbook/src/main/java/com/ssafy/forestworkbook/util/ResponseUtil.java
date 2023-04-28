@@ -11,11 +11,12 @@ import java.util.TimeZone;
 
 @Component
 public class ResponseUtil<T> {
+
     public ResponseSuccessDto<T> successResponse(T data, ForestStatus status) {
         ResponseSuccessDto<T> res = ResponseSuccessDto
                 .<T>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("UTC").toZoneId()))
-                .code(HttpStatus.OK.value())
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
+                .code(status.getStatus().value())
                 .status(status.name())
                 .data(data)
                 .build();
