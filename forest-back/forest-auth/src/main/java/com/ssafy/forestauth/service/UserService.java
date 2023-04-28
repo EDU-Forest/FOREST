@@ -3,6 +3,7 @@ package com.ssafy.forestauth.service;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.*;
 import com.ssafy.forestauth.entity.User;
+import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -76,12 +78,20 @@ public class UserService {
         return res;
     }
 
-    public ResponseSuccessDto<LoginResponseDto> getUserInfo(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
-        LoginResponseDto loginResponseDto = LoginResponseDto.builder()
-                .token("test")
+    public ResponseSuccessDto<CheckUserResponseDto> checkSocialUser(String email, EnumUserProviderStatus providerStatus) {
+        Optional<User> findUser = userRepository.findByEmailAndAuthProvider(email, providerStatus);
+        SuccessCode successCode;
+
+        if(findUser.isEmpty()) {
+            successCode = SuccessCode.AUTH_USER_NOT_DUPLICATED;
+        } else {
+            successCode = SuccessCode.AUTH_USER_DUPLICATED;
+        }
+
+        CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
+                .message(successCode.getMessage())
                 .build();
-        ResponseSuccessDto<LoginResponseDto> res = responseUtil.successResponse(loginResponseDto, SuccessCode.AUTH_LOGIN_SUCCESS);
+        ResponseSuccessDto<CheckUserResponseDto> res = responseUtil.successResponse(checkUserResponseDto, successCode);
         return res;
     }
 }

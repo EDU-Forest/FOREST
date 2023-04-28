@@ -62,8 +62,9 @@ public class User {
     private Boolean isDeleted = false;
 
     @Builder
-    public User(String email, EnumUserProviderStatus authProvider, String refreshToken) {
+    public User(String email, String name, EnumUserProviderStatus authProvider, String refreshToken) {
         this.email = email;
+        this.name = name;
         this.authProvider = authProvider;
         this.refreshToken = refreshToken;
     }
@@ -92,5 +93,6 @@ public class User {
         this.birth = signupSocialRequestDto.getBirth();
         this.role = signupSocialRequestDto.getRole();
         this.authProvider = signupSocialRequestDto.getProvider();
+        this.refreshToken = signupSocialRequestDto.getRefreshToken();
     }
 }

@@ -13,4 +13,5 @@ public class SignupSocialRequestDto {
     private LocalDate birth;
     private EnumUserRoleStatus role;
     private EnumUserProviderStatus provider;
+    private String refreshToken;
 }

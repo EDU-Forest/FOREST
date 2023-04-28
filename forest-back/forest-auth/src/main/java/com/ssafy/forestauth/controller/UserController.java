@@ -2,6 +2,7 @@ package com.ssafy.forestauth.controller;
 
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.*;
+import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.service.UserService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-@Api("Auth Controller V1")
+@Api("User Controller V1")
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +22,15 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    // 소셜 회원가입 여부 확인
+    @GetMapping("/check")
+    public ResponseEntity<ResponseSuccessDto<CheckUserResponseDto>> checkSocialUser(
+            @RequestParam("email") String email,
+            @RequestParam("provider") EnumUserProviderStatus providerStatus
+    ) {
+        return ResponseEntity.ok(userService.checkSocialUser(email, providerStatus));
+    }
 
     // 소셜 회원, 정보 추기
     @PostMapping("/social")
@@ -34,12 +43,12 @@ public class UserController {
     }
 
 
-
     /**
      * 이름으로 학생 검색
      */
     @GetMapping("/search")
-    public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(@RequestParam("userName") String userName) {
+    public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
+            @RequestParam("userName") String userName) {
         return ResponseEntity.ok(userService.searchStudent(userName));
     }
 
