@@ -4,6 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class SaveClassRequestDto {
-    private Long userId;
     private String name;
 }

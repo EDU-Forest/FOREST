@@ -31,4 +31,5 @@ public class ClassUser {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
 }
