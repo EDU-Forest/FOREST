@@ -16,7 +16,7 @@ public class SwaggerConfig {
 
     private ApiInfo commonInfo() {
         return new ApiInfoBuilder()
-                .title("Study API")
+                .title("workbook API")
                 .version("1.0")
                 .build();
     }
@@ -24,11 +24,11 @@ public class SwaggerConfig {
     @Bean
     public Docket allApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("Study")
+                .groupName("workbook")
                 .useDefaultResponseMessages(false)
                 .select()
                 //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.ssafy.foreststudy.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.ssafy.forestworkbook.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(commonInfo());

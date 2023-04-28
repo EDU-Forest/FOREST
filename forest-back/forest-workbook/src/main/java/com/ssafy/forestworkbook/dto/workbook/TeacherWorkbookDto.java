@@ -7,7 +7,7 @@ import lombok.*;
 @ToString
 public class TeacherWorkbookDto {
 
-    private int workbookId;
+    private Long workbookId;
     private String title;
     private String workbookImgPath;
     private int bookmarkCount;
