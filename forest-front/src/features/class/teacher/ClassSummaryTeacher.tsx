@@ -25,7 +25,7 @@ const examResult: TeacherExamResult = {
   studyCreatedDate: "2023-04-27", // 출제일
   workbookCreatedDate: "2023-04-27", // 출판일
   volume: 10, // 문항 수
-  isPublic: true,
+  isPublic: false,
   average: 80,
   standardDeviation: 8.5, //표준편차
   averageSolvingTime: 25,
@@ -59,7 +59,12 @@ export default function ClassSummaryTeacher() {
       </ClassSummaryTextWrapper>
       <ClassSummaryDeadline>{examResult.endTime}</ClassSummaryDeadline>
       <ClassSummaryItemWrapper>
-        <ClassWorkbookInfo />
+        <ClassWorkbookInfo
+          workbookCreatedDate={examResult.workbookCreatedDate}
+          studyCreatedDate={examResult.studyCreatedDate}
+          volume={examResult.volume}
+          isPublic={examResult.isPublic}
+        />
         <TotalResult
           average={examResult.average}
           standardDeviation={examResult.standardDeviation}

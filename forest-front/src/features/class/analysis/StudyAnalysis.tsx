@@ -11,8 +11,8 @@ import { useRouter } from "next/router";
 
 import { useState } from "react";
 import AnalysisToggle from "./AnalysisToggle";
-import ClassSummaryResult from "../TotalResult";
-import ClassSummaryWorkbook from "../ClassWorkbookInfo";
+import TotalResult from "../TotalResult";
+import ClassWorkbookInfo from "../ClassWorkbookInfo";
 import TakeRateChart from "../TakeRateChart";
 import CorrectRateDonut from "./CorrectRateDonut";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
@@ -22,28 +22,30 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import DescriptiveForm from "./DescriptiveForm";
 
-const dummyData = {
+const examResult: TeacherExamResult = {
   studyId: 1,
-  title: "킹규림쌤의 수능특강 완성편",
-  startTime: "",
+  title: "킹규림의 수능 100제",
+  startTime: "2023-04-27",
+  endTime: "2023-04-28",
   userName: "킹규림",
-  studyType: "self",
-  scheduleType: "self",
-  studyCreatedDate: "2022-08-08",
-  workbookCreatedDate: "2022-08-08",
-  volume: 20,
-  isPublic: true,
-  average: 88.5,
-  standardDeviation: 8.5,
-  averageSolvingTime: "23:23",
+  studyType: "SELF",
+  scheduleType: "ONGOING",
+  studyCreatedDate: "2023-04-27", // 출제일
+  workbookCreatedDate: "2023-04-27", // 출판일
+  volume: 10, // 문항 수
+  isPublic: false,
+  average: 80,
+  standardDeviation: 8.5, //표준편차
+  averageSolvingTime: 25,
   totalStudent: 20,
-  participantStudent: 16,
+  participantStudent: 15,
   takeRate: 80,
 };
 
 const dummyCorrectRate = {
   correctAnswerRate: 80,
 };
+
 export default function StudyAnalysis() {
   const { studyId } = useSelector((state: RootState) => state.analysis);
   const router = useRouter();
@@ -56,7 +58,7 @@ export default function StudyAnalysis() {
     <>
       <AnalysisTitle>
         <ArrowLeft onClick={goToBack} />
-        <p style={{ marginLeft: "2rem" }}>{dummyData.title}</p>
+        <p style={{ marginLeft: "2rem" }}>{examResult.title}</p>
       </AnalysisTitle>
       <AnalysisContent>
         <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
@@ -69,29 +71,40 @@ export default function StudyAnalysis() {
                 <CorrectRateDonut correctAnswerRate={dummyCorrectRate.correctAnswerRate} />
                 <div style={{ textAlign: "center" }}>
                   <StyledWorkbookStatus status="loading">
-                    학생들이 평균적으로 {dummyData.average}%의 문제를 맞췄습니다
+                    학생들이 평균적으로 {examResult.average}%의 문제를 맞췄습니다
                   </StyledWorkbookStatus>
                 </div>
               </AnalysisUpperItem>
               <AnalysisUpperItem>
-                <ClassSummaryResult noMargin />
+                <TotalResult
+                  noMargin
+                  average={examResult.average}
+                  standardDeviation={examResult.standardDeviation}
+                  averageSolvingTime={examResult.averageSolvingTime}
+                />
               </AnalysisUpperItem>
               <AnalysisUpperItem>
                 <AnalysisSubTitle>응시율</AnalysisSubTitle>
                 <TakeRateChart
                   noTitle
-                  totalStudent={dummyData.totalStudent}
-                  participantStudent={dummyData.participantStudent}
-                  takeRate={dummyData.takeRate}
+                  totalStudent={examResult.totalStudent}
+                  participantStudent={examResult.participantStudent}
+                  takeRate={examResult.takeRate}
                 />
                 <div style={{ textAlign: "center" }}>
                   <StyledWorkbookStatus status="progress">
-                    {dummyData.participantStudent}명의 학생이 응시하였습니다
+                    {examResult.participantStudent}명의 학생이 응시하였습니다
                   </StyledWorkbookStatus>
                 </div>
               </AnalysisUpperItem>
               <AnalysisUpperItem>
-                <ClassSummaryWorkbook noMargin />
+                <ClassWorkbookInfo
+                  noMargin
+                  workbookCreatedDate={examResult.workbookCreatedDate}
+                  studyCreatedDate={examResult.studyCreatedDate}
+                  volume={examResult.volume}
+                  isPublic={examResult.isPublic}
+                />
               </AnalysisUpperItem>
             </AnalysisUpper>
             {/* 문항별 정답률 */}
