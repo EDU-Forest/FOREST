@@ -8,7 +8,7 @@ import {
 } from "../ClassSummary.style";
 import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-icons/md";
 
-export default function ClassSummaryMyResult() {
+export default function () {
   return (
     <SummaryItemWrapper>
       <ClassSummarySubTitle>나의 결과</ClassSummarySubTitle>
