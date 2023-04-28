@@ -23,8 +23,7 @@ public class AuthController {
 
     @GetMapping("/reissue")
     public String reissueAccessToken(HttpServletRequest request,
-                                     @RequestHeader("Authorization") String accessToken,
-                                     @AuthenticationPrincipal UserDetails userDetails) {
+                                     @RequestHeader("Authorization") String accessToken) {
         accessToken = accessToken.substring(7);
 
         String refreshToken = SecurityUtil.getCookie(request, "refresh")

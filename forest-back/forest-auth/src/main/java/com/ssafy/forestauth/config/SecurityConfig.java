@@ -5,6 +5,7 @@ import com.ssafy.forestauth.auth.OAuth2LoginSuccessHandler;
 import com.ssafy.forestauth.auth.jwt.JwtAccessDeniedHandler;
 import com.ssafy.forestauth.auth.jwt.JwtAuthenticationEntryPoint;
 import com.ssafy.forestauth.auth.jwt.JwtFilter;
+import com.ssafy.forestauth.errorhandling.exception.service.InvalidTokenException;
 import com.ssafy.forestauth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,14 +44,26 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .formLogin().disable()
 
                 // 요청 URL 권한
-                .authorizeRequests().antMatchers("/api/user/check", "/api/user/common", "/api/user/social", "/api/user/login", "/api/msg", "/api/class/search")
-                .permitAll()
+//                .authorizeRequests().antMatchers("/api/user/check", "/api/user/common", "/api/user/social", "/api/user/login", "/api/msg", "/api/class/search")
+                .authorizeRequests()
+                .antMatchers(
+                        "**/api/user/search/**",
+                        "**/api/user/check/**",
+                        "**/api/user/common/**",
+                        "**/api/user/login/**",
+                        "**/api/msg/**",
+                        "**/api/class/search/**",
+                        "**/api/workbook/search/**",
+                        "**/api/workbook/best/**",
+                        "**/api/workbook/recent/**"
+                ).permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
 
                 // JWT
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, JwtFilter.class)
 
                 // 예외 처리
                 .exceptionHandling()

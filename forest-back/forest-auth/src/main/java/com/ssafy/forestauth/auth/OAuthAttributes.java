@@ -14,7 +14,7 @@ public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributekey;
 
-    private String userId;
+    private String nickname;
     private String email;
 
      public static OAuthAttributes of(String socialName, Map<String, Object> attributes) {
@@ -25,7 +25,7 @@ public class OAuthAttributes {
      }
 
      public static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_acount");
+         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
 
          return OAuthAttributes.builder()
                  .email((String) kakaoAccount.get("email"))

@@ -30,6 +30,7 @@ public class AuthService {
         User findUserById = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
 
+
         if (!refreshToken.equals(findUserById.getRefreshToken())) {
             throw new InvalidValueException(ErrorCode.AUTH_REFRESH_NOT_VALID);
         }

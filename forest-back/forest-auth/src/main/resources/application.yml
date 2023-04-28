@@ -39,7 +39,7 @@ spring:
 jwt:
   redirect-url: localhost:9000/api/login/
   token:
-    secretKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H # {secretKey} 로 만들기
+    secretKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4HQ4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H # {secretKey} 로 만들기
     refreshKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4Hvvdsvsd
     signatureAlgorithm: HS256
     accessTokenExpired: 604800

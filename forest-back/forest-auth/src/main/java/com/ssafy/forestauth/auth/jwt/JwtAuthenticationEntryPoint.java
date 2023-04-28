@@ -29,6 +29,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         responseJson.put("code", HttpStatus.UNAUTHORIZED.value());
         responseJson.put("message", exception);
 
+        System.out.println("REAL BEFORE");
         response.getWriter().write(String.valueOf(responseJson));
+        System.out.println("REAL AFTER");
     }
 }

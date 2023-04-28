@@ -24,7 +24,7 @@ public class JwtProvider {
     @Value("${jwt.token.secretKey}")
     private String secretKey;
 
-    private static final Long accessTokenValidateTime = 1000L * 60 * 60 * 24; // 하루
+    public static final Long accessTokenValidateTime = 1000L * 60 * 60 * 24; // 하루
     public Long refreshTokenValidateTime = 1000L * 60 * 60 * 24 * 7; // 1주일
     private final String authoritiesKey = "role";
 
@@ -68,7 +68,10 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
+        System.out.println("accessToken = " + accessToken);
         Claims claims = parseClaims(accessToken);
+
+        System.out.println("Claims = " + claims.toString());
         String userId = ((Map<String, Object>) claims).get("userId").toString();
 
         Collection<? extends GrantedAuthority> authorities =

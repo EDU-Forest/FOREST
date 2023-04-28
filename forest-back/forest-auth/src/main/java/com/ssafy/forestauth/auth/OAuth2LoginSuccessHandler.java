@@ -43,9 +43,18 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                     .path("/")
                     .build();
 
+            ResponseCookie cookie2 = ResponseCookie.from("access", accessToken)
+                    .httpOnly(true)
+                    .maxAge(JwtProvider.accessTokenValidateTime)
+                    .path("/")
+                    .build();
+
+
             // 로그인 실패가 발생했을 떄 세션에 저장된 에러 지움
             clearAuthenticationAttributes(request);
             response.addHeader("Set-Cookie", cookie.toString());
+            response.addHeader("Set-Cookie", cookie2.toString());
+
             String targetUrl = accessTokenRedirectUrl + accessToken;
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } catch (Exception e) {
