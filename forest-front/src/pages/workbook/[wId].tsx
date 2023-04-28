@@ -8,6 +8,7 @@ import WorkbookDetailInfoOverview from "@/features/workbookDetail/WorkbookDetail
 import WorkbookDetailQuestion from "@/features/workbookDetail/WorkbookDetailQuestion";
 import WorkbookDetailQuestionList from "@/features/workbookDetail/WorkbookDetailQuestionList";
 import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideReturn";
+import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useState } from "react";
 
@@ -156,6 +157,8 @@ function WorkbookDetail() {
   // 현재 문제
   // 문제집 내에 문제가 없는 경우에는 첫 문제를 세팅
   const [curQuestion, setCurQuestion] = useState(questions.length === 0 ? 0 : questions[0].id);
+  // modal open/close
+  const [isExportOpen, setIsExportOpen] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question) => {
@@ -185,7 +188,7 @@ function WorkbookDetail() {
         />
       </WorkbookDetailQuestionOverviewAndContentBox>
       <WorkbookDetailQuestionBtnAndVisibilityBox>
-        <WorkbookDetailBtns />
+        <WorkbookDetailBtns setIsExportOpen={setIsExportOpen} />
         <WorkbookDetailQuestionList
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
@@ -194,6 +197,9 @@ function WorkbookDetail() {
           setQuestionSum={setQuestionSummary}
         />
       </WorkbookDetailQuestionBtnAndVisibilityBox>
+
+      {/* 내보내기 모달 */}
+      {isExportOpen && <WorkbookExportModal setIsOpen={setIsExportOpen} />}
     </StyledWorkbookDetailBox>
   );
 }

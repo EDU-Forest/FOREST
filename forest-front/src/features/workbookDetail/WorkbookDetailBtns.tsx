@@ -4,8 +4,12 @@ import { MdOutlineFileCopy, MdOutlineFileUpload, MdSave } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { StyledWorkbookDetailBtnsBox, WorkbookSaveBtn } from "./WorkbookDetail.style";
 
-function WorkbookDetailBtns() {
-  // dummy: save loadin action
+interface IProps {
+  setIsExportOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function WorkbookDetailBtns({ setIsExportOpen }: IProps) {
+  // dummy: save loading action
   const [saveLoading, setSaveLoading] = useState(false);
 
   const handleClickSave = () => {
@@ -24,14 +28,15 @@ function WorkbookDetailBtns() {
 
   const handleClickExport = () => {
     // export api call
+    setIsExportOpen(true);
   };
 
   return (
     <StyledWorkbookDetailBtnsBox>
-      <WorkbookSaveBtn onClick={handleClickSave} >
+      <WorkbookSaveBtn onClick={handleClickSave}>
         {saveLoading ? (
           <>
-            <ClipLoader color="white" size={18} speedMultiplier={0.7}/>
+            <ClipLoader color="white" size={18} speedMultiplier={0.7} />
             저장 중
           </>
         ) : (
@@ -41,13 +46,13 @@ function WorkbookDetailBtns() {
           </>
         )}
       </WorkbookSaveBtn>
-      <StyledRoundGhostBtn>
-        <MdOutlineFileCopy onClick={handleClickCopy} />
+      <StyledRoundGhostBtn onClick={handleClickCopy}>
+        <MdOutlineFileCopy />
         사본
       </StyledRoundGhostBtn>
 
-      <StyledRoundGhostBtn>
-        <MdOutlineFileUpload onClick={handleClickExport} />
+      <StyledRoundGhostBtn onClick={handleClickExport}>
+        <MdOutlineFileUpload />
         내보내기
       </StyledRoundGhostBtn>
     </StyledWorkbookDetailBtnsBox>
