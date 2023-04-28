@@ -17,9 +17,9 @@ interface Iprops {
 
 export default function CommonWorkbook({ id, title, likes, used, clickAction }: Iprops) {
   return (
-    <WorkbookCard onClick={() => clickAction && clickAction(id)}>
-      <WorkbookImg src="/images/workbook.png" />
-      <WorkbookTitle>{title}</WorkbookTitle>
+    <WorkbookCard>
+      <WorkbookImg src="/images/workbook.png" onClick={() => clickAction && clickAction(id)} />
+      <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
       {likes && (
         <WorkbookContentWrapper>
           <WorkbookIcon>🧡</WorkbookIcon>
