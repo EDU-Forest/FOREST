@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
 import CommonWorkbook from "@/components/Workbook/CommonWorkbook";
-import { WorkbookType } from "./LikeWorkbook";
 import { StyledWorkbookListBox } from "./Workbook.style";
+import { WorkbookType } from "@/types/Workbook";
 
 interface IProps {
   list: WorkbookType[];
@@ -14,7 +14,7 @@ function WorkbookList({ list }: IProps) {
   const handleClickWorkbook = (id: number) => {
     router.push({
       pathname: `/workbook/[wId]`,
-      query: {wId: id},
+      query: { wId: id },
     });
   };
 
