@@ -20,17 +20,15 @@ public class Problem {
     @Column(name = "id", columnDefinition = "bigint", nullable = false)
     private Long id;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "image_id", nullable = false)
-    private ProblemImg img;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type", columnDefinition = "varchar(10)", nullable = false)
     private EnumProblemTypeStatus type;
 
     @Column(name = "title", columnDefinition = "varchar(30)", nullable = false)
     private String title;
+
+    @Column(name = "path", columnDefinition = "varchar(255)")
+    private String img;
 
     @Column(name = "text", columnDefinition = "varchar(255)")
     private String text;
