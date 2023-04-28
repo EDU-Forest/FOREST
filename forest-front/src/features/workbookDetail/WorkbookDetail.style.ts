@@ -216,7 +216,7 @@ export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>
     isSelected ? theme.colors.Lime[800] : theme.colors.Gray[800]};
   font-weight: ${({ isSelected }) => isSelected && "bold"};
 
-  cursor: pointer;
+  cursor: grab;
 
   :hover {
     background-color: ${({ isSelected, theme }) => !isSelected && theme.colors.Gray[200]};
