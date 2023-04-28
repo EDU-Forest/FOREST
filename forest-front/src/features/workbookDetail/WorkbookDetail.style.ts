@@ -1,5 +1,6 @@
+import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
 import { WorkbookImg } from "@/components/Workbook/Workbook.style";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const StyledWorkbookDetailBox = styled.div`
   min-height: 100vh;
@@ -329,4 +330,22 @@ export const StyledQuestionChoiceNumBox = styled.div`
   color: ${({ theme }) => theme.colors.Lime[600]};
   font-size: 0.875rem;
   font-weight: bold;
+`;
+
+const reactSpinnersClipLoaderClip = keyframes`
+  0% {
+      transform: rotate(0deg) scale(1);
+  }
+  50% {
+      transform: none !important;
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+`;
+
+export const WorkbookSaveBtn = styled(StyledRoundSolid600Btn)`
+  > span {
+    animation-name: ${reactSpinnersClipLoaderClip} !important;
+  }
 `;
