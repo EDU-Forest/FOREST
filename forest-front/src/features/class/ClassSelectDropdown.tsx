@@ -8,7 +8,7 @@ import {
 } from "./ClassSelect.style";
 import { setClass } from "@/stores/teacher/teacherClass";
 import { useState } from "react";
-import ClassAddModal from "./teacher/ClassAddModal";
+import AddClassModal from "./teacher/AddClassModal";
 
 interface Iprops {
   classList: ClassList[];
@@ -37,7 +37,7 @@ export default function ClassSelectDropdown({ classList, nowClassId, isStudent }
       {!isStudent && (
         <>
           <ClassSelectDropdownAdd onClick={handleModal}>+ 새 클래스 추가</ClassSelectDropdownAdd>
-          {isOpen && <ClassAddModal handleModal={handleModal} />}
+          {isOpen && <AddClassModal handleModal={handleModal} />}
         </>
       )}
     </ClassSelectDropdownContainer>

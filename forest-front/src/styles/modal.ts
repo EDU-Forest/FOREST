@@ -5,7 +5,7 @@ export const ModalBox = styled.div<{ padding?: number }>`
   min-width: 18.75rem;
   min-height: 12.5rem;
 
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
 

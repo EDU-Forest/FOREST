@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { ClassAddModalContainer, ClassInputBtnWrapper } from "./ClassAddModal.style";
 import { CommonInput } from "@/components/Input/Input.style";
 import {
   ClassSelectDropdownContainer,
   ClassSelectDropdownEach,
   ClassSelectDropdownEachItem,
 } from "../ClassSelect.style";
+import { ClassAddModalContainer, ClassInputBtnWrapper } from "./AddClassModal.style";
 
 const ClassStudentAddModalContainer = styled(ClassAddModalContainer)`
   z-index: 10;

@@ -8,7 +8,7 @@ import {
 } from "./ClassStudentList.style";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { useState } from "react";
-import ClassStudentAddModal from "./ClassStudentAddModal";
+import AddStudentModal from "./AddStudentModal";
 
 const studentList: Student[] = [
   {
@@ -92,7 +92,7 @@ export default function ClassStudentList() {
           학생 추가
         </StudentAddText>
       </StudentListTextWrapper>
-      {isOpen && <ClassStudentAddModal handleModal={handleModal} />}
+      {isOpen && <AddStudentModal handleModal={handleModal} />}
 
       <StudentListWrapper>
         {studentList?.map((item, idx) => (

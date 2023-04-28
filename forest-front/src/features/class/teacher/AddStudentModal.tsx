@@ -9,7 +9,7 @@ import {
   ClassStudentAddEmail,
   ClassStudentAddList,
   ClassStudentAddBtnWrapper,
-} from "./ClassStudentAddModal.style";
+} from "./AddStudentModal.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useState } from "react";
 
@@ -55,7 +55,7 @@ const searchList: Student[] = [
   },
 ];
 
-export default function ClassStudentAddModal({ handleModal }: Iprops) {
+export default function AddStudentModal({ handleModal }: Iprops) {
   const confirm = () => {
     //확인버튼
   };

@@ -6,15 +6,16 @@ import {
   ClassInput,
   ClassInputMsg,
   ClassInputBtnWrapper,
-} from "./ClassAddModal.style";
+} from "./AddClassModal.style";
 import { useState } from "react";
 import SmallBtn from "@/components/Button/SmallBtn";
+import React from "react";
 
 interface Iprops {
   handleModal: () => void;
 }
 
-export default function ClassAddModal({ handleModal }: Iprops) {
+export default function AddClassModal({ handleModal }: Iprops) {
   const [className, setClassName] = useState<string>("");
   // isSuccess -> axios 요청 성공 여부
 
