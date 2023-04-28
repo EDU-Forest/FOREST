@@ -47,7 +47,7 @@ export default function ClassSummaryStudent() {
       <ClassSummaryTextWrapper>
         <ClassSummaryTextItem>
           <ClassSummaryTitle>{examResult.title}</ClassSummaryTitle>
-          <WorkbookStatus status="progress" />
+          <WorkbookStatus status={examResult.scheduleType} />
         </ClassSummaryTextItem>
         <ClassSummaryText
           isGray
@@ -58,7 +58,7 @@ export default function ClassSummaryStudent() {
           <AiOutlineRight className="icon" />
         </ClassSummaryText>
       </ClassSummaryTextWrapper>
-      <ClassSummaryDeadline>{examResult.endTime}</ClassSummaryDeadline>
+      <ClassSummaryDeadline>~ {examResult.endTime}</ClassSummaryDeadline>
       <ClassSummaryItemWrapper>
         <ClassScoreChart
           myScore={examResult.studentResult.studentScore}

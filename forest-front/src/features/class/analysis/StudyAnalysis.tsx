@@ -72,7 +72,7 @@ export default function StudyAnalysis() {
                 <AnalysisSubTitle>정답률</AnalysisSubTitle>
                 <CorrectRateDonut answerRate={answerRate} />
                 <div style={{ textAlign: "center" }}>
-                  <StyledWorkbookStatus status="loading">
+                  <StyledWorkbookStatus status="BEFORE">
                     학생들이 평균적으로 {answerRate.correctAnswerRate}%의 문제를 맞췄습니다
                   </StyledWorkbookStatus>
                 </div>
@@ -94,7 +94,7 @@ export default function StudyAnalysis() {
                   takeRate={examResult.takeRate}
                 />
                 <div style={{ textAlign: "center" }}>
-                  <StyledWorkbookStatus status="progress">
+                  <StyledWorkbookStatus status="ONGOING">
                     {examResult.participantStudent}명의 학생이 응시하였습니다
                   </StyledWorkbookStatus>
                 </div>
