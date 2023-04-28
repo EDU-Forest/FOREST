@@ -13,6 +13,10 @@ const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
     background-color: red;
   } */
 
+  @media ${({ theme }) => theme.tablet} {
+    width: ${({ isScore }) => isScore && "3rem"};
+  }
+
   &::placeholder {
     color: ${({ theme }) => theme.colors.Gray[500]};
   }

@@ -36,7 +36,7 @@ const studentStudyResultList = [
     enterTime: "2023.04.19 11:32",
     exitTime: "2023.04.19 13:22",
     correctNum: 15,
-    correctRate: 87,
+    correctRate: 20,
   },
   {
     name: "김이름",
@@ -52,7 +52,7 @@ const studentStudyResultList = [
     enterTime: "2023.04.19 11:32",
     exitTime: "2023.04.19 13:22",
     correctNum: 15,
-    correctRate: 87,
+    correctRate: 30,
   },
   {
     name: "김이름",
@@ -68,7 +68,7 @@ const studentStudyResultList = [
     enterTime: "2023.04.19 11:32",
     exitTime: "2023.04.19 13:22",
     correctNum: 15,
-    correctRate: 87,
+    correctRate: 40,
   },
   {
     name: "김이름",
@@ -84,6 +84,13 @@ export default function EachResult() {
   const { studyId } = useSelector((state: RootState) => state.analysis);
   const goToGrade = () => {
     // 상세 성적으로 이동
+  };
+  const correctColor = (correctRate: number) => {
+    if (correctRate < 50) {
+      return true;
+    } else {
+      return false;
+    }
   };
   return (
     <EachResultWrapper>
@@ -109,7 +116,9 @@ export default function EachResult() {
               <ResultTableItemBig>{item.enterTime}</ResultTableItemBig>
               <ResultTableItemBig>{item.exitTime}</ResultTableItemBig>
               <ResultTableItemSmall>{item.correctNum}</ResultTableItemSmall>
-              <ResultTableItemSmall>{item.correctRate} %</ResultTableItemSmall>
+              <ResultTableItemSmall incorrect={correctColor(item.correctRate)}>
+                <span>{item.correctRate}</span>%
+              </ResultTableItemSmall>
               <ResultTableItemSmall>
                 <MdEqualizer className="icon" onClick={goToGrade} />
               </ResultTableItemSmall>

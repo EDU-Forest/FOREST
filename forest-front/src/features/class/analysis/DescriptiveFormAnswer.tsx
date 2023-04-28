@@ -84,7 +84,9 @@ export default function DescriptiveFormAnswer() {
     <EachResultWrapper height={37.5}>
       <>
         <ResultTableList isLabel>
-          <ResultTableItemSmall isLabel>순번</ResultTableItemSmall>
+          <ResultTableItemSmall isLabel isIdx>
+            순번
+          </ResultTableItemSmall>
           <TableItemAnswer isLabel>답안</TableItemAnswer>
           <ResultTableItemSmall isLabel>유사도</ResultTableItemSmall>
           <ResultTableItemSmall isLabel>핵심 키워드</ResultTableItemSmall>
@@ -93,11 +95,13 @@ export default function DescriptiveFormAnswer() {
         <ResultTableContent>
           {dummy.map((item, idx) => (
             <ResultTableList key={idx}>
-              <ResultTableItemSmall>{idx + 1}</ResultTableItemSmall>
+              <ResultTableItemSmall isIdx>{idx + 1}</ResultTableItemSmall>
               <TableItemAnswer>{item.answer}</TableItemAnswer>
-              <ResultTableItemSmall>{item.similarity}</ResultTableItemSmall>
+              <ResultTableItemSmall isOrange>
+                <span>{item.similarity}</span> %
+              </ResultTableItemSmall>
               <ResultTableItemSmall>
-                {item.keyword} / {item.allKeyword}
+                <span>{item.keyword}</span>/ {item.allKeyword}
               </ResultTableItemSmall>
               <ResultTableItemSmall>
                 <ScoreInput

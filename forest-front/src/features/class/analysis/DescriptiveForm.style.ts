@@ -78,6 +78,7 @@ const DescriptiveFormUpperScore = styled.div`
 
 const TableItemAnswer = styled(ResultTableItemBig)`
   width: 40%;
+  margin: 0.5rem 0;
 `;
 
 export {

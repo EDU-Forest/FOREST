@@ -25,6 +25,7 @@ const ResultTableList = styled.div<{ isLabel?: boolean }>`
 const ResultTableContent = styled.div`
   height: 500px;
   overflow-y: scroll;
+  overflow-x: hidden;
 
   &::-webkit-scrollbar {
     width: 0.5rem;
@@ -54,12 +55,36 @@ const ResultTableItemBig = styled.div<{ isLabel?: boolean }>`
   width: 22%;
   text-align: center;
 `;
-const ResultTableItemSmall = styled(ResultTableItemBig)`
-  width: 10%;
+const ResultTableItemSmall = styled(ResultTableItemBig)<{
+  isIdx?: boolean;
+  isOrange?: boolean;
+  incorrect?: boolean;
+}>`
+  width: ${({ isIdx }) => (isIdx ? "5%" : "10%")};
 
   .icon {
     font-size: 1.5rem;
     cursor: pointer;
+  }
+
+  span {
+    color: ${({ theme, isOrange }) =>
+      isOrange ? theme.colors.Orange[700] : theme.colors.Lime[700]};
+    margin-right: ${({ isOrange }) => !isOrange && "0.25rem"};
+    font-weight: 700;
+  }
+
+  ${({ incorrect }) =>
+    incorrect &&
+    css`
+      span {
+        color: ${({ theme }) => theme.colors.Orange[700]};
+        margin-right: 0.25rem;
+      }
+    `}
+
+  @media ${({ theme }) => theme.tablet} {
+    width: ${({ isIdx }) => (isIdx ? "8%" : "12%")};
   }
 `;
 
