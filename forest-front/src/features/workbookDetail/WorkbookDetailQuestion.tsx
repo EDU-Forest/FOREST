@@ -31,18 +31,13 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
 
   useEffect(() => {
     getQuestionNum();
-  }, [questionSumm]);
-  
-  useEffect(() => {
-    console.log(curQuestionNum);
-  }, [curQuestionNum]);
+  }, [questionSumm, curQuestion]);
 
   return (
     // 객관식
     <StyledWorkbookDetailQuestionBox>
       <StyledQuestionDetailTitleBox>
         <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
-        {/* <StyledQuestionDetailNumBox>{question?.problemNum}</StyledQuestionDetailNumBox> */}
         <span>{question?.title}</span>
         <StyledTextBtn>수정</StyledTextBtn>
       </StyledQuestionDetailTitleBox>
