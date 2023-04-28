@@ -1,7 +1,7 @@
 import TestInfoBox from "./TestInfoBox";
 import { StyledTestInfoContainer, TestStartImg } from "./TestInfo.style";
 import TestInfoTitleBox from "./TestInfoTitleBox";
-import TestInfoBtn from "./TestInfoBtn";
+import TestInfoBtn from "../common/TestCommonBtn";
 
 export default function TestInfoContainer() {
   return (

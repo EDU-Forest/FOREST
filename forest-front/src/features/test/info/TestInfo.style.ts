@@ -53,22 +53,22 @@ const StyledTestInfoText = styled.div`
   font-size: 16px;
 `;
 
-const StyledTestInfoBtn = styled.button`
-  width: 15rem;
-  height: 2.5rem;
-  background-color: ${({ theme }) => theme.colors.Lime[700]};
-  border: none;
-  border-radius: 1.5rem;
-  line-height: 2.5rem;
-  text-align: center;
-  color: white;
-  margin-top: 3rem;
-  font-weight: 700;
+// const StyledTestInfoBtn = styled.button`
+//   width: 15rem;
+//   height: 2.5rem;
+//   background-color: ${({ theme }) => theme.colors.Lime[700]};
+//   border: none;
+//   border-radius: 1.5rem;
+//   line-height: 2.5rem;
+//   text-align: center;
+//   color: white;
+//   margin-top: 3rem;
+//   font-weight: 700;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.Lime[900]};
-  }
-`;
+//   &:hover {
+//     background-color: ${({ theme }) => theme.colors.Lime[900]};
+//   }
+// `;
 
 export {
   StyledTestInfoBox,
@@ -78,5 +78,4 @@ export {
   StyledTestInfoLabel,
   StyledTestInfoContent,
   StyledTestInfoText,
-  StyledTestInfoBtn,
 };
