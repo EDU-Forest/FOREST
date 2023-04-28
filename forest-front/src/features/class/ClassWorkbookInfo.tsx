@@ -5,6 +5,7 @@ import {
   WorkbookInfo,
   ClassSummaryTextWrapper,
   ClassSummaryText,
+  ClassSummaryValue,
 } from "./ClassSummary.style";
 
 interface Iprops {
@@ -36,19 +37,19 @@ export default function ClassWorkbookInfo({
       <WorkbookInfo>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>출제일</ClassSummaryText>
-          {studyCreatedDate}
+          <ClassSummaryValue>{studyCreatedDate}</ClassSummaryValue>
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>속성</ClassSummaryText>
-          {changeStudyType(studyType)}
+          <ClassSummaryValue>{changeStudyType(studyType)}</ClassSummaryValue>
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>문항 수</ClassSummaryText>
-          {volume}
+          <ClassSummaryValue>{volume}</ClassSummaryValue>
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>공개여부</ClassSummaryText>
-          {disclosure()}
+          <ClassSummaryValue>{disclosure()}</ClassSummaryValue>
         </ClassSummaryTextWrapper>
       </WorkbookInfo>
     </SummaryItemWrapper>

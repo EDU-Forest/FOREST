@@ -17,8 +17,8 @@ import TotalResult from "../TotalResult";
 const examResult: StudentExamList = {
   studyId: 1,
   title: "킹규림의 수능 100제",
-  startTime: "2023-04-27",
-  endTime: "2023-04-28",
+  startTime: "2023.04.27",
+  endTime: "2023.04.28",
   userName: "킹규림",
   studyType: "SELF",
   scheduleType: "ONGOING",

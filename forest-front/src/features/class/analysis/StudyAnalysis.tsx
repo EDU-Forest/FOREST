@@ -30,8 +30,8 @@ const examResult: TeacherExamResult = {
   userName: "킹규림",
   studyType: "SELF",
   scheduleType: "ONGOING",
-  studyCreatedDate: "2023-04-27", // 출제일
-  workbookCreatedDate: "2023-04-27", // 출판일
+  studyCreatedDate: "2023.04.27", // 출제일
+  workbookCreatedDate: "2023.04.27", // 출판일
   volume: 10, // 문항 수
   isPublic: false,
   average: 80,
