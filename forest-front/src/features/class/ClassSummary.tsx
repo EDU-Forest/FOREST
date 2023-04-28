@@ -20,6 +20,26 @@ interface Iprops {
   isStudent?: boolean;
 }
 
+const examResult: TeacherExamResult = {
+  studyId: 1,
+  title: "킹규림의 수능 100제",
+  startTime: "2023-04-27",
+  endTime: "2023-04-28",
+  userName: "킹규림",
+  studyType: "SELF",
+  scheduleType: "",
+  studyCreatedDate: "2023-04-27", // 출제일
+  workbookCreatedDate: "2023-04-27", // 출판일
+  volume: 10, // 문항 수
+  isPublic: true,
+  average: 80,
+  standardDeviation: 8.5, //표준편차
+  averageSolvingTime: 25,
+  totalStudent: 20,
+  participantStudent: 15,
+  takeRate: 80,
+};
+
 export default function ClassSummary({ isStudent }: Iprops) {
   const router = useRouter();
   const id = 1; // 임시
@@ -35,31 +55,43 @@ export default function ClassSummary({ isStudent }: Iprops) {
     <ClassSummaryWrapper>
       <ClassSummaryTextWrapper>
         <ClassSummaryTextItem>
-          <ClassSummaryTitle>킹규림의 수능 100제</ClassSummaryTitle>
+          <ClassSummaryTitle>{examResult.title}</ClassSummaryTitle>
           <WorkbookStatus status="progress" />
         </ClassSummaryTextItem>
         <ClassSummaryText
           isGray
           style={{ cursor: "pointer", margin: "0px" }}
-          onClick={() => goToDetail(id)}
+          onClick={() => goToDetail(examResult.studyId)}
         >
           자세히 보기
           <AiOutlineRight className="icon" />
         </ClassSummaryText>
       </ClassSummaryTextWrapper>
-      <ClassSummaryDeadline>~ 2023.04.16 16:00</ClassSummaryDeadline>
+      <ClassSummaryDeadline>{examResult.endTime}</ClassSummaryDeadline>
       <ClassSummaryItemWrapper>
         {isStudent ? (
           <>
-            <ClassSummaryScoreChart score={80} />
+            <ClassSummaryScoreChart score={10} />
             <ClassSummaryMyResult />
-            <ClassSummaryResult />
+            <ClassSummaryResult
+              average={examResult.average}
+              standardDeviation={examResult.standardDeviation}
+              averageSolvingTime={examResult.averageSolvingTime}
+            />
           </>
         ) : (
           <>
             <ClassSummaryWorkbook />
-            <ClassSummaryResult />
-            <TakeRateChart totalStudent={15} participantStudent={12} takeRate={80} />
+            <ClassSummaryResult
+              average={examResult.average}
+              standardDeviation={examResult.standardDeviation}
+              averageSolvingTime={examResult.averageSolvingTime}
+            />
+            <TakeRateChart
+              totalStudent={examResult.totalStudent}
+              participantStudent={examResult.participantStudent}
+              takeRate={examResult.takeRate}
+            />
           </>
         )}
       </ClassSummaryItemWrapper>

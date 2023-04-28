@@ -10,10 +10,6 @@ import { setClass } from "@/stores/teacher/teacherClass";
 import { useState } from "react";
 import ClassAddModal from "./teacher/ClassAddModal";
 
-interface ClassList {
-  classId: number;
-  className: string;
-}
 interface Iprops {
   classList: ClassList[];
   nowClassId: number;
@@ -34,7 +30,7 @@ export default function ClassSelectDropdown({ classList, nowClassId, isStudent }
       <ClassSelectDropdownEach>
         {classList?.map((item) => (
           <ClassSelectDropdownEachItem key={item.classId} onClick={() => changeClass(item)}>
-            {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
+            {item.classId === nowClassId && <ClassSelectCircle />} {item.name}
           </ClassSelectDropdownEachItem>
         ))}
       </ClassSelectDropdownEach>

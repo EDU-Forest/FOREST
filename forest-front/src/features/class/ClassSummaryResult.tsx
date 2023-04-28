@@ -10,8 +10,17 @@ import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-ic
 
 interface Iprops {
   noMargin?: boolean;
+  average: number;
+  standardDeviation: number;
+  averageSolvingTime: number;
 }
-export default function ClassSummaryResult({ noMargin }: Iprops) {
+
+export default function ClassSummaryResult({
+  noMargin,
+  average,
+  standardDeviation,
+  averageSolvingTime,
+}: Iprops) {
   return (
     <SummaryItemWrapper>
       <ClassSummarySubTitle noMargin={noMargin}>전체 결과</ClassSummarySubTitle>
@@ -24,7 +33,7 @@ export default function ClassSummaryResult({ noMargin }: Iprops) {
             <ClassSummaryText>평균 점수</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>87.5</ClassSummaryText>
+            <ClassSummaryText>{average}</ClassSummaryText>
             <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -36,7 +45,7 @@ export default function ClassSummaryResult({ noMargin }: Iprops) {
             <ClassSummaryText>표준 편차</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>7.5</ClassSummaryText>
+            <ClassSummaryText>{standardDeviation}</ClassSummaryText>
             <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -48,10 +57,8 @@ export default function ClassSummaryResult({ noMargin }: Iprops) {
             <ClassSummaryText>풀이 시간</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>23</ClassSummaryText>
+            <ClassSummaryText>{averageSolvingTime}</ClassSummaryText>
             <ClassSummaryText isGray>분</ClassSummaryText>
-            <ClassSummaryText>23</ClassSummaryText>
-            <ClassSummaryText isGray>초</ClassSummaryText>
           </div>
         </ResultInfoItem>
       </SummaryResultWrapper>

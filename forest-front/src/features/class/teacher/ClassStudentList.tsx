@@ -9,6 +9,7 @@ import {
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { useState } from "react";
 import ClassStudentAddModal from "./ClassStudentAddModal";
+
 const studentList: Student[] = [
   {
     userId: 1,
@@ -94,8 +95,8 @@ export default function ClassStudentList() {
       {isOpen && <ClassStudentAddModal handleModal={handleModal} />}
 
       <StudentListWrapper>
-        {studentList?.map((item) => (
-          <StudentInfoCard studentInfo={item} />
+        {studentList?.map((item, idx) => (
+          <StudentInfoCard key={idx} studentInfo={item} />
         ))}
       </StudentListWrapper>
     </>
