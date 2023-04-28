@@ -1,4 +1,4 @@
-import { StyledTestHeaderContentBox, StyledTestHeaderText } from "./index.style";
+import { StyledTestHeaderContentBox, StyledTestHeaderText } from "./TextIndex.style";
 
 export default function TestHeaderRightContentBox() {
   return (

@@ -1,5 +1,5 @@
 import TestProblemTitleLabel from "./TestProblemTitleLabel";
-import { StyledTestProblemTitle, StyledTestProblemTitleContent } from "./index.style";
+import { StyledTestProblemTitle, StyledTestProblemTitleContent } from "./TextIndex.style";
 
 export default function TestProblemTitle() {
   return (

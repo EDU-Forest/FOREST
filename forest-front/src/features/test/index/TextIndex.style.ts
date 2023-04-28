@@ -1,3 +1,4 @@
+import { StyledCommonBtn } from "@/components/Button/Btn.style";
 import { Title } from "@/styles/text";
 import styled from "styled-components";
 
@@ -7,6 +8,9 @@ const StyledTestContainer = styled.div`
 
 const StyledAnswerBox = styled.div`
   margin-left: 1.5rem;
+  width: calc(100vw - 67.25rem);
+  min-width: 10rem;
+  max-width: 21.5rem;
 `;
 
 const StyledTestHeader = styled.div`
@@ -17,6 +21,8 @@ const StyledTestHeader = styled.div`
   align-items: center;
   background-color: white;
   padding: 24px;
+  position: fixed;
+  top: 0;
 `;
 
 const StyledTestHeaderContentBox = styled.div`
@@ -46,16 +52,18 @@ const StyledTestHeaderText = styled.div`
 
 // TestContent
 const StyledTestContent = styled.div`
-  margin: 48px 60px;
+  margin: 8rem 3.75rem;
   display: flex;
+  justify-content: center;
 `;
 
 const StyledTestProblemBox = styled.div`
-  width: 952px;
-  padding: 40px 40px 18px 40px;
+  width: calc(100vw - 30.5rem);
+  min-width: 33.5rem;
+  padding: 2.5rem 2.5rem 1.125rem 2.5rem;
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
-  border-radius: 24px;
+  border-radius: 1.5rem;
   overflow: auto;
 `;
 
@@ -88,7 +96,7 @@ const StyledTestProblemText = styled.div`
   line-height: 150%;
 `;
 
-const StyledTestProblemAnswer = styled.div``;
+const StyledTestProblemMultipleChoiceAnswer = styled.div``;
 
 const StyledTestProblemAnswerNumber = styled.div`
   display: flex;
@@ -125,10 +133,15 @@ const StyledTestAnswerTable = styled.table`
   box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.Lime[800]};
   border-collapse: collapse;
   text-align: center;
-  width: 21.5rem;
+  width: 100%;
 
-  tbody:last-child :first-child {
-    border-radius: 0.5rem;
+  tbody:last-child {
+    & :first-child {
+      border-radius: 0 0 0 0.5rem;
+    }
+    & :last-child {
+      border-radius: 0 0 0.5rem 0;
+    }
   }
 
   th {
@@ -153,6 +166,75 @@ const StyledTestAnswerTable = styled.table`
       background-color: ${({ theme }) => theme.colors.Lime[50]};
       color: ${({ theme }) => theme.colors.Lime[700]};
     }
+
+    & td:nth-child(2) {
+      background-color: white;
+    }
+  }
+`;
+
+const StyledTestSubmitBtn = styled(StyledCommonBtn)`
+  margin: 1.5rem 0rem;
+  width: 100%;
+  border-radius: 0.5rem;
+`;
+
+const StyledTestProblemShortAnswer = styled.input`
+  width: 54.5rem;
+  height: 3.5rem;
+  line-height: 3.5rem;
+  padding: 0rem 1.5rem;
+  background-color: ${({ theme }) => theme.colors.Gray[50]};
+  border: none;
+  border-radius: 0.5rem;
+
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.Gray[500]};
+    padding: 0rem 1.5rem;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+`;
+
+const StyledTestProblemEssayAnswer = styled.textarea`
+  width: 54.5rem;
+  height: 11.5rem;
+  padding: 1.5rem;
+  background-color: ${({ theme }) => theme.colors.Gray[50]};
+  border: none;
+  border-radius: 0.5rem;
+  resize: none;
+
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.Gray[500]};
+    padding: 1.5rem;
+    outline: none;
+  }
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+`;
+
+const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .correct-icon {
+    width: 9.25rem;
+    height: 9.25rem;
+    color: ${({ selectedMenu, theme }) =>
+      selectedMenu === "correct" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+  }
+
+  .wrong-icon {
+    width: 11.5rem;
+    height: 11.5rem;
+    color: ${({ selectedMenu, theme }) =>
+      selectedMenu === "wrong" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
   }
 `;
 
@@ -169,10 +251,14 @@ export {
   StyledTestProblemTitleLabel,
   StyledTestProblemTitleContent,
   StyledTestProblemText,
-  StyledTestProblemAnswer,
+  StyledTestProblemMultipleChoiceAnswer,
   StyledTestProblemAnswerNumber,
   StyledTestNumberBtn,
   StyledTestNumberText,
   StyledUsername,
   StyledTestAnswerTable,
+  StyledTestSubmitBtn,
+  StyledTestProblemShortAnswer,
+  StyledTestProblemEssayAnswer,
+  StyledTestProblemOXAnswer,
 };

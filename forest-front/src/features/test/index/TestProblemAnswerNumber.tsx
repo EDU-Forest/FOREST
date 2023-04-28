@@ -2,7 +2,7 @@ import {
   StyledTestNumberBtn,
   StyledTestNumberText,
   StyledTestProblemAnswerNumber,
-} from "./index.style";
+} from "./TextIndex.style";
 
 interface Iprops {
   idx: number;

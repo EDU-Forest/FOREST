@@ -1,5 +1,5 @@
 import { Title } from "@/styles/text";
-import { StyledTestHeaderContentBox, StyledTestHeaderTitle } from "./index.style";
+import { StyledTestHeaderContentBox, StyledTestHeaderTitle } from "./TextIndex.style";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { useRouter } from "next/router";
 

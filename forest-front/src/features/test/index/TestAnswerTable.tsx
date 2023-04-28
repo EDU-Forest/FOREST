@@ -1,4 +1,4 @@
-import { StyledTestAnswerTable } from "./index.style";
+import { StyledTestAnswerTable } from "./TextIndex.style";
 
 export default function TestAnswerTable() {
   return (

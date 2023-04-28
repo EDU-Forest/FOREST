@@ -1,4 +1,4 @@
-import { StyledTestProblemText } from "./index.style";
+import { StyledTestProblemText } from "./TextIndex.style";
 
 export default function TestProblemText() {
   const dummyData =

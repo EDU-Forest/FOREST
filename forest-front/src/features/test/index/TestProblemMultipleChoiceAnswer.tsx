@@ -1,7 +1,7 @@
 import TestProblemAnswerNumber from "./TestProblemAnswerNumber";
-import { StyledTestProblemAnswer } from "./index.style";
+import { StyledTestProblemMultipleChoiceAnswer } from "./TextIndex.style";
 
-export default function TestProblemAnswer() {
+export default function TestProblemMultipleChoiceAnswer() {
   const dummyData = [
     "How to Deal With Noise Disturbing Units",
     "How to Deal With Noise Disturbing Units",
@@ -10,11 +10,11 @@ export default function TestProblemAnswer() {
   ];
 
   return (
-    <StyledTestProblemAnswer>
+    <StyledTestProblemMultipleChoiceAnswer>
       {dummyData.map((data, idx) => (
         // key 임시로 지정해준거 -> 바꿔야함! (희제)
         <TestProblemAnswerNumber key={`idx`} idx={idx} text={data} />
       ))}
-    </StyledTestProblemAnswer>
+    </StyledTestProblemMultipleChoiceAnswer>
   );
 }
