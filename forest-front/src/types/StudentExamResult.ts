@@ -4,8 +4,8 @@ interface StudentExamList {
   startTime: string;
   endTime: string;
   userName: string; //출제자 이름
-  studyType: string; // EXAM, HOMEWORK, SELF
-  scheduleType: string; // 진행 전, 중, 완료
+  studyType: string;
+  scheduleType: string;
   studentResult: {
     totalScore: number; // 문제집 총 점수
     studentScore: number; // 학생 점수

@@ -5,7 +5,7 @@ interface TeacherExamResult {
   endTime: string; // Date?
   userName: string;
   studyType: string;
-  scheduleType: string; // 진행 전, 진행 중, 진행 완료
+  scheduleType: string;
   studyCreatedDate: string; // 출제일  Date?
   workbookCreatedDate: string; // 출판일 Date ?
   volume: number; // 문항 수

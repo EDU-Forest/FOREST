@@ -27,7 +27,7 @@ const examResult: TeacherExamResult = {
   endTime: "2023-04-28",
   userName: "킹규림",
   studyType: "SELF",
-  scheduleType: "",
+  scheduleType: "ONGOING",
   studyCreatedDate: "2023-04-27", // 출제일
   workbookCreatedDate: "2023-04-27", // 출판일
   volume: 10, // 문항 수
