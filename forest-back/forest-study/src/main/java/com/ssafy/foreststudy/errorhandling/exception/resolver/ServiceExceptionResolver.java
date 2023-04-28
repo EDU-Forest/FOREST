@@ -1,7 +1,6 @@
 package com.ssafy.foreststudy.errorhandling.exception.resolver;
 
 import com.ssafy.foreststudy.dto.common.response.ResponseErrorDto;
-import com.ssafy.foreststudy.enumeration.response.ErrorCode;
 import com.ssafy.foreststudy.errorhandling.exception.service.EntityIsNullException;
 import com.ssafy.foreststudy.mattermost.NotificationManager;
 import com.ssafy.foreststudy.util.ResponseUtil;
@@ -33,9 +32,38 @@ public class ServiceExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = EntityIsNullException.class)
     public ResponseErrorDto<?> handle(EntityIsNullException e, HttpServletRequest request) {
-        ErrorCode errorCode = e.getErrorCode();
         notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-        return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
+        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseErrorDto<?> handle(MethodArgumentNotValidException e, HttpServletRequest request) {
+        ObjectError objectError = e.getBindingResult().getAllErrors().stream().findFirst().get();
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, objectError.getDefaultMessage(), request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = DataIntegrityViolationException.class)
+    public ResponseErrorDto<?> handle(DataIntegrityViolationException e, HttpServletRequest request) {
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseErrorDto<?> handle(ConstraintViolationException e, HttpServletRequest request) {
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = Exception.class)
+    public ResponseErrorDto<?> handle(Exception e, HttpServletRequest request) {
+        e.printStackTrace();
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request.getRequestURI());
     }
 
     private String getParams(HttpServletRequest req) {
