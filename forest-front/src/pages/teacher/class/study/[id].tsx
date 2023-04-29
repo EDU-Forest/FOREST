@@ -1,7 +1,5 @@
 import StudyAnalysis from "@/features/class/analysis/StudyAnalysis";
 import { AnalysisFullScreen } from "@/features/class/analysis/StudyAnalysis.style";
-import { setStudyId } from "@/stores/analysis/analysis";
-import { useDispatch } from "react-redux";
 
 interface ServerProps {
   query: {
@@ -10,8 +8,6 @@ interface ServerProps {
 }
 
 export default function StudyAnalysisPage({ studyId }: StudyId) {
-  const dispatch = useDispatch();
-  dispatch(setStudyId(studyId));
   return (
     <AnalysisFullScreen>
       <StudyAnalysis />

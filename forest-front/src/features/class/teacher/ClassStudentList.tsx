@@ -12,7 +12,7 @@ import AddStudentModal from "./AddStudentModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
-import { openAddStudentModal } from "@/stores/teacher/teacherModalControl";
+import { openAddStudentModal } from "@/stores/class/classModal";
 
 const studentList: Student[] = [
   {
@@ -81,7 +81,7 @@ const studentList: Student[] = [
 ];
 export default function ClassStudentList() {
   const dispatch = useDispatch();
-  const { isOpenAddStudentModal } = useSelector((state: RootState) => state.teacherModalControl);
+  const { isOpenAddStudentModal } = useSelector((state: RootState) => state.classModal);
 
   return (
     <>

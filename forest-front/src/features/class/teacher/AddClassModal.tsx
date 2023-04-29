@@ -11,7 +11,7 @@ import { useState } from "react";
 import SmallBtn from "@/components/Button/SmallBtn";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { closeAddClassModal } from "@/stores/teacher/teacherModalControl";
+import { closeAddClassModal } from "@/stores/class/classModal";
 
 export default function AddClassModal() {
   const dispatch = useDispatch();

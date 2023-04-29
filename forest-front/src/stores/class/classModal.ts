@@ -1,24 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface teacherModalControlState {
+interface classModalState {
   isOpenDropdown: boolean;
   isOpenAddClassModal: boolean;
   isOpenAddStudentModal: boolean;
   isOpenDeleteStudentModal: boolean;
 }
 
-const initialState: teacherModalControlState = {
+const initialState: classModalState = {
   isOpenDropdown: false,
   isOpenAddClassModal: false,
   isOpenAddStudentModal: false,
   isOpenDeleteStudentModal: false,
 };
 
-const teacherModalControlSlice = createSlice({
+const classModalSlice = createSlice({
   name: "teacherModalControl",
   initialState,
   reducers: {
-    controlTeacherClassDropdown(state) {
+    controlClassDropdown(state) {
       state.isOpenDropdown = !state.isOpenDropdown;
       state.isOpenAddClassModal = false;
       state.isOpenAddStudentModal = false;
@@ -50,17 +50,24 @@ const teacherModalControlSlice = createSlice({
     closeDeleteStudentModal(state) {
       state.isOpenDeleteStudentModal = false;
     },
+    closeAllModal(state) {
+      state.isOpenDropdown = false;
+      state.isOpenAddClassModal = false;
+      state.isOpenAddStudentModal = false;
+      state.isOpenDeleteStudentModal = false;
+    },
   },
 });
 
 export const {
-  controlTeacherClassDropdown,
+  controlClassDropdown,
   openAddClassModal,
   closeAddClassModal,
   openAddStudentModal,
   closeAddStudentModal,
   openDeleteStudentModal,
   closeDeleteStudentModal,
-} = teacherModalControlSlice.actions;
+  closeAllModal,
+} = classModalSlice.actions;
 
-export default teacherModalControlSlice.reducer;
+export default classModalSlice.reducer;

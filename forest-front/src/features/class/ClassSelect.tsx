@@ -1,10 +1,10 @@
 import { AiFillCaretDown } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { ClassSelectWrapper, ClassSelectedTitle } from "../ClassSelect.style";
+import { ClassSelectWrapper, ClassSelectedTitle } from "./ClassSelect.style";
 import { useDispatch } from "react-redux";
-import { controlTeacherClassDropdown } from "@/stores/teacher/teacherModalControl";
-import ClassSelectDropdownTeacher from "./ClassSelectDropdownTeacher";
+import ClassSelectDropdown from "./ClassSelectDropdown";
+import { controlClassDropdown } from "@/stores/class/classModal";
 
 const classList: ClassList[] = [
   {
@@ -33,20 +33,24 @@ const classList: ClassList[] = [
   },
 ];
 
-export default function ClassSelectTeacher() {
-  const dispatch = useDispatch();
-  const { isOpenDropdown } = useSelector((state: RootState) => state.teacherModalControl);
+interface Iprops {
+  isStudent?: boolean;
+}
 
-  const { nowClassName, nowClassId } = useSelector((state: RootState) => state.teacherClass);
+export default function ClassSelect({ isStudent }: Iprops) {
+  const dispatch = useDispatch();
+  const { isOpenDropdown } = useSelector((state: RootState) => state.classModal);
+
+  const { nowClassName, nowClassId } = useSelector((state: RootState) => state.class);
 
   return (
     <ClassSelectWrapper>
       <ClassSelectedTitle>
         {nowClassName}
-        <AiFillCaretDown onClick={() => dispatch(controlTeacherClassDropdown())} className="icon" />
+        <AiFillCaretDown onClick={() => dispatch(controlClassDropdown())} className="icon" />
       </ClassSelectedTitle>
       {isOpenDropdown && (
-        <ClassSelectDropdownTeacher classList={classList} nowClassId={nowClassId} />
+        <ClassSelectDropdown classList={classList} nowClassId={nowClassId} isStudent={isStudent} />
       )}
     </ClassSelectWrapper>
   );

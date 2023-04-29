@@ -1,18 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import teacherClassSlice from "./teacher/teacherClass";
-import studentClassSlice from "./student/studentClass";
+import userSlice from "./user/user";
+import classSlice from "./class/classInfo";
+import classModalSlice from "./class/classModal";
 import analysisSlice from "./analysis/analysis";
-import teacherModalControlSlice from "./teacher/teacherModalControl";
-import studentModalControlSlice from "./student/studentModalControl";
 
 const reducers = combineReducers({
-  teacherClass: teacherClassSlice,
-  studentClass: studentClassSlice,
+  user: userSlice,
+  class: classSlice,
+  classModal: classModalSlice,
   analysis: analysisSlice,
-  teacherModalControl: teacherModalControlSlice,
-  studentModalControl: studentModalControlSlice,
 });
 
 const persistConfig = {

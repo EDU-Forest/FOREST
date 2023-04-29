@@ -13,7 +13,7 @@ import {
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { closeAddStudentModal } from "@/stores/teacher/teacherModalControl";
+import { closeAddStudentModal } from "@/stores/class/classModal";
 
 const searchList: Student[] = [
   {

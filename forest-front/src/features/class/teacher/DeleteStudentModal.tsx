@@ -2,10 +2,9 @@ import { ModalBtnsBox } from "@/styles/modal";
 import { DeleteModalBox } from "./DeleteStudentModal.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useDispatch } from "react-redux";
-import { closeDeleteStudentModal } from "@/stores/teacher/teacherModalControl";
+import { closeDeleteStudentModal } from "@/stores/class/classModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import teacherClass from "@/stores/teacher/teacherClass";
 
 interface Iprops {
   userId: number;
@@ -13,7 +12,7 @@ interface Iprops {
 
 export default function DeleteStudentModal({ userId }: Iprops) {
   const dispatch = useDispatch();
-  const classId = useSelector((state: RootState) => state.teacherClass.nowClassId);
+  const classId = useSelector((state: RootState) => state.class.nowClassId);
   const confirm = () => {
     // 확인 ->classId, userId 필요
   };

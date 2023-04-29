@@ -10,7 +10,7 @@ import DeleteStudentModal from "@/features/class/teacher/DeleteStudentModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
-import { openDeleteStudentModal } from "@/stores/teacher/teacherModalControl";
+import { openDeleteStudentModal } from "@/stores/class/classModal";
 
 interface Iprops {
   studentInfo: Student;
@@ -18,7 +18,7 @@ interface Iprops {
 
 export default function StudentInfoCard({ studentInfo }: Iprops) {
   const dispatch = useDispatch();
-  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.teacherModalControl);
+  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
 
   return (
     <StyledStudentInfoCard>
