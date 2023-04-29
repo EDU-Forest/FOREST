@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { KakaoLoginBtn, KakaoLoginImg, KakaoLoginText } from "./KakaoLogin.style";
+import { KakaoLoginBtn, KakaoLoginImg, KakaoLoginText } from "./Home.style";
 
 export default function KakaoLogin() {
   const router = useRouter();
