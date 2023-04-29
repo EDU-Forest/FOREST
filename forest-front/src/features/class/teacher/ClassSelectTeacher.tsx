@@ -1,10 +1,10 @@
 import { AiFillCaretDown } from "react-icons/ai";
-import ClassSelectDropdown from "../ClassSelectDropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { ClassSelectWrapper, ClassSelectedTitle } from "../ClassSelect.style";
 import { useDispatch } from "react-redux";
 import { controlTeacherClassDropdown } from "@/stores/teacher/teacherModalControl";
+import ClassSelectDropdownTeacher from "./ClassSelectDropdownTeacher";
 
 const classList: ClassList[] = [
   {
@@ -45,7 +45,9 @@ export default function ClassSelectTeacher() {
         {nowClassName}
         <AiFillCaretDown onClick={() => dispatch(controlTeacherClassDropdown())} className="icon" />
       </ClassSelectedTitle>
-      {isOpenDropdown && <ClassSelectDropdown classList={classList} nowClassId={nowClassId} />}
+      {isOpenDropdown && (
+        <ClassSelectDropdownTeacher classList={classList} nowClassId={nowClassId} />
+      )}
     </ClassSelectWrapper>
   );
 }

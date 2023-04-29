@@ -5,10 +5,9 @@ import {
   ClassSelectDropdownEachItem,
   ClassSelectDropdownAdd,
   ClassSelectCircle,
-} from "./ClassSelect.style";
+} from "../ClassSelect.style";
 import { setClass } from "@/stores/teacher/teacherClass";
-import { useState } from "react";
-import AddClassModal from "./teacher/AddClassModal";
+import AddClassModal from "../teacher/AddClassModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { openAddClassModal } from "@/stores/teacher/teacherModalControl";
@@ -16,10 +15,9 @@ import { openAddClassModal } from "@/stores/teacher/teacherModalControl";
 interface Iprops {
   classList: ClassList[];
   nowClassId: number;
-  isStudent?: boolean;
 }
 
-export default function ClassSelectDropdown({ classList, nowClassId, isStudent }: Iprops) {
+export default function ClassSelectDropdownTeacher({ classList, nowClassId }: Iprops) {
   const dispatch = useDispatch();
   const { isOpenAddClassModal } = useSelector((state: RootState) => state.teacherModalControl);
   const changeClass = (item: ClassList) => {
@@ -35,14 +33,11 @@ export default function ClassSelectDropdown({ classList, nowClassId, isStudent }
           </ClassSelectDropdownEachItem>
         ))}
       </ClassSelectDropdownEach>
-      {!isStudent && (
-        <>
-          <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
-            + 새 클래스 추가
-          </ClassSelectDropdownAdd>
-          {isOpenAddClassModal && <AddClassModal />}
-        </>
-      )}
+
+      <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
+        + 새 클래스 추가
+      </ClassSelectDropdownAdd>
+      {isOpenAddClassModal && <AddClassModal />}
     </ClassSelectDropdownContainer>
   );
 }
