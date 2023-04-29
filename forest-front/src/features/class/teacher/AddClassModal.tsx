@@ -10,12 +10,11 @@ import {
 import { useState } from "react";
 import SmallBtn from "@/components/Button/SmallBtn";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { closeAddClassModal } from "@/stores/teacher/teacherModalControl";
 
-interface Iprops {
-  handleModal: () => void;
-}
-
-export default function AddClassModal({ handleModal }: Iprops) {
+export default function AddClassModal() {
+  const dispatch = useDispatch();
   const [className, setClassName] = useState<string>("");
   // isSuccess -> axios 요청 성공 여부
 
@@ -37,7 +36,7 @@ export default function AddClassModal({ handleModal }: Iprops) {
         <ClassInputMsg>이미 존재하는 클래스 이름입니다. </ClassInputMsg>
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
-        <SmallBtn children="취소" onClick={handleModal} />
+        <SmallBtn children="취소" onClick={() => dispatch(closeAddClassModal())} />
         <SmallBtn children="확인" colored onClick={confirm} />
       </ClassInputBtnWrapper>
     </ClassAddModalContainer>

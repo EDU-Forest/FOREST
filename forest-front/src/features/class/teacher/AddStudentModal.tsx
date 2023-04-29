@@ -12,10 +12,8 @@ import {
 } from "./AddStudentModal.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useState } from "react";
-
-interface Iprops {
-  handleModal: () => void;
-}
+import { useDispatch } from "react-redux";
+import { closeAddStudentModal } from "@/stores/teacher/teacherModalControl";
 
 const searchList: Student[] = [
   {
@@ -55,7 +53,8 @@ const searchList: Student[] = [
   },
 ];
 
-export default function AddStudentModal({ handleModal }: Iprops) {
+export default function AddStudentModal() {
+  const dispatch = useDispatch();
   const confirm = () => {
     //확인버튼
   };
@@ -83,7 +82,7 @@ export default function AddStudentModal({ handleModal }: Iprops) {
       </ClassStudentAddDropdown>
       <ClassStudentAddList />
       <ClassStudentAddBtnWrapper>
-        <SmallBtn children="취소" onClick={handleModal} />
+        <SmallBtn children="취소" onClick={() => dispatch(closeAddStudentModal())} />
         <SmallBtn children="확인" colored onClick={confirm} />
       </ClassStudentAddBtnWrapper>
     </ClassStudentAddModalContainer>

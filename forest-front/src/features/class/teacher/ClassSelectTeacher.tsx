@@ -1,9 +1,8 @@
-import { useState } from "react";
 import { AiFillCaretDown } from "react-icons/ai";
-import ClassSelectDropdown from "./ClassSelectDropdown";
+import ClassSelectDropdown from "../ClassSelectDropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { ClassSelectWrapper, ClassSelectedTitle } from "./ClassSelect.style";
+import { ClassSelectWrapper, ClassSelectedTitle } from "../ClassSelect.style";
 import { useDispatch } from "react-redux";
 import { controlTeacherClassDropdown } from "@/stores/teacher/teacherModalControl";
 
@@ -34,32 +33,19 @@ const classList: ClassList[] = [
   },
 ];
 
-interface Iprops {
-  isStudent?: boolean;
-}
-
-export default function ClassSelect({ isStudent }: Iprops) {
+export default function ClassSelectTeacher() {
   const dispatch = useDispatch();
   const { isOpenDropdown } = useSelector((state: RootState) => state.teacherModalControl);
 
   const { nowClassName, nowClassId } = useSelector((state: RootState) => state.teacherClass);
 
-  const openDropdown = () => {
-    if (isStudent) {
-      // ㅇ
-    } else {
-      dispatch(controlTeacherClassDropdown());
-    }
-  };
   return (
     <ClassSelectWrapper>
       <ClassSelectedTitle>
         {nowClassName}
-        <AiFillCaretDown onClick={openDropdown} className="icon" />
+        <AiFillCaretDown onClick={() => dispatch(controlTeacherClassDropdown())} className="icon" />
       </ClassSelectedTitle>
-      {isOpenDropdown && (
-        <ClassSelectDropdown classList={classList} nowClassId={nowClassId} isStudent={isStudent} />
-      )}
+      {isOpenDropdown && <ClassSelectDropdown classList={classList} nowClassId={nowClassId} />}
     </ClassSelectWrapper>
   );
 }
