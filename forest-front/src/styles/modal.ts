@@ -37,4 +37,5 @@ export const ModalBtnsBox = styled.div`
   display: flex;
   gap: 2.75rem;
   margin-top: auto;
+  justify-content: center;
 `;

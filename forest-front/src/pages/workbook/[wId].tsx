@@ -10,6 +10,7 @@ import WorkbookDetailQuestionList from "@/features/workbookDetail/WorkbookDetail
 import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideReturn";
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
 import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
+import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useState } from "react";
 
@@ -161,6 +162,9 @@ function WorkbookDetail() {
   // modal open/close
   const [isExportOpen, setIsExportOpen] = useState(false);
   const [isSelectClassOpen, setIsSelectClassOpen] = useState(false);
+  const [isSettingOpen, setIsSettingOpen] = useState(false);
+  // 선택한 출제 클래스
+  const [selectedClass, setSelectedClass] = useState<number[]>([]);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question) => {
@@ -201,9 +205,25 @@ function WorkbookDetail() {
       </WorkbookDetailQuestionBtnAndVisibilityBox>
 
       {/* 내보내기 모달 */}
-      {isExportOpen && <WorkbookExportModal setIsOpen={setIsExportOpen} setIsSelectClassOpen={setIsSelectClassOpen}/>}
+      {isExportOpen && (
+        <WorkbookExportModal
+          setIsOpen={setIsExportOpen}
+          setIsSelectClassOpen={setIsSelectClassOpen}
+        />
+      )}
       {/* 내보내기 모달 */}
-      {isSelectClassOpen && <WorkbookSelectClassModal setIsOpen={setIsSelectClassOpen} />}
+      {isSelectClassOpen && (
+        <WorkbookSelectClassModal
+          setIsOpen={setIsSelectClassOpen}
+          setIsSettingOpen={setIsSettingOpen}
+          selectedClass={selectedClass}
+          setSelectedClass={setSelectedClass}
+        />
+      )}
+      {/* 출제 세팅 모달 */}
+      {isSettingOpen && (
+        <WorkbookSettingModal setIsOpen={setIsSettingOpen} selectedClass={selectedClass} title={workbook.title} />
+      )}
     </StyledWorkbookDetailBox>
   );
 }

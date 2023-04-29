@@ -1,14 +1,19 @@
+import { CommonInput } from "@/components/Input/Input.style";
+import { theme } from "./../../styles/theme";
 import { ModalBox } from "@/styles/modal";
 import styled from "styled-components";
 
+// 내보내기 유형 선택 모달
 export const WorkbookExportModalBox = styled(ModalBox)`
   gap: 1.5rem;
 `;
 
+// 출제할 클래스 선택 모달
 export const WorkbookSelectClassModalBox = styled(ModalBox)`
-  max-width: 640px;
+  width: 640px;
   max-height: 640px;
 
+  padding: 0 80px;
   padding-top: 64px;
   padding-bottom: 48px;
 
@@ -72,7 +77,7 @@ export const WorkbookClassBtnsBox = styled.div`
 `;
 
 export const WorkbookClassBtn = styled.button<{ isSelected: boolean }>`
-  min-width: 30rem;
+  min-width: 25rem;
 
   padding: 12px 1rem;
 
@@ -105,5 +110,124 @@ export const WorkbookClassModalFooterBox = styled.div`
   // 버튼
   > div {
     margin-top: 0 !important;
+  }
+`;
+
+// 출제 세팅 모달
+export const WorkbookSettingModalBox = styled(ModalBox)`
+  width: 640px;
+  min-height: 640px;
+
+  padding: 0 80px;
+  padding-top: 64px;
+  padding-bottom: 48px;
+
+  > div {
+    width: 100%;
+  }
+
+  p {
+    margin-bottom: 1rem;
+
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+
+  hr {
+    width: 100%;
+    height: 0.8px;
+
+    margin: 24px 0;
+
+    background-color: ${({ theme }) => theme.colors.Gray[300]};
+    border: none;
+  }
+`;
+
+export const WorkbookSettingTitleInput = styled.input`
+  width: 100%;
+
+  padding: 0.25rem 0.5rem;
+  margin-bottom: 3rem;
+
+  border: none;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+
+  ::placeholder {
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+
+  :focus {
+    outline: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
+    border-radius: 4px;
+  }
+`;
+
+export const WorkbookSettingTimeInputBox = styled(CommonInput)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  > input {
+    width: 100%;
+    border: none;
+    outline: none;
+
+    :disabled {
+      background: transparent;
+      color: ${({ theme }) => theme.colors.Gray[300]};
+    }
+  }
+
+  /* input[type="time"]::-webkit-datetime-edit-hour-field {
+    background-color: #f2f4f5;
+    border-radius: 15%;
+    padding: 19px 13px;
+  }
+  input[type="time"]::-webkit-datetime-edit-minute-field {
+    background-color: #f2f4f5;
+    border-radius: 15%;
+    padding: 19px 13px;
+  } */
+
+  /* input[type="time"]::-webkit-inner-spin-button {
+    display: none;
+  } */
+
+  /* input[type="time"]::-webkit-calendar-picker-indicator {
+    border: 1px solid red;
+    background-color: red;
+    fill: red;
+    color: red;
+  } */
+
+  // 시간 아이콘
+  svg {
+    fill: ${({ theme }) => theme.colors.Gray[500]};
+    cursor: pointer;
+  }
+`;
+
+export const WorkbookSettingRadioBox = styled.div`
+  display: flex;
+
+  gap: 32px;
+
+  input {
+    margin-right: 8px;
+  }
+`;
+
+export const WorkbookSettingModalInputsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+`;
+
+export const WorkbookSettingModalTimeBox = styled.div<{ disabled: boolean }>`
+  > p {
+    color: ${({ theme, disabled }) => disabled && theme.colors.Gray[300]};
   }
 `;

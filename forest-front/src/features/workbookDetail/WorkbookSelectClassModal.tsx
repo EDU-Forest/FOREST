@@ -1,6 +1,5 @@
 import SmallBtn from "@/components/Button/SmallBtn";
-import { ModalBox, ModalBtnsBox } from "@/styles/modal";
-import { useState } from "react";
+import { ModalBtnsBox } from "@/styles/modal";
 import {
   WorkbookClassBtn,
   WorkbookClassBtnsBox,
@@ -8,15 +7,23 @@ import {
   WorkbookSelectClassModalBox,
 } from "./WorkbookModal.style";
 
-interface IProps {
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
 interface ClassType {
   classId: number;
   name: String;
 }
+interface IProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSettingOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedClass: number[];
+  setSelectedClass: React.Dispatch<React.SetStateAction<number[]>>;
+}
 
-function WorkbookSelectClassModal({ setIsOpen }: IProps) {
+function WorkbookSelectClassModal({
+  setIsOpen,
+  setIsSettingOpen,
+  selectedClass,
+  setSelectedClass,
+}: IProps) {
   // dummy
   const classes = [
     {
@@ -57,8 +64,6 @@ function WorkbookSelectClassModal({ setIsOpen }: IProps) {
     },
   ];
 
-  const [selectedClass, setSelectedClass] = useState<number[]>([]);
-
   const handleClickCancel = () => {
     setIsOpen(false);
   };
@@ -76,7 +81,12 @@ function WorkbookSelectClassModal({ setIsOpen }: IProps) {
 
   const handleClickRegister = () => {
     // 한 개 이상의 클래스가 선택됐을 때만 등록 처리
-    selectedClass.length >= 1 && setIsOpen(false);
+    if (selectedClass.length >= 1) {
+      setIsOpen(false);
+      setIsSettingOpen(true);
+      // 선택 클래스 초기화
+      setSelectedClass([]);
+    }
   };
 
   const isSelected = (id: number): boolean => {
