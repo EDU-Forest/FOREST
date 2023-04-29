@@ -3,6 +3,7 @@ package com.ssafy.foreststudy.service;
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
 import com.ssafy.foreststudy.dto.study.*;
 import com.ssafy.foreststudy.entity.*;
+import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
 import com.ssafy.foreststudy.enumeration.response.ErrorCode;
 import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import com.ssafy.foreststudy.errorhandling.exception.service.EntityIsNullException;
@@ -447,7 +448,9 @@ public class StudyService {
             }
 
             /* 개인 시험 결과 문제 ID 가져오기 위함 */
-            StudentStudyProblemResult spr = studentStudyProblemResultRepository.findAllByStudyAndUserAndProblemList(study,user,pl);
+            StudentStudyProblemResult spr = studentStudyProblemResultRepository.findAllByStudyAndUserAndProblemList(study, user, pl)
+                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
 
             problem.add(GetProblemListResponseDto.builder()
                     .studentStudyProblemId(spr.getId())
@@ -508,4 +511,52 @@ public class StudyService {
         return res;
     }
 
+    /* 다음 문제 이동하기 */
+    public ResponseSuccessDto<PatchNextProblemResponseDto> PatchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+
+        /* 존재하지 않는 개인 시험 결과 ID 체크 */
+        StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        /* 존재하지 않는 스터디 ID 체크 */
+        Study study = studyRepository.findById(patchNextProblemRequestDto.getStudyId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(patchNextProblemRequestDto.getUserId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        /* 서술형이라면 */
+        if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
+            // 코사인 유사도 분석 코드 추가 예정
+            /*  키워드 포함 개수 분석 코드 -> 서술형 채점 부분으로 옮길 것
+                String getAnswer = spr.getProblemList().getProblem().getAnswer();
+                String[] keyWords = getAnswer.split(",");
+                for (String keyWord : keyWords) {
+                    int num = 0;
+                    if(patchNextProblemRequestDto.getUserAnswer().contains(keyWord)){
+                        num++;
+                    }
+                }
+            */
+
+
+            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
+        } else {
+            /* 정답이 맞을 때 */
+            if (patchNextProblemRequestDto.getUserAnswer().equals(spr.getProblemList().getProblem().getAnswer())) {
+                int partPoint = spr.getProblemList().getProblem().getPoint();
+                spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), partPoint, true, true);
+            } else {
+                spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, true);
+            }
+        }
+
+        PatchNextProblemResponseDto patchNextProblemResponseDto = PatchNextProblemResponseDto.builder()
+                .message("개인 시험 결과 문제 생성 완료")
+                .build();
+
+        ResponseSuccessDto<PatchNextProblemResponseDto> res = responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
+        return res;
+    }
 }

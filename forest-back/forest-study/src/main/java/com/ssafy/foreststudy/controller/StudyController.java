@@ -86,7 +86,7 @@ public class StudyController {
     }
 
     @ApiOperation(value = "시험 전체 문제 목록 조회", notes = "시험 전체 문제 목록을 조회합니다.")
-    @GetMapping("/problem/{studyId}")
+    @GetMapping("/problem/{studyId}/{userId}")
     public ResponseEntity<ResponseSuccessDto<GetProblemResponseDto>> getProblemListAll(@PathVariable("studyId") Long studyId, @PathVariable("userId") Long userId) {
         return ResponseEntity.ok(studyService.getProblemListAll(studyId,userId));
     }
@@ -97,9 +97,9 @@ public class StudyController {
         return ResponseEntity.ok(studyService.PostStartStudy(postStartStudyRequestDto));
     }
 
-//    @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
-//    @PatchMapping("/problem")
-//    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> PostStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
-//        return ResponseEntity.ok(studyService.PostStartStudy(postStartStudyRequestDto));
-//    }
+    @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
+    @PatchMapping("/problem")
+    public ResponseEntity<ResponseSuccessDto<PatchNextProblemResponseDto>> PatchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+        return ResponseEntity.ok(studyService.PatchNextProblem(patchNextProblemRequestDto));
+    }
 }
