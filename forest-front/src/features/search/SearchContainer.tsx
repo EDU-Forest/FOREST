@@ -26,7 +26,7 @@ export default function SearchContainer() {
         <SearchInput inputText={inputSearch} onChange={changeSearchText} />
         <HashTag value="수능대비" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="영어" onClick={(value: string) => searchKeyword(value)} />
-        <HashTag value="한국사" onClick={(value: string) => searchKeyword(value)} />
+        <HashTag value="싸피" onClick={(value: string) => searchKeyword(value)} />
       </SearchContainerInput>
       {inputSearch ? <SearchList keyword={keyword} /> : <SearchDefaultList />}
     </SearchContainerWrapper>

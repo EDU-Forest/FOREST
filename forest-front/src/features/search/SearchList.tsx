@@ -5,46 +5,48 @@ interface Iprops {
   keyword: string;
 }
 
-const searchList = [
+const searchList: SearchWorkbook[] = [
   {
+    id: 1,
     title: "킹규림의 수능 100제",
-    likes: 10,
-    used: 7,
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
   {
+    id: 2,
     title: "킹규림의 수능 100제",
-    likes: 10,
-    used: 7,
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
   {
+    id: 3,
     title: "킹규림의 수능 100제",
-    likes: 10,
-    used: 7,
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
   {
+    id: 4,
     title: "킹규림의 수능 100제",
-    likes: 10,
-    used: 7,
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
   {
-    title: "양GPT 100분 활용",
-    likes: 10,
-    used: 7,
+    id: 5,
+    title: "킹규림의 수능 100제",
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
   {
-    title: "양GPT 100분 활용",
-    likes: 10,
-    used: 7,
-  },
-  {
-    title: "양GPT 100분 활용",
-    likes: 10,
-    used: 7,
-  },
-  {
-    title: "양GPT 100분 활용",
-    likes: 10,
-    used: 7,
+    id: 6,
+    title: "킹규림의 수능 100제",
+    workbookImgPath: "",
+    bookmarkCount: 10,
+    scrapCount: 7,
   },
 ];
 
@@ -53,7 +55,12 @@ export default function SearchList({ keyword }: Iprops) {
     <SearchListWrapper>
       {searchList.map((item, idx) => (
         <SearchListItem>
-          <CommonWorkbook id={idx} title={item.title} likes={item.likes} used={item.used} />
+          <CommonWorkbook
+            id={idx}
+            title={item.title}
+            bookmarkCount={item.bookmarkCount}
+            scrapCount={item.scrapCount}
+          />
         </SearchListItem>
       ))}
     </SearchListWrapper>

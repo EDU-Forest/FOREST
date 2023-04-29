@@ -1,15 +1,36 @@
 import { flexBox } from "@/styles/theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const SearchTitle = styled.p`
+const SearchTitle = styled.div`
   font-size: 1.25rem;
   font-weight: 700;
-  margin-top: 2.5rem;
+  margin-top: 3rem;
   margin-bottom: 0.75rem;
+  ${flexBox("row", "center", "space-between")};
 `;
 
 const SearchDefaultWrapper = styled.div`
   padding: 1rem;
+`;
+
+const PopularOption = styled.div`
+  font-size: 1rem;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.Gray[500]};
+  span {
+    &:nth-of-type(1) {
+      margin-right: 24px;
+    }
+  }
+`;
+
+const PopularOptionItem = styled.span<{ selected?: boolean }>`
+  ${({ selected }) =>
+    selected &&
+    css`
+      font-weight: 700;
+      color: black;
+    `}
 `;
 
 const SearchDefalutListWrapper = styled.div`
@@ -45,6 +66,8 @@ const SearchListItem = styled.div`
 export {
   SearchTitle,
   SearchDefaultWrapper,
+  PopularOption,
+  PopularOptionItem,
   SearchDefalutListWrapper,
   SearchListWrapper,
   SearchListItem,
