@@ -3,7 +3,7 @@ import { StyledSmallBtn } from "./Btn.style";
 interface Iprops {
   children: string;
   colored?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export default function SmallBtn({ children, colored, onClick }: Iprops) {
