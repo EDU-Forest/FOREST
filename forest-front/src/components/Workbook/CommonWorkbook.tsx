@@ -10,22 +10,28 @@ import {
 interface Iprops {
   id: number;
   title: string;
-  likes?: number;
-  used?: number;
+  bookmarkCount?: number;
+  scrapCount?: number;
   clickAction?: (id: number) => void;
 }
 
-export default function CommonWorkbook({ id, title, likes, used, clickAction }: Iprops) {
+export default function CommonWorkbook({
+  id,
+  title,
+  bookmarkCount,
+  scrapCount,
+  clickAction,
+}: Iprops) {
   return (
     <WorkbookCard>
       <WorkbookImg src="/images/workbook.png" onClick={() => clickAction && clickAction(id)} />
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
-      {likes && (
+      {bookmarkCount && (
         <WorkbookContentWrapper>
           <WorkbookIcon>🧡</WorkbookIcon>
-          <WorkbookContent>{likes}</WorkbookContent>
+          <WorkbookContent>{bookmarkCount}</WorkbookContent>
           <WorkbookIcon>📝</WorkbookIcon>
-          <WorkbookContent>{used}</WorkbookContent>
+          <WorkbookContent>{scrapCount}</WorkbookContent>
         </WorkbookContentWrapper>
       )}
     </WorkbookCard>
