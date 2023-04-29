@@ -8,6 +8,7 @@ interface Iprops {
   takeRate: number;
 }
 
+// 응시율 - 클래스(T), 분석
 export default function TakeRateChart({
   noTitle,
   totalStudent,
@@ -35,7 +36,8 @@ export default function TakeRateChart({
         animate
         label={({ dataEntry }) => dataEntry.value + "%"}
         labelStyle={{
-          fontSize: "14px",
+          fontSize: "1rem",
+          fontWeight: 700,
           fill: "#82C91E",
         }}
         labelPosition={0}

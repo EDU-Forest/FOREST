@@ -5,23 +5,36 @@ import {
   ResultInfoItem,
   SummaryItemWrapper,
   SummaryResultWrapper,
-} from "../ClassSummary.style";
+} from "./ClassSummary.style";
 import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-icons/md";
 
-export default function () {
+interface Iprops {
+  noMargin?: boolean;
+  average: number;
+  standardDeviation: number;
+  averageSolvingTime: number;
+}
+
+// 전체 결과 - 클래스(T, S), 분석
+export default function TotalResult({
+  noMargin,
+  average,
+  standardDeviation,
+  averageSolvingTime,
+}: Iprops) {
   return (
     <SummaryItemWrapper>
-      <ClassSummarySubTitle>나의 결과</ClassSummarySubTitle>
+      <ClassSummarySubTitle noMargin={noMargin}>전체 결과</ClassSummarySubTitle>
       <SummaryResultWrapper>
         <ResultInfoItem>
           <div className="wrapper">
             <ClassSummaryIcon>
               <MdFormatListNumbered className="icon" />
             </ClassSummaryIcon>
-            <ClassSummaryText>백분율 환산</ClassSummaryText>
+            <ClassSummaryText>평균 점수</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>80</ClassSummaryText>
+            <ClassSummaryText>{average}</ClassSummaryText>
             <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -30,11 +43,11 @@ export default function () {
             <ClassSummaryIcon>
               <MdOutlineAutoGraph className="icon" />
             </ClassSummaryIcon>
-            <ClassSummaryText>정답 문항수</ClassSummaryText>
+            <ClassSummaryText>표준 편차</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>8</ClassSummaryText>
-            <ClassSummaryText isGray>개</ClassSummaryText>
+            <ClassSummaryText>{standardDeviation}</ClassSummaryText>
+            <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
         <ResultInfoItem>
@@ -45,10 +58,8 @@ export default function () {
             <ClassSummaryText>풀이 시간</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>23</ClassSummaryText>
+            <ClassSummaryText>{averageSolvingTime}</ClassSummaryText>
             <ClassSummaryText isGray>분</ClassSummaryText>
-            <ClassSummaryText>23</ClassSummaryText>
-            <ClassSummaryText isGray>초</ClassSummaryText>
           </div>
         </ResultInfoItem>
       </SummaryResultWrapper>

@@ -17,7 +17,7 @@ const teacherClassSlice = createSlice({
   initialState,
   reducers: {
     setClass(state, action) {
-      state.nowClassName = action.payload.className;
+      state.nowClassName = action.payload.name;
       state.nowClassId = action.payload.classId;
     },
     setStudy(state, action) {

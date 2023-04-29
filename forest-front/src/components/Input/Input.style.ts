@@ -13,6 +13,10 @@ const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
     background-color: red;
   } */
 
+  @media ${({ theme }) => theme.tablet} {
+    width: ${({ isScore }) => isScore && "3rem"};
+  }
+
   &::placeholder {
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
@@ -20,6 +24,12 @@ const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
   &:focus {
     outline: none;
     border: 1px solid ${({ theme }) => theme.colors.Lime[500]};
+  }
+
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 
   /* &[type="date"]::before {

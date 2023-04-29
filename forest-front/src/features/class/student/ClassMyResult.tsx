@@ -5,26 +5,29 @@ import {
   ResultInfoItem,
   SummaryItemWrapper,
   SummaryResultWrapper,
-} from "./ClassSummary.style";
+} from "../ClassSummary.style";
 import { MdFormatListNumbered, MdOutlineAutoGraph, MdAccessTime } from "react-icons/md";
 
 interface Iprops {
-  noMargin?: boolean;
+  percentage: number;
+  correctNum: number;
+  solvingTime: number;
 }
-export default function ClassSummaryResult({ noMargin }: Iprops) {
+
+export default function ClassMyResult({ percentage, correctNum, solvingTime }: Iprops) {
   return (
     <SummaryItemWrapper>
-      <ClassSummarySubTitle noMargin={noMargin}>전체 결과</ClassSummarySubTitle>
+      <ClassSummarySubTitle>나의 결과</ClassSummarySubTitle>
       <SummaryResultWrapper>
         <ResultInfoItem>
           <div className="wrapper">
             <ClassSummaryIcon>
               <MdFormatListNumbered className="icon" />
             </ClassSummaryIcon>
-            <ClassSummaryText>평균 점수</ClassSummaryText>
+            <ClassSummaryText>백분율 환산</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>87.5</ClassSummaryText>
+            <ClassSummaryText>{percentage}</ClassSummaryText>
             <ClassSummaryText isGray>점</ClassSummaryText>
           </div>
         </ResultInfoItem>
@@ -33,11 +36,11 @@ export default function ClassSummaryResult({ noMargin }: Iprops) {
             <ClassSummaryIcon>
               <MdOutlineAutoGraph className="icon" />
             </ClassSummaryIcon>
-            <ClassSummaryText>표준 편차</ClassSummaryText>
+            <ClassSummaryText>정답 문항수</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>7.5</ClassSummaryText>
-            <ClassSummaryText isGray>점</ClassSummaryText>
+            <ClassSummaryText>{correctNum}</ClassSummaryText>
+            <ClassSummaryText isGray>개</ClassSummaryText>
           </div>
         </ResultInfoItem>
         <ResultInfoItem>
@@ -48,10 +51,8 @@ export default function ClassSummaryResult({ noMargin }: Iprops) {
             <ClassSummaryText>풀이 시간</ClassSummaryText>
           </div>
           <div>
-            <ClassSummaryText>23</ClassSummaryText>
+            <ClassSummaryText>{solvingTime}</ClassSummaryText>
             <ClassSummaryText isGray>분</ClassSummaryText>
-            <ClassSummaryText>23</ClassSummaryText>
-            <ClassSummaryText isGray>초</ClassSummaryText>
           </div>
         </ResultInfoItem>
       </SummaryResultWrapper>

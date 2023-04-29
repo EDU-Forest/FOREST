@@ -15,7 +15,7 @@ interface Iprops {
 }
 
 export default function ClassAddModal({ handleModal }: Iprops) {
-  const [inputText, setInputText] = useState<string>("");
+  const [className, setClassName] = useState<string>("");
   // isSuccess -> axios 요청 성공 여부
 
   const confirm = () => {
@@ -28,8 +28,8 @@ export default function ClassAddModal({ handleModal }: Iprops) {
       <ClassInputWrapper>
         <ClassInput
           placeholder={"클래스명을 입력하세요"}
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
+          value={className}
+          onChange={(e) => setClassName(e.target.value)}
           maxLength={14}
         />
         <ClassInputCheck isSuccess />
