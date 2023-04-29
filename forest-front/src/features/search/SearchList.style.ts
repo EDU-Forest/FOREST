@@ -25,6 +25,7 @@ const PopularOption = styled.div`
 `;
 
 const PopularOptionItem = styled.span<{ selected?: boolean }>`
+  cursor: pointer;
   ${({ selected }) =>
     selected &&
     css`
