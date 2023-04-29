@@ -1,5 +1,5 @@
 server:
-  port: 9001
+  port: 9002
 
 spring:
   config:
@@ -20,11 +20,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/forest?serverTimezone=Asia/Seoul
-    username: ssafy
-    password: ssafy
+    username: root
+    password: 1234
 
-notification:
+study:
   mattermost:
     enabled: true
     webhook-url: https://meeting.ssafy.com/hooks/j85wn7zntjbnjper47prr5icic
-    channel :
