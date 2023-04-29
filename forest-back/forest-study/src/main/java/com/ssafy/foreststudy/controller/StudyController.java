@@ -93,19 +93,25 @@ public class StudyController {
 
     @ApiOperation(value = "시험 시작하기", notes = "시험을 시작합니다.")
     @PostMapping("/start")
-    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> PostStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
-        return ResponseEntity.ok(studyService.PostStartStudy(postStartStudyRequestDto));
+    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> postStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+        return ResponseEntity.ok(studyService.postStartStudy(postStartStudyRequestDto));
     }
 
     @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
     @PatchMapping("/problem")
-    public ResponseEntity<ResponseSuccessDto<PatchNextProblemResponseDto>> PatchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
-        return ResponseEntity.ok(studyService.PatchNextProblem(patchNextProblemRequestDto));
+    public ResponseEntity<ResponseSuccessDto<PatchNextProblemResponseDto>> patchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+        return ResponseEntity.ok(studyService.patchNextProblem(patchNextProblemRequestDto));
     }
 
     @ApiOperation(value = "시험 종료하기", notes = "시험을 종료합니다.")
     @PatchMapping("/exit")
-    public ResponseEntity<ResponseSuccessDto<PatchExitStudyResponseDto>> PatchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
-        return ResponseEntity.ok(studyService.PatchExitStudy(patchExitStudyRequestDto));
+    public ResponseEntity<ResponseSuccessDto<PatchExitStudyResponseDto>> patchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+        return ResponseEntity.ok(studyService.patchExitStudy(patchExitStudyRequestDto));
     }
+
+//    @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")
+//    @GetMapping("/descript/{studyId}")
+//    public ResponseEntity<ResponseSuccessDto<GetDescriptionListResponseDto>> getDescriptionList(@PathVariable("studyId") Long studyId) {
+//        return ResponseEntity.ok(studyService.getDescriptionList(studyId));
+//    }
 }

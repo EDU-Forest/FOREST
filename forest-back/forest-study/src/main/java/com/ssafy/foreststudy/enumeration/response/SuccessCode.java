@@ -23,7 +23,8 @@ public enum SuccessCode {
     STUDY_SUCCESS_PROBLEM_LIST(HttpStatus.OK,"시험 문제 전체 목록 조회 성공"),
     STUDY_SAVE_STUDENT_PROBLEM_RESULT(HttpStatus.CREATED,"개인 시험 결과 문제 생성 완료"),
     STUDY_SUCCESS_UPDATE_PROBLEM_RESULT(HttpStatus.NO_CONTENT,"문항 답안 저장 성공"),
-    STUDY_SAVE_STUDENT_RESULT(HttpStatus.NO_CONTENT,"시험 종료");
+    STUDY_SAVE_STUDENT_RESULT(HttpStatus.NO_CONTENT,"시험 종료"),
+    STUDY_SUCCESS_RESULT_DESCRIPT_LIST(HttpStatus.NO_CONTENT,"서술형 문제 채점 목록 조회 성공");
 
 
     private final HttpStatus status;

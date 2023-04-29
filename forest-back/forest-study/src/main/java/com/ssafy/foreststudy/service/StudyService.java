@@ -474,7 +474,7 @@ public class StudyService {
     }
 
     /* 시험 시작하기 */
-    public ResponseSuccessDto<PostStartStudyResponseDto> PostStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+    public ResponseSuccessDto<PostStartStudyResponseDto> postStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(postStartStudyRequestDto.getStudyId())
@@ -512,7 +512,7 @@ public class StudyService {
     }
 
     /* 다음 문제 이동하기 */
-    public ResponseSuccessDto<PatchNextProblemResponseDto> PatchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+    public ResponseSuccessDto<PatchNextProblemResponseDto> patchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
@@ -561,7 +561,7 @@ public class StudyService {
     }
 
     /* 시험 종료하기 */
-    public ResponseSuccessDto<PatchExitStudyResponseDto> PatchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+    public ResponseSuccessDto<PatchExitStudyResponseDto> patchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
@@ -604,5 +604,58 @@ public class StudyService {
 
         ResponseSuccessDto<PatchExitStudyResponseDto> res = responseUtil.successResponse(patchExitStudyResponseDto, SuccessCode.STUDY_SAVE_STUDENT_RESULT);
         return res;
+    }
+
+    /* (선생님) 서술형 문제 채점 목록 조회 */
+    public ResponseSuccessDto<GetProblemResponseDto> getDescriptionList(Long studyId) {
+
+        /*
+            1. 시험의 문제집 ID로 문제 목록 불러오기
+            2. 문제 목록 리스트에서 문제 타입이 '서술형' 이면 따로 저장
+            3.
+         */
+
+        /* 존재하지 않는 스터디 ID 체크 */
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+//        List<ProblemList> problemList = problemListRepository.findAllByWorkbook(study.getWorkbook());
+//        List<GetProblemListResponseDto> problem = new ArrayList<>();
+//        for (ProblemList pl : problemList) {
+//            List<Item> itemList = itemRepository.findAllByProblem(pl.getProblem());
+//            List<GetItemListResponseDto> item = new ArrayList<>();
+//
+//            for (Item it : itemList) {
+//                item.add(GetItemListResponseDto.builder()
+//                        .itemId(it.getId())
+//                        .no(it.getNo())
+//                        .content(it.getContent())
+//                        .isImage(it.getIsImage())
+//                        .build());
+//            }
+//
+//            /* 개인 시험 결과 문제 ID 가져오기 위함 */
+//            StudentStudyProblemResult spr = studentStudyProblemResultRepository.findAllByStudyAndUserAndProblemList(study, user, pl)
+//                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+//
+//
+//            problem.add(GetProblemListResponseDto.builder()
+//                    .studentStudyProblemId(spr.getId())
+//                    .problemNum(pl.getProblemNum())
+//                    .type(pl.getProblem().getType())
+//                    .title(pl.getProblem().getTitle())
+//                    .text(pl.getProblem().getText())
+//                    .problemImgPath(pl.getProblem().getPath())
+//                    .item(item)
+//                    .build());
+//        }
+
+        GetProblemResponseDto result = GetProblemResponseDto.builder()
+                .volume(study.getWorkbook().getVolume())
+                .startTime(study.getStartTime())
+                .endTime(study.getEndTime())
+                .build();
+
+        return responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
     }
 }
