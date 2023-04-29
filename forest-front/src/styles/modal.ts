@@ -10,7 +10,7 @@ export const ModalBox = styled.div<{ padding?: number }>`
   flex-direction: column;
 
   padding: ${({ padding }) => (padding ? padding : 32)}px 48px;
-  gap: 2rem;
+  /* gap: 2rem; */
 
   /* 중앙 배치 */
   /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
@@ -18,7 +18,7 @@ export const ModalBox = styled.div<{ padding?: number }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
 
   background: #ffffff;
@@ -27,7 +27,7 @@ export const ModalBox = styled.div<{ padding?: number }>`
   z-index: 999;
 
   /* 모달 타이틀 */
-  p:first-child {
+  > p:first-child {
     font-size: 1.375rem;
     font-weight: bold;
   }
@@ -36,4 +36,5 @@ export const ModalBox = styled.div<{ padding?: number }>`
 export const ModalBtnsBox = styled.div`
   display: flex;
   gap: 2.75rem;
+  margin-top: auto;
 `;
