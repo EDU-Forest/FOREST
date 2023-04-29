@@ -1,7 +1,9 @@
 import { ModalBox } from "@/styles/modal";
 import styled from "styled-components";
 
-export const WorkbookExportModalBox = styled(ModalBox)``;
+export const WorkbookExportModalBox = styled(ModalBox)`
+  gap: 1.5rem;
+`;
 
 export const WorkbookSelectClassModalBox = styled(ModalBox)`
   max-width: 640px;
