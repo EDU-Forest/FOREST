@@ -514,7 +514,7 @@ public class StudyService {
     /* 다음 문제 이동하기 */
     public ResponseSuccessDto<PatchNextProblemResponseDto> PatchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
 
-        /* 존재하지 않는 개인 시험 결과 ID 체크 */
+        /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
@@ -557,6 +557,52 @@ public class StudyService {
                 .build();
 
         ResponseSuccessDto<PatchNextProblemResponseDto> res = responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
+        return res;
+    }
+
+    /* 시험 종료하기 */
+    public ResponseSuccessDto<PatchExitStudyResponseDto> PatchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+
+        /* 존재하지 않는 스터디 ID 체크 */
+        Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(patchExitStudyRequestDto.getUserId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        /* 존재하지 않는 개인 시험 결과 ID 체크 */
+        StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(study, user)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        /* 존재하지 않는 개인 시험 문제 ID 체크 */
+        List<StudentStudyProblemResult> spr = studentStudyProblemResultRepository.findAllByStudyAndUser(study, user);
+
+        int correctNum = 0;
+        int scoreSum = 0;
+        int correctRate = 0;
+        boolean check = true;
+
+        for (StudentStudyProblemResult ssp : spr) {
+            if (ssp.getIsCorrected())
+                correctNum++;
+
+            if (!ssp.getIsGraded())
+                check = false;
+
+            scoreSum += ssp.getPartPoint();
+        }
+
+        if (spr.size() != 0)
+            correctRate = correctNum * 100 / spr.size();
+
+        ssr.updateStudentStudyResult(correctNum, scoreSum, correctRate, check);
+
+        PatchExitStudyResponseDto patchExitStudyResponseDto = PatchExitStudyResponseDto.builder()
+                .message("시험 종료")
+                .build();
+
+        ResponseSuccessDto<PatchExitStudyResponseDto> res = responseUtil.successResponse(patchExitStudyResponseDto, SuccessCode.STUDY_SAVE_STUDENT_RESULT);
         return res;
     }
 }

@@ -102,4 +102,10 @@ public class StudyController {
     public ResponseEntity<ResponseSuccessDto<PatchNextProblemResponseDto>> PatchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
         return ResponseEntity.ok(studyService.PatchNextProblem(patchNextProblemRequestDto));
     }
+
+    @ApiOperation(value = "시험 종료하기", notes = "시험을 종료합니다.")
+    @PatchMapping("/exit")
+    public ResponseEntity<ResponseSuccessDto<PatchExitStudyResponseDto>> PatchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+        return ResponseEntity.ok(studyService.PatchExitStudy(patchExitStudyRequestDto));
+    }
 }
