@@ -8,6 +8,7 @@ const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
   border-radius: 0.5rem;
   border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
   padding: 0.5rem 1rem;
+  background-color: ${({ theme }) => theme.colors.Gray[50]};
 
   /* &:invalid {
     background-color: red;
