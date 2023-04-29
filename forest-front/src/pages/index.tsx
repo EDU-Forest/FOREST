@@ -21,6 +21,7 @@ export default function Home() {
     <FullScreen isColumn={true}>
       {menuSelected === "login" && <LoginModal onClose={closeModalHandler} />}
       {menuSelected === "signup" && <SignupModal onClose={closeModalHandler} />}
+      {/* {menuSelected === "addInfo" && <SignupMoreInfoModal onClose={closeModalHandler} />} */}
       <ForestLargeLogo src={"/images/Forest_Logo.png"} />
       <KakaoLogin />
       <EmailBox openModalHandler={openModalHandler} />
