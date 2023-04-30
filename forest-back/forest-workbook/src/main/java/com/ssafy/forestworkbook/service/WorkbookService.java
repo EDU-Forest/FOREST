@@ -10,4 +10,5 @@ public interface WorkbookService {
 
     ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String sort, Pageable pageable);
 
+    ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId);
 }

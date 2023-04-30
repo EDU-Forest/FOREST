@@ -26,8 +26,16 @@ public class WorkbookController {
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList(
             @RequestParam("search") String search, Pageable pageable) {
-        Long userId = Long.valueOf(9);
+//        Map<String, String> authInfo = SecurityUtil.getCurrentUser();
+        Long userId = Long.valueOf(10);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
+    }
+
+    @PostMapping("/{workbookId}")
+    @ApiOperation(value = "문제집 사본 만들기", notes = "문제집 사본을 만듭니다.")
+    public ResponseSuccessDto<?> copyWorkbook(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(9);
+        return workbookService.copyWorkbook(userId, workbookId);
     }
 
 

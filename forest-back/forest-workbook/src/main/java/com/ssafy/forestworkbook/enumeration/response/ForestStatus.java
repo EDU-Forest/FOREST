@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 public enum ForestStatus {
 
     WORKBOOK_SUCESS_GET_LIST(HttpStatus.OK),
+    WORKBOOK_SUCCESS_COPY(HttpStatus.CREATED),
     ;
 
     private final HttpStatus status;

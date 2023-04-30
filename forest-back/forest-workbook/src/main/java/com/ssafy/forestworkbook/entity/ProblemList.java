@@ -1,6 +1,7 @@
 package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -34,4 +35,11 @@ public class ProblemList {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    @Builder
+    public ProblemList(Workbook workbook, Problem problem, int problemNum) {
+        this.workbook = workbook;
+        this.problem = problem;
+        this.problemNum = problemNum;
+    }
 }

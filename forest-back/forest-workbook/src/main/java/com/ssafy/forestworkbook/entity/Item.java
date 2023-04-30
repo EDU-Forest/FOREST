@@ -2,6 +2,7 @@ package com.ssafy.forestworkbook.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -36,4 +37,12 @@ public class Item {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    @Builder
+    public Item(Problem problem, int no, String content, Boolean isImage) {
+        this.problem = problem;
+        this.no = no;
+        this.content = content;
+        this.isImage = isImage;
+    }
 }
