@@ -1,4 +1,4 @@
-import { WorkbookSettingRadioBox, WorkbookSettingRadioLabel } from "./WorkbookModal.style";
+import { WorkbookSettingRadioBox } from "./WorkbookModal.style";
 
 interface IProps {
   types: { value: string; text: string }[];
