@@ -1,6 +1,6 @@
 // import EmailBox from "@/features/home/AuthWithEmail";
 import { FullScreen } from "@/styles/container";
-import { ForestLargeLogo, AuthSection } from "./index.style";
+import { ForestLargeLogo, AuthSection } from "../features/home/index.style";
 import KakaoLogin from "@/features/home/KakaoLogin";
 import { useState } from "react";
 import LoginModal from "@/features/home/LoginModal";
