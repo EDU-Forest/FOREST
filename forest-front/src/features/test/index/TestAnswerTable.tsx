@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import { StyledTestAnswerTable } from "./TextIndex.style";
+import { RootState } from "@/stores/store";
 
 export default function TestAnswerTable() {
+  const { problems } = useSelector((state: RootState) => state.exam);
   return (
     <StyledTestAnswerTable>
       <thead>
@@ -9,14 +12,12 @@ export default function TestAnswerTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>1</td>
-        </tr>
+        {problems.map((problem, idx) => (
+          <tr>
+            <td>{idx + 1}</td>
+            <td>{problem.userAnswer ? problem.userAnswer : ""}</td>
+          </tr>
+        ))}
       </tbody>
     </StyledTestAnswerTable>
   );
