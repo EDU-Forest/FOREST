@@ -7,7 +7,7 @@ declare module "styled-components" {
       Orange: array;
       Gray: array;
     };
-    // mobile: string;
+    mobile: string;
     tablet: string;
     desktop: string;
   }

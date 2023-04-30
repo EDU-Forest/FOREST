@@ -1,6 +1,0 @@
-enum ProblemType {
-  MULTIPLE = "MULTIPLE",
-  SUBJECTIVE = "SUBJECTIVE",
-  DESCRIPT = "DESCRIPT",
-  OX = "OX",
-}
