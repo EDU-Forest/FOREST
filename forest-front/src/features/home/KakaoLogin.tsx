@@ -4,12 +4,11 @@ import { useDispatch } from "react-redux";
 
 export default function KakaoLogin() {
   const { refetch } = useKakaoLoginQuery();
-  const handleLogin = () => {
+  const handleKakaoLogin = () => {
     refetch();
   };
-
   return (
-    <KakaoLoginBtn onClick={handleLogin}>
+    <KakaoLoginBtn onClick={handleKakaoLogin}>
       <KakaoLoginImg src={"images/Kakao_Login_Large_Wide.png"} />
       <KakaoLoginText>카카오톡으로 시작하기</KakaoLoginText>
     </KakaoLoginBtn>
