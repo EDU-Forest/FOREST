@@ -26,7 +26,6 @@ public class AuthController {
     public ResponseEntity<ResponseSuccessDto<ReissueResponseDto>> reissueAccessToken(HttpServletRequest request,
                                                                                      @RequestHeader("Authorization") String accessToken) {
         accessToken = accessToken.substring(7);
-
         String refreshToken = SecurityUtil.getCookie(request, "refresh")
                 .orElseThrow(() -> new RuntimeException("refresh token이 존재하지 않습니다."))
                 .getValue();
