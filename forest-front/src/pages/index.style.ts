@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const HomeAuthSection = styled.section`
+const AuthSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,4 +11,4 @@ const ForestLargeLogo = styled.img`
   height: 20rem;
 `;
 
-export { HomeAuthSection, ForestLargeLogo };
+export { AuthSection, ForestLargeLogo };
