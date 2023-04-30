@@ -10,9 +10,6 @@ const fetcher = () =>
   });
 
 const useKakaoLoginQuery = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   return useQuery([queryKeys.KAKAO_LOGIN], () => fetcher(), {
     refetchOnWindowFocus: false,
   });
