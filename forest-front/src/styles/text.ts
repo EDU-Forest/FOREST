@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import css from "styled-jsx/css";
 
 export const Title = styled.p`
   margin: 0;
@@ -7,8 +8,27 @@ export const Title = styled.p`
   font-weight: 700;
 `;
 
-export const Text = (size = 16, isBold = false, isGray = false) => `
-  font-size: ${size / 16}rem;
-  font-weight: ${isBold && 700};
-  color: ${isGray && "#ADB5BD"};
-`;
+// const getBold = (type: FontType) => {
+//   let fontWeight;
+//   switch (type) {
+//     case "title" || "button":
+//       fontWeight = 700;
+//       break;
+
+//     case "label":
+//       fontWeight = 600;
+//       break;
+
+//     default:
+//       return null;
+//   }
+//   return css`
+//     font-weight: ${fontWeight};
+//   `;
+// };
+
+// const Typograph = styled.p<IFont>`
+//   ${({ type }) => getBold(type)};
+// `;
+
+// export { Typograph };
