@@ -349,3 +349,34 @@ export const WorkbookSaveBtn = styled(StyledRoundSolid600Btn)`
     animation-name: ${reactSpinnersClipLoaderClip} !important;
   }
 `;
+
+export const WorkBookPdfBox = styled.div`
+  padding: 56px 80px;
+`;
+
+export const WorkBookPdfBoxQuestionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 80px;
+`;
+
+export const WorkBookPdfHeaderBox = styled.div`
+  margin-bottom: 2.5rem;
+  padding: 16px;
+
+  text-align: center;
+  border: 1px solid black;
+
+  // 문제집 이름
+  > p:first-child {
+    margin-bottom: 0.5rem;
+
+    font-size: 30px;
+    font-weight: bold;
+  }
+  // 문항 수
+  > p:nth-child(2) {
+    font-size: 16px;
+  }
+`;

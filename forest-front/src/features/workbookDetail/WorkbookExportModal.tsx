@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/ai";
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
 import { WorkbookExportModalBox } from "./WorkbookModal.style";
+import WorkbookPdfSave from "./WorkbookPdfSave";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,9 +18,9 @@ interface ExportType {
 }
 
 function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
-  const chosenSet = () => {
-    console.log("출제한다");
+  const [isSavePdf, setIsSavePdf] = useState(false);
 
+  const chosenSet = () => {
     setIsOpen(false);
     setIsSelectClassOpen(true);
   };
@@ -28,8 +29,8 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
     console.log("배포한다");
   };
 
-  const chosenPdf = () => {
-    console.log("피디엪이다");
+  const chosenPdf = async () => {
+    setIsSavePdf(true);
   };
 
   const exports: ExportType[] = [
@@ -52,16 +53,24 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   };
 
   return (
-    <WorkbookExportModalBox>
-      <p>내보내기 방식을 선택해주세요.</p>
-      <WorkbookExportRadioGroup exports={exports} value={value} setValue={setValue} />
-      <ModalBtnsBox>
-        <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
-        <SmallBtn onClick={handleClickChoose} colored={true}>
-          선택
-        </SmallBtn>
-      </ModalBtnsBox>
-    </WorkbookExportModalBox>
+    <>
+      {/* pdf 저장하기 위해 isSavePdf가 true가 되면 렌더링 */}
+      {/* 저장 직후 false되며 렌더링 사라짐 */}
+      {isSavePdf ? (
+        <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />
+      ) : (
+        <WorkbookExportModalBox>
+          <p>내보내기 방식을 선택해주세요.</p>
+          <WorkbookExportRadioGroup exports={exports} value={value} setValue={setValue} />
+          <ModalBtnsBox>
+            <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
+            <SmallBtn onClick={handleClickChoose} colored={true}>
+              선택
+            </SmallBtn>
+          </ModalBtnsBox>
+        </WorkbookExportModalBox>
+      )}
+    </>
   );
 }
 
