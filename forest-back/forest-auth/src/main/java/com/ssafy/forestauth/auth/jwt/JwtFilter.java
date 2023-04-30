@@ -66,6 +66,9 @@ public class JwtFilter extends OncePerRequestFilter {
             System.out.println("토큰 잘못됨");
             request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
             throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
+        } catch(Exception e) {
+            request.setAttribute("excetion", ErrorCode.AUTH_WRONG_TOKEN);
+            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
         }
 
         filterChain.doFilter(request, response);
