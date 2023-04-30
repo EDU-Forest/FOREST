@@ -7,7 +7,7 @@ export default function Editor() {
     <FullScreen>
       <EditorNav />
       <Container isEditor>
-        하하하하하하하
+        하하하하하하하 아직도 성공을 못하다니!!!
         <PdfViewer />
       </Container>
     </FullScreen>
