@@ -1,7 +1,7 @@
 import { CommonInput } from "@/components/Input/Input.style";
 import { SignupInputBox, SignupLabel } from "./SignupModal.style";
 import Label from "@/components/Label/Label";
-import { SignupLabelBox } from "./SignupInput.style";
+import { SignupLabelBox } from "./Home.style";
 
 interface validations {
   [key: string]: string | undefined;
