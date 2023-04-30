@@ -21,7 +21,7 @@ pipeline {
                         }
                     }
                     steps {
-                        sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/develop-BE-pipeline/forest-back/forest-auth/src/main/resources'
+                        sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-auth/src/main/resources'
 
                         echo 'Insert keystore...'
                     }                    
