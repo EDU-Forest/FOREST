@@ -23,9 +23,9 @@ export async function getServerSideProps({ params: { wId } }: { params: { wId: s
 
 interface WorkbookType {
   id: number;
-  title: String;
-  workbookImgPath: String;
-  desc: String;
+  title: string;
+  workbookImgPath: string;
+  desc: string;
   isPublic: Boolean;
   bookmarkCount: number;
   scrapCount: number;
