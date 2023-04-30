@@ -44,7 +44,6 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .formLogin().disable()
 
                 // 요청 URL 권한
-//                .authorizeRequests().antMatchers("/api/user/check", "/api/user/common", "/api/user/social", "/api/user/login", "/api/msg", "/api/class/search")
                 .authorizeRequests()
                 .antMatchers(
                         "**/api/user/search/**",
@@ -55,7 +54,14 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "**/api/class/search/**",
                         "**/api/workbook/search/**",
                         "**/api/workbook/best/**",
-                        "**/api/workbook/recent/**"
+                        "**/api/workbook/recent/**",
+
+                        // Swagger
+                        "**/api/swagger-ui.html/**",
+                        "**/api/webjars/**",
+                        "**/api/swagger-resources/**",
+                        "**/api/v2/api-docs/**",
+                        "**/api/"
                 ).permitAll()
                 .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()

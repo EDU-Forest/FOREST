@@ -68,7 +68,10 @@ public class JwtFilter extends OncePerRequestFilter {
             throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
         } catch(Exception e) {
             request.setAttribute("excetion", ErrorCode.AUTH_WRONG_TOKEN);
-            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
+//            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
+            System.out.println("Token is Null ->" + jwt);
+            setErrorResponse(response);
+            throw new RuntimeException(ErrorCode.AUTH_WRONG_TOKEN.getMessage());
         }
 
         filterChain.doFilter(request, response);
