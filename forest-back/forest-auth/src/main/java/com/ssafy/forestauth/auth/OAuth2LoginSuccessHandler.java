@@ -21,8 +21,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    @Value("${jwt.redirect-url}")
-    private String accessTokenRedirectUrl;
+//    @Value("${jwt.redirect-url}")
+//    private String accessTokenRedirectUrl;
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
