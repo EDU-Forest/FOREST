@@ -32,7 +32,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
   const workbook: WorkbookType = {
     id: 1,
     title: "수능 100제",
-    workbookImgisImage: false,
+    workbookImgPath: "",
     desc: `ENGLISH 평가문제집 설명글`,
     // desc: `ENGLISH 평가문제집 설명글입니다.
     // 설명글은 글자 제한이 있어야할 것 같습니다.
