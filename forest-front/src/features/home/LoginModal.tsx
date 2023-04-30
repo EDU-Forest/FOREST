@@ -73,11 +73,11 @@ export default function LoginModal({ onClose }: Iprops) {
         <LoginHr />
         <LoginContentBox>
           <LoginInputBox>
-            <LoginLabel htmlFor="email">아이디</LoginLabel>
+            <LoginLabel htmlFor="email">이메일</LoginLabel>
             <CommonInput
               id="email"
               name="email"
-              placeholder="아이디를 입력하세요"
+              placeholder="이메일를 입력하세요"
               value={email}
               onChange={onChange}
             />
