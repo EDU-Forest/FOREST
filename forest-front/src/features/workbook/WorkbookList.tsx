@@ -26,8 +26,8 @@ function WorkbookList({ list }: IProps) {
             key={item?.id}
             id={item?.id}
             title={item?.title}
-            likes={item?.likeCnt}
-            used={item?.usedCnt}
+            bookmarkCount={item?.likeCnt}
+            scrapCount={item?.usedCnt}
             clickAction={handleClickWorkbook}
           />
         );
