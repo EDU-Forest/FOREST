@@ -23,6 +23,7 @@ interface Iprops {
 export default function LoginModal({ onClose }: Iprops) {
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const [loginErrorMsg, setLoginErrorMsg] = useState("");
 
   // 서버 응답에 대한 에러 메세지
   // const [validErrorMsg, setValidErrorMsg] = useState("");
@@ -96,6 +97,7 @@ export default function LoginModal({ onClose }: Iprops) {
             {passwordErrorMsg && <LoginErrorMsg>{passwordErrorMsg}</LoginErrorMsg>}
           </LoginInputBox>
         </LoginContentBox>
+        {loginErrorMsg && <LoginErrorMsg>{loginErrorMsg}</LoginErrorMsg>}
         <LoginHr />
         <LoginSubmitBox>
           <SmallBtn colored>확인</SmallBtn>
