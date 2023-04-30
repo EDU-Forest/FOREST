@@ -33,7 +33,7 @@ public class StudyController {
 
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/recent/{classId}")
-    public ResponseEntity<ResponseSuccessDto<GetStudyRecentResponseDto>> getStudyRecent(@PathVariable("classId") Long classId) {
+    public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudyRecent(@PathVariable("classId") Long classId) {
         return ResponseEntity.ok(studyService.getStudyRecent(classId));
     }
 
@@ -75,7 +75,7 @@ public class StudyController {
 
     @ApiOperation(value = "(학생) 최근 진행한 문제집 성적 조회", notes = "(학생) 최근 진행한 문제집 성적을 조회합니다.")
     @GetMapping("/student/recent/{classId}/{userId}")
-    public ResponseEntity<ResponseSuccessDto<GetStudentRecentResponseDto>> getStudentRecent(@PathVariable("classId") Long classId, @PathVariable("userId") Long userId) {
+    public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudentRecent(@PathVariable("classId") Long classId, @PathVariable("userId") Long userId) {
         return ResponseEntity.ok(studyService.getStudentRecent(classId, userId));
     }
 

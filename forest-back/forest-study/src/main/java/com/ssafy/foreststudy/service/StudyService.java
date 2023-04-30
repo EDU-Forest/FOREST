@@ -198,7 +198,7 @@ public class StudyService {
     }
 
     /* 최근 진행한 시험 결과 조회 */
-    public ResponseSuccessDto<GetStudyRecentResponseDto> getStudyRecent(Long classId) {
+    public ResponseSuccessDto<GetStudyIdResponseDto> getStudyRecent(Long classId) {
         classRepository.findById(classId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
 
@@ -211,8 +211,11 @@ public class StudyService {
 
         String schedule = getScheduleType(cs);
 
-        GetStudyRecentResponseDto getStudyRecentResponseDto = getStudyInfoResponse(cs, schedule);
-        ResponseSuccessDto<GetStudyRecentResponseDto> res = responseUtil.successResponse(getStudyRecentResponseDto, SuccessCode.STUDY_SUCCESS_RECENT);
+        // GetStudyRecentResponseDto getStudyRecentResponseDto = getStudyInfoResponse(cs, schedule);
+        GetStudyIdResponseDto getStudyRecentResponseDto = GetStudyIdResponseDto.builder()
+                .studyId(cs.getStudy().getId())
+                .build();
+        ResponseSuccessDto<GetStudyIdResponseDto> res = responseUtil.successResponse(getStudyRecentResponseDto, SuccessCode.STUDY_SUCCESS_RECENT);
 
         return res;
     }
@@ -228,6 +231,7 @@ public class StudyService {
         String schedule = getScheduleType(cs);
         ResponseSuccessDto<GetStudyRecentResponseDto> res = null;
         if (schedule.equals("BEFORE") || schedule.equals("ONGOING")) {
+            //GetStudyBeforeAndOngoingResponseDto getStudyBeforeAndOngoingResponseDto = GetStudyBeforeAndOngoingResponseDto.builder()
             GetStudyBeforeAndOngoingResponseDto getStudyBeforeAndOngoingResponseDto = GetStudyBeforeAndOngoingResponseDto.builder()
                     .studyId(cs.getStudy().getId())
                     .title(cs.getStudy().getName())
@@ -369,7 +373,7 @@ public class StudyService {
     }
 
     /* (학생) 최근 진행한 문제집 성적 조회 */
-    public ResponseSuccessDto<GetStudentRecentResponseDto> getStudentRecent(Long classId, Long userId) {
+    public ResponseSuccessDto<GetStudyIdResponseDto> getStudentRecent(Long classId, Long userId) {
 
         classRepository.findById(classId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
@@ -384,8 +388,11 @@ public class StudyService {
         ClassStudyResult cs = csList.get(0);
         String schedule = getScheduleType(cs);
 
-        GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
-        ResponseSuccessDto<GetStudentRecentResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RECENT);
+        //GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
+        GetStudyIdResponseDto result = GetStudyIdResponseDto.builder()
+                .studyId(cs.getStudy().getId())
+                .build();
+        ResponseSuccessDto<GetStudyIdResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RECENT);
 
         return res;
     }
