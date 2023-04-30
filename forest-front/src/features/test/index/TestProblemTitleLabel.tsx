@@ -1,5 +1,9 @@
+import { useSelector } from "react-redux";
 import { StyledTestProblemTitleLabel } from "./TextIndex.style";
+import { RootState } from "@/stores/store";
 
 export default function TestProblemTitleLabel() {
-  return <StyledTestProblemTitleLabel>1</StyledTestProblemTitleLabel>;
+  const { problems } = useSelector((state: RootState) => state.exam);
+  const { problemNum } = problems[0];
+  return <StyledTestProblemTitleLabel>{problemNum}</StyledTestProblemTitleLabel>;
 }
