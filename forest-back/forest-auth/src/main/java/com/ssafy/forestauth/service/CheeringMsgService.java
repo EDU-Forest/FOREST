@@ -24,11 +24,19 @@ public class CheeringMsgService {
 
     public ResponseSuccessDto<SelectCheeringMsgResponseDto> selectMsg() {
         List<CheeringMsg> msgList = cheeringMsgRepository.findAll();
-        int idx = (int) Math.round(Math.random() * (msgList.size() - 1));
-        CheeringMsg cheeringMsg = msgList.get(idx);
-        SelectCheeringMsgResponseDto cheeringMsgResponseDto = SelectCheeringMsgResponseDto.builder()
-                .content(cheeringMsg.getContent())
-                .build();
+        SelectCheeringMsgResponseDto cheeringMsgResponseDto;
+
+        if(msgList.size() == 0) {
+            cheeringMsgResponseDto = SelectCheeringMsgResponseDto.builder()
+                    .content("No Content")
+                    .build();
+        } else{
+            int idx = (int) Math.round(Math.random() * (msgList.size() - 1));
+            CheeringMsg cheeringMsg = msgList.get(idx);
+             cheeringMsgResponseDto= SelectCheeringMsgResponseDto.builder()
+                    .content(cheeringMsg.getContent())
+                    .build();
+        }
 
         ResponseSuccessDto<SelectCheeringMsgResponseDto> res = responseUtil.successResponse(cheeringMsgResponseDto, SuccessCode.AUTH_READ_CHEERING_MSG);
         return res;
