@@ -1,10 +1,17 @@
-import { StyledHashTag } from "./HashTag.style";
+import styled from "styled-components";
 
 interface Iprops {
-  value: string;
-  onClick: (value: string) => void;
+  children: string;
 }
 
-export default function HashTag({ value, onClick }: Iprops) {
-  return <StyledHashTag onClick={() => onClick(value)}># {value}</StyledHashTag>;
+const StyledhashTag = styled.div`
+display: inline-block;
+background-color: ${({ theme }) => theme.colors.Orange[600]}}
+padding: .5rem .75rem;
+border-radius: 2.5rem;
+color: white;
+`;
+
+export default function HashTag({ children }: Iprops) {
+  return <StyledhashTag># {children}</StyledhashTag>;
 }
