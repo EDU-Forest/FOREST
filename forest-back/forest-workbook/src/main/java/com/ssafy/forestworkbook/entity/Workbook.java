@@ -1,12 +1,14 @@
 package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -59,4 +61,13 @@ public class Workbook {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    @Builder
+    public Workbook(WorkbookImg workbookImg, User creator, String title, String description, int volume) {
+        this.workbookImg = workbookImg;
+        this.creator = creator;
+        this.title = title;
+        this.description = description;
+        this.volume = volume;
+    }
 }
