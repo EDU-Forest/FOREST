@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { useEffect } from "react";
 
 const { NEXT_PUBLIC_BASE_URL } = process.env;
 
@@ -9,10 +10,10 @@ const AxiosConFigure: AxiosRequestConfig = {
 };
 
 const customAxios = axios.create(AxiosConFigure);
-const forestToken = localStorage.getItem("forest_access_token");
 
 customAxios.interceptors.request.use(
   (config) => {
+    const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.authorization && forestToken) {
       config.headers.authorization = JSON.parse(forestToken);
     }
