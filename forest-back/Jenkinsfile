@@ -85,6 +85,7 @@ pipeline {
                         script {
                             try {
                                 dir('forest-back/forest-auth') {
+                                    sh 'ls -al'
                                     sh 'docker-compose up -d'
                                 }
                                 echo 'run new image'
