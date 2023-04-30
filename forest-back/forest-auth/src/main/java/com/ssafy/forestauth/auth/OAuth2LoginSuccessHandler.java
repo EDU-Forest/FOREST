@@ -65,7 +65,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             response.addHeader("Set-Cookie", accessCookie.toString());
             response.addHeader("Set-Cookie", emailCookie.toString());
 
-            String targetUrl = accessTokenRedirectUrl;
+            String targetUrl;
+            if(oAuth2User.getEmail() == null) {
+                targetUrl = "null";
+            } else {
+                targetUrl = email;
+            }
+
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } catch (Exception e) {
             throw e;
