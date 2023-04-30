@@ -43,9 +43,8 @@ public class UserController {
     }
 
 
-    /**
-     * 이름으로 학생 검색
-     */
+
+    // 이름으로 학생 검색
     @GetMapping("/search")
     public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
             @RequestParam("userName") String userName) {
