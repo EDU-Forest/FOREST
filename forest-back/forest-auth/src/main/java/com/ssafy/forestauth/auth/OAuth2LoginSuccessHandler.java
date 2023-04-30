@@ -37,8 +37,20 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             String refreshToken = jwtProvider.createRefreshToken(authentication);
             log.info("생성된 refresh token : {}", refreshToken);
 
-            String email = oAuth2User.getEmail();
-            log.info("User email : {}", email);
+            Long userId = oAuth2User.getUserId();
+            log.info("유저 아이디 : {}", userId);
+
+            String username = null;
+
+            Optional<User> findUserById = userRepository.findById(userId);
+            if(findUserById.isEmpty()) {
+                username = "null";
+            } else {
+                User user = findUserById.get();
+                username = user.getName();
+            }
+
+            log.info("유저 이름 : {}", username);
 
             ResponseCookie refreshCookie = ResponseCookie.from("refresh", refreshToken)
                     .httpOnly(true)
@@ -52,7 +64,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                     .path("/")
                     .build();
 
-            ResponseCookie emailCookie = ResponseCookie.from("email", email)
+            ResponseCookie usernameCookie = ResponseCookie.from("username", username)
                     .httpOnly(true)
                     .maxAge(JwtProvider.accessTokenValidateTime)
                     .path("/")
@@ -63,13 +75,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             clearAuthenticationAttributes(request);
             response.addHeader("Set-Cookie", refreshCookie.toString());
             response.addHeader("Set-Cookie", accessCookie.toString());
-            response.addHeader("Set-Cookie", emailCookie.toString());
+            response.addHeader("Set-Cookie", usernameCookie.toString());
 
             String targetUrl;
             if(oAuth2User.getEmail() == null) {
                 targetUrl = "null";
             } else {
-                targetUrl = email;
+                targetUrl = username;
             }
 
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
