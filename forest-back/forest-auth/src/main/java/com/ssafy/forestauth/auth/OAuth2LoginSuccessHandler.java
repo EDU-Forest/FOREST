@@ -32,10 +32,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             String accessToken = jwtProvider.createAccessToken(authentication);
-            log.info("생성된 access token : {}", accessToken);
+            log.info("new access token : {}", accessToken);
 
             String refreshToken = jwtProvider.createRefreshToken(authentication);
-            log.info("생성된 refresh token : {}", refreshToken);
+            log.info("new refresh token : {}", refreshToken);
 
             Long userId = oAuth2User.getUserId();
             log.info("유저 아이디 : {}", userId);
@@ -52,13 +52,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             log.info("유저 이름 : {}", username);
 
-            ResponseCookie refreshCookie = ResponseCookie.from("refresh", refreshToken)
+            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
                     .maxAge(jwtProvider.refreshTokenValidateTime)
                     .path("/")
                     .build();
 
-            ResponseCookie accessCookie = ResponseCookie.from("access", accessToken)
+            ResponseCookie accessCookie = ResponseCookie.from("accessToken", accessToken)
                     .httpOnly(true)
                     .maxAge(JwtProvider.accessTokenValidateTime)
                     .path("/")
