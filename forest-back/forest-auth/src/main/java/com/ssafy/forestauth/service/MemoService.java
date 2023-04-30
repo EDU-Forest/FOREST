@@ -67,9 +67,6 @@ public class MemoService {
             memo.updateDelete(deleteMemoRequestDto.getIsDeleted());
         }
 
-        DeleteMemoResponseDto deleteMemoResponseDto = DeleteMemoResponseDto.builder()
-                .message(SuccessCode.AUTH_MEMO_DELETED.getMessage())
-                .build();
         ResponseSuccessDto<DeleteMemoResponseDto> res = responseUtil.successResponse(deleteMemoRequestDtoList, SuccessCode.AUTH_MEMO_DELETED);
         return res;
     }
