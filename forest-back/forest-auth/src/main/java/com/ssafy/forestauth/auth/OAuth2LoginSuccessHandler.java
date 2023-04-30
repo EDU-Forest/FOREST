@@ -37,13 +37,22 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             String refreshToken = jwtProvider.createRefreshToken(authentication);
             log.info("생성된 refresh token : {}", refreshToken);
 
-            ResponseCookie cookie = ResponseCookie.from("refresh", refreshToken)
+            String email = oAuth2User.getEmail();
+            log.info("User email : {}", email);
+
+            ResponseCookie refreshCookie = ResponseCookie.from("refresh", refreshToken)
                     .httpOnly(true)
                     .maxAge(jwtProvider.refreshTokenValidateTime)
                     .path("/")
                     .build();
 
-            ResponseCookie cookie2 = ResponseCookie.from("access", accessToken)
+            ResponseCookie accessCookie = ResponseCookie.from("access", accessToken)
+                    .httpOnly(true)
+                    .maxAge(JwtProvider.accessTokenValidateTime)
+                    .path("/")
+                    .build();
+
+            ResponseCookie emailCookie = ResponseCookie.from("email", email)
                     .httpOnly(true)
                     .maxAge(JwtProvider.accessTokenValidateTime)
                     .path("/")
@@ -52,10 +61,11 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             // 로그인 실패가 발생했을 떄 세션에 저장된 에러 지움
             clearAuthenticationAttributes(request);
-            response.addHeader("Set-Cookie", cookie.toString());
-            response.addHeader("Set-Cookie", cookie2.toString());
+            response.addHeader("Set-Cookie", refreshCookie.toString());
+            response.addHeader("Set-Cookie", accessCookie.toString());
+            response.addHeader("Set-Cookie", emailCookie.toString());
 
-            String targetUrl = accessTokenRedirectUrl + accessToken;
+            String targetUrl = accessTokenRedirectUrl;
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } catch (Exception e) {
             throw e;
