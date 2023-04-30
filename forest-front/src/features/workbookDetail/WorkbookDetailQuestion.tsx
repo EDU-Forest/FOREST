@@ -34,7 +34,6 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
   }, [questionSumm, curQuestion]);
 
   return (
-    // 객관식
     <StyledWorkbookDetailQuestionBox>
       <StyledQuestionDetailTitleBox>
         <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
@@ -44,18 +43,23 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
 
       {/* 지문이 있다면 지문 렌더링 */}
       {question.text && <StyledQuestionDetailTextBox>{question.text}</StyledQuestionDetailTextBox>}
+      {/* 이미지가 있다면 이미지 렌더링 */}
+      {question.image && <img src={question.image} alt="question" />}
 
       {/* 객관식 보기 */}
-      <StyledQuestionDetailChoiceListBox>
-        {question.items.map((item) => {
-          return (
-            <StyledQuestionDetailChoiceBox>
-              <StyledQuestionChoiceNumBox>{item.no}</StyledQuestionChoiceNumBox>
-              <span>{item.content}</span>
-            </StyledQuestionDetailChoiceBox>
-          );
-        })}
-      </StyledQuestionDetailChoiceListBox>
+      {question.type === "객관식" && (
+        <StyledQuestionDetailChoiceListBox>
+          {question.items.map((item) => {
+            return (
+              <StyledQuestionDetailChoiceBox>
+                <StyledQuestionChoiceNumBox>{item.no}</StyledQuestionChoiceNumBox>
+                {/* 이미지 형식의 보기라면 이미지 렌더링 */}
+                {item.isImage ? <img src={item.content} alt="item" /> : <span>{item.content}</span>}
+              </StyledQuestionDetailChoiceBox>
+            );
+          })}
+        </StyledQuestionDetailChoiceListBox>
+      )}
     </StyledWorkbookDetailQuestionBox>
   );
 }

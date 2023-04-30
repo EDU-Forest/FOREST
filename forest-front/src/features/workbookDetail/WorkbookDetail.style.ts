@@ -1,3 +1,4 @@
+import { theme } from "./../../styles/theme";
 import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
 import { WorkbookImg } from "@/components/Workbook/Workbook.style";
 import styled, { keyframes } from "styled-components";
@@ -48,6 +49,10 @@ export const StyledWorkbookDetailInfoOverviewBox = styled.div`
 
       font-size: 22px;
       font-weight: bold;
+
+      @media ${({ theme }) => theme.tablet} {
+        font-size: 1rem;
+      }
     }
 
     // 문제집 설명
@@ -109,6 +114,12 @@ export const StyledWorkbookDetailBtnsBox = styled.div`
 
   margin-bottom: 24px;
   gap: 16px;
+
+  @media ${({ theme }) => theme.tablet} {
+    span {
+      display: none;
+    }
+  }
 `;
 
 export const StyledWorkbookDetailQuestionListBox = styled.div`
@@ -130,6 +141,10 @@ export const WorkbookDetailQuestionOverviewAndContentBox = styled.div`
 export const WorkbookDetailQuestionBtnAndVisibilityBox = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media ${({ theme }) => theme.tablet} {
+    max-width: 216px;
+  }
 `;
 
 export const StyledToggleBtn = styled.button`
@@ -238,6 +253,10 @@ export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>
       max-width: 10.5rem;
       overflow: hidden;
       text-overflow: ellipsis;
+
+      @media ${({ theme }) => theme.tablet} {
+        max-width: 48px;
+      }
     }
   }
 
@@ -281,6 +300,10 @@ export const StyledQuestionDetailTitleBox = styled.div`
   > span {
     font-size: 1.375rem;
     font-weight: bold;
+
+    @media ${({ theme }) => theme.tablet} {
+      font-size: 1rem;
+    }
   }
 
   // 수정 버튼
@@ -347,5 +370,36 @@ const reactSpinnersClipLoaderClip = keyframes`
 export const WorkbookSaveBtn = styled(StyledRoundSolid600Btn)`
   > span {
     animation-name: ${reactSpinnersClipLoaderClip} !important;
+  }
+`;
+
+export const WorkBookPdfBox = styled.div`
+  padding: 56px 80px;
+`;
+
+export const WorkBookPdfBoxQuestionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  gap: 80px;
+`;
+
+export const WorkBookPdfHeaderBox = styled.div`
+  margin-bottom: 2.5rem;
+  padding: 16px;
+
+  text-align: center;
+  border: 1px solid black;
+
+  // 문제집 이름
+  > p:first-child {
+    margin-bottom: 0.5rem;
+
+    font-size: 30px;
+    font-weight: bold;
+  }
+  // 문항 수
+  > p:nth-child(2) {
+    font-size: 16px;
   }
 `;
