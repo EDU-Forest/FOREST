@@ -63,6 +63,8 @@ pipeline {
                         script {
                             try {
                                 dir('forest-back/forest-auth'){
+                                    sh 'docker stop ${FOREST_AUTH_CONTAINER}'
+                                    sh 'docker rm ${FOREST_AUTH_CONTAINER}'
                                     sh 'docker-compose down'    
                                 }                                
                             } catch (e) {
