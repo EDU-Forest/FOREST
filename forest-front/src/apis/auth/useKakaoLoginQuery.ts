@@ -1,16 +1,18 @@
-import customAxios from "@/utils/customAxios";
-import { useRouter } from "next/router";
 import { useQuery } from "react-query";
-import { useDispatch } from "react-redux";
 import * as queryKeys from "@/constants/queryKeys";
+import authAxios from "@/utils/authAxios";
 
 const fetcher = () =>
-  customAxios.get("/api/oauth2/authorization/kakao").then((res) => {
+  authAxios.get("/api/oauth2/authorization/kakao").then((res) => {
     return res;
   });
+// console.log("ff");
+// axios.get("/api/oauth2/authorization/kakao").then((res) => {
+//   return res;
+// });
 
 const useKakaoLoginQuery = () => {
-  return useQuery([queryKeys.KAKAO_LOGIN], () => fetcher(), {
+  return useQuery(queryKeys.KAKAO_LOGIN, fetcher, {
     refetchOnWindowFocus: false,
   });
 };
