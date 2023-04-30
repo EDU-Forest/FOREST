@@ -72,7 +72,8 @@ public enum ErrorCode {
     /**
      * 클래스에 학생 추가, 클래스에 속한 학생 목록 조회, 학생 삭제
      */
-    AUTH_CLASS_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 클래스가 존재하지 않습니다.");
+    AUTH_CLASS_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 클래스가 존재하지 않습니다."),
+    AUTH_CLASS_USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 클래스-유저가 존재하지 않습니다.");
 
     private final HttpStatus status;
     private final String message;

@@ -2,6 +2,7 @@ package com.ssafy.forestauth.controller;
 
 import com.ssafy.forestauth.dto.classes.*;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
+import com.ssafy.forestauth.dto.user.SearchStudentResponseDto;
 import com.ssafy.forestauth.service.ClassService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -50,10 +51,26 @@ public class ClassController {
     }
 
     // 클래스에 학생 추가
-//    @PostMapping("/student")
-//    public ResponseEntity<ResponseSuccessDto<SaveClassStudentResponseDto>> saveClassStudent(
-//            @RequestBody SaveClassStudentRequestDto saveClassStudentRequestDto
-//    ) {
-//        return ResponseEntity.ok(classService.saveClassStudent(saveClassStudentRequestDto));
-//    }
+    @PostMapping("/student")
+    public ResponseEntity<ResponseSuccessDto<SaveClassStudentResponseDto>> saveClassStudent(
+            @RequestBody SaveClassStudentRequestDto saveClassStudentRequestDto
+    ) {
+        return ResponseEntity.ok(classService.saveClassStudent(saveClassStudentRequestDto));
+    }
+
+    // 클래스에 속한 학생 목록 조회
+    @GetMapping("/{classId}/student")
+    public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
+            @PathVariable("classId") Long classId
+    ) {
+        return ResponseEntity.ok(classService.searchStudent(classId));
+    }
+
+    // 클래스에서 학생 삭제
+    @PatchMapping("/student")
+    public ResponseEntity<ResponseSuccessDto<DeleteStudentResponseDto>> deleteStudent(
+            @RequestBody DeleteStudentRequestDto deleteStudentRequestDto
+    ) {
+        return ResponseEntity.ok(classService.deleteStudent(deleteStudentRequestDto));
+    }
 }

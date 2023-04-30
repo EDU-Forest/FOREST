@@ -2,6 +2,7 @@ package com.ssafy.forestauth.service;
 
 import com.ssafy.forestauth.dto.classes.*;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
+import com.ssafy.forestauth.dto.user.SearchStudentResponseDto;
 import com.ssafy.forestauth.entity.Class;
 import com.ssafy.forestauth.entity.ClassUser;
 import com.ssafy.forestauth.entity.User;
@@ -19,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,14 +108,64 @@ public class ClassService {
         return res;
     }
 
-//    public ResponseSuccessDto<SaveClassStudentResponseDto> saveClassStudent(SaveClassStudentRequestDto saveClassStudentRequestDto) {
-//        Long classId = saveClassStudentRequestDto.getClassId();
-//        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
-//
-//
-//
-//
-//    }
-
     // 클래스에 학생 추가
+    public ResponseSuccessDto<SaveClassStudentResponseDto> saveClassStudent(SaveClassStudentRequestDto saveClassStudentRequestDto) {
+        Long classId = saveClassStudentRequestDto.getClassId();
+        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+
+        List<Long> studentList = saveClassStudentRequestDto.getStudentList();
+        for (Long studentId : studentList) {
+            User student = userRepository.findById(studentId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+            ClassUser classUser = new ClassUser();
+            classUser.createClassUser(findClass, student);
+            classUserRepository.save(classUser);
+        }
+
+        SaveClassStudentResponseDto saveClassStudentResponseDto = SaveClassStudentResponseDto.builder()
+                .message(SuccessCode.AUTH_STUDENT_INSERTED_CLASS.getMessage())
+                .build();
+
+        ResponseSuccessDto<SaveClassStudentResponseDto> res = responseUtil.successResponse(saveClassStudentResponseDto, SuccessCode.AUTH_STUDENT_INSERTED_CLASS);
+        return res;
+    }
+
+    public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(Long classId) {
+        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+        List<ClassUser> findUserClassList = classUserRepository.findAllByClasses(findClass);
+
+        List<SearchStudentResponseDto> dtoList = new ArrayList<>();
+        for (ClassUser classUser : findUserClassList) {
+            User user = classUser.getUser();
+            int age = LocalDate.now().getYear() - user.getBirth().getYear();
+            SearchStudentResponseDto searchStudentResponseDto = SearchStudentResponseDto.builder()
+                    .userId(user.getId())
+                    .name(user.getName())
+                    .age(age)
+                    .email(user.getEmail())
+                    .phone(user.getPhone())
+                    .build();
+            dtoList.add(searchStudentResponseDto);
+        }
+
+        ResponseSuccessDto<List<SearchStudentResponseDto>> res = responseUtil.successResponse(dtoList, SuccessCode.AUTH_SEARCH_STUDENT);
+        return res;
+    }
+
+    public ResponseSuccessDto<DeleteStudentResponseDto> deleteStudent(DeleteStudentRequestDto deleteStudentRequestDto) {
+        Long classId = deleteStudentRequestDto.getClassId();
+        Long userId = deleteStudentRequestDto.getUserId();
+
+        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+
+        ClassUser classUser = classUserRepository.findByClassesAndUser(findClass, findUser).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_USER_NOT_FOUND));
+        classUser.deleteClassUser();
+
+        DeleteStudentResponseDto deleteStudentResponseDto = DeleteStudentResponseDto.builder()
+                .message(SuccessCode.AUTH_STUDENT_EXCLUDED.getMessage())
+                .build();
+
+        ResponseSuccessDto<DeleteStudentResponseDto> res = responseUtil.successResponse(deleteStudentResponseDto, SuccessCode.AUTH_STUDENT_EXCLUDED);
+        return res;
+    }
 }

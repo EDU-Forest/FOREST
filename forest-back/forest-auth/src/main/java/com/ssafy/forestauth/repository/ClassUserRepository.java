@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface ClassUserRepository extends JpaRepository<ClassUser, Long> {
     List<ClassUser> findAllByUser(User user);
 
-    Optional<ClassUser> findByClasses(Class classes);
+    Optional<ClassUser> findByClassesAndUser(Class classes, User user);
+    List<ClassUser> findAllByClasses(Class classes);
 }
