@@ -62,25 +62,25 @@ function WorkbookDetail() {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -97,25 +97,25 @@ function WorkbookDetail() {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -132,25 +132,25 @@ function WorkbookDetail() {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -220,9 +220,13 @@ function WorkbookDetail() {
           setSelectedClass={setSelectedClass}
         />
       )}
-      {/* 출제 세팅 모달 */}
+      {/* 출제 세팅 모달 */}
       {isSettingOpen && (
-        <WorkbookSettingModal setIsOpen={setIsSettingOpen} selectedClass={selectedClass} title={workbook.title} />
+        <WorkbookSettingModal
+          setIsOpen={setIsSettingOpen}
+          selectedClass={selectedClass}
+          title={workbook.title}
+        />
       )}
     </StyledWorkbookDetailBox>
   );
