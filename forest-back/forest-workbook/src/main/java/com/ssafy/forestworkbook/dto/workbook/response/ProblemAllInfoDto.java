@@ -1,6 +1,5 @@
-package com.ssafy.forestworkbook.dto.workbook;
+package com.ssafy.forestworkbook.dto.workbook.response;
 
-import com.ssafy.forestworkbook.entity.Item;
 import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Getter
 @ToString
-public class ProblemAllInfo {
+public class ProblemAllInfoDto {
 
     private Long problemId;
     private int problemNum;
@@ -23,7 +22,7 @@ public class ProblemAllInfo {
     private List<ItemDto> itemList;
 
     @Builder
-    public ProblemAllInfo(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, int point, String path, String answer, List<ItemDto> itemList) {
+    public ProblemAllInfoDto(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, int point, String path, String answer, List<ItemDto> itemList) {
         this.problemId = problemId;
         this.problemNum = problemNum;
         this.type = type;

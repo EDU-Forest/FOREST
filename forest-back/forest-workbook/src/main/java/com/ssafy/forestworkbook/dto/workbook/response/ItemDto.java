@@ -1,4 +1,4 @@
-package com.ssafy.forestworkbook.dto.workbook;
+package com.ssafy.forestworkbook.dto.workbook.response;
 
 import com.ssafy.forestworkbook.entity.Item;
 import lombok.Builder;

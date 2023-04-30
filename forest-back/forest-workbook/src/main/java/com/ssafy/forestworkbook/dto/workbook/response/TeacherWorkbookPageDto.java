@@ -1,4 +1,4 @@
-package com.ssafy.forestworkbook.dto.workbook;
+package com.ssafy.forestworkbook.dto.workbook.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.forestworkbook.dto.common.response.ResponsePageDto;

@@ -2,18 +2,15 @@ package com.ssafy.forestworkbook.service.impl;
 
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
-import com.ssafy.forestworkbook.dto.workbook.*;
+import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
+import com.ssafy.forestworkbook.dto.workbook.response.*;
 import com.ssafy.forestworkbook.entity.*;
-import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
 import com.ssafy.forestworkbook.enumeration.response.ForestStatus;
 import com.ssafy.forestworkbook.errorhandling.exception.WorkbookErrorCode;
 import com.ssafy.forestworkbook.repository.*;
 import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
-import io.swagger.models.auth.In;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +27,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     private final UserRepository userRepository;
     private final WorkbookRepository workbookRepository;
+    private final WorkbookImgRepository workbookImgRepository;
     private final UserWorkbookRepository userWorkbookRepository;
     private final ProblemListRepository problemListRepository;
     private final ProblemRepository problemRepository;
@@ -78,8 +76,14 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     @Override
     public ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
         // 1. 문제집 만들기
         Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
 
         Workbook workbookCopy = Workbook.builder()
                 .workbookImg(workbook.getWorkbookImg())
@@ -90,6 +94,15 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .build();
 
         workbookRepository.save(workbookCopy);
+
+        if (workbookCopy.getCreator().getId() != userId) {
+            UserWorkbook userWorkbook = UserWorkbook.builder()
+                    .user(user)
+                    .workbook(workbookCopy)
+                    .build();
+
+            userWorkbookRepository.save(userWorkbook);
+        }
 
         // 2. 문제 만들기
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
@@ -160,7 +173,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         problemListRepository.saveAll(problemListsCopy);
 
-        WorkbookInfo workbookInfo = WorkbookInfo.builder()
+        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbookCopy.getId())
                 .title(workbookCopy.getTitle())
                 .workbookImgPath(workbookCopy.getWorkbookImg().getPath())
@@ -169,7 +182,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .isPublic(workbookCopy.getIsPublic())
                 .build();
 
-        List<ProblemAllInfo> problemList = new ArrayList<>();
+        List<ProblemAllInfoDto> problemList = new ArrayList<>();
 
         int size = itemCopyList.size();
         int j = 0;
@@ -195,7 +208,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     j++;
                 }
             }
-            ProblemAllInfo problemAllInfo = ProblemAllInfo.builder()
+            ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
                     .problemId(problemToDto.getId())
                     .problemNum(problemListToDto.getProblemNum())
                     .type(problemToDto.getType())
@@ -206,15 +219,43 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .itemList(itemDtoList.size() == 0 ? null : itemDtoList)
                     .build();
 
-            problemList.add(problemAllInfo);
+            problemList.add(problemAllInfoDto);
         }
 
         WorkbookCopyDto workbookCopyDto = WorkbookCopyDto.builder()
-                .workbookInfo(workbookInfo)
+                .workbookInfoDto(workbookInfoDto)
                 .problemList(problemList)
                 .build();
 
         return responseUtil.successResponse(workbookCopyDto, ForestStatus.WORKBOOK_SUCCESS_COPY);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        WorkbookImg workbookImg = workbookImgRepository.findById(Long.valueOf(1))
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
+
+        Workbook workbook = Workbook.builder()
+                .workbookImg(workbookImg)
+                .creator(user)
+                .title(workbookTitleDto.getTitle())
+                .build();
+
+        workbookRepository.save(workbook);
+
+        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
+                .workbookId(workbook.getId())
+                .title(workbook.getTitle())
+                .workbookImgPath(workbookImg.getPath())
+                .description(workbook.getDescription())
+                .isPublic(workbook.getIsPublic())
+                .volume(workbook.getVolume())
+                .build();
+
+        return responseUtil.successResponse(workbookInfoDto, ForestStatus.WORKBOOK_SUCCESS_CREATE);
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks) {

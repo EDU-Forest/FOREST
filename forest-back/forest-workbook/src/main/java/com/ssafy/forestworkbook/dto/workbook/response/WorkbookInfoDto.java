@@ -1,4 +1,4 @@
-package com.ssafy.forestworkbook.dto.workbook;
+package com.ssafy.forestworkbook.dto.workbook.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class WorkbookInfo {
+public class WorkbookInfoDto {
 
         private Long workbookId;
         private String title;
@@ -18,7 +18,7 @@ public class WorkbookInfo {
         private int scrapCount;
 
         @Builder
-        public WorkbookInfo(Long workbookId, String title, String workbookImgPath, String description, Boolean isPublic, int volume) {
+        public WorkbookInfoDto(Long workbookId, String title, String workbookImgPath, String description, Boolean isPublic, int volume) {
             this.workbookId = workbookId;
             this.title = title;
             this.workbookImgPath = workbookImgPath;

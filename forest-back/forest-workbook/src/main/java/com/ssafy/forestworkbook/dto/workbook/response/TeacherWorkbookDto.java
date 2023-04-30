@@ -1,4 +1,4 @@
-package com.ssafy.forestworkbook.dto.workbook;
+package com.ssafy.forestworkbook.dto.workbook.response;
 
 import lombok.*;
 import org.springframework.util.Assert;
