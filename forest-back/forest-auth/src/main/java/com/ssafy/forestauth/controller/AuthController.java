@@ -2,6 +2,9 @@ package com.ssafy.forestauth.controller;
 
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.ReissueResponseDto;
+import com.ssafy.forestauth.enumeration.response.ErrorCode;
+import com.ssafy.forestauth.enumeration.response.ErrorCode;
+import com.ssafy.forestauth.errorhandling.exception.service.InvalidTokenException;
 import com.ssafy.forestauth.service.AuthService;
 import com.ssafy.forestauth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +26,13 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/reissue")
-    public ResponseEntity<ResponseSuccessDto<ReissueResponseDto>> reissueAccessToken(HttpServletRequest request,
-                                                                                     @RequestHeader("Authorization") String accessToken) {
+    public ResponseEntity<ResponseSuccessDto<ReissueResponseDto>> reissueAccessToken(
+            HttpServletRequest request,
+            @RequestHeader("Authorization") String accessToken
+    ) {
         accessToken = accessToken.substring(7);
         String refreshToken = SecurityUtil.getCookie(request, "refresh")
-                .orElseThrow(() -> new RuntimeException("refresh token이 존재하지 않습니다."))
+                .orElseThrow(() -> new InvalidTokenException(ErrorCode.AUTH_REFRESH_NOT_VALID))
                 .getValue();
         log.info("refresh token : {}", refreshToken);
         return ResponseEntity.ok(authService.reissueAccessToken(accessToken, refreshToken));
