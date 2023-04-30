@@ -1,5 +1,5 @@
 import { Title } from "@/styles/text";
-import { flexBox } from "@/styles/theme";
+import { flexBox, positionCenter } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
 const ClassSummaryTitle = styled(Title)`
@@ -69,15 +69,39 @@ const SummaryItemWrapper = styled.div`
 `;
 
 const SummaryChartWrapper = styled(SummaryItemWrapper)<{ isStudent?: boolean }>`
-  ${flexBox("column", "center", "center")}
+  ${flexBox("column", "center", "center")};
+  position: relative;
 
   @media ${({ theme }) => theme.tablet} {
     ${({ isStudent }) =>
       isStudent &&
       css`
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
       `}
+  }
+`;
+
+const StudentScoreChartLabel = styled.div`
+  ${flexBox("column", "center", "center")}
+  ${positionCenter("absolute")};
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: ${({ theme }) => theme.colors.Gray[500]};
+  text-align: center;
+  padding-top: 4rem;
+
+  p {
+    display: inline-block;
+    &:nth-of-type(1) {
+      color: ${({ theme }) => theme.colors.Lime[600]};
+      margin-right: 0.25rem;
+    }
+  }
+  span {
+    margin-top: 0.25rem;
+    font-weight: 400;
+    font-size: 0.875rem;
   }
 `;
 
@@ -124,6 +148,11 @@ const ClassSummaryText = styled.p<{ isGray?: boolean; isGreen?: boolean }>`
   }
 `;
 
+const ClassSummaryValue = styled.div`
+  text-align: left;
+  width: 5rem;
+`;
+
 const ClassSummaryIcon = styled.div`
   ${flexBox("column", "center", "center")}
   width: 1.75rem;
@@ -148,9 +177,11 @@ export {
   SummaryItemWrapper,
   SummaryChartWrapper,
   ClassSummarySubTitle,
+  StudentScoreChartLabel,
   WorkbookInfo,
   ResultInfoItem,
   ClassSummaryTextWrapper,
   ClassSummaryText,
+  ClassSummaryValue,
   ClassSummaryIcon,
 };

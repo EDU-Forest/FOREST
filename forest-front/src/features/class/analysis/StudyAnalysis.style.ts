@@ -77,7 +77,7 @@ const LabelCircle = styled.div<{ isCorrect?: boolean; notYet?: boolean }>`
     isCorrect
       ? theme.colors.Lime[700]
       : notYet
-      ? theme.colors.Gray[500]
+      ? theme.colors.Gray[300]
       : theme.colors.Orange[400]};
   margin-left: 1rem;
   margin-right: 0.25rem;

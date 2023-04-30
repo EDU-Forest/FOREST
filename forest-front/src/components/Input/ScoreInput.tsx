@@ -2,16 +2,16 @@ import { ChangeEvent } from "react";
 import { CommonInput } from "./Input.style";
 
 interface Iprops {
-  maxScore?: number;
+  maxInput?: number;
   id: string;
   name: string;
   placeholder?: string;
-  inputScore: number;
+  inputScore?: number;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function ScoreInput({
-  maxScore,
+  maxInput,
   id,
   name,
   placeholder,
@@ -22,9 +22,9 @@ export default function ScoreInput({
     <CommonInput
       id={id}
       name={name}
-      type="text"
+      type="number"
       min={0}
-      max={maxScore}
+      max={maxInput}
       placeholder={placeholder}
       value={inputScore}
       onChange={onChange}

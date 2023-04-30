@@ -1,6 +1,3 @@
-import Swal from "sweetalert2";
-import "sweetalert2/dist/sweetalert2.min.css";
-import withReactContent from "sweetalert2-react-content";
 import { MdClose } from "react-icons/md";
 import {
   StudentInfoCardInner,
@@ -8,27 +5,21 @@ import {
   StudentInfoCardText,
   StyledStudentInfoCard,
 } from "./Card.style";
+import { useState } from "react";
+import DeleteStudentModal from "@/features/class/teacher/DeleteStudentModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import { useDispatch } from "react-redux";
+import { openDeleteStudentModal } from "@/stores/class/classModal";
 
 interface Iprops {
   studentInfo: Student;
 }
 
-const MySwal = withReactContent(Swal);
-
 export default function StudentInfoCard({ studentInfo }: Iprops) {
-  const deleteStudent = () => {
-    // 학생 삭제
-    MySwal.fire({
-      icon: "question",
-      title: "정말 삭제하시겠습니까?",
-      showConfirmButton: false,
-      showCancelButton: true,
-      customClass: {
-        title: "text-20 font-medium",
-        popup: "w-440 h-260",
-      },
-    });
-  };
+  const dispatch = useDispatch();
+  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
+
   return (
     <StyledStudentInfoCard>
       <StudentInfoCardInner>
@@ -36,13 +27,14 @@ export default function StudentInfoCard({ studentInfo }: Iprops) {
           <StudentInfoCardName>{studentInfo?.name}</StudentInfoCardName>
           <StudentInfoCardText>{studentInfo?.age}세</StudentInfoCardText>
         </div>
-        <MdClose className="close-icon" onClick={deleteStudent} />
+        <MdClose className="close-icon" onClick={() => dispatch(openDeleteStudentModal())} />
       </StudentInfoCardInner>
       <div>
         <StudentInfoCardText>{studentInfo?.email}</StudentInfoCardText>
         <StudentInfoCardText>|</StudentInfoCardText>
         <StudentInfoCardText>{studentInfo?.phone}</StudentInfoCardText>
       </div>
+      {isOpenDeleteStudentModal && <DeleteStudentModal userId={studentInfo.userId} />}
     </StyledStudentInfoCard>
   );
 }

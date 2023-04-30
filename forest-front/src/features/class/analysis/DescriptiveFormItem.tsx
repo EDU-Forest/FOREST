@@ -9,6 +9,9 @@ import { AnalysisSubTitle } from "./StudyAnalysis.style";
 import { ClassSummaryText, ClassSummaryTextWrapper } from "../ClassSummary.style";
 import { AiOutlineRight } from "react-icons/ai";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setMaxScore } from "@/stores/analysis/analysis";
 
 const dummy = {
   title:
@@ -17,6 +20,13 @@ const dummy = {
   score: 10,
 };
 export default function DescriptiveFormItem() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // 나중에 쿼리 안으로 옮겨주기
+    dispatch(setMaxScore(dummy.score));
+  }, []);
+
   const goToProblem = () => {
     // 문제 보기
   };
@@ -40,7 +50,7 @@ export default function DescriptiveFormItem() {
         <AnalysisSubTitle>핵심 키워드</AnalysisSubTitle>
         <DescriptiveFormUpperItem>
           {dummy.keyword.map((item, idx) => (
-            <StyledWorkbookStatus key={idx} status="loading">
+            <StyledWorkbookStatus key={idx} status="BEFORE">
               {item}
             </StyledWorkbookStatus>
           ))}

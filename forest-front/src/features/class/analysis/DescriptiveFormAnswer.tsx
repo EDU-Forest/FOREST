@@ -2,14 +2,13 @@ import ScoreInput from "@/components/Input/ScoreInput";
 import { TableItemAnswer } from "./DescriptiveForm.style";
 import {
   EachResultWrapper,
-  ResultTable,
-  ResultTableItemBig,
+  ResultTableContent,
   ResultTableItemSmall,
   ResultTableList,
 } from "./EachResult.style";
-import { CorrectRateWrapper } from "./QuestionCorrectRate.style";
-import { AnalysisSubTitle } from "./StudyAnalysis.style";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 const dummy = [
   {
@@ -61,6 +60,7 @@ interface ObjType {
 
 export default function DescriptiveFormAnswer() {
   const [scoreList, setScoreList] = useState<ObjType>({});
+  const { maxScore } = useSelector((state: RootState) => state.analysis);
 
   useEffect(() => {
     dummy.map((item, idx) => (scoreList[`score_${idx}`] = 0));
@@ -68,7 +68,11 @@ export default function DescriptiveFormAnswer() {
 
   const changeScore = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const { value } = e.target;
-    const numberScore = parseInt(value.replace(/[^0-9]/g, ""));
+    let numberScore = parseInt(value.replace(/[^0-9]/g, ""));
+
+    if (numberScore > maxScore) {
+      numberScore = maxScore;
+    }
 
     setScoreList({
       ...scoreList,
@@ -77,35 +81,41 @@ export default function DescriptiveFormAnswer() {
   };
 
   return (
-    <EachResultWrapper>
-      <ResultTable>
+    <EachResultWrapper height={37.5}>
+      <>
         <ResultTableList isLabel>
-          <ResultTableItemSmall isLabel>순번</ResultTableItemSmall>
+          <ResultTableItemSmall isLabel isIdx>
+            순번
+          </ResultTableItemSmall>
           <TableItemAnswer isLabel>답안</TableItemAnswer>
           <ResultTableItemSmall isLabel>유사도</ResultTableItemSmall>
           <ResultTableItemSmall isLabel>핵심 키워드</ResultTableItemSmall>
           <ResultTableItemSmall isLabel>점수</ResultTableItemSmall>
         </ResultTableList>
-        {dummy.map((item, idx) => (
-          <ResultTableList key={idx}>
-            <ResultTableItemSmall>{idx + 1}</ResultTableItemSmall>
-            <TableItemAnswer>{item.answer}</TableItemAnswer>
-            <ResultTableItemSmall>{item.similarity}</ResultTableItemSmall>
-            <ResultTableItemSmall>
-              {item.keyword} / {item.allKeyword}
-            </ResultTableItemSmall>
-            <ResultTableItemSmall>
-              <ScoreInput
-                id={"score"}
-                name={`score_${idx}`}
-                maxScore={100}
-                inputScore={scoreList.name}
-                onChange={(e) => changeScore(e, idx)}
-              />
-            </ResultTableItemSmall>
-          </ResultTableList>
-        ))}
-      </ResultTable>
+        <ResultTableContent>
+          {dummy.map((item, idx) => (
+            <ResultTableList key={idx}>
+              <ResultTableItemSmall isIdx>{idx + 1}</ResultTableItemSmall>
+              <TableItemAnswer>{item.answer}</TableItemAnswer>
+              <ResultTableItemSmall isOrange>
+                <span>{item.similarity}</span> %
+              </ResultTableItemSmall>
+              <ResultTableItemSmall>
+                <span>{item.keyword}</span>/ {item.allKeyword}
+              </ResultTableItemSmall>
+              <ResultTableItemSmall>
+                <ScoreInput
+                  id={`score_${idx}`}
+                  name={`score_${idx}`}
+                  maxInput={maxScore}
+                  inputScore={scoreList[`score_${idx}`] || 0}
+                  onChange={(e) => changeScore(e, idx)}
+                />
+              </ResultTableItemSmall>
+            </ResultTableList>
+          ))}
+        </ResultTableContent>
+      </>
     </EachResultWrapper>
   );
 }

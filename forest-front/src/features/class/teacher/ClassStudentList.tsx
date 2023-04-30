@@ -8,7 +8,12 @@ import {
 } from "./ClassStudentList.style";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { useState } from "react";
-import ClassStudentAddModal from "./ClassStudentAddModal";
+import AddStudentModal from "./AddStudentModal";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import { useDispatch } from "react-redux";
+import { openAddStudentModal } from "@/stores/class/classModal";
+
 const studentList: Student[] = [
   {
     userId: 1,
@@ -75,10 +80,9 @@ const studentList: Student[] = [
   },
 ];
 export default function ClassStudentList() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const handleModal = () => {
-    setIsOpen(!isOpen);
-  };
+  const dispatch = useDispatch();
+  const { isOpenAddStudentModal } = useSelector((state: RootState) => state.classModal);
+
   return (
     <>
       <StudentListTextWrapper>
@@ -86,16 +90,16 @@ export default function ClassStudentList() {
           <StudentListTitle>학생 리스트 </StudentListTitle>
           <StudentListText>(20)</StudentListText>
         </div>
-        <StudentAddText onClick={handleModal}>
+        <StudentAddText onClick={() => dispatch(openAddStudentModal())}>
           <AiOutlineUsergroupAdd className="icon" />
           학생 추가
         </StudentAddText>
       </StudentListTextWrapper>
-      {isOpen && <ClassStudentAddModal handleModal={handleModal} />}
+      {isOpenAddStudentModal && <AddStudentModal />}
 
       <StudentListWrapper>
-        {studentList?.map((item) => (
-          <StudentInfoCard studentInfo={item} />
+        {studentList?.map((item, idx) => (
+          <StudentInfoCard key={idx} studentInfo={item} />
         ))}
       </StudentListWrapper>
     </>

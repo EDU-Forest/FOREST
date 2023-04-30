@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER = 'sudo docker'
+    }
+   
+    stages {
+        stage('Clone Repository') {
+            steps {
+                checkout scm
+                echo 'Checkout Scm'
+            }
+        }
+
+        stage('env setting') {
+            steps{
+                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+            }            
+        }
+        
+        stage('Build image') {
+            steps {         
+                sh 'ls -al'       
+                sh 'npm -v'
+                sh 'node -v'
+                dir('forest-front'){
+                    sh 'ls -al'
+                    sh 'docker build -t ${FOREST_FRONT_IMAGE} .'    
+                }                                                
+                echo 'Build image...'
+            }
+        }
+
+        stage('Remove Previous image') {        
+            steps {
+                script {
+                    try {
+                        sh 'docker stop ${FOREST_FRONT_CONTAINER}'
+                        sh 'docker rm ${FOREST_FRONT_CONTAINER}'                        
+                    } catch (e) {
+                        echo 'fail to stop and remove container'
+                    }    
+                }                
+            }
+            
+        }
+        stage('Run New image') {
+            steps {
+                dir('forest-front'){
+                    sh 'ls -al'
+                    sh 'docker run --name ${FOREST_FRONT_CONTAINER} -d -p 3000:3000 ${FOREST_FRONT_IMAGE}'
+                    echo 'Run New image'
+                }                
+            }
+        }
+
+    }
+}

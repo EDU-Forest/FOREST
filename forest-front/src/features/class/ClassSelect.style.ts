@@ -14,6 +14,7 @@ const ClassSelectedTitle = styled.div`
     font-size: 1.375rem;
     margin-left: 0.5rem;
     vertical-align: text-bottom;
+    cursor: pointer;
   }
 `;
 const ClassSelectDropdownContainer = styled.div`
