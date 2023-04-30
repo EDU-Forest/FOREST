@@ -44,8 +44,7 @@ public class MemoController {
     // 메모 삭제
     @PatchMapping("")
     public ResponseEntity<ResponseSuccessDto<DeleteMemoResponseDto>> deleteMemo(
-            @RequestBody List<DeleteMemoRequestDto> deleteMemoRequestDtoList,
-            @AuthenticationPrincipal UserDetails userDetails
+            @RequestBody List<DeleteMemoRequestDto> deleteMemoRequestDtoList
     ) {
         return ResponseEntity.ok(memoService.deleteMemo(deleteMemoRequestDtoList));
     }
