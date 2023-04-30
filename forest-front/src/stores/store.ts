@@ -5,12 +5,14 @@ import userSlice from "./user/user";
 import classSlice from "./class/classInfo";
 import classModalSlice from "./class/classModal";
 import analysisSlice from "./analysis/analysis";
+import examSlice from "./exam/exam";
 
 const reducers = combineReducers({
   user: userSlice,
   class: classSlice,
   classModal: classModalSlice,
   analysis: analysisSlice,
+  exam: examSlice,
 });
 
 const persistConfig = {
