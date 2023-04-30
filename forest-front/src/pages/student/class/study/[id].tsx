@@ -1,5 +1,5 @@
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
-import { StudyAnalysisTitle } from "@/features/class/analysis/StudyAnalysis.style";
+import { AnalysisTitle } from "@/features/class/analysis/StudyAnalysis.style";
 import { FullScreen } from "@/styles/container";
 import { useRouter } from "next/router";
 
@@ -21,10 +21,10 @@ export default function StudyAnalysisStudent({ studyId }: Iprops) {
 
   return (
     <FullScreen>
-      <StudyAnalysisTitle>
+      <AnalysisTitle>
         <ArrowLeft onClick={goToBack} />
         {studyId}
-      </StudyAnalysisTitle>
+      </AnalysisTitle>
     </FullScreen>
   );
 }
