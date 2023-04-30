@@ -15,6 +15,10 @@ pipeline {
         stage('env setting') {
             steps{
                 sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
             }            
         }
         
