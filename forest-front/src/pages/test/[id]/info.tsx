@@ -11,3 +11,9 @@ export default function TestInfo() {
     </FullScreen>
   );
 }
+
+export async function getServerSideProps({ params: { id } }: { params: { id: string } }) {
+  return {
+    props: {},
+  };
+}

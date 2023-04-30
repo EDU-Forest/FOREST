@@ -9,7 +9,7 @@ import {
   LoginLabel,
   LoginInputBox,
   LoginErrorMsg,
-} from "./LoginModal.style";
+} from "./Home.style";
 import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
 import { CommonInput } from "@/components/Input/Input.style";

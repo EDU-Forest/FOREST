@@ -6,16 +6,26 @@ import {
 } from "./TestInfo.style";
 // import TestInfoLabel from "./TestInfoLabel";
 
-export default function TestInfoBox() {
-  const labelList = ["출제자", "문항 수", "제한시간"];
-  const dummyData = ["킹규림쌤", "10 문항", "제한시간 없음"];
+interface Iprops {
+  presenter: string;
+  volume: number;
+  timeLimit: number;
+}
+
+export default function TestInfoBox({ presenter, volume, timeLimit }: Iprops) {
+  const labels = ["출제자", "문항 수", "제한시간"];
+  const testInfoData = [
+    presenter,
+    `${volume} 문항`,
+    timeLimit ? `${timeLimit} 분` : "제한시간 없음",
+  ];
 
   return (
     <StyledTestInfoBox>
-      {dummyData.map((data, idx) => (
+      {testInfoData.map((data, idx) => (
         <StyledTestInfoContent>
           {/* <TestInfoLabel text={labelList[idx]} /> */}
-          <StyledTestInfoLabel>{labelList[idx]}</StyledTestInfoLabel>
+          <StyledTestInfoLabel>{labels[idx]}</StyledTestInfoLabel>
           <StyledTestInfoText>{data}</StyledTestInfoText>
         </StyledTestInfoContent>
       ))}
