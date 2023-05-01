@@ -26,15 +26,19 @@ customAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const prevRequest = error?.config;
+    console.log("error step 1");
     if (error?.response?.status === 403 && !prevRequest?.sent) {
+      console.log("error step 2");
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await customAxios.post("/api/auth/reissue");
+        console.log("error step 3");
         const { accessToken } = response.data.payload;
 
         return accessToken;
       };
       const accessToken = await newAccessToken();
+      console.log("error step 4");
       prevRequest.headers.authorization = accessToken;
       return customAxios(prevRequest);
     }
