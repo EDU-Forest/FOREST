@@ -48,26 +48,45 @@ public class SecurityConfig implements WebMvcConfigurer {
                 // 요청 URL 권한
                 .authorizeRequests()
                 .antMatchers(
-                        "**/api/user/search/**",
-                        "**/api/user/check/**",
-                        "**/api/user/common/**",
-                        "**/api/user/login/**",
-                        "**/api/msg/**",
-                        "**/api/class/search/**",
-                        "**/api/workbook/search/**",
-                        "**/api/workbook/best/**",
-                        "**/api/workbook/recent/**",
-                        "**/api/oauth2/**",
-                        "**/api/login/**",
+//                        "**/api/user/search/**",
+//                        "**/api/user/check/**",
+//                        "**/api/user/common/**",
+//                        "**/api/user/login/**",
+//                        "**/api/msg/**",
+//                        "**/api/class/search/**",
+//                        "**/api/workbook/search/**",
+//                        "**/api/workbook/best/**",
+//                        "**/api/workbook/recent/**",
+//                        "**/api/oauth2/**",
+//                        "**/api/login/**",
+//
+//                        // Swagger
+//                        "**/api/swagger-ui.html/**",
+//                        "**/api/webjars/**",
+//                        "**/api/swagger-resources/**",
+//                        "**/api/v2/api-docs/**",
+//                        "**/api/"
+
+                        "**/user/search/**",
+                        "**//user/check/**",
+                        "**/user/common/**",
+                        "**/user/login/**",
+                        "**/msg/**",
+                        "**/class/search/**",
+                        "**/workbook/search/**",
+                        "**/workbook/best/**",
+                        "**/workbook/recent/**",
+                        "**/oauth2/**",
+                        "**/login/**",
 
                         // Swagger
-                        "**/api/swagger-ui.html/**",
-                        "**/api/webjars/**",
-                        "**/api/swagger-resources/**",
-                        "**/api/v2/api-docs/**",
-                        "**/api/"
+                        "**/swagger-ui.html/**",
+                        "**/webjars/**",
+                        "**/swagger-resources/**",
+                        "**/v2/api-docs/**",
+                        "**/"
                 ).permitAll()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/**").authenticated()
                 .anyRequest().permitAll()
 
                 // JWT
