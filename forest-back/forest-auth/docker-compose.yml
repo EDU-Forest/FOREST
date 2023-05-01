@@ -1,9 +1,7 @@
 version: "3"
 services:
   application:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ${FOREST_AUTH_IMAGE}
     container_name: ${FOREST_AUTH_CONTAINER}
     environment:
       KEY_STORE: ${KEY_STORE}
