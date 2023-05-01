@@ -49,7 +49,7 @@ export default function UserForm({ type, email }: Iprops) {
     phoneNumber: "",
     password: "",
     checkPassword: "",
-    role: Role.STUDENT,
+    role: "STUDENT",
     birth: "",
   });
 
