@@ -6,15 +6,18 @@ import {
   EditorNavDiv,
   EditorNavDivInner,
 } from "./Nav.style";
-import { AiOutlineArrowLeft, AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
+import { AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
 import {
   MdOutlineFormatListNumbered,
   MdOutlinePowerInput,
   MdOutlineLineStyle,
 } from "react-icons/md";
 import ArrowLeft from "../Arrow/ArrowLeft";
+import { useDispatch } from "react-redux";
+import { openPdfModal } from "@/stores/editor/editorModal";
 
 export default function EditorNav() {
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const goToDashboard = () => {
@@ -50,7 +53,7 @@ export default function EditorNav() {
       <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
       <EditorNavDiv>
         <p>전체 영역</p>
-        <p>일부 영역</p>
+        <p onClick={() => dispatch(openPdfModal())}>일부 영역</p>
       </EditorNavDiv>
       <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
       <EditorNavDiv>
