@@ -1,5 +1,9 @@
 import EditorNav from "@/components/Nav/EditorNav";
-import { EditorBtnsAndListBox, EditorContainer, EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
+import {
+  EditorBtnsAndListBox,
+  EditorContainer,
+  EditorTitleAndQuestionBox,
+} from "@/features/editor/Editor.style";
 import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";

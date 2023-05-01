@@ -13,6 +13,10 @@ import {
   EditorNavDivTitle,
   StyledEditorNav,
 } from "./Nav.style";
+import { useDispatch } from "react-redux";
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface IProps {
   setSelectQuestionType: React.Dispatch<React.SetStateAction<string>>;
@@ -20,13 +24,67 @@ interface IProps {
 
 export default function EditorNav({ setSelectQuestionType }: IProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const { questions } = useSelector((state: RootState) => state.editQuestions);
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
   };
 
+  const questionInit = {
+    withItems: {
+      id: 0,
+      problemNum: 0,
+      type: "객관식",
+      title: "",
+      text: "",
+      point: 0,
+      image: "",
+      items: [
+        {
+          id: 0,
+          no: 1,
+          content: "",
+          isImage: false,
+        },
+        {
+          id: 0,
+          no: 2,
+          content: "",
+          isImage: false,
+        },
+        {
+          id: 0,
+          no: 3,
+          content: "",
+          isImage: false,
+        },
+        {
+          id: 0,
+          no: 4,
+          content: "",
+          isImage: false,
+        },
+      ],
+    },
+    withoutItems: {
+      id: 0,
+      problemNum: 0,
+      type: "",
+      title: "",
+      text: "",
+      point: 0,
+      image: "",
+      items: [],
+    },
+  };
+
   const handleClickQuestionType = (type: string) => {
-    setSelectQuestionType(type);
+    type === "multipleChoice"
+      ? dispatch(setQuestions([...questions, { ...questionInit.withItems }]))
+      : dispatch(setQuestions([...questions, { ...questionInit.withoutItems, type: type }]));
+    dispatch(setCurQuestion(questions.length + 1));
   };
 
   return (
