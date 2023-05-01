@@ -1,5 +1,6 @@
 import EditorNav from "@/components/Nav/EditorNav";
-import { EditorContainer, EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
+import { EditorBtnsAndListBox, EditorContainer, EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
+import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
@@ -135,7 +136,10 @@ export default function Editor() {
           <EditorTitle />
           <QuestionEditArea selectQuestionType={selectQuestionType} />
         </EditorTitleAndQuestionBox>
-        <EditorQuestionList />
+        <EditorBtnsAndListBox>
+          <EditorBtns />
+          <EditorQuestionList />
+        </EditorBtnsAndListBox>
         {/* <PdfViewer /> */}
       </EditorContainer>
     </FullScreen>
