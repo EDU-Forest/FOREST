@@ -1,6 +1,8 @@
+import { RootState } from "@/stores/store";
 import customAxios from "@/utils/customAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { useSelector } from "react-redux";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
   customAxios
@@ -14,11 +16,12 @@ const fetcher = (payload: KakaoLoginMoreInfo) =>
     .then(({ data }) => data);
 
 const useKakaoLoginMoreInfo = () => {
+  const { role } = useSelector((state: RootState) => state.user);
   const router = useRouter();
 
   return useMutation(fetcher, {
-    onSuccess: (data) => {
-      router.push(`/${data.role === Role.TEACHER ? "teacher" : "student"}/dashboard`);
+    onSuccess: () => {
+      router.push(`/${role}/dashboard`);
     },
     onError: (data) => {
       console.log("Err", data);
