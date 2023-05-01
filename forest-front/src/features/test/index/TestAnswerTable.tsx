@@ -3,7 +3,7 @@ import { StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 
 export default function TestAnswerTable() {
-  const { problems } = useSelector((state: RootState) => state.exam);
+  const { examTitle, problems } = useSelector((state: RootState) => state.exam);
   return (
     <StyledTestAnswerTable>
       <thead>

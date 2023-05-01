@@ -1,4 +1,5 @@
 import { StyledCommonBtn } from "@/components/Button/Btn.style";
+import CommonBtn from "@/components/Button/CommonBtn";
 import { Title } from "@/styles/text";
 import styled from "styled-components";
 
@@ -241,6 +242,22 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   }
 `;
 
+const TestProblemBtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const TestProblemBtn = styled(StyledCommonBtn)`
+  margin: 0.5rem;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors.Gray[500]};
+    color: #ffffff;
+    border: none;
+    cursor: auto;
+  }
+`;
+
 export {
   StyledTestContainer,
   StyledAnswerBox,
@@ -264,4 +281,6 @@ export {
   StyledTestProblemShortAnswer,
   StyledTestProblemEssayAnswer,
   StyledTestProblemOXAnswer,
+  TestProblemBtnBox,
+  TestProblemBtn,
 };
