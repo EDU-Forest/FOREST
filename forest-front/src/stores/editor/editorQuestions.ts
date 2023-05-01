@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface editorQuestions {
   questions: QuestionType[];
+  curQuestion: number;
 }
 
 const initialState: editorQuestions = {
@@ -43,6 +44,7 @@ const initialState: editorQuestions = {
       ],
     },
   ],
+  curQuestion: 1,
 };
 
 const questionSlice = createSlice({
@@ -52,9 +54,12 @@ const questionSlice = createSlice({
     setQuestions(state, action) {
       state.questions = action.payload;
     },
+    setCurQuestion(state, action) {
+      state.curQuestion = action.payload;
+    },
   },
 });
 
-export const { setQuestions } = questionSlice.actions;
+export const { setQuestions, setCurQuestion } = questionSlice.actions;
 
 export default questionSlice.reducer;
