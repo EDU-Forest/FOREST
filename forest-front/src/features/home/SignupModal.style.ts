@@ -71,7 +71,7 @@ const SignupErrorMsg = styled.div`
   color: ${({ theme }) => theme.colors.Orange[500]};
 `;
 
-const SignupInputRowBox = styled.div`
+const SignupPasswordBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
@@ -86,7 +86,7 @@ export {
   SignupContentBox,
   SignupSubmitBox,
   SignupInputBox,
-  SignupInputRowBox,
+  SignupPasswordBox,
   SignupTitle,
   SignupHr,
   SignupLabel,
