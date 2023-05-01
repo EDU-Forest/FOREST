@@ -1,4 +1,5 @@
 interface examState {
+  curProblemNum: number;
   examTitle: string;
   volume: number;
   timeLimit: number;
@@ -9,7 +10,7 @@ interface examState {
     title: string;
     text: string;
     problemImgPath?: string;
-    item?: {
+    items?: {
       itemId: number;
       no: number;
       content: string;
