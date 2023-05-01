@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserWorkbookRepository extends JpaRepository<UserWorkbook, Long> {
 
     Page<UserWorkbook> findAllByUserAndIsBookmarkedIsTrue(User user, Pageable pageable);
-    int countByWorkbookIdAndIsBookmarked(Long workbookId, Boolean isBookmarked);
-    int countByWorkbookIdAndIsScraped(Long workbookId, boolean isScraped);
+    int countByWorkbookIdAndIsBookmarkedIsTrue(Long workbookId);
+    int countByWorkbookIdAndIsScrapedIsTrue(Long workbookId);
 
 }

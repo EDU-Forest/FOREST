@@ -52,4 +52,12 @@ public class Problem {
         this.answer = answer;
         this.point = point;
     }
+
+    public void updateProblem(String title, String path, String text, String answer, int point) {
+        this.title = title;
+        this.path = path;
+        this.text = text;
+        this.answer = answer;
+        this.point = point;
+    }
 }

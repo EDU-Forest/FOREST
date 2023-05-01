@@ -19,10 +19,10 @@ public class ProblemAllInfoDto {
     private String text;
     private String answer;
     private int point;
-    private List<ItemDto> itemList;
+    private List<ItemResDto> itemList;
 
     @Builder
-    public ProblemAllInfoDto(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, int point, String path, String answer, List<ItemDto> itemList) {
+    public ProblemAllInfoDto(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, int point, String path, String answer, List<ItemResDto> itemList) {
         this.problemId = problemId;
         this.problemNum = problemNum;
         this.type = type;
