@@ -7,19 +7,21 @@ interface exportType {
   img: React.ReactElement<SetConstructor>;
 }
 interface IProps {
+  value: string
   setValue: React.Dispatch<React.SetStateAction<string>>;
   exports: exportType[];
 }
 
-function WorkbookExportRadioGroup({ setValue, exports }: IProps) {
+function WorkbookExportRadioGroup({ value, setValue, exports }: IProps) {
   return (
     <WorkbookExportRadioBox>
       {exports.map((item, i) => (
         <WorkbookExportRadio
           key={i}
-          value={item.value}
+          thisValue={item.value}
           text={item.text}
           img={item.img}
+          value={value}
           setValue={setValue}
           isDefault={i === 0} // 첫번째 버튼을 디폴트로
         />

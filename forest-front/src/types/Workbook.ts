@@ -18,7 +18,7 @@ export interface QuestionType {
     id: number;
     no: number;
     content: string;
-    path: string;
+    isImage: boolean;
   }[];
 }
 

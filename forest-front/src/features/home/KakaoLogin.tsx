@@ -1,16 +1,16 @@
-import { useRouter } from "next/router";
+import useKakaoLoginQuery from "@/apis/auth/useKakaoLoginQuery";
 import { KakaoLoginBtn, KakaoLoginImg, KakaoLoginText } from "./Home.style";
+import { useDispatch } from "react-redux";
 
 export default function KakaoLogin() {
-  const router = useRouter();
-
-  const goToDash = () => {
-    router.push("/teacher/dashboard");
+  const { refetch } = useKakaoLoginQuery();
+  const handleKakaoLogin = () => {
+    refetch();
   };
   return (
-    <KakaoLoginBtn>
+    <KakaoLoginBtn onClick={handleKakaoLogin}>
       <KakaoLoginImg src={"images/Kakao_Login_Large_Wide.png"} />
-      <KakaoLoginText onClick={goToDash}>카카오톡으로 시작하기</KakaoLoginText>
+      <KakaoLoginText>카카오톡으로 시작하기</KakaoLoginText>
     </KakaoLoginBtn>
   );
 }

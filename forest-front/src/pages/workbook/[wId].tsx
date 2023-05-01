@@ -9,6 +9,8 @@ import WorkbookDetailQuestion from "@/features/workbookDetail/WorkbookDetailQues
 import WorkbookDetailQuestionList from "@/features/workbookDetail/WorkbookDetailQuestionList";
 import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideReturn";
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
+import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
+import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useState } from "react";
 
@@ -21,9 +23,9 @@ export async function getServerSideProps({ params: { wId } }: { params: { wId: s
 
 interface WorkbookType {
   id: number;
-  title: String;
-  workbookImgPath: String;
-  desc: String;
+  title: string;
+  workbookImgPath: string;
+  desc: string;
   isPublic: Boolean;
   bookmarkCount: number;
   scrapCount: number;
@@ -54,31 +56,31 @@ function WorkbookDetail() {
       title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
       text: `It is very unfortunate that I need to be drafting this letter. However, the worsening situation has forced me to submit a formal complaint. I have been renting from you for 0 years and you would agree that there is no doubt that I have paid rent every month either on time or even sometimes early. However, despite this, there has been no effort whatsoever on your part to deal with the noise disturbance of the neighboring unit I have brought to your attention multiple times. The noise which I have to deal with in the wee hours is terrible. I am afraid that I cannot stand the loud music happening at all hours in the next unit any more. Besides this, they leave a pile of garbage at my doorstep almost every other day. I hope you look into this matter at your earliest convenience.`,
       point: 10,
-      image: "이미지",
+      image: "",
       items: [
         {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -89,31 +91,31 @@ function WorkbookDetail() {
       title: "2번 문항",
       text: "지문",
       point: 10,
-      image: "이미지",
+      image: "",
       items: [
         {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -124,31 +126,31 @@ function WorkbookDetail() {
       title: "3번 문항",
       text: "지문",
       point: 10,
-      image: "이미지",
+      image: "",
       items: [
         {
           id: 1,
           no: 1,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 2,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 3,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
         {
           id: 1,
           no: 4,
           content: "컨텐트",
-          path: "",
+          isImage: false,
         },
       ],
     },
@@ -159,6 +161,10 @@ function WorkbookDetail() {
   const [curQuestion, setCurQuestion] = useState(questions.length === 0 ? 0 : questions[0].id);
   // modal open/close
   const [isExportOpen, setIsExportOpen] = useState(false);
+  const [isSelectClassOpen, setIsSelectClassOpen] = useState(false);
+  const [isSettingOpen, setIsSettingOpen] = useState(false);
+  // 선택한 출제 클래스
+  const [selectedClass, setSelectedClass] = useState<number[]>([]);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question) => {
@@ -199,7 +205,29 @@ function WorkbookDetail() {
       </WorkbookDetailQuestionBtnAndVisibilityBox>
 
       {/* 내보내기 모달 */}
-      {isExportOpen && <WorkbookExportModal setIsOpen={setIsExportOpen} />}
+      {isExportOpen && (
+        <WorkbookExportModal
+          setIsOpen={setIsExportOpen}
+          setIsSelectClassOpen={setIsSelectClassOpen}
+        />
+      )}
+      {/* 내보내기 모달 */}
+      {isSelectClassOpen && (
+        <WorkbookSelectClassModal
+          setIsOpen={setIsSelectClassOpen}
+          setIsSettingOpen={setIsSettingOpen}
+          selectedClass={selectedClass}
+          setSelectedClass={setSelectedClass}
+        />
+      )}
+      {/* 출제 세팅 모달 */}
+      {isSettingOpen && (
+        <WorkbookSettingModal
+          setIsOpen={setIsSettingOpen}
+          selectedClass={selectedClass}
+          title={workbook.title}
+        />
+      )}
     </StyledWorkbookDetailBox>
   );
 }

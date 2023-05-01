@@ -37,23 +37,23 @@ function WorkbookDetailBtns({ setIsExportOpen }: IProps) {
         {saveLoading ? (
           <>
             <ClipLoader color="white" size={18} speedMultiplier={0.7} />
-            저장 중
+            <span>저장 중</span>
           </>
         ) : (
           <>
             <MdSave />
-            저장
+            <span>저장</span>
           </>
         )}
       </WorkbookSaveBtn>
       <StyledRoundGhostBtn onClick={handleClickCopy}>
         <MdOutlineFileCopy />
-        사본
+        <span>사본</span>
       </StyledRoundGhostBtn>
 
       <StyledRoundGhostBtn onClick={handleClickExport}>
         <MdOutlineFileUpload />
-        내보내기
+        <span>내보내기</span>
       </StyledRoundGhostBtn>
     </StyledWorkbookDetailBtnsBox>
   );
