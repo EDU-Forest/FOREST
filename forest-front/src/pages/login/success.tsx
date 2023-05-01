@@ -1,4 +1,7 @@
+import Spinner from "@/components/Spinner/Spinner";
+import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
+import { FullScreen } from "@/styles/container";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -29,7 +32,11 @@ export default function LoginSuccess() {
       });
     }
   }, []);
-  return <>테스트</>;
+  return (
+    <LoginSuccessLayout>
+      <Spinner />
+    </LoginSuccessLayout>
+  );
 }
 
 export async function getServerSideProps() {
