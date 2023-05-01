@@ -736,6 +736,11 @@ public class StudyService {
             int correctRate = correctNum * 100 / volume;
             boolean isGraded = index == ssp.size() - 1;
             ssr.updateStudentStudyResult(correctNum, scoreSum, correctRate, isGraded);
+
+            /* 채점 완료 시 반 문항별 정답율과 , 시험 결과 리포트 업데이트 하기 */
+            if(isGraded){
+
+            }
         }
 
         PatchResponseDto patchResponseDto = PatchResponseDto.builder()
