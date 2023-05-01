@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Optional;
 
 @Slf4j
@@ -48,33 +50,26 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                     .path("/")
                     .build();
 
-            ResponseCookie accessCookie = ResponseCookie.from("forest_access_token", accessToken)
-                    .httpOnly(true)
-                    .maxAge(JwtProvider.accessTokenValidateTime)
-                    .path("/")
-                    .build();
-
             // 로그인 실패가 발생했을 떄 세션에 저장된 에러 지움
             clearAuthenticationAttributes(request);
             response.addHeader("Set-Cookie", refreshCookie.toString());
-            response.addHeader("Set-Cookie", accessCookie.toString());
 
-            String targetUrl;
+            String targetUrl = "/login/success";
             Optional<User> findUserById = userRepository.findById(userId);
 
-            if(findUserById.isEmpty()) {
-                targetUrl = "/signup/more-info";
-            } else {
+            if(findUserById.isPresent()) {
                 User user = findUserById.get();
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
-                String prefixUrl = " /login/success";
-                targetUrl = prefixUrl + "?name=" + name + "&role=" + role.toString() + "&accessToken=" + accessToken;
+                targetUrl += "?name=" + name + "&role=" + role.toString() + "&accessToken=" + accessToken;
+                targetUrl = URLEncoder.encode(targetUrl);
+                log.info("decoded url : {}", URLDecoder.decode(targetUrl));
             }
 
             log.info("targetUrl : {}", targetUrl);
 
-//            request.getRequestDispatcher(targetUrl).forward(request, response);
+//            response.setHeader("Content-Type", "text/plain; charset=utf-8");
+//            response.setCharacterEncoding("UTF-8");
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
         } catch (Exception e) {
