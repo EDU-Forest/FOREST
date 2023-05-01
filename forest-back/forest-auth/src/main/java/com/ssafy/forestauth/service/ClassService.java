@@ -168,4 +168,27 @@ public class ClassService {
         ResponseSuccessDto<DeleteStudentResponseDto> res = responseUtil.successResponse(deleteStudentResponseDto, SuccessCode.AUTH_STUDENT_EXCLUDED);
         return res;
     }
+
+    public ResponseSuccessDto<RecentClassResponseDto> searchRecentClass(Long userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+        Optional<Class> findClass = classRepository.findTopByOwnerOrderByCreatedDateDesc(findUser);
+
+        long classId;
+        SuccessCode successCode;
+
+        if(findClass.isEmpty()) {
+            classId = -1L;
+            successCode = SuccessCode.AUTH_CLASS_RECENT_NO_ONE;
+        } else {
+            classId = findClass.get().getId();
+            successCode = SuccessCode.AUTH_CLASS_RECENT_ONE;
+        }
+
+        RecentClassResponseDto recentClassResponseDto = RecentClassResponseDto.builder()
+                .classId(classId)
+                .build();
+
+        ResponseSuccessDto<RecentClassResponseDto> res = responseUtil.successResponse(recentClassResponseDto, successCode);
+        return res;
+    }
 }

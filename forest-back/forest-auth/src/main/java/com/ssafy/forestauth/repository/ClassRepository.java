@@ -11,4 +11,5 @@ public interface ClassRepository extends JpaRepository<Class, Long> {
     List<Class> findAllByOwner(User user);
 
     Optional<Class> findByName(String name);
+    Optional<Class> findTopByOwnerOrderByCreatedDateDesc(User owner);
 }
