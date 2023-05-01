@@ -44,7 +44,7 @@ export default function UserForm({ type, email }: Iprops) {
     birth: "",
   });
   const [userData, setUserData] = useState({
-    email: type === "moreinfo" && email ? email : "",
+    email: "test",
     username: "",
     phoneNumber: "",
     password: "",
