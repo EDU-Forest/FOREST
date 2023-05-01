@@ -21,9 +21,10 @@ import { checkEmail } from "@/utils";
 
 interface Iprops {
   onClose: () => void;
+  type: "signup" | "moreinfo";
 }
 
-export default function SignupModal({ onClose }: Iprops) {
+export default function UserForm({ onClose, type }: Iprops) {
   // 이메일
   const [emailValidation, setEmailValidation] = useState("");
   const [emailDuplicateValidation, setEmailDuplicateValidation] = useState("");
@@ -146,16 +147,29 @@ export default function SignupModal({ onClose }: Iprops) {
   };
 
   return (
-    <Modal onClose={onClose}>
-      <SignupForm onSubmit={signupHandler}>
-        <SignupTitleBox>
-          <ArrowLeft onClick={onClose}></ArrowLeft>
-          <SignupTitle>회원가입</SignupTitle>
-        </SignupTitleBox>
-        <SignupHr />
-        <SignupContentBox>
-          {columnDataList.map((data) => (
+    <SignupForm onSubmit={signupHandler}>
+      <SignupTitleBox>
+        <ArrowLeft onClick={onClose}></ArrowLeft>
+        <SignupTitle>회원가입</SignupTitle>
+      </SignupTitleBox>
+      <SignupHr />
+      <SignupContentBox>
+        {columnDataList.map((data) => (
+          <SignupInput
+            label={data.label}
+            name={data.name}
+            type={data.type}
+            placeholder={data.placeholder}
+            value={data.value}
+            onChange={onChange}
+            validations={data.validations}
+            onBlur={blurHandler}
+          />
+        ))}
+        <SignupInputRowBox>
+          {rowDataList.map((data) => (
             <SignupInput
+              isShort={true}
               label={data.label}
               name={data.name}
               type={data.type}
@@ -166,43 +180,28 @@ export default function SignupModal({ onClose }: Iprops) {
               onBlur={blurHandler}
             />
           ))}
-          <SignupInputRowBox>
-            {rowDataList.map((data) => (
-              <SignupInput
-                isShort={true}
-                label={data.label}
-                name={data.name}
-                type={data.type}
-                placeholder={data.placeholder}
-                value={data.value}
-                onChange={onChange}
-                validations={data.validations}
-                onBlur={blurHandler}
-              />
-            ))}
-          </SignupInputRowBox>
-          <SignupInput
-            isShort={true}
-            label="생년월일"
-            name="birth"
-            type="date"
-            placeholder="생년월일을 입력하세요"
-            value={userData.birth}
-            onChange={onChange}
-            validations={{ "생년월일 선택": birthValidation }}
-            onBlur={blurHandler}
-          />
-        </SignupContentBox>
-        <SignupRoleBox>
-          <SignupLabel>역할</SignupLabel>
-          <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-          <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-        </SignupRoleBox>
-        <SignupHr />
-        <SignupSubmitBox>
-          <SmallBtn colored>확인</SmallBtn>
-        </SignupSubmitBox>
-      </SignupForm>
-    </Modal>
+        </SignupInputRowBox>
+        <SignupInput
+          isShort={true}
+          label="생년월일"
+          name="birth"
+          type="date"
+          placeholder="생년월일을 입력하세요"
+          value={userData.birth}
+          onChange={onChange}
+          validations={{ "생년월일 선택": birthValidation }}
+          onBlur={blurHandler}
+        />
+      </SignupContentBox>
+      <SignupRoleBox>
+        <SignupLabel>역할</SignupLabel>
+        <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+      </SignupRoleBox>
+      <SignupHr />
+      <SignupSubmitBox>
+        <SmallBtn colored>확인</SmallBtn>
+      </SignupSubmitBox>
+    </SignupForm>
   );
 }
