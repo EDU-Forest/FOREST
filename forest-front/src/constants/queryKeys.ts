@@ -1,6 +1,6 @@
-// 쿼리키 보관
-// 예시
-export const KEY_NAME = "/keyName";
-
 // auth
 export const KAKAO_LOGIN = "/kakaoLogin";
+
+// class
+export const CLASS_LIST = "/classList";
+export const CHECK_CLASSNAME = "/checkClassName";

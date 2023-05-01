@@ -7,16 +7,20 @@ import {
   ClassInputMsg,
   ClassInputBtnWrapper,
 } from "./AddClassModal.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SmallBtn from "@/components/Button/SmallBtn";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
+import useCheckClassNameQuery from "@/apis/auth/class/useCheckClassNameQuery";
 
 export default function AddClassModal() {
   const dispatch = useDispatch();
   const [className, setClassName] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
   // isSuccess -> axios 요청 성공 여부
+
+  useCheckClassNameQuery({ className, setErrorMsg });
 
   const confirm = () => {
     // 확인
@@ -33,11 +37,12 @@ export default function AddClassModal() {
           maxLength={14}
         />
         <ClassInputCheck isSuccess />
-        <ClassInputMsg>이미 존재하는 클래스 이름입니다. </ClassInputMsg>
+        <ClassInputMsg>{errorMsg}</ClassInputMsg>
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
         <SmallBtn children="취소" onClick={() => dispatch(closeAddClassModal())} />
-        <SmallBtn children="확인" colored onClick={confirm} />
+        {/* disabled에 변수 매핑해주기 + classinputcheck */}
+        <SmallBtn children="확인" disabled colored onClick={confirm} />
       </ClassInputBtnWrapper>
     </ClassAddModalContainer>
   );
