@@ -42,13 +42,13 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             Long userId = oAuth2User.getUserId();
             log.info("유저 아이디 : {}", userId);
 
-            ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
+            ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", refreshToken)
                     .httpOnly(true)
                     .maxAge(jwtProvider.refreshTokenValidateTime)
                     .path("/")
                     .build();
 
-            ResponseCookie accessCookie = ResponseCookie.from("accessToken", accessToken)
+            ResponseCookie accessCookie = ResponseCookie.from("forest_access_token", accessToken)
                     .httpOnly(true)
                     .maxAge(JwtProvider.accessTokenValidateTime)
                     .path("/")
