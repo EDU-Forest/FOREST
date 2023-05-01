@@ -23,5 +23,10 @@ const useLogin = () => {
       localStorage.setItem("forest_access_token", data.accessToken);
       router.push(`/${data.role === Role.TEACHER ? "teacher" : "student"}/dashboard`);
     },
+    onError: (data) => {
+      // 아직 미구현
+    },
   });
 };
+
+export default useLogin;
