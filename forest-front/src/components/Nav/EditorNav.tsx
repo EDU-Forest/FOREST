@@ -36,7 +36,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
     withItems: {
       id: 0,
       problemNum: 0,
-      type: "객관식",
+      type: "multipleChoice",
       title: "",
       text: "",
       point: 0,
