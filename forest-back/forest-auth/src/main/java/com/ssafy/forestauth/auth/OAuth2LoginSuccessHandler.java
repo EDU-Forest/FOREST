@@ -78,6 +78,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                         .build().toUriString();
             }
 
+            log.info("targetUrl : {}", targetUrl);
+
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } catch (Exception e) {
             throw e;
