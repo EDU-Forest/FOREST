@@ -18,5 +18,8 @@ public class PatchDescriptionListRequestDto {
     @NotNull
     private int point;
 
+    @NotNull
+    private Boolean isLast;
+
     private List<GetStudentPointListResponseDto> studentPointList;
 }

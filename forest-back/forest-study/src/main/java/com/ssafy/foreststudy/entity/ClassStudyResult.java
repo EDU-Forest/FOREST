@@ -65,4 +65,11 @@ public class ClassStudyResult {
         this.participantStudent = participantStudent;
     }
 
+    public void updateClassAnswerRate(Study study,  double average, double standardDeviation, int correctAnswerRate) {
+        this.study = study;
+        this.average = average;
+        this.standardDeviation = standardDeviation;
+        this.correctAnswerRate = correctAnswerRate;
+        this.ungradedAnswerRate = 0;
+    }
 }

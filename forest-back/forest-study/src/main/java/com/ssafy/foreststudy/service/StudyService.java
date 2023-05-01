@@ -718,9 +718,12 @@ public class StudyService {
         int volume = study.getWorkbook().getVolume();
 
         int index = 0;
+        int numOfCorrectStudent = 0;
         for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
             int partPoint = patchDescriptionListRequestDto.getStudentPointList().get(index).getScore();
             boolean isCorrected = partPoint == patchDescriptionListRequestDto.getPoint();
+            if (isCorrected)
+                numOfCorrectStudent++;
             studentStudyProblemResult.updateDescript(partPoint, isCorrected, true);
             index++;
 
@@ -734,13 +737,40 @@ public class StudyService {
             if (isCorrected)
                 correctNum++;
             int correctRate = correctNum * 100 / volume;
-            boolean isGraded = index == ssp.size() - 1;
+            boolean isGraded = patchDescriptionListRequestDto.getIsLast();
             ssr.updateStudentStudyResult(correctNum, scoreSum, correctRate, isGraded);
 
-            /* 채점 완료 시 반 문항별 정답율과 , 시험 결과 리포트 업데이트 하기 */
-            if(isGraded){
+        }
 
+        /* 반 문항별 정답율 업데이트 */
+        ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, problemList)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        classAnswerRate.updateClassAnswerRate(numOfCorrectStudent * 100 / ssp.size(), 0);
+
+        /* 채점 완료 시 시험 결과 리포트 업데이트 하기 */
+        if (patchDescriptionListRequestDto.getIsLast()) {
+
+            List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
+
+            int participateNum = studentStudyResults.size();
+            int sumScore = 0;
+            int correctRate = 0;
+            for (StudentStudyResult ssr : studentStudyResults) {
+                sumScore += ssr.getScore();
+                correctRate += ssr.getCorrectRate();
             }
+            double average = sumScore * 1.0 / participateNum;
+            double dis = 0;
+            for (StudentStudyResult ssr : studentStudyResults)
+                dis += Math.pow(average - ssr.getScore(), 2);
+
+            double standardDeviation = Math.sqrt(dis / participateNum);
+            int correctAnswerRate = correctRate / participateNum;
+
+            ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
+                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+            classStudyResult.updateClassAnswerRate(study, average, standardDeviation, correctAnswerRate);
         }
 
         PatchResponseDto patchResponseDto = PatchResponseDto.builder()

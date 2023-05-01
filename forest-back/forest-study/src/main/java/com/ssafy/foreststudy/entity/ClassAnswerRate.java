@@ -46,4 +46,9 @@ public class ClassAnswerRate {
         this.correctRate = correctRate;
         this.ungradedRate = ungradedRate;
     }
+
+    public void updateClassAnswerRate(int correctRate, int ungradedRate) {
+        this.correctRate = correctRate;
+        this.ungradedRate = ungradedRate;
+    }
 }
