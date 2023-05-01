@@ -1,5 +1,11 @@
 server:
   port: 9010
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
   ssl:
     enabled: true

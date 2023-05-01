@@ -55,45 +55,27 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             response.addHeader("Set-Cookie", refreshCookie.toString());
 
             String targetUrl = "/login/success";
-            Optional<User> findUserById = userRepository.findById(userId);
+            User user = userRepository.findById(userId).get();
 
-            if(findUserById.isPresent()) {
-                User user = findUserById.get();
+            // 기존 유저인 경우
+            if(user.getName() != null) {
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
-                targetUrl += "?name=" + name + "&role=" + role.toString() + "&accessToken=" + accessToken;
-                targetUrl = URLEncoder.encode(targetUrl);
-                log.info("decoded url : {}", URLDecoder.decode(targetUrl));
+
+                targetUrl += "?role=" + role.toString() + "&name=" + name + "&accessToken=" + accessToken;
+            }
+            // 신규 유저인 경우
+            else {
+                String email = user.getEmail();
+
+                targetUrl += "?email=" + email + "&accessToken=" + accessToken;
             }
 
-            log.info("targetUrl : {}", targetUrl);
-
-//            response.setHeader("Content-Type", "text/plain; charset=utf-8");
-//            response.setCharacterEncoding("UTF-8");
+            targetUrl = URLEncoder.encode(targetUrl);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
         } catch (Exception e) {
             throw e;
         }
     }
-
-    private User saveOrUpdateUser(String refreshToken, CustomOAuth2User oAuth2User) {
-        Optional<User> findUserByEmail = userRepository.findByEmail(oAuth2User.getEmail());
-        User user;
-
-        // 기존 회원 없으면 저장
-        if (findUserByEmail.isEmpty()) {
-            user = User.builder()
-                    .email(oAuth2User.getEmail())
-                    .refreshToken(refreshToken)
-                    .build();
-        }
-        // 기존 회원 존재하면 refresh token만 update
-        else {
-            user = findUserByEmail.get();
-            user.updateRefreshToken(refreshToken);
-        }
-        return userRepository.save(user);
-    }
-
 }
