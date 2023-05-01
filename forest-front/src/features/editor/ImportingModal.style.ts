@@ -38,12 +38,22 @@ const PdfViewerWrapper = styled.div`
     height: 100% !important;
   }
 `;
+const PdfViewerXmark = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  svg {
+    font-size: 24px;
+    color: ${({ theme }) => theme.colors.Gray[500]};
+    cursor: pointer;
+  }
+`;
 
 const PdfViewerPageController = styled.div`
   ${flexBox("row", "center", "center")}
-  position: absolute;
+  ${positionCenter("absolute")}
   z-index: 40;
-  top: 1rem;
+  top: 1.5rem;
   right: 3rem;
   color: ${({ theme }) => theme.colors.Lime[800]};
 
@@ -79,9 +89,6 @@ const ImgCropperWrapper = styled.div`
   ${scrollBar(0.5)};
 
   div {
-    /* width: 100%;
-    height: 100%; */
-
     .cropper-container {
       width: 100%;
       height: 100%;
@@ -96,11 +103,20 @@ const PdfViewerBtnWrapper = styled.div`
   margin-top: 24px;
 `;
 
+const ImgViewerBtnWrapper = styled(PdfViewerBtnWrapper)`
+  position: absolute;
+  left: 50%;
+  bottom: 2rem;
+  transform: translate(-50%);
+`;
+
 export {
   ImportingModalWrapper,
   ImportingModalInsideLine,
   PdfViewerWrapper,
+  PdfViewerXmark,
   PdfViewerPageController,
   ImgCropperWrapper,
   PdfViewerBtnWrapper,
+  ImgViewerBtnWrapper,
 };
