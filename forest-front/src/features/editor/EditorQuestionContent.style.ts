@@ -164,3 +164,51 @@ export const EditorOXAnswerBox = styled.div<{ isAnswer: boolean }>`
   color: ${({ theme, isAnswer }) => (isAnswer ? theme.colors.Orange[600] : theme.colors.Gray[400])};
   cursor: pointer;
 `;
+
+// 서술형
+export const EditorEssayKeywordsBox = styled.div`
+  display: flex;
+  flex-flow: wrap;
+
+  margin: 0 1.5rem;
+  gap: 0.5rem;
+
+  input {
+    width: fit-content;
+    width: 80px;
+    padding: 0.25rem 0.5rem;
+
+    outline: none;
+    border: none;
+    background: ${({ theme }) => theme.colors.Orange[500]};
+    border-radius: 4px;
+    color: white;
+
+    ::placeholder {
+      color: white;
+    }
+  }
+
+  button {
+    padding: 0.25rem 0.5rem;
+
+    background: ${({ theme }) => theme.colors.Orange[50]};
+    color: ${({ theme }) => theme.colors.Orange[500]};
+    border: 0.5px solid ${({ theme }) => theme.colors.Orange[500]};
+    border-radius: 4px;
+
+    > span {
+      font-weight: bold;
+    }
+  }
+`;
+
+export const EditorEssayBox = styled.div`
+  p {
+    margin: 0 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+
+    color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+`;
