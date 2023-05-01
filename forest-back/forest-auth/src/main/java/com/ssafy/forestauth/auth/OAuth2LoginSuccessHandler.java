@@ -61,7 +61,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 User user = findUserById.get();
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
-                targetUrl += "?name=" + name + "&role=" + role.toString() + "&accessToken=" + accessToken;
+                String email = user.getEmail();
+
+                targetUrl += "?name=" + name + "&role=" + role.toString() + "&email=" + email + "&accessToken=" + accessToken;
                 targetUrl = URLEncoder.encode(targetUrl);
                 log.info("decoded url : {}", URLDecoder.decode(targetUrl));
             }
