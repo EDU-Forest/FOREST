@@ -19,13 +19,13 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
   // 객관식 보기
   const [items, setItems] = useState<QuestionItemType[]>([]);
   const { questions } = useSelector((state: RootState) => state.editQuestions);
-  // 배열의 인덱스. 실제 넘버 = curQuestion + 1
-  const [curQuestion, setCurQuestion] = useState(2);
+  // 현재 문항 번호
+  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
   useEffect(() => {
-    setItems([...questions[curQuestion].items]);
-    setTitle(questions[curQuestion].title);
-  }, []);
+    setItems([...questions[curQuestion - 1].items]);
+    setTitle(questions[curQuestion - 1].title);
+  }, [curQuestion]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -45,7 +45,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
 
   return (
     <>
-      <EditorQuestionNumbox>{curQuestion + 1}</EditorQuestionNumbox>
+      <EditorQuestionNumbox>{curQuestion}</EditorQuestionNumbox>
       <EditorQuestionContentBox>
         {/* 객관식 */}
         <div>
@@ -61,7 +61,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
           보기 추가
         </EditorQuestionItemAddButton>
       </EditorQuestionContentBox>
-    </> 
+    </>
   );
 }
 
