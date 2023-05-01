@@ -2,9 +2,9 @@ import { StyledRoleBtn } from "./Btn.style";
 import { AiOutlineCheck } from "react-icons/ai";
 
 interface Iprops {
-  role: string;
+  role: Role.STUDENT | Role.TEACHER;
   selectedRole: string;
-  setSelectedRole: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedRole: React.Dispatch<React.SetStateAction<Role>>;
 }
 
 export default function RoleBtn({ role, selectedRole, setSelectedRole }: Iprops) {

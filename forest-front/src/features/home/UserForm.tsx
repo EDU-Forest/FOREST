@@ -21,6 +21,7 @@ import { CommonInput } from "@/components/Input/Input.style";
 import { SignupLabelBox } from "./Home.style";
 import Label from "@/components/Label/Label";
 import { useRouter } from "next/router";
+import useKakaoLoginMoreInfo from "@/apis/auth/useKakaoLoginMoreInfoQuery";
 
 interface Iprops {
   onClose: () => void;
@@ -29,6 +30,7 @@ interface Iprops {
 }
 
 export default function UserForm({ type, email }: Iprops) {
+  const { mutate } = useKakaoLoginMoreInfo();
   const router = useRouter();
   const [validation, setValidation] = useState({
     email: type === "moreinfo" && email ? email : "",
@@ -47,10 +49,11 @@ export default function UserForm({ type, email }: Iprops) {
     phoneNumber: "",
     password: "",
     checkPassword: "",
+    role: Role.STUDENT,
     birth: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState("student");
+  const [selectedRole, setSelectedRole] = useState(Role.STUDENT);
 
   const movePage = () => {
     router.push("/");
@@ -58,7 +61,16 @@ export default function UserForm({ type, email }: Iprops) {
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return null;
+    if (
+      validation.email === "pass" &&
+      validation.username === "pass" &&
+      validation.phoneNumber === "pass" &&
+      validation.password === "pass" &&
+      validation.checkPassword === "pass" &&
+      validation.birth === "pass"
+    ) {
+      mutate(userData);
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -237,8 +249,16 @@ export default function UserForm({ type, email }: Iprops) {
       </SignupContentBox>
       <SignupRoleBox>
         <SignupLabel>역할</SignupLabel>
-        <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-        <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn
+          role={Role.TEACHER}
+          setSelectedRole={setSelectedRole}
+          selectedRole={selectedRole}
+        />
+        <RoleBtn
+          role={Role.STUDENT}
+          setSelectedRole={setSelectedRole}
+          selectedRole={selectedRole}
+        />
       </SignupRoleBox>
       <SignupHr />
       <SignupSubmitBox>
