@@ -1,6 +1,7 @@
 package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.forestworkbook.dto.workbook.request.WorkbookDetailDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,5 +70,20 @@ public class Workbook {
         this.title = title;
         this.description = description;
         this.volume = volume;
+    }
+
+    public void updateWorkbook(String title, WorkbookImg workbookImg, String description) {
+        this.title = title;
+        this.workbookImg = workbookImg;
+        this.description = description;
+
+    }
+
+    public void changeIsPublid(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+
+    public void changeIsExcuted(boolean isExecuted) {
+        this.isExecuted = isExecuted;
     }
 }
