@@ -14,3 +14,9 @@ export default function Test() {
     </StyledTestContainer>
   );
 }
+
+export async function getServerSideProps({ params: { id } }: { params: { id: string } }) {
+  return {
+    props: {},
+  };
+}
