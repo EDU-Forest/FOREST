@@ -11,6 +11,7 @@ import {
 } from "./EditorQuestionContent.style";
 import EditorMultipleChoice from "./EditorMultipleChoice";
 import EditorShortAnswer from "./EditorShortAnswer";
+import EditorOX from "./EditorOX";
 
 interface IProps {
   selectQuestionType: string;
@@ -60,6 +61,8 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
         {question.type === "multipleChoice" && (
           <EditorMultipleChoice question={question}></EditorMultipleChoice>
         )}
+        {/* ox */}
+        {question.type === "oxChoice" && <EditorOX />}
         {/* 단답식 */}
         {question.type === "shortAnswer" && <EditorShortAnswer />}
       </EditorQuestionContentBox>

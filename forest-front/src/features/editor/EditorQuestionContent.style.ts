@@ -141,7 +141,7 @@ export const EditorShortAnswerBox = styled.div`
     width: 100%;
 
     padding: 1rem 1.5rem;
-    
+
     color: ${({ theme }) => theme.colors.Orange[500]};
     background: ${({ theme }) => theme.colors.Orange[50]};
     border: 0.8px solid ${({ theme }) => theme.colors.Orange[300]};
@@ -151,4 +151,16 @@ export const EditorShortAnswerBox = styled.div`
       color: ${({ theme }) => theme.colors.Orange[500]};
     }
   }
+`;
+
+export const EditorOXBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+export const EditorOXAnswerBox = styled.div<{ isAnswer: boolean }>`
+  font-size: 120px;
+  font-weight: 900;
+  color: ${({ theme, isAnswer }) => (isAnswer ? theme.colors.Orange[600] : theme.colors.Gray[400])};
+  cursor: pointer;
 `;
