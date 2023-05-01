@@ -12,7 +12,7 @@ export default function LoginSuccess() {
   const dispatch = useDispatch();
   console.log(router.query);
   useEffect(() => {
-    const accessToken = router.query?.forest_access_token;
+    const accessToken = router.query?.accessToken;
     console.log("typeof accessToken", typeof accessToken);
     if (typeof accessToken === "string") {
       setLocalStorage("forest_access_token", accessToken);
