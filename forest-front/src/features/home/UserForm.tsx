@@ -33,7 +33,7 @@ export default function UserForm({ type, email }: Iprops) {
   const { mutate } = useKakaoLoginMoreInfo();
   const router = useRouter();
   const [validation, setValidation] = useState({
-    email: type === "moreinfo" && email ? email : "",
+    email: "",
     emailDuplicate: "",
     username: "",
     phoneNumber: "",
@@ -44,16 +44,16 @@ export default function UserForm({ type, email }: Iprops) {
     birth: "",
   });
   const [userData, setUserData] = useState({
-    email: "",
+    email: type === "moreinfo" && email ? email : "",
     username: "",
     phoneNumber: "",
     password: "",
     checkPassword: "",
-    role: "STUDENT",
+    role: "student",
     birth: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState("STUDENT");
+  const [selectedRole, setSelectedRole] = useState("student");
 
   const movePage = () => {
     router.push("/");
@@ -61,12 +61,11 @@ export default function UserForm({ type, email }: Iprops) {
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console;
     if (
-      validation.email === "pass" &&
+      (type === "moreinfo" || validation.email === "pass") &&
       validation.username === "pass" &&
       validation.phoneNumber === "pass" &&
-      validation.password === "pass" &&
-      validation.checkPassword === "pass" &&
       validation.birth === "pass"
     ) {
       mutate(userData);
@@ -249,8 +248,8 @@ export default function UserForm({ type, email }: Iprops) {
       </SignupContentBox>
       <SignupRoleBox>
         <SignupLabel>역할</SignupLabel>
-        <RoleBtn role="TEACHER" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-        <RoleBtn role="STUDENT" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
       </SignupRoleBox>
       <SignupHr />
       <SignupSubmitBox>
