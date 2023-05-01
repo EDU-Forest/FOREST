@@ -16,7 +16,6 @@ export default function LoginSuccess() {
     const username = router.query?.name;
     const role = router.query?.role;
     const email = router.query?.email;
-    console.log(username, role, email);
     if (typeof username === "string" && typeof role === "string") {
       dispatch(setUsername(username));
       dispatch(setRole(role));
