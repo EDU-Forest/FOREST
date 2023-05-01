@@ -1,25 +1,34 @@
 import { useRouter } from "next/router";
-import {
-  StyledEditorNav,
-  ArrowDiv,
-  EditorNavDivTitle,
-  EditorNavDiv,
-  EditorNavDivInner,
-} from "./Nav.style";
-import { AiOutlineArrowLeft, AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
+import { AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
 import {
   MdOutlineFormatListNumbered,
-  MdOutlinePowerInput,
   MdOutlineLineStyle,
+  MdOutlinePowerInput,
 } from "react-icons/md";
 import ArrowLeft from "../Arrow/ArrowLeft";
+import {
+  ArrowDiv,
+  EditorNavDiv,
+  EditorNavDivInner,
+  EditorNavDivTitle,
+  StyledEditorNav,
+} from "./Nav.style";
 
-export default function EditorNav() {
+interface IProps {
+  setSelectQuestionType: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function EditorNav({ setSelectQuestionType }: IProps) {
   const router = useRouter();
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
   };
+
+  const handleClickQuestionType = (type: string) => {
+    setSelectQuestionType(type);
+  };
+
   return (
     <StyledEditorNav>
       <ArrowDiv>
@@ -27,22 +36,22 @@ export default function EditorNav() {
       </ArrowDiv>
       <EditorNavDivTitle isObject={false}>새로 만들기</EditorNavDivTitle>
       <EditorNavDiv>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("multipleChoice")}>
           <MdOutlineFormatListNumbered className="icon" />
           객관식
         </EditorNavDivInner>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("oxChoice")}>
           <div className="ox-div">
             <span>O</span>
             <span>X</span>
           </div>
           OX 선택
         </EditorNavDivInner>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("shortAnswer")}>
           <MdOutlinePowerInput className="icon" />
-          주관식
+          단답식
         </EditorNavDivInner>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("essay")}>
           <MdOutlineLineStyle className="icon" />
           서술형
         </EditorNavDivInner>

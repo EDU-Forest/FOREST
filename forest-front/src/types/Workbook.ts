@@ -6,6 +6,13 @@ export interface WorkbookType {
   usedCnt: number;
 }
 
+export interface QuestionItemType {
+  id: number;
+  no: number;
+  content: string;
+  isImage: boolean;
+}
+
 export interface QuestionType {
   id: number;
   problemNum: number;
@@ -14,12 +21,7 @@ export interface QuestionType {
   text: string;
   point: number;
   image: string;
-  items: {
-    id: number;
-    no: number;
-    content: string;
-    isImage: boolean;
-  }[];
+  items: QuestionItemType[];
 }
 
 export interface QuestionSummType {
