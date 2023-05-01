@@ -1,17 +1,13 @@
 package com.ssafy.forestauth.auth.jwt;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
-import com.ssafy.forestauth.errorhandling.exception.service.InvalidTokenException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -49,54 +45,23 @@ public class JwtFilter extends OncePerRequestFilter {
                 log.info("Secret Context에 '{}' 인증 정보 저장 완료!", authentication.getName());
             }
         } catch (SignatureException | MalformedJwtException e) {
-            System.out.println("유효하지 않는 토큰");
+            log.info("유효하지 않은 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_NOT_VALID_TOKEN);
-            setErrorResponse(response);
-//            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
-            throw new RuntimeException(ErrorCode.AUTH_WRONG_TOKEN.getMessage());
         } catch (ExpiredJwtException e) {
-            System.out.println("만료된 토큰");
+            log.info("만료된 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_EXPIRED_TOKEN);
-            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
         } catch (UnsupportedJwtException e) {
-            System.out.println("지원하지 않은 토큰");
+            log.info("지원하지 않은 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_UNSUPPORTED_TOKEN);
-            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
         } catch (JwtException e) {
-            System.out.println("토큰 잘못됨");
+            log.info("잘못된 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
-            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
         } catch(Exception e) {
+            log.info("JWT 값이 : {}", jwt);
             request.setAttribute("excetion", ErrorCode.AUTH_WRONG_TOKEN);
-//            throw new InvalidTokenException(ErrorCode.AUTH_WRONG_TOKEN);
-            System.out.println("Token is Null ->" + jwt);
-            setErrorResponse(response);
-            throw new RuntimeException(ErrorCode.AUTH_WRONG_TOKEN.getMessage());
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    private void setErrorResponse(
-            HttpServletResponse response
-    ){
-        ObjectMapper objectMapper = new ObjectMapper();
-        response.setStatus(ErrorCode.AUTH_WRONG_TOKEN.getStatus().value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.AUTH_WRONG_TOKEN.getStatus().value(), ErrorCode.AUTH_WRONG_TOKEN.getMessage());
-        try{
-            System.out.println("before");
-            response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
-            System.out.println("after");
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @Data
-    public static class ErrorResponse{
-        private final Integer code;
-        private final String message;
     }
 
     // Request 요청 시, Header에서 Token 정보 꺼내기
@@ -104,10 +69,8 @@ public class JwtFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            System.out.println("제대로된 토큰 값");
             return bearerToken.substring(7);
         }
-        System.out.println("잘못된 토큰 값");
         return null;
     }
 }
