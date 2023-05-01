@@ -20,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/class")
 public class ClassController {
-
     private final ClassService classService;
 
     // 선생님, 학생 클래스 목록
