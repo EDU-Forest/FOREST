@@ -1,10 +1,9 @@
-import { setRole, setUsername } from "@/stores/user/user";
-import axios from "axios";
+import authAxios from "@/utils/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
-  axios
+  authAxios
     .post(`/api/user/social`, {
       name: payload.username,
       phone: payload.phoneNumber,
