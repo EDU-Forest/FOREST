@@ -1,10 +1,8 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
+import QuestionChoiceList from "@/components/Question/QuestionChoiceList";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import {
-  StyledQuestionChoiceNumBox,
-  StyledQuestionDetailChoiceBox,
-  StyledQuestionDetailChoiceListBox,
   StyledQuestionDetailNumBox,
   StyledQuestionDetailTextBox,
   StyledQuestionDetailTitleBox,
@@ -47,19 +45,7 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
       {question.image && <img src={question.image} alt="question" />}
 
       {/* 객관식 보기 */}
-      {question.type === "객관식" && (
-        <StyledQuestionDetailChoiceListBox>
-          {question.items.map((item) => {
-            return (
-              <StyledQuestionDetailChoiceBox>
-                <StyledQuestionChoiceNumBox>{item.no}</StyledQuestionChoiceNumBox>
-                {/* 이미지 형식의 보기라면 이미지 렌더링 */}
-                {item.isImage ? <img src={item.content} alt="item" /> : <span>{item.content}</span>}
-              </StyledQuestionDetailChoiceBox>
-            );
-          })}
-        </StyledQuestionDetailChoiceListBox>
-      )}
+      {question.type === "객관식" && <QuestionChoiceList items={question.items} />}
     </StyledWorkbookDetailQuestionBox>
   );
 }
