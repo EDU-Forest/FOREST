@@ -56,7 +56,7 @@ spring:
             user-name-attribute: id
 
 jwt:
-  redirect-url: ${JWT_REDIRECT_URI}
+  redirect-url: https://k8b105.p.ssafy.io/login/success
   token:
     secretKey: ${JWT_SECRET_KEY}
 
