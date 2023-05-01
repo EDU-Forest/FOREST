@@ -93,7 +93,7 @@ public class StudyController {
 
     @ApiOperation(value = "시험 시작하기", notes = "시험을 시작합니다.")
     @PostMapping("/start")
-    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> postStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
         return ResponseEntity.ok(studyService.postStartStudy(postStartStudyRequestDto));
     }
 
@@ -119,5 +119,11 @@ public class StudyController {
     @PatchMapping("/descript")
     public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(@RequestBody @Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
         return ResponseEntity.ok(studyService.patchDescription(patchDescriptionListRequestDto));
+    }
+
+    @ApiOperation(value = "(클래스) 시험 종료", notes = "시험을 종료합니다.")
+    @PostMapping("/exit")
+    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.postExitStudy(studyId));
     }
 }

@@ -11,7 +11,6 @@ import com.ssafy.foreststudy.repository.*;
 import com.ssafy.foreststudy.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +34,6 @@ public class StudyService {
     private final ClassAnswerRateRepository classAnswerRateRepository;
     private final StudentStudyResultRepository studentStudyResultRepository;
     private final StudentStudyProblemResultRepository studentStudyProblemResultRepository;
-    private final ProblemRepository problemRepository;
     private final ProblemListRepository problemListRepository;
     private final ItemRepository itemRepository;
     private final ClassUserRepository classUserRepository;
@@ -439,7 +437,7 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<ProblemList> problemList = problemListRepository.findAllByWorkbook(study.getWorkbook());
+        List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
         List<GetProblemListResponseDto> problem = new ArrayList<>();
         for (ProblemList pl : problemList) {
             List<Item> itemList = itemRepository.findAllByProblem(pl.getProblem());
@@ -483,7 +481,7 @@ public class StudyService {
     }
 
     /* 시험 시작하기 */
-    public ResponseSuccessDto<PostStartStudyResponseDto> postStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+    public ResponseSuccessDto<PostResponseDto> postStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(postStartStudyRequestDto.getStudyId())
@@ -505,18 +503,18 @@ public class StudyService {
 
         /* 개인시험 결과_문제 테이블 생성 */
         Workbook workbook = study.getWorkbook();
-        List<ProblemList> problemLists = problemListRepository.findAllByWorkbook(workbook);
+        List<ProblemList> problemLists = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(workbook);
         for (ProblemList problemList : problemLists) {
             StudentStudyProblemResult studentStudyProblemResult = new StudentStudyProblemResult();
             studentStudyProblemResult.createStudentStudyProblemResult(study, user, problemList);
             studentStudyProblemResultRepository.save(studentStudyProblemResult);
         }
 
-        PostStartStudyResponseDto postStartStudyResponseDto = PostStartStudyResponseDto.builder()
+        PostResponseDto postResponseDto = PostResponseDto.builder()
                 .message("개인 시험 결과 문제 생성 완료")
                 .build();
 
-        ResponseSuccessDto<PostStartStudyResponseDto> res = responseUtil.successResponse(postStartStudyResponseDto, SuccessCode.STUDY_SAVE_STUDENT_PROBLEM_RESULT);
+        ResponseSuccessDto<PostResponseDto> res = responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SAVE_STUDENT_PROBLEM_RESULT);
         return res;
     }
 
@@ -745,6 +743,73 @@ public class StudyService {
                 .build();
 
         ResponseSuccessDto<PatchResponseDto> res = responseUtil.successResponse(patchResponseDto, SuccessCode.STUDY_SAVE_DESCRIPT);
+        return res;
+    }
+
+    /* (클래스) 시험 종료하기 */
+    public ResponseSuccessDto<PostResponseDto> postExitStudy(Long studyId) {
+
+        /* 존재하지 않는 스터디 ID 체크 */
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+        List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
+
+        /* 서술형 문항 개수 */
+        int descriptNum = 0;
+
+        /* 반 문항별 정답률 테이블 생성 */
+        for (ProblemList list : problemList) {
+            int correctNum = 0;
+            List<StudentStudyProblemResult> studentStudyProblemResult = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
+            for (StudentStudyProblemResult studyProblemResult : studentStudyProblemResult) {
+                if (studyProblemResult.getIsCorrected())
+                    correctNum++;
+            }
+            int correctRate = correctNum * 100 / studentStudyProblemResult.size();
+            ClassAnswerRate classAnswerRate = new ClassAnswerRate();
+            classAnswerRate.createClassAnswerRate(study, list, correctRate, 100 - correctRate);
+            classAnswerRateRepository.save(classAnswerRate);
+            if (list.getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
+                descriptNum++;
+
+        }
+
+        List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
+        List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
+
+        int participateNum = studentStudyResults.size();
+        int takeRate = participateNum * 100 / classUser.size();
+        int sumScore = 0;
+        long solvingTime = 0;
+        int correctRate = 0;
+        for (StudentStudyResult ssr : studentStudyResults) {
+            sumScore += ssr.getScore();
+            Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
+            solvingTime += duration.getSeconds() / 60;
+            correctRate += ssr.getCorrectRate();
+        }
+        double average = sumScore * 1.0 / participateNum;
+        double dis = 0;
+        for (StudentStudyResult ssr : studentStudyResults)
+            dis += Math.pow(average - ssr.getScore(), 2);
+
+        double standardDeviation = Math.sqrt(dis / participateNum);
+        long averageSolvingTime = solvingTime / participateNum;
+        int correctAnswerRate = correctRate / participateNum;
+        int volume = study.getWorkbook().getVolume();
+        int ungradedAnswerRate = (volume - descriptNum) * 100 / volume;
+
+        /* 반 시험 결과 리포트 테이블 생성 */
+        ClassStudyResult classStudyResult = new ClassStudyResult();
+        classStudyResult.createClassAnswerRate(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
+        classStudyResultRepository.save(classStudyResult);
+
+        PostResponseDto postResponseDto = PostResponseDto.builder()
+                .message("학습 종료")
+                .build();
+
+        ResponseSuccessDto<PostResponseDto> res = responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SUCCESS_EXIT);
         return res;
     }
 
