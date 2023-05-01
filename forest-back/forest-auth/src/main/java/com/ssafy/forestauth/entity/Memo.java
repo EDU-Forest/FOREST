@@ -1,6 +1,7 @@
 package com.ssafy.forestauth.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssafy.forestauth.dto.memo.SaveMemoRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -42,5 +43,14 @@ public class Memo {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void createMemo(User user, SaveMemoRequestDto saveMemoRequestDto) {
+        this.user = user;
+        this.content = saveMemoRequestDto.getContent();
+    }
+
+    public void updateDelete(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }
 

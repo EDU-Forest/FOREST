@@ -33,7 +33,7 @@ public class ResponseUtil<T> {
                 .<ErrorContentDto>builder()
                 .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
                 .code(errorCode.getStatus().value())
-                .status(errorCode.getStatus().name())
+                .status(errorCode.name())
                 .path(path)
                 .error(errorContentDto)
                 .build();

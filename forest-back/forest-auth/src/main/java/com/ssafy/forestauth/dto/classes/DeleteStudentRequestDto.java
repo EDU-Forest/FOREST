@@ -1,11 +1,9 @@
 package com.ssafy.forestauth.dto.classes;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
-public class SelectClassResponseDto {
+public class DeleteStudentRequestDto {
+    private Long userId;
     private Long classId;
-    private String name;
 }

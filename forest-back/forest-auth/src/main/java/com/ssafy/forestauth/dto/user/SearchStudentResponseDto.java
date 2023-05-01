@@ -8,6 +8,7 @@ import lombok.Getter;
 public class SearchStudentResponseDto {
     private Long userId;
     private String name;
+    private int age;
     private String email;
     private String phone;
 }

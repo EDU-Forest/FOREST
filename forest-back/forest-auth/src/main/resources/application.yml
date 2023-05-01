@@ -15,12 +15,3 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
-
-jwt:
-  token:
-    secretKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H # {secretKey} 로 만들기
-    refreshKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4Hvvdsvsd
-    signatureAlgorithm: HS256
-    accessTokenExpired: 604800
-    refreshTokenExpired: 6048000

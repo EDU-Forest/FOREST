@@ -37,5 +37,10 @@ public class Class {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void createClass(User user, String className) {
+        this.owner = user;
+        this.name = className;
+    }
 }
 

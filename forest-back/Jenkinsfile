@@ -1,0 +1,103 @@
+pipeline {
+    agent any
+    environment {
+        DOCKER = 'sudo docker'
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                checkout scm
+                echo 'Checkout Scm'
+            }
+        }
+
+        stage('env setting') {
+            parallel {
+                stage('insert-keystore-auth') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-auth/**/*"
+                        }
+                    }
+                    steps {
+                        sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-auth/src/main/resources'
+
+                        echo 'Insert keystore...'
+                    }                    
+                }                
+            }            
+        }
+
+        stage('Build image') {
+            parallel {
+                stage('build-forest-auth') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-auth/**/*"
+                        }
+                    }
+                    steps {
+                        sh 'ls -al'
+                        dir('forest-back/forest-auth'){
+                            sh 'ls -al'
+                            sh 'chmod +x ./gradlew'
+                            sh './gradlew build'
+                            sh 'docker build -t ${FOREST_AUTH_IMAGE} .'
+                        }
+                        echo 'Build image...'
+                    }
+                }            
+            }
+        }
+
+        stage('Remove Previous Container') {
+            parallel {
+                stage('remove-forest-auth') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-auth/**/*"
+                        }
+                    }
+                    steps {
+                        script {
+                            try {
+                                dir('forest-back/forest-auth'){
+                                    sh 'docker stop ${FOREST_AUTH_CONTAINER}'
+                                    sh 'docker rm ${FOREST_AUTH_CONTAINER}'
+                                    sh 'docker-compose down'    
+                                }                                
+                            } catch (e) {
+                                echo 'fail to stop and remove container'
+                            }
+                        }
+                    }
+                }            
+            }
+        }
+        stage('Run New image') {
+            parallel {
+                stage('run-forest-auth') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-auth/**/*"
+                        }
+                    }
+                    steps {
+                        script {
+                            try {
+                                dir('forest-back/forest-auth') {
+                                    sh 'ls -al'
+                                    sh 'docker-compose up -d'
+                                }
+                                echo 'run new image'
+                            } catch(e) {
+                                echo 'fail to docker-compose up'
+                            }
+                        }                        
+                    }
+                }                
+            }
+        }
+    }
+}

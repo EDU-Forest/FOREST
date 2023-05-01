@@ -4,6 +4,8 @@ import com.ssafy.forestauth.dto.common.response.ResponseErrorDto;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
 import com.ssafy.forestauth.errorhandling.exception.service.InvalidPasswordException;
+import com.ssafy.forestauth.errorhandling.exception.service.InvalidTokenException;
+import com.ssafy.forestauth.errorhandling.exception.service.InvalidValueException;
 import com.ssafy.forestauth.mattermost.NotificationManager;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +48,25 @@ public class ServiceExceptionResolver {
         notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
         return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidValueException.class)
+    public ResponseErrorDto<?> handle(InvalidValueException e, HttpServletRequest request) {
+        ErrorCode errorCode = e.getErrorCode();
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = InvalidTokenException.class)
+    public ResponseErrorDto<?> handle(InvalidTokenException e, HttpServletRequest request) {
+        ErrorCode errorCode = e.getErrorCode();
+        System.out.println("error message = " + e.getErrorCode().getMessage());
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
+    }
+
+
 
     private String getParams(HttpServletRequest req) {
         StringBuilder params = new StringBuilder();

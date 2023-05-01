@@ -7,6 +7,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 public enum SuccessCode {
+
+    /**
+     * 리프래쉬 토큰
+     */
+    AUTH_GET_NEW_TOKEN(HttpStatus.OK, "토큰 재발급 완료"),
+
     /**
      * 이메일 중복 검사
      */
