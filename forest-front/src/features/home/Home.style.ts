@@ -31,7 +31,7 @@ const EmailAuthBox = styled.div`
 
 // --- KakaoLogin ---
 
-const KakaoLoginBtn = styled.button`
+const KakaoLoginBtn = styled.a`
   width: 22.5rem;
   height: 3rem;
   border-radius: 0.5rem;
@@ -39,6 +39,8 @@ const KakaoLoginBtn = styled.button`
   position: relative;
   margin-bottom: 0.75rem;
   border: none;
+  text-decoration: none;
+  color: black;
 
   &:hover {
     background-color: #efdb0f;

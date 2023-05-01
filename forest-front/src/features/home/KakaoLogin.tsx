@@ -4,13 +4,8 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 
 export default function KakaoLogin() {
-  const [isClicked, setIsClicked] = useState(false);
-  useKakaoLoginQuery(isClicked);
-  const handleKakaoLogin = () => {
-    setIsClicked(!isClicked);
-  };
   return (
-    <KakaoLoginBtn onClick={handleKakaoLogin}>
+    <KakaoLoginBtn href={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/oauth2/authorization/kakao`}>
       <KakaoLoginImg src={"images/Kakao_Login_Large_Wide.png"} />
       <KakaoLoginText>카카오톡으로 시작하기</KakaoLoginText>
     </KakaoLoginBtn>
