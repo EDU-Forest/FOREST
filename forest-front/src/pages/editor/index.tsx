@@ -1,9 +1,10 @@
 import EditorNav from "@/components/Nav/EditorNav";
-import { EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
+import { EditorContainer, EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
+import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import { setQuestions } from "@/stores/editor/editorQuestions";
-import { Container, FullScreen } from "@/styles/container";
+import { FullScreen } from "@/styles/container";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -129,13 +130,14 @@ export default function Editor() {
   return (
     <FullScreen>
       <EditorNav setSelectQuestionType={setSelectQuestionType} />
-      <Container isEditor>
+      <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
           <EditorTitle />
           <QuestionEditArea selectQuestionType={selectQuestionType} />
         </EditorTitleAndQuestionBox>
+        <EditorQuestionList />
         {/* <PdfViewer /> */}
-      </Container>
+      </EditorContainer>
     </FullScreen>
   );
 }

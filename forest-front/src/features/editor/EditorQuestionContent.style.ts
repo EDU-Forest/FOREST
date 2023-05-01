@@ -8,6 +8,7 @@ import {
 export const EditorQuestionContentBox = styled.div`
   display: flex;
   flex-direction: column;
+  /* flex: 1; */
 
   padding: 1.5rem 0;
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]};

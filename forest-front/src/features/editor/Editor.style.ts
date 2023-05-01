@@ -1,9 +1,15 @@
+import { Container } from "@/styles/container";
 import styled from "styled-components";
+
+export const EditorContainer = styled(Container)`
+  display: flex;
+`
 
 export const EditorTitleAndQuestionBox = styled.div`
   height: 100vh;
 
   display: flex;
+  flex: 1;
   flex-direction: column;
 `;
 
