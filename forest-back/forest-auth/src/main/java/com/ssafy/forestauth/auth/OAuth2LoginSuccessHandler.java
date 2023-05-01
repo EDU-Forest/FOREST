@@ -11,6 +11,7 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-//    @Value("${jwt.redirect-url}")
-//    private String accessTokenRedirectUrl;
+    @Value("${jwt.redirect-url}")
+    private String accessTokenRedirectUrl;
 
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
@@ -54,7 +55,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             clearAuthenticationAttributes(request);
             response.addHeader("Set-Cookie", refreshCookie.toString());
 
-            String targetUrl = "/login/success";
+            String targetUrl;
             User user = userRepository.findById(userId).get();
 
             // 기존 유저인 경우
@@ -62,17 +63,22 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
 
-                targetUrl += "?role=" + role.toString() + "&name=" + URLEncoder.encode(name) + "&accessToken=" + accessToken;
+                targetUrl = UriComponentsBuilder.fromUriString(accessTokenRedirectUrl)
+                        .queryParam("role", role.toString())
+                        .queryParam("name", URLEncoder.encode(name))
+                        .queryParam("accessToken", accessToken)
+                        .build().toUriString();
             }
             // 신규 유저인 경우
             else {
                 String email = user.getEmail();
-
-                targetUrl += "?email=" + email + "&accessToken=" + accessToken;
+                targetUrl = UriComponentsBuilder.fromUriString(accessTokenRedirectUrl)
+                        .queryParam("email", email)
+                        .queryParam("accessToken", accessToken)
+                        .build().toUriString();
             }
 
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
         } catch (Exception e) {
             throw e;
         }
