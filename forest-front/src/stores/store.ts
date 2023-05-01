@@ -6,6 +6,7 @@ import classSlice from "./class/classInfo";
 import classModalSlice from "./class/classModal";
 import analysisSlice from "./analysis/analysis";
 import examSlice from "./exam/exam";
+import editorModalSlice from "./editor/editorModal";
 
 const reducers = combineReducers({
   user: userSlice,
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   classModal: classModalSlice,
   analysis: analysisSlice,
   exam: examSlice,
+  editorModal: editorModalSlice,
 });
 
 const persistConfig = {
