@@ -13,6 +13,7 @@ export default function LoginSuccess() {
   console.log(router.query);
   useEffect(() => {
     const accessToken = router.query?.forest_access_token;
+    console.log("typeof accessToken", typeof accessToken);
     if (typeof accessToken === "string") {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
@@ -20,7 +21,8 @@ export default function LoginSuccess() {
     const username = router.query?.name;
     const role = router.query?.role;
     const email = router.query?.email;
-    if (typeof username === "string" && typeof role === "string" && typeof role === "string") {
+    console.log("test", typeof username, typeof role, typeof email);
+    if (typeof username === "string" && typeof role === "string") {
       dispatch(setUsername(username));
       dispatch(setRole(role));
       router.push(`/${role.toLowerCase()}/dashboard`);
