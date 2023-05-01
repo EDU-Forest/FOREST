@@ -103,21 +103,24 @@ const StyledTestProblemAnswerNumber = styled.div`
   margin-bottom: 22px;
 `;
 
-const StyledTestNumberBtn = styled.div`
+const StyledTestNumberBtn = styled.div<{ isSelected: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]};
-  color: ${({ theme }) => theme.colors.Lime[600]};
-  background-color: ${({ theme }) => theme.colors.Lime[50]};
+  color: ${({ isSelected, theme }) => (isSelected ? "white" : theme.colors.Lime[600])};
+  background-color: ${({ isSelected, theme }) =>
+    isSelected ? theme.colors.Lime[600] : theme.colors.Lime[50]};
   text-align: center;
   line-height: 24px;
   font-size: 0.875rem;
+  cursor: pointer;
 `;
 
 const StyledTestNumberText = styled.div`
   margin-left: 24px;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 // TestAnswerBox

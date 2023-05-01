@@ -1,19 +1,33 @@
+import { useSelector } from "react-redux";
 import {
   StyledTestNumberBtn,
   StyledTestNumberText,
   StyledTestProblemAnswerNumber,
 } from "./TextIndex.style";
+import { RootState } from "@/stores/store";
+import { useDispatch } from "react-redux";
+import { setChooseAnswer } from "@/stores/exam/exam";
 
 interface Iprops {
   idx: number;
   text: string;
+  isSelected: boolean;
 }
 
-export default function TestProblemAnswerNumber({ idx, text }: Iprops) {
+export default function TestProblemAnswerNumber({ isSelected, idx, text }: Iprops) {
+  const dispatch = useDispatch();
+  const { problems } = useSelector((state: RootState) => state.exam);
+  const { problemNum } = problems[0];
+  const chooseAnswer = () => {
+    dispatch(setChooseAnswer({ problemNum: problemNum, userAnswer: idx + 1 }));
+  };
+
   return (
     <StyledTestProblemAnswerNumber>
-      <StyledTestNumberBtn>{idx + 1}</StyledTestNumberBtn>
-      <StyledTestNumberText>{text}</StyledTestNumberText>
+      <StyledTestNumberBtn onClick={chooseAnswer} isSelected={isSelected}>
+        {idx + 1}
+      </StyledTestNumberBtn>
+      <StyledTestNumberText onClick={chooseAnswer}>{text}</StyledTestNumberText>
     </StyledTestProblemAnswerNumber>
   );
 }

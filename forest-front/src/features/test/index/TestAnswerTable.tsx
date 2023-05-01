@@ -13,7 +13,7 @@ export default function TestAnswerTable() {
       </thead>
       <tbody>
         {problems.map((problem, idx) => (
-          <tr>
+          <tr key={`user-answer-${idx}`}>
             <td>{idx + 1}</td>
             <td>{problem.userAnswer ? problem.userAnswer : ""}</td>
           </tr>
