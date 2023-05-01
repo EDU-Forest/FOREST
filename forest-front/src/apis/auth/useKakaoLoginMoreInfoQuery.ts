@@ -1,9 +1,9 @@
-import authAxios from "@/utils/authAxios";
+import customAxios from "@/utils/customAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
-  authAxios
+  customAxios
     .post(`/api/user/social`, {
       name: payload.username,
       phone: payload.phoneNumber,

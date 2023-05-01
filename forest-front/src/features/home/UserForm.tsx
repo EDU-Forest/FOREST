@@ -14,7 +14,7 @@ import {
 } from "./SignupModal.style";
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
 import SmallBtn from "@/components/Button/SmallBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RoleBtn from "@/components/Button/RoleBtn";
 import { checkEmail } from "@/utils";
 import { CommonInput } from "@/components/Input/Input.style";
@@ -44,7 +44,7 @@ export default function UserForm({ type, email }: Iprops) {
     birth: "",
   });
   const [userData, setUserData] = useState({
-    email: "test",
+    email: "",
     username: "",
     phoneNumber: "",
     password: "",
@@ -54,6 +54,15 @@ export default function UserForm({ type, email }: Iprops) {
   });
 
   const [selectedRole, setSelectedRole] = useState("student");
+
+  useEffect(() => {
+    if (typeof email === "string") {
+      setUserData({
+        ...userData,
+        email: email,
+      });
+    }
+  }, []);
 
   const movePage = () => {
     router.push("/");
