@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 export default function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
+  console.log(router.query);
   useEffect(() => {
     const accessToken = router.query?.forest_access_token;
     if (typeof accessToken === "string") {
