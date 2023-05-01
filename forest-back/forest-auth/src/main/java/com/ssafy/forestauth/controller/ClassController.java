@@ -73,4 +73,13 @@ public class ClassController {
     ) {
         return ResponseEntity.ok(classService.deleteStudent(deleteStudentRequestDto));
     }
+
+    // 선생님 최근 생성 클래스 아이디 조회
+    @GetMapping("/recent")
+    public ResponseEntity<ResponseSuccessDto<RecentClassResponseDto>> searchRecentClass(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long userId = Long.parseLong(userDetails.getUsername());
+        return ResponseEntity.ok(classService.searchRecentClass(userId));
+    }
 }
