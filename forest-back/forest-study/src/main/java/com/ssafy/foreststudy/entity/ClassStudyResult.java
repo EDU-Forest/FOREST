@@ -35,11 +35,20 @@ public class ClassStudyResult {
     @Column(name = "standard_deviation", columnDefinition = "double")
     private double standardDeviation;
 
-    @Column(name = "average_solving_time", columnDefinition = "timestamp")
-    private LocalDateTime averageSolvingTime;
+    @Column(name = "average_solving_time", columnDefinition = "bigint")
+    private Long averageSolvingTime;
 
     @Column(name = "correct_answer_rate", columnDefinition = "int")
     private int correctAnswerRate;
+
+    @Column(name = "ungraded_answer_rate", columnDefinition = "int")
+    private int ungradedAnswerRate;
+
+    @Column(name = "total_student", columnDefinition = "int")
+    private int totalStudent;
+
+    @Column(name = "participant_student", columnDefinition = "int")
+    private int participantStudent;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;

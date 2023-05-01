@@ -1,5 +1,6 @@
 package com.ssafy.foreststudy.dto.study;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,10 +19,10 @@ public class GetStudyRecentResponseDto {
     private LocalDateTime studyCreatedDate;
     private LocalDateTime workbookCreatedDate;
     private int volume;
-    private boolean isPublic;
+    private Boolean isPublic;
     private double average;
     private double standardDeviation;
-    private LocalDateTime averageSolvingTime;
+    private Long averageSolvingTime;
     private int totalStudent;
     private int participantStudent;
     private int takeRate;
