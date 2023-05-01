@@ -1,11 +1,13 @@
 import useKakaoLoginQuery from "@/apis/auth/useKakaoLoginQuery";
 import { KakaoLoginBtn, KakaoLoginImg, KakaoLoginText } from "./Home.style";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function KakaoLogin() {
-  const { refetch } = useKakaoLoginQuery();
+  const [isClicked, setIsClicked] = useState(false);
+  useKakaoLoginQuery(isClicked);
   const handleKakaoLogin = () => {
-    refetch();
+    setIsClicked(!isClicked);
   };
   return (
     <KakaoLoginBtn onClick={handleKakaoLogin}>

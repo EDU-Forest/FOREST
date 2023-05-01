@@ -27,12 +27,12 @@ const examSlice = createSlice({
   name: "exam",
   initialState,
   reducers: {
-    setCheckAnswer(state, action) {
-      state.problems[action.payload.problemIdx].userAnswer = action.payload.userAnswer;
+    setChooseAnswer(state, action) {
+      state.problems[action.payload.problemNum - 1].userAnswer = action.payload.userAnswer;
     },
   },
 });
 
-export const { setCheckAnswer } = examSlice.actions;
+export const { setChooseAnswer } = examSlice.actions;
 
 export default examSlice.reducer;
