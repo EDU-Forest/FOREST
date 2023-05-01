@@ -131,3 +131,24 @@ export const EditorChoiceNumBox = styled(StyledQuestionChoiceNumBox)<{ isCorrect
   color: ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[600]};
   cursor: pointer;
 `;
+
+// 단답식
+export const EditorShortAnswerBox = styled.div`
+  margin: 0 1.5rem;
+  margin-top: 1.5rem;
+
+  > input {
+    width: 100%;
+
+    padding: 1rem 1.5rem;
+    
+    color: ${({ theme }) => theme.colors.Orange[500]};
+    background: ${({ theme }) => theme.colors.Orange[50]};
+    border: 0.8px solid ${({ theme }) => theme.colors.Orange[300]};
+    border-radius: 8px;
+
+    ::placeholder {
+      color: ${({ theme }) => theme.colors.Orange[500]};
+    }
+  }
+`;
