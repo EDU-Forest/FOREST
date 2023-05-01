@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class PatchExitStudyResponseDto {
-    private String message;
+public class GetStudentPointListResponseDto {
+    private int studentNum;
+    private int score;
 }

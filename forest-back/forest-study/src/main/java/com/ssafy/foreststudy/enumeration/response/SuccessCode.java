@@ -24,7 +24,9 @@ public enum SuccessCode {
     STUDY_SAVE_STUDENT_PROBLEM_RESULT(HttpStatus.CREATED,"개인 시험 결과 문제 생성 완료"),
     STUDY_SUCCESS_UPDATE_PROBLEM_RESULT(HttpStatus.NO_CONTENT,"문항 답안 저장 성공"),
     STUDY_SAVE_STUDENT_RESULT(HttpStatus.NO_CONTENT,"시험 종료"),
-    STUDY_SUCCESS_RESULT_DESCRIPT_LIST(HttpStatus.NO_CONTENT,"서술형 문제 채점 목록 조회 성공");
+    STUDY_SUCCESS_RESULT_DESCRIPT_LIST(HttpStatus.OK,"서술형 문제 채점 목록 조회 성공"),
+    STUDY_NONE_RESULT_DESCRIPT_LIST(HttpStatus.OK,"서술형 문제 목록 없음"),
+    STUDY_SAVE_DESCRIPT(HttpStatus.OK,"서술형 채점 성공");
 
 
     private final HttpStatus status;

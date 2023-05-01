@@ -62,4 +62,10 @@ public class StudentStudyProblemResult {
         this.isCorrected = isCorrected;
         this.isGraded = isGraded;
     }
+
+    public void updateDescript(int partPoint, Boolean isCorrected, Boolean isGraded){
+        this.partPoint = partPoint;
+        this.isCorrected = isCorrected;
+        this.isGraded = isGraded;
+    }
 }

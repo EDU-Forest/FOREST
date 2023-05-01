@@ -466,6 +466,8 @@ public class StudyService {
                     .title(pl.getProblem().getTitle())
                     .text(pl.getProblem().getText())
                     .problemImgPath(pl.getProblem().getPath())
+                    .userAnswer(spr.getUserAnswer())
+                    .problemAnswer(pl.getProblem().getAnswer())
                     .item(item)
                     .build());
         }
@@ -519,7 +521,7 @@ public class StudyService {
     }
 
     /* 다음 문제 이동하기 */
-    public ResponseSuccessDto<PatchNextProblemResponseDto> patchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
@@ -559,16 +561,16 @@ public class StudyService {
             }
         }
 
-        PatchNextProblemResponseDto patchNextProblemResponseDto = PatchNextProblemResponseDto.builder()
-                .message("개인 시험 결과 문제 생성 완료")
+        PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
+                .message("문제 답안 저장 완료")
                 .build();
 
-        ResponseSuccessDto<PatchNextProblemResponseDto> res = responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
+        ResponseSuccessDto<PatchResponseDto> res = responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
         return res;
     }
 
     /* 시험 종료하기 */
-    public ResponseSuccessDto<PatchExitStudyResponseDto> patchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
@@ -605,64 +607,145 @@ public class StudyService {
 
         ssr.updateStudentStudyResult(correctNum, scoreSum, correctRate, check);
 
-        PatchExitStudyResponseDto patchExitStudyResponseDto = PatchExitStudyResponseDto.builder()
+        PatchResponseDto patchExitStudyResponseDto = PatchResponseDto.builder()
                 .message("시험 종료")
                 .build();
 
-        ResponseSuccessDto<PatchExitStudyResponseDto> res = responseUtil.successResponse(patchExitStudyResponseDto, SuccessCode.STUDY_SAVE_STUDENT_RESULT);
+        ResponseSuccessDto<PatchResponseDto> res = responseUtil.successResponse(patchExitStudyResponseDto, SuccessCode.STUDY_SAVE_STUDENT_RESULT);
         return res;
     }
 
     /* (선생님) 서술형 문제 채점 목록 조회 */
-    public ResponseSuccessDto<GetProblemResponseDto> getDescriptionList(Long studyId) {
+    public ResponseSuccessDto<GetDescriptionListResponseDto> getDescriptionList(Long studyId) {
 
         /*
             1. 시험의 문제집 ID로 문제 목록 불러오기
             2. 문제 목록 리스트에서 문제 타입이 '서술형' 이면 따로 저장
-            3.
+            3. 스터디 ID와 문제 목록 ID로 학생 문제 답안 리스트 가져오기
+            4. 키워드 가져와서 유사도 분석하기
+            5. 값 추출
          */
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
 
-//        List<ProblemList> problemList = problemListRepository.findAllByWorkbook(study.getWorkbook());
-//        List<GetProblemListResponseDto> problem = new ArrayList<>();
-//        for (ProblemList pl : problemList) {
-//            List<Item> itemList = itemRepository.findAllByProblem(pl.getProblem());
-//            List<GetItemListResponseDto> item = new ArrayList<>();
-//
-//            for (Item it : itemList) {
-//                item.add(GetItemListResponseDto.builder()
-//                        .itemId(it.getId())
-//                        .no(it.getNo())
-//                        .content(it.getContent())
-//                        .isImage(it.getIsImage())
-//                        .build());
-//            }
-//
-//            /* 개인 시험 결과 문제 ID 가져오기 위함 */
-//            StudentStudyProblemResult spr = studentStudyProblemResultRepository.findAllByStudyAndUserAndProblemList(study, user, pl)
-//                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
-//
-//
-//            problem.add(GetProblemListResponseDto.builder()
-//                    .studentStudyProblemId(spr.getId())
-//                    .problemNum(pl.getProblemNum())
-//                    .type(pl.getProblem().getType())
-//                    .title(pl.getProblem().getTitle())
-//                    .text(pl.getProblem().getText())
-//                    .problemImgPath(pl.getProblem().getPath())
-//                    .item(item)
-//                    .build());
-//        }
 
-        GetProblemResponseDto result = GetProblemResponseDto.builder()
-                .volume(study.getWorkbook().getVolume())
-                .startTime(study.getStartTime())
-                .endTime(study.getEndTime())
+        List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
+
+        if (problemList == null)
+            return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
+
+
+        List<GetDescriptionResponseDto> descript = new ArrayList<>();
+
+        for (ProblemList list : problemList) {
+            List<GetKeywordListResponseDto> keywordList = new ArrayList<>();
+            String getAnswer = list.getProblem().getAnswer();
+            String[] keyWords = getAnswer.split(",");
+
+            // 키워드 리스트
+            for (String keyWord : keyWords) {
+                keywordList.add(GetKeywordListResponseDto.builder()
+                        .keyword(keyWord)
+                        .build());
+            }
+
+            // 학생 답안 리스트
+            List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
+            List<GetStudentAnswerListResponseDto> studentList = new ArrayList<>();
+
+            if (problemList == null)
+                return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
+
+            int index = 1;
+            for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
+                // 키워드 포함 개수 분석 코드
+                int num = 0;
+                for (String keyWord : keyWords) {
+                    if (studentStudyProblemResult.getUserAnswer().contains(keyWord))
+                        num++;
+
+                }
+                studentList.add(GetStudentAnswerListResponseDto.builder()
+                        .studentNum(index)
+                        .answer(studentStudyProblemResult.getUserAnswer())
+//                        .similarity() 유사도 체크 로직 추가 예정
+                        .sameNum(num)
+                        .build());
+
+                index++;
+            }
+
+            descript.add(GetDescriptionResponseDto.builder()
+                    .problemListId(list.getId())
+                    .title(list.getProblem().getTitle())
+                    .point(list.getProblem().getPoint())
+                    .keywordNum(keyWords.length)
+                    .keywordList(keywordList)
+                    .studentList(studentList)
+                    .build());
+
+        }
+
+        GetDescriptionListResponseDto result = GetDescriptionListResponseDto.builder()
+                .count(problemList.size())
+                .descript(descript)
                 .build();
 
         return responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
     }
+
+    /* (선생님) 서술형 문제 채점 */
+    public ResponseSuccessDto<PatchResponseDto> patchDescription(@Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
+
+        /* 존재하지 않는 스터디 ID 체크 */
+        Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+
+        /* 존재하지 않는 문제 목록 ID 체크 */
+        ProblemList problemList = problemListRepository.findById(patchDescriptionListRequestDto.getProblemListId())
+                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_PROBLEM_LIST_NOT_FOUND));
+
+        // 학생 답안 리스트
+        List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, problemList);
+
+        int size = patchDescriptionListRequestDto.getStudentPointList().size();
+
+        /* 받은 답안 리스트 개수와 학생의 수가 일치하는지 체크 */
+        if (size != ssp.size())
+            throw new EntityIsNullException(ErrorCode.STUDY_FAILURE_DESCRIPT);
+
+        // 총 문항 수 -> 정답률 계산 위해서
+        int volume = study.getWorkbook().getVolume();
+
+        int index = 0;
+        for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
+            int partPoint = patchDescriptionListRequestDto.getStudentPointList().get(index).getScore();
+            boolean isCorrected = partPoint == patchDescriptionListRequestDto.getPoint();
+            studentStudyProblemResult.updateDescript(partPoint, isCorrected, true);
+            index++;
+
+            /* 존재하지 않는 개인 시험 결과 ID 체크 */
+            StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(study, studentStudyProblemResult.getUser())
+                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+            int correctNum = ssr.getCorrectNum();
+            int scoreSum = ssr.getScore() + partPoint;
+
+            if (isCorrected)
+                correctNum++;
+            int correctRate = correctNum * 100 / volume;
+            boolean isGraded = index == ssp.size() - 1;
+            ssr.updateStudentStudyResult(correctNum, scoreSum, correctRate, isGraded);
+        }
+
+        PatchResponseDto patchResponseDto = PatchResponseDto.builder()
+                .message("서술형 문제 채점 성공")
+                .build();
+
+        ResponseSuccessDto<PatchResponseDto> res = responseUtil.successResponse(patchResponseDto, SuccessCode.STUDY_SAVE_DESCRIPT);
+        return res;
+    }
+
 }

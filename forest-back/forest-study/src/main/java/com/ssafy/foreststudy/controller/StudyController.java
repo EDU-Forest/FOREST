@@ -99,19 +99,25 @@ public class StudyController {
 
     @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
     @PatchMapping("/problem")
-    public ResponseEntity<ResponseSuccessDto<PatchNextProblemResponseDto>> patchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
         return ResponseEntity.ok(studyService.patchNextProblem(patchNextProblemRequestDto));
     }
 
-    @ApiOperation(value = "시험 종료하기", notes = "시험을 종료합니다.")
-    @PatchMapping("/exit")
-    public ResponseEntity<ResponseSuccessDto<PatchExitStudyResponseDto>> patchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+    @ApiOperation(value = "(학생)시험 종료하기", notes = "(학생) 시험을 종료합니다.")
+    @PatchMapping("/exit/student")
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
         return ResponseEntity.ok(studyService.patchExitStudy(patchExitStudyRequestDto));
     }
 
-//    @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")
-//    @GetMapping("/descript/{studyId}")
-//    public ResponseEntity<ResponseSuccessDto<GetDescriptionListResponseDto>> getDescriptionList(@PathVariable("studyId") Long studyId) {
-//        return ResponseEntity.ok(studyService.getDescriptionList(studyId));
-//    }
+    @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")
+    @GetMapping("/descript/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetDescriptionListResponseDto>> getDescriptionList(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getDescriptionList(studyId));
+    }
+
+    @ApiOperation(value = "(선생님) 서술형 문제 채점", notes = "(선생님) 서술형 문제를 채점합니다.")
+    @PatchMapping("/descript")
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(@RequestBody @Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
+        return ResponseEntity.ok(studyService.patchDescription(patchDescriptionListRequestDto));
+    }
 }
