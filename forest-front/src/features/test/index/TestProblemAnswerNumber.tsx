@@ -16,8 +16,8 @@ interface Iprops {
 
 export default function TestProblemAnswerNumber({ isSelected, idx, text }: Iprops) {
   const dispatch = useDispatch();
-  const { problems } = useSelector((state: RootState) => state.exam);
-  const { problemNum } = problems[0];
+  const { problems, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { problemNum } = problems[curProblemNum - 1];
   const chooseAnswer = () => {
     dispatch(setChooseAnswer({ problemNum: problemNum, userAnswer: idx + 1 }));
   };
