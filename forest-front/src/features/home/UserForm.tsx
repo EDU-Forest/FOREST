@@ -56,6 +56,7 @@ export default function UserForm({ type, email }: Iprops) {
   const [selectedRole, setSelectedRole] = useState("student");
 
   useEffect(() => {
+    console.log(email, typeof email);
     if (typeof email === "string") {
       setUserData({
         ...userData,
