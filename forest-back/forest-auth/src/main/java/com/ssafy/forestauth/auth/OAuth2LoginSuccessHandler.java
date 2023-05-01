@@ -2,6 +2,7 @@ package com.ssafy.forestauth.auth;
 
 import com.ssafy.forestauth.auth.jwt.JwtProvider;
 import com.ssafy.forestauth.entity.User;
+import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
 import com.ssafy.forestauth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     private final UserRepository userRepository;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         try {
             CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
             String accessToken = jwtProvider.createAccessToken(authentication);
@@ -39,18 +41,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             Long userId = oAuth2User.getUserId();
             log.info("유저 아이디 : {}", userId);
-
-            String username = null;
-
-            Optional<User> findUserById = userRepository.findById(userId);
-            if(findUserById.isEmpty()) {
-                username = "false";
-            } else {
-                User user = findUserById.get();
-                username = "ture";
-            }
-
-            log.info("유저 이름 : {}", username);
 
             ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                     .httpOnly(true)
@@ -64,27 +54,31 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                     .path("/")
                     .build();
 
-            ResponseCookie usernameCookie = ResponseCookie.from("username", username)
-                    .httpOnly(true)
-                    .maxAge(JwtProvider.accessTokenValidateTime)
-                    .path("/")
-                    .build();
-
-
             // 로그인 실패가 발생했을 떄 세션에 저장된 에러 지움
             clearAuthenticationAttributes(request);
             response.addHeader("Set-Cookie", refreshCookie.toString());
             response.addHeader("Set-Cookie", accessCookie.toString());
-            response.addHeader("Set-Cookie", usernameCookie.toString());
 
             String targetUrl;
-            if(oAuth2User.getEmail() == null) {
-                targetUrl = "null";
+            Optional<User> findUserById = userRepository.findById(userId);
+
+            if(findUserById.isEmpty()) {
+                targetUrl = "/signup/more-info";
             } else {
-                targetUrl = username;
+                User user = findUserById.get();
+
+                if(user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
+                    targetUrl = "/teacher/dashboard";
+                } else {
+                    targetUrl = " /student/dashboard";
+                }
             }
 
-            getRedirectStrategy().sendRedirect(request, response, targetUrl);
+            log.info("targetUrl : {}", targetUrl);
+
+            request.getRequestDispatcher(targetUrl).forward(request, response);
+
+//            getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } catch (Exception e) {
             throw e;
         }
