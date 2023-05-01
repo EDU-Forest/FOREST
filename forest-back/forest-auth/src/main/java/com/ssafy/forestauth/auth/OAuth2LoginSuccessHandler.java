@@ -44,10 +44,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             Optional<User> findUserById = userRepository.findById(userId);
             if(findUserById.isEmpty()) {
-                username = "null";
+                username = "false";
             } else {
                 User user = findUserById.get();
-                username = user.getName();
+                username = "ture";
             }
 
             log.info("유저 이름 : {}", username);
