@@ -53,7 +53,7 @@ export default function UserForm({ type, email }: Iprops) {
     birth: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState(Role.STUDENT);
+  const [selectedRole, setSelectedRole] = useState("STUDENT");
 
   const movePage = () => {
     router.push("/");
@@ -249,16 +249,8 @@ export default function UserForm({ type, email }: Iprops) {
       </SignupContentBox>
       <SignupRoleBox>
         <SignupLabel>역할</SignupLabel>
-        <RoleBtn
-          role={Role.TEACHER}
-          setSelectedRole={setSelectedRole}
-          selectedRole={selectedRole}
-        />
-        <RoleBtn
-          role={Role.STUDENT}
-          setSelectedRole={setSelectedRole}
-          selectedRole={selectedRole}
-        />
+        <RoleBtn role="TEACHER" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="STUDENT" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
       </SignupRoleBox>
       <SignupHr />
       <SignupSubmitBox>
