@@ -33,5 +33,11 @@ export default function LoginSuccess() {
       });
     }
   }, []);
-  return <></>;
+  return <>테스트</>;
+}
+
+export async function getServerSideProps({ params: { id } }: { params: { id: string } }) {
+  return {
+    props: {},
+  };
 }
