@@ -8,6 +8,8 @@ interface validations {
 }
 
 export interface Iprops {
+  email?: string;
+  formType?: "signup" | "moreinfo";
   label: string;
   name: string;
   isShort?: boolean;
@@ -20,6 +22,8 @@ export interface Iprops {
 }
 
 export default function SignupInput({
+  email,
+  formType,
   label,
   name,
   isShort = false,
@@ -38,9 +42,10 @@ export default function SignupInput({
         name={name}
         type={type}
         placeholder={placeholder}
-        value={value}
+        value={formType === "moreinfo" && name === "email" ? email : value}
         onChange={onChange}
         isShort={isShort}
+        disabled={formType === "moreinfo"}
       />
       <SignupLabelBox>
         {Object.entries(validations).map(([key, value]) => (
