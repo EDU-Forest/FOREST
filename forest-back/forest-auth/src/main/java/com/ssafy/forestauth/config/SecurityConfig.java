@@ -84,7 +84,9 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "**/webjars/**",
                         "**/swagger-resources/**",
                         "**/v2/api-docs/**",
-                        "**/"
+                        "**/",
+
+                        "/api/oauth2/authorization/kakao"
                 ).permitAll()
                 .antMatchers("/**").authenticated()
                 .anyRequest().permitAll()
