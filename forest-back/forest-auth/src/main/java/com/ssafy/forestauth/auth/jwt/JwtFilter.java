@@ -69,7 +69,6 @@ public class JwtFilter extends OncePerRequestFilter {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
-            System.out.println("제대로된 토큰 값");
             return bearerToken.substring(7);
         }
         System.out.println("잘못된 토큰 값");
