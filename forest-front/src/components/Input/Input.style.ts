@@ -1,3 +1,4 @@
+import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 
 const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
