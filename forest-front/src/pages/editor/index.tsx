@@ -1,15 +1,16 @@
 import EditorNav from "@/components/Nav/EditorNav";
+import ImportingModal from "@/features/editor/ImportingModal";
 import PdfViewer from "@/features/editor/PdfViewer";
+import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
+import { useSelector } from "react-redux";
 
 export default function Editor() {
+  const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
   return (
     <FullScreen>
       <EditorNav />
-      <Container isEditor>
-        하하하하하하하 아직도 성공을 못하다니!!!
-        <PdfViewer />
-      </Container>
+      <Container isEditor>{isOpenModal && <ImportingModal />}</Container>
     </FullScreen>
   );
 }
