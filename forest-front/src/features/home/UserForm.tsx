@@ -22,16 +22,18 @@ import { SignupLabelBox } from "./Home.style";
 import Label from "@/components/Label/Label";
 import { useRouter } from "next/router";
 import useKakaoLoginMoreInfo from "@/apis/auth/useKakaoLoginMoreInfoQuery";
+import { useDispatch } from "react-redux";
+import { setRole, setUsername } from "@/stores/user/user";
 
 interface Iprops {
   onClose: () => void;
   type: "signup" | "moreinfo";
-  email?: string;
 }
 
-export default function UserForm({ type, email }: Iprops) {
+export default function UserForm({ type }: Iprops) {
   const { mutate } = useKakaoLoginMoreInfo();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [validation, setValidation] = useState({
     email: "",
     emailDuplicate: "",
@@ -56,6 +58,7 @@ export default function UserForm({ type, email }: Iprops) {
   const [selectedRole, setSelectedRole] = useState("student");
 
   useEffect(() => {
+    const email = router.query?.email;
     console.log(email, typeof email);
     if (typeof email === "string") {
       setUserData({
@@ -71,7 +74,8 @@ export default function UserForm({ type, email }: Iprops) {
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console;
+    dispatch(setUsername(userData.username));
+    dispatch(setRole(userData.role));
     if (
       (type === "moreinfo" || validation.email === "pass") &&
       validation.username === "pass" &&

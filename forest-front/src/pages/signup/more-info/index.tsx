@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 
 export default function MoreInfo() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
+  // const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    const email = router.query?.email;
-    console.log("email", email);
-    if (typeof email === "string") {
-      setEmail(email);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const email = router.query?.email;
+  //   console.log("email", email);
+  //   if (typeof email === "string") {
+  //     setEmail(email);
+  //   }
+  // }, []);
 
   const movePageHandler = () => {
     router.push("/");
   };
 
-  return <UserForm type={"moreinfo"} email={email} onClose={movePageHandler} />;
+  return <UserForm type={"moreinfo"} onClose={movePageHandler} />;
 }
