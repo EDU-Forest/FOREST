@@ -62,7 +62,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
 
-                targetUrl += "?role=" + role.toString() + "&name=" + name + "&accessToken=" + accessToken;
+                targetUrl += "?role=" + role.toString() + "&name=" + URLEncoder.encode(name) + "&accessToken=" + accessToken;
             }
             // 신규 유저인 경우
             else {
@@ -71,7 +71,6 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 targetUrl += "?email=" + email + "&accessToken=" + accessToken;
             }
 
-            targetUrl = URLEncoder.encode(targetUrl);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
         } catch (Exception e) {
