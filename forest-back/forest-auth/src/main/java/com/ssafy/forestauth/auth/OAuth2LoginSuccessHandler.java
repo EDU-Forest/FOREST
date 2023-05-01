@@ -76,7 +76,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             log.info("targetUrl : {}", targetUrl);
 
-            request.getRequestDispatcher(targetUrl).forward(request, response);
+//            request.getRequestDispatcher(targetUrl).forward(request, response);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
         } catch (Exception e) {
