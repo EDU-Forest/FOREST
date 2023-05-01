@@ -18,8 +18,6 @@ const useKakaoLoginMoreInfo = () => {
 
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      console.log(data);
-      localStorage.setItem("forest_access_token", data.accessToken);
       router.push(`/${data.role === Role.TEACHER ? "teacher" : "student"}/dashboard`);
     },
     onError: (data) => {
