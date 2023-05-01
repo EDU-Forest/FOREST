@@ -2,13 +2,17 @@ import EditorNav from "@/components/Nav/EditorNav";
 import { EditorTitleAndQuestionBox } from "@/features/editor/Editor.style";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
+import { setQuestions } from "@/stores/editor/editorQuestions";
 import { Container, FullScreen } from "@/styles/container";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Editor() {
   const [selectQuestionType, setSelectQuestionType] = useState("");
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  // const [questions, setQuestions] = useState<QuestionType[]>([]);
+
+  const dispatch = useDispatch();
 
   let dummyQuestions: QuestionType[] = [
     {
@@ -85,33 +89,33 @@ export default function Editor() {
       id: 3,
       problemNum: 3,
       type: "객관식",
-      title: "3번 문항",
-      text: "지문",
-      point: 10,
+      title: "",
+      text: "",
+      point: 0,
       image: "",
       items: [
         {
-          id: 1,
+          id: 0,
           no: 1,
-          content: "컨텐트",
+          content: "",
           isImage: false,
         },
         {
-          id: 1,
+          id: 0,
           no: 2,
-          content: "컨텐트",
+          content: "",
           isImage: false,
         },
         {
-          id: 1,
+          id: 0,
           no: 3,
-          content: "컨텐트",
+          content: "",
           isImage: false,
         },
         {
-          id: 1,
+          id: 0,
           no: 4,
-          content: "컨텐트",
+          content: "",
           isImage: false,
         },
       ],
@@ -119,8 +123,8 @@ export default function Editor() {
   ];
 
   useEffect(() => {
-    setQuestions([...dummyQuestions]);
-  }, []);
+    dispatch(setQuestions([...dummyQuestions]));
+  }, [dispatch]);
 
   return (
     <FullScreen>
