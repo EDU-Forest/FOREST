@@ -1,4 +1,6 @@
 import EditorNav from "@/components/Nav/EditorNav";
+import ImgCropper from "@/features/editor/ImgCropper";
+import ImgEditor from "@/features/editor/ImgEditor";
 import PdfViewer from "@/features/editor/PdfViewer";
 import { Container, FullScreen } from "@/styles/container";
 
@@ -7,8 +9,9 @@ export default function Editor() {
     <FullScreen>
       <EditorNav />
       <Container isEditor>
-        하하하하하하하 아직도 성공을 못하다니!!!
+        {/* <ImgCropper /> */}
         <PdfViewer />
+        {/* <ImgEditor /> */}
       </Container>
     </FullScreen>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -8,6 +8,7 @@ export default function PdfViewer() {
   const [pdfFile, setPdfFile] = useState<string>("");
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pageImage, setPageImage] = useState<string | null>(null);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -17,7 +18,7 @@ export default function PdfViewer() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const targetFile = e.target.files;
-    console.log(targetFile);
+
     if (targetFile) {
       if (targetFile && fileType.includes(targetFile[0].type)) {
         let reader = new FileReader();
@@ -30,6 +31,7 @@ export default function PdfViewer() {
       }
     }
   };
+
   return (
     <>
       <input type="file" onChange={handleChange} />
