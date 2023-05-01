@@ -66,12 +66,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                 targetUrl = "/signup/more-info";
             } else {
                 User user = findUserById.get();
-
-                if(user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
-                    targetUrl = "/teacher/dashboard";
-                } else {
-                    targetUrl = " /student/dashboard";
-                }
+                String name = user.getName();
+                EnumUserRoleStatus role = user.getRole();
+                String prefixUrl = " /login/success";
+                targetUrl = prefixUrl + "?name=" + name + "&role=" + role.toString() + "&accessToken=" + accessToken;
             }
 
             log.info("targetUrl : {}", targetUrl);
