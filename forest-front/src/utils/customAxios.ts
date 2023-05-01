@@ -13,6 +13,7 @@ const customAxios = axios.create(AxiosConFigure);
 
 customAxios.interceptors.request.use(
   (config) => {
+    console.log("config", config);
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.authorization && forestToken) {
       config.headers.authorization = JSON.parse(forestToken);
@@ -25,6 +26,7 @@ customAxios.interceptors.request.use(
 customAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("interceptor error", error);
     const prevRequest = error?.config;
     console.log("error step 1");
     if (error?.response?.status === 403 && !prevRequest?.sent) {
