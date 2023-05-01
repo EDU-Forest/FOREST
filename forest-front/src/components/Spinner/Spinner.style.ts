@@ -13,7 +13,7 @@ const SpinnerBox = styled.div`
   .spinner > div {
     width: 18px;
     height: 18px;
-    background-color: #333;
+    background-color: ${({ theme }) => theme.colors.Lime[200]};
 
     border-radius: 100%;
     display: inline-block;

@@ -6,6 +6,7 @@ import LoginModal from "@/features/home/Login";
 import { useRouter } from "next/router";
 import EmailAuth from "@/features/home/EmailAuth";
 import UserForm from "@/features/home/UserForm";
+import Spinner from "@/components/Spinner/Spinner";
 
 export default function Home() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function Home() {
       {/* {modalState === "signup" && <UserForm type={"signup"} onClose={() => handleModal("")} />} */}
       {/* {modalState === "login" && <LoginModal onClose={() => handleModal("")} />} */}
       <AuthSection>
+        <Spinner />
         <ForestLargeLogo onClick={goToDash} src={"/images/Forest_Logo.png"} />
         <KakaoLogin />
         <EmailAuth handleModal={handleModal} />
