@@ -22,9 +22,10 @@ import { checkEmail } from "@/utils";
 interface Iprops {
   onClose: () => void;
   type: "signup" | "moreinfo";
+  email?: string;
 }
 
-export default function UserForm({ onClose, type }: Iprops) {
+export default function UserForm({ onClose, type, email }: Iprops) {
   // 이메일
   const [emailValidation, setEmailValidation] = useState("");
   const [emailDuplicateValidation, setEmailDuplicateValidation] = useState("");
@@ -150,12 +151,14 @@ export default function UserForm({ onClose, type }: Iprops) {
     <SignupForm onSubmit={signupHandler}>
       <SignupTitleBox>
         <ArrowLeft onClick={onClose}></ArrowLeft>
-        <SignupTitle>회원가입</SignupTitle>
+        <SignupTitle>{type === "signup" ? "회원가입" : "추가 정보 입력"}</SignupTitle>
       </SignupTitleBox>
       <SignupHr />
       <SignupContentBox>
         {columnDataList.map((data) => (
           <SignupInput
+            email={email}
+            formType={type}
             label={data.label}
             name={data.name}
             type={data.type}
