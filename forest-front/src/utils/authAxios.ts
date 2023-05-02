@@ -17,15 +17,19 @@ authAxios.interceptors.request.use(
       // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
       config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }
-    console.log("config", config, "forestToken", forestToken);
+    console.log("config", config);
     return config;
   },
   (error) => error,
 );
 
 authAxios.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log("response", response);
+    return response;
+  },
   async (error) => {
+    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
