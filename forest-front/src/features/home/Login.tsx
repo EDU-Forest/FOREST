@@ -10,22 +10,23 @@ import {
   LoginInputBox,
   LoginErrorMsg,
 } from "./Home.style";
-import Modal from "@/components/Modal/Modal";
 import { useState } from "react";
 import { CommonInput } from "@/components/Input/Input.style";
 import { checkEmail } from "@/utils";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useRouter } from "next/router";
+import useLogin from "@/apis/auth/useLoginQuery";
 
 export default function Login() {
   const router = useRouter();
+  const { mutate } = useLogin();
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
 
   // 서버 응답에 대한 에러 메세지
   // const [validErrorMsg, setValidErrorMsg] = useState("");
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   });
@@ -56,6 +57,7 @@ export default function Login() {
 
     setEmailErrorMsg("");
     setPasswordErrorMsg("");
+    mutate(userData);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,6 +2,7 @@ import beforeAuthAxios from "@/utils/beforeAuthAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import { checkEmail } from "@/utils";
+import workbookAxios from "@/utils/workbookAxios";
 
 interface Iprops {
   email: string;
@@ -9,18 +10,18 @@ interface Iprops {
   setValidation: (validation: AuthValidation) => void;
 }
 
-const fetcher = (email: string) =>
-  beforeAuthAxios.get("/api/user/check", { params: { email: email } }).then(({ data }) => data);
+const fetcher = (studyId: string) =>
+  workbookAxios.get(`/api/study/problem/${studyId}/${1}`).then(({ data }) => data);
 
-const useCheckEmail = ({ email, validation, setValidation }: Iprops) => {
+const useGetDetailWorkbookQuery = (studyId: string) => {
   return useQuery([queryKeys.CHECK_EMAIL, validation.email], () => fetcher(email), {
     enabled: !!validation.email,
     refetchOnWindowFocus: false,
-    onSuccess: (data) => {
+    onSuccess: () => {
       setValidation({
         ...validation,
         email: checkEmail(email.trim()) ? "pass" : "fail",
-        emailDuplicate: data.status === "AUTH_EMAIL_NOT_DUPLICATED" ? "pass" : "fail",
+        emailDuplicate: "pass",
       });
     },
     onError: (error) => {
@@ -29,4 +30,4 @@ const useCheckEmail = ({ email, validation, setValidation }: Iprops) => {
   });
 };
 
-export default useCheckEmail;
+export default useCheckEmailQuery;

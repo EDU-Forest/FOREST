@@ -4,3 +4,4 @@ export const KEY_NAME = "/keyName";
 
 // auth
 export const KAKAO_LOGIN = "/kakaoLogin";
+export const CHECK_EMAIL = "/checkEmail";

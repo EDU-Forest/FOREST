@@ -3,8 +3,6 @@ import { flexBox, positionCenter } from "@/styles/theme";
 import styled from "styled-components";
 
 const SignupForm = styled.form`
-  ${positionCenter("absolute")}
-  transform: translate(-50%, -30%);
   width: 37.5rem;
   padding: 2.5rem 2rem;
   background-color: white;
