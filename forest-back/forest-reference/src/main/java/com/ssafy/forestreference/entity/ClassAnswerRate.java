@@ -33,6 +33,9 @@ public class ClassAnswerRate {
     @Column(name = "correct_rate", columnDefinition = "int default 0", nullable = false)
     private int correctRate;
 
+    @Column(name = "ungraded_rate", columnDefinition = "int default 0", nullable = false)
+    private int ungradedRate;
+
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 }
