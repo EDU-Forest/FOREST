@@ -99,7 +99,8 @@ export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceList
   margin: 24px 0 24px -24px;
 
   gap: 8px;
-  padding: 0 1rem;
+  padding-left: 1rem;
+  padding-right: 1.5rem;
   margin-top: 1rem;
 
   > div {
