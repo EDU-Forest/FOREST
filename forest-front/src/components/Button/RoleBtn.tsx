@@ -24,6 +24,7 @@ export default function RoleBtn({ role, selectedRole, setSelectedRole }: Iprops)
   };
 
   const roleClickHandler = () => {
+    console.log(role);
     setSelectedRole(role);
   };
 
