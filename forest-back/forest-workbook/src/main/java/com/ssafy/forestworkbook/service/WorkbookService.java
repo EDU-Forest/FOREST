@@ -17,5 +17,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId);
     ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId);
     ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId);
+    ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
+    ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
 
 }

@@ -17,6 +17,9 @@ public enum WorkbookErrorCode implements Codable {
     WORKBOOK_NOT_OWN(HttpStatus.BAD_REQUEST, "내가 만든 문제집만 변경할 수 있습니다.", true),
     WORKBOOK_FAIL_CHANGE_ISPUBLIC(HttpStatus.BAD_REQUEST, "문제집 공개 상태를 변경할 수 없는 문제집입니다.", true),
     WORKBOOK_FAIL_DEPLOY(HttpStatus.BAD_REQUEST, "배포할 수 없는 문제집입니다.", true),
+    WORKBOOK_FAIL_ADD_BOOKMARK(HttpStatus.BAD_REQUEST, "북마크를 추가할 수 없는 문제집입니다.", true),
+    WORKBOOK_FAIL_GET_USERWORKBOOK(HttpStatus.NOT_FOUND, "기존 북마크 이력을 찾을 수 없습니다.", false),
+
 
 
 

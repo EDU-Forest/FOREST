@@ -88,7 +88,26 @@ public class WorkbookController {
         return workbookService.changeWorkbookIsPublic(userId, workbookId);
     }
 
+    @PostMapping("/bookmark/{workbookId}")
+    @ApiOperation(value = "북마크 추가", notes = "해당 문제집에 스크랩, 북마크 이력이 없는 경우에 북마크를 추가합니다.")
+    public ResponseSuccessDto<?> createNewBookmark(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(10);
+        return workbookService.createBookmark(userId, workbookId, true);
+    }
 
+    @PatchMapping("/bookmark/{workbookId}")
+    @ApiOperation(value = "북마크 추가", notes = "해당 문제집에 스크랩, 북마크 이력이 있는 경우에 북마크를 추가합니다.")
+    public ResponseSuccessDto<?> updateNewBookmark(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(10);
+        return workbookService.createBookmark(userId, workbookId, true);
+    }
+
+    @GetMapping("/best")
+    @ApiOperation(value = "최고 인기 문제집 목록 조회", notes = "최고 인기 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getBestWorkbook(@RequestParam("search") String search) {
+        Long userId = Long.valueOf(10);
+        return workbookService.getBestWorkbook(userId, search);
+    }
 
 
 }

@@ -1,7 +1,6 @@
 package com.ssafy.forestworkbook.service.impl;
 
 import com.ssafy.forest.exception.CustomException;
-import com.ssafy.forest.exception.ErrorCode;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
 import com.ssafy.forestworkbook.dto.workbook.response.*;
@@ -42,7 +41,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 좋아하는 문제집
         if(Objects.equals(search, "like")) {
-            Page<UserWorkbook> userWorkbooks = userWorkbookRepository.findAllByUserAndIsBookmarkedIsTrue(user, pageable);
+            Page<UserWorkbook> userWorkbooks = userWorkbookRepository.findAllByUserAndIsBookmarkedIsTrueAndWorkbookIsPublicIsTrue(user, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .title(w.getWorkbook().getTitle())
@@ -100,6 +99,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             UserWorkbook userWorkbook = UserWorkbook.builder()
                     .user(user)
                     .workbook(workbookCopy)
+                    .isBookmarked(false)
                     .build();
 
             userWorkbookRepository.save(userWorkbook);
@@ -216,7 +216,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .problemNum(problemListToDto.getProblemNum())
                     .type(problemToDto.getType())
                     .title(problemToDto.getTitle())
-                    .path(problemToDto.getPath())
+                    .problemImgPath(problemToDto.getPath())
                     .answer(problemToDto.getAnswer())
                     .point(problemToDto.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
@@ -299,7 +299,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .problemNum(problemList.getProblemNum())
                     .type(problem.getType())
                     .title(problem.getTitle())
-                    .path(problem.getPath())
+                    .problemImgPath(problem.getPath())
                     .answer(problem.getAnswer())
                     .point(problem.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
@@ -471,6 +471,75 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DEPLOY);
     }
 
+    @Override
+    public ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        if(!workbook.getIsPublic() || !workbook.getIsExecuted()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_ADD_BOOKMARK);
+        }
+
+        // insert
+        if (isNew) {
+            UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
+
+            if (userWorkbook != null) {
+                userWorkbook.updateIsBookmarked(true);
+                return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_ADD_BOOKMARK);
+            }
+
+            UserWorkbook createUserWorkbook = UserWorkbook.builder()
+                    .user(user)
+                    .workbook(workbook)
+                    .isBookmarked(true)
+                    .build();
+
+            userWorkbookRepository.save(createUserWorkbook);
+        }
+
+        // update
+        else {
+            UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
+
+            userWorkbook.updateIsBookmarked(true);
+        }
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_ADD_BOOKMARK);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> getBestWorkbook(Long userId, String search) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        List<ExploreWorkbookDto> exploreWorkbookDtoList = new ArrayList<>();
+
+        // 좋아요순
+        if (search.equals("bookmark")) {
+            List<BestWorkbookDto> bestWorkbookList = workbookRepository.findTop20ByIsBookmarkedBestWorkbook();
+            exploreWorkbookDtoList = userWorkbookToDto(userId, bestWorkbookList);
+        }
+
+        // 사용순
+        else if (search.equals("scrap")) {
+            List<BestWorkbookDto> bestWorkbookList = workbookRepository.findTop20ByIsScrapedBestWorkbook();
+            exploreWorkbookDtoList = userWorkbookToDto(userId, bestWorkbookList);
+        }
+
+        // 파라미터 오류
+        else {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
+        }
+
+        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
+        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks) {
         Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                 .workbookId(w.getId())
@@ -481,6 +550,30 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .build());
         TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
         return  teacherWorkbookPageDtoList;
+    }
+
+    public List<ExploreWorkbookDto> userWorkbookToDto(Long userId, List<BestWorkbookDto> bestWorkbookList) {
+        List<ExploreWorkbookDto> workbookList = new ArrayList<>();
+
+        for(BestWorkbookDto workbookDto : bestWorkbookList) {
+
+            UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookDto.getWorkbookId())
+                    .orElse(null);
+
+            ExploreWorkbookDto exploreWorkbookDto = ExploreWorkbookDto.builder()
+                    .workbookId(workbookDto.getWorkbookId())
+                    .title(workbookDto.getTitle())
+                    .workbookImgPath(workbookDto.getWorkbookImgPath())
+                    .bookmarkCount(workbookDto.getCount())
+                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbookDto.getWorkbookId()))
+                    .methodType((userWorkbook == null) ? "POST" : "FATCH")
+                    .isScraped((userWorkbook == null) ? false : userWorkbook.getIsScraped())
+                    .isBookmarked((userWorkbook == null) ? false : userWorkbook.getIsBookmarked())
+                    .build();
+
+            workbookList.add(exploreWorkbookDto);
+        }
+        return workbookList;
     }
 
     public void updateItemList(int size, List<Item> itemList, List<ItemReqDto> itemReqList) {

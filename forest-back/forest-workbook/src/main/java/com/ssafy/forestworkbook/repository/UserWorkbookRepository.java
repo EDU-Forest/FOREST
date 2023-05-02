@@ -6,10 +6,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserWorkbookRepository extends JpaRepository<UserWorkbook, Long> {
 
-    Page<UserWorkbook> findAllByUserAndIsBookmarkedIsTrue(User user, Pageable pageable);
+    Page<UserWorkbook> findAllByUserAndIsBookmarkedIsTrueAndWorkbookIsPublicIsTrue(User user, Pageable pageable);
     int countByWorkbookIdAndIsBookmarkedIsTrue(Long workbookId);
     int countByWorkbookIdAndIsScrapedIsTrue(Long workbookId);
+    Optional<UserWorkbook> findByUserIdAndWorkbookId(Long userId, Long workbookId);
 
 }
