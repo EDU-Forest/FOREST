@@ -53,7 +53,89 @@ pipeline {
                             }
                         }     
                     }                    
-                }                
+                }   
+
+                stage('insert-keystore-workbook') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-workbook/**/*"
+                        }
+                    }
+                    steps {
+                        sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-workbook/src/main/resources'
+                        echo 'Insert keystore...'
+                        
+                        dir('forest-back/forest-workbook'){
+                            sh 'ls -al'
+                            sh 'chmod +x ./gradlew'
+                            sh './gradlew build'
+                            sh 'docker build -t ${FOREST_WORKBOOK_IMAGE} .'
+                        }
+                        echo 'Build image...'
+
+                        script {
+                            try {
+                                dir('forest-back/forest-workbook'){                                                                        
+                                    sh 'docker-compose down'    
+                                }                                
+                            } catch (e) {
+                                echo 'fail to stop and remove container'
+                            }
+                        }
+
+                        script {
+                            try {
+                                dir('forest-back/forest-workbook') {                                    
+                                    sh 'docker-compose up -d'
+                                }
+                                echo 'run new image'
+                            } catch(e) {
+                                echo 'fail to docker-compose up'
+                            }
+                        }     
+                    }                    
+                }
+
+                stage('insert-keystore-study') {
+                    when {
+                        anyOf {
+                            changeset "forest-back/forest-study/**/*"
+                        }
+                    }
+                    steps {
+                        sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-study/src/main/resources'
+                        echo 'Insert keystore...'
+                        
+                        dir('forest-back/forest-study'){
+                            sh 'ls -al'
+                            sh 'chmod +x ./gradlew'
+                            sh './gradlew build'
+                            sh 'docker build -t ${FOREST_STUDY_IMAGE} .'
+                        }
+                        echo 'Build image...'
+
+                        script {
+                            try {
+                                dir('forest-back/forest-study'){                                                                        
+                                    sh 'docker-compose down'    
+                                }                                
+                            } catch (e) {
+                                echo 'fail to stop and remove container'
+                            }
+                        }
+
+                        script {
+                            try {
+                                dir('forest-back/forest-study') {                                    
+                                    sh 'docker-compose up -d'
+                                }
+                                echo 'run new image'
+                            } catch(e) {
+                                echo 'fail to docker-compose up'
+                            }
+                        }     
+                    }                    
+                }                                       
             }            
         }
 
