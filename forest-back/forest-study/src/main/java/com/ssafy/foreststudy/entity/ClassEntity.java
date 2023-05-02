@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Table(name = "classes")
 @EntityListeners(AuditingEntityListener.class)
 @Where(clause = "is_deleted = false")
-public class Class {
+public class ClassEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
