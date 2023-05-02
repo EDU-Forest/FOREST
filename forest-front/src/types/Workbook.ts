@@ -19,8 +19,9 @@ export interface QuestionType {
   type: string;
   title: string;
   text: string;
+  answer: number;
   point: number;
-  image: string;
+  problemImgPath: string;
   items: QuestionItemType[];
 }
 
