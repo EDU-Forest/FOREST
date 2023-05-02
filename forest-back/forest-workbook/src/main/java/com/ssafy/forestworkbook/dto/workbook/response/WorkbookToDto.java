@@ -8,13 +8,13 @@ import java.util.List;
 
 @Getter
 @ToString
-public class WorkbookCopyDto {
+public class WorkbookToDto {
 
     private WorkbookInfoDto workbookInfoDto;
     private List<ProblemAllInfoDto> problemList;
 
     @Builder
-    public WorkbookCopyDto(WorkbookInfoDto workbookInfoDto, List<ProblemAllInfoDto> problemList) {
+    public WorkbookToDto(WorkbookInfoDto workbookInfoDto, List<ProblemAllInfoDto> problemList) {
         this.workbookInfoDto = workbookInfoDto;
         this.problemList = problemList;
     }

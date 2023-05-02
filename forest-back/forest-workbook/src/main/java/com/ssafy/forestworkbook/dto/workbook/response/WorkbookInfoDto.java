@@ -18,15 +18,14 @@ public class WorkbookInfoDto {
         private int scrapCount;
 
         @Builder
-        public WorkbookInfoDto(Long workbookId, String title, String workbookImgPath, String description, Boolean isPublic, int volume) {
+        public WorkbookInfoDto(Long workbookId, String title, String workbookImgPath, String description, Boolean isPublic, int bookmarkCount, int scrapCount, int volume) {
             this.workbookId = workbookId;
             this.title = title;
             this.workbookImgPath = workbookImgPath;
             this.description = description;
             this.isPublic = isPublic;
             this.volume = volume;
-            this.bookmarkCount = 0;
-            this.scrapCount = 0;
-
+            this.bookmarkCount = bookmarkCount;
+            this.scrapCount = scrapCount;
     }
 }

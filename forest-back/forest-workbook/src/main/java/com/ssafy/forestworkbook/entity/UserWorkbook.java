@@ -40,8 +40,13 @@ public class UserWorkbook {
     private Boolean isDeleted = false;
 
     @Builder
-    public UserWorkbook(Workbook workbook, User user) {
+    public UserWorkbook(Workbook workbook, User user, Boolean isBookmarked) {
         this.workbook = workbook;
         this.user = user;
+        this.isBookmarked = isBookmarked;
+    }
+
+    public void updateIsBookmarked(boolean isBookmarked) {
+        this.isBookmarked = isBookmarked;
     }
 }
