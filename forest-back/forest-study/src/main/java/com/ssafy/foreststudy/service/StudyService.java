@@ -11,8 +11,14 @@ import com.ssafy.foreststudy.repository.*;
 import com.ssafy.foreststudy.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
 import java.time.Duration;
@@ -665,10 +671,24 @@ public class StudyService {
                         num++;
 
                 }
+                String userAnswer = studentStudyProblemResult.getUserAnswer();
+                String workbookAnswer =
+                        studentStudyProblemResult.getProblemList().getProblem().getAnswer();
+
+                // WebClient로 Flask 통신
+                GetJaccardSimilarityResponseDto similarity = WebClient.create("http://127.0.0.1:5000")
+                        .get()
+                        .uri("/similarity?sentence1=" + userAnswer + "&sentence2=" + workbookAnswer)
+                        .retrieve()
+                        .bodyToMono(GetJaccardSimilarityResponseDto.class)
+                        .block();
+                assert similarity != null;
+                System.out.println(similarity.getSimilarity());
+
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
-                        .answer(studentStudyProblemResult.getUserAnswer())
-//                        .similarity() 유사도 체크 로직 추가 예정
+                        .answer(userAnswer)
+                        //.similarity(getJaccardSimilarity(userAnswer,workbookAnswer)) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
@@ -848,4 +868,41 @@ public class StudyService {
         return res;
     }
 
+    /* 자카드 유사도 계산 로직 */
+    public int getJaccardSimilarity(String s1, String s2) {
+        // WebClient로 Flask 통신
+        WebClient webClient = WebClient.builder()
+                .baseUrl("http://127.0.0.1:5000")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+
+        System.out.println("s1 = " + s1);
+        System.out.println("s2 = " + s2);
+        GetJaccardSimilarityResponseDto similarity = webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/similarity")
+                        .queryParam("sentence1", s1)
+                        .queryParam("sentence2", s2)
+                        .build())
+                .retrieve()
+                .bodyToMono(GetJaccardSimilarityResponseDto.class)
+                .block();
+
+        return similarity.getSimilarity();
+    }
+
+    /* 시험 시작하기 정보 조회 */
+    public ResponseSuccessDto<GetStudyInfoResponseDto> getStudyInfo(Long studyId) {
+        Study study = studyRepository.findById(studyId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
+
+        GetStudyInfoResponseDto result = GetStudyInfoResponseDto.builder()
+                .name(study.getUser().getName())
+                .volume(study.getWorkbook().getVolume())
+                .startTime(study.getStartTime())
+                .endTime(study.getEndTime())
+                .build();
+
+        ResponseSuccessDto<GetStudyInfoResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO);
+        return res;
+    }
 }
