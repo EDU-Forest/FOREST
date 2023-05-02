@@ -62,7 +62,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "**/api/v2/api-docs/**",
                         "**/api/"
                 ).permitAll()
-                .antMatchers("/**").authenticated()
+                .antMatchers("**/api/**").authenticated()
                 .anyRequest().permitAll()
 
                 // JWT
