@@ -58,22 +58,24 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             String targetUrl;
             User user = userRepository.findById(userId).get();
 
+            // 신규 유저인 경우
+            if(user.getName() == null || user.getName().equals("")) {
+                log.info("SuccessHandler, 신규 유저");
+                String email = user.getEmail();
+                targetUrl = UriComponentsBuilder.fromUriString(accessTokenRedirectUrl)
+                        .queryParam("email", email)
+                        .queryParam("accessToken", accessToken)
+                        .build().toUriString();
+            }
             // 기존 유저인 경우
-            if(user.getName() != null) {
+            else {
+                log.info("SuccessHandler, 기존 유저");
                 String name = user.getName();
                 EnumUserRoleStatus role = user.getRole();
 
                 targetUrl = UriComponentsBuilder.fromUriString(accessTokenRedirectUrl)
                         .queryParam("role", role.toString())
                         .queryParam("name", URLEncoder.encode(name))
-                        .queryParam("accessToken", accessToken)
-                        .build().toUriString();
-            }
-            // 신규 유저인 경우
-            else {
-                String email = user.getEmail();
-                targetUrl = UriComponentsBuilder.fromUriString(accessTokenRedirectUrl)
-                        .queryParam("email", email)
                         .queryParam("accessToken", accessToken)
                         .build().toUriString();
             }
