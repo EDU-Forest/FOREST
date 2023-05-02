@@ -102,6 +102,13 @@ public class WorkbookController {
         return workbookService.createBookmark(userId, workbookId, true);
     }
 
+    @DeleteMapping("/bookmark/{workbookId}")
+    @ApiOperation(value = "북마크 삭제", notes = "북마크를 삭제합니다.")
+    public ResponseSuccessDto<?> deleteNewBookmark(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(10);
+        return workbookService.deleteBookmark(userId, workbookId);
+    }
+
     @GetMapping("/best")
     @ApiOperation(value = "최고 인기 문제집 목록 조회", notes = "최고 인기 문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getBestWorkbook(@RequestParam("search") String search) {

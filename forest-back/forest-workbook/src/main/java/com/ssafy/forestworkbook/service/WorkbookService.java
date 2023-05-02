@@ -20,5 +20,6 @@ public interface WorkbookService {
     ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
     ResponseSuccessDto<?> getRecentWorkbook(Long userId);
+    ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);
 
 }
