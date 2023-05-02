@@ -27,7 +27,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
   useEffect(() => {
-    setCorret(question.answer);
+    setCorret(Number(question.answer));
   }, [question]);
 
   const handleChangeItem = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +51,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
     const copyArr = [...questions];
     copyArr.splice(curQuestion - 1, 1, {
       ...questions[curQuestion - 1],
-      answer: num,
+      answer: num.toString(),
     });
 
     dispatch(setQuestions([...copyArr]));

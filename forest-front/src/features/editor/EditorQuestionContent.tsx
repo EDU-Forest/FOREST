@@ -30,7 +30,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     type: "multipleChoice",
     title: "",
     text: "",
-    answer: 1,
+    answer: '1',
     point: 0,
     problemImgPath: "",
     items: [],
