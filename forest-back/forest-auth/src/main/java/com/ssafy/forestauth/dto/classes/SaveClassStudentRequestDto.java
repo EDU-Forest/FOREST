@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 public class SaveClassStudentRequestDto {
     private Long classId;
-    private List<Long> studentList;
+    private List<SaveClassStudentIdRequestDto> studentList;
 }
