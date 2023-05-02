@@ -1,3 +1,0 @@
-interface StudyId {
-  studyId: number;
-}
