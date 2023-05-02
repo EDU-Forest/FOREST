@@ -5,33 +5,35 @@ import authAxios from "@/utils/authAxios";
 interface Iprops {
   className: string;
   setErrorMsg: (msg: string) => void;
+  setIsAvailable: (status: boolean) => void;
 }
-const fetcher = (className: string) => {
+
+const fetcher = (className: string) =>
   authAxios
     .get("/api/class/search", {
       params: {
         className,
       },
     })
-    .then((res) => {
-      res;
-    });
-};
+    .then(({ data }) => data);
 
-const useCheckClassNameQuery = ({ className, setErrorMsg }: Iprops) => {
+const useCheckClassNameQuery = ({ className, setErrorMsg, setIsAvailable }: Iprops) => {
   return useQuery([queryKeys.CHECK_CLASSNAME, className], () => fetcher(className), {
     enabled: !!className,
-    onSuccess: (res) => {
-      console.log("성공", res);
-      // if (res.status === "AUTH_CLASS_NAME_NOT_DUPLICATED") {
-      //   setErrorMsg("");
-      //   return;
-      // } else if (res.status === "AUTH_CLASS_NAME_DUPLICATED") {
-      //   setErrorMsg("중복된 클래스 이름입니다.");
-      // }
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      if (data.status === "AUTH_CLASS_NAME_NOT_DUPLICATED") {
+        setErrorMsg("");
+        setIsAvailable(true);
+        return;
+      } else if (data.status === "AUTH_CLASS_NAME_DUPLICATED") {
+        setErrorMsg("중복된 클래스 이름입니다.");
+        setIsAvailable(false);
+      }
     },
     onError: () => {
       setErrorMsg("입력값이 올바르지 않습니다.");
+      setIsAvailable(false);
     },
   });
 };

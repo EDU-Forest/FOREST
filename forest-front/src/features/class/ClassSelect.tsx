@@ -49,9 +49,7 @@ export default function ClassSelect({ isStudent }: Iprops) {
         {nowClassName}
         <AiFillCaretDown onClick={() => dispatch(controlClassDropdown())} className="icon" />
       </ClassSelectedTitle>
-      {isOpenDropdown && (
-        <ClassSelectDropdown classList={classList} nowClassId={nowClassId} isStudent={isStudent} />
-      )}
+      {isOpenDropdown && <ClassSelectDropdown nowClassId={nowClassId} isStudent={isStudent} />}
     </ClassSelectWrapper>
   );
 }

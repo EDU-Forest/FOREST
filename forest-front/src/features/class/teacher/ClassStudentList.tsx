@@ -101,9 +101,7 @@ export default function ClassStudentList() {
 
       <StudentListWrapper>
         {studentList?.map((item) => (
-          <>
-            <StudentInfoCard key={item.userId} studentInfo={item} />
-          </>
+          <StudentInfoCard key={item.userId} studentInfo={item} />
         ))}
       </StudentListWrapper>
       {isOpenDeleteStudentModal && <DeleteStudentModal />}

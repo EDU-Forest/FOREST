@@ -18,13 +18,20 @@ export default function AddClassModal() {
   const dispatch = useDispatch();
   const [className, setClassName] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
+  const [isAvailable, setIsAvailable] = useState<boolean>(false);
+
   // isSuccess -> axios 요청 성공 여부
 
-  useCheckClassNameQuery({ className, setErrorMsg });
-
+  useCheckClassNameQuery({ className, setErrorMsg, setIsAvailable });
   const confirm = () => {
     // 확인
   };
+
+  useEffect(() => {
+    if (className.length < 1) {
+      setIsAvailable(false);
+    }
+  }, [className]);
 
   return (
     <ClassAddModalContainer>
@@ -36,13 +43,12 @@ export default function AddClassModal() {
           onChange={(e) => setClassName(e.target.value)}
           maxLength={14}
         />
-        <ClassInputCheck isSuccess />
+        <ClassInputCheck isSuccess={isAvailable} />
         <ClassInputMsg>{errorMsg}</ClassInputMsg>
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
         <SmallBtn children="취소" onClick={() => dispatch(closeAddClassModal())} />
-        {/* disabled에 변수 매핑해주기 + classinputcheck */}
-        <SmallBtn children="확인" disabled colored onClick={confirm} />
+        <SmallBtn children="확인" disabled={!isAvailable} colored onClick={confirm} />
       </ClassInputBtnWrapper>
     </ClassAddModalContainer>
   );
