@@ -85,21 +85,4 @@ public class UserService {
         ResponseSuccessDto<List<SearchStudentResponseDto>> res = responseUtil.successResponse(dtoList, SuccessCode.AUTH_SEARCH_STUDENT);
         return res;
     }
-
-    public ResponseSuccessDto<CheckUserResponseDto> checkSocialUser(String email, EnumUserProviderStatus providerStatus) {
-        Optional<User> findUser = userRepository.findByEmailAndAuthProvider(email, providerStatus);
-        SuccessCode successCode;
-
-        if(findUser.isEmpty()) {
-            successCode = SuccessCode.AUTH_USER_NOT_DUPLICATED;
-        } else {
-            successCode = SuccessCode.AUTH_USER_DUPLICATED;
-        }
-
-        CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
-                .message(successCode.getMessage())
-                .build();
-        ResponseSuccessDto<CheckUserResponseDto> res = responseUtil.successResponse(checkUserResponseDto, successCode);
-        return res;
-    }
 }
