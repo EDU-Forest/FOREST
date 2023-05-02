@@ -1,15 +1,17 @@
 import { StyledCommonBtn } from "@/components/Button/Btn.style";
 import CommonBtn from "@/components/Button/CommonBtn";
 import { Title } from "@/styles/text";
+import { scrollBar } from "@/styles/theme";
 import styled from "styled-components";
 
 const StyledTestContainer = styled.div`
-  width: 100vw;
+  /* width: 100vw; */
 `;
 
 const StyledAnswerBox = styled.div`
-  margin-left: 1.5rem;
-  width: calc(100vw - 67.25rem);
+  padding-left: 1.5rem;
+  /* width: calc(100vw - 67.25rem); */
+  width: 20%;
   min-width: 10rem;
   max-width: 21.5rem;
 `;
@@ -22,8 +24,8 @@ const StyledTestHeader = styled.div`
   align-items: center;
   background-color: white;
   padding: 24px;
-  position: fixed;
-  top: 0;
+  /* position: fixed;
+  top: 0; */
 `;
 
 const StyledTestHeaderContentBox = styled.div`
@@ -53,19 +55,22 @@ const StyledTestHeaderText = styled.div`
 
 // TestContent
 const StyledTestContent = styled.div`
-  margin: 8rem 3.75rem;
+  padding: 1.5rem 2rem 1.5rem 2rem;
   display: flex;
   justify-content: center;
 `;
 
 const StyledTestProblemBox = styled.div`
-  width: calc(100vw - 30.5rem);
+  /* width: calc(100vw - 20rem); */
+  width: 80%;
   min-width: 33.5rem;
+  max-height: 50%;
   padding: 2.5rem 2.5rem 1.125rem 2.5rem;
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
-  overflow: auto;
+  overflow-y: auto;
+  ${scrollBar(0.75)}
 `;
 
 const StyledTestProblemTitle = styled.div`
@@ -138,6 +143,7 @@ const StyledTestAnswerTable = styled.table`
   border-collapse: collapse;
   text-align: center;
   width: 100%;
+  table-layout: fixed;
 
   tbody:last-child {
     & :first-child {
@@ -164,9 +170,13 @@ const StyledTestAnswerTable = styled.table`
   tr {
     td {
       padding: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      word-break: break-all;
     }
     & td:nth-child(1) {
-      width: 3.5rem;
+      width: 10%;
       background-color: ${({ theme }) => theme.colors.Lime[50]};
       color: ${({ theme }) => theme.colors.Lime[700]};
     }
@@ -181,10 +191,16 @@ const StyledTestSubmitBtn = styled(StyledCommonBtn)`
   margin: 1.5rem 0rem;
   width: 100%;
   border-radius: 0.5rem;
+
+  &:hover {
+    border: 0.125rem solid ${({ theme }) => theme.colors.Lime[600]};
+    background-color: ${({ theme }) => theme.colors.Lime[600]};
+    color: white;
+  }
 `;
 
 const StyledTestProblemShortAnswer = styled.input`
-  width: 54.5rem;
+  width: 100%;
   height: 3.5rem;
   line-height: 3.5rem;
   padding: 0rem 1.5rem;
@@ -204,7 +220,7 @@ const StyledTestProblemShortAnswer = styled.input`
 `;
 
 const StyledTestProblemEssayAnswer = styled.textarea`
-  width: 54.5rem;
+  width: 100%;
   height: 11.5rem;
   padding: 1.5rem;
   background-color: ${({ theme }) => theme.colors.Gray[50]};
@@ -231,24 +247,32 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
     width: 9.25rem;
     height: 9.25rem;
     color: ${({ selectedMenu, theme }) =>
-      selectedMenu === "correct" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+      selectedMenu === "O" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
   }
 
   .wrong-icon {
     width: 11.5rem;
     height: 11.5rem;
     color: ${({ selectedMenu, theme }) =>
-      selectedMenu === "wrong" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+      selectedMenu === "X" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
   }
 `;
 
 const TestProblemBtnBox = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 `;
 
 const TestProblemBtn = styled(StyledCommonBtn)`
   margin: 0.5rem;
+
+  &:hover {
+    background-color: ${({ theme, colored }) => colored && theme.colors.Lime[700]};
+    border: 0.125rem solid
+      ${({ theme, colored }) => (colored ? theme.colors.Lime[700] : theme.colors.Lime[900])};
+    color: ${({ theme, colored }) => !colored && theme.colors.Lime[900]};
+  }
 
   &:disabled {
     background-color: ${({ theme }) => theme.colors.Gray[500]};

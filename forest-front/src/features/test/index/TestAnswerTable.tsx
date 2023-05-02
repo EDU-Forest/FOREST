@@ -3,7 +3,7 @@ import { StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 
 export default function TestAnswerTable() {
-  const { examTitle, problems } = useSelector((state: RootState) => state.exam);
+  const { problem } = useSelector((state: RootState) => state.exam);
   return (
     <StyledTestAnswerTable>
       <thead>
@@ -12,10 +12,10 @@ export default function TestAnswerTable() {
         </tr>
       </thead>
       <tbody>
-        {problems.map((problem, idx) => (
+        {problem.map((data, idx) => (
           <tr key={`user-answer-${idx}`}>
             <td>{idx + 1}</td>
-            <td>{problem.userAnswer ? problem.userAnswer : ""}</td>
+            <td colSpan={3}>{data.userAnswer ? data.userAnswer : ""}</td>
           </tr>
         ))}
       </tbody>

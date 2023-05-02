@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface userState {
-  role: "TEACHER" | "STUDENT";
+  role: "TEACHER" | "STUDENT" | "";
   username: string;
 }
 
 const initialState: userState = {
-  role: "TEACHER", // 임시로 넣음
-  username: "킹규림",
+  role: "",
+  username: "",
 };
 
 const userSlice = createSlice({

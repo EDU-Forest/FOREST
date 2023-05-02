@@ -11,25 +11,24 @@ import {
   TestProblemBtnBox,
 } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
-import { useRouter } from "next/router";
-import { setSessionStorage } from "@/utils/sessionStorage";
-import { getSessionStorage } from "@/utils/sessionStorage";
 import { useDispatch } from "react-redux";
-import { setCurProblemNum } from "@/stores/exam/exam";
-import CommonBtn from "@/components/Button/CommonBtn";
+import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
 
 export default function TestProblemBox() {
-  const router = useRouter();
-  const { problems, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { type } = problems[curProblemNum - 1];
+  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { type, userAnswer } = problem[curProblemNum - 1];
   const dispatch = useDispatch();
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    dispatch(setChooseAnswer({ problemNum: curProblemNum, userAnswer: e.target.value }));
+  };
 
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
   };
   const goToNextProblem = () => {
-    if (curProblemNum === problems.length) return;
+    if (curProblemNum === problem.length) return;
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
   };
 
@@ -39,8 +38,12 @@ export default function TestProblemBox() {
       <TestProblemText />
       {type === "MULTIPLE" && <TestProblemMultipleChoiceAnswer />}
       {type === "OX" && <TestProblemOXAnswer />}
-      {type === "SUBJECTIVE" && <StyledTestProblemShortAnswer placeholder="정답을 입력하세요" />}
-      {type === "DESCRIPT" && <StyledTestProblemEssayAnswer placeholder="정답을 입력하세요" />}
+      {type === "SUBJECTIVE" && (
+        <StyledTestProblemShortAnswer onChange={onChange} placeholder="정답을 입력하세요" />
+      )}
+      {type === "DESCRIPT" && (
+        <StyledTestProblemEssayAnswer onChange={onChange} placeholder="정답을 입력하세요" />
+      )}
       <TestProblemBtnBox>
         <TestProblemBtn onClick={goToPrevProblem} disabled={curProblemNum === 1 ? true : false}>
           이전
@@ -48,7 +51,7 @@ export default function TestProblemBox() {
         <TestProblemBtn
           onClick={goToNextProblem}
           colored={true}
-          disabled={curProblemNum === problems.length ? true : false}
+          disabled={curProblemNum === problem.length ? true : false}
         >
           다음
         </TestProblemBtn>
