@@ -3,11 +3,11 @@ import { AiOutlineCheck } from "react-icons/ai";
 
 interface Iprops {
   role: "STUDENT" | "TEACHER";
-  selectedRole: string;
-  setSelectedRole: React.Dispatch<React.SetStateAction<string>>;
+  userData: UserData;
+  setUserData: React.Dispatch<React.SetStateAction<UserData>>;
 }
 
-export default function RoleBtn({ role, selectedRole, setSelectedRole }: Iprops) {
+export default function RoleBtn({ role, userData, setUserData }: Iprops) {
   const roleName = (role: string) => {
     if (role === "TEACHER") {
       return "선생님";
@@ -24,15 +24,17 @@ export default function RoleBtn({ role, selectedRole, setSelectedRole }: Iprops)
   };
 
   const roleClickHandler = () => {
-    console.log(role);
-    setSelectedRole(role);
+    setUserData({
+      ...userData,
+      role: role,
+    });
   };
 
   return (
-    <StyledRoleBtn type="button" onClick={roleClickHandler} selected={selectedRole === role}>
+    <StyledRoleBtn type="button" onClick={roleClickHandler} selected={userData.role === role}>
       <span className="role-name">{roleName(role)}</span>
       <span className="role-detail">{roleDetail(role)}</span>
-      {selectedRole === role && <AiOutlineCheck className="icon" />}
+      {userData.role === role && <AiOutlineCheck className="icon" />}
     </StyledRoleBtn>
   );
 }
