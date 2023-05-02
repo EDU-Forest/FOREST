@@ -139,72 +139,11 @@ pipeline {
             }            
         }
 
-        // stage('Build image') {
-        //     parallel {
-        //         stage('build-forest-auth') {
-        //             when {
-        //                 anyOf {
-        //                     changeset "forest-back/forest-auth/**/*"
-        //                 }
-        //             }
-        //             steps {
-        //                 sh 'ls -al'
-        //                 dir('forest-back/forest-auth'){
-        //                     sh 'ls -al'
-        //                     sh 'chmod +x ./gradlew'
-        //                     sh './gradlew build'
-        //                     sh 'docker build -t ${FOREST_AUTH_IMAGE} .'
-        //                 }
-        //                 echo 'Build image...'
-        //             }
-        //         }                            
-        //     }
-        // }
-
-        // stage('Remove Previous Container') {
-        //     parallel {
-        //         stage('remove-forest-auth') {
-        //             when {
-        //                 anyOf {
-        //                     changeset "forest-back/forest-auth/**/*"
-        //                 }
-        //             }
-        //             steps {
-        //                 script {
-        //                     try {
-        //                         dir('forest-back/forest-auth'){                                                                        
-        //                             sh 'docker-compose down'    
-        //                         }                                
-        //                     } catch (e) {
-        //                         echo 'fail to stop and remove container'
-        //                     }
-        //                 }
-        //             }
-        //         }                
-        //     }
-        // }
-        // stage('Run New image') {
-        //     parallel {
-        //         stage('run-forest-auth') {
-        //             when {
-        //                 anyOf {
-        //                     changeset "forest-back/forest-auth/**/*"
-        //                 }
-        //             }
-        //             steps {
-        //                 script {
-        //                     try {
-        //                         dir('forest-back/forest-auth') {                                    
-        //                             sh 'docker-compose up -d'
-        //                         }
-        //                         echo 'run new image'
-        //                     } catch(e) {
-        //                         echo 'fail to docker-compose up'
-        //                     }
-        //                 }                        
-        //             }
-        //         }                                
-        //     }
-        // }
+        stage('send to mattermost') {
+            steps {
+                echo 'send to mattermost'
+                mattermostSend(color: colorCode, icon: "https://jenkins.io/images/logos/jenkins/jenkins.png", message: message, channel: 'B105_JENKINS', endpoint: 'https://meeting.ssafy.com/hooks/ixfxtzo9qpbh3m5gc854ps7nca')
+            }
+        }
     }
 }
