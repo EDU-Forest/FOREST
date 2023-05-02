@@ -17,6 +17,7 @@ const fetcher = (className: string) =>
     })
     .then(({ data }) => data);
 
+// 클래스 이름 중복 검사 - OK
 const useCheckClassNameQuery = ({ className, setErrorMsg, setIsAvailable }: Iprops) => {
   return useQuery([queryKeys.CHECK_CLASSNAME, className], () => fetcher(className), {
     enabled: !!className,

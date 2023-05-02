@@ -9,6 +9,7 @@ const fetcher = (studentList: []) =>
     })
     .then(({ data }) => data);
 
+// 클래스에 학생 추가
 const useClassStudentAdd = (studentList: []) => {
   const queryClient = useQueryClient();
   return useMutation(fetcher, {

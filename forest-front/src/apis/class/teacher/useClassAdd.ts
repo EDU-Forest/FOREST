@@ -6,6 +6,7 @@ import { closeAddClassModal } from "@/stores/class/classModal";
 
 const fetcher = (name: string) => authAxios.post("/api/class", { name }).then(({ data }) => data);
 
+// 클래스 추가 - OK
 const useClassAdd = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();

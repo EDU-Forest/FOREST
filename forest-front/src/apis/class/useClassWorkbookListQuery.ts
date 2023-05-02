@@ -12,6 +12,7 @@ const fetcher = ({ classId, type }: Payload) =>
     .get(`/api/workbook/${classId}`, { params: { sort: type } })
     .then(({ data }) => data);
 
+// 클래스 내 문제집 목록 조회 - API 구현 이전
 const useClassWorkbookListQuery = (classId: number, type: string) => {
   return useQuery([queryKeys.CLASS_WORKBOOK_LIST, classId], () => fetcher({ classId, type }), {
     enabled: !!classId,
