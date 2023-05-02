@@ -131,7 +131,7 @@ export default function Editor() {
   useEffect(() => {
     dispatch(initCurQuestion());
     dispatch(setQuestions([...dummyQuestions]));
-  }, [dispatch]);
+  }, []);
 
   return (
     <FullScreen>

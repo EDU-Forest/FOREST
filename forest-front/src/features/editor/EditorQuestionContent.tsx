@@ -1,24 +1,25 @@
+import { setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
-import { QuestionItemType, QuestionType } from "@/types/Workbook";
+import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import EditorQuestionChoiceList from "./EditorQuestionChoiceList";
+import { useDispatch, useSelector } from "react-redux";
+import EditorEssay from "./EditorEssay";
+import EditorMultipleChoice from "./EditorMultipleChoice";
+import EditorOX from "./EditorOX";
 import {
   EditorQuestionContentBox,
-  EditorQuestionItemAddButton,
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
 } from "./EditorQuestionContent.style";
-import EditorMultipleChoice from "./EditorMultipleChoice";
 import EditorShortAnswer from "./EditorShortAnswer";
-import EditorOX from "./EditorOX";
-import EditorEssay from "./EditorEssay";
 
 interface IProps {
   selectQuestionType: string;
 }
 
 function EditorQuestionContent({ selectQuestionType }: IProps) {
+  const dispatch = useDispatch();
+
   const [title, setTitle] = useState("");
   const [question, setQuestion] = useState<QuestionType>({
     id: 0,
@@ -36,15 +37,26 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
   useEffect(() => {
+    // view 할 문항이 바뀌거나, 현재 문항에 변동이 있을 경우에만
     setQuestion(questions[curQuestion - 1]);
-  }, [curQuestion]);
+  }, [curQuestion, questions[curQuestion - 1]]);
 
   useEffect(() => {
+    // 현재 문항의 타이틀이 변경되면 타이틀을 초기화 또는 변경
     setTitle(question.title);
-  }, [question]);
+  }, [question.title]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
+
+    // 변경된 제목을 questions(전체 문제 배열)에 반영
+    const copyArr = [...questions];
+    copyArr.splice(curQuestion - 1, 1, {
+      ...questions[curQuestion - 1],
+      title: e.target.value,
+    });
+
+    dispatch(setQuestions([...copyArr]));
   };
 
   return (
