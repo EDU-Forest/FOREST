@@ -42,7 +42,7 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
       {/* 지문이 있다면 지문 렌더링 */}
       {question.text && <StyledQuestionDetailTextBox>{question.text}</StyledQuestionDetailTextBox>}
       {/* 이미지가 있다면 이미지 렌더링 */}
-      {question.image && <img src={question.image} alt="question" />}
+      {question.problemImgPath && <img src={question.problemImgPath} alt="question" />}
 
       {/* 객관식 보기 */}
       {question.type === "객관식" && <QuestionChoiceList items={question.items} />}
