@@ -30,7 +30,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     type: "multipleChoice",
     title: "",
     text: "",
-    answer: '1',
+    answer: "1",
     point: 0,
     problemImgPath: "",
     items: [],
@@ -93,7 +93,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
         {/* 단답식 */}
         {question.type === "shortAnswer" && <EditorShortAnswer />}
         {/* 서술형 */}
-        {question.type === "essay" && <EditorEssay />}
+        {question.type === "essay" && <EditorEssay question={question} />}
       </EditorQuestionContentBox>
     </>
   );

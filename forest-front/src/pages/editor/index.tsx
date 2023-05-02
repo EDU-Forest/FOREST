@@ -63,7 +63,7 @@ export default function Editor() {
       type: "multipleChoice",
       title: "2번 문항",
       text: "지문",
-      answer: '1',
+      answer: "1",
       point: 10,
       problemImgPath: "",
       items: [
@@ -132,38 +132,13 @@ export default function Editor() {
     {
       id: 4,
       problemNum: 4,
-      type: "shortAnswer",
+      type: "essay",
       title: "",
       text: "",
-      answer: "2",
+      answer: "이거, 저거, 그거",
       point: 10,
       problemImgPath: "",
-      items: [
-        {
-          id: 0,
-          no: 1,
-          content: "",
-          isImage: false,
-        },
-        {
-          id: 0,
-          no: 2,
-          content: "",
-          isImage: false,
-        },
-        {
-          id: 0,
-          no: 3,
-          content: "",
-          isImage: false,
-        },
-        {
-          id: 0,
-          no: 4,
-          content: "",
-          isImage: false,
-        },
-      ],
+      items: [],
     },
   ];
 
