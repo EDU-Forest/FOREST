@@ -1,9 +1,13 @@
 import { AiOutlineArrowUp } from "react-icons/ai";
 import { StyledMemoUploadBtn } from "./Memo.style";
 
-function MemoUploadBtn() {
+interface Iprops {
+  onClick: () => void;
+}
+
+function MemoUploadBtn({ onClick }: Iprops) {
   return (
-    <StyledMemoUploadBtn>
+    <StyledMemoUploadBtn onClick={onClick}>
       <AiOutlineArrowUp />
     </StyledMemoUploadBtn>
   );

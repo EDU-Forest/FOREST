@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { StyledMemoUploadInputBox } from "./Memo.style";
 import MemoUploadBtn from "./MemoUploadBtn";
+import useMemoWrite from "@/apis/dashboard/useMemoWrite";
 
 function MemoUploadInput() {
   const [memo, setMemo] = useState("");
+  const { mutate } = useMemoWrite();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setMemo(e.target.value);
@@ -13,16 +15,20 @@ function MemoUploadInput() {
     // 엔터 키 눌리면 메모 등록
     if (e.key === "Enter") {
       console.log(memo);
-
-      // 등록 성공하면 input 초기화
+      mutate(memo);
       setMemo("");
     }
+  };
+
+  const handleClick = () => {
+    mutate(memo);
+    setMemo("");
   };
 
   return (
     <StyledMemoUploadInputBox>
       <input type="text" value={memo} onChange={handleChange} onKeyDown={handleKeyPress} />
-      <MemoUploadBtn />
+      <MemoUploadBtn onClick={handleClick} />
     </StyledMemoUploadInputBox>
   );
 }
