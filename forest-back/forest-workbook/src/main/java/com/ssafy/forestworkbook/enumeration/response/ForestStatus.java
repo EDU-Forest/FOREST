@@ -15,7 +15,7 @@ public enum ForestStatus {
     WORKBOOK_SUCCESS_DEPLOY(HttpStatus.NO_CONTENT),
     WORKBOOK_SUCCESS_ADD_BOOKMARK(HttpStatus.CREATED),
     WORKBOOK_SUCCESS_DELETE_BOOKMARK(HttpStatus.NO_CONTENT),
-
+    WORKBOOK_SUCCESS_DELETE_WORKBOOK(HttpStatus.NO_CONTENT),
     ;
 
     private final HttpStatus status;

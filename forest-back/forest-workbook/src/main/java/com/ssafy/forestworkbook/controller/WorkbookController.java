@@ -33,6 +33,14 @@ public class WorkbookController {
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
 
+    @GetMapping("/class/{classId}")
+    @ApiOperation(value = "클래스 문제집 목록 조회", notes = "클래스 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getClassWorkbook(
+            @PathVariable Long classId, @RequestParam String search) {
+        Long userId = Long.valueOf(10);
+        return workbookService.getClassWorkbook(userId, classId, search);
+    }
+
     @GetMapping("/{workbookId}")
     @ApiOperation(value = "문제집 상세 조회", notes = "문제집 전체 내용을 조회합니다.")
     public ResponseSuccessDto<?> getWorkbookAllInfo(@PathVariable Long workbookId) {
@@ -40,11 +48,11 @@ public class WorkbookController {
         return workbookService.getWorkbookAllInfo(userId, workbookId);
     }
 
-    @PostMapping("/{workbookId}")
-    @ApiOperation(value = "문제집 사본 만들기", notes = "문제집 사본을 만듭니다.")
-    public ResponseSuccessDto<?> copyWorkbook(@PathVariable Long workbookId) {
+    @PostMapping
+    @ApiOperation(value = "문제집 생성하기", notes = "새로운 문제집을 생성합니다.")
+    public ResponseSuccessDto<?> createWorkbook(@RequestBody WorkbookTitleDto workbookTitleDto) {
         Long userId = Long.valueOf(9);
-        return workbookService.copyWorkbook(userId, workbookId);
+        return workbookService.createWorkbook(userId, workbookTitleDto);
     }
 
     @PatchMapping
@@ -54,17 +62,18 @@ public class WorkbookController {
         return workbookService.updateWorkbook(userId, workbookUpdateInfoDto);
     }
 
-    @PostMapping
-    @ApiOperation(value = "문제집 생성하기", notes = "새로운 문제집을 생성합니다.")
-    public ResponseSuccessDto<?> createWorkbook(@RequestBody WorkbookTitleDto workbookTitleDto) {
+    @DeleteMapping
+    @ApiOperation(value = "문제집 삭제하기", notes = "문제집을 삭제합니다.")
+    public ResponseSuccessDto<?> deleteWorkbook(@PathVariable Long workbookId) {
         Long userId = Long.valueOf(9);
-        return workbookService.createWorkbook(userId, workbookTitleDto);
+        return workbookService.deleteWorkbook(userId, workbookId);
     }
-    @PatchMapping("/problem")
-    @ApiOperation(value = "문제 수정하기", notes = "문제를 수정합니다.")
-    public ResponseSuccessDto<?> updateProblem(@RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) {
-        Long userId = Long.valueOf(9);
-        return workbookService.updateProblem(userId, problemUpdateInfoDto);
+
+    @PatchMapping("/public/{workbookId}")
+    @ApiOperation(value = "공개 여부 변경", notes = "내가 만든 문제집이면서 배포한 경우에 문제집 공개 범위를 수정할 수 있습니다.")
+    public ResponseSuccessDto<?> changeWorkbookIsPublic(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(10);
+        return workbookService.changeWorkbookIsPublic(userId, workbookId);
     }
 
     @GetMapping("/export/{workbookId}")
@@ -81,11 +90,18 @@ public class WorkbookController {
         return workbookService.delpoyWorkbook(userId, workbookId);
     }
 
-    @PatchMapping("/public/{workbookId}")
-    @ApiOperation(value = "공개 여부 변경", notes = "내가 만든 문제집이면서 배포한 경우에 문제집 공개 범위를 수정할 수 있습니다.")
-    public ResponseSuccessDto<?> changeWorkbookIsPublic(@PathVariable Long workbookId) {
+    @PostMapping("/{workbookId}")
+    @ApiOperation(value = "문제집 사본 만들기", notes = "문제집 사본을 만듭니다.")
+    public ResponseSuccessDto<?> copyWorkbook(@PathVariable Long workbookId) {
         Long userId = Long.valueOf(10);
-        return workbookService.changeWorkbookIsPublic(userId, workbookId);
+        return workbookService.copyWorkbook(userId, workbookId);
+    }
+
+    @PatchMapping("/problem")
+    @ApiOperation(value = "문제 수정하기", notes = "문제를 수정합니다.")
+    public ResponseSuccessDto<?> updateProblem(@RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) {
+        Long userId = Long.valueOf(9);
+        return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
     @PostMapping("/bookmark/{workbookId}")
@@ -123,14 +139,6 @@ public class WorkbookController {
         return workbookService.getRecentWorkbook(userId);
     }
 
-    @GetMapping("/class/{classId}")
-    @ApiOperation(value = "클래스 문제집 목록 조회", notes = "클래스 문제집 목록을 조회합니다.")
-    public ResponseSuccessDto<?> getClassWorkbook(
-            @PathVariable Long classId, @RequestParam String search) {
-        log.info("????????????????");
-        Long userId = Long.valueOf(10);
-        return workbookService.getClassWorkbook(userId, classId, search);
-    }
 
 
 }
