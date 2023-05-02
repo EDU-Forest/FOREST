@@ -60,14 +60,15 @@ public class MemoService {
         return res;
     }
 
-    public ResponseSuccessDto<DeleteMemoResponseDto> deleteMemo(List<DeleteMemoRequestDto> deleteMemoRequestDtoList) {
-        for (DeleteMemoRequestDto deleteMemoRequestDto : deleteMemoRequestDtoList) {
-            Long memoId = deleteMemoRequestDto.getMemoId();
-            Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_MEMO_NOT_FOUND));
-            memo.updateDelete(deleteMemoRequestDto.getIsDeleted());
-        }
+    public ResponseSuccessDto<DeleteMemoResponseDto> deleteMemo(DeleteMemoRequestDto deleteMemoRequestDto) {
+        Long memoId = deleteMemoRequestDto.getMemoId();
+        Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_MEMO_NOT_FOUND));
+        memo.updateDelete(deleteMemoRequestDto.getIsDeleted());
+        DeleteMemoResponseDto deleteMemoResponseDto = DeleteMemoResponseDto.builder()
+                .message(SuccessCode.AUTH_MEMO_DELETED.getMessage())
+                .build();
 
-        ResponseSuccessDto<DeleteMemoResponseDto> res = responseUtil.successResponse(deleteMemoRequestDtoList, SuccessCode.AUTH_MEMO_DELETED);
+        ResponseSuccessDto<DeleteMemoResponseDto> res = responseUtil.successResponse(deleteMemoResponseDto, SuccessCode.AUTH_MEMO_DELETED);
         return res;
     }
 }
