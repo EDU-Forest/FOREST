@@ -2,7 +2,6 @@ import { KakaoLoginBtn, KakaoLoginImg, KakaoLoginText } from "./Home.style";
 
 export default function KakaoLogin() {
   return (
-    // <KakaoLoginBtn href={`${process.env.NEXT_PUBLIC_SERVER_URL}/api/oauth2/authorization/kakao`}>
     <KakaoLoginBtn
       href={`${process.env.NEXT_PUBLIC_SERVER_URL}:9010/api/oauth2/authorization/kakao`}
     >
