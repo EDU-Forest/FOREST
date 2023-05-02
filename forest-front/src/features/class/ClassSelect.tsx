@@ -6,33 +6,6 @@ import { useDispatch } from "react-redux";
 import ClassSelectDropdown from "./ClassSelectDropdown";
 import { controlClassDropdown } from "@/stores/class/classModal";
 
-const classList: ClassList[] = [
-  {
-    classId: 1,
-    name: "싸피 고등학교 1반",
-  },
-  {
-    classId: 2,
-    name: "싸피 고등학교 2반",
-  },
-  {
-    classId: 3,
-    name: "싸피 고등학교 3반",
-  },
-  {
-    classId: 4,
-    name: "싸피중 1반",
-  },
-  {
-    classId: 5,
-    name: "싸피중 2반",
-  },
-  {
-    classId: 6,
-    name: "싸피중 3반",
-  },
-];
-
 interface Iprops {
   isStudent?: boolean;
 }

@@ -35,7 +35,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
                 key={item.classId}
                 onClick={() => dispatch(setClass(item))}
               >
-                {item.classId === nowClassId && <ClassSelectCircle />} {item.name}
+                {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
               </ClassSelectDropdownEachItem>
             ))}
           </ClassSelectDropdownEach>
