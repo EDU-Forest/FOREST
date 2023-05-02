@@ -7,4 +7,5 @@ import lombok.Getter;
 @Getter
 public class RecentClassResponseDto {
     private Long classId;
+    private String className;
 }

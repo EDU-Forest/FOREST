@@ -13,4 +13,5 @@ public interface ClassUserRepository extends JpaRepository<ClassUser, Long> {
 
     Optional<ClassUser> findByClassesAndUser(ClassEntity classes, User user);
     List<ClassUser> findAllByClasses(ClassEntity classes);
+    Optional<ClassUser> findTopByUserOrderByIdDesc(User user);
 }

@@ -169,21 +169,45 @@ public class ClassService {
 
     public ResponseSuccessDto<RecentClassResponseDto> searchRecentClass(Long userId) {
         User findUser = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
-        Optional<ClassEntity> findClass = classRepository.findTopByOwnerOrderByCreatedDateDesc(findUser);
 
         long classId;
+        String className;
         SuccessCode successCode;
 
-        if(findClass.isEmpty()) {
-            classId = -1L;
-            successCode = SuccessCode.AUTH_CLASS_RECENT_NO_ONE;
-        } else {
-            classId = findClass.get().getId();
-            successCode = SuccessCode.AUTH_CLASS_RECENT_ONE;
+        // 선생님 클래스 찾기
+        if(findUser.getRole().equals(EnumUserRoleStatus.TEACHER)) {
+            Optional<ClassEntity> findClass = classRepository.findTopByOwnerOrderByCreatedDateDesc(findUser);
+
+            if(findClass.isEmpty()) {
+                classId = -1L;
+                className = "";
+                successCode = SuccessCode.AUTH_CLASS_RECENT_NO_ONE;
+            } else {
+                ClassEntity classEntity = findClass.get();
+                classId = classEntity.getId();
+                className = classEntity.getName();
+                successCode = SuccessCode.AUTH_CLASS_RECENT_ONE;
+            }
+        }
+        // 학생 클래스 찾기
+        else {
+            Optional<ClassUser> findClassUser = classUserRepository.findTopByUserOrderByIdDesc(findUser);
+
+            if(findClassUser.isEmpty()) {
+                classId = -1L;
+                className = "";
+                successCode = SuccessCode.AUTH_CLASS_RECENT_NO_ONE;
+            } else {
+                ClassEntity classEntity = findClassUser.get().getClasses();
+                classId = classEntity.getId();
+                className = classEntity.getName();
+                successCode = SuccessCode.AUTH_CLASS_RECENT_ONE;
+            }
         }
 
         RecentClassResponseDto recentClassResponseDto = RecentClassResponseDto.builder()
                 .classId(classId)
+                .className(className)
                 .build();
 
         ResponseSuccessDto<RecentClassResponseDto> res = responseUtil.successResponse(recentClassResponseDto, successCode);
