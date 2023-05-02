@@ -8,7 +8,6 @@ export default function MoreInfo() {
 
   // useEffect(() => {
   //   const email = router.query?.email;
-  //   console.log("email", email);
   //   if (typeof email === "string") {
   //     setEmail(email);
   //   }
