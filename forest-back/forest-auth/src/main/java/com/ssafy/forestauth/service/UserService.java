@@ -54,10 +54,16 @@ public class UserService {
                 .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
         findUserById.updateUserInfo(signupSocialRequestDto);
 
+        log.info("signup request name : {}", signupSocialRequestDto.getName());
+        log.info("signup request role : {}", signupSocialRequestDto.getRole().toString());
+
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
                 .name(findUserById.getName())
                 .role(findUserById.getRole())
                 .build();
+
+        log.info("responseDto name : {}", signupResponseDto.getName());
+        log.info("responseDto role : {}", signupResponseDto.getRole());
         ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
         return res;
     }
