@@ -17,7 +17,7 @@ function EditorQuestionText({ question }: IProps) {
     setText(question.text);
   }, [question.text]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
     toChangeQuestions("text", e.target.value);
   };
@@ -25,7 +25,7 @@ function EditorQuestionText({ question }: IProps) {
   return (
     <EditorQuestionTextInput
       value={text}
-      onChange={(e) => handleChange(e)}
+      onChange={handleChange}
       placeholder="지문을 입력하세요"
     />
   );
