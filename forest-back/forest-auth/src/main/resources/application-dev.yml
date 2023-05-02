@@ -61,7 +61,8 @@ jwt:
   token:
     secretKey: ${JWT_SECRET_KEY}
 
-auth:
+notification:
   mattermost:
     enabled: true
     webhook-url: ${MM_WEBHOOK_URL}
+    channel :
