@@ -1,10 +1,9 @@
 package com.ssafy.forestauth.controller;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.ReissueResponseDto;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
-import com.ssafy.forestauth.enumeration.response.ErrorCode;
-import com.ssafy.forestauth.errorhandling.exception.service.InvalidTokenException;
 import com.ssafy.forestauth.service.AuthService;
 import com.ssafy.forestauth.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +31,7 @@ public class AuthController {
     ) {
         accessToken = accessToken.substring(7);
         String refreshToken = SecurityUtil.getCookie(request, "refresh")
-                .orElseThrow(() -> new InvalidTokenException(ErrorCode.AUTH_REFRESH_NOT_VALID))
+                .orElseThrow(() -> new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID))
                 .getValue();
         log.info("refresh token : {}", refreshToken);
         return ResponseEntity.ok(authService.reissueAccessToken(accessToken, refreshToken));
