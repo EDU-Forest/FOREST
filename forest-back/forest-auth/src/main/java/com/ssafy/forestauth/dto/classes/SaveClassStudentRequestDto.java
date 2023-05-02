@@ -7,6 +7,6 @@ import java.util.List;
 
 @Getter
 public class SaveClassStudentRequestDto {
-    private String classId;
+    private Long classId;
     private List<Long> studentList;
 }

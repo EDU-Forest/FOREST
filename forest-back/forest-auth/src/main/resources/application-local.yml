@@ -1,5 +1,11 @@
 server:
   port: 9000
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 spring:
   config:
@@ -23,7 +29,33 @@ spring:
     username: root
     password: 1234
 
-auth:
+  security:
+    oauth2:
+      client:
+        # KAKAO
+        registration:
+          kakao:
+            client-id: fda95c1963b36856cb31a4c0bc3f264b
+            client-secret: CyorQDz2wxfMYMfo0EgFSc2m5oD92hFQ
+            redirect-uri: http://localhost:9000/api/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-name: Kakao
+            client-authentication-method: POST
+        # KAKAO Provider
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+jwt:
+  redirect-url: https://localhost:3000/login/success
+  token:
+    secretKey: Q4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4HQ4NSl604sgyHJj1qwEkR3ycUeR4uUAt7WJraD7EN3O9DVM4yyYuHxMEbSF4XXyYJkal13eqgB0F7Bq4H # {secretKey} 로 만들기
+
+notification:
   mattermost:
     enabled: true
     webhook-url: https://meeting.ssafy.com/hooks/j85wn7zntjbnjper47prr5icic
+    channel :

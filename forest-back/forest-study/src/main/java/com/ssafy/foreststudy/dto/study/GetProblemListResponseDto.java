@@ -15,5 +15,7 @@ public class GetProblemListResponseDto {
     private String title;
     private String text;
     private String problemImgPath;
+    private String userAnswer;
+    private String problemAnswer;
     private List<GetItemListResponseDto> item;
 }

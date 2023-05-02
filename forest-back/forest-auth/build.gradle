@@ -14,6 +14,13 @@ configurations {
     }
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -23,6 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
     // swagger2
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
@@ -33,7 +41,6 @@ dependencies {
     // gson
     implementation 'com.google.code.gson:gson:2.10.1'
 
-
     // spring-boot-configuration-processor
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
@@ -42,6 +49,9 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     implementation 'javax.xml.bind:jaxb-api'
+
+    // mattermost
+    implementation 'com.github.lmghee:forest-noti:63a0806612'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

@@ -55,4 +55,17 @@ public class StudentStudyProblemResult {
         this.user = user;
         this.problemList = problemList;
     }
+
+    public void updateStudentStudyProblemResult(String userAnswer, int partPoint, Boolean isCorrected, Boolean isGraded){
+        this.userAnswer = userAnswer;
+        this.partPoint = partPoint;
+        this.isCorrected = isCorrected;
+        this.isGraded = isGraded;
+    }
+
+    public void updateDescript(int partPoint, Boolean isCorrected, Boolean isGraded){
+        this.partPoint = partPoint;
+        this.isCorrected = isCorrected;
+        this.isGraded = isGraded;
+    }
 }

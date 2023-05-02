@@ -22,7 +22,7 @@ public class ClassUser {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id", nullable = false)
-    private Class classes;
+    private ClassEntity classes;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -31,4 +31,13 @@ public class ClassUser {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void createClassUser(ClassEntity classes, User user) {
+        this.classes = classes;
+        this.user = user;
+    }
+
+    public void deleteClassUser() {
+        this.isDeleted = true;
+    }
 }

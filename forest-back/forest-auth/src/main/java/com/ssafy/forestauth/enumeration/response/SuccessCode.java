@@ -7,6 +7,12 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 public enum SuccessCode {
+
+    /**
+     * 리프래쉬 토큰
+     */
+    AUTH_GET_NEW_TOKEN(HttpStatus.OK, "토큰 재발급 완료"),
+
     /**
      * 이메일 중복 검사
      */
@@ -83,7 +89,13 @@ public enum SuccessCode {
     /**
      * 클래스에서 학생 제외
      */
-    AUTH_STUDENT_EXCLUDED(HttpStatus.NO_CONTENT, "해당 클래스에서 학생 제외에 성공하였습니다");
+    AUTH_STUDENT_EXCLUDED(HttpStatus.NO_CONTENT, "해당 클래스에서 학생 제외에 성공하였습니다"),
+
+    /**
+     * 선생님 최근 생성 클래스 조회
+     */
+    AUTH_CLASS_RECENT_ONE(HttpStatus.OK, "최근 생성 클래스 조회를 성공하였습니다."),
+    AUTH_CLASS_RECENT_NO_ONE(HttpStatus.OK, "최근 클래스가 존재하지 않습니다.");
 
 
     private final HttpStatus status;
