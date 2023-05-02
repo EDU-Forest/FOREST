@@ -1,5 +1,4 @@
 import { useState } from "react";
-import EditorShortAnswer from "./EditorShortAnswer";
 import { EditorEssayBox, EditorEssayKeywordsBox } from "./EditorQuestionContent.style";
 
 function EditorEssay() {
@@ -16,7 +15,6 @@ function EditorEssay() {
 
   return (
     <EditorEssayBox>
-      <EditorShortAnswer />
       <p>채점 핵심 단어</p>
       <EditorEssayKeywordsBox>
         {answers.map((ans: string, i) => (
