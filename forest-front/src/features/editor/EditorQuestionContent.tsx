@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import EditorEssay from "./EditorEssay";
 import EditorMultipleChoice from "./EditorMultipleChoice";
 import EditorOX from "./EditorOX";
+import EditorPoint from "./EditorPoint";
 import {
   EditorNumAndPointBox,
-  EditorPointBox,
-  EditorPointInput,
   EditorQuestionContentBox,
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
@@ -67,10 +66,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     <>
       <EditorNumAndPointBox>
         <EditorQuestionNumbox>{curQuestion}</EditorQuestionNumbox>
-        <EditorPointBox>
-          <span>배점</span>
-          <EditorPointInput />
-        </EditorPointBox>
+        <EditorPoint curQuestion={curQuestion} />
       </EditorNumAndPointBox>
 
       <EditorQuestionContentBox>
