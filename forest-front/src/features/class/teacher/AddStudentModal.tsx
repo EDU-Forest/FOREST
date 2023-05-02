@@ -69,6 +69,7 @@ export default function AddStudentModal() {
       classId,
       studentList: newList,
     };
+
     console.log(payload);
     mutate(payload);
   };
@@ -86,31 +87,29 @@ export default function AddStudentModal() {
         <ClassStudentAddDropdown>
           <ClassStudentAddDropdownEach>
             {searchList?.map((item) => (
-              <>
+              <div key={item.userId}>
                 {studentList.includes(item) ? (
-                  <>
-                    <ClassStudentAddDropdownEachItem disabled>
-                      <ClassStudentCheckIcon>
-                        <AiOutlineCheckCircle />
-                      </ClassStudentCheckIcon>
-                      <ClassStudentAddName>{item.name}</ClassStudentAddName>
-                      <ClassStudentAddEmail>{item.email}</ClassStudentAddEmail>
-                    </ClassStudentAddDropdownEachItem>
-                  </>
+                  <ClassStudentAddDropdownEachItem disabled>
+                    <ClassStudentCheckIcon>
+                      <AiOutlineCheckCircle />
+                    </ClassStudentCheckIcon>
+                    <ClassStudentAddName>{item.name}</ClassStudentAddName>
+                    <ClassStudentAddEmail>{item.email}</ClassStudentAddEmail>
+                  </ClassStudentAddDropdownEachItem>
                 ) : (
                   <ClassStudentAddDropdownEachItem onClick={() => addStudent(item)}>
                     <ClassStudentAddName>{item.name}</ClassStudentAddName>
                     <ClassStudentAddEmail>{item.email}</ClassStudentAddEmail>
                   </ClassStudentAddDropdownEachItem>
                 )}
-              </>
+              </div>
             ))}
           </ClassStudentAddDropdownEach>
         </ClassStudentAddDropdown>
       )}
       <ClassStudentAddList>
         {studentList.map((item) => (
-          <ClassStudentAddDropdownEach>
+          <ClassStudentAddDropdownEach key={item.userId}>
             <ClassStudentAddDropdownEachItem disabled>
               <ClassStudentAddName>{item.name}</ClassStudentAddName>
               <ClassStudentAddEmail>{item.email}</ClassStudentAddEmail>
