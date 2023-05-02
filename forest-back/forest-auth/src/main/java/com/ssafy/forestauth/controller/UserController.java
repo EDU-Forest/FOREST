@@ -59,8 +59,9 @@ public class UserController {
     // 이름으로 학생 검색
     @GetMapping("/search")
     public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
+            @RequestParam("classId") Long classId,
             @RequestParam("userName") String userName) {
-        return ResponseEntity.ok(userService.searchStudent(userName));
+        return ResponseEntity.ok(userService.searchStudent(classId, userName));
     }
 
 }

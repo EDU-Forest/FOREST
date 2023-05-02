@@ -4,11 +4,15 @@ import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.auth.jwt.JwtProvider;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.*;
+import com.ssafy.forestauth.entity.ClassEntity;
+import com.ssafy.forestauth.entity.ClassUser;
 import com.ssafy.forestauth.entity.User;
 import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
+import com.ssafy.forestauth.repository.ClassRepository;
+import com.ssafy.forestauth.repository.ClassUserRepository;
 import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,8 @@ public class UserService {
 
     private final ResponseUtil responseUtil;
     private final UserRepository userRepository;
+    private final ClassRepository classRepository;
+    private final ClassUserRepository classUserRepository;
     private final BCryptPasswordEncoder encoder;
     private final JwtProvider jwtProvider;
     private Long expireTimeMs = 1000 * 60 * 60L;
@@ -63,18 +69,24 @@ public class UserService {
     }
 
     // 이름으로 학생 조회
-    public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(String userName) {
+    public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(Long classId, String userName) {
         List<User> userList = userRepository.findByNameStartsWithAndRole(userName, EnumUserRoleStatus.STUDENT);
 
         List<SearchStudentResponseDto> dtoList = new ArrayList<>();
         for (User user : userList) {
+            ClassEntity findClass = classRepository.findById(classId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+            Optional<ClassUser> findUser = classUserRepository.findByClassesAndUser(findClass, user);
+
             SearchStudentResponseDto dto = SearchStudentResponseDto.builder()
                     .userId(user.getId())
                     .email(user.getEmail())
                     .name(user.getName())
                     .phone(user.getPhone())
                     .build();
-            dtoList.add(dto);
+
+            if (findUser.isEmpty()) {
+                dtoList.add(dto);
+            }
         }
 
         ResponseSuccessDto<List<SearchStudentResponseDto>> res = responseUtil.successResponse(dtoList, SuccessCode.AUTH_SEARCH_STUDENT);

@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface ClassUserRepository extends JpaRepository<ClassUser, Long> {
     List<ClassUser> findAllByUser(User user);
-
     Optional<ClassUser> findByClassesAndUser(ClassEntity classes, User user);
     List<ClassUser> findAllByClasses(ClassEntity classes);
     Optional<ClassUser> findTopByUserOrderByIdDesc(User user);
