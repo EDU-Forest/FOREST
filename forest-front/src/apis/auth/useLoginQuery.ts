@@ -21,7 +21,7 @@ const useLogin = () => {
       dispatch(setUsername(data.name));
       dispatch(setRole(data.role));
       localStorage.setItem("forest_access_token", data.accessToken);
-      router.push(`/${data.role === Role.TEACHER ? "teacher" : "student"}/dashboard`);
+      router.push(`/${data.role === "teacher" ? "teacher" : "student"}/dashboard`);
     },
     onError: (data) => {
       // 아직 미구현
