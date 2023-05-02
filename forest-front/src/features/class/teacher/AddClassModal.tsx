@@ -13,18 +13,18 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
 import useCheckClassNameQuery from "@/apis/class/teacher/useCheckClassNameQuery";
+import useClassAdd from "@/apis/class/teacher/useClassAdd";
 
 export default function AddClassModal() {
   const dispatch = useDispatch();
   const [className, setClassName] = useState<string>("");
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
-
-  // isSuccess -> axios 요청 성공 여부
+  const { mutate } = useClassAdd();
 
   useCheckClassNameQuery({ className, setErrorMsg, setIsAvailable });
   const confirm = () => {
-    // 확인
+    mutate(className);
   };
 
   useEffect(() => {

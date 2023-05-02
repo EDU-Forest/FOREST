@@ -33,12 +33,13 @@ export default function ClassWorkbookList({ type }: Iprops) {
     dispatch(closeAllModal());
   };
 
-  // const workbooks = useClassWorkbookListQuery(classId, type)
+  // const workbooks = useClassWorkbookListQuery(classId, type);
+  // console.log("workbooks", workbooks);
 
   return (
     <div style={{ marginTop: "2rem" }}>
       <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-        {workbooks.map((item) => (
+        {workbooks?.map((item) => (
           <SwiperSlide key={item.id}>
             <CommonWorkbook id={item.id} title={item.title} clickAction={changeWorkbookSummary} />
           </SwiperSlide>

@@ -7,13 +7,17 @@ interface Payload {
   type: string;
 }
 
-const fetcher = ({ classId, type }: Payload) => {
-  workbookAxios.get(`/api/workbook/${classId}`, { params: { sort: type } });
-};
+const fetcher = ({ classId, type }: Payload) =>
+  workbookAxios
+    .get(`/api/workbook/${classId}`, { params: { sort: type } })
+    .then(({ data }) => data);
 
 const useClassWorkbookListQuery = (classId: number, type: string) => {
   return useQuery([queryKeys.CLASS_WORKBOOK_LIST, classId], () => fetcher({ classId, type }), {
     enabled: !!classId,
+    onSuccess: (data) => {
+      console.log("리스트", data);
+    },
   });
 };
 
