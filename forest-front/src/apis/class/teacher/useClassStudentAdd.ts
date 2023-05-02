@@ -25,14 +25,7 @@ const useClassStudentAdd = () => {
   return useMutation(fetcher, {
     onSuccess: (data) => {
       // 학생 추가 후 목록 재조회
-      console.log("하하 성공하니?", data);
       return queryClient.invalidateQueries(queryKeys.CLASS_STUDENT_LIST);
-    },
-    onSettled(data, error, variables, context) {
-      console.log("variables", variables);
-    },
-    onError: (error, variables) => {
-      console.log("하하하", variables);
     },
   });
 };

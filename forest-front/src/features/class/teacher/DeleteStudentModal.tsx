@@ -5,18 +5,15 @@ import { useDispatch } from "react-redux";
 import { closeDeleteStudentModal } from "@/stores/class/classModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-
-interface Iprops {
-  userId?: number;
-}
+import useClassStudentDelete from "@/apis/class/teacher/useClassStudentDelete";
 
 export default function DeleteStudentModal() {
   const dispatch = useDispatch();
+  const { mutate } = useClassStudentDelete();
   const classId = useSelector((state: RootState) => state.class.nowClassId);
   const userId = useSelector((state: RootState) => state.class.deleteStudentNum);
-  console.log("userId", userId);
   const confirm = () => {
-    // 확인 ->classId, userId 필요
+    mutate({ classId, userId });
   };
 
   return (
