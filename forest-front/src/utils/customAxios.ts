@@ -13,11 +13,11 @@ const customAxios = axios.create(AxiosConFigure);
 
 customAxios.interceptors.request.use(
   (config) => {
-    console.log("config", config);
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.authorization && forestToken) {
       config.headers.authorization = JSON.parse(forestToken);
     }
+    console.log("config", config, "forestToken", forestToken);
     return config;
   },
   (error) => error,
