@@ -6,17 +6,12 @@ import { useDispatch } from "react-redux";
 import { setClass } from "@/stores/class/classInfo";
 import { useRouter } from "next/router";
 
-interface ListType {
-  classId: number;
-  className: string;
-}
-
 function DashboardClassList() {
   const dispatch = useDispatch();
   const router = useRouter();
   const classList: ClassList[] = useClassListQuery().data;
 
-  const handleClick = (item: ListType) => {
+  const handleClick = (item: ClassList) => {
     dispatch(setClass(item));
     router.push("/student/class");
   };

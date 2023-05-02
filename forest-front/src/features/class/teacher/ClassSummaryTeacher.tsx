@@ -15,6 +15,7 @@ import TotalResult from "../TotalResult";
 import TakeRateChart from "../TakeRateChart";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 
 const examResult: TeacherExamResult = {
   studyId: 1,
@@ -39,7 +40,8 @@ const examResult: TeacherExamResult = {
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   // 이걸로 데이터 요청
-  const { nowStudyId } = useSelector((state: RootState) => state.class);
+  const { nowClassId } = useSelector((state: RootState) => state.class);
+  const studyId = useRecentStudyIdQuery(nowClassId).data;
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);

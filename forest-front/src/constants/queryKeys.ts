@@ -5,9 +5,11 @@ export const CHECK_EMAIL = "/checkEmail";
 // dashboard
 export const CHEER_MSG = "/cheerMsg";
 export const GET_MEMO = "/getMemo";
+export const GET_SCHEDULE = "/getSchedule";
 
 // class
 export const RECENT_CLASSID = "/recentClassId";
+export const RECENT_STUDYID = "/recentStudyId";
 export const CLASS_LIST = "/classList";
 export const CHECK_CLASSNAME = "/checkClassName";
 export const CLASS_STUDENT_LIST = "/classStudentList";

@@ -5,6 +5,7 @@ interface ClassState {
   nowClassId: number;
   nowStudyId: number;
   deleteStudentNum: number;
+  recentStudyId: number;
 }
 
 const initialState: ClassState = {
@@ -12,6 +13,7 @@ const initialState: ClassState = {
   nowClassId: -1,
   nowStudyId: -1,
   deleteStudentNum: -1,
+  recentStudyId: -1,
 };
 
 const classSlice = createSlice({
@@ -28,9 +30,12 @@ const classSlice = createSlice({
     setDeleteStudentNum(state, action) {
       state.deleteStudentNum = action.payload;
     },
+    setRecentStudyId(state, action) {
+      state.recentStudyId = action.payload;
+    },
   },
 });
 
-export const { setClass, setStudy, setDeleteStudentNum } = classSlice.actions;
+export const { setClass, setStudy, setDeleteStudentNum, setRecentStudyId } = classSlice.actions;
 
 export default classSlice.reducer;

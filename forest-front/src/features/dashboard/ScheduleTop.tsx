@@ -24,15 +24,15 @@ function ScheduleTop() {
       <StyledStatusNotification>
         <div>
           <StyledScheduleStatus>
-            <StyledScheduleStatusCircle status="중" />
+            <StyledScheduleStatusCircle status="ONGOING" />
             진행 중
           </StyledScheduleStatus>
           <StyledScheduleStatus>
-            <StyledScheduleStatusCircle status="예정" />
+            <StyledScheduleStatusCircle status="BEFORE" />
             진행 예정
           </StyledScheduleStatus>
           <StyledScheduleStatus>
-            <StyledScheduleStatusCircle status="완료" />
+            <StyledScheduleStatusCircle status="AFTER" />
             진행 완료
           </StyledScheduleStatus>
         </div>
