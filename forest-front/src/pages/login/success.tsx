@@ -1,3 +1,4 @@
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
@@ -10,6 +11,10 @@ import { useDispatch } from "react-redux";
 export default function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  // 최근 클래스 아이디
+  useRecentClassIdQuery();
+
   useEffect(() => {
     const accessToken = router.query?.accessToken;
     if (typeof accessToken === "string") {
