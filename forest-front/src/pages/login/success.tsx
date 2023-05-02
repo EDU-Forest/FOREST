@@ -5,14 +5,13 @@ import { setRole, setUsername } from "@/stores/user/user";
 import { FullScreen } from "@/styles/container";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // 최근 클래스 아이디
   useRecentClassIdQuery();
 
   useEffect(() => {
