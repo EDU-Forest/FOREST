@@ -8,7 +8,7 @@ import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { initCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { FullScreen } from "@/styles/container";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
@@ -129,6 +129,7 @@ export default function Editor() {
   ];
 
   useEffect(() => {
+    dispatch(initCurQuestion());
     dispatch(setQuestions([...dummyQuestions]));
   }, [dispatch]);
 

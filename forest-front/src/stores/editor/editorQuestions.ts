@@ -54,12 +54,15 @@ const questionSlice = createSlice({
     setQuestions(state, action) {
       state.questions = action.payload;
     },
+    initCurQuestion(state) {
+      state.curQuestion = initialState.curQuestion;
+    },
     setCurQuestion(state, action) {
       state.curQuestion = action.payload;
     },
   },
 });
 
-export const { setQuestions, setCurQuestion } = questionSlice.actions;
+export const { setQuestions, initCurQuestion, setCurQuestion } = questionSlice.actions;
 
 export default questionSlice.reducer;
