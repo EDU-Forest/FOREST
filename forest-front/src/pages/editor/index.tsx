@@ -38,19 +38,19 @@ export default function Editor() {
           isImage: false,
         },
         {
-          id: 1,
+          id: 2,
           no: 2,
           content: "컨텐트",
           isImage: false,
         },
         {
-          id: 1,
+          id: 3,
           no: 3,
           content: "컨텐트",
           isImage: false,
         },
         {
-          id: 1,
+          id: 4,
           no: 4,
           content: "컨텐트",
           isImage: false,

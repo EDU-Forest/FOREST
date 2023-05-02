@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 interface editorQuestions {
   questions: QuestionType[];
   curQuestion: number;
+  deleteAnswers: number[];
 }
 
 const initialState: editorQuestions = {
@@ -46,6 +47,7 @@ const initialState: editorQuestions = {
     },
   ],
   curQuestion: 1,
+  deleteAnswers: [],
 };
 
 const questionSlice = createSlice({
@@ -61,9 +63,13 @@ const questionSlice = createSlice({
     setCurQuestion(state, action) {
       state.curQuestion = action.payload;
     },
+    setDeleteAnswers(state, action) {
+      state.deleteAnswers = action.payload;
+    },
   },
 });
 
-export const { setQuestions, initCurQuestion, setCurQuestion } = questionSlice.actions;
+export const { setQuestions, initCurQuestion, setCurQuestion, setDeleteAnswers } =
+  questionSlice.actions;
 
 export default questionSlice.reducer;

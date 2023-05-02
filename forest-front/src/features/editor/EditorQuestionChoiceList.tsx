@@ -1,4 +1,4 @@
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setDeleteAnswers, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionItemType, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
@@ -25,6 +25,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
 
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { deleteAnswers } = useSelector((state: RootState) => state.editQuestions);
 
   useEffect(() => {
     setCorret(Number(question.answer));
@@ -38,10 +39,15 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
     itemChange([...copyArr]);
   };
 
-  const handleClickDelete = (i: number) => {
+  const handleClickDelete = (id: number, i: number) => {
+    console.log(deleteAnswers);
     setItems(items.filter((item, idx) => idx !== i));
 
     itemChange(items.filter((item, idx) => idx !== i));
+
+    const copyArr = [...deleteAnswers];
+    copyArr.push(id);
+    dispatch(setDeleteAnswers(copyArr));
   };
 
   // 정답으로 체크
@@ -83,7 +89,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               )}
               <AiOutlineCheck />
             </EditorQuestionChoiceBox>
-            <AiOutlineMinusCircle onClick={() => handleClickDelete(i)} />
+            <AiOutlineMinusCircle onClick={() => handleClickDelete(item.id, i)} />
           </div>
         );
       })}
