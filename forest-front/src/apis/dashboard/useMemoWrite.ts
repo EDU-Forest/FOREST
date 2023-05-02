@@ -5,6 +5,7 @@ import * as queryKeys from "@/constants/queryKeys";
 const fetcher = (memo: string) =>
   authAxios.post("/api/memo", { content: memo }).then(({ data }) => data.data);
 
+// 메모 등록 - OK
 const useMemoWrite = () => {
   const queryClient = useQueryClient();
   return useMutation(fetcher, {
