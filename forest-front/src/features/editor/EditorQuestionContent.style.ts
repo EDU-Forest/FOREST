@@ -1,3 +1,4 @@
+import { CommonInput } from "@/components/Input/Input.style";
 import styled from "styled-components";
 import {
   StyledQuestionChoiceNumBox,
@@ -37,6 +38,24 @@ export const EditorQuestionNumbox = styled.div`
   font-size: 1.25rem;
   font-weight: bold;
 `;
+
+export const EditorNumAndPointBox = styled.label`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    margin-right: 16px;
+    color: ${({ theme }) => theme.colors.Gray[600]};
+  }
+`;
+
+export const EditorPointInput = styled(CommonInput)`
+  width: 56px;
+  padding: 4px 8px;
+`;
+
+export const EditorPointBox = styled.div``;
 
 export const EditorQuestionTitleInput = styled.input`
   width: 100%;

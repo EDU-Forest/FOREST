@@ -7,6 +7,9 @@ import EditorEssay from "./EditorEssay";
 import EditorMultipleChoice from "./EditorMultipleChoice";
 import EditorOX from "./EditorOX";
 import {
+  EditorNumAndPointBox,
+  EditorPointBox,
+  EditorPointInput,
   EditorQuestionContentBox,
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
@@ -27,8 +30,9 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     type: "multipleChoice",
     title: "",
     text: "",
+    answer: 1,
     point: 0,
-    image: "",
+    problemImgPath: "",
     items: [],
   });
 
@@ -61,7 +65,14 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
 
   return (
     <>
-      <EditorQuestionNumbox>{curQuestion}</EditorQuestionNumbox>
+      <EditorNumAndPointBox>
+        <EditorQuestionNumbox>{curQuestion}</EditorQuestionNumbox>
+        <EditorPointBox>
+          <span>배점</span>
+          <EditorPointInput />
+        </EditorPointBox>
+      </EditorNumAndPointBox>
+
       <EditorQuestionContentBox>
         <div>
           <EditorQuestionTitleInput
