@@ -1,6 +1,9 @@
-import { QuestionItemType } from "@/types/Workbook";
-import { useState } from "react";
+import { setQuestions } from "@/stores/editor/editorQuestions";
+import { RootState } from "@/stores/store";
+import { QuestionItemType, QuestionType } from "@/types/Workbook";
+import { useEffect, useState } from "react";
 import { AiOutlineCheck, AiOutlineMinusCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import {
   EditorChoiceNumBox,
   EditorQuestionChoiceBox,
@@ -8,14 +11,24 @@ import {
 } from "./EditorQuestionContent.style";
 
 interface IProps {
+  question: QuestionType;
   items: QuestionItemType[];
   setItems: React.Dispatch<React.SetStateAction<QuestionItemType[]>>;
   itemChange: (item: QuestionItemType[]) => void;
 }
 
-function EditorQuestionChoiceList({ items, setItems, itemChange }: IProps) {
+function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IProps) {
+  const dispatch = useDispatch();
+
   const [content, setContent] = useState("");
   const [corret, setCorret] = useState(0);
+
+  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+
+  useEffect(() => {
+    setCorret(question.answer);
+  }, [question]);
 
   const handleChangeItem = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const copyArr = [...items];
@@ -31,8 +44,17 @@ function EditorQuestionChoiceList({ items, setItems, itemChange }: IProps) {
     itemChange(items.filter((item, idx) => idx !== i));
   };
 
+  // 정답으로 체크
   const handleClickItem = (num: number) => {
     setCorret(num);
+
+    const copyArr = [...questions];
+    copyArr.splice(curQuestion - 1, 1, {
+      ...questions[curQuestion - 1],
+      answer: num,
+    });
+
+    dispatch(setQuestions([...copyArr]));
   };
 
   return (

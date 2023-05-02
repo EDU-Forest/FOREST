@@ -57,7 +57,7 @@ function EditorMultipleChoice({ question, curQuestion }: IProps) {
 
   return (
     <>
-      <EditorQuestionChoiceList items={items} setItems={setItems} itemChange={itemChange} />
+      <EditorQuestionChoiceList question={question} items={items} setItems={setItems} itemChange={itemChange} />
       <EditorQuestionItemAddButton onClick={handleClickItemAdd}>
         <div>+</div>
         보기 추가
