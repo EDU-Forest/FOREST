@@ -23,7 +23,8 @@ const useKakaoLoginMoreInfo = () => {
     onSuccess: (data) => {
       dispatch(setUsername(data.name));
       dispatch(setRole(data.role));
-      router.push(`/${data.role}/dashboard`);
+      console.log("ff", data);
+      router.push(`/${data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
     onError: (data) => {
       console.log("Err", data);
