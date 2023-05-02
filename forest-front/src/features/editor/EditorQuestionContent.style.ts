@@ -230,7 +230,7 @@ export const EditorEssayBox = styled.div`
   }
 `;
 
-export const EditorQuestionTextInput = styled.input`
+export const EditorQuestionTextInput = styled.textarea`
   width: 100%;
 
   padding: 1.5rem !important;
@@ -239,4 +239,10 @@ export const EditorQuestionTextInput = styled.input`
   border: 1px solid ${({ theme }) => theme.colors.Lime[600]} !important;
   border-radius: 4px !important;
   line-height: 28px !important;
+  outline: none;
+  resize: none;
+
+  ::placeholder {
+    color: black !important;
+  }
 `;

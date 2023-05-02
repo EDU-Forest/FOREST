@@ -30,6 +30,8 @@ export default function Editor() {
       answer: "2",
       point: 10,
       problemImgPath: "",
+      imgIsEmpty: false,
+      textIsEmpty: true,
       items: [
         {
           id: 1,
@@ -66,6 +68,8 @@ export default function Editor() {
       answer: "1",
       point: 10,
       problemImgPath: "",
+      imgIsEmpty: false,
+      textIsEmpty: false,
       items: [
         {
           id: 1,
@@ -102,6 +106,8 @@ export default function Editor() {
       answer: "2",
       point: 10,
       problemImgPath: "",
+      imgIsEmpty: false,
+      textIsEmpty: false,
       items: [
         {
           id: 0,
@@ -138,6 +144,8 @@ export default function Editor() {
       answer: "이거, 저거, 그거",
       point: 10,
       problemImgPath: "",
+      imgIsEmpty: false,
+      textIsEmpty: false,
       items: [],
     },
   ];

@@ -14,6 +14,7 @@ import {
   EditorQuestionTitleInput,
 } from "./EditorQuestionContent.style";
 import EditorShortAnswer from "./EditorShortAnswer";
+import EditorQuestionTextInput from "./EditorQuestionText";
 
 interface IProps {
   selectQuestionType: string;
@@ -32,6 +33,8 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     answer: "1",
     point: 0,
     problemImgPath: "",
+    imgIsEmpty: false,
+    textIsEmpty: false,
     items: [],
   });
 
@@ -76,6 +79,8 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
             placeholder="문제를 입력하세요"
             onChange={handleChangeTitle}
           />
+          {/* 지문 여부에 따라 지문 렌더링 */}
+          {question.textIsEmpty && <EditorQuestionTextInput question={question}/>}
         </div>
         {/* 객관식 */}
         {question.type === "multipleChoice" && (

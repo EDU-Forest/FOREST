@@ -23,6 +23,8 @@ export interface QuestionType {
   point: number;
   problemImgPath: string;
   items: QuestionItemType[];
+  imgIsEmpty: boolean;
+  textIsEmpty: boolean;
 }
 
 export interface QuestionSummType {

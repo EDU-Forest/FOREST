@@ -88,7 +88,11 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickObjectType = (type: string) => {
-    // type === "image" ? {} : "text" && dispatch(questions[curQuestion].text);
+    if (type === "text") {
+      const copyArr = [...questions];
+      copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: true });
+      dispatch(setQuestions([...copyArr]));
+    }
   };
 
   return (
