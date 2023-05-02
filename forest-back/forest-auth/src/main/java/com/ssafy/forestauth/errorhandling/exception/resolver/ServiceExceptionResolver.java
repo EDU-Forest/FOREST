@@ -66,6 +66,13 @@ public class ServiceExceptionResolver {
         return responseUtil.buildErrorResponse(errorCode, request.getRequestURI());
     }
 
+    // Test
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = Exception.class)
+    public ResponseErrorDto<?> handle(Exception e, HttpServletRequest request) {
+        notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
+        return responseUtil.buildErrorResponse(ErrorCode.AUTH_NOT_VALID_TOKEN, request.getRequestURI());
+    }
 
 
     private String getParams(HttpServletRequest req) {
