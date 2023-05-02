@@ -56,6 +56,14 @@ export default function UserForm({ type }: Iprops) {
   });
 
   useEffect(() => {
+    if (type === "moreinfo") {
+      setValidation({
+        ...validation,
+        email: "pass",
+        emailDuplicate: "pass",
+      });
+    }
+
     const email = router.query?.email;
     if (typeof email === "string") {
       setUserData({
