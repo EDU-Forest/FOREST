@@ -16,6 +16,7 @@ public class ProblemAllInfoDto {
     private EnumProblemTypeStatus type;
     private String title;
     private String problemImgPath;
+    private boolean imgIsEmpty;
     private String text;
     private boolean textIsEmpty;
     private String answer;
@@ -23,12 +24,13 @@ public class ProblemAllInfoDto {
     private List<ItemResDto> itemList;
 
     @Builder
-    public ProblemAllInfoDto(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, boolean textIsEmpty, int point, String problemImgPath,String answer, List<ItemResDto> itemList) {
+    public ProblemAllInfoDto(Long problemId, int problemNum, EnumProblemTypeStatus type, String title, String text, boolean textIsEmpty, int point, String problemImgPath, boolean imgIsEmpty, String answer, List<ItemResDto> itemList) {
         this.problemId = problemId;
         this.problemNum = problemNum;
         this.type = type;
         this.title = title;
         this.problemImgPath = problemImgPath;
+        this.imgIsEmpty = imgIsEmpty;
         this.text = text;
         this.textIsEmpty = textIsEmpty;
         this.answer = answer;

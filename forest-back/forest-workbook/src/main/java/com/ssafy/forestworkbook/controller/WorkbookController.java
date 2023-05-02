@@ -127,6 +127,7 @@ public class WorkbookController {
     @ApiOperation(value = "클래스 문제집 목록 조회", notes = "클래스 문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getClassWorkbook(
             @PathVariable Long classId, @RequestParam String search) {
+        log.info("????????????????");
         Long userId = Long.valueOf(10);
         return workbookService.getClassWorkbook(userId, classId, search);
     }
