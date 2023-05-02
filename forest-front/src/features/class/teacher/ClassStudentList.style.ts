@@ -3,7 +3,7 @@ import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 
 const StudentListTextWrapper = styled.div`
-  ${flexBox("row", "start", "space-between")}
+  ${flexBox("row", "start", "space-between")};
 `;
 
 const StudentListTitle = styled(Title)`

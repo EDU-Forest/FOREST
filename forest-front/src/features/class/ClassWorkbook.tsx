@@ -4,6 +4,7 @@ import { useState } from "react";
 import ClassWorkbookList from "./ClassWorkbookList";
 
 export default function ClassWorkbook() {
+  const [type, setType] = useState<string>("self");
   const [inputs, setInputs] = useState({
     isSelf: true,
     isHomework: false,
@@ -13,6 +14,7 @@ export default function ClassWorkbook() {
   const { isSelf, isHomework, isExam } = inputs;
 
   const changeTab = (type: string) => {
+    setType(type);
     switch (type) {
       case "self":
         setInputs({ isSelf: true, isHomework: false, isExam: false });
@@ -27,6 +29,7 @@ export default function ClassWorkbook() {
         setInputs({ isSelf: true, isHomework: false, isExam: false });
     }
   };
+
   return (
     <ClassWorkbookWrapper>
       <WorkbookTab children="자율" selected={isSelf} space={32} onClick={changeTab} type={"self"} />
@@ -38,7 +41,7 @@ export default function ClassWorkbook() {
         type={"homework"}
       />
       <WorkbookTab children="시험" selected={isExam} space={32} onClick={changeTab} type={"exam"} />
-      <ClassWorkbookList />
+      <ClassWorkbookList type={type} />
     </ClassWorkbookWrapper>
   );
 }

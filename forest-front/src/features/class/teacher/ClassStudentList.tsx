@@ -13,82 +13,22 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { openAddStudentModal } from "@/stores/class/classModal";
+import DeleteStudentModal from "./DeleteStudentModal";
+import useClassStudentListQuery from "@/apis/class/teacher/useClassStudentListQuery";
 
-const studentList: Student[] = [
-  {
-    userId: 1,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 2,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 3,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 4,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 5,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 6,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 7,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 8,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-  {
-    userId: 9,
-    name: "최규림",
-    age: 28,
-    email: "ssafy124@gmail.com",
-    phone: "010-1234-5678",
-  },
-];
 export default function ClassStudentList() {
   const dispatch = useDispatch();
+  const classId = useSelector((state: RootState) => state.class.nowClassId);
   const { isOpenAddStudentModal } = useSelector((state: RootState) => state.classModal);
+  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
+  const studentList: Student[] = useClassStudentListQuery(classId).data;
 
   return (
     <>
       <StudentListTextWrapper>
         <div>
           <StudentListTitle>학생 리스트 </StudentListTitle>
-          <StudentListText>(20)</StudentListText>
+          <StudentListText>({studentList?.length})</StudentListText>
         </div>
         <StudentAddText onClick={() => dispatch(openAddStudentModal())}>
           <AiOutlineUsergroupAdd className="icon" />
@@ -98,10 +38,11 @@ export default function ClassStudentList() {
       {isOpenAddStudentModal && <AddStudentModal />}
 
       <StudentListWrapper>
-        {studentList?.map((item, idx) => (
-          <StudentInfoCard key={idx} studentInfo={item} />
+        {studentList?.map((item) => (
+          <StudentInfoCard key={item.userId} studentInfo={item} />
         ))}
       </StudentListWrapper>
+      {isOpenDeleteStudentModal && <DeleteStudentModal />}
     </>
   );
 }

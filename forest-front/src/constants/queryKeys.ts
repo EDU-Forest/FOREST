@@ -1,7 +1,11 @@
-// 쿼리키 보관
-// 예시
-export const KEY_NAME = "/keyName";
-
 // auth
 export const KAKAO_LOGIN = "/kakaoLogin";
 export const CHECK_EMAIL = "/checkEmail";
+
+// class
+export const RECENT_CLASSID = "/recentClassId";
+export const CLASS_LIST = "/classList";
+export const CHECK_CLASSNAME = "/checkClassName";
+export const CLASS_STUDENT_LIST = "/classStudentList";
+export const SEARCH_CLASS_STUDENT = "/searchClassStudent";
+export const CLASS_WORKBOOK_LIST = "/classWorkbookList";
