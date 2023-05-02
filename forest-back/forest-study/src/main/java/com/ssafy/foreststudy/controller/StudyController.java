@@ -26,8 +26,8 @@ public class StudyController {
 
     private final StudyService studyService;
 
-    @ApiOperation(value = "클래스 일정 목록 조회", notes = "클래스의 일정 목록을 조회합니다.")
-    @GetMapping("/calendar/{classId}")
+    @ApiOperation(value = "유저 일정 목록 조회", notes = "유저의 일정 목록을 조회합니다.")
+    @GetMapping("/calendar/{userId}")
     public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(studyService.getScheduleList(userId));
     }
