@@ -1,3 +1,5 @@
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
+import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
 import { AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
 import {
@@ -5,6 +7,7 @@ import {
   MdOutlineLineStyle,
   MdOutlinePowerInput,
 } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowLeft from "../Arrow/ArrowLeft";
 import {
   ArrowDiv,
@@ -13,10 +16,6 @@ import {
   EditorNavDivTitle,
   StyledEditorNav,
 } from "./Nav.style";
-import { useDispatch } from "react-redux";
-import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 
 interface IProps {
   setSelectQuestionType: React.Dispatch<React.SetStateAction<string>>;
@@ -27,6 +26,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const dispatch = useDispatch();
 
   const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
@@ -87,6 +87,10 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
     dispatch(setCurQuestion(questions.length + 1));
   };
 
+  const handleClickObjectType = (type: string) => {
+    // type === "image" ? {} : "text" && dispatch(questions[curQuestion].text);
+  };
+
   return (
     <StyledEditorNav>
       <ArrowDiv>
@@ -121,11 +125,11 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       </EditorNavDiv>
       <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
       <EditorNavDiv>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickObjectType("image")}>
           <AiFillPicture className="object" />
           이미지
         </EditorNavDivInner>
-        <EditorNavDivInner>
+        <EditorNavDivInner onClick={() => handleClickObjectType("text")}>
           <AiOutlinePicLeft className="object" />
           지문
         </EditorNavDivInner>
