@@ -132,12 +132,24 @@ public class StudyService {
     }
 
     /* 대시보드 일정(캘린더) 목록 조회 */
-    public ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>> getScheduleList(Long classId) {
+    public ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>> getScheduleList(Long userId) {
 
-        classRepository.findById(classId)
+//        classRepository.findById(classId)
+//                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
+
+        List<ClassUser> classUser = classUserRepository.findAllByUser(user);
+
+        List<Study> studyList = new ArrayList<>();
+        for (ClassUser cu : classUser) {
+            classRepository.findById(cu.getId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
+            List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
+            studyList.addAll(classStudyList);
+        }
 
-        List<Study> studyList = studyRepository.findAllListByClassId(classId);
 
         System.out.println("studyList = " + studyList);
 

@@ -28,8 +28,8 @@ public class StudyController {
 
     @ApiOperation(value = "클래스 일정 목록 조회", notes = "클래스의 일정 목록을 조회합니다.")
     @GetMapping("/calendar/{classId}")
-    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("classId") Long classId) {
-        return ResponseEntity.ok(studyService.getScheduleList(classId));
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getScheduleList(userId));
     }
 
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
