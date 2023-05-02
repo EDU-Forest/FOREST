@@ -235,7 +235,6 @@ export const EditorQuestionTextInput = styled.input`
 
   padding: 1.5rem !important;
   margin-top: 1.5rem !important;
-  margin: 0 1.5rem;
 
   border: 1px solid ${({ theme }) => theme.colors.Lime[600]} !important;
   border-radius: 4px !important;
