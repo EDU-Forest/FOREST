@@ -19,7 +19,7 @@ function EditorEssay({ question }: IProps) {
   const [answers, setAnswers] = useState<string[]>([]);
 
   useEffect(() => {
-    setAnswers(question.answer.split(","));
+    question.answer && setAnswers(question.answer.split(","));
   }, [question]);
 
   const handleChangeAnswer = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
