@@ -39,7 +39,7 @@ authAxios.interceptors.response.use(
       prevRequest.headers.authorization = accessToken;
       return authAxios(prevRequest);
     }
-    return authAxios;
+    return Promise.reject(error);
   },
 );
 
