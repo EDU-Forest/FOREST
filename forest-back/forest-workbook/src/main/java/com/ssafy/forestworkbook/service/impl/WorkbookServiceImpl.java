@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.*;
 
 @Slf4j
@@ -32,6 +33,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ProblemListRepository problemListRepository;
     private final ProblemRepository problemRepository;
     private final ItemRepository itemRepository;
+    private final StudyRepository studyRepository;
     private final ResponseUtil responseUtil;
 
     @Override
@@ -218,6 +220,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(problemToDto.getTitle())
                     .problemImgPath(problemToDto.getPath())
                     .answer(problemToDto.getAnswer())
+                    .text(problemToDto.getText())
+                    .textIsEmpty((problemToDto.getText().equals("") || problemToDto.getText() == null) ? true : false)
                     .point(problemToDto.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
                     .build();
@@ -300,6 +304,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .type(problem.getType())
                     .title(problem.getTitle())
                     .problemImgPath(problem.getPath())
+                    .text(problem.getText())
+                    .textIsEmpty((problem.getText() == null || problem.getText().equals("")) ? true : false)
                     .answer(problem.getAnswer())
                     .point(problem.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
@@ -513,6 +519,21 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
+    public ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
+
+        userWorkbook.updateIsBookmarked(false);
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_BOOKMARK);
+    }
+
+    @Override
     public ResponseSuccessDto<?> getBestWorkbook(Long userId, String search) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
@@ -567,6 +588,45 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
         ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
         return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> getClassWorkbook(Long userId, Long classId, String search) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        LocalTime now = LocalTime.now();
+
+        // EXAM
+        if (search.equals("exam")) {
+            List<Study> studyList = studyRepository.findAllByClassesId(classId);
+
+//            for (Study study : studyList) {
+//                ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
+//                        .
+//                        .build();
+//            }
+
+
+        }
+
+        // HOMEWORK
+        else if (search.equals("homework")) {
+
+        }
+
+        // SELF
+        else if (search.equals("self")) {
+
+        }
+
+        // 파라미터 입력 오류
+        else {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
+        }
+
+
+        return null;
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks) {
