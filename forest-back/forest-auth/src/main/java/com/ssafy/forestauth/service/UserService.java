@@ -118,6 +118,8 @@ public class UserService {
             throw new CustomException(ErrorCode.AUTH_USER_NOT_FOUND);
         }
 
+        findUser.updateRefreshToken(jwtProvider.createRefreshToken());
+
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())
                 .role(findUser.getRole())
