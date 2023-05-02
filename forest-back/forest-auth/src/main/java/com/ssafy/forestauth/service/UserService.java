@@ -41,7 +41,8 @@ public class UserService {
         userRepository.save(user);
 
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
-                .message(SuccessCode.AUTH_SIGN_UP_SUCCESS.getMessage())
+                .name(user.getName())
+                .role(user.getRole())
                 .build();
         ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
         return res;
@@ -54,7 +55,8 @@ public class UserService {
         findUserById.updateUserInfo(signupSocialRequestDto);
 
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
-                .message(SuccessCode.AUTH_SIGN_UP_SUCCESS.getMessage())
+                .username(findUserById.getName())
+                .role(findUserById.getRole())
                 .build();
         ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
         return res;
