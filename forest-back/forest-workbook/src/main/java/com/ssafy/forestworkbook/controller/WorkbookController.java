@@ -27,7 +27,7 @@ public class WorkbookController {
     @GetMapping
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList(
-            @RequestParam("search") String search, Pageable pageable) {
+            @RequestParam String search, Pageable pageable) {
 //        Map<String, String> authInfo = SecurityUtil.getCurrentUser();
         Long userId = Long.valueOf(10);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
@@ -111,7 +111,7 @@ public class WorkbookController {
 
     @GetMapping("/best")
     @ApiOperation(value = "최고 인기 문제집 목록 조회", notes = "최고 인기 문제집 목록을 조회합니다.")
-    public ResponseSuccessDto<?> getBestWorkbook(@RequestParam("search") String search) {
+    public ResponseSuccessDto<?> getBestWorkbook(@RequestParam String search) {
         Long userId = Long.valueOf(10);
         return workbookService.getBestWorkbook(userId, search);
     }
@@ -121,6 +121,14 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getRecentWorkbook() {
         Long userId = Long.valueOf(10);
         return workbookService.getRecentWorkbook(userId);
+    }
+
+    @GetMapping("/class/{classId}")
+    @ApiOperation(value = "클래스 문제집 목록 조회", notes = "클래스 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getClassWorkbook(
+            @PathVariable Long classId, @RequestParam String search) {
+        Long userId = Long.valueOf(10);
+        return workbookService.getClassWorkbook(userId, classId, search);
     }
 
 

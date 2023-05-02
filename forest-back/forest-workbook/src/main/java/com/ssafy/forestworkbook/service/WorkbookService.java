@@ -18,8 +18,9 @@ public interface WorkbookService {
     ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId);
     ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
+    ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
     ResponseSuccessDto<?> getRecentWorkbook(Long userId);
-    ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);
+    ResponseSuccessDto<?> getClassWorkbook(Long userID, Long classId, String search);
 
 }
