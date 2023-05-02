@@ -5,12 +5,11 @@ import {
   StudentInfoCardText,
   StyledStudentInfoCard,
 } from "./Card.style";
-import { useState } from "react";
-import DeleteStudentModal from "@/features/class/teacher/DeleteStudentModal";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
+
 import { useDispatch } from "react-redux";
 import { openDeleteStudentModal } from "@/stores/class/classModal";
+import { useEffect } from "react";
+import { setDeleteStudentNum } from "@/stores/class/classInfo";
 
 interface Iprops {
   studentInfo: Student;
@@ -18,7 +17,11 @@ interface Iprops {
 
 export default function StudentInfoCard({ studentInfo }: Iprops) {
   const dispatch = useDispatch();
-  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
+
+  const clickDeleteBtn = () => {
+    dispatch(openDeleteStudentModal());
+    dispatch(setDeleteStudentNum(studentInfo.userId));
+  };
 
   return (
     <StyledStudentInfoCard>
@@ -27,14 +30,13 @@ export default function StudentInfoCard({ studentInfo }: Iprops) {
           <StudentInfoCardName>{studentInfo?.name}</StudentInfoCardName>
           <StudentInfoCardText>{studentInfo?.age}세</StudentInfoCardText>
         </div>
-        <MdClose className="close-icon" onClick={() => dispatch(openDeleteStudentModal())} />
+        <MdClose className="close-icon" onClick={clickDeleteBtn} />
       </StudentInfoCardInner>
       <div>
         <StudentInfoCardText>{studentInfo?.email}</StudentInfoCardText>
         <StudentInfoCardText>|</StudentInfoCardText>
         <StudentInfoCardText>{studentInfo?.phone}</StudentInfoCardText>
       </div>
-      {isOpenDeleteStudentModal && <DeleteStudentModal userId={studentInfo.userId} />}
     </StyledStudentInfoCard>
   );
 }

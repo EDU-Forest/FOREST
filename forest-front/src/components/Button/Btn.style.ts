@@ -191,6 +191,12 @@ const StyledSmallBtn = styled.button<{ colored?: boolean }>`
     background-color: ${({ colored, theme }) => (colored ? theme.colors.Lime[800] : "white")};
     color: ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[800])};
   }
+
+  &:disabled {
+    border: 0.125rem solid ${({ theme }) => theme.colors.Gray[300]};
+    background-color: white;
+    color: ${({ theme }) => theme.colors.Gray[300]};
+  }
 `;
 
 const StyledStartBtn = styled.button`
