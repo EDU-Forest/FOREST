@@ -1,11 +1,11 @@
 import { setRole, setUsername } from "@/stores/user/user";
-import customAxios from "@/utils/customAxios";
+import authAxios from "@/utils/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
-  customAxios
+  authAxios
     .post(`/api/user/social`, {
       name: payload.username,
       phone: payload.phoneNumber,
@@ -13,7 +13,7 @@ const fetcher = (payload: KakaoLoginMoreInfo) =>
       role: payload.role,
       provider: "KAKAO",
     })
-    .then(({ data }) => data);
+    .then(({ data }) => data.data);
 
 const useKakaoLoginMoreInfo = () => {
   const dispatch = useDispatch();

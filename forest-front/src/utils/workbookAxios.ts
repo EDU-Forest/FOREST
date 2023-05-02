@@ -1,17 +1,16 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { useEffect } from "react";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
 const AxiosConFigure: AxiosRequestConfig = {
-  baseURL: NEXT_PUBLIC_SERVER_URL,
+  baseURL: `${NEXT_PUBLIC_SERVER_URL}:9011`,
   timeout: 5000,
   // withCredentials: true,
 };
 
-const customAxios = axios.create(AxiosConFigure);
+const workbookAxios = axios.create(AxiosConFigure);
 
-customAxios.interceptors.request.use(
+workbookAxios.interceptors.request.use(
   (config) => {
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
@@ -24,7 +23,7 @@ customAxios.interceptors.request.use(
   (error) => error,
 );
 
-customAxios.interceptors.response.use(
+workbookAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     console.log("interceptor error", error);
@@ -34,7 +33,7 @@ customAxios.interceptors.response.use(
       console.log("error step 2");
       prevRequest.sent = true;
       const newAccessToken = async () => {
-        const response = await customAxios.post("/api/auth/reissue");
+        const response = await workbookAxios.post("/api/auth/reissue");
         console.log("error step 3");
         const { accessToken } = response.data.payload;
 
@@ -43,10 +42,10 @@ customAxios.interceptors.response.use(
       const accessToken = await newAccessToken();
       console.log("error step 4");
       prevRequest.headers.authorization = accessToken;
-      return customAxios(prevRequest);
+      return workbookAxios(prevRequest);
     }
-    return customAxios;
+    return workbookAxios;
   },
 );
 
-export default customAxios;
+export default workbookAxios;
