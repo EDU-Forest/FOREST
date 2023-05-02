@@ -4,19 +4,17 @@ import {
   StyledQuestionChoiceNumBox,
   StyledQuestionDetailChoiceBox,
   StyledQuestionDetailChoiceListBox,
+  StyledQuestionDetailTextBox,
 } from "../workbookDetail/WorkbookDetail.style";
 
 export const EditorQuestionContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  /* flex: 1; */
 
-  padding: 1.5rem 0;
+  padding: 1.5rem;
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]};
 
   input {
-    padding: 0 1.5rem;
-
     border: none;
     background-color: transparent;
     outline: none;
@@ -69,7 +67,6 @@ export const EditorQuestionItemAddButton = styled.button`
   align-items: center;
   flex: 1;
 
-  margin: 0 1rem;
   padding: 4px 8px;
   gap: 0.5rem;
   margin-top: 8px;
@@ -97,6 +94,10 @@ export const EditorQuestionItemAddButton = styled.button`
 `;
 
 export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceListBox)`
+  // 부모 패딩 무시
+  width: calc(100% + 24px * 2);
+  margin: 24px 0 24px -24px;
+
   gap: 8px;
   padding: 0 1rem;
   margin-top: 1rem;
@@ -153,7 +154,6 @@ export const EditorChoiceNumBox = styled(StyledQuestionChoiceNumBox)<{ isCorrect
 
 // 단답식
 export const EditorShortAnswerBox = styled.div`
-  margin: 0 1.5rem;
   margin-top: 1.5rem;
 
   > input {
@@ -189,7 +189,6 @@ export const EditorEssayKeywordsBox = styled.div`
   display: flex;
   flex-flow: wrap;
 
-  margin: 0 1.5rem;
   gap: 0.5rem;
 
   input {
@@ -224,10 +223,21 @@ export const EditorEssayKeywordsBox = styled.div`
 
 export const EditorEssayBox = styled.div`
   p {
-    margin: 0 1.5rem;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
 
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
+`;
+
+export const EditorQuestionTextInput = styled.input`
+  width: 100%;
+
+  padding: 1.5rem !important;
+  margin-top: 1.5rem !important;
+  margin: 0 1.5rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.Lime[600]} !important;
+  border-radius: 4px !important;
+  line-height: 28px !important;
 `;
