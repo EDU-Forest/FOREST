@@ -1,10 +1,7 @@
 package com.ssafy.foreststudy.util;
 
 
-import com.ssafy.foreststudy.dto.common.response.ErrorContentDto;
-import com.ssafy.foreststudy.dto.common.response.ResponseErrorDto;
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
-import com.ssafy.foreststudy.enumeration.response.ErrorCode;
 import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import org.springframework.stereotype.Component;
 
@@ -22,21 +19,6 @@ public class ResponseUtil<T> {
                 .data(data)
                 .build();
         return res;
-    }
-
-    public ResponseErrorDto<ErrorContentDto> buildErrorResponse(ErrorCode errorCode, String path) {
-        ErrorContentDto errorContentDto = ErrorContentDto.builder()
-                .message(errorCode.getMessage())
-                .build();
-
-        return ResponseErrorDto
-                .<ErrorContentDto>builder()
-                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
-                .code(errorCode.getStatus().value())
-                .status(errorCode.name())
-                .path(path)
-                .error(errorContentDto)
-                .build();
     }
 
 }
