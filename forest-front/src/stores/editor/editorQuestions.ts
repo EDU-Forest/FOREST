@@ -14,8 +14,9 @@ const initialState: editorQuestions = {
       type: "",
       title: "",
       text: "",
+      answer: "",
       point: 0,
-      image: "",
+      problemImgPath: "",
       items: [
         {
           id: 0,
