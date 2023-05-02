@@ -14,6 +14,13 @@ configurations {
     }
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 repositories {
     mavenCentral()
 }
@@ -42,6 +49,9 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
     implementation 'javax.xml.bind:jaxb-api'
+
+    // mattermost
+    implementation 'com.github.lmghee:forest-noti:63a0806612'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
