@@ -247,3 +247,52 @@ export const EditorQuestionTextInput = styled.textarea`
     color: black !important;
   }
 `;
+
+export const EditorQuestionImgBox = styled.div`
+  height: 160px;
+
+  display: flex;
+  justify-content: center;
+
+  margin-top: 1.5rem;
+
+  img {
+    width: auto;
+    height: 100%;
+  }
+
+  input {
+    display: none;
+  }
+`;
+
+export const EditorQuestionInputBox = styled(EditorQuestionItemAddButton)`
+  justify-content: center;
+
+  label {
+    padding: 8px 16px;
+
+    font-weight: bold;
+    text-align: center;
+    justify-content: center;
+    font-size: 1rem;
+    background-color: ${({ theme }) => theme.colors.Lime[100]};
+    color: ${({ theme }) => theme.colors.Lime[600]};
+    border-radius: 4px;
+
+    cursor: pointer;
+  }
+`;
+
+export const EditorQuestionImgBtn = styled.label`
+  padding: 8px 16px;
+
+  font-weight: bold;
+  text-align: center;
+  font-size: 1rem;
+  background-color: ${({ theme }) => theme.colors.Lime[100]};
+  color: ${({ theme }) => theme.colors.Lime[600]};
+  border-radius: 4px;
+
+  cursor: pointer;
+`;

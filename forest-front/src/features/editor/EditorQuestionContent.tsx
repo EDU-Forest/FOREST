@@ -15,6 +15,7 @@ import {
 } from "./EditorQuestionContent.style";
 import EditorShortAnswer from "./EditorShortAnswer";
 import EditorQuestionTextInput from "./EditorQuestionText";
+import EditorQuestionImg from "./EditorQuestionImg";
 
 interface IProps {
   selectQuestionType: string;
@@ -73,15 +74,15 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
       </EditorNumAndPointBox>
 
       <EditorQuestionContentBox>
-        <div>
-          <EditorQuestionTitleInput
-            value={title}
-            placeholder="문제를 입력하세요"
-            onChange={handleChangeTitle}
-          />
-          {/* 지문 여부에 따라 지문 렌더링 */}
-          {question.textIsEmpty && <EditorQuestionTextInput question={question}/>}
-        </div>
+        <EditorQuestionTitleInput
+          value={title}
+          placeholder="문제를 입력하세요"
+          onChange={handleChangeTitle}
+        />
+        {/* 지문 여부에 따라 지문 렌더링 */}
+        {question.textIsEmpty && <EditorQuestionTextInput question={question} />}
+        {/* 이미지 여부에 따라 이미지 렌더링 */}
+        {question.imgIsEmpty && <EditorQuestionImg question={question} />}
         {/* 객관식 */}
         {question.type === "multipleChoice" && (
           <EditorMultipleChoice

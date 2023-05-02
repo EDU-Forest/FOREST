@@ -16,6 +16,7 @@ import {
   EditorNavDivTitle,
   StyledEditorNav,
 } from "./Nav.style";
+import useEditor from "@/hooks/editor/useEditor";
 
 interface IProps {
   setSelectQuestionType: React.Dispatch<React.SetStateAction<string>>;
@@ -27,6 +28,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
 
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const [toChangeQuestions] = useEditor();
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
@@ -92,6 +94,8 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       const copyArr = [...questions];
       copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: true });
       dispatch(setQuestions([...copyArr]));
+    } else if (type === "image") {
+      toChangeQuestions('imgIsEmpty', true);
     }
   };
 
