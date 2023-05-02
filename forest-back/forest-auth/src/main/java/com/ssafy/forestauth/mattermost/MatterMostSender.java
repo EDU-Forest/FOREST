@@ -50,6 +50,8 @@ public class MatterMostSender {
             headers.set("Content-type", MediaType.APPLICATION_JSON_VALUE);
 
             HttpEntity<String> entity = new HttpEntity<>(payload, headers);
+
+            logger.info("webhookUrl : {}", webhookUrl);
             restTemplate.postForEntity(webhookUrl, entity, String.class);
         } catch (Exception e) {
             logger.error("### ERROR!! Notification Manager : {}", e.getMessage());
