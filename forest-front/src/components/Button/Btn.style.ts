@@ -193,6 +193,7 @@ const StyledRoundSolid600Btn = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  justify-content: center;
 
   padding: 0.5rem 1rem;
   gap: 0.5rem;

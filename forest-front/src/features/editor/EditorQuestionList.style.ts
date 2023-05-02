@@ -1,4 +1,3 @@
-import { theme } from "./../../styles/theme";
 import styled from "styled-components";
 import { StyledWorkbookDetailQuestionListContentBox } from "../workbookDetail/WorkbookDetail.style";
 
@@ -6,6 +5,16 @@ export const EditorQuestionListBox = styled(StyledWorkbookDetailQuestionListCont
   width: 240px;
 
   flex: 1 !important;
+
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  padding: 24px;
 `;
 
 export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`

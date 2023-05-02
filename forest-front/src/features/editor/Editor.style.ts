@@ -4,17 +4,20 @@ import { StyledWorkbookDetailBtnsBox } from "../workbookDetail/WorkbookDetail.st
 
 export const EditorContainer = styled(Container)`
   display: flex;
+
+  padding: 32px;
+  gap: 24px;
 `;
 
 export const EditorTitleAndQuestionBox = styled.div`
-  height: 100vh;
-
   display: flex;
   flex: 1;
   flex-direction: column;
 `;
 
 export const EditorBtnsAndListBox = styled.div`
+  width: 240px;
+
   display: flex;
   flex-direction: column;
 `;
@@ -30,5 +33,13 @@ export const QuestionEditAreaBox = styled.div`
 `;
 
 export const EditorBtnsBox = styled(StyledWorkbookDetailBtnsBox)`
-  width: 240px;
+  width: auto;
+  min-width: auto;
+  display: flex;
+
+  margin: 0;
+
+  > button {
+    width: 100%;
+  }
 `;
