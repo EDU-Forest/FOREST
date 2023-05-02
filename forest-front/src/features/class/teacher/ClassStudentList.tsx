@@ -28,7 +28,7 @@ export default function ClassStudentList() {
       <StudentListTextWrapper>
         <div>
           <StudentListTitle>학생 리스트 </StudentListTitle>
-          <StudentListText>(20)</StudentListText>
+          <StudentListText>({studentList?.length})</StudentListText>
         </div>
         <StudentAddText onClick={() => dispatch(openAddStudentModal())}>
           <AiOutlineUsergroupAdd className="icon" />
