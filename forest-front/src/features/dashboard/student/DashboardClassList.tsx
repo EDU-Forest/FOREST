@@ -1,41 +1,33 @@
 import { StyledDashboardClassItem, StyledDashboardClassListBox } from "./DashboardClass.style";
 import { MdSchool } from "react-icons/md";
 import { AiOutlineRight } from "react-icons/ai";
+import useClassListQuery from "@/apis/class/useClassListQuery";
+import { useDispatch } from "react-redux";
+import { setClass } from "@/stores/class/classInfo";
+import { useRouter } from "next/router";
 
 interface ListType {
-  id: number;
-  classTitle: string;
+  classId: number;
+  className: string;
 }
 
 function DashboardClassList() {
-  // 더미
-  const list: ListType[] = [
-    {
-      id: 1,
-      classTitle: "A반",
-    },
-    {
-      id: 2,
-      classTitle: "A반",
-    },
-    {
-      id: 3,
-      classTitle: "A반",
-    },
-  ];
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const classList: ClassList[] = useClassListQuery().data;
 
-  const handleClick = (id?: number) => {
-    // 클래스 이동
-    console.log(id);
+  const handleClick = (item: ListType) => {
+    dispatch(setClass(item));
+    router.push("/student/class");
   };
 
   return (
     <StyledDashboardClassListBox>
-      {list.map((item) => {
+      {classList?.map((item) => {
         return (
-          <StyledDashboardClassItem key={item?.id} onClick={() => handleClick(item?.id)}>
+          <StyledDashboardClassItem key={item.classId} onClick={() => handleClick(item)}>
             <MdSchool />
-            <span>{item?.classTitle}</span>
+            <span>{item.className}</span>
             <AiOutlineRight />
           </StyledDashboardClassItem>
         );
