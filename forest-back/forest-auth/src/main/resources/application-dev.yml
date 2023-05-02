@@ -57,7 +57,7 @@ spring:
 
 jwt:
 #  redirect-url: https://k8b105.p.ssafy.io/login/success
-  redirect-url: http://localhost/login/success
+  redirect-url: http://localhost:3000/login/success
   token:
     secretKey: ${JWT_SECRET_KEY}
 
