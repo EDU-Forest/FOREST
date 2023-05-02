@@ -19,5 +19,6 @@ public interface WorkbookService {
     ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
+    ResponseSuccessDto<?> getRecentWorkbook(Long userId);
 
 }

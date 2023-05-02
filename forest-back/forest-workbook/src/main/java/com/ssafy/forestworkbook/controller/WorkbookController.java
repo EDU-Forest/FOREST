@@ -109,5 +109,12 @@ public class WorkbookController {
         return workbookService.getBestWorkbook(userId, search);
     }
 
+    @GetMapping("/recent")
+    @ApiOperation(value = "최고 인기 문제집 목록 조회", notes = "최고 인기 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getRecentWorkbook() {
+        Long userId = Long.valueOf(10);
+        return workbookService.getRecentWorkbook(userId);
+    }
+
 
 }

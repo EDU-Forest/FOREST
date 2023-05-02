@@ -13,5 +13,6 @@ public interface WorkbookCustomRepository {
 
     List<BestWorkbookDto> findTop20ByIsBookmarkedBestWorkbook();
     List<BestWorkbookDto> findTop20ByIsScrapedBestWorkbook();
+    List<BestWorkbookDto> findTop20ByUpdatedDateWorkbook();
 
 }

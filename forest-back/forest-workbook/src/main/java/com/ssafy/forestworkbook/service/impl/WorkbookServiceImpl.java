@@ -517,7 +517,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<ExploreWorkbookDto> exploreWorkbookDtoList = new ArrayList<>();
+        List<ExploreWorkbookDto> exploreWorkbookDtoList;
 
         // 좋아요순
         if (search.equals("bookmark")) {
@@ -536,6 +536,35 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
         }
 
+        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
+        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> getRecentWorkbook(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        List<ExploreWorkbookDto> exploreWorkbookDtoList = new ArrayList<>();
+
+        List<Workbook> workbookList = workbookRepository.findTop20ByIsPublicIsTrueOrderByCreatedDateDesc();
+
+        for (Workbook workbook : workbookList) {
+            UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                    .orElse(null);
+
+            ExploreWorkbookDto exploreWorkbookDto = ExploreWorkbookDto.builder()
+                    .workbookId(workbook.getId())
+                    .title(workbook.getTitle())
+                    .workbookImgPath(workbook.getWorkbookImg().getPath())
+                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
+                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
+                    .methodType((userWorkbook == null) ? "POST" : "FATCH")
+                    .isScraped((userWorkbook == null) ? false : userWorkbook.getIsScraped())
+                    .isBookmarked((userWorkbook == null) ? false : userWorkbook.getIsBookmarked())
+                    .build();
+            exploreWorkbookDtoList.add(exploreWorkbookDto);
+        }
         ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
         return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
