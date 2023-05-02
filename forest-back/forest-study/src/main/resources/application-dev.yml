@@ -1,5 +1,12 @@
 server:
   port: 9012
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   ssl:
     enabled: true
     key-store: ${KEY_STORE}
@@ -31,7 +38,8 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-study:
+notification:
   mattermost:
     enabled: true
     webhook-url: ${MM_WEBHOOK_URL}
+    channel :
