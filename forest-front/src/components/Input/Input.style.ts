@@ -1,4 +1,3 @@
-import { Iprops } from "@/features/home/SignupInput";
 import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 

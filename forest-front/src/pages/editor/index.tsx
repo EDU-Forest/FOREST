@@ -1,6 +1,5 @@
 import EditorNav from "@/components/Nav/EditorNav";
 import ImportingModal from "@/features/editor/ImportingModal";
-import PdfViewer from "@/features/editor/PdfViewer";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
 import { useSelector } from "react-redux";

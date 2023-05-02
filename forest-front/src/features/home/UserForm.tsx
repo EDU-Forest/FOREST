@@ -1,10 +1,10 @@
-import Modal from "@/components/Modal/Modal";
 import {
   SignupContentBox,
   SignupForm,
   SignupHr,
-  SignupInputRowBox,
+  SignupInputBox,
   SignupLabel,
+  SignupPasswordBox,
   SignupRoleBox,
   // SignupInputBox,
   // SignupLabel,
@@ -14,117 +14,73 @@ import {
 } from "./SignupModal.style";
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
 import SmallBtn from "@/components/Button/SmallBtn";
-import { useState } from "react";
-import SignupInput from "./SignupInput";
+import { useEffect, useState } from "react";
 import RoleBtn from "@/components/Button/RoleBtn";
 import { checkEmail } from "@/utils";
+import { CommonInput } from "@/components/Input/Input.style";
+import { SignupLabelBox } from "./Home.style";
+import Label from "@/components/Label/Label";
+import { useRouter } from "next/router";
+import useKakaoLoginMoreInfo from "@/apis/auth/useKakaoLoginMoreInfoQuery";
+import { useDispatch } from "react-redux";
+import { setRole, setUsername } from "@/stores/user/user";
 
 interface Iprops {
   onClose: () => void;
   type: "signup" | "moreinfo";
 }
 
-export default function UserForm({ onClose, type }: Iprops) {
-  // 이메일
-  const [emailValidation, setEmailValidation] = useState("");
-  const [emailDuplicateValidation, setEmailDuplicateValidation] = useState("");
-
-  // 이름
-  const [usernameValidation, setUsernameValidation] = useState("");
-
-  // 전화번호
-  const [phoneNumberValidation, setPhoneNumberValidation] = useState("");
-  const [phoneNumberDuplicateValidation, setPhoneNumberDuplicateValidation] = useState("");
-
-  // 비밀번호
-  const [passwordValidation, setPasswordValidation] = useState("");
-
-  // 비밀번호 확인
-  const [checkPasswordValidation, setCheckPasswordValidation] = useState("");
-
-  // 생일
-  const [birthValidation, setBirthValidation] = useState("");
-
-  const [userData, setUserData] = useState({
+export default function UserForm({ type }: Iprops) {
+  const { mutate } = useKakaoLoginMoreInfo();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [validation, setValidation] = useState({
+    email: "",
+    emailDuplicate: "",
+    username: "",
+    phoneNumber: "",
+    phoneNumberDuplicate: "",
+    password: "",
+    passwordForm: "",
+    checkPassword: "",
+    birth: "",
+  });
+  const [userData, setUserData] = useState<UserData>({
     email: "",
     username: "",
     phoneNumber: "",
     password: "",
     checkPassword: "",
+    role: "STUDENT",
     birth: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState("student");
+  useEffect(() => {
+    const email = router.query?.email;
+    if (typeof email === "string") {
+      setUserData({
+        ...userData,
+        email: email,
+      });
+    }
+  }, []);
 
-  const columnDataList = [
-    {
-      label: "이메일",
-      name: "email",
-      type: "email",
-      placeholder: "이메일을 입력하세요",
-      value: userData.email,
-      validations: {
-        "이메일 형식": emailValidation,
-        중복체크: emailDuplicateValidation,
-      },
-    },
-    {
-      label: "이름",
-      name: "username",
-      type: "text",
-      placeholder: "이름을 입력하세요",
-      value: userData.username,
-      validations: {
-        "2자 이상 8자 이하": usernameValidation,
-      },
-    },
-    {
-      label: "전화번호",
-      name: "phoneNumber",
-      type: "number",
-      placeholder: "- 없이 숫자만 입력하세요",
-      value: userData.phoneNumber,
-      validations: {
-        "전화번호 형식": phoneNumberValidation,
-        중복체크: phoneNumberDuplicateValidation,
-      },
-    },
-  ];
-
-  const rowDataList = [
-    {
-      label: "비밀번호",
-      name: "password",
-      type: "password",
-      placeholder: "비밀번호를 입력하세요",
-      value: userData.password,
-      validations: {
-        "8자 이상 16자 이하": passwordValidation,
-      },
-    },
-    {
-      label: "비밀번호 확인",
-      name: "checkPassword",
-      type: "password",
-      placeholder: "비밀번호를 입력하세요",
-      value: userData.checkPassword,
-      validations: {
-        "비밀번호 일치": checkPasswordValidation,
-      },
-    },
-    // {
-    //   label: "생년월일",
-    //   name: "birth",
-    //   type: "date",
-    //   placeholder: "생년월일을 선택하세요",
-    //   value: userData.birth,
-    //   validations: birthValidation,
-    // },
-  ];
+  const movePage = () => {
+    router.push("/");
+  };
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    return null;
+    dispatch(setUsername(userData.username));
+    dispatch(setRole(userData.role));
+    if (
+      (type === "moreinfo" || validation.email === "pass") &&
+      validation.username === "pass" &&
+      validation.phoneNumber === "pass" &&
+      validation.birth === "pass"
+    ) {
+      mutate(userData);
+    }
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,70 +89,178 @@ export default function UserForm({ onClose, type }: Iprops) {
       ...userData,
       [name]: value,
     });
+
+    if (name === "birth") {
+      birthValidator();
+    }
   };
 
-  const blurHandler = (e: React.FocusEvent<HTMLElement>) => {
-    console.log(e);
-    // if (name === "email") {
-    //   if (checkEmail(userData.email)) {
-    //     setEmailValidation("pass");
-    //   } else {
-    //     setEmailValidation("fail");
-    //   }
-    // }
+  const emailValidator = () => {
+    setValidation({
+      ...validation,
+      email: checkEmail(userData.email.trim()) ? "pass" : "fail",
+    });
+  };
+
+  const usernameValidator = () => {
+    const lengthOfUsername = userData.username.trim().length;
+    setValidation({
+      ...validation,
+      username: lengthOfUsername >= 2 && lengthOfUsername <= 8 ? "pass" : "fail",
+    });
+  };
+
+  const phoneNumberValidator = () => {
+    const regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    setValidation({
+      ...validation,
+      phoneNumber: regPhone.test(userData.phoneNumber.trim()) ? "pass" : "fail",
+    });
+  };
+
+  const passwordValidator = () => {
+    const lengthOfPassword = userData.password.trim().length;
+    const checkNumber = userData.password.search(/[0-9]/g);
+    const checkEnglish = userData.password.search(/[a-z]/gi);
+
+    setValidation({
+      ...validation,
+      password: lengthOfPassword >= 8 && lengthOfPassword <= 16 ? "pass" : "fail",
+      passwordForm: checkNumber >= 0 && checkEnglish >= 0 ? "pass" : "fail",
+    });
+  };
+
+  const checkPasswordValidator = () => {
+    setValidation({
+      ...validation,
+      checkPassword:
+        userData.password && userData.password === userData.checkPassword ? "pass" : "fail",
+    });
+  };
+
+  const birthValidator = () => {
+    setValidation({
+      ...validation,
+      birth: "pass",
+    });
   };
 
   return (
     <SignupForm onSubmit={signupHandler}>
       <SignupTitleBox>
-        <ArrowLeft onClick={onClose}></ArrowLeft>
-        <SignupTitle>회원가입</SignupTitle>
+        <ArrowLeft onClick={movePage}></ArrowLeft>
+        <SignupTitle>{type === "signup" ? "회원가입" : "추가 정보 입력"}</SignupTitle>
       </SignupTitleBox>
       <SignupHr />
       <SignupContentBox>
-        {columnDataList.map((data) => (
-          <SignupInput
-            label={data.label}
-            name={data.name}
-            type={data.type}
-            placeholder={data.placeholder}
-            value={data.value}
+        <SignupInputBox>
+          <SignupLabel htmlFor="email">이메일</SignupLabel>
+          <CommonInput
+            id="email"
+            name="email"
+            type="email"
+            placeholder="이메일을 입력하세요"
+            value={userData.email}
             onChange={onChange}
-            validations={data.validations}
-            onBlur={blurHandler}
+            disabled={type === "moreinfo"}
+            onBlur={emailValidator}
           />
-        ))}
-        <SignupInputRowBox>
-          {rowDataList.map((data) => (
-            <SignupInput
-              isShort={true}
-              label={data.label}
-              name={data.name}
-              type={data.type}
-              placeholder={data.placeholder}
-              value={data.value}
-              onChange={onChange}
-              validations={data.validations}
-              onBlur={blurHandler}
-            />
-          ))}
-        </SignupInputRowBox>
-        <SignupInput
-          isShort={true}
-          label="생년월일"
-          name="birth"
-          type="date"
-          placeholder="생년월일을 입력하세요"
-          value={userData.birth}
-          onChange={onChange}
-          validations={{ "생년월일 선택": birthValidation }}
-          onBlur={blurHandler}
-        />
+          <SignupLabelBox>
+            <Label status={validation.email}>이메일 형식</Label>
+            <Label status={validation.emailDuplicate}>중복체크</Label>
+          </SignupLabelBox>
+        </SignupInputBox>
+        <SignupInputBox>
+          <SignupLabel htmlFor="username">이름</SignupLabel>
+          <CommonInput
+            id="username"
+            name="username"
+            isShort={true}
+            placeholder="이름을 입력하세요"
+            value={userData.username}
+            onChange={onChange}
+            onBlur={usernameValidator}
+            autoComplete="username"
+          />
+          <SignupLabelBox>
+            <Label status={validation.username}>2자 이상 8자 이하</Label>
+          </SignupLabelBox>
+        </SignupInputBox>
+        <SignupInputBox>
+          <SignupLabel htmlFor="phoneNumber">전화번호</SignupLabel>
+          <CommonInput
+            id="phoneNumber"
+            name="phoneNumber"
+            type="number"
+            placeholder="- 없이 숫자만 입력하세요"
+            value={userData.phoneNumber}
+            onChange={onChange}
+            onBlur={phoneNumberValidator}
+          />
+          <SignupLabelBox>
+            <Label status={validation.phoneNumber}>전화번호 형식</Label>
+            <Label status={validation.phoneNumberDuplicate}>중복체크</Label>
+          </SignupLabelBox>
+        </SignupInputBox>
+        {type === "signup" && (
+          <SignupPasswordBox>
+            <SignupInputBox>
+              <SignupLabel htmlFor="password">비밀번호</SignupLabel>
+              <CommonInput
+                id="password"
+                name="password"
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                isShort={true}
+                value={userData.password}
+                onChange={onChange}
+                onBlur={passwordValidator}
+                autoComplete="new-password"
+              />
+              <SignupLabelBox>
+                <Label status={validation.password}>8자 이상 16자 이하</Label>
+                <Label status={validation.passwordForm}>영문 숫자 모두 사용</Label>
+              </SignupLabelBox>
+            </SignupInputBox>
+            <SignupInputBox>
+              <SignupLabel htmlFor="checkPassword">비밀번호 확인</SignupLabel>
+              <CommonInput
+                id="checkPassword"
+                name="checkPassword"
+                type="password"
+                isShort={true}
+                placeholder="비밀번호를 입력하세요"
+                value={userData.checkPassword}
+                onChange={onChange}
+                onBlur={checkPasswordValidator}
+                autoComplete="new-check-password"
+              />
+              <SignupLabelBox>
+                <Label status={validation.checkPassword}>비밀번호 일치</Label>
+              </SignupLabelBox>
+            </SignupInputBox>
+          </SignupPasswordBox>
+        )}
+        <SignupInputBox>
+          <SignupLabel htmlFor="birth">생년월일</SignupLabel>
+          <CommonInput
+            id="birth"
+            name="birth"
+            type="date"
+            isShort={true}
+            placeholder="생년월일을 선택하세요"
+            value={userData.birth}
+            onChange={onChange}
+          />
+          <SignupLabelBox>
+            <Label status={validation.birth}>생년월일 선택</Label>
+          </SignupLabelBox>
+        </SignupInputBox>
       </SignupContentBox>
       <SignupRoleBox>
         <SignupLabel>역할</SignupLabel>
-        <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-        <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="TEACHER" setUserData={setUserData} userData={userData} />
+        <RoleBtn role="STUDENT" setUserData={setUserData} userData={userData} />
       </SignupRoleBox>
       <SignupHr />
       <SignupSubmitBox>
