@@ -72,7 +72,10 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
         </div>
         {/* 객관식 */}
         {question.type === "multipleChoice" && (
-          <EditorMultipleChoice question={question}></EditorMultipleChoice>
+          <EditorMultipleChoice
+            question={question}
+            curQuestion={curQuestion}
+          ></EditorMultipleChoice>
         )}
         {/* ox */}
         {question.type === "oxChoice" && <EditorOX />}

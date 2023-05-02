@@ -10,9 +10,10 @@ import {
 interface IProps {
   items: QuestionItemType[];
   setItems: React.Dispatch<React.SetStateAction<QuestionItemType[]>>;
+  itemChange: (item: QuestionItemType[]) => void;
 }
 
-function EditorQuestionChoiceList({ items, setItems }: IProps) {
+function EditorQuestionChoiceList({ items, setItems, itemChange }: IProps) {
   const [content, setContent] = useState("");
   const [corret, setCorret] = useState(0);
 
@@ -20,10 +21,14 @@ function EditorQuestionChoiceList({ items, setItems }: IProps) {
     const copyArr = [...items];
     copyArr.splice(i, 1, { ...copyArr[i], content: e.target.value });
     setItems([...copyArr]);
+
+    itemChange([...copyArr]);
   };
 
   const handleClickDelete = (i: number) => {
     setItems(items.filter((item, idx) => idx !== i));
+
+    itemChange(items.filter((item, idx) => idx !== i));
   };
 
   const handleClickItem = (num: number) => {
