@@ -1,11 +1,11 @@
 import { setRole, setUsername } from "@/stores/user/user";
-import authAxios from "@/utils/authAxios";
+import beforeAuthAxios from "@/utils/beforeAuthAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 
 const fetcher = (payload: Login) =>
-  authAxios
+  beforeAuthAxios
     .post(`/api/user/login`, {
       email: payload.email,
       password: payload.password,
