@@ -15,7 +15,8 @@ customAxios.interceptors.request.use(
   (config) => {
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
-      config.headers.Authorization = JSON.parse("Bearer " + forestToken);
+      // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
+      config.headers.Authorization = `Bearer ${forestToken}`;
     }
     console.log("config", config, "forestToken", forestToken);
     return config;
