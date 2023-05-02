@@ -1,12 +1,12 @@
 package com.ssafy.foreststudy.service;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
 import com.ssafy.foreststudy.dto.study.*;
 import com.ssafy.foreststudy.entity.*;
 import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
-import com.ssafy.foreststudy.enumeration.response.ErrorCode;
 import com.ssafy.foreststudy.enumeration.response.SuccessCode;
-import com.ssafy.foreststudy.errorhandling.exception.service.EntityIsNullException;
+import com.ssafy.foreststudy.errorhandling.exception.StudyErrorCode;
 import com.ssafy.foreststudy.repository.*;
 import com.ssafy.foreststudy.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +83,7 @@ public class StudyService {
     /* duplicate Extract */
     private GetStudentRecentResponseDto GetStudentStudyResult(User user, ClassStudyResult cs, String schedule) {
         StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(cs.getStudy(), user)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
         List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudyAndUser(cs.getStudy(), user);
         int totalScore = 0;
@@ -129,7 +129,7 @@ public class StudyService {
     public ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>> getScheduleList(Long classId) {
 
         classRepository.findById(classId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
 
         List<Study> studyList = studyRepository.findAllListByClassId(classId);
 
@@ -198,7 +198,7 @@ public class StudyService {
     /* 최근 진행한 시험 결과 조회 */
     public ResponseSuccessDto<GetStudyIdResponseDto> getStudyRecent(Long classId) {
         classRepository.findById(classId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
         ClassStudyResult cs = csList.get(0);
@@ -222,9 +222,9 @@ public class StudyService {
     public ResponseSuccessDto<?> getStudyResult(Long studyId) {
 
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
-        ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+        ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
         String schedule = getScheduleType(cs);
         ResponseSuccessDto<GetStudyRecentResponseDto> res = null;
@@ -252,7 +252,7 @@ public class StudyService {
     /* (클래스) 문항별 정답률 조회 */
     public ResponseSuccessDto<Map<String, List<GetStudyResultQuestionResponseDto>>> getStudyResultQuestion(Long studyId) {
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         List<ClassAnswerRate> ca = classAnswerRateRepository.findAllByStudyOrderByProblemListAsc(study);
         Map<String, List<GetStudyResultQuestionResponseDto>> result = new HashMap<>();
@@ -276,9 +276,9 @@ public class StudyService {
     /* (클래스) 전체 정답률 조회 */
     public ResponseSuccessDto<GetStudyResultAllResponseDto> getStudyResultAll(Long studyId) {
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
-        ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+        ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study).orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
         int incorrect = 100 - cs.getCorrectAnswerRate() - cs.getUngradedAnswerRate();
 
@@ -295,7 +295,7 @@ public class StudyService {
     /* (클래스) 응시자별 성취도 조회 */
     public ResponseSuccessDto<Map<String, List<GetStudyResultStudentResponseDto>>> getStudyResultStudent(Long studyId) {
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         List<StudentStudyResult> ssr = studentStudyResultRepository.findAllByStudy(study);
         Map<String, List<GetStudyResultStudentResponseDto>> result = new HashMap<>();
@@ -321,10 +321,10 @@ public class StudyService {
     /* (개인) 문항별 정답 여부 조회 */
     public ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> getStudentResultQuestion(Long studyId, Long userId) {
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndUser(study, user);
         Map<String, List<GetStudentResultQuestionResponseDto>> result = new HashMap<>();
@@ -346,12 +346,12 @@ public class StudyService {
     /* (개인) 시험 결과 조회 */
     public ResponseSuccessDto<GetStudentResultResponseDto> getStudentResult(Long studyId, Long userId) {
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-        StudentStudyResult cs = studentStudyResultRepository.findAllByStudyAndUser(study, user).orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+        StudentStudyResult cs = studentStudyResultRepository.findAllByStudyAndUser(study, user).orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
         Duration duration = Duration.between(cs.getEnterTime(), cs.getExitTime());
 
@@ -374,10 +374,10 @@ public class StudyService {
     public ResponseSuccessDto<GetStudyIdResponseDto> getStudentRecent(Long classId, Long userId) {
 
         classRepository.findById(classId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdAndUserIdOrderByEndTime(classId, userId);
         if (csList.size() == 0)
@@ -399,12 +399,12 @@ public class StudyService {
     public ResponseSuccessDto<?> getStudentWorkbookResult(Long studyId, Long userId) {
 
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         ClassStudyResult cs = classStudyResultRepository.findAllByStudy(study)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
         String schedule = getScheduleType(cs);
 
@@ -431,11 +431,11 @@ public class StudyService {
     public ResponseSuccessDto<GetProblemResponseDto> getProblemListAll(Long studyId, Long userId) {
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
         List<GetProblemListResponseDto> problem = new ArrayList<>();
@@ -454,7 +454,7 @@ public class StudyService {
 
             /* 개인 시험 결과 문제 ID 가져오기 위함 */
             StudentStudyProblemResult spr = studentStudyProblemResultRepository.findAllByStudyAndUserAndProblemList(study, user, pl)
-                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
 
             problem.add(GetProblemListResponseDto.builder()
@@ -485,15 +485,15 @@ public class StudyService {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(postStartStudyRequestDto.getStudyId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(postStartStudyRequestDto.getUserId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 해당 유저 클래스 회원이 아닌 경우 체크 */
         classUserRepository.findAllByClassesAndUser(study.getClasses(), user)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_IN_CLASS));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS));
 
         /* 개인시험 결과 테이블 생성 */
         StudentStudyResult studentStudyResult = new StudentStudyResult();
@@ -523,15 +523,15 @@ public class StudyService {
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_PROBLEM_NOT_FOUND));
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchNextProblemRequestDto.getStudyId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(patchNextProblemRequestDto.getUserId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 서술형이라면 */
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
@@ -572,15 +572,15 @@ public class StudyService {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(patchExitStudyRequestDto.getUserId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 존재하지 않는 개인 시험 결과 ID 체크 */
         StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(study, user)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         List<StudentStudyProblemResult> spr = studentStudyProblemResultRepository.findAllByStudyAndUser(study, user);
@@ -626,7 +626,7 @@ public class StudyService {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
@@ -699,11 +699,11 @@ public class StudyService {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 문제 목록 ID 체크 */
         ProblemList problemList = problemListRepository.findById(patchDescriptionListRequestDto.getProblemListId())
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_PROBLEM_LIST_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_PROBLEM_LIST_NOT_FOUND));
 
         // 학생 답안 리스트
         List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, problemList);
@@ -712,7 +712,7 @@ public class StudyService {
 
         /* 받은 답안 리스트 개수와 학생의 수가 일치하는지 체크 */
         if (size != ssp.size())
-            throw new EntityIsNullException(ErrorCode.STUDY_FAILURE_DESCRIPT);
+            throw new CustomException(StudyErrorCode.STUDY_FAILURE_DESCRIPT);
 
         // 총 문항 수 -> 정답률 계산 위해서
         int volume = study.getWorkbook().getVolume();
@@ -729,7 +729,7 @@ public class StudyService {
 
             /* 존재하지 않는 개인 시험 결과 ID 체크 */
             StudentStudyResult ssr = studentStudyResultRepository.findAllByStudyAndUser(study, studentStudyProblemResult.getUser())
-                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
             int correctNum = ssr.getCorrectNum();
             int scoreSum = ssr.getScore() + partPoint;
@@ -744,7 +744,7 @@ public class StudyService {
 
         /* 반 문항별 정답율 업데이트 */
         ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, problemList)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
 
         classAnswerRate.updateClassAnswerRate(numOfCorrectStudent * 100 / ssp.size(), 0);
 
@@ -769,7 +769,7 @@ public class StudyService {
             int correctAnswerRate = correctRate / participateNum;
 
             ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
-                    .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
             classStudyResult.updateClassAnswerRate(study, average, standardDeviation, correctAnswerRate);
         }
 
@@ -786,7 +786,7 @@ public class StudyService {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(studyId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.STUDY_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
 

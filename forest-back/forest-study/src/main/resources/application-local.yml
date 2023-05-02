@@ -27,4 +27,5 @@ notification:
   mattermost:
     enabled: true
     webhook-url: https://meeting.ssafy.com/hooks/j85wn7zntjbnjper47prr5icic
+#    webhook-url: https://meeting.ssafy.com/hooks/pnorjom5sb87uy583c1zrqtjoa
     channel :
