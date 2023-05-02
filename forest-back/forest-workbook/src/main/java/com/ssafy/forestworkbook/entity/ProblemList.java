@@ -42,4 +42,8 @@ public class ProblemList {
         this.problem = problem;
         this.problemNum = problemNum;
     }
+
+    public void updateProblemNum(int problemNum) {
+        this.problemNum = problemNum;
+    }
 }
