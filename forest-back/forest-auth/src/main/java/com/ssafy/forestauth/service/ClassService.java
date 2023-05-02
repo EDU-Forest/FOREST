@@ -3,7 +3,7 @@ package com.ssafy.forestauth.service;
 import com.ssafy.forestauth.dto.classes.*;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.SearchStudentResponseDto;
-import com.ssafy.forestauth.entity.Class;
+import com.ssafy.forestauth.entity.ClassEntity;
 import com.ssafy.forestauth.entity.ClassUser;
 import com.ssafy.forestauth.entity.User;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
@@ -16,13 +16,11 @@ import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +43,8 @@ public class ClassService {
 
         // 선생님(관리자)이 클래스 조회
         if (user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
-            List<Class> allByOwner = classRepository.findAllByOwner(user);
-            for (Class cls : allByOwner) {
+            List<ClassEntity> allByOwner = classRepository.findAllByOwner(user);
+            for (ClassEntity cls : allByOwner) {
                 SelectClassResponseDto selectClassResponseDto = SelectClassResponseDto.builder()
                         .classId(cls.getId())
                         .name(cls.getName())
@@ -73,7 +71,7 @@ public class ClassService {
 
     // 클래스 이름 중복 검사
     public ResponseSuccessDto<CheckClassResponseDto> checkClassName(String className) {
-        Optional<Class> findClass = classRepository.findByName(className);
+        Optional<ClassEntity> findClass = classRepository.findByName(className);
 
         SuccessCode successCode;
         if (findClass.isEmpty()) {
@@ -95,7 +93,7 @@ public class ClassService {
         User user = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
         String className = saveClassRequestDto.getName();
 
-        Class classes = new Class();
+        ClassEntity classes = new ClassEntity();
         classes.createClass(user, className);
         classRepository.save(classes);
 
@@ -111,13 +109,13 @@ public class ClassService {
     // 클래스에 학생 추가
     public ResponseSuccessDto<SaveClassStudentResponseDto> saveClassStudent(SaveClassStudentRequestDto saveClassStudentRequestDto) {
         Long classId = saveClassStudentRequestDto.getClassId();
-        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+        ClassEntity findClassEntity = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
 
         List<Long> studentList = saveClassStudentRequestDto.getStudentList();
         for (Long studentId : studentList) {
             User student = userRepository.findById(studentId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
             ClassUser classUser = new ClassUser();
-            classUser.createClassUser(findClass, student);
+            classUser.createClassUser(findClassEntity, student);
             classUserRepository.save(classUser);
         }
 
@@ -130,8 +128,8 @@ public class ClassService {
     }
 
     public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(Long classId) {
-        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
-        List<ClassUser> findUserClassList = classUserRepository.findAllByClasses(findClass);
+        ClassEntity findClassEntity = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+        List<ClassUser> findUserClassList = classUserRepository.findAllByClasses(findClassEntity);
 
         List<SearchStudentResponseDto> dtoList = new ArrayList<>();
         for (ClassUser classUser : findUserClassList) {
@@ -155,10 +153,10 @@ public class ClassService {
         Long classId = deleteStudentRequestDto.getClassId();
         Long userId = deleteStudentRequestDto.getUserId();
 
-        Class findClass = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+        ClassEntity findClassEntity = classRepository.findById(classId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_NOT_FOUND));
         User findUser = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
 
-        ClassUser classUser = classUserRepository.findByClassesAndUser(findClass, findUser).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_USER_NOT_FOUND));
+        ClassUser classUser = classUserRepository.findByClassesAndUser(findClassEntity, findUser).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_CLASS_USER_NOT_FOUND));
         classUser.deleteClassUser();
 
         DeleteStudentResponseDto deleteStudentResponseDto = DeleteStudentResponseDto.builder()
@@ -171,7 +169,7 @@ public class ClassService {
 
     public ResponseSuccessDto<RecentClassResponseDto> searchRecentClass(Long userId) {
         User findUser = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
-        Optional<Class> findClass = classRepository.findTopByOwnerOrderByCreatedDateDesc(findUser);
+        Optional<ClassEntity> findClass = classRepository.findTopByOwnerOrderByCreatedDateDesc(findUser);
 
         long classId;
         SuccessCode successCode;
