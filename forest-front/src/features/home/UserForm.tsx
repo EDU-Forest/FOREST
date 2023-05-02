@@ -51,11 +51,11 @@ export default function UserForm({ type }: Iprops) {
     phoneNumber: "",
     password: "",
     checkPassword: "",
-    role: "student",
+    role: "STUDENT",
     birth: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState("student");
+  const [selectedRole, setSelectedRole] = useState("STUDENT");
 
   useEffect(() => {
     const email = router.query?.email;
@@ -262,8 +262,8 @@ export default function UserForm({ type }: Iprops) {
       </SignupContentBox>
       <SignupRoleBox>
         <SignupLabel>역할</SignupLabel>
-        <RoleBtn role="teacher" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
-        <RoleBtn role="student" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="TEACHER" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
+        <RoleBtn role="STUDENT" setSelectedRole={setSelectedRole} selectedRole={selectedRole} />
       </SignupRoleBox>
       <SignupHr />
       <SignupSubmitBox>
