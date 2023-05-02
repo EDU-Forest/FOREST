@@ -33,7 +33,7 @@ public class StudyController {
 
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/recent/{classId}")
-    public ResponseEntity<ResponseSuccessDto<GetStudyRecentResponseDto>> getStudyRecent(@PathVariable("classId") Long classId) {
+    public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudyRecent(@PathVariable("classId") Long classId) {
         return ResponseEntity.ok(studyService.getStudyRecent(classId));
     }
 
@@ -75,7 +75,7 @@ public class StudyController {
 
     @ApiOperation(value = "(학생) 최근 진행한 문제집 성적 조회", notes = "(학생) 최근 진행한 문제집 성적을 조회합니다.")
     @GetMapping("/student/recent/{classId}/{userId}")
-    public ResponseEntity<ResponseSuccessDto<GetStudentRecentResponseDto>> getStudentRecent(@PathVariable("classId") Long classId, @PathVariable("userId") Long userId) {
+    public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudentRecent(@PathVariable("classId") Long classId, @PathVariable("userId") Long userId) {
         return ResponseEntity.ok(studyService.getStudentRecent(classId, userId));
     }
 
@@ -86,20 +86,44 @@ public class StudyController {
     }
 
     @ApiOperation(value = "시험 전체 문제 목록 조회", notes = "시험 전체 문제 목록을 조회합니다.")
-    @GetMapping("/problem/{studyId}")
+    @GetMapping("/problem/{studyId}/{userId}")
     public ResponseEntity<ResponseSuccessDto<GetProblemResponseDto>> getProblemListAll(@PathVariable("studyId") Long studyId, @PathVariable("userId") Long userId) {
         return ResponseEntity.ok(studyService.getProblemListAll(studyId,userId));
     }
 
     @ApiOperation(value = "시험 시작하기", notes = "시험을 시작합니다.")
     @PostMapping("/start")
-    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> PostStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
-        return ResponseEntity.ok(studyService.PostStartStudy(postStartStudyRequestDto));
+    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+        return ResponseEntity.ok(studyService.postStartStudy(postStartStudyRequestDto));
     }
 
-//    @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
-//    @PatchMapping("/problem")
-//    public ResponseEntity<ResponseSuccessDto<PostStartStudyResponseDto>> PostStartStudy(@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) {
-//        return ResponseEntity.ok(studyService.PostStartStudy(postStartStudyRequestDto));
-//    }
+    @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
+    @PatchMapping("/problem")
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchNextProblem(@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+        return ResponseEntity.ok(studyService.patchNextProblem(patchNextProblemRequestDto));
+    }
+
+    @ApiOperation(value = "(학생)시험 종료하기", notes = "(학생) 시험을 종료합니다.")
+    @PatchMapping("/exit/student")
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+        return ResponseEntity.ok(studyService.patchExitStudy(patchExitStudyRequestDto));
+    }
+
+    @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")
+    @GetMapping("/descript/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetDescriptionListResponseDto>> getDescriptionList(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getDescriptionList(studyId));
+    }
+
+    @ApiOperation(value = "(선생님) 서술형 문제 채점", notes = "(선생님) 서술형 문제를 채점합니다.")
+    @PatchMapping("/descript")
+    public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(@RequestBody @Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
+        return ResponseEntity.ok(studyService.patchDescription(patchDescriptionListRequestDto));
+    }
+
+    @ApiOperation(value = "(클래스) 시험 종료", notes = "시험을 종료합니다.")
+    @PostMapping("/exit")
+    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.postExitStudy(studyId));
+    }
 }
