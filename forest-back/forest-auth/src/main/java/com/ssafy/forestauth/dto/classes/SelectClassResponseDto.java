@@ -7,5 +7,5 @@ import lombok.Getter;
 @Builder
 public class SelectClassResponseDto {
     private Long classId;
-    private String name;
+    private String className;
 }

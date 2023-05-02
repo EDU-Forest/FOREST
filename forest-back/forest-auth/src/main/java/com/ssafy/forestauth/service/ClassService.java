@@ -47,7 +47,7 @@ public class ClassService {
             for (ClassEntity cls : allByOwner) {
                 SelectClassResponseDto selectClassResponseDto = SelectClassResponseDto.builder()
                         .classId(cls.getId())
-                        .name(cls.getName())
+                        .className(cls.getName())
                         .build();
                 dtoList.add(selectClassResponseDto);
             }
@@ -58,7 +58,7 @@ public class ClassService {
             for (ClassUser classUser : allByUser) {
                 SelectClassResponseDto selectClassResponseDto = SelectClassResponseDto.builder()
                         .classId(classUser.getClasses().getId())
-                        .name(classUser.getClasses().getName())
+                        .className(classUser.getClasses().getName())
                         .build();
                 dtoList.add(selectClassResponseDto);
             }
