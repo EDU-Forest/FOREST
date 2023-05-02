@@ -113,9 +113,8 @@ public class ClassService {
 
         Long classId = saveClassStudentRequestDto.getClassId();
         ClassEntity findClassEntity = classRepository.findById(classId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_CLASS_NOT_FOUND));
-
-        List<Long> studentList = saveClassStudentRequestDto.getStudentList();
-        for (Long studentId : studentList) {
+        for (SaveClassStudentIdRequestDto saveDto : saveClassStudentRequestDto.getStudentList()) {
+            Long studentId = saveDto.getUserId();
             User student = userRepository.findById(studentId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
             ClassUser classUser = new ClassUser();
             classUser.createClassUser(findClassEntity, student);
