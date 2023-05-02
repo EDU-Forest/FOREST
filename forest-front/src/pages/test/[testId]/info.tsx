@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 
 export default function TestInfo() {
   const router = useRouter();
-  console.log(router);
   return (
     <FullScreen>
       <TestInfoContainer />
