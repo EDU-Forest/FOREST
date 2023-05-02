@@ -23,15 +23,6 @@ public class UserController {
 
     private final UserService userService;
 
-    // 소셜 회원가입 여부 확인
-    @GetMapping("/check")
-    public ResponseEntity<ResponseSuccessDto<CheckUserResponseDto>> checkSocialUser(
-            @RequestParam("email") String email,
-            @RequestParam("provider") EnumUserProviderStatus providerStatus
-    ) {
-        return ResponseEntity.ok(userService.checkSocialUser(email, providerStatus));
-    }
-
     // 소셜 회원, 정보 추기
     @PostMapping("/social")
     public ResponseEntity<ResponseSuccessDto<SignupResponseDto>> signupSocial(
@@ -41,8 +32,6 @@ public class UserController {
         Long userId = Long.parseLong(userDetails.getUsername());
         return ResponseEntity.ok(userService.signupSocial(userId, signupSocialRequestDto));
     }
-
-
 
     // 이름으로 학생 검색
     @GetMapping("/search")
