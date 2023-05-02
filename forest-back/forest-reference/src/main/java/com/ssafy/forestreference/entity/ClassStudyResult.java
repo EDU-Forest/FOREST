@@ -35,8 +35,8 @@ public class ClassStudyResult {
     @Column(name = "standard_deviation", columnDefinition = "double")
     private double standardDeviation;
 
-    @Column(name = "average_solving_time", columnDefinition = "timestamp")
-    private LocalDateTime averageSolvingTime;
+    @Column(name = "average_solving_time", columnDefinition = "bigint")
+    private Long averageSolvingTime;
 
     @Column(name = "correct_answer_rate", columnDefinition = "int")
     private int correctAnswerRate;
