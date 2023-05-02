@@ -28,7 +28,7 @@ authAxios.interceptors.response.use(
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
-        const response = await authAxios.post("/api/auth/reissue");
+        const response = await authAxios.get("/api/auth/reissue");
         const { accessToken } = response.data.payload;
 
         return accessToken;

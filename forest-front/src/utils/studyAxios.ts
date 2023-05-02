@@ -29,7 +29,7 @@ studyAxios.interceptors.response.use(
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
-        const response = await studyAxios.post("/api/auth/reissue");
+        const response = await studyAxios.get("/api/auth/reissue");
         const { accessToken } = response.data.payload;
 
         return accessToken;
