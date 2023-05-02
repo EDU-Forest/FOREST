@@ -1,12 +1,12 @@
 package com.ssafy.forestauth.service;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.memo.*;
 import com.ssafy.forestauth.entity.Memo;
 import com.ssafy.forestauth.entity.User;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
-import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
 import com.ssafy.forestauth.repository.MemoRepository;
 import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
@@ -29,7 +29,7 @@ public class MemoService {
     private final UserRepository userRepository;
 
     public ResponseSuccessDto<List<SelectMemoResponseDto>> selectMemo(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
         List<Memo> memoList = memoRepository.findAllByUser(user);
 
         List<SelectMemoResponseDto> memos = new ArrayList<>();
@@ -48,7 +48,7 @@ public class MemoService {
     }
 
     public ResponseSuccessDto<SaveMemoResponseDto> saveMemo(Long userId, SaveMemoRequestDto saveMemoRequestDto) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
         Memo memo = new Memo();
         memo.createMemo(user, saveMemoRequestDto);
         memoRepository.save(memo);
@@ -63,7 +63,7 @@ public class MemoService {
     public ResponseSuccessDto<DeleteMemoResponseDto> deleteMemo(List<DeleteMemoRequestDto> deleteMemoRequestDtoList) {
         for (DeleteMemoRequestDto deleteMemoRequestDto : deleteMemoRequestDtoList) {
             Long memoId = deleteMemoRequestDto.getMemoId();
-            Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_MEMO_NOT_FOUND));
+            Memo memo = memoRepository.findById(memoId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_MEMO_NOT_FOUND));
             memo.updateDelete(deleteMemoRequestDto.getIsDeleted());
         }
 

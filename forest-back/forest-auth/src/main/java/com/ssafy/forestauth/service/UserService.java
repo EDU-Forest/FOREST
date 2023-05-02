@@ -1,14 +1,12 @@
 package com.ssafy.forestauth.service;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.*;
 import com.ssafy.forestauth.entity.User;
-import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
-import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
-import com.ssafy.forestauth.errorhandling.exception.service.InvalidPasswordException;
 import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -51,19 +49,14 @@ public class UserService {
     // 소셜 회원 정보 추가
     public ResponseSuccessDto<SignupResponseDto> signupSocial(Long userId, SignupSocialRequestDto signupSocialRequestDto) {
         User findUserById = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
         findUserById.updateUserInfo(signupSocialRequestDto);
-
-        log.info("signup request name : {}", signupSocialRequestDto.getName());
-        log.info("signup request role : {}", signupSocialRequestDto.getRole().toString());
 
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
                 .name(findUserById.getName())
                 .role(findUserById.getRole())
                 .build();
 
-        log.info("responseDto name : {}", signupResponseDto.getName());
-        log.info("responseDto role : {}", signupResponseDto.getRole());
         ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
         return res;
     }
@@ -83,23 +76,6 @@ public class UserService {
         }
 
         ResponseSuccessDto<List<SearchStudentResponseDto>> res = responseUtil.successResponse(dtoList, SuccessCode.AUTH_SEARCH_STUDENT);
-        return res;
-    }
-
-    public ResponseSuccessDto<CheckUserResponseDto> checkSocialUser(String email, EnumUserProviderStatus providerStatus) {
-        Optional<User> findUser = userRepository.findByEmailAndAuthProvider(email, providerStatus);
-        SuccessCode successCode;
-
-        if(findUser.isEmpty()) {
-            successCode = SuccessCode.AUTH_USER_NOT_DUPLICATED;
-        } else {
-            successCode = SuccessCode.AUTH_USER_DUPLICATED;
-        }
-
-        CheckUserResponseDto checkUserResponseDto = CheckUserResponseDto.builder()
-                .message(successCode.getMessage())
-                .build();
-        ResponseSuccessDto<CheckUserResponseDto> res = responseUtil.successResponse(checkUserResponseDto, successCode);
         return res;
     }
 }

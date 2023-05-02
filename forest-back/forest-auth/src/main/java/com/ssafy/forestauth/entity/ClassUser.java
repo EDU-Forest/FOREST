@@ -1,7 +1,6 @@
 package com.ssafy.forestauth.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.forestauth.dto.classes.SaveClassStudentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -23,7 +22,7 @@ public class ClassUser {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "class_id", nullable = false)
-    private Class classes;
+    private ClassEntity classes;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -33,7 +32,7 @@ public class ClassUser {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
-    public void createClassUser(Class classes, User user) {
+    public void createClassUser(ClassEntity classes, User user) {
         this.classes = classes;
         this.user = user;
     }

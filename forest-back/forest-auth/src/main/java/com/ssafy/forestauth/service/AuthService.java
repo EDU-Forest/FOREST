@@ -1,13 +1,12 @@
 package com.ssafy.forestauth.service;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.auth.jwt.JwtProvider;
 import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.ReissueResponseDto;
 import com.ssafy.forestauth.entity.User;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.enumeration.response.SuccessCode;
-import com.ssafy.forestauth.errorhandling.exception.service.EntityIsNullException;
-import com.ssafy.forestauth.errorhandling.exception.service.InvalidValueException;
 import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +27,16 @@ public class AuthService {
 
     public ResponseSuccessDto<ReissueResponseDto> reissueAccessToken(String accessToken, String refreshToken) {
         if (!jwtProvider.validateToken(refreshToken)) {
-            throw new InvalidValueException(ErrorCode.AUTH_REFRESH_NOT_VALID);
+            throw new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID);
         }
 
         Authentication authentication = jwtProvider.getAuthentication(accessToken);
         Long userId = Long.parseLong(((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername());
         User findUserById = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityIsNullException(ErrorCode.AUTH_USER_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
 
         if (!refreshToken.equals(findUserById.getRefreshToken())) {
-            throw new InvalidValueException(ErrorCode.AUTH_REFRESH_NOT_VALID);
+            throw new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID);
         }
 
 
