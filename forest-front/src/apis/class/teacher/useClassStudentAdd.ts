@@ -1,6 +1,8 @@
 import authAxios from "@/utils/authAxios";
 import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
+import { useDispatch } from "react-redux";
+import { closeAddStudentModal } from "@/stores/class/classModal";
 
 interface userId {
   userId: number;
@@ -22,8 +24,10 @@ const fetcher = (payload: Payload) =>
 // 클래스에 학생 추가
 const useClassStudentAdd = () => {
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
+      dispatch(closeAddStudentModal());
       // 학생 추가 후 목록 재조회
       return queryClient.invalidateQueries(queryKeys.CLASS_STUDENT_LIST);
     },
