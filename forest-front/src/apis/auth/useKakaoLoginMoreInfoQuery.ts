@@ -13,7 +13,7 @@ const fetcher = (payload: KakaoLoginMoreInfo) =>
       role: payload.role,
       provider: "KAKAO",
     })
-    .then(({ data }) => data);
+    .then(({ data }) => data.data);
 
 const useKakaoLoginMoreInfo = () => {
   const dispatch = useDispatch();
