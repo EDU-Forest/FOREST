@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -125,5 +126,11 @@ public class StudyController {
     @PostMapping("/exit")
     public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(@PathVariable("studyId") Long studyId) {
         return ResponseEntity.ok(studyService.postExitStudy(studyId));
+    }
+
+    @ApiOperation(value = "시험 시작하기 정보 조회", notes = "시험 시작하기 정보를 조회합니다.")
+    @GetMapping("/info/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudyInfoResponseDto>> getStudyInfo(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyInfo(studyId));
     }
 }
