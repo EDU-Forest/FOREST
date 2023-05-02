@@ -89,7 +89,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
           ></EditorMultipleChoice>
         )}
         {/* ox */}
-        {question.type === "oxChoice" && <EditorOX />}
+        {question.type === "oxChoice" && <EditorOX question={question} curQuestion={curQuestion} />}
         {/* 단답식 */}
         {question.type === "shortAnswer" && <EditorShortAnswer />}
         {/* 서술형 */}
