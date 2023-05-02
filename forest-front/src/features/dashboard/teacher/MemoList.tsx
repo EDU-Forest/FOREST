@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { StyledMemoListBox, StyledMemoListItemBox, StyledMemoListItemTopBox } from "./Memo.style";
+import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
 
 interface listType {
   id: number;
@@ -8,6 +9,9 @@ interface listType {
 }
 
 function MemoList() {
+  const memoList: Memo[] = useMemoListQuery().data;
+  console.log("memolist", memoList);
+
   // 더미
   const list: listType[] = [
     {
@@ -99,15 +103,14 @@ function MemoList() {
 
   return (
     <StyledMemoListBox>
-      {list.map((item) => {
+      {memoList?.map((item) => {
         return (
-          <StyledMemoListItemBox key={item?.id} className="item">
+          <StyledMemoListItemBox key={item.memoId} className="item">
             <StyledMemoListItemTopBox>
-              {/* <span>{item?.id}</span> */}
-              <span>{item?.date}</span>
+              <span>{item.createdDate}</span>
               <button>삭제</button>
             </StyledMemoListItemTopBox>
-            <div>{item?.content}</div>
+            <div>{item.content}</div>
           </StyledMemoListItemBox>
         );
       })}

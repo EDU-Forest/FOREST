@@ -4,6 +4,7 @@ export const CHECK_EMAIL = "/checkEmail";
 
 // dashboard
 export const CHEER_MSG = "/cheerMsg";
+export const GET_MEMO = "/getMemo";
 
 // class
 export const RECENT_CLASSID = "/recentClassId";
