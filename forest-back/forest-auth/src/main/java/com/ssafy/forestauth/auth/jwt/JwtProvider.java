@@ -55,7 +55,27 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String createRefreshToken(Authentication authentication) {
+    public String createAccessTokenCommon(Long userId) {
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + accessTokenValidateTime);
+
+        log.info("userId : {}", userId);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", userId);
+        claims.put(authoritiesKey, "ROLE_USER");
+
+        return Jwts.builder()
+                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .setClaims(claims)
+                .setSubject(userId.toString())
+                .setIssuer("issuer")
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .compact();
+    }
+
+    public String createRefreshToken() {
         Date now = new Date();
         Date validity = new Date(now.getTime() + refreshTokenValidateTime);
         return Jwts.builder()
