@@ -6,10 +6,10 @@ const fetcher = (classId: number) => {
   authAxios.get(`/api/class/${classId}/student`).then(({ data }) => data);
 };
 
-const useStudentListQuery = (classId: number) => {
-  return useQuery([queryKeys.STUDENT_LIST, classId], () => fetcher(classId), {
+const useClassStudentListQuery = (classId: number) => {
+  return useQuery([queryKeys.CLASS_STUDENT_LIST, classId], () => fetcher(classId), {
     enabled: !!classId,
   });
 };
 
-export default useStudentListQuery;
+export default useClassStudentListQuery;

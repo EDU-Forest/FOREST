@@ -10,7 +10,7 @@ import * as queryKeys from "@/constants/queryKeys";
 //     .then(({ data }) => data);
 // };
 
-const useStudentAdd = (studentList: []) => {
+const useClassStudentAdd = (studentList: []) => {
   const queryClient = useQueryClient();
   return useMutation(
     () =>
@@ -22,10 +22,10 @@ const useStudentAdd = (studentList: []) => {
     {
       onSuccess: (data) => {
         // 학생 추가 후 목록 재조회
-        return queryClient.invalidateQueries(queryKeys.STUDENT_LIST);
+        return queryClient.invalidateQueries(queryKeys.CLASS_STUDENT_LIST);
       },
     },
   );
 };
 
-export default useStudentAdd;
+export default useClassStudentAdd;

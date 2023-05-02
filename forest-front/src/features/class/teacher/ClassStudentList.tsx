@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { openAddStudentModal } from "@/stores/class/classModal";
+import DeleteStudentModal from "./DeleteStudentModal";
 
 const studentList: Student[] = [
   {
@@ -82,6 +83,7 @@ const studentList: Student[] = [
 export default function ClassStudentList() {
   const dispatch = useDispatch();
   const { isOpenAddStudentModal } = useSelector((state: RootState) => state.classModal);
+  const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
 
   return (
     <>
@@ -98,10 +100,13 @@ export default function ClassStudentList() {
       {isOpenAddStudentModal && <AddStudentModal />}
 
       <StudentListWrapper>
-        {studentList?.map((item, idx) => (
-          <StudentInfoCard key={idx} studentInfo={item} />
+        {studentList?.map((item) => (
+          <>
+            <StudentInfoCard key={item.userId} studentInfo={item} />
+          </>
         ))}
       </StudentListWrapper>
+      {isOpenDeleteStudentModal && <DeleteStudentModal />}
     </>
   );
 }

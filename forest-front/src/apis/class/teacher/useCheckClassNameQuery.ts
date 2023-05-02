@@ -1,6 +1,6 @@
-import authAxios from "@/utils/authAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
+import authAxios from "@/utils/authAxios";
 
 interface Iprops {
   className: string;

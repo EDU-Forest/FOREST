@@ -12,7 +12,7 @@ import SmallBtn from "@/components/Button/SmallBtn";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
-import useCheckClassNameQuery from "@/apis/auth/class/teacher/useCheckClassNameQuery";
+import useCheckClassNameQuery from "@/apis/class/teacher/useCheckClassNameQuery";
 
 export default function AddClassModal() {
   const dispatch = useDispatch();

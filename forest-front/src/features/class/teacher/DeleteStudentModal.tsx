@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
 interface Iprops {
-  userId: number;
+  userId?: number;
 }
 
-export default function DeleteStudentModal({ userId }: Iprops) {
+export default function DeleteStudentModal() {
   const dispatch = useDispatch();
   const classId = useSelector((state: RootState) => state.class.nowClassId);
+  const userId = useSelector((state: RootState) => state.class.deleteStudentNum);
+  console.log("userId", userId);
   const confirm = () => {
     // 확인 ->classId, userId 필요
   };
