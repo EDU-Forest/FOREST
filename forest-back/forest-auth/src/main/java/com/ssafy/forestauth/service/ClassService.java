@@ -108,6 +108,9 @@ public class ClassService {
 
     // 클래스에 학생 추가
     public ResponseSuccessDto<SaveClassStudentResponseDto> saveClassStudent(SaveClassStudentRequestDto saveClassStudentRequestDto) {
+        log.info("class id : {}", saveClassStudentRequestDto.getClassId());
+        log.info("studentList : {}", saveClassStudentRequestDto.getStudentList().toString());
+
         Long classId = saveClassStudentRequestDto.getClassId();
         ClassEntity findClassEntity = classRepository.findById(classId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_CLASS_NOT_FOUND));
 
