@@ -55,7 +55,7 @@ public class UserService {
         findUserById.updateUserInfo(signupSocialRequestDto);
 
         SignupResponseDto signupResponseDto = SignupResponseDto.builder()
-                .username(findUserById.getName())
+                .name(findUserById.getName())
                 .role(findUserById.getRole())
                 .build();
         ResponseSuccessDto<SignupResponseDto> res = responseUtil.successResponse(signupResponseDto, SuccessCode.AUTH_SIGN_UP_SUCCESS);
