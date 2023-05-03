@@ -10,8 +10,5 @@ import javax.validation.constraints.NotNull;
 public class PostStartStudyRequestDto {
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long studyId;
 }
