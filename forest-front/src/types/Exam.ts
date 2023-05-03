@@ -2,8 +2,8 @@ interface examState {
   curProblemNum: number;
   examTitle: string;
   volume: number;
-  startTime: Date;
-  endTime: Date;
+  startTime: number;
+  endTime: number;
   problem: {
     studentStudyProblemId: number;
     problemNum: number;
