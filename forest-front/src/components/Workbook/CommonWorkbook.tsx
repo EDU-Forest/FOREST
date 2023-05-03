@@ -25,7 +25,6 @@ export default function CommonWorkbook({
   bookmarkCount,
   scrapCount,
   isBookmarked,
-
   workbookImgPath,
   clickAction,
 }: Iprops) {
@@ -33,6 +32,7 @@ export default function CommonWorkbook({
   const pressHeart = () => {
     mutate(id);
   };
+
   return (
     <WorkbookCard>
       {workbookImgPath ? (
@@ -41,7 +41,7 @@ export default function CommonWorkbook({
         <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
       )}
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
-      {bookmarkCount && (
+      {(bookmarkCount || bookmarkCount === 0) && (
         <WorkbookContentWrapper>
           <WorkbookContent bg>
             <span>{scrapCount} </span>

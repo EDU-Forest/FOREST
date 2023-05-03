@@ -14,59 +14,6 @@ import { useState } from "react";
 import usePopularWorkbookListQuery from "@/apis/search/usePopularWorkbookListQuery";
 import useRecentWorkbookListQuery from "@/apis/search/useRecentWorkbookListQuery";
 
-const popularList: SearchWorkbook[] = [
-  {
-    workbookId: 1,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 2,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 3,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: true,
-    isBookmarked: true,
-  },
-  {
-    workbookId: 4,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 5,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: true,
-  },
-];
-
 export default function SearchDefaultList() {
   const [sortType, setSortType] = useState<string>("bookmark");
   const changeSort = (value: string) => {
@@ -106,6 +53,7 @@ export default function SearchDefaultList() {
                 bookmarkCount={item.bookmarkCount}
                 scrapCount={item.scrapCount}
                 isBookmarked={item.isBookmarked}
+                workbookImgPath={item.workbookImgPath}
               />
             </SwiperSlide>
           ))}
@@ -122,6 +70,7 @@ export default function SearchDefaultList() {
                 bookmarkCount={item.bookmarkCount}
                 scrapCount={item.scrapCount}
                 isBookmarked={item.isBookmarked}
+                workbookImgPath={item.workbookImgPath}
               />
             </SwiperSlide>
           ))}
