@@ -3,7 +3,10 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 
 const fetcher = (studyId: number) =>
-  studyAxios.post("/api/study/start", { studyId }).then(({ data }) => data);
+  studyAxios.post("/api/study/start", { studyId, userId: 1 }).then(({ data }) => {
+    console.log(data);
+    return data;
+  });
 
 const useStartStudy = (studyId: number) => {
   const router = useRouter();

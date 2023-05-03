@@ -26,7 +26,6 @@ import { setRole, setUsername } from "@/stores/user/user";
 import { checkBirthRange } from "@/utils/checkBirthRange";
 import { SignupLayout } from "../signup/Signup.style";
 import useCheckEmail from "@/apis/auth/useCheckEmailQuery";
-import useLogin from "@/apis/auth/useLoginQuery";
 import useSignup from "@/apis/auth/useSignupQuery";
 import { sign } from "crypto";
 
