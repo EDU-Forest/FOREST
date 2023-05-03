@@ -18,10 +18,11 @@ function EditorQuestionImg({ question, property, whereInserted, curItem }: IProp
   const [imgFile, setImgFile]: any = useState(null);
   const { toChangeQuestions, toChangeItem } = useEditor();
 
-  const handleChange = (e: any, curItem: any) => {
+  const handleChange = (e: any) => {
     console.log(curItem);
 
-    const file: any = e.target.files; // 이부분을 추가함 if Else를 넣어줌
+    const file: any = e.target.files;
+    
     if (file.length === 0) {
       return;
     } else {
@@ -40,9 +41,10 @@ function EditorQuestionImg({ question, property, whereInserted, curItem }: IProp
         setImgFile(result);
 
         if (whereInserted === "question") {
+          console.log('문제', curItem);
           toChangeQuestions(property, result);
         } else if (whereInserted === "item") {
-          console.log(curItem);
+          console.log('보기', curItem);
           curItem && toChangeItem({ [property]: result }, curItem);
         }
       };
@@ -67,22 +69,12 @@ function EditorQuestionImg({ question, property, whereInserted, curItem }: IProp
       {imgFile ? (
         <EditorQuestionImgAddedBox>
           <img src={imgFile} alt="문제 이미지" />
-          <input
-            type="file"
-            id="img-input"
-            accept="image/*"
-            onChange={(e) => handleChange(e, curItem)}
-          />
+          <input type="file" id="img-input" accept="image/*" onChange={handleChange} />
           <label htmlFor="img-input">수정</label>
         </EditorQuestionImgAddedBox>
       ) : (
         <EditorQuestionInputBox as="div">
-          <input
-            type="file"
-            id="img-input"
-            accept="image/*"
-            onChange={(e) => handleChange(e, curItem)}
-          />
+          <input type="file" id="img-input" accept="image/*" onChange={handleChange} />
           <label htmlFor="img-input" onClick={() => console.log(curItem)}>
             이미지 삽입
           </label>
