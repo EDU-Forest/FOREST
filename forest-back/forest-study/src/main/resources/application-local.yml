@@ -30,7 +30,8 @@ spring:
       authentication-database: admin
       username:
       password:
-      database: admin
+      database: canvas
+
       # uri: mongodb: //546.465.445:27017/qwerqwer
 
   datasource:

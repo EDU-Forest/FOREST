@@ -19,7 +19,7 @@ public class ShelterService {
     public String getShelterList(Long id) {
         Line line = shelterRepository.findById(id)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
-        String a = line.getClass().getName();
+        String a = line.getAuthor();
         System.out.println("test");
         return a;
     }
