@@ -28,10 +28,14 @@ export default function CommonWorkbook({
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
       {bookmarkCount && (
         <WorkbookContentWrapper>
-          <WorkbookIcon>🧡</WorkbookIcon>
-          <WorkbookContent>{bookmarkCount}</WorkbookContent>
-          <WorkbookIcon>📝</WorkbookIcon>
-          <WorkbookContent>{scrapCount}</WorkbookContent>
+          <WorkbookContent bg>
+            <span>{scrapCount} </span>
+            명이 이용 중이에요
+          </WorkbookContent>
+          <div>
+            <WorkbookIcon>🧡</WorkbookIcon>
+            <WorkbookContent>{bookmarkCount}</WorkbookContent>
+          </div>
         </WorkbookContentWrapper>
       )}
     </WorkbookCard>
