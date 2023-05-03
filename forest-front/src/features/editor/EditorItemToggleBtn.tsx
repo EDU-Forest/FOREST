@@ -1,7 +1,7 @@
 import useEditor from "@/hooks/editor/useEditor";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiText } from "react-icons/bi";
 import { BsImage } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ interface IProps {
 function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   const dispatch = useDispatch();
 
-  const { toChangeItems } = useEditor();
+  const { toChangeItem } = useEditor();
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
@@ -24,29 +24,27 @@ function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   // 2 -> 이미지 선택
   const [selected, setSelected] = useState(1);
 
-  const changeItems = useCallback(
-    (type: number) => {
-      if (type === 1) {
-        toChangeItems("isImage", false, curItem);
-      } else if (type === 2) {
-        toChangeItems("isImage", true, curItem);
-      }
-    },
-    [selected],
-  );
+  const switchItemType = (type: number) => {
+    // 변경된 타입을 전체 배열에 반영하고,
+    // 타입이 변할 때마다 보기의 내용을 초기화
+    if (type === 1) {
+      toChangeItem({ isImage: false, content: "" }, curItem);
+    } else if (type === 2) {
+      toChangeItem({ isImage: true, content: "" }, curItem);
+    }
+  };
 
   const handleClickToggle = (type: number) => {
-    setSelected(type);
-
-    changeItems(type);
+    // 현재의 타입과 다른 타입을 클릭했을 때만 동작
+    if (selected !== type) {
+      setSelected(type);
+      switchItemType(type);
+    }
   };
 
   useEffect(() => {
     setSelected(question.items[curItem - 1].isImage ? 2 : 1);
-    console.log(questions);
   }, [question.items[curItem - 1].isImage]);
-
-  useEffect(() => {}, [questions]);
 
   return (
     <EditorItemToggleBtnBox isCorrect={isCorrect} selected={selected}>

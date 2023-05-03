@@ -78,10 +78,11 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               </EditorChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? (
-                <>
-                  <img src={item.content} alt="item" />
+                item.content === "" ? (
                   <button>이미지 삽입</button>
-                </>
+                ) : (
+                  <img src={item.content} alt="item" />
+                )
               ) : (
                 <>
                   <input
@@ -91,7 +92,11 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
                   />
                 </>
               )}
-              <EditorItemToggleBtn isCorrect={corret === i + 1} question={question} curItem={i + 1} />
+              <EditorItemToggleBtn
+                isCorrect={corret === i + 1}
+                question={question}
+                curItem={i + 1}
+              />
             </EditorQuestionChoiceBox>
             <AiOutlineMinusCircle onClick={() => handleClickDelete(item.id, i)} />
           </div>
