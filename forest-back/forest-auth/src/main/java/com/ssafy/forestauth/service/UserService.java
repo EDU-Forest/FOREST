@@ -17,9 +17,12 @@ import com.ssafy.forestauth.repository.UserRepository;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +109,7 @@ public class UserService {
         return res;
     }
 
-    public ResponseSuccessDto<LoginResponseDto> loginCommon(LoginRequestDto loginRequestDto) {
+    public ResponseSuccessDto<LoginResponseDto> loginCommon(HttpServletRequest request, HttpServletResponse response, LoginRequestDto loginRequestDto) {
         String email = loginRequestDto.getEmail();
         String pw = loginRequestDto.getPw();
 
@@ -119,6 +122,15 @@ public class UserService {
         }
 
         findUser.updateRefreshToken(jwtProvider.createRefreshToken());
+
+        ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", findUser.getRefreshToken())
+                .httpOnly(true)
+                .maxAge(jwtProvider.refreshTokenValidateTime)
+                .path("/")
+//                    .domain("localhost:3000")
+                .build();
+
+        response.addHeader("Set-Cookie", refreshCookie.toString());
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())
