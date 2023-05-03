@@ -5,51 +5,60 @@ import {
   StyledScheduleListBox,
   StyledScheduleStatusCircle,
 } from "./Schedule.style";
+import useScheduleQuery from "@/apis/dashboard/useScheduleQuery";
 
 function ScheduleList() {
-  interface listType {
-    status: string;
-    title: string;
-    class: string;
-    period: string;
-  }
+  const userId = 1;
+  const { data } = useScheduleQuery(userId);
 
   // 더미 데이터
-  const list: listType[] = [
+  const list: ScheduleList[] = [
     {
-      status: "중",
+      studyId: 1,
       title: "모의고사",
-      class: "A반",
-      period: "23.04.16 09:00 ~ 23.04.21 18:00",
+      startTime: "23.04.16 09:00",
+      endTime: "23.04.21 18:00",
+      className: "싸피 고등학교 3반",
+      studyType: "ONGOING",
+      scheduleType: "EXAM",
     },
     {
-      status: "예정",
+      studyId: 2,
       title: "모의고사",
-      class: "A반",
-      period: "23.04.16 09:00 ~ 23.04.21 18:00",
+      startTime: "23.04.16 09:00",
+      endTime: "23.04.21 18:00",
+      className: "싸피중 1반",
+      studyType: "AFTER",
+      scheduleType: "SELF",
     },
     {
-      status: "완료",
+      studyId: 3,
       title: "모의고사",
-      class: "A반",
-      period: "23.04.16 09:00 ~ 23.04.21 18:00",
+      startTime: "23.04.16 09:00",
+      endTime: "23.04.21 18:00",
+      className: "싸피 고등학교 3반",
+      studyType: "BEFORE",
+      scheduleType: "HOMEWORK",
     },
   ];
 
   return (
     <StyledScheduleListBox>
-      {list.map((item) => {
+      {/* {data?.studyList.map((item: ScheduleList) => { */}
+      {list?.map((item) => {
         return (
           <>
             <StyledScheduleItem>
               <StyledScheduleItemTop>
                 <div>
-                  <StyledScheduleStatusCircle status={item?.status} />
-                  <span>{item?.title}</span>
+                  <StyledScheduleStatusCircle status={item.studyType} />
+                  <span>{item.title}</span>
                 </div>
-                <ClassLabel classTitle={item.class} />
+                <ClassLabel classTitle={item.className} />
               </StyledScheduleItemTop>
-              <span>{item?.period}</span>
+              <span>
+                {item.startTime} ~ {item.endTime}
+              </span>
             </StyledScheduleItem>
             <hr />
           </>

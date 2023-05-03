@@ -39,6 +39,7 @@
 		"react-dom": "18.2.0",
 		"react-icons": "^4.8.0",
 		"react-image-crop": "^10.0.9",
+		"react-lottie-player": "^1.5.4",
 		"react-minimal-pie-chart": "^8.4.0",
 		"react-pdf": "^6.2.2",
 		"react-query": "^3.39.3",

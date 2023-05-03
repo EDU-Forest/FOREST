@@ -14,7 +14,7 @@ const fetcher = ({ classId, userId }: Payload) =>
     .patch("/api/class/student", { classId: classId, userId: userId })
     .then(({ data }) => data);
 
-// 클래스 내 학생 삭제
+// 클래스 내 학생 삭제 - OK
 const useClassStudentDelete = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();

@@ -16,11 +16,11 @@ export const StyledScheduleStatusCircle = styled.div<{ status: string }>`
   margin-right: 8px;
 
   background-color: ${({ status, theme }) =>
-    status === "중"
+    status === "ONGOING"
       ? theme.colors.Lime[700]
-      : status === "예정"
+      : status === "BEFORE"
       ? theme.colors.Orange[700]
-      : status === "완료" && theme.colors.Gray[400]};
+      : status === "AFTER" && theme.colors.Gray[400]};
   border-radius: 50%;
 `;
 

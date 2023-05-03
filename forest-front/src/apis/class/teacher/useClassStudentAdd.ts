@@ -21,7 +21,7 @@ const fetcher = (payload: Payload) =>
     })
     .then(({ data }) => data);
 
-// 클래스에 학생 추가
+// 클래스에 학생 추가 - OK
 const useClassStudentAdd = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();

@@ -51,6 +51,12 @@ const ClassSelectDropdownEachItem = styled.div`
   }
 `;
 
+const ClassSelectNoClass = styled.div`
+  ${flexBox("row", "center", "center")};
+  color: ${({ theme }) => theme.colors.Orange[700]};
+  height: 6rem;
+`;
+
 const ClassSelectDropdownAdd = styled.div`
   ${flexBox("row", "center", "center")}
   font-size: .875rem;
@@ -80,6 +86,7 @@ export {
   ClassSelectDropdownContainer,
   ClassSelectDropdownEach,
   ClassSelectDropdownEachItem,
+  ClassSelectNoClass,
   ClassSelectDropdownAdd,
   ClassSelectCircle,
 };
