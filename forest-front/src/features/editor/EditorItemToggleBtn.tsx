@@ -25,25 +25,26 @@ function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   const [selected, setSelected] = useState(1);
 
   const switchItemType = (type: number) => {
+    // 변경된 타입을 전체 배열에 반영하고,
+    // 타입이 변할 때마다 보기의 내용을 초기화
     if (type === 1) {
-      toChangeItem("isImage", false, curItem);
+      toChangeItem({ isImage: false, content: "" }, curItem);
     } else if (type === 2) {
-      toChangeItem("isImage", true, curItem);
+      toChangeItem({ isImage: true, content: "" }, curItem);
     }
   };
 
   const handleClickToggle = (type: number) => {
-    setSelected(type);
-
-    switchItemType(type);
+    // 현재의 타입과 다른 타입을 클릭했을 때만 동작
+    if (selected !== type) {
+      setSelected(type);
+      switchItemType(type);
+    }
   };
 
   useEffect(() => {
     setSelected(question.items[curItem - 1].isImage ? 2 : 1);
-    console.log(questions);
   }, [question.items[curItem - 1].isImage]);
-
-  useEffect(() => {}, [questions]);
 
   return (
     <EditorItemToggleBtnBox isCorrect={isCorrect} selected={selected}>
