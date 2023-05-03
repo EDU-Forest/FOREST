@@ -116,9 +116,19 @@ public class ClassService {
         for (SaveClassStudentIdRequestDto saveDto : saveClassStudentRequestDto.getStudentList()) {
             Long studentId = saveDto.getUserId();
             User student = userRepository.findById(studentId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
-            ClassUser classUser = new ClassUser();
-            classUser.createClassUser(findClassEntity, student);
-            classUserRepository.save(classUser);
+            Optional<ClassUser> findClassUser = classUserRepository.findByClassesAndUser(findClassEntity, student);
+
+            // 새로운 클래스 유저인 경우, insert
+            if(findClassUser.isEmpty()){
+                ClassUser classUser = new ClassUser();
+                classUser.createClassUser(findClassEntity, student);
+                classUserRepository.save(classUser);
+            }
+            // 기존의 클래스에서 제외되었다가 다시 추가되는 경우, update
+            else {
+                ClassUser classUser = findClassUser.get();
+                classUser.updateDeleted();
+            }
         }
 
         SaveClassStudentResponseDto saveClassStudentResponseDto = SaveClassStudentResponseDto.builder()

@@ -40,4 +40,7 @@ public class ClassUser {
     public void deleteClassUser() {
         this.isDeleted = true;
     }
+    public void updateDeleted() {
+        this.isDeleted = false;
+    }
 }
