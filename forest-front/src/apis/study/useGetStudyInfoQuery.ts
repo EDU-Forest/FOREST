@@ -19,10 +19,10 @@ const useGetStudyInfo = ({ studyId, setStudyInfoData }: Iprops) => {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setStudyInfoData({
-        studyTitle: data.title,
-        studyPresenter: data.name,
-        studyVolume: data.volume,
-        studyTimeLimit: getTimeLimit(data.startTime, data.endTime),
+        studyTitle: data.data.title,
+        studyPresenter: data.data.name,
+        studyVolume: data.data.volume,
+        studyTimeLimit: data.data.endTime - data.data.startTime,
       });
     },
     onError: (error) => {

@@ -1,6 +1,7 @@
 import { Container } from "@/styles/container";
 import styled from "styled-components";
 import { StyledWorkbookDetailBtnsBox } from "../workbookDetail/WorkbookDetail.style";
+import { ClassSelectWrapper, ClassSelectedTitle } from "../class/ClassSelect.style";
 
 export const EditorContainer = styled(Container)`
   display: flex;
@@ -43,3 +44,7 @@ export const EditorBtnsBox = styled(StyledWorkbookDetailBtnsBox)`
     width: 100%;
   }
 `;
+
+export const EditorTitleBox = styled(ClassSelectWrapper)``;
+
+export const EditorSelectedTitle = styled(ClassSelectedTitle)``;

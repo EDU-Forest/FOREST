@@ -1,5 +1,9 @@
-function EditorTitle() {
-  return <div>asdf</div>;
-}
+import { EditorSelectedTitle, EditorTitleBox } from "./Editor.style";
 
-export default EditorTitle;
+export default function EditorTitle() {
+  return (
+    <EditorTitleBox>
+      <EditorSelectedTitle>asdf</EditorSelectedTitle>
+    </EditorTitleBox>
+  );
+}
