@@ -10,6 +10,7 @@ interface Iprops {
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/problem/${studyId}/${1}`).then(({ data }) => {
+    console.log(data);
     return data;
   });
 
