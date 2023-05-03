@@ -9,8 +9,5 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class PatchExitStudyRequestDto {
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long studyId;
 }

@@ -14,9 +14,6 @@ public class PatchNextProblemRequestDto {
     private Long studentStudyProblemId;
 
     @NotNull
-    private Long userId;
-
-    @NotNull
     private Long studyId;
 
     private String userAnswer;
