@@ -49,4 +49,8 @@ public class UserWorkbook {
     public void updateIsBookmarked(boolean isBookmarked) {
         this.isBookmarked = isBookmarked;
     }
+
+    public void updateIsScraped(boolean isScraped) {
+        this.isScraped = isScraped;
+    }
 }

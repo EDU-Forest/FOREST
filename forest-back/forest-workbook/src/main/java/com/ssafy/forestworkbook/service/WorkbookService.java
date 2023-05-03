@@ -23,5 +23,6 @@ public interface WorkbookService {
     ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
     ResponseSuccessDto<?> getRecentWorkbook(Long userId);
+    ResponseSuccessDto<?> getEditorWorkbook(Long userId);
 
 }
