@@ -13,7 +13,7 @@ import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
-import Lottie from "react-lottie-player";
+import Loading from "@/components/Loading/loading";
 
 interface Iprops {
   nowClassId: number;
@@ -28,12 +28,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   return (
     <ClassSelectDropdownContainer>
       {isLoading ? (
-        <Lottie
-          loop
-          path="/lottieJson/loadingGreen.json"
-          play
-          style={{ width: 100, height: 100 }}
-        />
+        <Loading width={100} height={100} />
       ) : (
         <>
           {data?.length > 0 ? (
