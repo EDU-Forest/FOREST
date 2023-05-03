@@ -17,7 +17,7 @@ workbookAxios.interceptors.request.use(
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
       // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
-      config.headers.Authorization = `Bearer ${forestToken}`;
+      config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }
     return config;
   },
