@@ -18,8 +18,8 @@ export default function EditorTitle() {
         {"Test"}
         <AiFillCaretDown onClick={() => dispatch(controlClassDropdown())} className="icon" />
       </EditorSelectedTitle>
-      {/* 추후 확인 */}
-      {isOpenDropdown && <EditorSelectDropdown nowClassId={1} isStudent={true} />}
+      {/* nowWorkbookId 같은 거 있어야 할 듯 */}
+      {isOpenDropdown && <EditorSelectDropdown />}
     </EditorTitleBox>
   );
 }
