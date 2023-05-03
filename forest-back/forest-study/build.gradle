@@ -48,9 +48,10 @@ dependencies {
 
 	// webClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	// JSON 형식의 응답 처리
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
-	
+
+	// mongoDB
+	implementation ('org.springframework.boot:spring-boot-starter-data-mongodb-reactive')
+
 	// spring-boot-configuration-processor
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
