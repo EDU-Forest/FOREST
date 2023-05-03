@@ -609,8 +609,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-//        Problem problem = problemRepository.findById(problemId)
-//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
         ProblemList problemList = problemListRepository.findByProblemId(problemId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
@@ -626,9 +626,9 @@ public class WorkbookServiceImpl implements WorkbookService {
 //        Long problemId = problem.getId();
 
 //        log.info("{}", problemList.getId());
-//        problemListRepository.deleteById(problemListId);
-            log.info("{}", problemId);
-            problemRepository.deleteById(problemId);
+        problemListRepository.deleteById(problemListId);
+//            log.info("{}", problemId);
+//            problemRepository.deleteById(problemId);
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_PROBLEM);
     }
