@@ -5,6 +5,8 @@ import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
 import com.ssafy.forestworkbook.dto.workbook.response.*;
 import com.ssafy.forestworkbook.entity.*;
+import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
+import com.ssafy.forestworkbook.enumeration.EnumStudyTypeStatus;
 import com.ssafy.forestworkbook.enumeration.response.ForestStatus;
 import com.ssafy.forestworkbook.errorhandling.exception.WorkbookErrorCode;
 import com.ssafy.forestworkbook.repository.*;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,6 +47,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         // 좋아하는 문제집
+        // 스크랩 한 것도 좋아하는 문제집에
         if(Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks = userWorkbookRepository.findAllByUserAndIsBookmarkedIsTrueAndWorkbookIsPublicIsTrue(user, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
@@ -78,196 +82,36 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
-    public ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId) {
+    public ResponseSuccessDto<?> getClassWorkbook(Long userId, Long classId, String search) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        // 1. 문제집 만들기
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+        List<ClassWorkbookDto> classWorkbookDtoList = new ArrayList<>();
 
-        // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 스크랩 불가능 -> 사본 생성 불가능
-        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
-
-        Workbook workbookCopy = Workbook.builder()
-                .workbookImg(workbook.getWorkbookImg())
-                .creator(workbook.getCreator())
-                .title(workbook.getTitle())
-                .description(workbook.getDescription())
-                .volume(workbook.getVolume())
-                .build();
-
-        workbookRepository.save(workbookCopy);
-
-        if (workbookCopy.getCreator().getId() != userId) {
-            UserWorkbook userWorkbook = UserWorkbook.builder()
-                    .user(user)
-                    .workbook(workbookCopy)
-                    .isBookmarked(false)
-                    .build();
-
-            userWorkbookRepository.save(userWorkbook);
+        // EXAM
+        if (search.equals("exam")) {
+            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.EXAM);
+            studyToDto(studyList, classWorkbookDtoList);
         }
 
-        // 2. 문제 만들기
-        List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
-        // 문제 복사 리스트
-        List<Problem> problems = new ArrayList();
-        List<Integer> problemNumList = new ArrayList<>();
-
-        // TODO 트랜잭션이 N개 열리는게 빠를까? N개 for문 두 번, 트랜잭션 2번이 빠를까?
-        for (ProblemList problemList : problemLists) {
-            Problem problem = problemList.getProblem();
-
-            Problem problemCopy = Problem.builder()
-                    .type(problem.getType())
-                    .title(problem.getTitle())
-                    .path(problem.getPath())
-                    .text(problem.getText())
-                    .answer(problem.getAnswer())
-                    .point(problem.getPoint())
-                    .build();
-
-            problems.add(problemCopy);
-            problemNumList.add(problemList.getProblemNum());
-        }
-        problemRepository.saveAll(problems);
-
-        // 3. 문제 항목 만들기
-        // 문제 항목 복사 리스트
-        List<Item> itemCopyList = new ArrayList<>();
-
-        // 항목이 있는 문제 번호 관리용 PQ
-        PriorityQueue<Long> itemPq = new PriorityQueue<>();
-
-        for(int i = 0; i < problemLists.size(); i++) {
-            List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(i).getId());
-
-            if(!itemList.isEmpty()) {
-                for (Item item : itemList) {
-                    Item itemCopy = Item.builder()
-                            .problem(problems.get(i))
-                            .no(item.getNo())
-                            .content(item.getContent())
-                            .isImage(item.getIsImage())
-                            .build();
-
-                    itemCopyList.add(itemCopy);
-                }
-                itemPq.add(itemList.get(0).getProblem().getId());
-            }
+        // HOMEWORK
+        else if (search.equals("homework")) {
+            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.HOMEWORK);
         }
 
-        itemRepository.saveAll(itemCopyList);
-
-        // 4. 문제 목록 만들기
-        // 문제 목록 복사 리스트
-        List<ProblemList> problemListsCopy = new ArrayList();
-
-        for (int i = 0; i < problems.size(); i++) {
-            Problem problem = problems.get(i);
-
-            ProblemList problemListCopy = ProblemList.builder()
-                    .problem(problem)
-                    .workbook(workbookCopy)
-                    .problemNum(problemNumList.get(i))
-                    .build();
-
-            problemListsCopy.add(problemListCopy);
+        // SELF
+        else if (search.equals("self")) {
+            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.SELF);
+            studyToDto(studyList, classWorkbookDtoList);
         }
 
-        problemListRepository.saveAll(problemListsCopy);
-
-        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
-                .workbookId(workbookCopy.getId())
-                .title(workbookCopy.getTitle())
-                .workbookImgPath(workbookCopy.getWorkbookImg().getPath())
-                .description(workbookCopy.getDescription())
-                .volume(workbookCopy.getVolume())
-                .isPublic(workbookCopy.getIsPublic())
-                .bookmarkCount(0)
-                .scrapCount(0)
-                .build();
-
-        List<ProblemAllInfoDto> problemList = new ArrayList<>();
-
-        int size = itemCopyList.size();
-        int j = 0;
-        List<ItemResDto> itemResList = new ArrayList<>();
-
-        for(int i = 0; i < problemListsCopy.size(); i++) {
-            ProblemList problemListToDto = problemListsCopy.get(i);
-            Problem problemToDto = problems.get(i);
-
-            if (size != 0 && itemCopyList.get(j).getProblem().getId() == problemToDto.getId()) {
-
-                while (j < size && problemToDto.getId() == itemCopyList.get(j).getProblem().getId()) {
-                    Item tempItem = itemCopyList.get(j);
-
-                    ItemResDto itemRes = ItemResDto.builder()
-                            .itemId(tempItem.getId())
-                            .no(tempItem.getNo())
-                            .content(tempItem.getContent())
-                            .isImage(tempItem.getIsImage())
-                            .build();
-                    itemResList.add(itemRes);
-
-                    j++;
-                }
-            }
-            ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
-                    .problemId(problemToDto.getId())
-                    .problemNum(problemListToDto.getProblemNum())
-                    .type(problemToDto.getType())
-                    .title(problemToDto.getTitle())
-                    .problemImgPath(problemToDto.getPath())
-                    .imgIsEmpty(problemToDto.getPath() == null || problemToDto.getPath().equals("") ? true : false)
-                    .answer(problemToDto.getAnswer())
-                    .text(problemToDto.getText())
-                    .textIsEmpty((problemToDto.getText() == null || problemToDto.getText().equals("")) ? true : false)
-                    .point(problemToDto.getPoint())
-                    .itemList(itemResList.isEmpty() ? null : itemResList)
-                    .build();
-
-            problemList.add(problemAllInfoDto);
+        // 파라미터 입력 오류
+        else {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
         }
 
-        WorkbookToDto workbookToDto = WorkbookToDto.builder()
-                .workbookInfoDto(workbookInfoDto)
-                .problemList(problemList)
-                .build();
-
-        return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_COPY);
-    }
-
-    @Override
-    public ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
-
-        WorkbookImg workbookImg = workbookImgRepository.findById(Long.valueOf(1))
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
-
-        Workbook workbook = Workbook.builder()
-                .workbookImg(workbookImg)
-                .creator(user)
-                .title(workbookTitleDto.getTitle())
-                .build();
-
-        workbookRepository.save(workbook);
-
-        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
-                .workbookId(workbook.getId())
-                .title(workbook.getTitle())
-                .workbookImgPath(workbookImg.getPath())
-                .description(workbook.getDescription())
-                .isPublic(workbook.getIsPublic())
-                .volume(workbook.getVolume())
-                .bookmarkCount(0)
-                .scrapCount(0)
-                .build();
-
-        return responseUtil.successResponse(workbookInfoDto, ForestStatus.WORKBOOK_SUCCESS_CREATE);
+        ClassWorkbookListDto classWorkbookListDto = new ClassWorkbookListDto(classWorkbookDtoList);
+        return responseUtil.successResponse(classWorkbookListDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -307,9 +151,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .type(problem.getType())
                     .title(problem.getTitle())
                     .problemImgPath(problem.getPath())
-                    .imgIsEmpty(problem.getPath() == null || problem.getPath().equals("") ? true : false)
+                    .imgIsEmpty(problem.getPath() == null || problem.getPath().equals(""))
                     .text(problem.getText())
-                    .textIsEmpty((problem.getText() == null || problem.getText().equals("")) ? true : false)
+                    .textIsEmpty((problem.getText() == null || problem.getText().equals("")))
                     .answer(problem.getAnswer())
                     .point(problem.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
@@ -336,6 +180,36 @@ public class WorkbookServiceImpl implements WorkbookService {
 
 
         return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        WorkbookImg workbookImg = workbookImgRepository.findById(Long.valueOf(1))
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
+
+        Workbook workbook = Workbook.builder()
+                .workbookImg(workbookImg)
+                .creator(user)
+                .title(workbookTitleDto.getTitle())
+                .build();
+
+        workbookRepository.save(workbook);
+
+        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
+                .workbookId(workbook.getId())
+                .title(workbook.getTitle())
+                .workbookImgPath(workbookImg.getPath())
+                .description(workbook.getDescription())
+                .isPublic(workbook.getIsPublic())
+                .volume(workbook.getVolume())
+                .bookmarkCount(0)
+                .scrapCount(0)
+                .build();
+
+        return responseUtil.successResponse(workbookInfoDto, ForestStatus.WORKBOOK_SUCCESS_CREATE);
     }
 
     @Override
@@ -369,6 +243,283 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_UPDATE);
     }
+
+    @Override
+    public ResponseSuccessDto<?> deleteWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        workbookRepository.deleteById(workbookId);
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_WORKBOOK);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        // 내가 만든 문제집만 공개 여부 설정 가능
+        if (workbook.getCreator().getId() != userId) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
+        }
+
+        // 배포 전에는 공개 여부 설정 불가
+        if (!workbook.getIsExecuted()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_CHANGE_ISPUBLIC);
+        }
+
+        workbook.changeIsPublid(!workbook.getIsPublic());
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+
+        boolean isOriginal = checkIsOriginal(workbook.getCreator().getId(), userId);
+
+        IsOriginalDto isOriginalDto = IsOriginalDto.builder().isOriginal(isOriginal).build();
+
+        return responseUtil.successResponse(isOriginalDto, ForestStatus.WORKBOOK_SUCCESS_GET_EXPORT_INFO);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        // 내가 만든 문제집만 배포 가능
+        if (workbook.getCreator().getId() != userId) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
+        }
+
+        // 배포 했는데 비공개인 경우 공개 여부 변경
+        if (workbook.getIsExecuted() && workbook.getIsPublic()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DEPLOY);
+        }
+
+        workbook.changeIsPublid(true);
+        workbook.changeIsExcuted(true);
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DEPLOY);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        // 1. 문제집 만들기
+        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 스크랩 불가능 -> 사본 생성 불가능
+        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
+
+        Workbook workbookCopy = Workbook.builder()
+                .workbookImg(workbook.getWorkbookImg())
+                .creator(workbook.getCreator())
+                .title(workbook.getTitle())
+                .description(workbook.getDescription())
+                .volume(workbook.getVolume())
+                .build();
+
+        workbookRepository.save(workbookCopy);
+
+        if (workbook.getCreator().getId() != userId) {
+            // TODO 문제집 스크랩 처리 - workbookId -> workbookCopy 거
+        }
+
+        if (workbookCopy.getCreator().getId() != userId) {
+            UserWorkbook userWorkbook = UserWorkbook.builder()
+                    .user(user)
+                    .workbook(workbookCopy)
+                    .isBookmarked(false)
+                    .build();
+
+            userWorkbookRepository.save(userWorkbook);
+        }
+
+        // 2. 문제 만들기
+        List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
+        // 문제 복사 리스트
+        List<Problem> problems = new ArrayList();
+        List<Integer> problemNumList = new ArrayList<>();
+
+        // 문제 항목 복사 필요 여부
+        int[] itemIsMultiple = new int[problemLists.size() + 1];
+        int check = 0;
+
+        // TODO 트랜잭션이 N개 열리는게 빠를까? N개 for문 두 번, 트랜잭션 2번이 빠를까?
+        for (ProblemList problemList : problemLists) {
+            Problem problem = problemList.getProblem();
+
+            Problem problemCopy = Problem.builder()
+                    .type(problem.getType())
+                    .title(problem.getTitle())
+                    .path(problem.getPath())
+                    .text(problem.getText())
+                    .answer(problem.getAnswer())
+                    .point(problem.getPoint())
+                    .build();
+
+            problems.add(problemCopy);
+            problemNumList.add(problemList.getProblemNum());
+
+            if (problemCopy.getType().equals(EnumProblemTypeStatus.MULTIPLE)) {
+                itemIsMultiple[check] = check;
+            } else {
+                itemIsMultiple[check] = -1;
+            }
+            check++;
+
+        }
+        problemRepository.saveAll(problems);
+
+        // 3. 문제 항목 만들기
+        // 문제 항목 복사 리스트
+        List<Item> itemCopyList = new ArrayList<>();
+
+//        // 항목이 있는 문제 번호 관리용 PQ
+//        PriorityQueue<Long> itemPq = new PriorityQueue<>();
+//
+//        for(int i = 0; i < problemLists.size(); i++) {
+//            List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(i).getId());
+//
+//            if(!itemList.isEmpty()) {
+//                for (Item item : itemList) {
+//                    Item itemCopy = Item.builder()
+//                            .problem(problems.get(i))
+//                            .no(item.getNo())
+//                            .content(item.getContent())
+//                            .isImage(item.getIsImage())
+//                            .build();
+//
+//                    itemCopyList.add(itemCopy);
+//                }
+//                itemPq.add(itemList.get(0).getProblem().getId());
+//            }
+//        }
+
+        for (int checked : itemIsMultiple) {
+            if (checked == -1) continue;
+            else {
+                List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(checked).getId());
+
+                for (Item item : itemList) {
+                    Item itemCopy = Item.builder()
+                            .problem(problems.get(checked))
+                            .no(item.getNo())
+                            .content(item.getContent())
+                            .isImage(item.getIsImage())
+                            .build();
+
+                    itemCopyList.add(itemCopy);
+                }
+            }
+        }
+        itemRepository.saveAll(itemCopyList);
+
+        // 4. 문제 목록 만들기
+        // 문제 목록 복사 리스트
+        List<ProblemList> problemListsCopy = new ArrayList();
+
+        for (int i = 0; i < problems.size(); i++) {
+            Problem problem = problems.get(i);
+
+            ProblemList problemListCopy = ProblemList.builder()
+                    .problem(problem)
+                    .workbook(workbookCopy)
+                    .problemNum(problemNumList.get(i))
+                    .build();
+
+            problemListsCopy.add(problemListCopy);
+        }
+
+        problemListRepository.saveAll(problemListsCopy);
+
+        WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
+                .workbookId(workbookCopy.getId())
+                .title(workbookCopy.getTitle())
+                .workbookImgPath(workbookCopy.getWorkbookImg().getPath())
+                .description(workbookCopy.getDescription())
+                .volume(workbookCopy.getVolume())
+                .isPublic(workbookCopy.getIsPublic())
+                .bookmarkCount(0)
+                .scrapCount(0)
+                .build();
+
+        List<ProblemAllInfoDto> problemList = new ArrayList<>();
+
+        int size = itemCopyList.size();
+        int j = 0;
+        List<ItemResDto> itemResList = new ArrayList<>();
+
+//        for(int i = 0; i < problemListsCopy.size(); i++) {
+//            ProblemList problemListToDto = problemListsCopy.get(i);
+//            Problem problemToDto = problems.get(i);
+//
+//            if (size != 0 && itemCopyList.get(j).getProblem().getId() == problemToDto.getId()) {
+//
+//                while (j < size && problemToDto.getId() == itemCopyList.get(j).getProblem().getId()) {
+//                    Item tempItem = itemCopyList.get(j);
+//
+//                    ItemResDto itemRes = ItemResDto.builder()
+//                            .itemId(tempItem.getId())
+//                            .no(tempItem.getNo())
+//                            .content(tempItem.getContent())
+//                            .isImage(tempItem.getIsImage())
+//                            .build();
+//                    itemResList.add(itemRes);
+//
+//                    j++;
+//                }
+//            }
+//            ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
+//                    .problemId(problemToDto.getId())
+//                    .problemNum(problemListToDto.getProblemNum())
+//                    .type(problemToDto.getType())
+//                    .title(problemToDto.getTitle())
+//                    .problemImgPath(problemToDto.getPath())
+//                    .imgIsEmpty(problemToDto.getPath() == null || problemToDto.getPath().equals(""))
+//                    .answer(problemToDto.getAnswer())
+//                    .text(problemToDto.getText())
+//                    .textIsEmpty((problemToDto.getText() == null || problemToDto.getText().equals("")))
+//                    .point(problemToDto.getPoint())
+//                    .itemList(itemResList.isEmpty() ? null : itemResList)
+//                    .build();
+//
+//            problemList.add(problemAllInfoDto);
+//        }
+
+        for (ProblemList problemListGetOne : problemListsCopy) {
+
+        }
+
+        WorkbookToDto workbookToDto = WorkbookToDto.builder()
+                .workbookInfoDto(workbookInfoDto)
+                .problemList(problemList)
+                .build();
+
+        return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_COPY);
+    }
+
 
     @Override
     public ResponseSuccessDto<?> updateProblem(Long userId, ProblemUpdateInfoDto problemUpdateInfoDto) {
@@ -413,72 +564,6 @@ public class WorkbookServiceImpl implements WorkbookService {
             }
         }
         return null;
-    }
-
-    @Override
-    public ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
-
-        Workbook workbook = workbookRepository.findById(workbookId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
-
-        boolean isOriginal = true;
-
-        if (workbook.getCreator().getId() != userId) {
-            isOriginal = false;
-        }
-
-        IsOriginalDto isOriginalDto = IsOriginalDto.builder().isOriginal(isOriginal).build();
-
-        return responseUtil.successResponse(isOriginalDto, ForestStatus.WORKBOOK_SUCCESS_GET_EXPORT_INFO);
-    }
-
-    @Override
-    public ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
-
-        Workbook workbook = workbookRepository.findById(workbookId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
-
-        // 내가 만든 문제집만 공개 여부 설정 가능
-        if (workbook.getCreator().getId() != userId) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
-        }
-
-        // 배포 전에는 공개 여부 설정 불가
-        if (!workbook.getIsExecuted()) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_CHANGE_ISPUBLIC);
-        }
-
-        workbook.changeIsPublid(!workbook.getIsPublic());
-
-        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
-    }
-
-    @Override
-    public ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
-
-        Workbook workbook = workbookRepository.findById(workbookId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
-
-        // 내가 만든 문제집만 배포 가능
-        if (workbook.getCreator().getId() != userId) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
-        }
-
-        // 배포 했는데 비공개인 경우 공개 여부 변경
-        if (workbook.getIsExecuted() && workbook.getIsPublic()) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DEPLOY);
-        }
-
-        workbook.changeIsPublid(true);
-        workbook.changeIsExcuted(true);
-
-        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DEPLOY);
     }
 
     @Override
@@ -542,18 +627,18 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<ExploreWorkbookDto> exploreWorkbookDtoList;
+        List<ExploreWorkbookDto> exploreWorkbookDtoList = new ArrayList<>();
 
         // 좋아요순
         if (search.equals("bookmark")) {
             List<BestWorkbookDto> bestWorkbookList = workbookRepository.findTop20ByIsBookmarkedBestWorkbook();
-            exploreWorkbookDtoList = userWorkbookToDto(userId, bestWorkbookList);
+            userWorkbookToDto(userId, bestWorkbookList, exploreWorkbookDtoList);
         }
 
         // 사용순
         else if (search.equals("scrap")) {
             List<BestWorkbookDto> bestWorkbookList = workbookRepository.findTop20ByIsScrapedBestWorkbook();
-            exploreWorkbookDtoList = userWorkbookToDto(userId, bestWorkbookList);
+            userWorkbookToDto(userId, bestWorkbookList, exploreWorkbookDtoList);
         }
 
         // 파라미터 오류
@@ -594,51 +679,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
-    @Override
-    public ResponseSuccessDto<?> getClassWorkbook(Long userId, Long classId, String search) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
-
-        LocalDateTime now = LocalDateTime.now();
-
-        List<ClassWorkbookDto> classWorkbookDtoList = new ArrayList<>();
-
-        // EXAM
-        if (search.equals("exam")) {
-            List<Study> studyList = studyRepository.findAllByClassesId(classId);
-
-            for (Study study : studyList) {
-                ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
-                        .workbookId(study.getWorkbook().getId())
-                        .title(study.getWorkbook().getTitle())
-                        .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
-                        .isFinished((study.getEndTime().isBefore(now)))
-                        .build();
-
-                classWorkbookDtoList.add(classWorkbookDto);
-            }
-
-        }
-
-        // HOMEWORK
-        else if (search.equals("homework")) {
-
-        }
-
-        // SELF
-        else if (search.equals("self")) {
-
-        }
-
-        // 파라미터 입력 오류
-        else {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
-        }
-
-        ClassWorkbookListDto classWorkbookListDto = new ClassWorkbookListDto(classWorkbookDtoList);
-        return responseUtil.successResponse(classWorkbookListDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
-    }
-
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks) {
         Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                 .workbookId(w.getId())
@@ -651,9 +691,29 @@ public class WorkbookServiceImpl implements WorkbookService {
         return  teacherWorkbookPageDtoList;
     }
 
-    public List<ExploreWorkbookDto> userWorkbookToDto(Long userId, List<BestWorkbookDto> bestWorkbookList) {
-        List<ExploreWorkbookDto> workbookList = new ArrayList<>();
+    public void studyToDto(List<Study> studyList, List<ClassWorkbookDto> classWorkbookDtoList) {
+        LocalDateTime now = LocalDateTime.now();
 
+        for (Study study : studyList) {
+            ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
+                    .studyId(study.getId())
+                    .title(study.getWorkbook().getTitle())
+                    .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
+                    .isFinished((study.getEndTime().isBefore(now)))
+                    .build();
+
+            classWorkbookDtoList.add(classWorkbookDto);
+        }
+    }
+
+    public boolean checkIsOriginal(Long creatorId, Long userId) {
+        if (creatorId != userId) {
+            return false;
+        }
+        return true;
+    }
+
+    public void userWorkbookToDto(Long userId, List<BestWorkbookDto> bestWorkbookList, List<ExploreWorkbookDto> exploreWorkbookDtoList) {
         for(BestWorkbookDto workbookDto : bestWorkbookList) {
 
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookDto.getWorkbookId())
@@ -670,9 +730,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .isBookmarked((userWorkbook == null) ? false : userWorkbook.getIsBookmarked())
                     .build();
 
-            workbookList.add(exploreWorkbookDto);
+            exploreWorkbookDtoList.add(exploreWorkbookDto);
         }
-        return workbookList;
     }
 
     public void updateItemList(int size, List<Item> itemList, List<ItemReqDto> itemReqList) {

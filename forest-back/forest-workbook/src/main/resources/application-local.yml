@@ -4,27 +4,32 @@ server:
 spring:
   config:
     activate:
-      on-profile: local
+      on-profile:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto:
       naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        physical-strategy:
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql:
+        format_sql:
     open-in-view: false
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/forest?serverTimezone=Asia/Seoul
-    username: ssafy
-    password: ssafy
+    driver-class-name:
+    url:
+    username:
+    password:
+
+jwt:
+  redirect-url:
+  token:
+    secretKey:
 
 notification:
   mattermost:
-    enabled: true
-    webhook-url: https://meeting.ssafy.com/hooks/j85wn7zntjbnjper47prr5icic
+    enabled:
+    webhook-url:
     channel :
