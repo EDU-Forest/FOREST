@@ -13,7 +13,7 @@ import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
-import Loading from "@/components/Loading/loading";
+import Loading from "@/components/Loading/Loading";
 
 interface Iprops {
   nowClassId: number;
