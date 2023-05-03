@@ -11,6 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -57,9 +59,11 @@ public class UserController {
     // 일반 로그인
     @PostMapping("/login")
     public ResponseEntity<ResponseSuccessDto<LoginResponseDto>> loginCommon(
+            HttpServletRequest request,
+            HttpServletResponse response,
             @RequestBody @Valid LoginRequestDto loginRequestDto
     ) {
-        return ResponseEntity.ok(userService.loginCommon(loginRequestDto));
+        return ResponseEntity.ok(userService.loginCommon(request, response, loginRequestDto));
     }
 
     // 이름으로 학생 검색
