@@ -17,6 +17,7 @@ const useGetWorkbooksBySelf = ({ setWorkbooksBySelf }: Iprops) => {
   return useQuery(queryKeys.WORKBOOKS_BY_SELF, () => fetcher(), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
+      console.log("success", data);
       // 연결 시 수정해야 할 듯
       setWorkbooksBySelf(data.data);
     },
