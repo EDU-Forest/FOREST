@@ -219,11 +219,12 @@ public class StudyService {
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
-        ClassStudyResult cs = csList.get(0);
 
-        if (cs == null)
+        if(csList.isEmpty()) {
             return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
+        }
 
+        ClassStudyResult cs = csList.get(0);
 
         String schedule = getScheduleType(cs);
 
