@@ -32,6 +32,12 @@ const WorkbookContentWrapper = styled.div`
 
 const WorkbookIcon = styled.span`
   margin-right: 0.25rem;
+  svg {
+    vertical-align: text-bottom;
+    font-size: 1rem;
+    color: red;
+    cursor: pointer;
+  }
 `;
 
 const WorkbookContent = styled.span<{ bg?: boolean }>`

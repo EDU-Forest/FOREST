@@ -6,12 +6,14 @@ import {
   WorkbookImg,
   WorkbookTitle,
 } from "./Workbook.style";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 
 interface Iprops {
   id: number;
   title: string;
   bookmarkCount?: number;
   scrapCount?: number;
+  isBookmarked?: boolean;
   clickAction?: (id: number) => void;
 }
 
@@ -20,6 +22,7 @@ export default function CommonWorkbook({
   title,
   bookmarkCount,
   scrapCount,
+  isBookmarked,
   clickAction,
 }: Iprops) {
   return (
@@ -33,7 +36,7 @@ export default function CommonWorkbook({
             명이 이용 중이에요
           </WorkbookContent>
           <div>
-            <WorkbookIcon>🧡</WorkbookIcon>
+            <WorkbookIcon>{isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}</WorkbookIcon>
             <WorkbookContent>{bookmarkCount}</WorkbookContent>
           </div>
         </WorkbookContentWrapper>

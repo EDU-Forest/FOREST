@@ -23,5 +23,5 @@ export const STUDY_RESULT = "/studyResult";
 export const STUDENT_SCORE = "/studentScore";
 
 // search
-export const POPULAR_LIST = "/popularList";
-export const RECENT_LIST = "/recentList";
+export const POPULAR_WORKBOOK_LIST = "/popularWorkbookList";
+export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
