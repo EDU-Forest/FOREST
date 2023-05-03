@@ -7,14 +7,10 @@ import lombok.Getter;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Builder
 public class PatchNextProblemRequestDto {
 
     @NotNull
     private Long studentStudyProblemId;
-
-    @NotNull
-    private Long userId;
 
     @NotNull
     private Long studyId;

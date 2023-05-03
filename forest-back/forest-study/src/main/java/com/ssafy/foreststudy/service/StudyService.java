@@ -499,14 +499,14 @@ public class StudyService {
     }
 
     /* 시험 시작하기 */
-    public ResponseSuccessDto<PostResponseDto> postStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto) {
+    public ResponseSuccessDto<PostResponseDto> postStartStudy(PostStartStudyRequestDto postStartStudyRequestDto, Long userId) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(postStartStudyRequestDto.getStudyId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
-        User user = userRepository.findById(postStartStudyRequestDto.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 해당 유저 클래스 회원이 아닌 경우 체크 */
@@ -544,7 +544,7 @@ public class StudyService {
     }
 
     /* 다음 문제 이동하기 */
-    public ResponseSuccessDto<PatchResponseDto> patchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchNextProblem(PatchNextProblemRequestDto patchNextProblemRequestDto, Long userId) {
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
@@ -555,7 +555,7 @@ public class StudyService {
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
-        User user = userRepository.findById(patchNextProblemRequestDto.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 서술형이라면 */
@@ -593,14 +593,14 @@ public class StudyService {
     }
 
     /* 시험 종료하기 */
-    public ResponseSuccessDto<PatchResponseDto> patchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchExitStudy(PatchExitStudyRequestDto patchExitStudyRequestDto, Long userId) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         /* 존재하지 않는 유저 ID 체크 */
-        User user = userRepository.findById(patchExitStudyRequestDto.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
         /* 존재하지 않는 개인 시험 결과 ID 체크 */
@@ -734,7 +734,7 @@ public class StudyService {
     }
 
     /* (선생님) 서술형 문제 채점 */
-    public ResponseSuccessDto<PatchResponseDto> patchDescription(@Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchDescription(PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())

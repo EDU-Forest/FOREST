@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CanvasController {
     private final ShelterService shelterService;
 
-    @GetMapping("/{title}")
-    public String findById(@PathVariable String title){
+    @GetMapping("/{id}")
+    public String findById(@PathVariable Long id){
         System.out.println("test");
-        return shelterService.getShelterList(title);
+        return shelterService.getShelterList(id);
     }
 }

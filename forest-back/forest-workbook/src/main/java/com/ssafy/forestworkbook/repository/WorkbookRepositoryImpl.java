@@ -1,20 +1,14 @@
 package com.ssafy.forestworkbook.repository;
 
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.StringPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.forestworkbook.dto.workbook.response.BestWorkbookDto;
-import com.ssafy.forestworkbook.dto.workbook.response.ExploreWorkbookDto;
 import com.ssafy.forestworkbook.dto.workbook.response.QBestWorkbookDto;
-import com.ssafy.forestworkbook.entity.Workbook;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.ssafy.forestworkbook.entity.QWorkbook.workbook;
 import static com.ssafy.forestworkbook.entity.QUserWorkbook.userWorkbook;
+import static com.ssafy.forestworkbook.entity.QWorkbook.workbook;
 
 public class WorkbookRepositoryImpl implements WorkbookCustomRepository {
 
@@ -30,7 +24,7 @@ public class WorkbookRepositoryImpl implements WorkbookCustomRepository {
                         workbook.creator.id, userWorkbook.count().intValue()))
                 .from(workbook, userWorkbook)
                 .where(workbook.id.eq(userWorkbook.workbook.id).and(workbook.isPublic.isTrue())
-                                .and(workbook.isExecuted.isTrue()).and(userWorkbook.isBookmarked.isTrue()))
+                                .and(workbook.isDeploy.isTrue()).and(userWorkbook.isBookmarked.isTrue()))
                 .groupBy(userWorkbook.workbook.id)
                 .orderBy(userWorkbook.count().desc())
                 .limit(20)
@@ -45,7 +39,7 @@ public class WorkbookRepositoryImpl implements WorkbookCustomRepository {
                         workbook.creator.id, userWorkbook.count().intValue()))
                 .from(workbook, userWorkbook)
                 .where(workbook.id.eq(userWorkbook.workbook.id).and(workbook.isPublic.isTrue())
-                        .and(workbook.isExecuted.isTrue()).and(userWorkbook.isScraped.isTrue()))
+                        .and(workbook.isDeploy.isTrue()).and(userWorkbook.isScraped.isTrue()))
                 .groupBy(userWorkbook.workbook.id)
                 .orderBy(userWorkbook.count().desc())
                 .limit(20)
@@ -60,7 +54,7 @@ public class WorkbookRepositoryImpl implements WorkbookCustomRepository {
                         workbook.creator.id, userWorkbook.count().intValue()))
                 .from(workbook, userWorkbook)
                 .where(workbook.id.eq(userWorkbook.workbook.id).and(workbook.isPublic.isTrue())
-                        .and(workbook.isExecuted.isTrue()).and(userWorkbook.isScraped.isTrue()))
+                        .and(workbook.isDeploy.isTrue()).and(userWorkbook.isScraped.isTrue()))
                 .groupBy(userWorkbook.workbook.id)
                 .orderBy(userWorkbook.count().desc())
                 .limit(20)

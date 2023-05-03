@@ -121,7 +121,7 @@ public class StudyController {
     public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postStartStudy(HttpServletRequest request,@RequestBody @Valid PostStartStudyRequestDto postStartStudyRequestDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        return ResponseEntity.ok(studyService.postStartStudy(postStartStudyRequestDto));
+        return ResponseEntity.ok(studyService.postStartStudy(postStartStudyRequestDto,userId));
     }
 
     @ApiOperation(value = "다음 문제 이동하기", notes = "다음 문제로 이동합니다.")
@@ -129,7 +129,7 @@ public class StudyController {
     public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchNextProblem(HttpServletRequest request,@RequestBody @Valid PatchNextProblemRequestDto patchNextProblemRequestDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        return ResponseEntity.ok(studyService.patchNextProblem(patchNextProblemRequestDto));
+        return ResponseEntity.ok(studyService.patchNextProblem(patchNextProblemRequestDto, userId));
     }
 
     @ApiOperation(value = "(학생)시험 종료하기", notes = "(학생) 시험을 종료합니다.")
@@ -137,7 +137,7 @@ public class StudyController {
     public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(HttpServletRequest request,@RequestBody @Valid PatchExitStudyRequestDto patchExitStudyRequestDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        return ResponseEntity.ok(studyService.patchExitStudy(patchExitStudyRequestDto));
+        return ResponseEntity.ok(studyService.patchExitStudy(patchExitStudyRequestDto, userId));
     }
 
     @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")

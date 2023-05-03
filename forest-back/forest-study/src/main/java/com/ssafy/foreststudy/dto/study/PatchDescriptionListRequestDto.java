@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
-@Builder
 public class PatchDescriptionListRequestDto {
     @NotNull
     private Long problemListId;

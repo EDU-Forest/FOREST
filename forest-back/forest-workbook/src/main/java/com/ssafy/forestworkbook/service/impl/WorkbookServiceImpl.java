@@ -14,6 +14,7 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.jdbc.Work;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
@@ -50,7 +51,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         // 좋아하는 문제집
         // 스크랩 한 것도 좋아하는 문제집에
         if(Objects.equals(search, "like")) {
-            Page<UserWorkbook> userWorkbooks = userWorkbookRepository.findAllByUserAndWorkbookIsPublicIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(user, pageable);
+            Page<UserWorkbook> userWorkbooks =
+                    userWorkbookRepository.findAllByUserAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(user, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .isOriginal(w.getWorkbook().getCreator().getId() == userId)
@@ -327,7 +329,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         workbook.changeIsPublid(true);
-        workbook.changeIsExcuted(true);
+        workbook.changeIsDploy(true);
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DEPLOY);
     }
@@ -579,6 +581,36 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
+    public ResponseSuccessDto<?> deleteProblem(Long userId, Long problemId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+//        Problem problem = problemRepository.findById(problemId)
+//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
+
+        ProblemList problemList = problemListRepository.findByProblemId(problemId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
+
+        Workbook workbook = workbookRepository.findById(problemList.getWorkbook().getId())
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        if (workbook.getCreator().getId() != userId) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
+        }
+
+        Long problemListId = problemList.getId();
+//        Long problemId = problem.getId();
+
+//        log.info("{}", problemList.getId());
+//        problemListRepository.deleteById(problemListId);
+            log.info("{}", problemId);
+            problemRepository.deleteById(problemId);
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_PROBLEM);
+    }
+
+
+    @Override
     public ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
@@ -586,7 +618,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        if(!workbook.getIsPublic() || !workbook.getIsExecuted()) {
+        if(!workbook.getIsPublic() || !workbook.getIsDeploy()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_ADD_BOOKMARK);
         }
 
@@ -632,6 +664,33 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         userWorkbook.updateIsBookmarked(false);
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_BOOKMARK);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> scrapWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                .orElse(null);
+
+        if (userWorkbook == null) {
+            UserWorkbook userWorkbookSave = UserWorkbook.builder()
+                    .user(user)
+                    .workbook(workbook)
+                    .isBookmarked(false)
+                    .build();
+
+            userWorkbookSave.updateIsScraped(true);
+            userWorkbookRepository.save(userWorkbookSave);
+        } else {
+            userWorkbook.updateIsScraped(true);
+        }
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_ADD_SCRAP);
     }
 
     @Override
