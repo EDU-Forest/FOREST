@@ -137,10 +137,10 @@ pipeline {
                     }                    
                 }                                       
             }            
-        }
+        }                
+    }
 
-        
-        post {
+    post {
         success{
             script{
                 mattermostSend color: 'good', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Success'
@@ -149,9 +149,8 @@ pipeline {
         failure
         {
             script{
-                 mattermostSend color: 'danger', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Failed'
+                mattermostSend color: 'danger', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Failed'
             }
         }
-    }
     }
 }
