@@ -26,7 +26,7 @@ const ClassSummaryWrapper = styled.div<{ small?: boolean }>`
     small &&
     css`
       @media ${({ theme }) => theme.tablet} {
-        height: 10rem;
+        height: 20rem;
       }
     `}
 `;

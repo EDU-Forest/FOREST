@@ -15,6 +15,7 @@ interface Iprops {
   bookmarkCount?: number;
   scrapCount?: number;
   isBookmarked?: boolean;
+  workbookImgPath?: string;
   clickAction?: (id: number) => void;
 }
 
@@ -24,6 +25,8 @@ export default function CommonWorkbook({
   bookmarkCount,
   scrapCount,
   isBookmarked,
+
+  workbookImgPath,
   clickAction,
 }: Iprops) {
   const { mutate } = useBookmarkAdd();
@@ -32,7 +35,11 @@ export default function CommonWorkbook({
   };
   return (
     <WorkbookCard>
-      <WorkbookImg src="/images/workbook.png" onClick={() => clickAction && clickAction(id)} />
+      {workbookImgPath ? (
+        <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
+      ) : (
+        <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
+      )}
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
       {bookmarkCount && (
         <WorkbookContentWrapper>
