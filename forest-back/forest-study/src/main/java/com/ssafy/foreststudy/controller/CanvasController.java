@@ -1,6 +1,5 @@
 package com.ssafy.foreststudy.controller;
 
-import com.ssafy.foreststudy.service.ShelterService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RequestMapping("/canvas")
 public class CanvasController {
-    private final ShelterService shelterService;
+ //   private final LineService shelterService;
 
-    @GetMapping("/{id}")
-    public String findById(@PathVariable Long id){
-        System.out.println("test");
-        return shelterService.getShelterList(id);
-    }
+//    @GetMapping("/{id}")
+//    public String findById(@PathVariable String id){
+//        System.out.println("test");
+//        return shelterService.getShelterList(id);
+//    }
 }

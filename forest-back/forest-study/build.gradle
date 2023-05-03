@@ -41,7 +41,7 @@ dependencies {
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
 
 	// Mattermost
-	implementation 'com.github.lmghee:forest-noti:c7d81bb63f'
+	implementation 'com.github.lmghee:forest-noti:5303fe0a58'
 
 	// gson
 	implementation 'com.google.code.gson:gson:2.10.1'
