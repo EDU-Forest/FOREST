@@ -19,14 +19,14 @@ function WorkbookTab({ selectedType, setSelectedType }: IProps) {
         좋아하는 문제집
       </StyledWorkbookTabItem>
       <StyledWorkbookTabItem
-        onClick={() => handleClickTapItem("used")}
-        isSelected={selectedType === "used" ? true : false}
+        onClick={() => handleClickTapItem("use")}
+        isSelected={selectedType === "use" ? true : false}
       >
         사용한 문제집
       </StyledWorkbookTabItem>
       <StyledWorkbookTabItem
-        onClick={() => handleClickTapItem("madeOneself")}
-        isSelected={selectedType === "madeOneself" ? true : false}
+        onClick={() => handleClickTapItem("own")}
+        isSelected={selectedType === "own" ? true : false}
       >
         내가 만든 문제집
       </StyledWorkbookTabItem>
