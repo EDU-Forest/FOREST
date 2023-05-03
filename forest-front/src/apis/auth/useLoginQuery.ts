@@ -3,7 +3,6 @@ import beforeAuthAxios from "@/utils/beforeAuthAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import useRecentClassIdQuery from "../class/useRecentClassIdQuery";
 
 const fetcher = (payload: Login) =>
   beforeAuthAxios
@@ -11,7 +10,10 @@ const fetcher = (payload: Login) =>
       email: payload.email,
       pw: payload.password,
     })
-    .then(({ data }) => data);
+    .then(({ data }) => {
+      console.log(data);
+      return data;
+    });
 
 const useLogin = () => {
   const router = useRouter();
@@ -19,13 +21,14 @@ const useLogin = () => {
 
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      dispatch(setUsername(data.name));
-      dispatch(setRole(data.role));
-      localStorage.setItem("forest_access_token", data.accessToken);
-      router.push(`/${data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
+      dispatch(setUsername(data.data.name));
+      dispatch(setRole(data.data.role));
+      localStorage.setItem("forest_access_token", data.data.accessToken);
+      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
-    onError: (data) => {
+    onError: (error) => {
       // 아직 미구현
+      console.log("--useLogin error--", error);
     },
   });
 };

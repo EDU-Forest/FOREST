@@ -1,12 +1,13 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { setLocalStorage } from "./localStorage";
+import authAxios from "./authAxios";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
 const AxiosConFigure: AxiosRequestConfig = {
   baseURL: `${NEXT_PUBLIC_SERVER_URL}:9011`,
   timeout: 5000,
-  // withCredentials: true,
+  withCredentials: true,
 };
 
 const workbookAxios = axios.create(AxiosConFigure);
@@ -16,7 +17,7 @@ workbookAxios.interceptors.request.use(
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
       // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
-      config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
+      config.headers.Authorization = `Bearer ${forestToken}`;
     }
     return config;
   },
@@ -30,7 +31,7 @@ workbookAxios.interceptors.response.use(
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
-        const response = await workbookAxios.get("/api/auth/reissue");
+        const response = await authAxios.get("/api/auth/reissue");
         console.log(response.data);
         const { accessToken } = response.data.payload;
 
