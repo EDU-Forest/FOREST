@@ -26,15 +26,15 @@ const ClassSummaryWrapper = styled.div<{ small?: boolean }>`
     small &&
     css`
       @media ${({ theme }) => theme.tablet} {
-        height: 20rem;
+        height: 10rem;
       }
     `}
 `;
 
 const ClassSummaryItemWrapperNoResult = styled.div`
   ${flexBox("row", "center", "center")};
+  height: 100%;
   color: ${({ theme }) => theme.colors.Lime[700]};
-  padding: 6rem;
 `;
 
 const ClassSummaryItemWrapper = styled.div`

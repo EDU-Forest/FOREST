@@ -1,5 +1,10 @@
+import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 import TeacherNav from "@/components/Nav/TeacherNav";
 import ClassSelect from "@/features/class/ClassSelect";
+import {
+  ClassSummaryItemWrapperNoResult,
+  ClassSummaryWrapper,
+} from "@/features/class/ClassSummary.style";
 import ClassWorkbook from "@/features/class/ClassWorkbook";
 import NoClass from "@/features/class/NoClass";
 import ClassStudentList from "@/features/class/teacher/ClassStudentList";
@@ -14,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 export default function TeacherClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
+  const studyId = useRecentStudyIdQuery(nowClassId).data;
 
   useEffect(() => {
     dispatch(closeAllModal());
@@ -26,7 +32,15 @@ export default function TeacherClass() {
         {nowClassId !== -1 ? (
           <>
             <ClassSelect />
-            <ClassSummaryTeacher />
+            {studyId < 1 ? (
+              <ClassSummaryWrapper small>
+                <ClassSummaryItemWrapperNoResult>
+                  최근 진행한 스터디가 없습니다.
+                </ClassSummaryItemWrapperNoResult>
+              </ClassSummaryWrapper>
+            ) : (
+              <ClassSummaryTeacher />
+            )}
             <Title>문제집</Title>
             <ClassWorkbook />
             <ClassStudentList />

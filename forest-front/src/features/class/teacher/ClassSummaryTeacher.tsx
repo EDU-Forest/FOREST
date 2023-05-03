@@ -42,9 +42,9 @@ const examResult: TeacherExamResult = {
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   // 이걸로 데이터 요청
-  const { nowClassId } = useSelector((state: RootState) => state.class);
-  const studyId = useRecentStudyIdQuery(nowClassId).data;
-  // const examResult = useStudyResultQuery(studyId).data
+  const { nowStudyId } = useSelector((state: RootState) => state.class);
+
+  // const examResult = useStudyResultQuery(nowStudyId).data
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);
