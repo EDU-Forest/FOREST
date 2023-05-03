@@ -28,3 +28,8 @@ export const RECENT_LIST = "/recentList";
 
 // workbok
 export const WORKBOOKS_BY_SELF = "/workbooksBySelf";
+export const POPULAR_WORKBOOK_LIST = "/popularWorkbookList";
+export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
+
+// workbook
+export const GET_WORKBOOK_LIST = "/getWorkbookList";

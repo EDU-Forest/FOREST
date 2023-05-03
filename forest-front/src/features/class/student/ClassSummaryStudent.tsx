@@ -14,7 +14,6 @@ import { AiOutlineRight } from "react-icons/ai";
 import ClassScoreChart from "./ClassScoreChart";
 import ClassMyResult from "./ClassMyResult";
 import TotalResult from "../TotalResult";
-import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
@@ -43,7 +42,6 @@ const examResult: StudentExamList = {
 export default function ClassSummaryStudent() {
   const router = useRouter();
   const { nowClassId } = useSelector((state: RootState) => state.class);
-  const studyId = useRecentStudyIdQuery(nowClassId).data;
 
   const goToDetail = (studyId: number) => {
     router.push(`/student/class/study/${studyId}`);

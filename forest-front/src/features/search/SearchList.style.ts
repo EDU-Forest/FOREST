@@ -36,6 +36,10 @@ const PopularOptionItem = styled.span<{ selected?: boolean }>`
 
 const SearchDefalutListWrapper = styled.div`
   ${flexBox("row", "center", "space-between")}
+
+  .swiper-wrapper {
+    min-width: calc(100vw - 16rem);
+  }
 `;
 
 const SearchListWrapper = styled.div`

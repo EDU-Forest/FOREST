@@ -1,5 +1,5 @@
 interface ClassWorkbooks {
-  id: number;
+  studyId: number;
   title: string;
   workbookImgPath: string;
   isFinished: boolean;

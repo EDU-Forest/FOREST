@@ -1,3 +1,4 @@
+import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
 import {
   WorkbookCard,
   WorkbookContent,
@@ -6,12 +7,18 @@ import {
   WorkbookImg,
   WorkbookTitle,
 } from "./Workbook.style";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface Iprops {
   id: number;
   title: string;
   bookmarkCount?: number;
   scrapCount?: number;
+  isBookmarked?: boolean;
+  workbookImgPath?: string;
+  methodType?: string;
   clickAction?: (id: number) => void;
 }
 
@@ -20,18 +27,46 @@ export default function CommonWorkbook({
   title,
   bookmarkCount,
   scrapCount,
+  isBookmarked,
+  workbookImgPath,
+  methodType,
   clickAction,
 }: Iprops) {
+  const patchMutate = useBookmarkPatch().mutate;
+  const postMutate = useBookmarkPost().mutate;
+  const deleteMutate = useBookmarkDelete().mutate;
+  const pressHeart = () => {
+    if (isBookmarked) {
+      deleteMutate(id);
+      return;
+    }
+    if (methodType === "POST") {
+      postMutate(id);
+    } else {
+      patchMutate(id);
+    }
+  };
+
   return (
     <WorkbookCard>
-      <WorkbookImg src="/images/workbook.png" onClick={() => clickAction && clickAction(id)} />
+      {workbookImgPath ? (
+        <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
+      ) : (
+        <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
+      )}
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
-      {bookmarkCount && (
+      {(bookmarkCount || bookmarkCount === 0) && (
         <WorkbookContentWrapper>
-          <WorkbookIcon>🧡</WorkbookIcon>
-          <WorkbookContent>{bookmarkCount}</WorkbookContent>
-          <WorkbookIcon>📝</WorkbookIcon>
-          <WorkbookContent>{scrapCount}</WorkbookContent>
+          <WorkbookContent bg>
+            <span>{scrapCount} </span>
+            명이 이용 중이에요
+          </WorkbookContent>
+          <div>
+            <WorkbookIcon onClick={pressHeart}>
+              {isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+            </WorkbookIcon>
+            <WorkbookContent>{bookmarkCount}</WorkbookContent>
+          </div>
         </WorkbookContentWrapper>
       )}
     </WorkbookCard>

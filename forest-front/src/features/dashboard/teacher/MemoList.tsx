@@ -22,7 +22,7 @@ function MemoList() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [memoList]);
 
   const arrangeDate = (date: string) => {
     return date.replaceAll("T", " ").slice(0, 19);

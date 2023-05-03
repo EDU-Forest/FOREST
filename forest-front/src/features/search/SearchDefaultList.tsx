@@ -11,66 +11,33 @@ import { Navigation } from "swiper";
 import "swiper/swiper.min.css";
 import { breakpoints } from "@/styles/theme";
 import { useState } from "react";
-
-const popularList: SearchWorkbook[] = [
-  {
-    id: 1,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-  {
-    id: 2,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-  {
-    id: 3,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-  {
-    id: 4,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-  {
-    id: 5,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-  {
-    id: 6,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-  },
-];
+import usePopularWorkbookListQuery from "@/apis/search/usePopularWorkbookListQuery";
+import useRecentWorkbookListQuery from "@/apis/search/useRecentWorkbookListQuery";
 
 export default function SearchDefaultList() {
-  const [sortBookmark, setSortBookmark] = useState<boolean>(true);
-  const changeSort = (value: boolean) => {
-    setSortBookmark(value);
+  const [sortType, setSortType] = useState<string>("bookmark");
+  const changeSort = (value: string) => {
+    setSortType(value);
   };
+
+  const popularList: SearchWorkbook[] = usePopularWorkbookListQuery(sortType).data?.workbookList;
+  const recentList: SearchWorkbook[] = useRecentWorkbookListQuery().data?.workbookList;
+
   return (
     <SearchDefaultWrapper>
       <SearchTitle>
         최고 인기 문제집 ⭐
         <PopularOption>
-          <PopularOptionItem selected={sortBookmark} onClick={() => changeSort(true)}>
+          <PopularOptionItem
+            selected={sortType === "bookmark" ? true : false}
+            onClick={() => changeSort("bookmark")}
+          >
             좋아요 순
           </PopularOptionItem>
-          <PopularOptionItem selected={!sortBookmark} onClick={() => changeSort(false)}>
+          <PopularOptionItem
+            selected={sortType === "scrap" ? true : false}
+            onClick={() => changeSort("scrap")}
+          >
             사용 순
           </PopularOptionItem>
         </PopularOption>
@@ -78,13 +45,16 @@ export default function SearchDefaultList() {
 
       <SearchDefalutListWrapper>
         <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-          {popularList.map((item) => (
-            <SwiperSlide key={item.id}>
+          {popularList?.map((item) => (
+            <SwiperSlide key={item.workbookId}>
               <CommonWorkbook
-                id={item.id}
+                id={item.workbookId}
                 title={item.title}
                 bookmarkCount={item.bookmarkCount}
                 scrapCount={item.scrapCount}
+                isBookmarked={item.isBookmarked}
+                workbookImgPath={item.workbookImgPath}
+                methodType={item.methodType}
               />
             </SwiperSlide>
           ))}
@@ -93,13 +63,16 @@ export default function SearchDefaultList() {
       <SearchTitle>최신 등록 문제집 ⭐</SearchTitle>
       <SearchDefalutListWrapper>
         <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-          {popularList.map((item) => (
-            <SwiperSlide key={item.id}>
+          {recentList?.map((item) => (
+            <SwiperSlide key={item.workbookId}>
               <CommonWorkbook
-                id={item.id}
+                id={item.workbookId}
                 title={item.title}
                 bookmarkCount={item.bookmarkCount}
                 scrapCount={item.scrapCount}
+                isBookmarked={item.isBookmarked}
+                workbookImgPath={item.workbookImgPath}
+                methodType={item.methodType}
               />
             </SwiperSlide>
           ))}

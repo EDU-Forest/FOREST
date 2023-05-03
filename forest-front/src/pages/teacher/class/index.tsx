@@ -32,7 +32,7 @@ export default function TeacherClass() {
         {nowClassId !== -1 ? (
           <>
             <ClassSelect />
-            {studyId < 1 ? (
+            {studyId === -1 ? (
               <ClassSummaryWrapper small>
                 <ClassSummaryItemWrapperNoResult>
                   최근 진행한 스터디가 없습니다.
