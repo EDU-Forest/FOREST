@@ -9,6 +9,7 @@ import {
 } from "./Workbook.style";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import useBookmarkPost from "@/apis/search/useBookmarkPost";
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface Iprops {
   id: number;
@@ -33,7 +34,12 @@ export default function CommonWorkbook({
 }: Iprops) {
   const patchMutate = useBookmarkPatch().mutate;
   const postMutate = useBookmarkPost().mutate;
+  const deleteMutate = useBookmarkDelete().mutate;
   const pressHeart = () => {
+    if (isBookmarked) {
+      deleteMutate(id);
+      return;
+    }
     if (methodType === "POST") {
       postMutate(id);
     } else {
