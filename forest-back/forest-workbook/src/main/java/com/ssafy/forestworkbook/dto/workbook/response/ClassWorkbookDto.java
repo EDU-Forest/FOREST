@@ -8,14 +8,14 @@ import lombok.ToString;
 @ToString
 public class ClassWorkbookDto {
 
-        private Long workbookId;
+        private Long studyId;
         private String title;
         private String workbookImgPath;
         private Boolean isFinished;
 
         @Builder
-        public ClassWorkbookDto(Long workbookId, String title, String workbookImgPath,Boolean isFinished) {
-            this.workbookId = workbookId;
+        public ClassWorkbookDto(Long studyId, String title, String workbookImgPath,Boolean isFinished) {
+            this.studyId = studyId;
             this.title = title;
             this.workbookImgPath = workbookImgPath;
             this.isFinished = isFinished;
