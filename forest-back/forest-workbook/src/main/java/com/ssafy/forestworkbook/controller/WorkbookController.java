@@ -2,6 +2,7 @@ package com.ssafy.forestworkbook.controller;
 
 import com.ssafy.forest.jwt.JwtDecoder;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
+import com.ssafy.forestworkbook.dto.workbook.request.ExcuteDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookUpdateInfoDto;
@@ -10,14 +11,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 @Api("Workbook Controller")
 @Slf4j
@@ -124,6 +122,19 @@ public class WorkbookController {
         log.info("{}", userId);
 //        userId = Long.valueOf(1);
         return workbookService.checkExportRange(userId, workbookId);
+    }
+
+    @PostMapping("/export")
+    @ApiOperation(value = "문제집 출제하기", notes = "문제집을 출제합니다.")
+    public ResponseSuccessDto<?> executeWorkbook(
+            HttpServletRequest request,
+            @RequestBody ExcuteDto excuteDto) throws UnsupportedEncodingException {
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
+        return workbookService.executeWorkbook(userId, excuteDto);
+
     }
 
     @PatchMapping("/export/{workbookId}")

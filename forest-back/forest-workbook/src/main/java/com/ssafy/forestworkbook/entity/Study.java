@@ -2,6 +2,7 @@ package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.forestworkbook.enumeration.EnumStudyTypeStatus;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -58,4 +59,15 @@ public class Study {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    @Builder
+    public Study(ClassEntity classes, Workbook workbook, User user, String name, EnumStudyTypeStatus type, LocalDateTime startTime, LocalDateTime endTime) {
+        this.classes = classes;
+        this.workbook = workbook;
+        this.user = user;
+        this.name = name;
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }
