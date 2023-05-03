@@ -93,6 +93,5 @@ public class User {
         this.birth = signupSocialRequestDto.getBirth();
         this.role = signupSocialRequestDto.getRole();
         this.authProvider = signupSocialRequestDto.getProvider();
-        this.refreshToken = signupSocialRequestDto.getRefreshToken();
     }
 }
