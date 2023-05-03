@@ -18,6 +18,8 @@ const initialState: editorQuestions = {
       answer: "",
       point: 0,
       problemImgPath: "",
+      imgIsEmpty: false, 
+      textIsEmpty: false, 
       items: [
         {
           id: 0,
