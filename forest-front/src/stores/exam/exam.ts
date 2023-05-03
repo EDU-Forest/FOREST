@@ -47,8 +47,8 @@ const initialState: examState = {
   curProblemNum: 1,
   examTitle: "임시 시험 제목", // 임시로 넣음
   volume: 10,
-  startTime: new Date("2023-01-01"),
-  endTime: new Date(),
+  startTime: 0,
+  endTime: 0,
   problem: [
     {
       studentStudyProblemId: 1,
