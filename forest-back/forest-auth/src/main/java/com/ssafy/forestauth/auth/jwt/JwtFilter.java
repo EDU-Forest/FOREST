@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 @Component
 @Slf4j
@@ -41,6 +42,7 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             if(jwt == null) {
                 log.info("JWT 값이 NULL 입니다!!");
+                log.info("exception occurred : {}", jwt.getBytes(StandardCharsets.UTF_8));
                 request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
             }
             else if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
