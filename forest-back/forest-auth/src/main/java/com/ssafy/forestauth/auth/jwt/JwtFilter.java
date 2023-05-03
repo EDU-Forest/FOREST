@@ -39,7 +39,11 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Token 정상 여부 확인
         try {
-            if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
+            if(jwt == null) {
+                log.info("JWT 값이 NULL 입니다!!");
+                request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
+            }
+            else if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
                 Authentication authentication = jwtProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 log.info("Secret Context에 '{}' 인증 정보 저장 완료!", authentication.getName());

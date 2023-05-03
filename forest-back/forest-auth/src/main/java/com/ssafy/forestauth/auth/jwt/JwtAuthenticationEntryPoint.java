@@ -23,10 +23,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         ErrorCode exception = (ErrorCode) request.getAttribute("exception");
 
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
         JSONObject responseJson = new JSONObject();
-        responseJson.put("code", HttpStatus.UNAUTHORIZED.value());
+        responseJson.put("code", HttpStatus.FORBIDDEN.value());
         responseJson.put("message", exception);
 
         log.info("JwtAuthentication EntryPoint Spot!");
