@@ -1,6 +1,5 @@
 package com.ssafy.forestworkbook.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
 import lombok.Builder;
 import lombok.Getter;

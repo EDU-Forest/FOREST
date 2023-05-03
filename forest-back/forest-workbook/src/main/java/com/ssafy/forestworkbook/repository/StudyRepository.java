@@ -1,7 +1,6 @@
 package com.ssafy.forestworkbook.repository;
 
 import com.ssafy.forestworkbook.entity.Study;
-import com.ssafy.forestworkbook.entity.User;
 import com.ssafy.forestworkbook.enumeration.EnumStudyTypeStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 

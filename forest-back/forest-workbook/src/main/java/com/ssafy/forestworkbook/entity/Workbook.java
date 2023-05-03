@@ -1,7 +1,6 @@
 package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ssafy.forestworkbook.dto.workbook.request.WorkbookDetailDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,6 @@ import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -83,13 +81,17 @@ public class Workbook {
         this.description = description;
     }
 
-    public void changeIsPublid(boolean isPublic) {
+    // 공개 여부
+    public void changeIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
-    public void changeIsDploy(boolean isDeploy) {
+
+    // 배포 여부
+    public void changeIsDeploy(boolean isDeploy) {
         this.isDeploy = isDeploy;
     }
 
+    // 출제 여부
     public void changeIsExcuted(boolean isExecuted) {
         this.isExecuted = isExecuted;
     }

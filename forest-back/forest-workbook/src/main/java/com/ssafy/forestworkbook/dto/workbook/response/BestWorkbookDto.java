@@ -1,10 +1,6 @@
 package com.ssafy.forestworkbook.dto.workbook.response;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.querydsl.core.types.dsl.NumberExpression;
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.StringPath;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
