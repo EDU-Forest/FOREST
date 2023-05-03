@@ -5,7 +5,7 @@ import { getTimeLimit } from "@/utils";
 
 interface Iprops {
   studyId: number;
-  setStudyInfoData: (data: StudyInfo) => void;
+  setStudyInfoData: (data: IStudyInfo) => void;
 }
 
 const fetcher = (studyId: number) =>
