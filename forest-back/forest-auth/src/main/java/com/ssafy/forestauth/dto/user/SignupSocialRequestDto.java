@@ -2,6 +2,8 @@ package com.ssafy.forestauth.dto.user;
 
 import com.ssafy.forestauth.enumeration.EnumUserProviderStatus;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
+import com.ssafy.forestauth.enumeration.ValidDate;
+import com.ssafy.forestauth.enumeration.ValidEnum;
 import lombok.Getter;
 
 import javax.validation.constraints.NotBlank;
@@ -19,13 +21,10 @@ public class SignupSocialRequestDto {
     @NotNull(message = "전화번호는 필수 값입니다!!")
     @NotBlank(message = "전화번호가 빈 문자열입니다!!")
     private String phone;
-    @NotNull(message = "생년월일은 필수 값입니다!!")
-    @NotBlank(message = "생년월일이 빈 문자열입니다!!")
+    @ValidDate(message = "8자리의 yyyy-MM-dd 형식이어야 합니다.", pattern = "yyyy-MM-dd")
     private LocalDate birth;
-    @NotNull(message = "role은 필수 값입니다!!")
-    @NotBlank(message = "role이 빈 문자열입니다!!")
+    @ValidEnum(enumClass = EnumUserRoleStatus.class)
     private EnumUserRoleStatus role;
-    @NotNull(message = "provider는 필수 값입니다!!")
-    @NotBlank(message = "provider가 빈 문자열입니다!!")
+    @ValidEnum(enumClass = EnumUserProviderStatus.class)
     private EnumUserProviderStatus provider;
 }
