@@ -77,7 +77,7 @@ public class WorkbookController {
     }
 
     @PatchMapping
-    @ApiOperation(value = "문제 순서 수정하기", notes = "문제집 정보와 문제 순서를 수정합니다.")
+    @ApiOperation(value = "문제집 순서 수정하기", notes = "문제집 정보와 문제 순서를 수정합니다.")
     public ResponseSuccessDto<?> updateWorkbook(
             HttpServletRequest request,
             @RequestBody WorkbookUpdateInfoDto workbookUpdateInfoDto) throws UnsupportedEncodingException {
@@ -169,7 +169,7 @@ public class WorkbookController {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("{}", userId);
-//        userId = Long.valueOf(1);
+//        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
@@ -178,10 +178,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @PathVariable Long problemId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-        userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.deleteProblem(userId, problemId);
     }
 
