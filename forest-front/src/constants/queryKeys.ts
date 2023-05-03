@@ -15,6 +15,8 @@ export const CHECK_CLASSNAME = "/checkClassName";
 export const CLASS_STUDENT_LIST = "/classStudentList";
 export const SEARCH_CLASS_STUDENT = "/searchClassStudent";
 export const CLASS_WORKBOOK_LIST = "/classWorkbookList";
+export const STUDY_RESULT = "/studyResult";
+export const STUDENT_SCORE = "/studentScore";
 
 // search
 export const POPULAR_LIST = "/popularList";

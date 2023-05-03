@@ -1,5 +1,5 @@
 import { Title } from "@/styles/text";
-import { flexBox, positionCenter } from "@/styles/theme";
+import { flexBox, positionCenter, theme } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
 const ClassSummaryTitle = styled(Title)`
@@ -9,7 +9,7 @@ const ClassSummaryTitle = styled(Title)`
   margin-right: 2rem;
 `;
 
-const ClassSummaryWrapper = styled.div`
+const ClassSummaryWrapper = styled.div<{ small?: boolean }>`
   width: 100%;
   height: 23.875rem;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
@@ -21,6 +21,20 @@ const ClassSummaryWrapper = styled.div`
   @media ${({ theme }) => theme.tablet} {
     height: 41rem;
   }
+
+  ${({ small }) =>
+    small &&
+    css`
+      @media ${({ theme }) => theme.tablet} {
+        height: 20rem;
+      }
+    `}
+`;
+
+const ClassSummaryItemWrapperNoResult = styled.div`
+  ${flexBox("row", "center", "center")};
+  color: ${({ theme }) => theme.colors.Lime[700]};
+  padding: 6rem;
 `;
 
 const ClassSummaryItemWrapper = styled.div`
@@ -171,6 +185,7 @@ export {
   ClassSummaryTitle,
   ClassSummaryWrapper,
   ClassSummaryItemWrapper,
+  ClassSummaryItemWrapperNoResult,
   ClassSummaryTextItem,
   ClassSummaryDeadline,
   SummaryResultWrapper,
