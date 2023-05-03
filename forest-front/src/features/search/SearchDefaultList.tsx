@@ -73,10 +73,8 @@ export default function SearchDefaultList() {
     setSortType(value);
   };
 
-  const list = usePopularWorkbookListQuery(sortType).data;
-  console.log("요요요", list);
-  const list2 = useRecentWorkbookListQuery().data;
-  console.log("하하하", list2);
+  const popularList: SearchWorkbook[] = usePopularWorkbookListQuery(sortType).data?.workbookList;
+  const recentList: SearchWorkbook[] = useRecentWorkbookListQuery().data?.workbookList;
 
   return (
     <SearchDefaultWrapper>
@@ -116,7 +114,7 @@ export default function SearchDefaultList() {
       <SearchTitle>최신 등록 문제집 ⭐</SearchTitle>
       <SearchDefalutListWrapper>
         <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-          {popularList.map((item) => (
+          {recentList?.map((item) => (
             <SwiperSlide key={item.workbookId}>
               <CommonWorkbook
                 id={item.workbookId}

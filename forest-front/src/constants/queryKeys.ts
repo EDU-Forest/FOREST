@@ -25,3 +25,6 @@ export const STUDENT_SCORE = "/studentScore";
 // search
 export const POPULAR_WORKBOOK_LIST = "/popularWorkbookList";
 export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
+
+// workbook
+export const GET_WORKBOOK_LIST = "/getWorkbookList";

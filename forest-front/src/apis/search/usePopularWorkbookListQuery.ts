@@ -9,7 +9,7 @@ const fetcher = (type: string) =>
         search: type,
       },
     })
-    .then(({ data }) => data);
+    .then(({ data }) => data.data);
 
 const usePopularWorkbookListQuery = (type: string) => {
   return useQuery([queryKeys.POPULAR_WORKBOOK_LIST, type], () => fetcher(type), {

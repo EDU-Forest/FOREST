@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import workbookAxios from "@/utils/workbookAxios";
 
-const fetcher = () => workbookAxios.get("/api/workbook/recent").then(({ data }) => data);
+const fetcher = () => workbookAxios.get("/api/workbook/recent").then(({ data }) => data.data);
 
 const useRecentWorkbookListQuery = () => {
   return useQuery([queryKeys.RECENT_WORKBOOK_LIST], fetcher, {
