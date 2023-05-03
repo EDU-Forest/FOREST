@@ -136,6 +136,7 @@ public class UserService {
                 .name(findUser.getName())
                 .role(findUser.getRole())
                 .accessToken(jwtProvider.createAccessTokenCommon(findUser.getId()))
+                .refreshToken(findUser.getRefreshToken())
                 .build();
 
         ResponseSuccessDto<LoginResponseDto> res = responseUtil.successResponse(loginResponseDto, SuccessCode.AUTH_LOGIN_SUCCESS);

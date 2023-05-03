@@ -10,4 +10,5 @@ public class LoginResponseDto {
     private String name;
     private EnumUserRoleStatus role;
     private String accessToken;
+    private String refreshToken;
 }
