@@ -46,8 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 log.info("JWT 값이 NULL 입니다!!");
                 log.info("exception occurred : {}", jwt.getBytes(StandardCharsets.UTF_8));
                 request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
-
-                inValidTokenException(request, response);
             }
             else if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
                 Authentication authentication = jwtProvider.getAuthentication(jwt);
@@ -57,40 +55,21 @@ public class JwtFilter extends OncePerRequestFilter {
         } catch (SignatureException | MalformedJwtException e) {
             log.info("유효하지 않은 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_NOT_VALID_TOKEN);
-            inValidTokenException(request, response);
         } catch (ExpiredJwtException e) {
             log.info("만료된 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_EXPIRED_TOKEN);
-            inValidTokenException(request, response);
         } catch (UnsupportedJwtException e) {
             log.info("지원하지 않은 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_UNSUPPORTED_TOKEN);
-            inValidTokenException(request, response);
         } catch (JwtException e) {
             log.info("잘못된 토큰");
             request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
-            inValidTokenException(request, response);
         } catch(Exception e) {
             log.info("JWT 값이 : {}", jwt);
             request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
-            inValidTokenException(request, response);
         }
 
         filterChain.doFilter(request, response);
-    }
-
-    private void inValidTokenException(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ErrorCode exception = (ErrorCode) request.getAttribute("exception");
-
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-        JSONObject responseJson = new JSONObject();
-        responseJson.put("code", HttpStatus.FORBIDDEN.value());
-        responseJson.put("message", exception);
-
-        log.info("JwtAuthentication EntryPoint Spot!");
-        response.getWriter().write(String.valueOf(responseJson));
     }
 
     // Request 요청 시, Header에서 Token 정보 꺼내기
