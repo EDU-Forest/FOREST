@@ -1,7 +1,7 @@
 import useEditor from "@/hooks/editor/useEditor";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BiText } from "react-icons/bi";
 import { BsImage } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,7 @@ interface IProps {
 function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   const dispatch = useDispatch();
 
-  const { toChangeItems } = useEditor();
+  const { toChangeItem } = useEditor();
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
@@ -24,21 +24,18 @@ function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   // 2 -> 이미지 선택
   const [selected, setSelected] = useState(1);
 
-  const changeItems = useCallback(
-    (type: number) => {
-      if (type === 1) {
-        toChangeItems("isImage", false, curItem);
-      } else if (type === 2) {
-        toChangeItems("isImage", true, curItem);
-      }
-    },
-    [selected],
-  );
+  const switchItemType = (type: number) => {
+    if (type === 1) {
+      toChangeItem("isImage", false, curItem);
+    } else if (type === 2) {
+      toChangeItem("isImage", true, curItem);
+    }
+  };
 
   const handleClickToggle = (type: number) => {
     setSelected(type);
 
-    changeItems(type);
+    switchItemType(type);
   };
 
   useEffect(() => {

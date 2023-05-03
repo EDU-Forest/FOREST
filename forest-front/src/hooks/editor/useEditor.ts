@@ -17,21 +17,21 @@ function useEditor() {
     dispatch(setQuestions([...copyArr]));
   };
 
-  const toChangeItems = (property: string, value: any, curItem: number) => {
+  const toChangeItem = (property: string, value: any, curItem: number) => {
     // 1. items: question의 보기
     // 2. 1을 question에 합치기
     // 3. 2를 questions에 splice
 
-    const copyItmesArr = [...questions[curQuestion - 1].items];
-    copyItmesArr.splice(curItem - 1, 1, {
-      ...copyItmesArr[curItem - 1],
+    const copyItemsArr = [...questions[curQuestion - 1].items];
+    copyItemsArr.splice(curItem - 1, 1, {
+      ...copyItemsArr[curItem - 1],
       [property]: value,
     });
 
-    toChangeQuestions("items", copyItmesArr);
+    toChangeQuestions("items", copyItemsArr);
   };
 
-  return { toChangeQuestions, toChangeItems };
+  return { toChangeQuestions, toChangeItem };
 }
 
 export default useEditor;
