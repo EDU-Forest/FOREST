@@ -12,6 +12,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Api("Class Controller V1")
@@ -35,7 +38,10 @@ public class ClassController {
     // 클래스 이름 중복 검사
     @GetMapping("/search")
     public ResponseEntity<ResponseSuccessDto<CheckClassResponseDto>> checkClassName(
-            @RequestParam("className") String className
+            @RequestParam("className")
+            @NotNull(message = "className은 필수 값입니다!!")
+            @NotEmpty(message = "className이 빈 문자열입니다!!")
+            String className
     ) {
         return ResponseEntity.ok(classService.checkClassName(className));
     }
@@ -43,7 +49,7 @@ public class ClassController {
     // 선생님 클래스 추가
     @PostMapping("")
     public ResponseEntity<ResponseSuccessDto<SaveClassResponseDto>> saveClass(
-            @RequestBody SaveClassRequestDto saveClassRequestDto,
+            @RequestBody @Valid SaveClassRequestDto saveClassRequestDto,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         Long userId = Long.parseLong(userDetails.getUsername());
@@ -53,7 +59,7 @@ public class ClassController {
     // 클래스에 학생 추가
     @PostMapping("/student")
     public ResponseEntity<ResponseSuccessDto<SaveClassStudentResponseDto>> saveClassStudent(
-            @RequestBody SaveClassStudentRequestDto saveClassStudentRequestDto
+            @RequestBody @Valid SaveClassStudentRequestDto saveClassStudentRequestDto
     ) {
         return ResponseEntity.ok(classService.saveClassStudent(saveClassStudentRequestDto));
     }
@@ -61,7 +67,9 @@ public class ClassController {
     // 클래스에 속한 학생 목록 조회
     @GetMapping("/{classId}/student")
     public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
-            @PathVariable("classId") Long classId
+            @PathVariable("classId")
+            @NotNull(message = "classId는 필수 값입니다!!")
+            Long classId
     ) {
         return ResponseEntity.ok(classService.searchStudent(classId));
     }
@@ -69,7 +77,7 @@ public class ClassController {
     // 클래스에서 학생 삭제
     @PatchMapping("/student")
     public ResponseEntity<ResponseSuccessDto<DeleteStudentResponseDto>> deleteStudent(
-            @RequestBody DeleteStudentRequestDto deleteStudentRequestDto
+            @RequestBody @Valid DeleteStudentRequestDto deleteStudentRequestDto
     ) {
         return ResponseEntity.ok(classService.deleteStudent(deleteStudentRequestDto));
     }
