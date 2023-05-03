@@ -5,6 +5,7 @@ import com.ssafy.forestworkbook.dto.workbook.request.WorkbookDetailDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @Table(name = "workbooks")
 @EntityListeners(AuditingEntityListener.class)
 @Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE workbooks SET is_deleted = true WHERE id = ?")
 public class Workbook {
 
     @Id
@@ -52,6 +54,9 @@ public class Workbook {
     @Column(name = "is_public", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isPublic = false;
 
+    @Column(name = "is_deploy", columnDefinition = "tinyint(1) default 0", nullable = false)
+    private Boolean isDeploy = false;
+
     @CreatedDate
     @Column(name = "created_date", updatable = false, nullable = false)
     private LocalDateTime createdDate;
@@ -76,11 +81,13 @@ public class Workbook {
         this.title = title;
         this.workbookImg = workbookImg;
         this.description = description;
-
     }
 
     public void changeIsPublid(boolean isPublic) {
         this.isPublic = isPublic;
+    }
+    public void changeIsDploy(boolean isDeploy) {
+        this.isDeploy = isDeploy;
     }
 
     public void changeIsExcuted(boolean isExecuted) {
