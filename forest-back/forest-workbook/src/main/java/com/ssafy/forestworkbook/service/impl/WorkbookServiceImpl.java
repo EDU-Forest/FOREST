@@ -696,7 +696,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         for (Study study : studyList) {
             ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
-                    .workbookId(study.getWorkbook().getId())
+                    .studyId(study.getId())
                     .title(study.getWorkbook().getTitle())
                     .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
                     .isFinished((study.getEndTime().isBefore(now)))
