@@ -9,12 +9,17 @@ import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import { initCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
-import { FullScreen } from "@/styles/container";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import ImportingModal from "@/features/editor/ImportingModal";
+import { RootState } from "@/stores/store";
+import { Container, FullScreen } from "@/styles/container";
+import { useSelector } from "react-redux";
 
 export default function Editor() {
+  const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
+
   const [selectQuestionType, setSelectQuestionType] = useState("");
   // const [questions, setQuestions] = useState<QuestionType[]>([]);
 
@@ -168,6 +173,7 @@ export default function Editor() {
           <EditorQuestionList />
         </EditorBtnsAndListBox>
         {/* <PdfViewer /> */}
+        {isOpenModal && <ImportingModal />}
       </EditorContainer>
     </FullScreen>
   );

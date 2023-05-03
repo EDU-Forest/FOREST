@@ -4,7 +4,7 @@ export const getLocalStorage = (key: string) => {
   return value && JSON.parse(value);
 };
 
-export const setLocalStorage = (key: string, value: number) => {
+export const setLocalStorage = (key: string, value: string) => {
   if (!value) return;
 
   const toJson = JSON.stringify(value);

@@ -3,8 +3,6 @@ import { flexBox, positionCenter } from "@/styles/theme";
 import styled from "styled-components";
 
 const SignupForm = styled.form`
-  ${positionCenter("absolute")}
-  transform: translate(-50%, -30%);
   width: 37.5rem;
   padding: 2.5rem 2rem;
   background-color: white;
@@ -71,7 +69,7 @@ const SignupErrorMsg = styled.div`
   color: ${({ theme }) => theme.colors.Orange[500]};
 `;
 
-const SignupInputRowBox = styled.div`
+const SignupPasswordBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
@@ -86,7 +84,7 @@ export {
   SignupContentBox,
   SignupSubmitBox,
   SignupInputBox,
-  SignupInputRowBox,
+  SignupPasswordBox,
   SignupTitle,
   SignupHr,
   SignupLabel,

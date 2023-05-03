@@ -14,15 +14,41 @@ const StyledClassBtn = styled.button<{ selected: boolean }>`
   color: ${({ selected }) => (selected ? "white" : "black")};
 `;
 
-const StyledCommonBtn = styled.button<{ colored?: boolean }>`
+const StyledCommonBtn = styled.button<{
+  disabled?: boolean;
+  colored?: boolean;
+  isYellowGreen?: boolean;
+}>`
   display: inline-block;
   font-size: 16px;
   font-weight: 700;
   padding: 8px 32px;
   border-radius: 20px;
-  border: 0.125rem solid ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[600])};
-  background-color: ${({ colored, theme }) => (colored ? theme.colors.Lime[600] : "white")};
-  color: ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[600])};
+  border: 0.125rem solid ${({ theme }) => theme.colors.Lime[600]};
+  background-color: white;
+  color: ${({ theme }) => theme.colors.Lime[600]};
+
+  &:disabled {
+    border: 0.125rem solid ${({ theme }) => theme.colors.Gray[300]};
+    background-color: white;
+    color: ${({ theme }) => theme.colors.Gray[300]};
+  }
+
+  ${({ colored }) =>
+    colored &&
+    css`
+      border: 0.125rem solid ${({ theme }) => theme.colors.Lime[600]};
+      background-color: ${({ theme }) => theme.colors.Lime[600]};
+      color: white;
+    `}
+
+  ${({ isYellowGreen }) =>
+    isYellowGreen &&
+    css`
+      border: 0.125rem solid ${({ theme }) => theme.colors.Lime[100]};
+      background-color: ${({ theme }) => theme.colors.Lime[100]};
+      color: ${({ theme }) => theme.colors.Lime[600]};
+    `}
 `;
 
 const StyledExportBtn = styled.button<{ selected: boolean }>`
@@ -164,6 +190,12 @@ const StyledSmallBtn = styled.button<{ colored?: boolean }>`
     border: 0.125rem solid ${({ theme }) => theme.colors.Lime[800]};
     background-color: ${({ colored, theme }) => (colored ? theme.colors.Lime[800] : "white")};
     color: ${({ colored, theme }) => (colored ? "white" : theme.colors.Lime[800])};
+  }
+
+  &:disabled {
+    border: 0.125rem solid ${({ theme }) => theme.colors.Gray[300]};
+    background-color: white;
+    color: ${({ theme }) => theme.colors.Gray[300]};
   }
 `;
 

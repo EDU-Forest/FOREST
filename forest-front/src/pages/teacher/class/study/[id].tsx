@@ -7,7 +7,7 @@ interface ServerProps {
   };
 }
 
-export default function StudyAnalysisPage({ studyId }: StudyId) {
+export default function StudyAnalysisPage({ studyId }: IStudyId) {
   return (
     <AnalysisFullScreen>
       <StudyAnalysis />

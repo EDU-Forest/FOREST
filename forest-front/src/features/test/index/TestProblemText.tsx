@@ -3,8 +3,8 @@ import { StyledTestProblemText } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 
 export default function TestProblemText() {
-  const { problems } = useSelector((state: RootState) => state.exam);
-  const { text } = problems[0];
+  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { text } = problem[curProblemNum - 1];
 
   return <StyledTestProblemText>{text}</StyledTestProblemText>;
 }

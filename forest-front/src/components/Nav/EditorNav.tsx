@@ -2,6 +2,13 @@ import useEditor from "@/hooks/editor/useEditor";
 import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
+import {
+  StyledEditorNav,
+  ArrowDiv,
+  EditorNavDivTitle,
+  EditorNavDiv,
+  EditorNavDivInner,
+} from "./Nav.style";
 import { AiFillPicture, AiOutlinePicLeft } from "react-icons/ai";
 import {
   MdOutlineFormatListNumbered,
@@ -17,12 +24,14 @@ import {
   EditorNavDivTitle,
   StyledEditorNav,
 } from "./Nav.style";
+import { openPdfModal } from "@/stores/editor/editorModal";
 
 interface IProps {
   setSelectQuestionType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function EditorNav({ setSelectQuestionType }: IProps) {
+  const dispatch = useDispatch();
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -129,7 +138,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
       <EditorNavDiv>
         <p>전체 영역</p>
-        <p>일부 영역</p>
+        <p onClick={() => dispatch(openPdfModal())}>일부 영역</p>
       </EditorNavDiv>
       <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
       <EditorNavDiv>

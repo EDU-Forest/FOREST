@@ -23,7 +23,7 @@ export default function TestInfoBox({ presenter, volume, timeLimit }: Iprops) {
   return (
     <StyledTestInfoBox>
       {testInfoData.map((data, idx) => (
-        <StyledTestInfoContent>
+        <StyledTestInfoContent key={`test-info-content-${idx}`}>
           {/* <TestInfoLabel text={labelList[idx]} /> */}
           <StyledTestInfoLabel>{labels[idx]}</StyledTestInfoLabel>
           <StyledTestInfoText>{data}</StyledTestInfoText>

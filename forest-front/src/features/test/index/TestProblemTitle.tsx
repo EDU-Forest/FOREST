@@ -4,8 +4,8 @@ import { StyledTestProblemTitle, StyledTestProblemTitleContent } from "./TextInd
 import { RootState } from "@/stores/store";
 
 export default function TestProblemTitle() {
-  const { problems } = useSelector((state: RootState) => state.exam);
-  const { title } = problems[0];
+  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { title } = problem[curProblemNum - 1];
   return (
     <StyledTestProblemTitle>
       <TestProblemTitleLabel />

@@ -1,4 +1,4 @@
-import { Iprops } from "@/features/home/SignupInput";
+import { flexBox } from "@/styles/theme";
 import styled from "styled-components";
 
 const CommonInput = styled.input<{ isShort?: boolean; isScore?: boolean }>`
@@ -90,4 +90,31 @@ const SearchInputDiv = styled.div`
   }
 `;
 
-export { CommonInput, StyledSearchInput, SearchInputDiv };
+const StyledFileInputLabel = styled.label`
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem 2rem;
+  border-radius: 1.25rem;
+  cursor: pointer;
+
+  background-color: ${({ theme }) => theme.colors.Lime[600]};
+  color: white;
+
+  ${flexBox("row", "center", "center")};
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  width: 17.5rem;
+  height: 3.75rem;
+
+  svg {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+  }
+`;
+
+const StyledFileInput = styled.input`
+  display: none;
+`;
+
+export { CommonInput, StyledSearchInput, SearchInputDiv, StyledFileInputLabel, StyledFileInput };

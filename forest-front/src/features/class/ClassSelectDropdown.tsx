@@ -11,26 +11,38 @@ import {
 import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
+import useClassListQuery from "@/apis/class/useClassListQuery";
 
 interface Iprops {
-  classList: ClassList[];
+  // classList?: ClassList[];
   nowClassId: number;
   isStudent?: boolean;
 }
 
-export default function ClassSelectDropdown({ classList, nowClassId, isStudent }: Iprops) {
+export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   const dispatch = useDispatch();
   const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
 
+  const classList: ClassList[] = useClassListQuery().data;
+
   return (
     <ClassSelectDropdownContainer>
-      <ClassSelectDropdownEach>
-        {classList?.map((item) => (
-          <ClassSelectDropdownEachItem key={item.classId} onClick={() => dispatch(setClass(item))}>
-            {item.classId === nowClassId && <ClassSelectCircle />} {item.name}
-          </ClassSelectDropdownEachItem>
-        ))}
-      </ClassSelectDropdownEach>
+      {classList?.length > 0 ? (
+        <>
+          <ClassSelectDropdownEach>
+            {classList?.map((item) => (
+              <ClassSelectDropdownEachItem
+                key={item.classId}
+                onClick={() => dispatch(setClass(item))}
+              >
+                {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
+              </ClassSelectDropdownEachItem>
+            ))}
+          </ClassSelectDropdownEach>
+        </>
+      ) : (
+        <div style={{ height: "6rem" }}>노 클래스</div>
+      )}
       {!isStudent && (
         <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
           + 새 클래스 추가
