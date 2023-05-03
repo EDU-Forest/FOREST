@@ -11,6 +11,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Api("User Controller V1")
@@ -25,7 +28,7 @@ public class UserController {
     // 소셜 회원, 정보 추기
     @PostMapping("/social")
     public ResponseEntity<ResponseSuccessDto<SignupSocialResponseDto>> signupSocial(
-            @RequestBody SignupSocialRequestDto signupSocialRequestDto,
+            @RequestBody @Valid SignupSocialRequestDto signupSocialRequestDto,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         Long userId = Long.parseLong(userDetails.getUsername());
@@ -35,7 +38,10 @@ public class UserController {
     // 이메일 중복 검사
     @GetMapping("/check")
     public ResponseEntity<ResponseSuccessDto<CheckEmailResponseDto>> checkEmail(
-            @RequestParam("email") String email
+            @RequestParam("email")
+            @NotNull(message = "email은 필수 값입니다!!")
+            @NotEmpty(message = "email이 빈 문자열입니다!!")
+            String email
     ) {
         return ResponseEntity.ok(userService.checkEmail(email));
     }
@@ -43,7 +49,7 @@ public class UserController {
     // 일반 회원가입
     @PostMapping("/common")
     public ResponseEntity<ResponseSuccessDto<SignupCommonResponseDto>> signupCommon(
-            @RequestBody SignupRequestDto signupRequestDto
+            @RequestBody @Valid SignupRequestDto signupRequestDto
     ) {
         return ResponseEntity.ok(userService.signupCommon(signupRequestDto));
     }
@@ -51,7 +57,7 @@ public class UserController {
     // 일반 로그인
     @PostMapping("/login")
     public ResponseEntity<ResponseSuccessDto<LoginResponseDto>> loginCommon(
-            @RequestBody LoginRequestDto loginRequestDto
+            @RequestBody @Valid LoginRequestDto loginRequestDto
     ) {
         return ResponseEntity.ok(userService.loginCommon(loginRequestDto));
     }
@@ -59,7 +65,7 @@ public class UserController {
     // 이름으로 학생 검색
     @GetMapping("/search")
     public ResponseEntity<ResponseSuccessDto<List<SearchStudentResponseDto>>> searchStudent(
-            @RequestParam("classId") Long classId,
+            @RequestParam("classId") @NotNull(message = "classId는 필수 값입니다!!") Long classId,
             @RequestParam("userName") String userName) {
         return ResponseEntity.ok(userService.searchStudent(classId, userName));
     }

@@ -11,6 +11,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api("Memo Controller V1")
@@ -34,7 +35,7 @@ public class MemoController {
     // 메모 생성
     @PostMapping("")
     public ResponseEntity<ResponseSuccessDto<SaveMemoResponseDto>> saveMemo(
-            @RequestBody SaveMemoRequestDto saveMemoRequestDto,
+            @RequestBody @Valid SaveMemoRequestDto saveMemoRequestDto,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
         Long userId = Long.parseLong(userDetails.getUsername());
@@ -44,7 +45,7 @@ public class MemoController {
     // 메모 삭제
     @PatchMapping("")
     public ResponseEntity<ResponseSuccessDto<DeleteMemoResponseDto>> deleteMemo(
-            @RequestBody DeleteMemoRequestDto deleteMemoRequestDto
+            @RequestBody @Valid DeleteMemoRequestDto deleteMemoRequestDto
     ) {
         return ResponseEntity.ok(memoService.deleteMemo(deleteMemoRequestDto));
     }
