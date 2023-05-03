@@ -5,6 +5,7 @@ import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "problems")
 @Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE problems SET is_deleted = true WHERE id = ?")
 public class Problem {
 
     @Id

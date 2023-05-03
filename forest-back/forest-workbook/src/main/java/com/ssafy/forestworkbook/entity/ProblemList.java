@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "problem_lists")
 @Where(clause = "is_deleted = false")
+@SQLDelete(sql = "UPDATE problem_lists SET is_deleted = true WHERE id = ?")
 public class ProblemList {
 
     @Id
