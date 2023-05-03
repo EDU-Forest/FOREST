@@ -1,5 +1,6 @@
 package com.ssafy.forestworkbook.controller;
 
+import com.ssafy.forest.jwt.JwtDecoder;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
@@ -9,9 +10,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
 @Api("Workbook Controller")
 @Slf4j
@@ -21,15 +27,23 @@ import org.springframework.web.bind.annotation.*;
 public class WorkbookController {
 
     private final WorkbookService workbookService;
+//    private final JwtDecoder jwtDecoder;
 
     // TODO UserID가 어떻게 올까?
     // TODO path -> MultipartFile file로 바꾸기
     @GetMapping
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList(
-            @RequestParam String search, Pageable pageable) {
-//        Map<String, String> authInfo = SecurityUtil.getCurrentUser();
-        Long userId = Long.valueOf(10);
+            HttpServletRequest request,
+            @RequestParam String search, Pageable pageable) throws UnsupportedEncodingException{
+
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+
+//        System.out.println(authInfo.get("userId"));
+
+        userId = Long.valueOf(10);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
 
