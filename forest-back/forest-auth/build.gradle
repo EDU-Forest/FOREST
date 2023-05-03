@@ -51,7 +51,7 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api'
 
     // notification
-    implementation 'com.github.lmghee:forest-noti:c7d81bb63f'
+    implementation 'com.github.lmghee:forest-noti:5f82b89bf3'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
