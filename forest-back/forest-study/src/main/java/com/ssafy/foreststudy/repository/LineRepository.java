@@ -6,5 +6,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface LineRepository extends MongoRepository<Line, String> {
 
-    Line findByAuthor(String author);
+    Line findByName(String name);
 }

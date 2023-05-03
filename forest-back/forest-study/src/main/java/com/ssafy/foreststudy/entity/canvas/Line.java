@@ -5,13 +5,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
-@Document(collection = "canvas")
+@Document(collection = "line")
 @Data
 @NoArgsConstructor
 public class Line {
     @Id
     private Long id;
-    private String title;
-    private String author;
-    private String copies;
+    private String name;
+    private String email;
 }

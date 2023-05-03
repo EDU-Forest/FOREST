@@ -25,12 +25,7 @@ spring:
 
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      authentication-database: admin
-      database: admin
-      username: root
-      password: 1234
+      uri: mongodb://localhost:27017/canvas
 
       # uri: mongodb: //546.465.445:27017/qwerqwer
 

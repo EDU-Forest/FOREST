@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CanvasController {
     private final LineService shelterService;
 
-    @GetMapping("/{author}")
-    public String findUserData(@PathVariable String author){
-        return shelterService.selectUser(author);
+    @GetMapping("/{name}")
+    public String findUserData(@PathVariable String name){
+        return shelterService.selectUser(name);
     }
 }
