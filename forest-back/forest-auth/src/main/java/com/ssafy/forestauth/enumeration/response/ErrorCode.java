@@ -11,7 +11,7 @@ public enum ErrorCode implements Codable {
     /**
      * JWT
      */
-    AUTH_NOT_VALID_TOKEN(HttpStatus.UNAUTHORIZED, "우효하지 않은 토큰입니다", true),
+    AUTH_NOT_VALID_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다", true),
     AUTH_WRONG_TOKEN(HttpStatus.UNAUTHORIZED, "잘못된 토큰입니다.", true),
     AUTH_UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, "지원하지 않는 토큰입니다.", true),
     AUTH_EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Access Token 기한이 만료되었습니다.", true),
