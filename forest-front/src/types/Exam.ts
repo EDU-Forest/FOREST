@@ -1,9 +1,11 @@
 interface examState {
+  isStarted: boolean;
   curProblemNum: number;
   examTitle: string;
   volume: number;
   startTime: number;
   endTime: number;
+  presenter: string;
   problem: {
     studentStudyProblemId: number;
     problemNum: number;
