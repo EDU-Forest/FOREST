@@ -24,7 +24,8 @@ public class JwtProvider {
     @Value("${jwt.token.secretKey}")
     private String secretKey;
 
-    public static final Long accessTokenValidateTime = 1000L * 60 * 60 * 24; // 하루
+//    public static final Long accessTokenValidateTime = 1000L * 60 * 60 * 24; // 하루
+    public static final Long accessTokenValidateTime = 1000L * 5; // 5초
     public Long refreshTokenValidateTime = 1000L * 60 * 60 * 24 * 7; // 1주일
     private final String authoritiesKey = "role";
 
