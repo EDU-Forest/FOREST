@@ -21,12 +21,11 @@ import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
 export default function Editor() {
   const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
 
-  const [workbooksBySelf, setWorkbooksBySelf] = useState<IWorkbookBySelf[]>();
   const [selectQuestionType, setSelectQuestionType] = useState("");
   // const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   const dispatch = useDispatch();
-  useGetWorkbooksBySelf({ setWorkbooksBySelf });
+  // useGetWorkbooksBySelf({ setWorkbooksBySelf });
   // let dummyQuestions: QuestionType[] = [
   //   {
   //     id: 1,
@@ -157,10 +156,10 @@ export default function Editor() {
   //   },
   // ];
 
-  useEffect(() => {
-    dispatch(initCurQuestion());
-    // dispatch(setQuestions([...dummyQuestions]));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(initCurQuestion());
+  //   // dispatch(setQuestions([...dummyQuestions]));
+  // }, []);
 
   return (
     <FullScreen>

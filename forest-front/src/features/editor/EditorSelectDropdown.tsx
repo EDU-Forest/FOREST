@@ -13,6 +13,7 @@ import { setClass } from "@/stores/class/classInfo";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import AddClassModal from "../class/teacher/AddClassModal";
+import { IWorkbookBySelf } from "@/types/Workbook";
 
 interface Iprops {
   nowClassId: number;

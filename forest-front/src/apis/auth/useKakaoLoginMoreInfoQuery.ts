@@ -14,7 +14,7 @@ const fetcher = (payload: KakaoLoginMoreInfo) =>
       role: payload.role,
       provider: "KAKAO",
     })
-    .then(({ data }) => data.data);
+    .then(({ data }) => data);
 
 const useKakaoLoginMoreInfo = () => {
   const dispatch = useDispatch();
@@ -22,9 +22,9 @@ const useKakaoLoginMoreInfo = () => {
 
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      dispatch(setUsername(data.name));
-      dispatch(setRole(data.role));
-      router.push(`/${data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
+      dispatch(setUsername(data.data.name));
+      dispatch(setRole(data.data.role));
+      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
     onError: (data) => {
       console.log("Err", data);

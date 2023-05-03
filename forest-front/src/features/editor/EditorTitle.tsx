@@ -6,6 +6,7 @@ import ClassSelectDropdown from "../class/ClassSelectDropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import EditorSelectDropdown from "./EditorSelectDropdown";
+import { IWorkbookBySelf } from "@/types/Workbook";
 
 export default function EditorTitle() {
   const dispatch = useDispatch();
