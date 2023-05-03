@@ -13,6 +13,7 @@ const studyAxios = axios.create(AxiosConFigure);
 
 studyAxios.interceptors.request.use(
   (config) => {
+    console.log("req", config);
     const forestToken = localStorage.getItem("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
       // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
@@ -26,6 +27,7 @@ studyAxios.interceptors.request.use(
 studyAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
+    console.log("err", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
