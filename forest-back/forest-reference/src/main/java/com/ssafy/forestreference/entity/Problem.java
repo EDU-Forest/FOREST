@@ -30,11 +30,11 @@ public class Problem {
     @Column(name = "path", columnDefinition = "varchar(255)")
     private String path;
 
-    @Column(name = "text", columnDefinition = "text")
-    private String text;
-
     @Column(name = "answer", columnDefinition = "text", nullable = false)
     private String answer;
+
+    @Column(name = "text", columnDefinition = "text")
+    private String text;
 
     @Column(name = "point", columnDefinition = "int", nullable = false)
     private int point;
