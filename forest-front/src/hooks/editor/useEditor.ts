@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 interface IItem {
   isImage?: boolean;
-  content?: string;
+  content?: string | any;
 }
 
 function useEditor() {
@@ -12,11 +12,11 @@ function useEditor() {
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
 
-  const toChangeQuestions = (property: string, value: any) => {
+  const toChangeQuestions = (key: string, value: any) => {
     const copyArr = [...questions];
     copyArr.splice(curQuestion - 1, 1, {
       ...questions[curQuestion - 1],
-      [property]: value,
+      [key]: value,
     });
 
     dispatch(setQuestions([...copyArr]));

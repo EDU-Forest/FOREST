@@ -10,6 +10,7 @@ import {
   EditorQuestionChoiceBox,
   EditorQuestionChoiceListBox,
 } from "./EditorQuestionContent.style";
+import EditorQuestionImg from "./EditorQuestionImg";
 
 interface IProps {
   question: QuestionType;
@@ -66,9 +67,9 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
 
   return (
     <EditorQuestionChoiceListBox>
-      {items.map((item, i) => {
+      {items.map((item, i: number) => {
         return (
-          <div>
+          <div key={`item-${i}`}>
             <EditorQuestionChoiceBox isCorrect={corret === i + 1}>
               <EditorChoiceNumBox
                 onClick={() => handleClickItem(i + 1)}
@@ -78,11 +79,12 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               </EditorChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? (
-                item.content === "" ? (
-                  <button>이미지 삽입</button>
-                ) : (
-                  <img src={item.content} alt="item" />
-                )
+                <EditorQuestionImg
+                  question={question}
+                  property="content"
+                  whereInserted="item"
+                  curItem={i + 1}
+                />
               ) : (
                 <>
                   <input

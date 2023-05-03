@@ -13,9 +13,9 @@ import {
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
 } from "./EditorQuestionContent.style";
-import EditorShortAnswer from "./EditorShortAnswer";
-import EditorQuestionTextInput from "./EditorQuestionText";
 import EditorQuestionImg from "./EditorQuestionImg";
+import EditorQuestionTextInput from "./EditorQuestionText";
+import EditorShortAnswer from "./EditorShortAnswer";
 
 interface IProps {
   selectQuestionType: string;
@@ -82,7 +82,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
         {/* 지문 여부에 따라 지문 렌더링 */}
         {question.textIsEmpty && <EditorQuestionTextInput question={question} />}
         {/* 이미지 여부에 따라 이미지 렌더링 */}
-        {question.imgIsEmpty && <EditorQuestionImg question={question} />}
+        {question.imgIsEmpty && <EditorQuestionImg question={question} property="problemImgPath" whereInserted="question" />}
         {/* 객관식 */}
         {question.type === "multipleChoice" && (
           <EditorMultipleChoice
