@@ -1,23 +1,29 @@
+import useGetStudyInfo from "@/apis/study/useGetStudyInfoQuery";
+import { useRouter } from "next/router";
 import {
   StyledTestInfoBox,
   StyledTestInfoContent,
   StyledTestInfoLabel,
   StyledTestInfoText,
 } from "./TestInfo.style";
-// import TestInfoLabel from "./TestInfoLabel";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
-interface Iprops {
-  presenter: string;
-  volume: number;
-  timeLimit: number;
-}
+export default function TestInfoBox() {
+  const router = useRouter();
 
-export default function TestInfoBox({ presenter, volume, timeLimit }: Iprops) {
+  const { presenter, startTime, endTime, volume } = useSelector((state: RootState) => state.exam);
+
+  const studyId = router.query?.studyId;
+  useGetStudyInfo({
+    studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
+  });
+
   const labels = ["출제자", "문항 수", "제한시간"];
   const testInfoData = [
     presenter,
     `${volume} 문항`,
-    timeLimit ? `${timeLimit} 분` : "제한시간 없음",
+    startTime && endTime ? `${endTime} 분` : "제한시간 없음",
   ];
 
   return (

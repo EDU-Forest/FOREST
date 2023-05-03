@@ -5,12 +5,17 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
-export default function TestHeaderLeftContentBox() {
+interface Iprops {
+  setToggleModal: (toggleModal: boolean) => void;
+}
+
+export default function TestHeaderLeftContentBox({ setToggleModal }: Iprops) {
   const { examTitle } = useSelector((state: RootState) => state.exam);
   const router = useRouter();
 
   const clickHandler = () => {
-    router.push("/test/info");
+    setToggleModal(true);
+    // router.push(`/test/${router.query.studyId}/info`);
   };
 
   return (
