@@ -1,9 +1,9 @@
+import { useSelector } from "react-redux";
 import { StyledTestInfoTitleBox } from "./TestInfo.style";
+import { RootState } from "@/stores/store";
 
-interface Iprops {
-  title: string;
-}
+export default function TestInfoTitleBox() {
+  const { examTitle } = useSelector((state: RootState) => state.exam);
 
-export default function TestInfoTitleBox({ title }: Iprops) {
-  return <StyledTestInfoTitleBox>{title}</StyledTestInfoTitleBox>;
+  return <StyledTestInfoTitleBox>{examTitle}</StyledTestInfoTitleBox>;
 }

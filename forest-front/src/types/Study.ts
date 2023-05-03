@@ -3,7 +3,6 @@ interface IStudyId {
 }
 
 interface IStudyInfo {
-  studyTitle: string;
   studyPresenter: string;
   studyVolume: number;
   studyTimeLimit: number;

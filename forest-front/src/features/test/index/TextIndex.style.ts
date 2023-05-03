@@ -31,6 +31,7 @@ const StyledTestHeader = styled.div`
 
 const StyledTestHeaderContentBox = styled.div`
   display: flex;
+  align-items: center;
 
   .icon {
     width: 32px;

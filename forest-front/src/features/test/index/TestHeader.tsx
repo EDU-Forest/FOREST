@@ -2,10 +2,14 @@ import TestHeaderLeftContentBox from "./TestHeaderLeftContentBox";
 import TestHeaderRightContentBox from "./TestHeaderRightContentBox";
 import { StyledTestHeader } from "./TextIndex.style";
 
-export default function TestHeader() {
+interface Iprops {
+  setToggleModal: (toggleModal: boolean) => void;
+}
+
+export default function TestHeader({ setToggleModal }: Iprops) {
   return (
     <StyledTestHeader>
-      <TestHeaderLeftContentBox />
+      <TestHeaderLeftContentBox setToggleModal={setToggleModal} />
       <TestHeaderRightContentBox />
     </StyledTestHeader>
   );

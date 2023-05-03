@@ -7,16 +7,12 @@ import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestEndModal from "@/features/test/index/TestEndModal";
 
 export default function Test() {
-  const router = useRouter();
-  const studyId = router.query?.studyId;
   const [toggleModal, setToggleModal] = useState(false);
-
-  useGetStudyProblems({ studyId: typeof studyId === "string" ? parseInt(studyId) : -1 });
 
   return (
     <StyledTestContainer>
       {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
-      <TestHeader />
+      <TestHeader setToggleModal={setToggleModal} />
       <TestContent toggleModal={toggleModal} setToggleModal={setToggleModal} />
     </StyledTestContainer>
   );
