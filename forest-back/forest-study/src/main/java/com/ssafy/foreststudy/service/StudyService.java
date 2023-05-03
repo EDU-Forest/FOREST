@@ -145,7 +145,7 @@ public class StudyService {
         List<Study> studyList = new ArrayList<>();
         for (ClassUser cu : classUser) {
             classRepository.findById(cu.getId())
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
             List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
             studyList.addAll(classStudyList);
         }
@@ -512,6 +512,13 @@ public class StudyService {
         /* 해당 유저 클래스 회원이 아닌 경우 체크 */
         classUserRepository.findAllByClassesAndUser(study.getClasses(), user)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS));
+
+        /* 재입장 여부 체크 */
+        Optional<StudentStudyResult> ssr = studentStudyResultRepository.findAllByStudyAndUser(study, user);
+        if (ssr.isPresent())
+            throw new CustomException(StudyErrorCode.STUDY_STUDENT_ENTER);
+
+
 
         /* 개인시험 결과 테이블 생성 */
         StudentStudyResult studentStudyResult = new StudentStudyResult();
