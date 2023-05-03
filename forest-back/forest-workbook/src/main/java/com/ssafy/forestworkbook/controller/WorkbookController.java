@@ -136,9 +136,13 @@ public class WorkbookController {
 
     @PostMapping("scrap/{workbookId}")
     @ApiOperation(value = "문제집 스크랩", notes = "문제집을 스크랩합니다.")
-    public ResponseSuccessDto<?> scrapWorkbook(@PathVariable Long workbookId) {
-        Long userId = Long.valueOf(1);
-        return workbookService.deleteBookmark(userId, workbookId);
+    public ResponseSuccessDto<?> scrapWorkbook(HttpServletRequest request, @PathVariable Long workbookId) throws UnsupportedEncodingException {
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+
+//        userId = Long.valueOf(1);
+        return workbookService.scrapWorkbook(userId, workbookId);
     }
 
     @GetMapping("/best")
@@ -161,7 +165,6 @@ public class WorkbookController {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("{}", userId);
-
 //        userId = Long.valueOf(3);
         return workbookService.getEditorWorkbook(userId);
     }

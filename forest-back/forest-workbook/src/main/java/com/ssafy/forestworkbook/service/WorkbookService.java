@@ -21,6 +21,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> updateProblem(Long userId, ProblemUpdateInfoDto problemUpdateInfoDto);
     ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
     ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);
+    ResponseSuccessDto<?> scrapWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
     ResponseSuccessDto<?> getRecentWorkbook(Long userId);
     ResponseSuccessDto<?> getEditorWorkbook(Long userId);
