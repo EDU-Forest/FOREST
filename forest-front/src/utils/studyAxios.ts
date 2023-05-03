@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { setLocalStorage } from "./localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -30,11 +31,13 @@ studyAxios.interceptors.response.use(
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await studyAxios.get("/api/auth/reissue");
+        console.log(response.data);
         const { accessToken } = response.data.payload;
 
         return accessToken;
       };
       const accessToken = await newAccessToken();
+      setLocalStorage("forest_access_token", accessToken);
       prevRequest.headers.authorization = accessToken;
       return studyAxios(prevRequest);
     }

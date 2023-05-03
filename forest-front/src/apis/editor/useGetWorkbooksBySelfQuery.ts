@@ -7,7 +7,11 @@ interface Iprops {
   setWorkbooksBySelf: (workbooksBySelf: IWorkbookBySelf[]) => void;
 }
 
-const fetcher = () => workbookAxios.get("/api/workbook/editor").then(({ data }) => data);
+const fetcher = () =>
+  workbookAxios.get("/api/workbook/editor").then(({ data }) => {
+    console.log(data);
+    return data;
+  });
 
 const useGetWorkbooksBySelf = ({ setWorkbooksBySelf }: Iprops) => {
   return useQuery(queryKeys.WORKBOOKS_BY_SELF, () => fetcher(), {
