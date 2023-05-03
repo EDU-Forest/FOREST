@@ -4,8 +4,7 @@ import { StyledAnswerBox, StyledTestSubmitBtn, StyledUsername } from "./TextInde
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
-export default function TestAnswerBox() {
-  const [toggleModal, setToggleModal] = useState(false);
+export default function TestAnswerBox({ toggleModal, setToggleModal }: IStudyModal) {
   const { username } = useSelector((state: RootState) => state.user);
 
   const clickHandler = () => {
