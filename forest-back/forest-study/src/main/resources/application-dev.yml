@@ -20,6 +20,16 @@ spring:
     activate:
       on-profile: dev
 
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username:
+      password:
+      database: admin
+      # uri: mongodb: //546.465.445:27017/qwerqwer
+
   jpa:
     hibernate:
       ddl-auto: none
