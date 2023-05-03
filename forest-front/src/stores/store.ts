@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userSlice from "./user/user";
+import analysisSlice from "./analysis/analysis";
 import classSlice from "./class/classInfo";
 import classModalSlice from "./class/classModal";
-import analysisSlice from "./analysis/analysis";
 import examSlice from "./exam/exam";
+import userSlice from "./user/user";
+import questionSlice from "./editor/editorQuestions";
 import editorModalSlice from "./editor/editorModal";
 
 const reducers = combineReducers({
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   classModal: classModalSlice,
   analysis: analysisSlice,
   exam: examSlice,
+  editQuestions: questionSlice,
   editorModal: editorModalSlice,
 });
 

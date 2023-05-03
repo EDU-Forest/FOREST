@@ -6,20 +6,25 @@ export interface WorkbookType {
   usedCnt: number;
 }
 
+export interface QuestionItemType {
+  id: number;
+  no: number;
+  content: string;
+  isImage: boolean;
+}
+
 export interface QuestionType {
   id: number;
   problemNum: number;
   type: string;
   title: string;
   text: string;
+  answer: string;
   point: number;
-  image: string;
-  items: {
-    id: number;
-    no: number;
-    content: string;
-    isImage: boolean;
-  }[];
+  problemImgPath: string;
+  items: QuestionItemType[];
+  imgIsEmpty: boolean;
+  textIsEmpty: boolean;
 }
 
 export interface QuestionSummType {
