@@ -48,8 +48,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", refreshToken)
                     .httpOnly(true)
                     .maxAge(jwtProvider.refreshTokenValidateTime)
-//                    .path("/")
-                    .domain("localhost:3000")
+                    .path("/")
+//                    .domain("localhost:3000")
                     .build();
 
             // 로그인 실패가 발생했을 떄 세션에 저장된 에러 지움

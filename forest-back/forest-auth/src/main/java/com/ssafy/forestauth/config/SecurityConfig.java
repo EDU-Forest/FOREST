@@ -54,6 +54,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         "**/api/workbook/recent/**",
                         "**/api/oauth2/**",
                         "**/api/login/**",
+                        "**/api/auth/reissue/**",
 
                         // Swagger
                         "**/api/swagger-ui.html/**",
