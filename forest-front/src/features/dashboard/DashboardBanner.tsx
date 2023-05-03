@@ -5,26 +5,31 @@ import { StyledDashboardBanner } from "./DashboardBanner.style";
 
 import StudentImg from "/public/images/Banner_Student.png";
 import TeacherImg from "/public/images/Banner_Teacher.png";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import useCheerMsgQuery from "@/apis/dashboard/useCheerMsgQuery";
 
-interface PropsType {
-  role: string;
-}
-
-function DashboardBanner({ role }: PropsType) {
-  // 더미
-  const name: string = "킹규림";
-  const text: string = "오늘도 즐거운 하루!";
+function DashboardBanner() {
+  const { username, role } = useSelector((state: RootState) => state.user);
+  const cheerMsg = useCheerMsgQuery().data;
+  const changeToKorean = (role: string) => {
+    if (role === "TEACHER") {
+      return "선생님";
+    } else {
+      return "학생";
+    }
+  };
 
   return (
     <div>
       <StyledDashboardBanner>
         <div>
           <Title>
-            안녕하세요, {name} {role}!
+            안녕하세요, {username} {changeToKorean(role)}!
           </Title>
-          <span>{text}</span>
+          <span>{cheerMsg?.content}</span>
         </div>
-        <Image src={role === "선생님" ? TeacherImg : StudentImg} alt="role" />
+        <Image src={role === "TEACHER" ? TeacherImg : StudentImg} alt="role" />
       </StyledDashboardBanner>
     </div>
   );

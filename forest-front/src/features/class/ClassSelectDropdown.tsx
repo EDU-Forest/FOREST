@@ -7,6 +7,7 @@ import {
   ClassSelectDropdownEachItem,
   ClassSelectDropdownAdd,
   ClassSelectCircle,
+  ClassSelectNoClass,
 } from "./ClassSelect.style";
 import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
@@ -14,7 +15,6 @@ import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 
 interface Iprops {
-  // classList?: ClassList[];
   nowClassId: number;
   isStudent?: boolean;
 }
@@ -41,7 +41,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
           </ClassSelectDropdownEach>
         </>
       ) : (
-        <div style={{ height: "6rem" }}>노 클래스</div>
+        <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
       )}
       {!isStudent && (
         <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
