@@ -130,6 +130,45 @@ const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
   }
 `;
 
+const TestBtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem 3rem;
+
+  svg {
+    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem;
+    margin: 1rem 2rem 0rem 2rem;
+  }
+  .ok {
+    background-color: ${({ theme }) => theme.colors.Lime[200]};
+    color: ${({ theme }) => theme.colors.Lime[700]};
+    border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[700]};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.Lime[300]};
+      color: ${({ theme }) => theme.colors.Lime[900]};
+      border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[900]};
+    }
+  }
+
+  .cancel {
+    background-color: ${({ theme }) => theme.colors.Orange[200]};
+    color: ${({ theme }) => theme.colors.Orange[700]};
+    border: 0.0625rem solid ${({ theme }) => theme.colors.Orange[700]};
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.Orange[300]};
+      color: ${({ theme }) => theme.colors.Orange[900]};
+      border: 0.0625rem solid ${({ theme }) => theme.colors.Orange[900]};
+    }
+  }
+`;
+
 export {
   TestResultTotalBox,
   TestResultTotalTitleBox,
@@ -145,4 +184,5 @@ export {
   ResultContainer,
   TestResultOkBtn,
   TestResultContentBox,
+  TestBtnBox,
 };
