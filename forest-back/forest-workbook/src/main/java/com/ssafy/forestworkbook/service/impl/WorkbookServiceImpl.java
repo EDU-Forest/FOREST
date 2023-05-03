@@ -356,10 +356,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         workbookRepository.save(workbookCopy);
 
-        if (workbook.getCreator().getId() != userId) {
-            // TODO 문제집 스크랩 처리 - workbookId -> workbookCopy 거
-        }
-
         if (workbookCopy.getCreator().getId() != userId) {
             UserWorkbook userWorkbook = UserWorkbook.builder()
                     .user(user)
@@ -377,10 +373,10 @@ public class WorkbookServiceImpl implements WorkbookService {
         List<Integer> problemNumList = new ArrayList<>();
 
         // 문제 항목 복사 필요 여부
-        int[] itemIsMultiple = new int[problemLists.size() + 1];
+        int[] itemIsMultiple = new int[problemLists.size()];
+        log.info("{}", problemLists.size());
         int check = 0;
 
-        // TODO 트랜잭션이 N개 열리는게 빠를까? N개 for문 두 번, 트랜잭션 2번이 빠를까?
         for (ProblemList problemList : problemLists) {
             Problem problem = problemList.getProblem();
 
@@ -406,10 +402,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
         problemRepository.saveAll(problems);
 
-        // 3. 문제 항목 만들기
-        // 문제 항목 복사 리스트
-        List<Item> itemCopyList = new ArrayList<>();
-
 //        // 항목이 있는 문제 번호 관리용 PQ
 //        PriorityQueue<Long> itemPq = new PriorityQueue<>();
 //
@@ -430,11 +422,20 @@ public class WorkbookServiceImpl implements WorkbookService {
 //                itemPq.add(itemList.get(0).getProblem().getId());
 //            }
 //        }
+        // 3. 문제 항목 만들기
+        // 문제 항목 복사 리스트
+        List<Item> itemCopyList = new ArrayList<>();
+        int[] itemCount = new int[itemIsMultiple.length];
+        int count = -1;
 
         for (int checked : itemIsMultiple) {
+            count++;
+            int itemListSize = 0;
             if (checked == -1) continue;
             else {
+
                 List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(checked).getId());
+                itemListSize = itemList.size();
 
                 for (Item item : itemList) {
                     Item itemCopy = Item.builder()
@@ -446,6 +447,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     itemCopyList.add(itemCopy);
                 }
+                itemCount[count] = itemListSize;
             }
         }
         itemRepository.saveAll(itemCopyList);
@@ -483,47 +485,44 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         int size = itemCopyList.size();
         int j = 0;
-        List<ItemResDto> itemResList = new ArrayList<>();
 
-//        for(int i = 0; i < problemListsCopy.size(); i++) {
-//            ProblemList problemListToDto = problemListsCopy.get(i);
-//            Problem problemToDto = problems.get(i);
-//
-//            if (size != 0 && itemCopyList.get(j).getProblem().getId() == problemToDto.getId()) {
-//
-//                while (j < size && problemToDto.getId() == itemCopyList.get(j).getProblem().getId()) {
-//                    Item tempItem = itemCopyList.get(j);
-//
-//                    ItemResDto itemRes = ItemResDto.builder()
-//                            .itemId(tempItem.getId())
-//                            .no(tempItem.getNo())
-//                            .content(tempItem.getContent())
-//                            .isImage(tempItem.getIsImage())
-//                            .build();
-//                    itemResList.add(itemRes);
-//
-//                    j++;
-//                }
-//            }
-//            ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
-//                    .problemId(problemToDto.getId())
-//                    .problemNum(problemListToDto.getProblemNum())
-//                    .type(problemToDto.getType())
-//                    .title(problemToDto.getTitle())
-//                    .problemImgPath(problemToDto.getPath())
-//                    .imgIsEmpty(problemToDto.getPath() == null || problemToDto.getPath().equals(""))
-//                    .answer(problemToDto.getAnswer())
-//                    .text(problemToDto.getText())
-//                    .textIsEmpty((problemToDto.getText() == null || problemToDto.getText().equals("")))
-//                    .point(problemToDto.getPoint())
-//                    .itemList(itemResList.isEmpty() ? null : itemResList)
-//                    .build();
-//
-//            problemList.add(problemAllInfoDto);
-//        }
+        for(int i = 0; i < problemListsCopy.size(); i++) {
+            ProblemList problemListToDto = problemListsCopy.get(i);
+            Problem problemToDto = problems.get(i);
 
-        for (ProblemList problemListGetOne : problemListsCopy) {
+            List<ItemResDto> itemResList = new ArrayList<>();
 
+            if(itemIsMultiple[i] != -1) {
+                for(int k = 0; k < itemCount[i]; k++) {
+                    Item tempItem = itemCopyList.get(j);
+
+                    ItemResDto itemRes = ItemResDto.builder()
+                            .itemId(tempItem.getId())
+                            .no(tempItem.getNo())
+                            .content(tempItem.getContent())
+                            .isImage(tempItem.getIsImage())
+                            .build();
+                    itemResList.add(itemRes);
+
+                    j++;
+                }
+            }
+
+            ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
+                    .problemId(problemToDto.getId())
+                    .problemNum(problemListToDto.getProblemNum())
+                    .type(problemToDto.getType())
+                    .title(problemToDto.getTitle())
+                    .problemImgPath(problemToDto.getPath())
+                    .imgIsEmpty(problemToDto.getPath() == null || problemToDto.getPath().equals(""))
+                    .answer(problemToDto.getAnswer())
+                    .text(problemToDto.getText())
+                    .textIsEmpty((problemToDto.getText() == null || problemToDto.getText().equals("")))
+                    .point(problemToDto.getPoint())
+                    .itemList(itemResList.isEmpty() ? null : itemResList)
+                    .build();
+
+            problemList.add(problemAllInfoDto);
         }
 
         WorkbookToDto workbookToDto = WorkbookToDto.builder()
@@ -533,7 +532,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_COPY);
     }
-
 
     @Override
     public ResponseSuccessDto<?> updateProblem(Long userId, ProblemUpdateInfoDto problemUpdateInfoDto) {
