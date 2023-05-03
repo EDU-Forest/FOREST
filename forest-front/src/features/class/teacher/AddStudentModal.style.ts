@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { CommonInput } from "@/components/Input/Input.style";
 import {
   ClassSelectDropdownContainer,
@@ -18,15 +18,42 @@ const ClassStudentAddInput = styled(CommonInput)`
   margin-top: 1.5rem;
 `;
 
+const ClassStudentDeleteIcon = styled.p`
+  position: absolute;
+  top: 2.1rem;
+  right: 1rem;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.Gray[600]};
+`;
+
 const ClassStudentAddDropdown = styled(ClassSelectDropdownContainer)`
   width: 30rem;
+  max-height: 20rem;
 `;
 const ClassStudentAddDropdownEach = styled(ClassSelectDropdownEach)`
   width: 30rem;
 `;
-const ClassStudentAddDropdownEachItem = styled(ClassSelectDropdownEachItem)`
+const ClassStudentAddDropdownEachItem = styled(ClassSelectDropdownEachItem)<{ disabled?: boolean }>`
   width: 30rem;
+  position: relative;
   cursor: pointer;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: default;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+    `}
+`;
+
+const ClassStudentCheckIcon = styled.p`
+  color: ${({ theme }) => theme.colors.Lime[600]};
+  font-size: 1rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
 `;
 
 const ClassStudentAddName = styled.p`
@@ -44,6 +71,11 @@ const ClassStudentAddEmail = styled.p`
   text-align: left;
 `;
 
+const ClassStudentRemoveIcon = styled.p`
+  color: ${({ theme }) => theme.colors.Orange[600]};
+  font-size: 1rem;
+  cursor: pointer;
+`;
 const ClassStudentAddList = styled.div`
   width: 30rem;
   height: 17.5rem;
@@ -64,6 +96,9 @@ export {
   ClassStudentAddDropdownEachItem,
   ClassStudentAddName,
   ClassStudentAddEmail,
+  ClassStudentDeleteIcon,
+  ClassStudentCheckIcon,
+  ClassStudentRemoveIcon,
   ClassStudentAddList,
   ClassStudentAddBtnWrapper,
 };

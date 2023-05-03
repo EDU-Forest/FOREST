@@ -1,15 +1,19 @@
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { FullScreen } from "@/styles/container";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export default function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
+
+  useRecentClassIdQuery();
+
   useEffect(() => {
     const accessToken = router.query?.accessToken;
     if (typeof accessToken === "string") {

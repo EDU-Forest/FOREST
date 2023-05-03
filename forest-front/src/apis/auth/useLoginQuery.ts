@@ -3,6 +3,7 @@ import beforeAuthAxios from "@/utils/beforeAuthAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
+import useRecentClassIdQuery from "../class/useRecentClassIdQuery";
 
 const fetcher = (payload: Login) =>
   beforeAuthAxios
