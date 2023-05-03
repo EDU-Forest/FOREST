@@ -635,6 +635,33 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
+    public ResponseSuccessDto<?> scrapWorkbook(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                .orElse(null);
+
+        if (userWorkbook == null) {
+            UserWorkbook userWorkbookSave = UserWorkbook.builder()
+                    .user(user)
+                    .workbook(workbook)
+                    .isBookmarked(false)
+                    .build();
+
+            userWorkbookSave.updateIsScraped(true);
+            userWorkbookRepository.save(userWorkbookSave);
+        } else {
+            userWorkbook.updateIsScraped(true);
+        }
+
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_ADD_SCRAP);
+    }
+
+    @Override
     public ResponseSuccessDto<?> getBestWorkbook(Long userId, String search) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
