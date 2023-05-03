@@ -11,6 +11,7 @@ import {
   EditorQuestionChoiceListBox,
 } from "./EditorQuestionContent.style";
 import EditorQuestionImg from "./EditorQuestionImg";
+import EditorItemImg from "./EditorItemImg";
 
 interface IProps {
   question: QuestionType;
@@ -79,10 +80,8 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               </EditorChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? (
-                <EditorQuestionImg
+                <EditorItemImg
                   question={question}
-                  property="content"
-                  whereInserted="item"
                   curItem={i + 1}
                 />
               ) : (
