@@ -9,7 +9,7 @@ const fetcher = (payload: Login) =>
   beforeAuthAxios
     .post(`/api/user/login`, {
       email: payload.email,
-      password: payload.password,
+      pw: payload.password,
     })
     .then(({ data }) => data);
 

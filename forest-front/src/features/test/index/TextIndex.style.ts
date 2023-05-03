@@ -1,5 +1,6 @@
 import { StyledCommonBtn } from "@/components/Button/Btn.style";
 import CommonBtn from "@/components/Button/CommonBtn";
+import { ModalBox } from "@/styles/modal";
 import { Title } from "@/styles/text";
 import { scrollBar } from "@/styles/theme";
 import styled from "styled-components";
@@ -11,7 +12,7 @@ const StyledTestContainer = styled.div`
 const StyledAnswerBox = styled.div`
   padding-left: 1.5rem;
   /* width: calc(100vw - 67.25rem); */
-  width: 20%;
+  width: 30%;
   min-width: 10rem;
   max-width: 21.5rem;
 `;
@@ -62,7 +63,7 @@ const StyledTestContent = styled.div`
 
 const StyledTestProblemBox = styled.div`
   /* width: calc(100vw - 20rem); */
-  width: 80%;
+  width: 70%;
   min-width: 33.5rem;
   max-height: 50%;
   padding: 2.5rem 2.5rem 1.125rem 2.5rem;
@@ -106,6 +107,7 @@ const StyledTestProblemMultipleChoiceAnswer = styled.div``;
 
 const StyledTestProblemAnswerNumber = styled.div`
   display: flex;
+  align-items: center;
   margin-bottom: 22px;
 `;
 
@@ -282,6 +284,40 @@ const TestProblemBtn = styled(StyledCommonBtn)`
   }
 `;
 
+const TestEndModalBox = styled(ModalBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2.5rem 3.5rem;
+
+  > p {
+    font-size: 1rem;
+    font-weight: 700;
+    padding-bottom: 1rem;
+  }
+`;
+
+const TestWarningBox = styled.div`
+  padding: 0.5rem 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.Orange[50]};
+  color: ${({ theme }) => theme.colors.Orange[700]};
+  border-radius: 0.5rem;
+  margin: 0.5rem 0rem;
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.25rem;
+  }
+`;
+
 export {
   StyledTestContainer,
   StyledAnswerBox,
@@ -307,4 +343,6 @@ export {
   StyledTestProblemOXAnswer,
   TestProblemBtnBox,
   TestProblemBtn,
+  TestEndModalBox,
+  TestWarningBox,
 };

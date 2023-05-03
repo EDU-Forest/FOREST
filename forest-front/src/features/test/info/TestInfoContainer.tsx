@@ -22,14 +22,6 @@ export default function TestInfoContainer() {
     setStudyInfoData,
   });
 
-  // dummyData
-  // const [testInfoData, setTestInfoData] = useState({
-  //   title: "킹규림 쌤의 수능특강 수학 완성편",
-  //   presenter: "킹규림쌤",
-  //   volume: 10,
-  //   timeLimit: 0,
-  // });
-
   const { studyTitle, studyPresenter, studyVolume, studyTimeLimit } = studyInfoData;
 
   return (

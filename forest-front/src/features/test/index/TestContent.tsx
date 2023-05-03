@@ -5,11 +5,11 @@ import { StyledTestContent } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useEffect, useState } from "react";
 
-export default function TestContent() {
+export default function TestContent({ toggleModal, setToggleModal }: IStudyModal) {
   return (
     <StyledTestContent>
       <TestProblemBox />
-      <TestAnswerBox />
+      <TestAnswerBox toggleModal={toggleModal} setToggleModal={setToggleModal} />
     </StyledTestContent>
   );
 }
