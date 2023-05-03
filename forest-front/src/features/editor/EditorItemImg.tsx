@@ -9,11 +9,13 @@ import {
 
 interface IProps {
   question: QuestionType;
+  curItem: number;
 }
 
-function EditorQuestionImg({ question }: IProps) {
+function EditorItemImg({ question, curItem }: IProps) {
   const [imgFile, setImgFile]: any = useState(null);
-  const { toChangeQuestions } = useEditor();
+  const { toChangeItem } = useEditor();
+  const eleId = `item-img-input-${curItem}`;
 
   const handleChange = (e: any) => {
     const file: any = e.target.files;
@@ -34,31 +36,31 @@ function EditorQuestionImg({ question }: IProps) {
         }: any = finishedEvent;
 
         setImgFile(result);
-        toChangeQuestions("problemImgPath", result);
+        toChangeItem({ content: result }, curItem);
       };
     }
   };
 
   useEffect(() => {
-    setImgFile(question.problemImgPath);
-  }, [question.problemImgPath]);
+    setImgFile(question.items[curItem - 1].content);
+  }, [question.items]);
 
   return (
     <EditorQuestionImgBox>
       {imgFile ? (
         <EditorQuestionImgAddedBox>
           <img src={imgFile} alt="문제 이미지" />
-          <input type="file" id="img-input" accept="image/*" onChange={handleChange} />
-          <label htmlFor="img-input">수정</label>
+          <input type="file" id={eleId} accept="image/*" onChange={handleChange} />
+          <label htmlFor={eleId}>수정</label>
         </EditorQuestionImgAddedBox>
       ) : (
         <EditorQuestionInputBox as="div">
-          <input type="file" id="img-input" accept="image/*" onChange={handleChange} />
-          <label htmlFor="img-input">이미지 삽입</label>
+          <input type="file" id={eleId} accept="image/*" onChange={handleChange} />
+          <label htmlFor={eleId}>이미지 삽입</label>
         </EditorQuestionInputBox>
       )}
     </EditorQuestionImgBox>
   );
 }
 
-export default EditorQuestionImg;
+export default EditorItemImg;

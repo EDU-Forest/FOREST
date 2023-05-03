@@ -13,9 +13,9 @@ import {
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
 } from "./EditorQuestionContent.style";
-import EditorShortAnswer from "./EditorShortAnswer";
-import EditorQuestionTextInput from "./EditorQuestionText";
 import EditorQuestionImg from "./EditorQuestionImg";
+import EditorQuestionTextInput from "./EditorQuestionText";
+import EditorShortAnswer from "./EditorShortAnswer";
 
 interface IProps {
   selectQuestionType: string;

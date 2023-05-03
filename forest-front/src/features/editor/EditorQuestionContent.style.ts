@@ -235,7 +235,7 @@ export const EditorQuestionTextInput = styled.textarea`
   width: 100%;
 
   padding: 24px !important;
-  margin-top: 24px !important;
+  margin: 24px 0 !important;
 
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]} !important;
   border-radius: 0.25rem !important;
@@ -253,8 +253,6 @@ export const EditorQuestionImgBox = styled.div`
 
   display: flex;
   justify-content: center;
-
-  margin-top: 24px;
 
   img {
     width: auto;
