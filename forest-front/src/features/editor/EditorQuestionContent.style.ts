@@ -126,6 +126,7 @@ export const EditorQuestionChoiceBox = styled(StyledQuestionDetailChoiceBox)<{
 
   background-color: ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[600]};
   border-radius: 0.25rem;
+  justify-content: space-between;
 
   input {
     width: 100%;
