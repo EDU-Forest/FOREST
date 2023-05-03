@@ -56,7 +56,20 @@ pipeline {
                     echo 'Run New image'
                 }                
             }
-        }
+        }        
+    }
 
+    post {
+        success{
+            script{
+                mattermostSend color: 'good', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Success'
+            }
+        }
+        failure
+        {
+            script{
+                mattermostSend color: 'danger', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Failed'
+            }
+        }
     }
 }
