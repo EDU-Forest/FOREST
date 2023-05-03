@@ -24,16 +24,16 @@ public class Problem {
     @Column(name = "type", columnDefinition = "varchar(10)", nullable = false)
     private EnumProblemTypeStatus type;
 
-    @Column(name = "title", columnDefinition = "varchar(30)", nullable = false)
+    @Column(name = "title", columnDefinition = "text", nullable = false)
     private String title;
 
     @Column(name = "path", columnDefinition = "varchar(255)")
     private String path;
 
-    @Column(name = "text", columnDefinition = "varchar(255)")
+    @Column(name = "text", columnDefinition = "text")
     private String text;
 
-    @Column(name = "answer", columnDefinition = "varchar(100)", nullable = false)
+    @Column(name = "answer", columnDefinition = "text", nullable = false)
     private String answer;
 
     @Column(name = "point", columnDefinition = "int", nullable = false)
