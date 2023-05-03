@@ -499,7 +499,7 @@ public class StudyService {
     }
 
     /* 시험 시작하기 */
-    public ResponseSuccessDto<PostResponseDto> postStartStudy(@Valid PostStartStudyRequestDto postStartStudyRequestDto, Long userId) {
+    public ResponseSuccessDto<PostResponseDto> postStartStudy(PostStartStudyRequestDto postStartStudyRequestDto, Long userId) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(postStartStudyRequestDto.getStudyId())
@@ -544,7 +544,7 @@ public class StudyService {
     }
 
     /* 다음 문제 이동하기 */
-    public ResponseSuccessDto<PatchResponseDto> patchNextProblem(@Valid PatchNextProblemRequestDto patchNextProblemRequestDto, Long userId) {
+    public ResponseSuccessDto<PatchResponseDto> patchNextProblem(PatchNextProblemRequestDto patchNextProblemRequestDto, Long userId) {
 
         /* 존재하지 않는 개인 시험 문제 ID 체크 */
         StudentStudyProblemResult spr = studentStudyProblemResultRepository.findById(patchNextProblemRequestDto.getStudentStudyProblemId())
@@ -593,7 +593,7 @@ public class StudyService {
     }
 
     /* 시험 종료하기 */
-    public ResponseSuccessDto<PatchResponseDto> patchExitStudy(@Valid PatchExitStudyRequestDto patchExitStudyRequestDto, Long userId) {
+    public ResponseSuccessDto<PatchResponseDto> patchExitStudy(PatchExitStudyRequestDto patchExitStudyRequestDto, Long userId) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchExitStudyRequestDto.getStudyId())
@@ -734,7 +734,7 @@ public class StudyService {
     }
 
     /* (선생님) 서술형 문제 채점 */
-    public ResponseSuccessDto<PatchResponseDto> patchDescription(@Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
+    public ResponseSuccessDto<PatchResponseDto> patchDescription(PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
 
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())
