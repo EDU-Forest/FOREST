@@ -27,7 +27,6 @@ studyAxios.interceptors.request.use(
 
 studyAxios.interceptors.response.use(
   (response) => {
-    console.log("studyRes", response);
     return response;
   },
   async (error) => {
