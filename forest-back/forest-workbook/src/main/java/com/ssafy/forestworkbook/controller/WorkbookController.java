@@ -35,14 +35,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getTeacherWorkbookList(
             HttpServletRequest request,
             @RequestParam String search, Pageable pageable) throws UnsupportedEncodingException{
-
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("{}", userId);
-
-//        System.out.println(authInfo.get("userId"));
-
-        userId = Long.valueOf(1);
+//        userId = Long.valueOf(9);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
 
@@ -138,6 +134,13 @@ public class WorkbookController {
         return workbookService.deleteBookmark(userId, workbookId);
     }
 
+    @PostMapping("scrap/{workbookId}")
+    @ApiOperation(value = "문제집 스크랩", notes = "문제집을 스크랩합니다.")
+    public ResponseSuccessDto<?> scrapWorkbook(@PathVariable Long workbookId) {
+        Long userId = Long.valueOf(1);
+        return workbookService.deleteBookmark(userId, workbookId);
+    }
+
     @GetMapping("/best")
     @ApiOperation(value = "최고 인기 문제집 목록 조회", notes = "최고 인기 문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getBestWorkbook(@RequestParam String search) {
@@ -150,6 +153,17 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getRecentWorkbook() {
         Long userId = Long.valueOf(1);
         return workbookService.getRecentWorkbook(userId);
+    }
+
+    @GetMapping("/editor")
+    @ApiOperation(value = "에디터 페이지 문제집 목록 조회", notes = "내가 만든 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getEditorWorkbook(HttpServletRequest request) throws UnsupportedEncodingException {
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+
+//        userId = Long.valueOf(3);
+        return workbookService.getEditorWorkbook(userId);
     }
 
 
