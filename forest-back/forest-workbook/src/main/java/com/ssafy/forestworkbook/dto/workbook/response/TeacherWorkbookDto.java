@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 public class TeacherWorkbookDto {
 
     private Long workbookId;
+    private Boolean isOriginal;
     private String title;
     private String workbookImgPath;
     private int bookmarkCount;
@@ -15,7 +16,7 @@ public class TeacherWorkbookDto {
 
 
     @Builder
-    public TeacherWorkbookDto(Long workbookId, String title, String workbookImgPath, int bookmarkCount, int scrapCount) {
+    public TeacherWorkbookDto(Long workbookId, Boolean isOriginal, String title, String workbookImgPath, int bookmarkCount, int scrapCount) {
         Assert.notNull(workbookId, "workbookId must not be null");
         Assert.notNull(title, "title must not be null");
         Assert.notNull(workbookId, "workbookId must not be null");
@@ -23,6 +24,7 @@ public class TeacherWorkbookDto {
         Assert.notNull(scrapCount, "scrapCount must not be null");
 
         this.workbookId = workbookId;
+        this.isOriginal = isOriginal;
         this.title = title;
         this.workbookImgPath = workbookImgPath;
         this.bookmarkCount = bookmarkCount;
