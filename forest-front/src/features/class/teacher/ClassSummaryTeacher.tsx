@@ -17,7 +17,6 @@ import TakeRateChart from "../TakeRateChart";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
-import { useEffect, useState } from "react";
 
 const examResult: TeacherExamResult = {
   studyId: 1,

@@ -13,6 +13,7 @@ import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
+import Lottie from "react-lottie-player";
 
 interface Iprops {
   nowClassId: number;
@@ -22,33 +23,43 @@ interface Iprops {
 export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   const dispatch = useDispatch();
   const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
-
-  const classList: ClassList[] = useClassListQuery().data;
+  const { data, isLoading } = useClassListQuery();
 
   return (
     <ClassSelectDropdownContainer>
-      {classList?.length > 0 ? (
-        <>
-          <ClassSelectDropdownEach>
-            {classList?.map((item) => (
-              <ClassSelectDropdownEachItem
-                key={item.classId}
-                onClick={() => dispatch(setClass(item))}
-              >
-                {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
-              </ClassSelectDropdownEachItem>
-            ))}
-          </ClassSelectDropdownEach>
-        </>
+      {isLoading ? (
+        <Lottie
+          loop
+          path="/lottieJson/loadingGreen.json"
+          play
+          style={{ width: 100, height: 100 }}
+        />
       ) : (
-        <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
+        <>
+          {data?.length > 0 ? (
+            <>
+              <ClassSelectDropdownEach>
+                {data?.map((item: ClassList) => (
+                  <ClassSelectDropdownEachItem
+                    key={item.classId}
+                    onClick={() => dispatch(setClass(item))}
+                  >
+                    {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
+                  </ClassSelectDropdownEachItem>
+                ))}
+              </ClassSelectDropdownEach>
+            </>
+          ) : (
+            <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
+          )}
+          {!isStudent && (
+            <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
+              + 새 클래스 추가
+            </ClassSelectDropdownAdd>
+          )}
+          {isOpenAddClassModal && <AddClassModal />}
+        </>
       )}
-      {!isStudent && (
-        <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
-          + 새 클래스 추가
-        </ClassSelectDropdownAdd>
-      )}
-      {isOpenAddClassModal && <AddClassModal />}
     </ClassSelectDropdownContainer>
   );
 }
