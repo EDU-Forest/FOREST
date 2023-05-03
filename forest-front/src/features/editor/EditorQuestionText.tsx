@@ -11,7 +11,7 @@ interface IProps {
 
 function EditorQuestionText({ question }: IProps) {
   const [text, setText] = useState("");
-  const [toChangeQuestions] = useEditor();
+  const {toChangeQuestions} = useEditor();
 
   useEffect(() => {
     setText(question.text);

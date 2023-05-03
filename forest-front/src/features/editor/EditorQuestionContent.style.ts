@@ -10,8 +10,8 @@ export const EditorQuestionContentBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  padding: 1.5rem;
-  border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]};
+  padding: 24px;
+  border: 1px solid ${({ theme }) => theme.colors.Lime[600]};
 
   input {
     border: none;
@@ -27,12 +27,12 @@ export const EditorQuestionContentBox = styled.div`
 export const EditorQuestionNumbox = styled.div`
   width: fit-content;
 
-  padding: 6px 32px;
+  padding: 0.375rem 2rem;
 
   background: ${({ theme }) => theme.colors.Lime[600]};
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
   color: white;
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -42,14 +42,14 @@ export const EditorNumAndPointBox = styled.label`
   align-items: center;
 
   span {
-    margin-right: 16px;
+    margin-right: 1rem;
     color: ${({ theme }) => theme.colors.Gray[600]};
   }
 `;
 
 export const EditorPointInput = styled(CommonInput)`
-  width: 56px;
-  padding: 4px 8px;
+  width: 3.5rem;
+  padding: 0.25rem 0.5rem;
 `;
 
 export const EditorPointBox = styled.div``;
@@ -57,7 +57,7 @@ export const EditorPointBox = styled.div``;
 export const EditorQuestionTitleInput = styled.input`
   width: 100%;
 
-  font-size: 1.375rem;
+  font-size: 22px;
   font-weight: bold;
 `;
 
@@ -66,20 +66,20 @@ export const EditorQuestionItemAddButton = styled.button`
   align-items: center;
   flex: 1;
 
-  padding: 4px 8px;
-  gap: 0.5rem;
-  margin-top: 8px;
+  padding: 0.25rem 0.5rem;
+  gap: 8px;
+  margin-top: 0.5rem;
 
-  border: 1px dashed ${({ theme }) => theme.colors.Lime[600]};
-  border-radius: 4px;
+  border: 0.0625rem dashed ${({ theme }) => theme.colors.Lime[600]};
+  border-radius: 0.25rem;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.Lime[600]};
-  font-size: 14px;
+  font-size: 0.875rem;
 
   // circle icon
   > div {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 
     display: flex;
     align-items: center;
@@ -87,20 +87,20 @@ export const EditorQuestionItemAddButton = styled.button`
 
     border-radius: 50%;
     background-color: ${({ theme }) => theme.colors.Lime[100]};
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: bold;
   }
 `;
 
 export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceListBox)`
   // 부모 패딩 무시
-  width: calc(100% + 24px * 2);
-  margin: 24px 0 24px -24px;
+  width: calc(100% + 1.5rem * 2);
+  margin: 1.5rem 0 1.5rem -1.5rem;
 
-  gap: 8px;
-  padding-left: 1rem;
-  padding-right: 1.5rem;
-  margin-top: 1rem;
+  gap: 0.5rem;
+  padding-left: 16px;
+  padding-right: 24px;
+  margin-top: 16px;
 
   > div {
     display: flex;
@@ -109,8 +109,8 @@ export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceList
 
   // 마이너스 아이콘
   > div > svg {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
 
     fill: ${({ theme }) => theme.colors.Orange[600]};
   }
@@ -121,11 +121,11 @@ export const EditorQuestionChoiceBox = styled(StyledQuestionDetailChoiceBox)<{
 }>`
   width: 100%;
 
-  padding: 4px 8px;
-  margin-right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  margin-right: 8px;
 
   background-color: ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[600]};
-  border-radius: 4px;
+  border-radius: 0.25rem;
 
   input {
     width: 100%;
@@ -138,15 +138,15 @@ export const EditorQuestionChoiceBox = styled(StyledQuestionDetailChoiceBox)<{
   }
 
   > svg {
-    width: 16px;
-    height: 16px;
+    width: 1rem;
+    height: 1rem;
 
     fill: white;
   }
 `;
 
 export const EditorChoiceNumBox = styled(StyledQuestionChoiceNumBox)<{ isCorrect: boolean }>`
-  border: 0.8px solid ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[50]};
+  border: 0.05rem solid ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[50]};
   background-color: ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[50]};
   color: ${({ theme, isCorrect }) => isCorrect && theme.colors.Orange[600]};
   cursor: pointer;
@@ -154,17 +154,17 @@ export const EditorChoiceNumBox = styled(StyledQuestionChoiceNumBox)<{ isCorrect
 
 // 단답식
 export const EditorShortAnswerBox = styled.div`
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
   > input {
     width: 100%;
 
-    padding: 1rem 1.5rem;
+    padding: 16px 24px;
 
     color: ${({ theme }) => theme.colors.Orange[500]};
     background: ${({ theme }) => theme.colors.Orange[50]};
-    border: 0.8px solid ${({ theme }) => theme.colors.Orange[300]};
-    border-radius: 8px;
+    border: 0.05rem solid ${({ theme }) => theme.colors.Orange[300]};
+    border-radius: 0.5rem;
 
     ::placeholder {
       color: ${({ theme }) => theme.colors.Orange[500]};
@@ -178,7 +178,7 @@ export const EditorOXBox = styled.div`
 `;
 
 export const EditorOXAnswerBox = styled.div<{ isAnswer: boolean }>`
-  font-size: 120px;
+  font-size: 7.5rem;
   font-weight: 900;
   color: ${({ theme, isAnswer }) => (isAnswer ? theme.colors.Orange[600] : theme.colors.Gray[400])};
   cursor: pointer;
@@ -189,17 +189,17 @@ export const EditorEssayKeywordsBox = styled.div`
   display: flex;
   flex-flow: wrap;
 
-  gap: 0.5rem;
+  gap: 8px;
 
   input {
     width: fit-content;
-    width: 80px;
-    padding: 0.25rem 0.5rem;
+    width: 5rem;
+    padding: 4px 8px;
 
     outline: none;
     border: none;
     background: ${({ theme }) => theme.colors.Orange[500]};
-    border-radius: 4px;
+    border-radius: 0.25rem;
     color: white;
 
     ::placeholder {
@@ -208,12 +208,12 @@ export const EditorEssayKeywordsBox = styled.div`
   }
 
   button {
-    padding: 0.25rem 0.5rem;
+    padding: 4px 8px;
 
     background: ${({ theme }) => theme.colors.Orange[50]};
     color: ${({ theme }) => theme.colors.Orange[500]};
-    border: 0.5px solid ${({ theme }) => theme.colors.Orange[500]};
-    border-radius: 4px;
+    border: 0.0313rem solid ${({ theme }) => theme.colors.Orange[500]};
+    border-radius: 0.25rem;
 
     > span {
       font-weight: bold;
@@ -223,8 +223,8 @@ export const EditorEssayKeywordsBox = styled.div`
 
 export const EditorEssayBox = styled.div`
   p {
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
+    margin-top: 24px;
+    margin-bottom: 8px;
 
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
@@ -233,12 +233,12 @@ export const EditorEssayBox = styled.div`
 export const EditorQuestionTextInput = styled.textarea`
   width: 100%;
 
-  padding: 1.5rem !important;
-  margin-top: 1.5rem !important;
+  padding: 24px !important;
+  margin-top: 24px !important;
 
-  border: 1px solid ${({ theme }) => theme.colors.Lime[600]} !important;
-  border-radius: 4px !important;
-  line-height: 28px !important;
+  border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]} !important;
+  border-radius: 0.25rem !important;
+  line-height: 1.75rem !important;
   outline: none;
   resize: none;
 
@@ -248,12 +248,12 @@ export const EditorQuestionTextInput = styled.textarea`
 `;
 
 export const EditorQuestionImgBox = styled.div`
-  height: 160px;
+  height: 10rem;
 
   display: flex;
   justify-content: center;
 
-  margin-top: 1.5rem;
+  margin-top: 24px;
 
   img {
     width: auto;
@@ -274,14 +274,14 @@ export const EditorQuestionImgAddedBox = styled.div`
 
   label {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 0.5rem;
+    right: 0.5rem;
 
-    padding: 4px 8px;
+    padding: 0.25rem 0.5rem;
 
-    font-size: 12px !important;
+    font-size: 0.75rem !important;
     background: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
+    border-radius: 0.25rem;
     color: white;
     text-align: center;
   }
@@ -291,27 +291,75 @@ export const EditorQuestionInputBox = styled(EditorQuestionItemAddButton)`
   justify-content: center;
 
   label {
-    padding: 8px 16px;
+    padding: 0.5rem 1rem;
 
     font-weight: bold;
     text-align: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 16px;
     background-color: ${({ theme }) => theme.colors.Lime[100]};
     color: ${({ theme }) => theme.colors.Lime[600]};
-    border-radius: 4px;
+    border-radius: 0.25rem;
   }
 `;
 
 export const EditorQuestionImgBtn = styled.label`
-  padding: 8px 16px;
+  padding: 0.5rem 1rem;
 
   font-weight: bold;
   text-align: center;
-  font-size: 1rem;
+  font-size: 16px;
   background-color: ${({ theme }) => theme.colors.Lime[100]};
   color: ${({ theme }) => theme.colors.Lime[600]};
-  border-radius: 4px;
+  border-radius: 0.25rem;
 
   cursor: pointer;
+`;
+
+export const EditorItemToggleBtnBox = styled.div<{ selected: number; isCorrect: boolean }>`
+  display: flex;
+  cursor: pointer;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 4px;
+
+    border: 0.0625rem solid
+      ${({ theme, isCorrect }) => (isCorrect ? theme.colors.Orange[200] : theme.colors.Lime[600])};
+  }
+
+  svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  // 텍스트 버튼
+  > div:nth-child(1) {
+    background: ${({ theme, selected, isCorrect }) =>
+      selected !== 1 ? "#ffffff" : isCorrect ? theme.colors.Orange[200] : theme.colors.Lime[600]};
+    border-radius: 0.125rem 0rem 0rem 0.125rem;
+
+    svg {
+      fill: ${({ theme, selected, isCorrect }) =>
+        isCorrect ? theme.colors.Orange[600] : selected === 1 ? "#ffffff" : theme.colors.Lime[600]};
+    }
+  }
+  // 이미지 버튼
+  > div:nth-child(2) {
+    background: ${({ theme, selected, isCorrect }) =>
+      selected !== 2 ? "#ffffff" : isCorrect ? theme.colors.Orange[200] : theme.colors.Lime[600]};
+    border-radius: 0rem 0.125rem 0.125rem 0rem;
+
+    svg {
+      fill: ${({ theme, selected }) => (selected === 2 ? "#ffffff" : theme.colors.Lime[600])};
+
+      // 셀렉되지 않은 경우 -> 라임(정답 아님), 오렌지(정답임)
+      // 셀렉된 경우 -> 화이트(정답 아님), 오렌지(정답임)
+      fill: ${({ theme, selected, isCorrect }) =>
+        isCorrect ? theme.colors.Orange[600] : selected === 2 ? "#ffffff" : theme.colors.Lime[600]};
+    }
+  }
 `;

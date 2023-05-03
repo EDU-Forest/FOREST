@@ -43,7 +43,7 @@ export default function Editor() {
           id: 2,
           no: 2,
           content: "컨텐트",
-          isImage: false,
+          isImage: true,
         },
         {
           id: 3,

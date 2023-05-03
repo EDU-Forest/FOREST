@@ -2,8 +2,9 @@ import { setDeleteAnswers, setQuestions } from "@/stores/editor/editorQuestions"
 import { RootState } from "@/stores/store";
 import { QuestionItemType, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
-import { AiOutlineCheck, AiOutlineMinusCircle } from "react-icons/ai";
+import { AiOutlineMinusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import EditorItemToggleBtn from "./EditorItemToggleBtn";
 import {
   EditorChoiceNumBox,
   EditorQuestionChoiceBox,
@@ -77,7 +78,10 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               </EditorChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? (
-                <img src={item.content} alt="item" />
+                <>
+                  <img src={item.content} alt="item" />
+                  <button>이미지 삽입</button>
+                </>
               ) : (
                 <>
                   <input
@@ -87,7 +91,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
                   />
                 </>
               )}
-              <AiOutlineCheck />
+              <EditorItemToggleBtn isCorrect={corret === i + 1} question={question} curItem={i + 1} />
             </EditorQuestionChoiceBox>
             <AiOutlineMinusCircle onClick={() => handleClickDelete(item.id, i)} />
           </div>

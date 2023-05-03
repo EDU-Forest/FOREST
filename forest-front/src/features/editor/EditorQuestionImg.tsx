@@ -1,7 +1,11 @@
 import useEditor from "@/hooks/editor/useEditor";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
-import { EditorQuestionImgAddedBox, EditorQuestionImgBox, EditorQuestionInputBox } from "./EditorQuestionContent.style";
+import {
+  EditorQuestionImgAddedBox,
+  EditorQuestionImgBox,
+  EditorQuestionInputBox,
+} from "./EditorQuestionContent.style";
 
 interface IProps {
   question: QuestionType;
@@ -9,7 +13,7 @@ interface IProps {
 
 function EditorQuestionImg({ question }: IProps) {
   const [imgFile, setImgFile]: any = useState(null);
-  const [toChangeQuestions] = useEditor();
+  const {toChangeQuestions} = useEditor();
 
   const handleChange = (e: any) => {
     const file: any = e.target.files; // 이부분을 추가함 if Else를 넣어줌
@@ -38,7 +42,7 @@ function EditorQuestionImg({ question }: IProps) {
   }, [question.problemImgPath]);
 
   return (
-    <EditorQuestionImgBox >
+    <EditorQuestionImgBox>
       {imgFile ? (
         <EditorQuestionImgAddedBox>
           <img src={imgFile && imgFile} alt="문제 이미지" />
