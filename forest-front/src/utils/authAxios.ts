@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getLocalStorage, setLocalStorage } from "./localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -29,11 +30,13 @@ authAxios.interceptors.response.use(
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
+        console.log(response.data);
         const { accessToken } = response.data.payload;
 
         return accessToken;
       };
       const accessToken = await newAccessToken();
+      setLocalStorage("forest_access_token", accessToken);
       prevRequest.headers.authorization = accessToken;
       return authAxios(prevRequest);
     }
