@@ -7,13 +7,13 @@ import { setStudy } from "@/stores/class/classInfo";
 const fetcher = (classId: number) =>
   studyAxios.get(`/api/study/recent/${classId}`).then(({ data }) => data.data);
 
+// 최근 진행한 시험 결과 조회 - OK
 const useRecentStudyIdQuery = (classId: number) => {
   const dispatch = useDispatch();
-  return useQuery([queryKeys.RECENT_CLASSID], () => fetcher(classId), {
+  return useQuery([queryKeys.RECENT_CLASSID, classId], () => fetcher(classId), {
     enabled: !!classId,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("최근 스터디", data);
       dispatch(setStudy(data));
     },
   });
