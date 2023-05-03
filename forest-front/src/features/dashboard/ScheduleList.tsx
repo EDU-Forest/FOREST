@@ -6,10 +6,10 @@ import {
   StyledScheduleStatusCircle,
 } from "./Schedule.style";
 import useScheduleQuery from "@/apis/dashboard/useScheduleQuery";
+import { ClassSummaryItemWrapperNoResult } from "../class/ClassSummary.style";
 
 function ScheduleList() {
-  const userId = 1;
-  const { data } = useScheduleQuery(userId);
+  const ScheduleList: ScheduleList[] = useScheduleQuery().data?.studyList;
 
   // 더미 데이터
   const list: ScheduleList[] = [
@@ -44,26 +44,33 @@ function ScheduleList() {
 
   return (
     <StyledScheduleListBox>
-      {/* {data?.studyList.map((item: ScheduleList) => { */}
-      {list?.map((item) => {
-        return (
-          <>
-            <StyledScheduleItem>
-              <StyledScheduleItemTop>
-                <div>
-                  <StyledScheduleStatusCircle status={item.studyType} />
-                  <span>{item.title}</span>
-                </div>
-                <ClassLabel classTitle={item.className} />
-              </StyledScheduleItemTop>
-              <span>
-                {item.startTime} ~ {item.endTime}
-              </span>
-            </StyledScheduleItem>
-            <hr />
-          </>
-        );
-      })}
+      {ScheduleList?.length > 0 ? (
+        <>
+          {ScheduleList?.map((item) => {
+            return (
+              <>
+                <StyledScheduleItem>
+                  <StyledScheduleItemTop>
+                    <div>
+                      <StyledScheduleStatusCircle status={item.studyType} />
+                      <span>{item.title}</span>
+                    </div>
+                    <ClassLabel classTitle={item.className} />
+                  </StyledScheduleItemTop>
+                  <span>
+                    {item.startTime} ~ {item.endTime}
+                  </span>
+                </StyledScheduleItem>
+                <hr />
+              </>
+            );
+          })}
+        </>
+      ) : (
+        <ClassSummaryItemWrapperNoResult>
+          <p style={{ marginBottom: "1rem" }}>등록된 스케줄이 없습니다</p>
+        </ClassSummaryItemWrapperNoResult>
+      )}
     </StyledScheduleListBox>
   );
 }
