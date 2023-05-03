@@ -4,7 +4,6 @@ import {
   StyledQuestionChoiceNumBox,
   StyledQuestionDetailChoiceBox,
   StyledQuestionDetailChoiceListBox,
-  StyledQuestionDetailTextBox,
 } from "../workbookDetail/WorkbookDetail.style";
 
 export const EditorQuestionContentBox = styled.div`
@@ -264,6 +263,28 @@ export const EditorQuestionImgBox = styled.div`
   input {
     display: none;
   }
+
+  label {
+    cursor: pointer;
+  }
+`;
+
+export const EditorQuestionImgAddedBox = styled.div`
+  position: relative;
+
+  label {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    padding: 4px 8px;
+
+    font-size: 12px !important;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+  }
 `;
 
 export const EditorQuestionInputBox = styled(EditorQuestionItemAddButton)`
@@ -279,8 +300,6 @@ export const EditorQuestionInputBox = styled(EditorQuestionItemAddButton)`
     background-color: ${({ theme }) => theme.colors.Lime[100]};
     color: ${({ theme }) => theme.colors.Lime[600]};
     border-radius: 4px;
-
-    cursor: pointer;
   }
 `;
 

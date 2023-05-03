@@ -1,14 +1,7 @@
 import useEditor from "@/hooks/editor/useEditor";
-import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import {
-  EditorQuestionImgBox,
-  EditorQuestionImgBtn,
-  EditorQuestionInputBox,
-  EditorQuestionItemAddButton,
-} from "./EditorQuestionContent.style";
+import { useEffect, useState } from "react";
+import { EditorQuestionImgAddedBox, EditorQuestionImgBox, EditorQuestionInputBox } from "./EditorQuestionContent.style";
 
 interface IProps {
   question: QuestionType;
@@ -45,13 +38,13 @@ function EditorQuestionImg({ question }: IProps) {
   }, [question.problemImgPath]);
 
   return (
-    <EditorQuestionImgBox>
+    <EditorQuestionImgBox >
       {imgFile ? (
-        <>
+        <EditorQuestionImgAddedBox>
           <img src={imgFile && imgFile} alt="문제 이미지" />
           <input type="file" id="img-input" accept="image/*" onChange={handleChange} />
-          <label htmlFor="img-input">이미지 삽입</label>
-        </>
+          <label htmlFor="img-input">수정</label>
+        </EditorQuestionImgAddedBox>
       ) : (
         <EditorQuestionInputBox as="div">
           <input type="file" id="img-input" accept="image/*" onChange={handleChange} />

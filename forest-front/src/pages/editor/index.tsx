@@ -64,7 +64,7 @@ export default function Editor() {
       problemNum: 2,
       type: "multipleChoice",
       title: "2번 문항",
-      text: "지문",
+      text: "",
       answer: "1",
       point: 10,
       problemImgPath: "",
