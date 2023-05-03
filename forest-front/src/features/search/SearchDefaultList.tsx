@@ -54,6 +54,7 @@ export default function SearchDefaultList() {
                 scrapCount={item.scrapCount}
                 isBookmarked={item.isBookmarked}
                 workbookImgPath={item.workbookImgPath}
+                methodType={item.methodType}
               />
             </SwiperSlide>
           ))}
@@ -71,6 +72,7 @@ export default function SearchDefaultList() {
                 scrapCount={item.scrapCount}
                 isBookmarked={item.isBookmarked}
                 workbookImgPath={item.workbookImgPath}
+                methodType={item.methodType}
               />
             </SwiperSlide>
           ))}

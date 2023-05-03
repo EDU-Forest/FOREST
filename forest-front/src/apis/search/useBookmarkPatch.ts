@@ -4,7 +4,7 @@ import { useMutation } from "react-query";
 const fetcher = (workbookId: number) =>
   workbookAxios.patch(`/api/workbook/bookmark/${workbookId}`).then(({ data }) => data);
 
-const useBookmarkAdd = () => {
+const useBookmarkPatch = () => {
   return useMutation(fetcher, {
     onSuccess: (data) => {
       console.log("북마크 성공", data);
@@ -12,4 +12,4 @@ const useBookmarkAdd = () => {
   });
 };
 
-export default useBookmarkAdd;
+export default useBookmarkPatch;

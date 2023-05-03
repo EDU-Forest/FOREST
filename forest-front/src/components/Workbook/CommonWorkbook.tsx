@@ -1,4 +1,4 @@
-import useBookmarkAdd from "@/apis/search/useBookmarkAdd";
+import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
 import {
   WorkbookCard,
   WorkbookContent,
@@ -8,6 +8,7 @@ import {
   WorkbookTitle,
 } from "./Workbook.style";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
 
 interface Iprops {
   id: number;
@@ -16,6 +17,7 @@ interface Iprops {
   scrapCount?: number;
   isBookmarked?: boolean;
   workbookImgPath?: string;
+  methodType?: string;
   clickAction?: (id: number) => void;
 }
 
@@ -26,11 +28,17 @@ export default function CommonWorkbook({
   scrapCount,
   isBookmarked,
   workbookImgPath,
+  methodType,
   clickAction,
 }: Iprops) {
-  const { mutate } = useBookmarkAdd();
+  const patchMutate = useBookmarkPatch().mutate;
+  const postMutate = useBookmarkPost().mutate;
   const pressHeart = () => {
-    mutate(id);
+    if (methodType === "POST") {
+      postMutate(id);
+    } else {
+      patchMutate(id);
+    }
   };
 
   return (
