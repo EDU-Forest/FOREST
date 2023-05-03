@@ -17,6 +17,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 @Slf4j
@@ -32,6 +35,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ProblemListRepository problemListRepository;
     private final ProblemRepository problemRepository;
     private final ItemRepository itemRepository;
+    private final StudyRepository studyRepository;
     private final ResponseUtil responseUtil;
 
     @Override
@@ -217,7 +221,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .type(problemToDto.getType())
                     .title(problemToDto.getTitle())
                     .problemImgPath(problemToDto.getPath())
+                    .imgIsEmpty(problemToDto.getPath() == null || problemToDto.getPath().equals("") ? true : false)
                     .answer(problemToDto.getAnswer())
+                    .text(problemToDto.getText())
+                    .textIsEmpty((problemToDto.getText() == null || problemToDto.getText().equals("")) ? true : false)
                     .point(problemToDto.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
                     .build();
@@ -300,6 +307,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .type(problem.getType())
                     .title(problem.getTitle())
                     .problemImgPath(problem.getPath())
+                    .imgIsEmpty(problem.getPath() == null || problem.getPath().equals("") ? true : false)
+                    .text(problem.getText())
+                    .textIsEmpty((problem.getText() == null || problem.getText().equals("")) ? true : false)
                     .answer(problem.getAnswer())
                     .point(problem.getPoint())
                     .itemList(itemResList.isEmpty() ? null : itemResList)
@@ -486,7 +496,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         // insert
         if (isNew) {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
-                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
+                    .orElse(null);
 
             if (userWorkbook != null) {
                 userWorkbook.updateIsBookmarked(true);
@@ -510,6 +520,21 @@ public class WorkbookServiceImpl implements WorkbookService {
             userWorkbook.updateIsBookmarked(true);
         }
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_ADD_BOOKMARK);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
+
+        userWorkbook.updateIsBookmarked(false);
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_BOOKMARK);
     }
 
     @Override
@@ -567,6 +592,51 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
         ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
         return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> getClassWorkbook(Long userId, Long classId, String search) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        LocalDateTime now = LocalDateTime.now();
+
+        List<ClassWorkbookDto> classWorkbookDtoList = new ArrayList<>();
+
+        // EXAM
+        if (search.equals("exam")) {
+            List<Study> studyList = studyRepository.findAllByClassesId(classId);
+
+            for (Study study : studyList) {
+                ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
+                        .workbookId(study.getWorkbook().getId())
+                        .title(study.getWorkbook().getTitle())
+                        .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
+                        .isFinished((study.getEndTime().isBefore(now)))
+                        .build();
+
+                classWorkbookDtoList.add(classWorkbookDto);
+            }
+
+        }
+
+        // HOMEWORK
+        else if (search.equals("homework")) {
+
+        }
+
+        // SELF
+        else if (search.equals("self")) {
+
+        }
+
+        // 파라미터 입력 오류
+        else {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
+        }
+
+        ClassWorkbookListDto classWorkbookListDto = new ClassWorkbookListDto(classWorkbookDtoList);
+        return responseUtil.successResponse(classWorkbookListDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks) {

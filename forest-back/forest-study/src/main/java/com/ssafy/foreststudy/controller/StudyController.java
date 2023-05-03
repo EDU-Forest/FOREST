@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,10 @@ public class StudyController {
 
     private final StudyService studyService;
 
-    @ApiOperation(value = "클래스 일정 목록 조회", notes = "클래스의 일정 목록을 조회합니다.")
-    @GetMapping("/calendar/{classId}")
-    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("classId") Long classId) {
-        return ResponseEntity.ok(studyService.getScheduleList(classId));
+    @ApiOperation(value = "유저 일정 목록 조회", notes = "유저의 일정 목록을 조회합니다.")
+    @GetMapping("/calendar/{userId}")
+    public ResponseEntity<ResponseSuccessDto<Map<String, List<GetScheduleResponseDto>>>> getScheduleList(@PathVariable("userId") Long userId) {
+        return ResponseEntity.ok(studyService.getScheduleList(userId));
     }
 
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
@@ -125,5 +126,11 @@ public class StudyController {
     @PostMapping("/exit")
     public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(@PathVariable("studyId") Long studyId) {
         return ResponseEntity.ok(studyService.postExitStudy(studyId));
+    }
+
+    @ApiOperation(value = "시험 시작하기 정보 조회", notes = "시험 시작하기 정보를 조회합니다.")
+    @GetMapping("/info/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudyInfoResponseDto>> getStudyInfo(@PathVariable("studyId") Long studyId) {
+        return ResponseEntity.ok(studyService.getStudyInfo(studyId));
     }
 }
