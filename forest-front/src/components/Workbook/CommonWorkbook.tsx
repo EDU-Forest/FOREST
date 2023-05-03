@@ -1,3 +1,4 @@
+import useBookmarkAdd from "@/apis/search/useBookmarkAdd";
 import {
   WorkbookCard,
   WorkbookContent,
@@ -25,6 +26,10 @@ export default function CommonWorkbook({
   isBookmarked,
   clickAction,
 }: Iprops) {
+  const { mutate } = useBookmarkAdd();
+  const pressHeart = () => {
+    mutate(id);
+  };
   return (
     <WorkbookCard>
       <WorkbookImg src="/images/workbook.png" onClick={() => clickAction && clickAction(id)} />
@@ -36,7 +41,9 @@ export default function CommonWorkbook({
             명이 이용 중이에요
           </WorkbookContent>
           <div>
-            <WorkbookIcon>{isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}</WorkbookIcon>
+            <WorkbookIcon onClick={pressHeart}>
+              {isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+            </WorkbookIcon>
             <WorkbookContent>{bookmarkCount}</WorkbookContent>
           </div>
         </WorkbookContentWrapper>

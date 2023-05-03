@@ -99,7 +99,7 @@ export default function SearchDefaultList() {
       </SearchTitle>
 
       <SearchDefalutListWrapper>
-        {/* <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
+        <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
           {popularList?.map((item) => (
             <SwiperSlide key={item.workbookId}>
               <CommonWorkbook
@@ -111,7 +111,7 @@ export default function SearchDefaultList() {
               />
             </SwiperSlide>
           ))}
-        </Swiper> */}
+        </Swiper>
       </SearchDefalutListWrapper>
       <SearchTitle>최신 등록 문제집 ⭐</SearchTitle>
       <SearchDefalutListWrapper>
