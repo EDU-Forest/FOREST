@@ -58,7 +58,9 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
             String targetUrl;
             User user = userRepository.findById(userId).get();
+            log.info("user : {}", user.getName());
             user.updateRefreshToken(refreshToken);
+            log.info("user's refresh token : {}", user.getRefreshToken());
 
             // 신규 유저인 경우
             if(user.getName() == null || user.getName().equals("")) {
