@@ -174,6 +174,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .description(workbook.getDescription())
                 .volume(workbook.getVolume())
                 .isPublic(workbook.getIsPublic())
+                .isOriginal(workbook.getCreator().getId() == userId)
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
                 .build();
@@ -209,6 +210,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .workbookImgPath(workbookImg.getPath())
                 .description(workbook.getDescription())
                 .isPublic(workbook.getIsPublic())
+                .isOriginal(workbook.getCreator().getId() == userId)
                 .volume(workbook.getVolume())
                 .bookmarkCount(0)
                 .scrapCount(0)
@@ -507,6 +509,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .description(workbookCopy.getDescription())
                 .volume(workbookCopy.getVolume())
                 .isPublic(workbookCopy.getIsPublic())
+                .isOriginal(false)
                 .bookmarkCount(0)
                 .scrapCount(0)
                 .build();
