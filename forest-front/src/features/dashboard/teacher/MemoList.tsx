@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { StyledMemoListBox, StyledMemoListItemBox, StyledMemoListItemTopBox } from "./Memo.style";
 import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
 import useMemoDelete from "@/apis/dashboard/useMemoDelete";
+import arrangeDate from "@/utils/arrangeDate";
 
 function MemoList() {
   const memoList: Memo[] = useMemoListQuery().data;
@@ -23,10 +24,6 @@ function MemoList() {
       window.removeEventListener("resize", handleResize);
     };
   }, [memoList]);
-
-  const arrangeDate = (date: string) => {
-    return date.replaceAll("T", " ").slice(0, 19);
-  };
 
   const deleteMemo = (id: number) => {
     mutate(id);

@@ -7,6 +7,7 @@ import {
   ClassSummaryText,
   ClassSummaryValue,
 } from "./ClassSummary.style";
+import date from "@/utils/Date";
 
 interface Iprops {
   noMargin?: boolean;
@@ -37,7 +38,7 @@ export default function ClassWorkbookInfo({
       <WorkbookInfo>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>출제일</ClassSummaryText>
-          <ClassSummaryValue>{studyCreatedDate}</ClassSummaryValue>
+          <ClassSummaryValue>{date(studyCreatedDate)}</ClassSummaryValue>
         </ClassSummaryTextWrapper>
         <ClassSummaryTextWrapper>
           <ClassSummaryText isGray>속성</ClassSummaryText>
