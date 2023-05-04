@@ -12,7 +12,7 @@ export default function Test() {
   return (
     <StyledTestContainer>
       {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
-      <TestHeader setToggleModal={setToggleModal} />
+      <TestHeader page={"study"} setToggleModal={setToggleModal} />
       <TestContent toggleModal={toggleModal} setToggleModal={setToggleModal} />
     </StyledTestContainer>
   );
