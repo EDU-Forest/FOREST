@@ -101,10 +101,12 @@ export default function Canvas({ storedData }: Iprops) {
     setIsOpenCanvas(!isOpenCanvas);
   };
 
+  // API GET한 기록 그리기
   useEffect(() => {
     canvasRef.current?.loadPaths(storedData);
   }, [isOpenCanvas]);
 
+  // API POST
   const { mutate } = useCanvasPost();
   const gogo = () => {
     const payload = {
@@ -139,15 +141,6 @@ export default function Canvas({ storedData }: Iprops) {
         </CanvasDrawSection>
       )}
       <button onClick={gogo}>해보자!</button>
-
-      {/* <textarea
-        id="paths"
-        className="dataURICode col-12"
-        style={{ width: "800px", height: "500px" }}
-        readOnly
-        rows={10}
-        value={paths.length !== 0 ? JSON.stringify(paths, null, 2) : "Sketch to get paths"}
-      /> */}
 
       <label htmlFor="pathsToLoad" className="form-label">
         Paths to load
