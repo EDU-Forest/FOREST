@@ -19,6 +19,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -92,9 +95,14 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
+        List<String> allowedOrigin = new ArrayList<>();
+        allowedOrigin.add("localhost");
+        allowedOrigin.add("k8b105.p.ssafy.io");
+        configuration.setAllowedOrigins(allowedOrigin);
+//        configuration.addAllowedOrigin();
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
