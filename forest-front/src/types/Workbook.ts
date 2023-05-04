@@ -26,6 +26,19 @@ export interface QuestionType {
   imgIsEmpty: boolean;
   textIsEmpty: boolean;
 }
+export interface RawQuestionType {
+  problemId: number;
+  problemNum: number;
+  type: string;
+  title: string;
+  text: string;
+  answer: string;
+  point: number;
+  problemImgPath: string;
+  itemList: QuestionItemType[];
+  imgIsEmpty: boolean;
+  textIsEmpty: boolean;
+}
 
 export interface QuestionSummType {
   id: number;
