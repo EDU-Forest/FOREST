@@ -38,8 +38,9 @@ studyAxios.interceptors.response.use(
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
-        const { accessToken } = response.data.payload;
-        return accessToken;
+        console.log(response);
+        const { token } = response.data;
+        return token;
       };
       const accessToken = await newAccessToken();
       setLocalStorage("forest_access_token", accessToken);
