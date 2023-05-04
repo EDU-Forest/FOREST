@@ -266,12 +266,14 @@ public class WorkbookController {
     }
 
     @GetMapping("/explore")
-    @ApiOperation(value = "에디터 페이지 문제집 목록 조회", notes = "내가 만든 문제집 목록을 조회합니다.")
-    public ResponseSuccessDto<?> searchEditorWorkbook(@RequestParam String search) throws UnsupportedEncodingException {
+    @ApiOperation(value = "에디터 페이지 문제집 검색", notes = "문제집을 검색합니다.")
+    public ResponseSuccessDto<?> searchEditorWorkbook(
+            HttpServletRequest request,
+            @RequestParam String search) throws UnsupportedEncodingException {
 //        JwtDecoder jwtDecoder = new JwtDecoder();
 //        Long userId = jwtDecoder.verifyJWT(request);
 //        log.info("{}", userId);
-        Long userId = Long.valueOf(3);
-        return workbookService.searchEditorWorkbook(search);
+        Long userId = Long.valueOf(9);
+        return workbookService.searchEditorWorkbook(userId, search);
     }
 }

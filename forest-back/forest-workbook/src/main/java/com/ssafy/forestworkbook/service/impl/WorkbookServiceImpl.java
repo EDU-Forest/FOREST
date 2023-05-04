@@ -800,9 +800,56 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
-    public ResponseSuccessDto<?> searchEditorWorkbook(String search) {
+    public ResponseSuccessDto<?> searchEditorWorkbook(Long userId, String search) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        return null;
+        List<Workbook> workbookList = workbookRepository.findAllByIsPublicIsTrueAndTitleContainingOrderByCreatedDateDesc(search);
+
+        List<ExploreWorkbookDto> exploreWorkbookDtoList = workbookList.stream()
+                .map(w -> ExploreWorkbookDto.builder()
+                        .workbookId(w.getId())
+                        .title(w.getTitle())
+                        .workbookImgPath(w.getWorkbookImg().getPath())
+                        .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
+                        .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(w.getId()))
+                        .methodType(checkMethodType(userId, w.getId()))
+                        .isScraped(checkIsScraped(userId, w.getId()))
+                        .isBookmarked(checkIsBookmarked(userId, w.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
+        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    public String checkMethodType(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        return (userWorkbook == null) ? "POST" : "PATCH";
+    }
+
+    public Boolean checkIsScraped(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        if (userWorkbook == null || !userWorkbook.getIsScraped()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Boolean checkIsBookmarked(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        if (userWorkbook == null || !userWorkbook.getIsBookmarked()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks, Long userId) {
