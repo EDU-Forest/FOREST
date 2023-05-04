@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class ItemContentDto {
 
-    private int no;
+    private int itemNo;
     private String content;
     private Boolean isImage;
 
