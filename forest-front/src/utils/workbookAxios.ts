@@ -21,8 +21,6 @@ workbookAxios.interceptors.request.use(
       // config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }
 
-    console.log("config", config);
-
     return config;
   },
   (error) => error,
@@ -32,7 +30,6 @@ workbookAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const prevRequest = error?.config;
-    console.log("ff", document.cookie, prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {

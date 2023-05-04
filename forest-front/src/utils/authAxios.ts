@@ -19,8 +19,6 @@ authAxios.interceptors.request.use(
       config.headers.Authorization = `Bearer ${forestToken}`;
     }
 
-    console.log("config", config);
-
     return config;
   },
   (error) => error,
@@ -32,12 +30,10 @@ authAxios.interceptors.response.use(
   },
   async (error) => {
     const prevRequest = error?.config;
-    console.log("ss", document.cookie, prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
-        console.log(response);
         const { token } = response.data.data;
 
         return token;
