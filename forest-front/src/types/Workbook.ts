@@ -1,9 +1,12 @@
 export interface WorkbookType {
   workbookId: number;
-  cover: string;
+  image: string;
   title: string;
+  description: string;
+  isPublic: boolean;
   bookmarkCount: number;
   scrapCount: number;
+  volume: number;
 }
 
 export interface QuestionItemType {

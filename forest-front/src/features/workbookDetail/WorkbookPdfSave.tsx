@@ -1,4 +1,4 @@
-import { QuestionType } from "@/types/Workbook";
+import { QuestionType, WorkbookType } from "@/types/Workbook";
 import html2canvas from "html2canvas";
 import jspdf from "jspdf";
 import { useEffect } from "react";
@@ -17,35 +17,25 @@ import {
 interface IProps {
   setIsSavePdf: React.Dispatch<React.SetStateAction<boolean>>;
 }
-interface WorkbookType {
-  id: number;
-  title: String;
-  workbookImgPath: String;
-  desc: String;
-  isPublic: Boolean;
-  bookmarkCount: number;
-  scrapCount: number;
-  problemCount: number;
-}
 
 function WorkbookPdfSave({ setIsSavePdf }: IProps) {
   const workbook: WorkbookType = {
-    id: 1,
+    workbookId: 1,
     title: "수능 100제",
-    workbookImgPath: "",
-    desc: `ENGLISH 평가문제집 설명글`,
+    image: "",
+    description: `ENGLISH 평가문제집 설명글`,
     // desc: `ENGLISH 평가문제집 설명글입니다.
     // 설명글은 글자 제한이 있어야할 것 같습니다.
     // 현재 화면 기준으로`,
     isPublic: true,
     bookmarkCount: 12,
     scrapCount: 1,
-    problemCount: 4,
+    volume: 4,
   };
 
   let questions: QuestionType[] = [
     {
-      id: 1,
+      problemId: 1,
       problemNum: 1,
       type: "객관식",
       title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
@@ -55,7 +45,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       problemImgPath: "",
       imgIsEmpty: false,
       textIsEmpty: false,
-      items: [
+      itemList: [
         {
           id: 1,
           no: 1,
@@ -83,7 +73,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       ],
     },
     {
-      id: 1,
+      problemId: 1,
       problemNum: 1,
       type: "객관식",
       title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
@@ -93,7 +83,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       problemImgPath: "",
       imgIsEmpty: false,
       textIsEmpty: false,
-      items: [
+      itemList: [
         {
           id: 1,
           no: 1,
@@ -121,7 +111,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       ],
     },
     {
-      id: 1,
+      problemId: 1,
       problemNum: 1,
       type: "객관식",
       title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
@@ -131,7 +121,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       problemImgPath: "",
       imgIsEmpty: false,
       textIsEmpty: false,
-      items: [
+      itemList: [
         {
           id: 1,
           no: 1,
@@ -210,7 +200,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
     <WorkBookPdfBox id="workbook-pdf">
       <WorkBookPdfHeaderBox>
         <p>{workbook.title}</p>
-        <p>{workbook.problemCount} 문항</p>
+        <p>{workbook.volume} 문항</p>
       </WorkBookPdfHeaderBox>
       <WorkBookPdfBoxQuestionsBox>
         {questions.map((question, i) => (
