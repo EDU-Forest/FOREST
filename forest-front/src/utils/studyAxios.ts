@@ -44,7 +44,7 @@ studyAxios.interceptors.response.use(
       };
       const accessToken = await newAccessToken();
       setLocalStorage("forest_access_token", accessToken);
-      prevRequest.headers.Authorization = accessToken;
+      prevRequest.headers.Authorization = `Bearer ${JSON.parse(accessToken)}`;
       return studyAxios(prevRequest);
     }
     return studyAxios;
