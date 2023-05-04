@@ -166,10 +166,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
@@ -178,10 +178,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @PathVariable Long problemId) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
         return workbookService.deleteProblem(userId, problemId);
     }
 
@@ -270,10 +270,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> searchEditorWorkbook(
             HttpServletRequest request,
             @RequestParam String search) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
         return workbookService.searchEditorWorkbook(userId, search);
     }
 }

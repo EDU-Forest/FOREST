@@ -9,5 +9,6 @@ public class ProblemUpdateInfoDto {
 
     private WorkbookDetailDto workbookInfo;
     private List<ProblemDto> problemList;
+    private List<ItemIdDto> deleteItemList;
 
 }
