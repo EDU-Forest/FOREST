@@ -12,6 +12,8 @@ export default function SearchList({ keyword }: Iprops) {
   const router = useRouter();
   const { data, isLoading } = useSearchWorkbookQuery(keyword);
 
+  // console.log(keyword);
+
   const goToDetail = (id: number) => {
     router.push(`/workbook/${id}`);
   };
