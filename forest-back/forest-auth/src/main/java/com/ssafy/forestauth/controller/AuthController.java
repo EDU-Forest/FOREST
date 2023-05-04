@@ -30,6 +30,11 @@ public class AuthController {
             @RequestHeader("Authorization") String accessToken
     ) {
         accessToken = accessToken.substring(7);
+        log.info("Here is Auth Controller");
+        log.info("refreshToken : {}",SecurityUtil.getCookie(request, "refresh").toString());
+        System.out.println(SecurityUtil.getCookie(request, "refresh"));
+        System.out.println(SecurityUtil.getCookie(request, "refresh").get());
+
         String refreshToken = SecurityUtil.getCookie(request, "refresh")
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID))
                 .getValue();
