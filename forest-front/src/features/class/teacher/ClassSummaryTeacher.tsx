@@ -17,6 +17,7 @@ import TakeRateChart from "../TakeRateChart";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
+import arrangeDate from "@/utils/arrangeDate";
 
 const examResult: TeacherExamResult = {
   studyId: 1,
@@ -67,7 +68,7 @@ export default function ClassSummaryTeacher() {
           </ClassSummaryText>
         )}
       </ClassSummaryTextWrapper>
-      <ClassSummaryDeadline>~ {examResult?.endTime}</ClassSummaryDeadline>
+      <ClassSummaryDeadline>~ {arrangeDate(examResult?.endTime)}</ClassSummaryDeadline>
 
       {examResult?.scheduleType === "AFTER" ? (
         <ClassSummaryItemWrapper>
