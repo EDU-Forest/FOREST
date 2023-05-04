@@ -95,14 +95,18 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        List<String> allowedOrigin = new ArrayList<>();
-        allowedOrigin.add("localhost");
-        allowedOrigin.add("k8b105.p.ssafy.io");
-        configuration.setAllowedOrigins(allowedOrigin);
-//        configuration.addAllowedOrigin();
+//        List<String> allowedOrigin = new ArrayList<>();
+//        allowedOrigin.add("localhost");
+//        allowedOrigin.add("k8b105.p.ssafy.io");
+//        configuration.setAllowedOrigins(allowedOrigin);
+//        configuration.setAllowedHeaders();
+//        configuration.setAllowedMethods();
+
+        configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
