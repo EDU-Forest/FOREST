@@ -7,6 +7,7 @@ import {
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
 import { CanvasDrawSection } from "./Canvas.style";
+import useCanvasPost from "@/apis/canvas/useCanvasPost";
 
 interface StoredData {
   drawMode: boolean;
@@ -100,25 +101,18 @@ export default function Canvas({ storedData }: Iprops) {
     setIsOpenCanvas(!isOpenCanvas);
   };
 
-  const [exportData, setExportData] = useState<string>("");
-
   useEffect(() => {
-    setExportData(JSON.stringify(paths, null, 2));
-    // console.log("paths", paths);
-    // paths.map((path) => console.log("path", path, "/", typeof path));
-    // console.log(typeof exportData);
-    // console.log("paths", paths);
-  }, [paths]);
-
-  useEffect(() => {
-    // console.log("storedData", storedData);
-    // console.log(typeof storedData);
-    // const pathsToUpdate = JSON.parse(exportData);
-    // console.log(pathsToUpdate);
     canvasRef.current?.loadPaths(storedData);
   }, [isOpenCanvas]);
 
-  //   console.log("pathsToLoad", pathsToLoad);
+  const { mutate } = useCanvasPost();
+  const gogo = () => {
+    const payload = {
+      studentStudyProblemId: 1,
+      line: paths,
+    };
+    mutate(payload);
+  };
   return (
     <>
       <CanvasBar
@@ -144,14 +138,16 @@ export default function Canvas({ storedData }: Iprops) {
           />
         </CanvasDrawSection>
       )}
-      <textarea
+      <button onClick={gogo}>해보자!</button>
+
+      {/* <textarea
         id="paths"
         className="dataURICode col-12"
         style={{ width: "800px", height: "500px" }}
         readOnly
         rows={10}
         value={paths.length !== 0 ? JSON.stringify(paths, null, 2) : "Sketch to get paths"}
-      />
+      /> */}
 
       <label htmlFor="pathsToLoad" className="form-label">
         Paths to load

@@ -49,12 +49,8 @@ export default function CanvasPen({ color, width, setColor, setWidth }: Iprops) 
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {penColors.map((item, idx) => (
-          <CanvasColorSelectorSelected selected={item.colorCode === color ? true : false}>
-            <CanvasColorSelector
-              key={idx}
-              color={item.colorCode}
-              onClick={() => setColor(item.colorCode)}
-            />
+          <CanvasColorSelectorSelected key={idx} selected={item.colorCode === color ? true : false}>
+            <CanvasColorSelector color={item.colorCode} onClick={() => setColor(item.colorCode)} />
           </CanvasColorSelectorSelected>
         ))}
       </CanvasSelectorSection>

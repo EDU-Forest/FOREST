@@ -33,3 +33,6 @@ export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
 export const GET_WORKBOOK_LIST = "/getWorkbookList";
 export const GET_WORKBOOK_DETAIL = "/getWorkbookDetail";
 export const GET_STUDY_RESULT = "/getStudyResult";
+
+// canvas
+export const CANVAS_RECORD = "/canvasRecord";
