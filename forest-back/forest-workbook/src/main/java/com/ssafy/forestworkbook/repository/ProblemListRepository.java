@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface ProblemListRepository extends JpaRepository<ProblemList, Long> {
 
     List<ProblemList> findAllByWorkbookId(Long workbookId);
-    Optional<ProblemList> findByProblemId(Long problemId);
+    Optional<ProblemList> findByProblemIdAndWorkbookId(Long problemId, Long workbookId);
+
+    Optional<ProblemList> findTop1ByProblemId(Long problemId);
 
 }

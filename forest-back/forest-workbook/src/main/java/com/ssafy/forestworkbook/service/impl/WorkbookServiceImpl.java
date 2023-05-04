@@ -229,7 +229,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         WorkbookImg workbookImg = workbookImgRepository.findById(workbookUpdateInfoDto.getWorkbookInfo().getWorkbookImgId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
-        log.info("{}", userId);
 
         if (userId != workbook.getCreator().getId()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_UPADATE);
@@ -242,7 +241,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         if (!problemOrderDtoList.isEmpty()) {
             for (ProblemOrderDto problemOrderDto : problemOrderDtoList) {
-                ProblemList problemList = problemListRepository.findByProblemId(problemOrderDto.getProblemId())
+                ProblemList problemList = problemListRepository.findByProblemIdAndWorkbookId(problemOrderDto.getProblemId(), workbookUpdateInfoDto.getWorkbookInfo().getWorkbookId())
                         .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
                 problemList.updateProblemNum(problemOrderDto.getProblemNum());
             }
@@ -655,7 +654,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Problem problem = problemRepository.findById(problemId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
-        ProblemList problemList = problemListRepository.findByProblemId(problemId)
+        ProblemList problemList = problemListRepository.findTop1ByProblemId(problemId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
 
         Workbook workbook = workbookRepository.findById(problemList.getWorkbook().getId())
