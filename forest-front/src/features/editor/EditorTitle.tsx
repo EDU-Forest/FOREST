@@ -6,6 +6,7 @@ import ClassSelectDropdown from "../class/ClassSelectDropdown";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import EditorSelectDropdown from "./EditorSelectDropdown";
+import { IWorkbookBySelf } from "@/types/Workbook";
 
 export default function EditorTitle() {
   const dispatch = useDispatch();
@@ -17,8 +18,8 @@ export default function EditorTitle() {
         {"Test"}
         <AiFillCaretDown onClick={() => dispatch(controlClassDropdown())} className="icon" />
       </EditorSelectedTitle>
-      {/* 추후 확인 */}
-      {isOpenDropdown && <EditorSelectDropdown nowClassId={1} isStudent={true} />}
+      {/* nowWorkbookId 같은 거 있어야 할 듯 */}
+      {isOpenDropdown && <EditorSelectDropdown />}
     </EditorTitleBox>
   );
 }

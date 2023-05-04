@@ -26,11 +26,10 @@ export const STUDENT_SCORE = "/studentScore";
 export const POPULAR_LIST = "/popularList";
 export const RECENT_LIST = "/recentList";
 
-// workbok
+// workbook
 export const WORKBOOKS_BY_SELF = "/workbooksBySelf";
 export const POPULAR_WORKBOOK_LIST = "/popularWorkbookList";
 export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
-
-// workbook
 export const GET_WORKBOOK_LIST = "/getWorkbookList";
 export const GET_WORKBOOK_DETAIL = "/getWorkbookDetail";
+export const GET_STUDY_RESULT = "/getStudyResult";

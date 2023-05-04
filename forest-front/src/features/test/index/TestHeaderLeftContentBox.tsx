@@ -5,18 +5,24 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
-export default function TestHeaderLeftContentBox() {
+interface Iprops {
+  page: string;
+  setToggleModal?: (toggleModal: boolean) => void;
+}
+
+export default function TestHeaderLeftContentBox({ page, setToggleModal }: Iprops) {
   const { examTitle } = useSelector((state: RootState) => state.exam);
   const router = useRouter();
 
   const clickHandler = () => {
-    router.push("/test/info");
+    setToggleModal && setToggleModal(true);
+    // router.push(`/test/${router.query.studyId}/info`);
   };
 
   return (
     <StyledTestHeaderContentBox>
       {/* 시험일 경우 경고 모달, 자습일 경우 저장 모달? */}
-      <AiOutlineArrowLeft className="icon" onClick={clickHandler} />
+      {page !== "result" && <AiOutlineArrowLeft className="icon" onClick={clickHandler} />}
       <StyledTestHeaderTitle>{examTitle}</StyledTestHeaderTitle>
     </StyledTestHeaderContentBox>
   );
