@@ -13,7 +13,7 @@ const authAxios = axios.create(AxiosConFigure);
 
 authAxios.interceptors.request.use(
   (config) => {
-    const forestToken = localStorage.getItem("forest_access_token");
+    const forestToken = getLocalStorage("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
       config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }

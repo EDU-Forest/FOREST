@@ -1,5 +1,6 @@
 import { setRole, setUsername } from "@/stores/user/user";
 import beforeAuthAxios from "@/utils/beforeAuthAxios";
+import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
@@ -23,7 +24,7 @@ const useLogin = () => {
     onSuccess: (data) => {
       dispatch(setUsername(data.data.name));
       dispatch(setRole(data.data.role));
-      localStorage.setItem("forest_access_token", data.data.accessToken);
+      setLocalStorage("forest_access_token", data.data.accessToken);
       router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
     onError: (error) => {
