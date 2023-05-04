@@ -705,14 +705,14 @@ public class StudyService {
                         studentStudyProblemResult.getProblemList().getProblem().getAnswer();
 
                 // WebClient로 Flask 통신
-                GetJaccardSimilarityResponseDto similarity = WebClient.create("http://127.0.0.1:5000")
-                        .get()
-                        .uri("/similarity?sentence1=" + userAnswer + "&sentence2=" + workbookAnswer)
-                        .retrieve()
-                        .bodyToMono(GetJaccardSimilarityResponseDto.class)
-                        .block();
-                assert similarity != null;
-                System.out.println(similarity.getSimilarity());
+//                GetJaccardSimilarityResponseDto similarity = WebClient.create("http://127.0.0.1:5000")
+//                        .get()
+//                        .uri("/similarity?sentence1=" + userAnswer + "&sentence2=" + workbookAnswer)
+//                        .retrieve()
+//                        .bodyToMono(GetJaccardSimilarityResponseDto.class)
+//                        .block();
+//                assert similarity != null;
+//                System.out.println(similarity.getSimilarity());
 
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
