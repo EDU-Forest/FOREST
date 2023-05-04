@@ -14,6 +14,8 @@ public interface StudentStudyProblemResultRepository extends JpaRepository<Stude
     List<StudentStudyProblemResult> findAllByStudyAndProblemListOrderByIdAsc(Study study, ProblemList problemList);
 
     Optional<StudentStudyProblemResult> findAllByStudyAndUserAndProblemList(Study study, User user, ProblemList problemList);
+    Optional<StudentStudyProblemResult> findAllById(Long studentStudyProblemId);
+
 
 
 }
