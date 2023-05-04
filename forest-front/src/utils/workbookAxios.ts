@@ -7,7 +7,7 @@ const { NEXT_PUBLIC_SERVER_URL } = process.env;
 const AxiosConFigure: AxiosRequestConfig = {
   baseURL: `${NEXT_PUBLIC_SERVER_URL}:9011`,
   timeout: 5000,
-  // withCredentials: true,
+  withCredentials: true,
 };
 
 const workbookAxios = axios.create(AxiosConFigure);
