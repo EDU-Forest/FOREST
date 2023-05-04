@@ -256,11 +256,12 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        // 스크랩 삭제
+        // 북마크 삭제
         if(user.getId() != workbook.getCreator().getId()) {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
-            userWorkbook.updateIsScraped(false);
+            userWorkbook.updateIsBookmarked(false);
+//            userWorkbook.updateIsScraped(false);
         }
 
         // 내 문제집 삭제
@@ -570,38 +571,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         if(userId != workbook.getCreator().getId()) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_UPADATE);
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        List<ProblemDto> problemDtoList = problemUpdateInfoDto.getProblemList();
+        for (ItemIdDto itemId : problemUpdateInfoDto.getDeleteItemList()) {
 
-        for (ProblemDto problemDto : problemDtoList) {
-            log.info("{}", problemDto.getProblemId());
-            List<Item> itemList = itemRepository.findAllByProblemId(problemDto.getProblemId());
-
-            // request ItemList size
-            int size = (problemDto.getItemList() == null) ? 0 : problemDto.getItemList().size();
-            // entity ItemList size
-            int maxSize = itemList.size();
-
-            log.info("size : {}, maxSize : {}", size, maxSize);
-
-            updateItemList((size > maxSize ? maxSize : size), itemList, problemDto.getItemList());
-
-            // update > maxSize > insert > size
-            if (size > maxSize) {
-                insertItemList(maxSize, size, problemDto.getItemList());
-            }
-
-            // update > maxSize
-//            else if (size == maxSize) {
-//                updateItemList(maxSize, itemList, problemDto.getItemList());
-//            }
-
-            // update > size > delete > maxSize
-            else {
-                deleteItemList(size, maxSize, itemList);
-            }
         }
         return null;
     }
@@ -800,9 +774,56 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
-    public ResponseSuccessDto<?> searchEditorWorkbook(String search) {
+    public ResponseSuccessDto<?> searchEditorWorkbook(Long userId, String search) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        return null;
+        List<Workbook> workbookList = workbookRepository.findAllByIsPublicIsTrueAndTitleContainingOrderByCreatedDateDesc(search);
+
+        List<ExploreWorkbookDto> exploreWorkbookDtoList = workbookList.stream()
+                .map(w -> ExploreWorkbookDto.builder()
+                        .workbookId(w.getId())
+                        .title(w.getTitle())
+                        .workbookImgPath(w.getWorkbookImg().getPath())
+                        .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
+                        .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(w.getId()))
+                        .methodType(checkMethodType(userId, w.getId()))
+                        .isScraped(checkIsScraped(userId, w.getId()))
+                        .isBookmarked(checkIsBookmarked(userId, w.getId()))
+                        .build())
+                .collect(Collectors.toList());
+
+        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
+        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    public String checkMethodType(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        return (userWorkbook == null) ? "POST" : "PATCH";
+    }
+
+    public Boolean checkIsScraped(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        if (userWorkbook == null || !userWorkbook.getIsScraped()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Boolean checkIsBookmarked(Long userId, Long workbookId) {
+        UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
+        if (userWorkbook == null || !userWorkbook.getIsBookmarked()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks, Long userId) {

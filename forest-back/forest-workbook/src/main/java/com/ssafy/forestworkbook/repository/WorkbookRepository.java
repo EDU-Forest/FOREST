@@ -13,4 +13,5 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long>, Workb
     Page<Workbook> findAllByCreatorId(Long UserId, Pageable pageable);
     List<Workbook> findAllByCreatorId(Long UserId);
     List<Workbook> findTop20ByIsPublicIsTrueOrderByCreatedDateDesc();
+    List<Workbook> findAllByIsPublicIsTrueAndTitleContainingOrderByCreatedDateDesc(String search);
 }
