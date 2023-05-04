@@ -29,7 +29,7 @@ public class SignupRequestDto {
     @NotNull(message = "확인 비밀번호는 필수 값입니다!!")
     @NotBlank(message = "확인 비밀번호가 빈 문자열입니다!!")
     private String pw2;
-    @ValidDate(message = "8자리의 yyyy-MM-dd 형식이어야 합니다.", pattern = "yyyy-MM-dd")
+//    @ValidDate(message = "8자리의 yyyy-MM-dd 형식이어야 합니다.", pattern = "yyyy-MM-dd")
     private LocalDate birth;
     @ValidEnum(enumClass = EnumUserRoleStatus.class)
     private EnumUserRoleStatus role;
