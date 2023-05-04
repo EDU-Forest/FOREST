@@ -13,6 +13,6 @@ public class ProblemDto {
     private String text;
     private String answer;
     private int point;
-    private List<ItemReqDto> itemList;
+    private List<ItemContentDto> itemList;
 
 }

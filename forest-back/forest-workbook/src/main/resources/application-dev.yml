@@ -24,7 +24,6 @@ spring:
         format_sql: true
     open-in-view: false
 
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
