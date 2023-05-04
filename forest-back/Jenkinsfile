@@ -64,6 +64,9 @@ pipeline {
                     steps {
                         sh 'cp /var/jenkins_home/env/keystore.p12 /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-workbook/src/main/resources'
                         echo 'Insert keystore...'
+
+                        sh 'cp /var/jenkins_home/env/key.json /var/jenkins_home/workspace/dev-back-pipeline/forest-back/forest-workbook/src/main/resources'
+                        echo 'Insert key.json...'
                         
                         dir('forest-back/forest-workbook'){
                             sh 'ls -al'
