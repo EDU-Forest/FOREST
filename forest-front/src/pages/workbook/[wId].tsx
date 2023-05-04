@@ -12,7 +12,7 @@ import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideRetu
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
 import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
 import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
-import { QuestionSummType, RawQuestionType } from "@/types/Workbook";
+import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -44,7 +44,7 @@ function WorkbookDetail() {
   const [selectedClass, setSelectedClass] = useState<number[]>([]);
 
   const getQuestionSummary = (): QuestionSummType[] => {
-    return questions.map((question: RawQuestionType) => {
+    return questions.map((question: QuestionType) => {
       return { id: question?.problemId, title: question?.title };
     });
   };

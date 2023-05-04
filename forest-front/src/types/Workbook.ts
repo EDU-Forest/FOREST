@@ -14,19 +14,6 @@ export interface QuestionItemType {
 }
 
 export interface QuestionType {
-  id: number;
-  problemNum: number;
-  type: string;
-  title: string;
-  text: string;
-  answer: string;
-  point: number;
-  problemImgPath: string;
-  items: QuestionItemType[];
-  imgIsEmpty: boolean;
-  textIsEmpty: boolean;
-}
-export interface RawQuestionType {
   problemId: number;
   problemNum: number;
   type: string;
