@@ -23,13 +23,16 @@ spring:
         format_sql: true
     open-in-view: false
 
-#  data:
-#    mongodb:
-#      uri: mongodb://localhost:27017/admin
-#      username: root
-#      password: 1234
+  data:
+    mongodb:
+      host: 13.124.81.117
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: B105FOREST
+      database: admin
+      # uri: mongodb://localhost:27017/canvas
 
-      # uri: mongodb: //546.465.445:27017/qwerqwer
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
