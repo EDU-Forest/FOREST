@@ -16,18 +16,12 @@ interface IProps {
 }
 
 function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
-  // dummy: save loading action
-  const [saveLoading, setSaveLoading] = useState(false);
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const { questions } = useSelector((state: RootState) => state.editQuestions);
 
   const { isLoading, mutate: saveWorkbookApiCall } = useWorkbookDetailSaveQuery();
 
   const handleClickSave = () => {
-    // save api call
-    // dummy: during saving action
-    // setSaveLoading(true);
-
     const workbookInfo = {
       workbookId: workbook.workbookId,
       title: workbook.title,
@@ -63,7 +57,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
     <StyledWorkbookDetailBtnsBox>
       {workbook.isOriginal && (
         <WorkbookSaveBtn onClick={handleClickSave}>
-          {saveLoading ? (
+          {isLoading ? (
             <>
               <ClipLoader color="white" size={18} speedMultiplier={0.7} />
               <span>저장 중</span>
