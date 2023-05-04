@@ -559,6 +559,15 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
+        if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
+            PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
+                    .message("문제 답안 저장 완료")
+                    .build();
+
+            return responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
+        }
+
         /* 서술형이라면 */
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
             // 코사인 유사도 분석 코드 추가 예정
