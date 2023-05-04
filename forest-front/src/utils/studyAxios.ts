@@ -20,6 +20,8 @@ studyAxios.interceptors.request.use(
       config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }
 
+    console.log("config", config);
+
     return config;
   },
   (error) => Promise.reject(error),

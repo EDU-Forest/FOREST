@@ -17,6 +17,9 @@ authAxios.interceptors.request.use(
     if (!config.headers.Authorization && forestToken) {
       config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
     }
+
+    console.log("config", config);
+
     return config;
   },
   (error) => error,
