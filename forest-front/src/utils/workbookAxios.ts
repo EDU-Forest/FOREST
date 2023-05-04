@@ -28,13 +28,12 @@ workbookAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const prevRequest = error?.config;
+    console.log(prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
-        console.log(response.data);
         const { accessToken } = response.data.payload;
-
         return accessToken;
       };
       const accessToken = await newAccessToken();
