@@ -31,6 +31,7 @@ export default function Home() {
         <KakaoLogin />
         <EmailAuth handleModal={handleModal} />
       </AuthSection>
+      <p onClick={() => router.push("/canvastest")}>캔버스ㅎㅎ</p>
     </FullScreen>
   );
 }
