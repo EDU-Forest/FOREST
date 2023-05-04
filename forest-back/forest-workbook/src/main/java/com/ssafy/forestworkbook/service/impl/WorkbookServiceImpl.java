@@ -567,17 +567,77 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        Workbook workbook = workbookRepository.findById(problemUpdateInfoDto.getWorkbookInfo().getWorkbookId())
+        Workbook workbook = workbookRepository.findById(problemUpdateInfoDto.getWorkbookId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         if(userId != workbook.getCreator().getId()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
+        // 기존 문제 보기 삭제
         for (ItemIdDto itemId : problemUpdateInfoDto.getDeleteItemList()) {
-
+            Item item = itemRepository.findById(itemId.getItemId())
+                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_ITEM_NOT_FOUND));
+            item.deleteById(true);
         }
-        return null;
+
+        // 문제 만들기
+        for (ProblemDto problemDto : problemUpdateInfoDto.getProblemList()) {
+            EnumProblemTypeStatus enumProblemTypeStatus;
+            String problemType = problemDto.getType();
+
+            if (problemType.equals("MULTIPLE")) {
+                enumProblemTypeStatus = EnumProblemTypeStatus.MULTIPLE;
+            } else if (problemType.equals("SUBJECTIVE")) {
+                enumProblemTypeStatus = EnumProblemTypeStatus.SUBJECTIVE;
+            } else if (problemType.equals("DESCRIPT")) {
+                enumProblemTypeStatus = EnumProblemTypeStatus.DESCRIPT;
+            } else if (problemType.equals("OX")) {
+                enumProblemTypeStatus = EnumProblemTypeStatus.OX;
+            } else {
+                throw new CustomException(WorkbookErrorCode.PROBLEM_TYPE_NO_VAILD);
+            }
+
+            Problem problem = Problem.builder()
+                    .type(enumProblemTypeStatus)
+                    .title(problemDto.getTitle())
+                    .path(problemDto.getPath())
+                    .text(problemDto.getText())
+                    .answer(problemDto.getAnswer())
+                    .point(problemDto.getPoint())
+                    .build();
+
+            problemRepository.save(problem);
+
+            // 항목 만들기
+            if (enumProblemTypeStatus.equals(EnumProblemTypeStatus.MULTIPLE)
+                    && problemDto.getItemList() !=
+                    null && !problemDto.getItemList().isEmpty()) {
+
+                List<Item> itemList = new ArrayList<>();
+                for (ItemContentDto itemContent : problemDto.getItemList()) {
+                    Item item = Item.builder()
+                            .problem(problem)
+                            .no(itemContent.getItemNo())
+                            .content(itemContent.getContent())
+                            .isImage(itemContent.getIsImage())
+                            .build();
+
+                    itemList.add(item);
+                }
+                itemRepository.saveAll(itemList);
+            }
+
+            // 문제 리스트 만들기
+            ProblemList problemList = ProblemList.builder()
+                    .workbook(workbook)
+                    .problem(problem)
+                    .problemNum(problemDto.getProblemNo())
+                    .build();
+
+            problemListRepository.save(problemList);
+        }
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CREATE);
     }
 
     @Override

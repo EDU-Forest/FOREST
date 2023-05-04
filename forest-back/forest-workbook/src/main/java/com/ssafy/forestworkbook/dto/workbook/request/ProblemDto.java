@@ -7,7 +7,8 @@ import java.util.List;
 @Getter
 public class ProblemDto {
 
-    private Long problemId;
+    private int problemNo;
+    private String type;
     private String title;
     private String path;
     private String text;

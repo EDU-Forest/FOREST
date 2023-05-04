@@ -7,7 +7,7 @@ import java.util.List;
 @Getter
 public class ProblemUpdateInfoDto {
 
-    private WorkbookDetailDto workbookInfo;
+    private Long workbookId;
     private List<ProblemDto> problemList;
     private List<ItemIdDto> deleteItemList;
 

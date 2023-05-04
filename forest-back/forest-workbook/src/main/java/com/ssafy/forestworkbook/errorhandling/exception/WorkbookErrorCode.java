@@ -25,6 +25,7 @@ public enum WorkbookErrorCode implements Codable {
     STUDY_TYPE_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 스터디 타입입니다.", true),
     WORKBOOK_FAIL_DELETE_PROBLEM(HttpStatus.BAD_REQUEST, "삭제할 수 없는 문제입니다.", true),
     WORKBOOK_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "보기를 찾을 수 없습니다.", true),
+    PROBLEM_TYPE_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 문제 타입입니다.", true),
     ;
     private final String message;
     private final HttpStatus status;
