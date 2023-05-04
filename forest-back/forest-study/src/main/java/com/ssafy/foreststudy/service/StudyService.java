@@ -912,7 +912,8 @@ public class StudyService {
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         GetStudyInfoResponseDto result = GetStudyInfoResponseDto.builder()
-                .name(study.getUser().getName())
+                .userName(study.getUser().getName())
+                .studyName(study.getName())
                 .volume(study.getWorkbook().getVolume())
                 .startTime(study.getStartTime())
                 .endTime(study.getEndTime())

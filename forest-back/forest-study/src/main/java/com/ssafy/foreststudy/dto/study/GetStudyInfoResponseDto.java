@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 public class GetStudyInfoResponseDto {
-    private String name;
+    private String userName;
+    private String studyName;
     private int volume;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
