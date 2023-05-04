@@ -129,10 +129,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> executeWorkbook(
             HttpServletRequest request,
             @RequestBody ExcuteDto excuteDto) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
         return workbookService.executeWorkbook(userId, excuteDto);
 
     }
