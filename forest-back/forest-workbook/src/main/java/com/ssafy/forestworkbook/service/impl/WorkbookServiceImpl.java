@@ -102,6 +102,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         // HOMEWORK
         else if (search.equals("homework")) {
             List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.HOMEWORK);
+            studyToDto(studyList, classWorkbookDtoList);
         }
 
         // SELF
