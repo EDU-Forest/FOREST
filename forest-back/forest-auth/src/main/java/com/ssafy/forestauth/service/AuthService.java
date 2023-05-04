@@ -27,6 +27,7 @@ public class AuthService {
 
     public ResponseSuccessDto<ReissueResponseDto> reissueAccessToken(String accessToken, String refreshToken) {
         if (!jwtProvider.validateToken(refreshToken)) {
+            log.error("refresh token not valid");
             throw new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID);
         }
 
@@ -36,6 +37,7 @@ public class AuthService {
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
 
         if (!refreshToken.equals(findUserById.getRefreshToken())) {
+            log.error("refresh token not equal");
             throw new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID);
         }
 
