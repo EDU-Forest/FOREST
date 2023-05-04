@@ -20,6 +20,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -97,23 +98,28 @@ public class SecurityConfig implements WebMvcConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
 
-        List<String> allowedOrigin = new ArrayList<>();
-        allowedOrigin.add("localhost");
-        allowedOrigin.add("k8b105.p.ssafy.io");
-        allowedOrigin.add("k8b105.p.ssafy.io:3000");
-        allowedOrigin.add("k8b105.p.ssafy.io:443");
-        configuration.setAllowedOrigins(allowedOrigin);
+//        List<String> allowedOrigin = new ArrayList<>();
+//        allowedOrigin.add("localhost");
+//        allowedOrigin.add("k8b105.p.ssafy.io");
+//        allowedOrigin.add("k8b105.p.ssafy.io:3000");
+//        allowedOrigin.add("k8b105.p.ssafy.io:443");
+//        configuration.setAllowedOrigins(allowedOrigin);
+//
+//        List<String> allowedHeaders = new ArrayList<>();
+//        allowedHeaders.add("Content-Type");
+//        configuration.setAllowedHeaders(allowedHeaders);
+//
+//        List<String> allowedMethods = new ArrayList<>();
+//        allowedMethods.add("GET");
+//        allowedMethods.add("POST");
+//        allowedMethods.add("PATCH");
+//        allowedMethods.add("OPTIONS");
+//        configuration.setAllowedMethods(allowedMethods);
 
-        List<String> allowedHeaders = new ArrayList<>();
-        allowedHeaders.add("Content-Type");
-        configuration.setAllowedHeaders(allowedHeaders);
-
-        List<String> allowedMethods = new ArrayList<>();
-        allowedMethods.add("GET");
-        allowedMethods.add("POST");
-        allowedMethods.add("PATCH");
-        allowedMethods.add("OPTIONS");
-        configuration.setAllowedMethods(allowedMethods);
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
 
 //        configuration.setAllowedHeaders();
 //        configuration.setAllowedMethods();
