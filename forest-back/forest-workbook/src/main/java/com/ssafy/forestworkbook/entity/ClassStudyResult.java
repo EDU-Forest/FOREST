@@ -26,29 +26,29 @@ public class ClassStudyResult {
     private Study study;
 
     @Column(name = "take_rate", columnDefinition = "int")
-    private int takeRate;
+    private int takeRate = 0;
 
     /* double? decimal? */
     @Column(name = "average", columnDefinition = "double")
-    private double average;
+    private double average = 0;
 
     @Column(name = "standard_deviation", columnDefinition = "double")
-    private double standardDeviation;
+    private double standardDeviation = 0;
 
     @Column(name = "average_solving_time", columnDefinition = "bigint")
-    private Long averageSolvingTime;
+    private Long averageSolvingTime = Long.valueOf(0);
 
     @Column(name = "correct_answer_rate", columnDefinition = "int")
-    private int correctAnswerRate;
+    private int correctAnswerRate = 0;
 
     @Column(name = "ungraded_answer_rate", columnDefinition = "int")
-    private int ungradedAnswerRate;
+    private int ungradedAnswerRate = 0;
 
     @Column(name = "total_student", columnDefinition = "int")
-    private int totalStudent;
+    private int totalStudent = 0;
 
     @Column(name = "participant_student", columnDefinition = "int")
-    private int participantStudent;
+    private int participantStudent = 0;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
