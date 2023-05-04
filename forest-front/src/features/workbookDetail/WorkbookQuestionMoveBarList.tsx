@@ -82,6 +82,9 @@ function WorkbookQuestionMoveBarList({
             num={i + 1}
             question={question}
             isSelected={question.id === curQuestion}
+            questionSumm={questionSumm}
+            setQuestionSum={setQuestionSum}
+            setCurQuestion={setCurQuestion}
           />
         </div>
       ))}
