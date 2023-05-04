@@ -6,8 +6,19 @@ export function checkEmail(email: string) {
   return email_format.test(email);
 }
 
-// 시간제한 구하기
-export const getTimeLimit = (start: Date, end: Date) => {
-  if (!start || !end) return 0;
-  return Math.floor(Math.abs((end.getTime() - start.getTime()) / (1000 * 60)));
+// 날짜 분으로 환산
+export const dateToMinute = (start: Date, end: Date) => {
+  return Math.floor((new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60));
+};
+
+// 날짜 초로 환산
+export const dateToSecond = (start: Date, end: Date) => {
+  return Math.floor((new Date(end).getTime() - new Date(start).getTime()) / 1000);
+};
+
+// 분 초로 환산
+export const secondToMinute = (time: number) => {
+  const minute = String(Math.floor(time / 60));
+  const second = String(Math.floor(time % 60));
+  return `${minute.padStart(2, "0")} 분 ${second.padStart(2, "0")} 초`;
 };
