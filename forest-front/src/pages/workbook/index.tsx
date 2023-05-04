@@ -1,3 +1,4 @@
+import useWorkbookListQuery from "@/apis/workbook/useWorkbookListQuery";
 import TeacherNav from "@/components/Nav/TeacherNav";
 import { StyledFullSectionBox } from "@/features/dashboard/Dashboard.style";
 import LikeWorkbook from "@/features/workbook/LikeWorkbook";
@@ -5,10 +6,17 @@ import MadeOneselfWorkbook from "@/features/workbook/MadeOneselfWorkbook";
 import UsedWorkbook from "@/features/workbook/UsedWorkbook";
 import WorkbookTab from "@/features/workbook/WorkbookTab";
 import { Container, FullScreen } from "@/styles/container";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Workbook() {
   const [selectedType, setSelectedType] = useState("like");
+
+  const { data: { workbookList: list } = { workbookList: [] }, refetch } =
+    useWorkbookListQuery(selectedType);
+
+  useEffect(() => {
+    refetch();
+  }, [selectedType]);
 
   return (
     <FullScreen>
@@ -17,11 +25,11 @@ export default function Workbook() {
         <StyledFullSectionBox padding={40} tabletPadding={24}>
           <WorkbookTab selectedType={selectedType} setSelectedType={setSelectedType} />
           {selectedType === "like" ? (
-            <LikeWorkbook />
-          ) : selectedType === "used" ? (
-            <UsedWorkbook />
+            <LikeWorkbook list={list} />
+          ) : selectedType === "use" ? (
+            <UsedWorkbook list={list} />
           ) : (
-            selectedType === "madeOneself" && <MadeOneselfWorkbook />
+            selectedType === "own" && <MadeOneselfWorkbook list={list} />
           )}
         </StyledFullSectionBox>
       </Container>
