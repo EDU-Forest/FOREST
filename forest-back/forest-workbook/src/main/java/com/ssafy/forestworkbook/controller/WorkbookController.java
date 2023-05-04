@@ -77,7 +77,7 @@ public class WorkbookController {
     }
 
     @PatchMapping
-    @ApiOperation(value = "문제 순서 수정하기", notes = "문제집 정보와 문제 순서를 수정합니다.")
+    @ApiOperation(value = "문제집 순서 수정하기", notes = "문제집 정보와 문제 순서를 수정합니다.")
     public ResponseSuccessDto<?> updateWorkbook(
             HttpServletRequest request,
             @RequestBody WorkbookUpdateInfoDto workbookUpdateInfoDto) throws UnsupportedEncodingException {
@@ -162,14 +162,14 @@ public class WorkbookController {
     }
 
     @PatchMapping("/problem")
-    @ApiOperation(value = "문제 수정하기", notes = "문제를 수정합니다.")
+    @ApiOperation(value = "문제 만들기 및 수정하기", notes = "문제를 만들고 수정합니다.")
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
@@ -178,10 +178,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @PathVariable Long problemId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-        userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.deleteProblem(userId, problemId);
     }
 
@@ -265,6 +265,13 @@ public class WorkbookController {
         return workbookService.getEditorWorkbook(userId);
     }
 
-
-
+    @GetMapping("/explore")
+    @ApiOperation(value = "에디터 페이지 문제집 목록 조회", notes = "내가 만든 문제집 목록을 조회합니다.")
+    public ResponseSuccessDto<?> searchEditorWorkbook(@RequestParam String search) throws UnsupportedEncodingException {
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(3);
+        return workbookService.searchEditorWorkbook(search);
+    }
 }

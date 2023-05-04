@@ -268,6 +268,8 @@ public class WorkbookServiceImpl implements WorkbookService {
             workbookRepository.deleteById(workbookId);
         }
 
+        // TODO 만약 출제한 문제집이면...?
+
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_WORKBOOK);
     }
 
@@ -609,8 +611,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-//        Problem problem = problemRepository.findById(problemId)
-//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
         ProblemList problemList = problemListRepository.findByProblemId(problemId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
@@ -618,17 +620,24 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(problemList.getWorkbook().getId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
+        if (workbook.getIsExecuted() || workbook.getIsDeploy()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DELETE_PROBLEM);
+        }
+
         if (workbook.getCreator().getId() != userId) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        Long problemListId = problemList.getId();
-//        Long problemId = problem.getId();
+        List<Item> itemList = itemRepository.findAllByProblemId(problemId);
 
-//        log.info("{}", problemList.getId());
-//        problemListRepository.deleteById(problemListId);
-            log.info("{}", problemId);
-            problemRepository.deleteById(problemId);
+        if(!itemList.isEmpty()) {
+            for (Item item : itemList) {
+                item.deleteById(true);
+            }
+        }
+
+        problem.deleteById(true);
+        problemList.deleteById(true);
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_PROBLEM);
     }
@@ -788,6 +797,12 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .collect(Collectors.toList());
 
         return responseUtil.successResponse(new WorkbookEditorListDto(workbookList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> searchEditorWorkbook(String search) {
+
+        return null;
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks, Long userId) {

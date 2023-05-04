@@ -61,4 +61,8 @@ public class Problem {
         this.answer = answer;
         this.point = point;
     }
+
+    public void deleteById(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }

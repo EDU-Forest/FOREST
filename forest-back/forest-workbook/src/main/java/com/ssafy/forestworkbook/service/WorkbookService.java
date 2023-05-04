@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface WorkbookService {
 
-    ResponseSuccessDto<?> getTeacherWorkbookList(Long userId, String sort, Pageable pageable);
+    ResponseSuccessDto<?> getTeacherWorkbookList(Long userId, String search, Pageable pageable);
     ResponseSuccessDto<?> getClassWorkbook(Long userID, Long classId, String search);
     ResponseSuccessDto<?> getWorkbookAllInfo(Long userId, Long workbookId);
     ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto);
@@ -28,5 +28,6 @@ public interface WorkbookService {
     ResponseSuccessDto<?> getBestWorkbook(Long userId, String search);
     ResponseSuccessDto<?> getRecentWorkbook(Long userId);
     ResponseSuccessDto<?> getEditorWorkbook(Long userId);
+    ResponseSuccessDto<?> searchEditorWorkbook(String search);
 
 }
