@@ -20,7 +20,10 @@ public enum WorkbookErrorCode implements Codable {
     WORKBOOK_FAIL_ADD_BOOKMARK(HttpStatus.BAD_REQUEST, "북마크를 추가할 수 없는 문제집입니다.", true),
     WORKBOOK_FAIL_GET_USERWORKBOOK(HttpStatus.NOT_FOUND, "기존 북마크 이력을 찾을 수 없습니다.", false),
     WORKBOOK_FAIL_DELETE_WORKBOOK(HttpStatus.BAD_REQUEST, "문제집을 삭제할 수 없습니다.", true),
-    ;
+    WORKBOOK_FAIL_EXECUTE(HttpStatus.BAD_REQUEST, "출제할 수 없는 문제집입니다.", true),
+    CLASS_NOT_FOUND(HttpStatus.NOT_FOUND, "클래스를 찾을 수 없습니다.", true),
+    STUDY_TYPE_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 스터디 타입입니다.", true),
+    WORKBOOK_FAIL_DELETE_PROBLEM(HttpStatus.BAD_REQUEST, "삭제할 수 없는 문제입니다.", true);
 
     private final String message;
     private final HttpStatus status;

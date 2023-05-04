@@ -52,7 +52,7 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     // Mattermost & jwt decode
-    implementation 'com.github.lmghee:forest-noti:5303fe0a58'
+    implementation 'com.github.lmghee:forest-noti:60d98a7d18'
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'

@@ -1,6 +1,5 @@
 package com.ssafy.forestworkbook.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.forestworkbook.enumeration.EnumProblemTypeStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -61,5 +60,9 @@ public class Problem {
         this.text = text;
         this.answer = answer;
         this.point = point;
+    }
+
+    public void deleteById(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

@@ -1,7 +1,6 @@
 package com.ssafy.forestworkbook.repository;
 
 import com.ssafy.forestworkbook.entity.Item;
-import com.ssafy.forestworkbook.entity.Problem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -14,17 +14,15 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.jdbc.Work;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,6 +39,8 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ProblemRepository problemRepository;
     private final ItemRepository itemRepository;
     private final StudyRepository studyRepository;
+    private final ClassRepository classRepository;
+    private final ClassStudyResultRepository classStudyResultRepository;
     private final ResponseUtil responseUtil;
 
     @Override
@@ -268,6 +268,8 @@ public class WorkbookServiceImpl implements WorkbookService {
             workbookRepository.deleteById(workbookId);
         }
 
+        // TODO 만약 출제한 문제집이면...?
+
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_WORKBOOK);
     }
 
@@ -289,9 +291,55 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_CHANGE_ISPUBLIC);
         }
 
-        workbook.changeIsPublid(!workbook.getIsPublic());
+        workbook.changeIsPublic(!workbook.getIsPublic());
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        Workbook workbook = workbookRepository.findById(excuteDto.getWorkbookId())
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        ClassEntity classEntity = classRepository.findById(excuteDto.getClassId())
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
+
+        EnumStudyTypeStatus enumStudyTypeStatus;
+        if (excuteDto.getType().equals("exam")) {
+            enumStudyTypeStatus = EnumStudyTypeStatus.EXAM;
+        } else if (excuteDto.getType().equals("homework")) {
+            enumStudyTypeStatus = EnumStudyTypeStatus.HOMEWORK;
+        } else if (excuteDto.getType().equals("self")) {
+            enumStudyTypeStatus = EnumStudyTypeStatus.SELF;
+        } else {
+            throw new CustomException(WorkbookErrorCode.STUDY_TYPE_NO_VAILD);
+        }
+
+        workbook.changeIsExcuted(true);
+
+        Study study = Study.builder()
+                .classes(classEntity)
+                .workbook(workbook)
+                .user(user)
+                .name(excuteDto.getName())
+                .type(enumStudyTypeStatus)
+                .startTime(excuteDto.getStartTime())
+                .endTime(excuteDto.getEndTime())
+                .build();
+
+        studyRepository.save(study);
+
+        ClassStudyResult classStudyResult = ClassStudyResult.builder()
+                .study(study).build();
+
+        classStudyResultRepository.save(classStudyResult);
+
+        StudyIdDto studyIdDto = StudyIdDto.builder().studyId(study.getId()).build();
+
+        return responseUtil.successResponse(studyIdDto, ForestStatus.WORKBOOK_SUCCESS_EXECUTE);
     }
 
     @Override
@@ -328,8 +376,8 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DEPLOY);
         }
 
-        workbook.changeIsPublid(true);
-        workbook.changeIsDploy(true);
+        workbook.changeIsPublic(true);
+        workbook.changeIsDeploy(true);
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DEPLOY);
     }
@@ -402,26 +450,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
         problemRepository.saveAll(problems);
 
-//        // 항목이 있는 문제 번호 관리용 PQ
-//        PriorityQueue<Long> itemPq = new PriorityQueue<>();
-//
-//        for(int i = 0; i < problemLists.size(); i++) {
-//            List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(i).getId());
-//
-//            if(!itemList.isEmpty()) {
-//                for (Item item : itemList) {
-//                    Item itemCopy = Item.builder()
-//                            .problem(problems.get(i))
-//                            .no(item.getNo())
-//                            .content(item.getContent())
-//                            .isImage(item.getIsImage())
-//                            .build();
-//
-//                    itemCopyList.add(itemCopy);
-//                }
-//                itemPq.add(itemList.get(0).getProblem().getId());
-//            }
-//        }
         // 3. 문제 항목 만들기
         // 문제 항목 복사 리스트
         List<Item> itemCopyList = new ArrayList<>();
@@ -583,8 +611,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-//        Problem problem = problemRepository.findById(problemId)
-//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
         ProblemList problemList = problemListRepository.findByProblemId(problemId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
@@ -592,17 +620,24 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(problemList.getWorkbook().getId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
+        if (workbook.getIsExecuted() || workbook.getIsDeploy()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DELETE_PROBLEM);
+        }
+
         if (workbook.getCreator().getId() != userId) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        Long problemListId = problemList.getId();
-//        Long problemId = problem.getId();
+        List<Item> itemList = itemRepository.findAllByProblemId(problemId);
 
-//        log.info("{}", problemList.getId());
-//        problemListRepository.deleteById(problemListId);
-            log.info("{}", problemId);
-            problemRepository.deleteById(problemId);
+        if(!itemList.isEmpty()) {
+            for (Item item : itemList) {
+                item.deleteById(true);
+            }
+        }
+
+        problem.deleteById(true);
+        problemList.deleteById(true);
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_PROBLEM);
     }
@@ -762,6 +797,12 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .collect(Collectors.toList());
 
         return responseUtil.successResponse(new WorkbookEditorListDto(workbookList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> searchEditorWorkbook(String search) {
+
+        return null;
     }
 
     public TeacherWorkbookPageDto workbooksToDto(Page<Workbook> workbooks, Long userId) {

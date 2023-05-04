@@ -54,4 +54,8 @@ public class Item {
         this.isImage = isImage;
     }
 
+    public void deleteById(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
 }
