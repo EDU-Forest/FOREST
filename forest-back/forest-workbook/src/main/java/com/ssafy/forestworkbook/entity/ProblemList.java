@@ -28,7 +28,7 @@ public class ProblemList {
     private Workbook workbook;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "problem_id", nullable = false)
     private Problem problem;
 
@@ -47,5 +47,9 @@ public class ProblemList {
 
     public void updateProblemNum(int problemNum) {
         this.problemNum = problemNum;
+    }
+
+    public void deleteById(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
