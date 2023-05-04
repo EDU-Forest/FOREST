@@ -28,7 +28,7 @@ authAxios.interceptors.response.use(
   },
   async (error) => {
     const prevRequest = error?.config;
-    console.log(prevRequest);
+    console.log("ss", document.cookie, prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
