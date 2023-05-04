@@ -43,7 +43,7 @@ authAxios.interceptors.response.use(
       };
       const accessToken = await newAccessToken();
       setLocalStorage("forest_access_token", accessToken);
-      prevRequest.headers.authorization = accessToken;
+      prevRequest.headers.Authorization = accessToken;
       return authAxios(prevRequest);
     }
     return Promise.reject(error);
