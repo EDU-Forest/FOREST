@@ -9,7 +9,7 @@ export default function Result() {
   const workbookId = router.query.id;
   return (
     <ResultContainer>
-      <TestHeader />
+      <TestHeader page={"result"} />
       <TestResultTotal />
       <TestResultQuestion />
       <TestResultOkBtn>확인</TestResultOkBtn>
