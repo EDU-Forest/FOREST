@@ -12,6 +12,7 @@ import {
 import { AnalysisSubTitle } from "./StudyAnalysis.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
 
 const studentStudyResultList = [
   {
@@ -85,6 +86,10 @@ export default function EachResult() {
   const goToGrade = () => {
     // 상세 성적으로 이동
   };
+
+  const { data } = useStudentAnsweRate(studyId as number);
+  console.log("응시자별 data", data);
+
   const correctColor = (correctRate: number) => {
     if (correctRate < 50) {
       return true;

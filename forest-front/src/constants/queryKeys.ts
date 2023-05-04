@@ -19,6 +19,10 @@ export const CLASS_STUDENT_LIST = "/classStudentList";
 export const SEARCH_CLASS_STUDENT = "/searchClassStudent";
 export const CLASS_WORKBOOK_LIST = "/classWorkbookList";
 
+export const QUESTION_ANSWER_RATE = "/questionAnswerRate";
+export const ALL_ANSWER_RATE = "/allAnswerRate";
+export const STUDENT_ANSWER_RATE = "/studentAnswerRate";
+
 export const STUDY_RESULT = "/studyResult";
 export const STUDENT_SCORE = "/studentScore";
 

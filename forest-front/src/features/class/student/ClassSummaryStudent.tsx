@@ -16,6 +16,8 @@ import ClassMyResult from "./ClassMyResult";
 import TotalResult from "../TotalResult";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
+import { useEffect } from "react";
 
 const examResult: StudentExamList = {
   studyId: 1,
@@ -41,7 +43,12 @@ const examResult: StudentExamList = {
 
 export default function ClassSummaryStudent() {
   const router = useRouter();
-  const { nowClassId } = useSelector((state: RootState) => state.class);
+  const { nowStudyId } = useSelector((state: RootState) => state.class);
+
+  console.log("nowStudyId", nowStudyId);
+
+  // const lest = useStudyResultQuery(nowStudyId).data;
+  // console.log(nowStudyId, "ddd", lest, "examResult");
 
   const goToDetail = (studyId: number) => {
     router.push(`/student/class/study/${studyId}`);

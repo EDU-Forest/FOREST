@@ -21,6 +21,8 @@ import EachResult from "./EachResult";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import DescriptiveForm from "./DescriptiveForm";
+import useQuestionAnswerRateQuery from "@/apis/class/analysis/useQuestionAnswerRateQuery";
+import useAllAnswerRateQuery from "@/apis/class/analysis/useAllAnswerRateQuery";
 
 const examResult: TeacherExamResult = {
   studyId: 1,
@@ -55,6 +57,10 @@ export default function StudyAnalysis() {
     router.back();
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
+
+  const { data } = useQuestionAnswerRateQuery(studyId as number);
+  // const { data } = useAllAnswerRateQuery(studyId as number);
+  console.log("데이터", data);
 
   return (
     <>

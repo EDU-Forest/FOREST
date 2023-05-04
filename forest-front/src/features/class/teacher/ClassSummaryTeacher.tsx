@@ -42,50 +42,50 @@ export default function ClassSummaryTeacher() {
   const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const lest = useStudyResultQuery(nowStudyId).data;
-  console.log(nowStudyId, "ddd", lest, "examResult");
+  const examResult = useStudyResultQuery(nowStudyId).data;
+  console.log("data", examResult);
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);
   };
 
   return (
-    <ClassSummaryWrapper small={examResult.scheduleType === "AFTER" ? false : true}>
+    <ClassSummaryWrapper small={examResult?.scheduleType === "AFTER" ? false : true}>
       <ClassSummaryTextWrapper>
         <ClassSummaryTextItem>
-          <ClassSummaryTitle>{examResult.title}</ClassSummaryTitle>
-          <WorkbookStatus status={examResult.scheduleType} />
+          <ClassSummaryTitle>{examResult?.title}</ClassSummaryTitle>
+          <WorkbookStatus status={examResult?.scheduleType} />
         </ClassSummaryTextItem>
-        {examResult.scheduleType === "AFTER" && (
+        {examResult?.scheduleType === "AFTER" && (
           <ClassSummaryText
             isGray
             style={{ cursor: "pointer", margin: "0px" }}
-            onClick={() => goToDetail(examResult.studyId)}
+            onClick={() => goToDetail(examResult?.studyId)}
           >
             자세히 보기
             <AiOutlineRight className="icon" />
           </ClassSummaryText>
         )}
       </ClassSummaryTextWrapper>
-      <ClassSummaryDeadline>~ {examResult.endTime}</ClassSummaryDeadline>
+      <ClassSummaryDeadline>~ {examResult?.endTime}</ClassSummaryDeadline>
 
-      {examResult.scheduleType === "AFTER" ? (
+      {examResult?.scheduleType === "AFTER" ? (
         <ClassSummaryItemWrapper>
           <ClassWorkbookInfo
-            studyCreatedDate={examResult.studyCreatedDate}
-            studyType={examResult.studyType}
-            volume={examResult.volume}
-            isPublic={examResult.isPublic}
+            studyCreatedDate={examResult?.studyCreatedDate}
+            studyType={examResult?.studyType}
+            volume={examResult?.volume}
+            isPublic={examResult?.isPublic}
           />
           <TotalResult
-            average={examResult.average}
-            standardDeviation={examResult.standardDeviation}
-            averageSolvingTime={examResult.averageSolvingTime}
+            average={examResult?.average}
+            standardDeviation={examResult?.standardDeviation}
+            averageSolvingTime={examResult?.averageSolvingTime}
           />
           <TakeRateChart
-            totalStudent={examResult.totalStudent}
-            participantStudent={examResult.participantStudent}
-            takeRate={examResult.takeRate}
+            totalStudent={examResult?.totalStudent}
+            participantStudent={examResult?.participantStudent}
+            takeRate={examResult?.takeRate}
           />
         </ClassSummaryItemWrapper>
       ) : (
