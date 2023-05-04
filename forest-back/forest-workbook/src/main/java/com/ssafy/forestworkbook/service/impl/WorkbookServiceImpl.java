@@ -637,6 +637,9 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             problemListRepository.save(problemList);
         }
+
+        workbook.updateVolume(problemUpdateInfoDto.getProblemList().size());
+
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CREATE);
     }
 

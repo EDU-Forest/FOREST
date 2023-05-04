@@ -81,6 +81,9 @@ public class Workbook {
         this.description = description;
     }
 
+    public void updateVolume(int volume) {
+        this.volume = volume;
+    }
     // 공개 여부
     public void changeIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
