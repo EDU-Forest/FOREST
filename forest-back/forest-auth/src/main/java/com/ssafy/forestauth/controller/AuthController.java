@@ -31,11 +31,11 @@ public class AuthController {
     ) {
         accessToken = accessToken.substring(7);
         log.info("Here is Auth Controller");
-        log.info("refreshToken : {}",SecurityUtil.getCookie(request, "refresh").toString());
-        System.out.println(SecurityUtil.getCookie(request, "refresh"));
-        System.out.println(SecurityUtil.getCookie(request, "refresh").get());
+        log.info("refreshToken : {}",SecurityUtil.getCookie(request, "forest_refresh_token").toString());
+        System.out.println(SecurityUtil.getCookie(request, "forest_refresh_token"));
+        System.out.println(SecurityUtil.getCookie(request, "forest_refresh_token").get());
 
-        String refreshToken = SecurityUtil.getCookie(request, "refresh")
+        String refreshToken = SecurityUtil.getCookie(request, "forest_refresh_token")
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID))
                 .getValue();
         log.info("refresh token : {}", refreshToken);
