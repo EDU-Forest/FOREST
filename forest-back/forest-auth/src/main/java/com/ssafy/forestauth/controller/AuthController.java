@@ -5,7 +5,7 @@ import com.ssafy.forestauth.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestauth.dto.user.ReissueResponseDto;
 import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.service.AuthService;
-import com.ssafy.forestauth.util.SecurityUtil;
+import com.ssafy.forestauth.util.CookieUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +31,9 @@ public class AuthController {
     ) {
         accessToken = accessToken.substring(7);
         log.info("Here is Auth Controller");
-        log.info("refreshToken : {}",SecurityUtil.getCookie(request, "forest_refresh_token").toString());
+        log.info("refreshToken : {}", CookieUtil.getCookie(request, "forest_refresh_token").toString());
 
-        String refreshToken = SecurityUtil.getCookie(request, "forest_refresh_token")
+        String refreshToken = CookieUtil.getCookie(request, "forest_refresh_token")
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID))
                 .getValue();
         log.info("refresh token : {}", refreshToken);
