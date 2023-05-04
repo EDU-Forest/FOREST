@@ -216,7 +216,7 @@ public class StudyService {
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
 
-        if(csList.isEmpty()) {
+        if (csList.isEmpty()) {
             return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
         }
 
@@ -512,8 +512,12 @@ public class StudyService {
 
         /* 재입장 여부 체크 */
         Optional<StudentStudyResult> ssr = studentStudyResultRepository.findAllByStudyAndUser(study, user);
-        if (ssr.isPresent())
-            throw new CustomException(StudyErrorCode.STUDY_STUDENT_ENTER);
+        if (ssr.isPresent()) {
+            PostResponseDto postResponseDto = PostResponseDto.builder()
+                    .message("재입장 완료")
+                    .build();
+            return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_STUDENT_ENTER);
+        }
 
 
 
@@ -912,7 +916,8 @@ public class StudyService {
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
         GetStudyInfoResponseDto result = GetStudyInfoResponseDto.builder()
-                .name(study.getUser().getName())
+                .userName(study.getUser().getName())
+                .studyName(study.getName())
                 .volume(study.getWorkbook().getVolume())
                 .startTime(study.getStartTime())
                 .endTime(study.getEndTime())
