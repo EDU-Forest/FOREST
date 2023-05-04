@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 
 import CommonWorkbook from "@/components/Workbook/CommonWorkbook";
-import { StyledWorkbookListBox } from "./Workbook.style";
 import { WorkbookType } from "@/types/Workbook";
+import { StyledWorkbookListBox } from "./Workbook.style";
 
 interface IProps {
   list: WorkbookType[];
@@ -23,11 +23,11 @@ function WorkbookList({ list }: IProps) {
       {list.map((item) => {
         return (
           <CommonWorkbook
-            key={item?.id}
-            id={item?.id}
+            key={`workbook-${item?.workbookId}`}
+            id={item?.workbookId}
             title={item?.title}
-            bookmarkCount={item?.likeCnt}
-            scrapCount={item?.usedCnt}
+            bookmarkCount={item?.bookmarkCount}
+            scrapCount={item?.scrapCount}
             clickAction={handleClickWorkbook}
           />
         );

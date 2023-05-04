@@ -1,9 +1,9 @@
 export interface WorkbookType {
-  id: number;
+  workbookId: number;
   cover: string;
   title: string;
-  likeCnt: number;
-  usedCnt: number;
+  bookmarkCount: number;
+  scrapCount: number;
 }
 
 export interface QuestionItemType {

@@ -10,13 +10,11 @@ import { useEffect, useState } from "react";
 
 export default function Workbook() {
   const [selectedType, setSelectedType] = useState("like");
-  const [workbooks, setWorkbooks] = useState([]);
 
-  const { data: lists, refetch } = useWorkbookListQuery(selectedType);
+  const { data: { workbookList: list } = { workbookList: [] }, refetch } =
+    useWorkbookListQuery(selectedType);
 
   useEffect(() => {
-    console.log(lists);
-    console.log(selectedType);
     refetch();
   }, [selectedType]);
 
@@ -27,11 +25,11 @@ export default function Workbook() {
         <StyledFullSectionBox padding={40} tabletPadding={24}>
           <WorkbookTab selectedType={selectedType} setSelectedType={setSelectedType} />
           {selectedType === "like" ? (
-            <LikeWorkbook />
+            <LikeWorkbook list={list} />
           ) : selectedType === "use" ? (
-            <UsedWorkbook />
+            <UsedWorkbook list={list} />
           ) : (
-            selectedType === "own" && <MadeOneselfWorkbook />
+            selectedType === "own" && <MadeOneselfWorkbook list={list} />
           )}
         </StyledFullSectionBox>
       </Container>
