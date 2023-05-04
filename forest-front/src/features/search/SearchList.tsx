@@ -1,5 +1,6 @@
 import CommonWorkbook from "@/components/Workbook/CommonWorkbook";
 import { SearchListWrapper, SearchListItem } from "./SearchList.style";
+import useSearchWorkbookQuery from "@/apis/search/useSearchWorkbookQuery";
 
 interface Iprops {
   keyword: string;
@@ -59,12 +60,15 @@ const searchList: SearchWorkbook[] = [
 ];
 
 export default function SearchList({ keyword }: Iprops) {
+  console.log(keyword);
+  const { workbookList } = useSearchWorkbookQuery(keyword).data;
+
   return (
     <SearchListWrapper>
-      {searchList.map((item, idx) => (
-        <SearchListItem>
+      {workbookList?.map((item: SearchWorkbook) => (
+        <SearchListItem key={item.workbookId}>
           <CommonWorkbook
-            id={idx}
+            id={item.workbookId}
             title={item.title}
             bookmarkCount={item.bookmarkCount}
             scrapCount={item.scrapCount}
