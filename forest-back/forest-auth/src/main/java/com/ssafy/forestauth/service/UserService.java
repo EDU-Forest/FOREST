@@ -14,6 +14,7 @@ import com.ssafy.forestauth.enumeration.response.SuccessCode;
 import com.ssafy.forestauth.repository.ClassRepository;
 import com.ssafy.forestauth.repository.ClassUserRepository;
 import com.ssafy.forestauth.repository.UserRepository;
+import com.ssafy.forestauth.util.CookieUtil;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
     private final JwtProvider jwtProvider;
     private Long expireTimeMs = 1000 * 60 * 60L;
+    private String REFRESH_TOKEN = "forest_refresh_token";
 
     // 일반 회원가입
     public ResponseSuccessDto<SignupCommonResponseDto> signupCommon(SignupRequestDto signupRequestDto) {
@@ -123,14 +125,8 @@ public class UserService {
 
         findUser.updateRefreshToken(jwtProvider.createRefreshToken());
 
-        ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", findUser.getRefreshToken())
-                .httpOnly(true)
-                .maxAge(jwtProvider.refreshTokenValidateTime)
-                .path("/")
-//                    .domain("localhost:3000")
-                .build();
-
-        response.addHeader("Set-Cookie", refreshCookie.toString());
+        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
+        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())
