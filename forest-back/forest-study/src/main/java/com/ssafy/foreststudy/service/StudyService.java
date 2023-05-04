@@ -884,10 +884,11 @@ public class StudyService {
         int volume = study.getWorkbook().getVolume();
         int ungradedAnswerRate = (volume - descriptNum) * 100 / volume;
 
-        /* 반 시험 결과 리포트 테이블 생성 */
-        ClassStudyResult classStudyResult = new ClassStudyResult();
+        /* 반 시험 결과 리포트 테이블 수정 (생성은 출제 시) */
+        ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
+                        .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+
         classStudyResult.createClassAnswerRate(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
-        classStudyResultRepository.save(classStudyResult);
 
         PostResponseDto postResponseDto = PostResponseDto.builder()
                 .message("학습 종료")
