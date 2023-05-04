@@ -33,3 +33,4 @@ export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
 
 // workbook
 export const GET_WORKBOOK_LIST = "/getWorkbookList";
+export const GET_WORKBOOK_DETAIL = "/getWorkbookDetail";
