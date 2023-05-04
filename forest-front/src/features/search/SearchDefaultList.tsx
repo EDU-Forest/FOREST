@@ -13,8 +13,11 @@ import { breakpoints } from "@/styles/theme";
 import { useState } from "react";
 import usePopularWorkbookListQuery from "@/apis/search/usePopularWorkbookListQuery";
 import useRecentWorkbookListQuery from "@/apis/search/useRecentWorkbookListQuery";
+import { useRouter } from "next/router";
 
 export default function SearchDefaultList() {
+  const router = useRouter();
+
   const [sortType, setSortType] = useState<string>("bookmark");
   const changeSort = (value: string) => {
     setSortType(value);
@@ -22,6 +25,10 @@ export default function SearchDefaultList() {
 
   const popularList: SearchWorkbook[] = usePopularWorkbookListQuery(sortType).data?.workbookList;
   const recentList: SearchWorkbook[] = useRecentWorkbookListQuery().data?.workbookList;
+
+  const goToDetail = (id: number) => {
+    router.push(`/workbook/${id}`);
+  };
 
   return (
     <SearchDefaultWrapper>
@@ -55,6 +62,7 @@ export default function SearchDefaultList() {
                 isBookmarked={item.isBookmarked}
                 workbookImgPath={item.workbookImgPath}
                 methodType={item.methodType}
+                clickAction={() => goToDetail(item.workbookId)}
               />
             </SwiperSlide>
           ))}
@@ -73,6 +81,7 @@ export default function SearchDefaultList() {
                 isBookmarked={item.isBookmarked}
                 workbookImgPath={item.workbookImgPath}
                 methodType={item.methodType}
+                clickAction={() => goToDetail(item.workbookId)}
               />
             </SwiperSlide>
           ))}
