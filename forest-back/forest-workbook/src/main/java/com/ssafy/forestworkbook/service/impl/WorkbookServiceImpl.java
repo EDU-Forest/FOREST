@@ -50,7 +50,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 좋아하는 문제집
         // 스크랩 한 것도 좋아하는 문제집에
-        if(Objects.equals(search, "like")) {
+        if (Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks =
                     userWorkbookRepository.findAllByUserAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(user, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
@@ -66,14 +66,14 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         // 사용한 문제집
-        else if(search.equals("use")) {
+        else if (search.equals("use")) {
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdAndIsExecuted(userId, true, pageable);
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
         // 내가 만든 문제집
-        else if(search.equals("own")) {
+        else if (search.equals("own")) {
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorId(userId, pageable);
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
@@ -228,7 +228,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
         log.info("{}", userId);
 
-        if(userId != workbook.getCreator().getId()) {
+        if (userId != workbook.getCreator().getId()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_UPADATE);
         }
 
@@ -237,8 +237,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         workbook.updateWorkbook(workbookDetailDto.getTitle(), workbookImg, workbookDetailDto.getDescription());
 
-        if(!problemOrderDtoList.isEmpty()) {
-            for(ProblemOrderDto problemOrderDto : problemOrderDtoList) {
+        if (!problemOrderDtoList.isEmpty()) {
+            for (ProblemOrderDto problemOrderDto : problemOrderDtoList) {
                 ProblemList problemList = problemListRepository.findByProblemId(problemOrderDto.getProblemId())
                         .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEMLIST));
                 problemList.updateProblemNum(problemOrderDto.getProblemNum());
@@ -257,7 +257,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 북마크 삭제
-        if(user.getId() != workbook.getCreator().getId()) {
+        if (user.getId() != workbook.getCreator().getId()) {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
             userWorkbook.updateIsBookmarked(false);
@@ -515,14 +515,14 @@ public class WorkbookServiceImpl implements WorkbookService {
         int size = itemCopyList.size();
         int j = 0;
 
-        for(int i = 0; i < problemListsCopy.size(); i++) {
+        for (int i = 0; i < problemListsCopy.size(); i++) {
             ProblemList problemListToDto = problemListsCopy.get(i);
             Problem problemToDto = problems.get(i);
 
             List<ItemResDto> itemResList = new ArrayList<>();
 
-            if(itemIsMultiple[i] != -1) {
-                for(int k = 0; k < itemCount[i]; k++) {
+            if (itemIsMultiple[i] != -1) {
+                for (int k = 0; k < itemCount[i]; k++) {
                     Item tempItem = itemCopyList.get(j);
 
                     ItemResDto itemRes = ItemResDto.builder()
@@ -570,7 +570,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(problemUpdateInfoDto.getWorkbookId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        if(userId != workbook.getCreator().getId()) {
+        if (userId != workbook.getCreator().getId()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
@@ -664,7 +664,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         List<Item> itemList = itemRepository.findAllByProblemId(problemId);
 
-        if(!itemList.isEmpty()) {
+        if (!itemList.isEmpty()) {
             for (Item item : itemList) {
                 item.deleteById(true);
             }
@@ -685,7 +685,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        if(!workbook.getIsPublic() || !workbook.getIsDeploy()) {
+        if (!workbook.getIsPublic() || !workbook.getIsDeploy()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_ADD_BOOKMARK);
         }
 
@@ -825,9 +825,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         List<Workbook> workbookTitleList = workbookRepository.findAllByCreatorId(userId);
         List<WorkbookEditorDto> workbookList = workbookTitleList.stream()
                 .map(w -> WorkbookEditorDto.builder()
-                    .workbookId(w.getId())
-                    .title(w.getTitle())
-                    .build())
+                        .workbookId(w.getId())
+                        .title(w.getTitle())
+                        .build())
                 .collect(Collectors.toList());
 
         return responseUtil.successResponse(new WorkbookEditorListDto(workbookList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
@@ -896,7 +896,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(w.getId()))
                 .build());
         TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
-        return  teacherWorkbookPageDtoList;
+        return teacherWorkbookPageDtoList;
     }
 
     public void studyToDto(List<Study> studyList, List<ClassWorkbookDto> classWorkbookDtoList) {
@@ -922,7 +922,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     public void userWorkbookToDto(Long userId, List<BestWorkbookDto> bestWorkbookList, List<ExploreWorkbookDto> exploreWorkbookDtoList) {
-        for(BestWorkbookDto workbookDto : bestWorkbookList) {
+        for (BestWorkbookDto workbookDto : bestWorkbookList) {
 
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookDto.getWorkbookId())
                     .orElse(null);
@@ -939,43 +939,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .build();
 
             exploreWorkbookDtoList.add(exploreWorkbookDto);
-        }
-    }
-
-    public void updateItemList(int size, List<Item> itemList, List<ItemReqDto> itemReqList) {
-        for(int i = 0; i < size; i++) {
-            Item item = itemList.get(i);
-            ItemReqDto itemReqDto = itemReqList.get(i);
-
-            item.updateItem(itemReqDto.getNo(), itemReqDto.getContent(), itemReqDto.getIsImage());
-        }
-    }
-
-    public void insertItemList(int start, int size, List<ItemReqDto> itemReqList) {
-        List<Item> itemList = new ArrayList<>();
-
-        for(int i = start; i < size; i++) {
-            ItemReqDto itemReqDto = itemReqList.get(i);
-            Problem problem = problemRepository.findById(itemReqDto.getProblemId())
-                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
-            Item item = Item.builder()
-                    .problem(problem)
-                    .no(itemReqDto.getNo())
-                    .content(itemReqDto.getContent())
-                    .isImage(itemReqDto.getIsImage())
-                    .build();
-
-            itemList.add(item);
-            log.info(item.toString());
-        }
-        itemRepository.saveAll(itemList);
-    }
-
-    public void deleteItemList(int start, int size, List<Item> itemList) {
-        for(int i = start; i < size; i++) {
-            Item item = itemList.get(i);
-            log.info("{}", item.getId());
-            itemRepository.deleteById(item.getId());
         }
     }
 }
