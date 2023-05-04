@@ -66,7 +66,7 @@ function WorkbookQuestionMoveBarList({
 
   return (
     <StyledWorkbookQuestionMoveBarListBox onDragOver={(e) => onDragOver(e)}>
-      {questionSumm.map((question, i) => (
+      {questionSumm?.map((question, i) => (
         <div
           key={question.id}
           onClick={() => handleClickMoveBar(question.id)}

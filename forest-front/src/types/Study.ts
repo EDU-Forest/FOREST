@@ -3,7 +3,6 @@ interface IStudyId {
 }
 
 interface IStudyInfo {
-  studyTitle: string;
   studyPresenter: string;
   studyVolume: number;
   studyTimeLimit: number;
@@ -19,4 +18,15 @@ interface IStudySaveAnswer {
   studyId: number;
   userAnswer: string;
   type: string;
+}
+
+interface IStudyResult {
+  score: number;
+  correctNum: number;
+  solvingTime: number;
+  correctRate: number;
+  isGraded: boolean;
+  volume: number;
+  startTime: Date;
+  endTime: Date;
 }

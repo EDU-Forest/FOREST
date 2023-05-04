@@ -43,8 +43,8 @@ function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   };
 
   useEffect(() => {
-    setSelected(question.items[curItem - 1].isImage ? 2 : 1);
-  }, [question.items[curItem - 1].isImage]);
+    setSelected(question.itemList[curItem - 1]?.isImage ? 2 : 1);
+  }, [question.itemList[curItem - 1]?.isImage]);
 
   return (
     <EditorItemToggleBtnBox isCorrect={isCorrect} selected={selected}>

@@ -1,29 +1,24 @@
 import studyAxios from "@/utils/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import { getTimeLimit } from "@/utils";
+import { useDispatch } from "react-redux";
+import { setStudyInfo, setinitProblem } from "@/stores/exam/exam";
 
 interface Iprops {
   studyId: number;
-  setStudyInfoData: (data: IStudyInfo) => void;
 }
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/info/${studyId}`).then(({ data }) => {
-    console.log(data);
     return data;
   });
 
-const useGetStudyInfo = ({ studyId, setStudyInfoData }: Iprops) => {
+const useGetStudyInfo = ({ studyId }: Iprops) => {
+  const dispatch = useDispatch();
   return useQuery(queryKeys.STUDY_INFO, () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      setStudyInfoData({
-        studyTitle: data.data.title,
-        studyPresenter: data.data.name,
-        studyVolume: data.data.volume,
-        studyTimeLimit: data.data.endTime - data.data.startTime,
-      });
+      dispatch(setStudyInfo(data.data));
     },
     onError: (error) => {
       console.log("--useGetStudyInfoError --", error);

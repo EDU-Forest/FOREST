@@ -13,9 +13,9 @@ import {
   EditorQuestionNumbox,
   EditorQuestionTitleInput,
 } from "./EditorQuestionContent.style";
-import EditorShortAnswer from "./EditorShortAnswer";
-import EditorQuestionTextInput from "./EditorQuestionText";
 import EditorQuestionImg from "./EditorQuestionImg";
+import EditorQuestionTextInput from "./EditorQuestionText";
+import EditorShortAnswer from "./EditorShortAnswer";
 
 interface IProps {
   selectQuestionType: string;
@@ -26,7 +26,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
 
   const [title, setTitle] = useState("");
   const [question, setQuestion] = useState<QuestionType>({
-    id: 0,
+    problemId: 0,
     problemNum: 0,
     type: "multipleChoice",
     title: "",
@@ -36,7 +36,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     problemImgPath: "",
     imgIsEmpty: false,
     textIsEmpty: false,
-    items: [],
+    itemList: [],
   });
 
   const { questions } = useSelector((state: RootState) => state.editQuestions);

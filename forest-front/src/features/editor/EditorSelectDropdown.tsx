@@ -13,29 +13,27 @@ import { setClass } from "@/stores/class/classInfo";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import AddClassModal from "../class/teacher/AddClassModal";
+import { IWorkbookBySelf } from "@/types/Workbook";
+import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
+import { openAddWorkBookModal } from "@/stores/editor/editorModal";
 
-interface Iprops {
-  nowClassId: number;
-  isStudent?: boolean;
-}
-
-export default function EditorSelectDropdown({ nowClassId, isStudent }: Iprops) {
+export default function EditorSelectDropdown() {
   const dispatch = useDispatch();
   const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
-
-  const classList: ClassList[] = useClassListQuery().data;
-
+  const { curWorkbookIdx, workbooksBySelf } = useSelector(
+    (state: RootState) => state.editorWorkbook,
+  );
   return (
     <ClassSelectDropdownContainer>
-      {classList?.length > 0 ? (
+      {workbooksBySelf?.length > 0 ? (
         <>
           <ClassSelectDropdownEach>
-            {classList?.map((item) => (
+            {workbooksBySelf?.map((item, idx) => (
               <ClassSelectDropdownEachItem
-                key={item.classId}
-                onClick={() => dispatch(setClass(item))}
+                key={item.workbookId}
+                onClick={() => dispatch(setSelectWorkbook(idx))}
               >
-                {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
+                {item.workbookId === curWorkbookIdx && <ClassSelectCircle />} {item.workbookTitle}
               </ClassSelectDropdownEachItem>
             ))}
           </ClassSelectDropdownEach>
@@ -43,11 +41,11 @@ export default function EditorSelectDropdown({ nowClassId, isStudent }: Iprops) 
       ) : (
         <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
       )}
-      {!isStudent && (
-        <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
-          + 새 클래스 추가
-        </ClassSelectDropdownAdd>
-      )}
+
+      <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}>
+        + 새 클래스 추가
+      </ClassSelectDropdownAdd>
+
       {isOpenAddClassModal && <AddClassModal />}
     </ClassSelectDropdownContainer>
   );

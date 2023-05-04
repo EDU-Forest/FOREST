@@ -1,9 +1,12 @@
 export interface WorkbookType {
-  id: number;
-  cover: string;
+  workbookId: number;
+  image: string;
   title: string;
-  likeCnt: number;
-  usedCnt: number;
+  description: string;
+  isPublic: boolean;
+  bookmarkCount: number;
+  scrapCount: number;
+  volume: number;
 }
 
 export interface QuestionItemType {
@@ -14,7 +17,7 @@ export interface QuestionItemType {
 }
 
 export interface QuestionType {
-  id: number;
+  problemId: number;
   problemNum: number;
   type: string;
   title: string;
@@ -22,7 +25,7 @@ export interface QuestionType {
   answer: string;
   point: number;
   problemImgPath: string;
-  items: QuestionItemType[];
+  itemList: QuestionItemType[];
   imgIsEmpty: boolean;
   textIsEmpty: boolean;
 }
