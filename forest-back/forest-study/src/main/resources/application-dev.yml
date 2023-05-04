@@ -22,11 +22,11 @@ spring:
 
   data:
     mongodb:
-      host: localhost
+      host: 13.124.81.117
       port: 27017
       authentication-database: admin
-      username:
-      password:
+      username: root
+      password: B105FOREST
       database: admin
       # uri: mongodb: //546.465.445:27017/qwerqwer
 
