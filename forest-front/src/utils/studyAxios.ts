@@ -31,7 +31,7 @@ studyAxios.interceptors.response.use(
   },
   async (error) => {
     const prevRequest = error?.config;
-    console.log(prevRequest);
+    console.log("dd", document.cookie, prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {

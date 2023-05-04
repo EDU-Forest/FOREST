@@ -15,6 +15,7 @@ import useClassListQuery from "@/apis/class/useClassListQuery";
 import AddClassModal from "../class/teacher/AddClassModal";
 import { IWorkbookBySelf } from "@/types/Workbook";
 import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
+import { openAddWorkBookModal } from "@/stores/editor/editorModal";
 
 export default function EditorSelectDropdown() {
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ export default function EditorSelectDropdown() {
         <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
       )}
 
-      <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
+      <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}>
         + 새 클래스 추가
       </ClassSelectDropdownAdd>
 
