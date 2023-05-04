@@ -67,7 +67,7 @@ function WorkbookDetail() {
           id={workbook?.id}
           cover={workbook?.workbookImgPath}
           title={workbook?.title}
-          desc={workbook?.desc}
+          desc={workbook?.description}
           likeCnt={workbook?.bookmarkCount}
           usedCnt={workbook?.scrapCount}
         />
