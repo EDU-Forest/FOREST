@@ -101,6 +101,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         allowedOrigin.add("localhost");
         allowedOrigin.add("k8b105.p.ssafy.io");
         allowedOrigin.add("k8b105.p.ssafy.io:3000");
+        allowedOrigin.add("k8b105.p.ssafy.io:443");
         configuration.setAllowedOrigins(allowedOrigin);
 
         List<String> allowedHeaders = new ArrayList<>();
