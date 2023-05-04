@@ -6,7 +6,7 @@ import {
   ReactSketchCanvasRef,
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
-import { CanvasBarClose, CanvasDrawSection } from "./Canvas.style";
+import { CanvasDrawSection } from "./Canvas.style";
 
 interface StoredData {
   drawMode: boolean;
@@ -23,6 +23,8 @@ interface Iprops {
 
 export default function Canvas({ storedData }: Iprops) {
   const canvasRef = createRef<ReactSketchCanvasRef>();
+
+  const [nowTab, setNowTab] = useState<string>("");
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
@@ -119,9 +121,6 @@ export default function Canvas({ storedData }: Iprops) {
   //   console.log("pathsToLoad", pathsToLoad);
   return (
     <>
-      <CanvasBarClose>
-        <img src="/icons/icon-72x72.png" style={{ width: "40px" }} onClick={ControlCanvas} />
-      </CanvasBarClose>
       <CanvasBar
         canvasProps={canvasProps}
         setCanvasProps={setCanvasProps}
@@ -132,10 +131,11 @@ export default function Canvas({ storedData }: Iprops) {
         clearHandler={clearHandler}
         ControlCanvas={ControlCanvas}
         isOpenCanvas={isOpenCanvas}
+        nowTab={nowTab}
+        setNowTab={setNowTab}
       />
-
       {isOpenCanvas && (
-        <CanvasDrawSection>
+        <CanvasDrawSection nowTab={nowTab}>
           <ReactSketchCanvas
             ref={canvasRef}
             onChange={onChange}

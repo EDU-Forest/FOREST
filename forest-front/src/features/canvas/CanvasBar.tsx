@@ -18,6 +18,8 @@ interface Iprops {
   clearHandler: () => void;
   ControlCanvas: () => void;
   isOpenCanvas: boolean;
+  nowTab: string;
+  setNowTab: (tab: string) => void;
 }
 
 export default function CanvasBar({
@@ -30,6 +32,8 @@ export default function CanvasBar({
   clearHandler,
   ControlCanvas,
   isOpenCanvas,
+  nowTab,
+  setNowTab,
 }: Iprops) {
   const [isOpenController, setIsOpenController] = useState<boolean>(false);
   const [isPen, setIsPen] = useState<boolean>(false);
@@ -41,8 +45,6 @@ export default function CanvasBar({
 
   const [highlighterColor, setHighlighterColor] = useState<string>("rgba(250, 255, 0, 0.2)");
   const [highlighterWidth, setHighlighterWidth] = useState<number>(10);
-
-  const [nowTab, setNowTab] = useState<string>("");
 
   const openPenController = () => {
     penHandler();

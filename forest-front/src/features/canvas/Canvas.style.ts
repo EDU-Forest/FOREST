@@ -1,14 +1,6 @@
 import { flexBox } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
-const CanvasBarClose = styled.div`
-  width: 50px;
-  height: 50px;
-  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 24px;
-  background-color: white;
-`;
-
 const CanvasBarWrapper = styled.div<{ isOpenController?: boolean; nowTab?: string }>`
   ${flexBox("row", "center", "space-around")}
   position: relative;
@@ -126,12 +118,23 @@ const CanvasWidthSelector = styled.div<{ width?: number }>`
         `}
 `;
 
-const CanvasDrawSection = styled.div`
-  cursor: url(images/pen.png) -40 48, auto;
+const CanvasDrawSection = styled.div<{ nowTab?: string }>`
+  ${({ nowTab }) =>
+    nowTab === "pen"
+      ? css`
+          cursor: url(images/pen.png) -40 48, auto;
+        `
+      : nowTab === "highlighter"
+      ? css`
+          cursor: url(images/highlighter.png) -40 48, auto;
+        `
+      : nowTab === "eraser" &&
+        css`
+          cursor: url(images/eraser.png) -20 20, auto;
+        `}
 `;
 
 export {
-  CanvasBarClose,
   CanvasBarWrapper,
   CanvasSelectorWrapper,
   CanvasSelectorSection,
