@@ -53,9 +53,9 @@ function WorkbookDetail() {
     setQuestionSummary(getQuestionSummary);
 
     // questions가 초기화된 후에 curQuestion 지정
-    // questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 수정
+    // questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
     if (curQuestion === 0 && questions.length !== 0) {
-      setCurQuestion(questions.length);
+      setCurQuestion(1);
     }
   }, [questions]);
 
