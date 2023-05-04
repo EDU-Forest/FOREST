@@ -9,6 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import useDescriptionScoring from "@/apis/class/analysis/useDescriptionScoring";
 
 const dummy = [
   {
@@ -58,12 +59,19 @@ interface ObjType {
   [index: string]: number;
 }
 
-export default function DescriptiveFormAnswer() {
+interface Iprops {
+  studentList?: StudentList[];
+  keywordNum?: number;
+}
+
+export default function DescriptiveFormAnswer({ studentList, keywordNum }: Iprops) {
   const [scoreList, setScoreList] = useState<ObjType>({});
   const { maxScore } = useSelector((state: RootState) => state.analysis);
 
+  const { mutate } = useDescriptionScoring();
+
   useEffect(() => {
-    dummy.map((item, idx) => (scoreList[`score_${idx}`] = 0));
+    studentList?.map((item, idx) => (scoreList[`score_${idx}`] = 0));
   }, []);
 
   const changeScore = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
@@ -93,7 +101,7 @@ export default function DescriptiveFormAnswer() {
           <ResultTableItemSmall isLabel>점수</ResultTableItemSmall>
         </ResultTableList>
         <ResultTableContent>
-          {dummy.map((item, idx) => (
+          {studentList?.map((item, idx) => (
             <ResultTableList key={idx}>
               <ResultTableItemSmall isIdx>{idx + 1}</ResultTableItemSmall>
               <TableItemAnswer>{item.answer}</TableItemAnswer>
@@ -101,7 +109,7 @@ export default function DescriptiveFormAnswer() {
                 <span>{item.similarity}</span> %
               </ResultTableItemSmall>
               <ResultTableItemSmall>
-                <span>{item.keyword}</span>/ {item.allKeyword}
+                <span>{item.sameNum}</span>/ {keywordNum}
               </ResultTableItemSmall>
               <ResultTableItemSmall>
                 <ScoreInput

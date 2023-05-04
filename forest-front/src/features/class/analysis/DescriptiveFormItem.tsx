@@ -19,7 +19,17 @@ const dummy = {
   keyword: ["리액트", "샤브샤브", "커피", "코딩", "집에보내줘", "하하", "졸려", "잠와"],
   score: 10,
 };
-export default function DescriptiveFormItem() {
+
+interface Keyword {
+  keyword: string;
+}
+interface Iprops {
+  title?: string;
+  keywordList?: Keyword[];
+  point?: number;
+}
+
+export default function DescriptiveFormItem({ title, keywordList, point }: Iprops) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,14 +54,14 @@ export default function DescriptiveFormItem() {
             <AiOutlineRight className="icon" />
           </ClassSummaryText>
         </ClassSummaryTextWrapper>
-        <DescriptiveFormUpperTitle>{dummy.title}</DescriptiveFormUpperTitle>
+        <DescriptiveFormUpperTitle>{title}</DescriptiveFormUpperTitle>
       </DescriptiveFormUpperBox>
       <DescriptiveFormUpperBox className="item2">
         <AnalysisSubTitle>핵심 키워드</AnalysisSubTitle>
         <DescriptiveFormUpperItem>
-          {dummy.keyword.map((item, idx) => (
+          {keywordList?.map((item, idx) => (
             <StyledWorkbookStatus key={idx} status="BEFORE">
-              {item}
+              {item.keyword}
             </StyledWorkbookStatus>
           ))}
         </DescriptiveFormUpperItem>
@@ -59,7 +69,7 @@ export default function DescriptiveFormItem() {
       <DescriptiveFormUpperBox className="item3">
         <AnalysisSubTitle>배점</AnalysisSubTitle>
 
-        <DescriptiveFormUpperScore>{dummy.score}</DescriptiveFormUpperScore>
+        <DescriptiveFormUpperScore>{point}</DescriptiveFormUpperScore>
       </DescriptiveFormUpperBox>
     </DescriptiveFormUpper>
   );
