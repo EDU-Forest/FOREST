@@ -1,4 +1,7 @@
 import { QuestionType } from "@/types/Workbook";
+import html2canvas from "html2canvas";
+import jspdf from "jspdf";
+import { useEffect } from "react";
 import {
   StyledQuestionChoiceNumBox,
   StyledQuestionDetailChoiceBox,
@@ -10,9 +13,6 @@ import {
   WorkBookPdfBoxQuestionsBox,
   WorkBookPdfHeaderBox,
 } from "./WorkbookDetail.style";
-import { useEffect } from "react";
-import jspdf from "jspdf";
-import html2canvas from "html2canvas";
 
 interface IProps {
   setIsSavePdf: React.Dispatch<React.SetStateAction<boolean>>;
@@ -227,7 +227,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
 
             {/* 객관식 보기 */}
             <StyledQuestionDetailChoiceListBox>
-              {question.items.map((item) => {
+              {question.itemList.map((item) => {
                 return (
                   <StyledQuestionDetailChoiceBox>
                     <StyledQuestionChoiceNumBox>{item.no}</StyledQuestionChoiceNumBox>

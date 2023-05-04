@@ -42,8 +42,8 @@ function EditorItemImg({ question, curItem }: IProps) {
   };
 
   useEffect(() => {
-    setImgFile(question.items[curItem - 1].content);
-  }, [question.items]);
+    setImgFile(question.itemList[curItem - 1].content);
+  }, [question.itemList]);
 
   return (
     <EditorQuestionImgBox>

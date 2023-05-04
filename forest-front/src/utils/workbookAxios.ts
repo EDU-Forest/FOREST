@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
 import authAxios from "./authAxios";
+import { getLocalStorage, setLocalStorage } from "./localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -16,7 +16,7 @@ workbookAxios.interceptors.request.use(
   (config) => {
     const forestToken = getLocalStorage("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
-      config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
+      config.headers.Authorization = `Bearer ${forestToken}`;
     }
 
     return config;

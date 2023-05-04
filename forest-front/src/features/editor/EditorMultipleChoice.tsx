@@ -23,7 +23,7 @@ function EditorMultipleChoice({ question, curQuestion }: IProps) {
     const copyArr = [...questions];
     copyArr.splice(curQuestion - 1, 1, {
       ...questions[curQuestion - 1],
-      items: items,
+      itemList: items,
     });
 
     dispatch(setQuestions([...copyArr]));
@@ -52,12 +52,17 @@ function EditorMultipleChoice({ question, curQuestion }: IProps) {
   };
 
   useEffect(() => {
-    setItems([...question.items]);
+    setItems([...question.itemList]);
   }, [question]);
 
   return (
     <>
-      <EditorQuestionChoiceList question={question} items={items} setItems={setItems} itemChange={itemChange} />
+      <EditorQuestionChoiceList
+        question={question}
+        items={items}
+        setItems={setItems}
+        itemChange={itemChange}
+      />
       <EditorQuestionItemAddButton onClick={handleClickItemAdd}>
         <div>+</div>
         보기 추가
