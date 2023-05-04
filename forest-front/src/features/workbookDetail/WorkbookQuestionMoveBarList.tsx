@@ -51,6 +51,8 @@ function WorkbookQuestionMoveBarList({
     draggingItemIndex.current = draggingOverItemIndex.current;
     draggingOverItemIndex.current = -1; //5
     setQuestionSum(copyListItems);
+
+    console.log(questionSumm)
   };
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {

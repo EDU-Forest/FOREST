@@ -12,9 +12,11 @@ import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideRetu
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
 import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
 import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
+import { RootState } from "@/stores/store";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
 export async function getServerSideProps({ params: { wId } }: { params: { wId: string } }) {
@@ -27,9 +29,12 @@ function WorkbookDetail() {
   const router = useRouter();
   const wId = router.query.wId;
 
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+  const { questions } = useSelector((state: RootState) => state.editQuestions);
+
   const {
-    data: { workbookInfoDto: workbook } = { workbookInfoDto: [] },
-    data: { problemList: questions } = { problemList: [] },
+    // data: { workbookInfoDto: workbook } = { workbookInfoDto: [] },
+    // data: { problemList: questions } = { problemList: [] },
   } = useWorkbookDetailQuery(Number(wId));
 
   // 현재 문제
@@ -49,13 +54,21 @@ function WorkbookDetail() {
     });
   };
 
+  const getCurQuestionIdx = (): number => {
+    return questions.findIndex((question) => question.problemId === curQuestion);
+  };
+
+  useEffect(() => {
+    getCurQuestionIdx();
+  }, [curQuestion]);
+
   useEffect(() => {
     setQuestionSummary(getQuestionSummary);
 
     // questions가 초기화된 후에 curQuestion 지정
     // questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
     if (curQuestion === 0 && questions.length !== 0) {
-      setCurQuestion(1);
+      setCurQuestion(questions[0].problemId);
     }
   }, [questions]);
 
@@ -64,7 +77,7 @@ function WorkbookDetail() {
       <WorkbookSideReturn />
       <WorkbookDetailQuestionOverviewAndContentBox>
         <WorkbookDetailInfoOverview
-          id={workbook?.id}
+          id={workbook?.workbookId}
           cover={workbook?.workbookImgPath}
           title={workbook?.title}
           desc={workbook?.description}
@@ -72,14 +85,14 @@ function WorkbookDetail() {
           usedCnt={workbook?.scrapCount}
         />
         <WorkbookDetailQuestion
-          question={questions[curQuestion - 1]} /* 현재 선택된 문제 */
+          question={questions[getCurQuestionIdx()]} /* 현재 선택된 문제 */
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
           questionSumm={questionSummary}
         />
       </WorkbookDetailQuestionOverviewAndContentBox>
       <WorkbookDetailQuestionBtnAndVisibilityBox>
-        <WorkbookDetailBtns setIsExportOpen={setIsExportOpen} />
+        <WorkbookDetailBtns setIsExportOpen={setIsExportOpen} questionSummary={questionSummary} />
         <WorkbookDetailQuestionList
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}
