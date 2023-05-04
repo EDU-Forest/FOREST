@@ -36,7 +36,7 @@ workbookAxios.interceptors.response.use(
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
-        const { token } = response.data;
+        const { token } = response.data.data;
         return token;
       };
       const accessToken = await newAccessToken();

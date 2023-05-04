@@ -37,7 +37,7 @@ authAxios.interceptors.response.use(
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
         console.log(response);
-        const { token } = response.data;
+        const { token } = response.data.data;
 
         return token;
       };
