@@ -15,7 +15,7 @@ import { closeAddClassModal } from "@/stores/class/classModal";
 import useCheckClassNameQuery from "@/apis/class/teacher/useCheckClassNameQuery";
 import useClassAdd from "@/apis/class/teacher/useClassAdd";
 
-export default function AddClassModal() {
+export default function AddWorkbookModal() {
   const dispatch = useDispatch();
   const [workbookTitle, setWorkbookTitle] = useState<string>("");
 
