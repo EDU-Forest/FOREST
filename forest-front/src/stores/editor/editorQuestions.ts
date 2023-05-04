@@ -10,7 +10,7 @@ interface editorQuestions {
 const initialState: editorQuestions = {
   questions: [
     {
-      id: 0,
+      problemId: 0,
       problemNum: 0,
       type: "",
       title: "",
@@ -20,7 +20,7 @@ const initialState: editorQuestions = {
       problemImgPath: "",
       imgIsEmpty: false, 
       textIsEmpty: false, 
-      items: [
+      itemList: [
         {
           id: 0,
           no: 1,
