@@ -23,7 +23,7 @@ function useEditor() {
   };
 
   const toChangeItem = (payload: IItem, curItem: number) => {
-    const copyItemsArr = [...questions[curQuestion - 1].items];
+    const copyItemsArr = [...questions[curQuestion - 1].itemList];
     copyItemsArr.splice(curItem - 1, 1, {
       ...copyItemsArr[curItem - 1],
       ...payload,
