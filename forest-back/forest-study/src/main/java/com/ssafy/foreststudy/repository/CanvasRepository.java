@@ -8,4 +8,5 @@ public interface CanvasRepository extends MongoRepository<Canvas, String> {
 
     Canvas findAllByStudentStudyProblemId(Long studentStudyProblemId);
 
+    void deleteCanvasByStudentStudyProblemId(Long studentStudyProblemId);
 }
