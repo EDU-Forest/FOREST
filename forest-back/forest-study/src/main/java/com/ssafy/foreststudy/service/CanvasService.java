@@ -34,10 +34,7 @@ public class CanvasService {
         /* 존재하지 않는 개인 시험 문제 결과 ID 체크 */
 //        StudentStudyProblemResult studentStudyProblemResult = studentStudyProblemResultRepository.findAllById(studentStudyProblem.getStudentStudyProblemId())
 //                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_PROBLEM_NOT_FOUND));
-
-        Canvas cv = canvasRepository.findAllByStudentStudyProblemId(canvas.getStudentStudyProblemId());
-        if (cv != null)
-            canvasRepository.deleteCanvasByStudentStudyProblemId(canvas.getStudentStudyProblemId());
+        canvasRepository.deleteCanvasByStudentStudyProblemId(canvas.getStudentStudyProblemId());
 
 
         canvasRepository.save(canvas);
