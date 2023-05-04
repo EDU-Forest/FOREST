@@ -21,10 +21,10 @@ public class SignupSocialRequestDto {
     @NotNull(message = "전화번호는 필수 값입니다!!")
     @NotBlank(message = "전화번호가 빈 문자열입니다!!")
     private String phone;
-    @ValidDate(message = "8자리의 yyyy-MM-dd 형식이어야 합니다.", pattern = "yyyy-MM-dd")
+//    @ValidDate(message = "8자리의 yyyy-MM-dd 형식이어야 합니다.", pattern = "yyyy-MM-dd")
     private LocalDate birth;
-    @ValidEnum(enumClass = EnumUserRoleStatus.class)
+//    @ValidEnum(enumClass = EnumUserRoleStatus.class)
     private EnumUserRoleStatus role;
-    @ValidEnum(enumClass = EnumUserProviderStatus.class)
+//    @ValidEnum(enumClass = EnumUserProviderStatus.class)
     private EnumUserProviderStatus provider;
 }
