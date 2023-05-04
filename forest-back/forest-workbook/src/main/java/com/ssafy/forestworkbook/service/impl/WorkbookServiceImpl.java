@@ -812,7 +812,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .workbookId(workbook.getId())
                     .title(workbook.getTitle())
                     .workbookImgPath(workbook.getWorkbookImg().getPath())
-                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
+                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                     .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
                     .methodType((userWorkbook == null) ? "POST" : "FATCH")
                     .isScraped((userWorkbook == null) ? false : userWorkbook.getIsScraped())
