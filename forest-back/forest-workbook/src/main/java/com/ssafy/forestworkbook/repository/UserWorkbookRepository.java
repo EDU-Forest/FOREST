@@ -14,5 +14,6 @@ public interface UserWorkbookRepository extends JpaRepository<UserWorkbook, Long
     int countByWorkbookIdAndIsBookmarkedIsTrue(Long workbookId);
     int countByWorkbookIdAndIsScrapedIsTrue(Long workbookId);
     Optional<UserWorkbook> findByUserIdAndWorkbookId(Long userId, Long workbookId);
+    Optional<Boolean> findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(Long userId, Long workbookId);
 
 }

@@ -54,6 +54,9 @@ dependencies {
     // Mattermost & jwt decode
     implementation 'com.github.lmghee:forest-noti:60d98a7d18'
 
+    // google vision
+    implementation 'com.google.cloud:google-cloud-vision:3.13.0'
+
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'

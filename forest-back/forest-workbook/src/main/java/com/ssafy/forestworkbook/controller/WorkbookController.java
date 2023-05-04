@@ -206,7 +206,7 @@ public class WorkbookController {
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("{}", userId);
 //        userId = Long.valueOf(10);
-        return workbookService.createBookmark(userId, workbookId, true);
+        return workbookService.createBookmark(userId, workbookId, false);
     }
 
     @DeleteMapping("/bookmark/{workbookId}")

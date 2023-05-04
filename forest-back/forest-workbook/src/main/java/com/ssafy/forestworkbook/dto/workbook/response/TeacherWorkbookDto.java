@@ -13,20 +13,16 @@ public class TeacherWorkbookDto {
     private Boolean isOriginal;
     private String title;
     private String workbookImgPath;
+    private Boolean isBookmarked;
     private int bookmarkCount;
     private int scrapCount;
 
 
     @Builder
-    public TeacherWorkbookDto(Long workbookId, Boolean isOriginal, String title, String workbookImgPath, int bookmarkCount, int scrapCount) {
-        Assert.notNull(workbookId, "workbookId must not be null");
-        Assert.notNull(title, "title must not be null");
-        Assert.notNull(workbookId, "workbookId must not be null");
-        Assert.notNull(bookmarkCount, "bookmarkCount must not be null");
-        Assert.notNull(scrapCount, "scrapCount must not be null");
-
+    public TeacherWorkbookDto(Long workbookId, Boolean isOriginal, Boolean isBookmarked, String title, String workbookImgPath, int bookmarkCount, int scrapCount) {
         this.workbookId = workbookId;
         this.isOriginal = isOriginal;
+        this.isBookmarked = isBookmarked;
         this.title = title;
         this.workbookImgPath = workbookImgPath;
         this.bookmarkCount = bookmarkCount;
