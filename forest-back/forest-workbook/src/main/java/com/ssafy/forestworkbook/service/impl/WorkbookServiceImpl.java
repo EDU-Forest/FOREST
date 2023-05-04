@@ -102,6 +102,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         // HOMEWORK
         else if (search.equals("homework")) {
             List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.HOMEWORK);
+            studyToDto(studyList, classWorkbookDtoList);
         }
 
         // SELF
@@ -258,17 +259,22 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        // 북마크 삭제
+        // 내 문제집이 아닌 경우 - 북마크 삭제
         if (user.getId() != workbook.getCreator().getId()) {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
             userWorkbook.updateIsBookmarked(false);
-//            userWorkbook.updateIsScraped(false);
+            userWorkbook.updateIsScraped(false);
         }
 
-        // 내 문제집 삭제
+        // 내 문제집인 경우 - 삭제, 유저 북마크 전체 삭제
         else {
             workbookRepository.deleteById(workbookId);
+            List<UserWorkbook> userWorkbookList = userWorkbookRepository.findAllByWorkbookId(workbookId);
+            for (UserWorkbook userWorkbook : userWorkbookList) {
+                userWorkbook.updateIsScraped(false);
+                userWorkbook.updateIsBookmarked(false);
+            }
         }
 
         // TODO 만약 출제한 문제집이면...?
@@ -660,7 +666,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(problemList.getWorkbook().getId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        if (workbook.getIsExecuted() || workbook.getIsDeploy()) {
+        if (workbook.getIsExecuted() || workbook.getIsDeploy() || workbook.getIsDeleted()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DELETE_PROBLEM);
         }
 
