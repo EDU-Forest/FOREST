@@ -7,29 +7,12 @@ import { dateToMinute, dateToSecond } from "@/utils";
 
 interface Iprops {
   page: string;
+  minutes: number;
+  seconds: number;
 }
 
-export default function TestHeaderRightContentBox({ page }: Iprops) {
+export default function TestHeaderRightContentBox({ page, minutes, seconds }: Iprops) {
   const { volume, startTime, endTime } = useSelector((state: RootState) => state.exam);
-  const [minutes, setMinutes] = useState(dateToMinute(new Date(), endTime));
-  const [seconds, setSeconds] = useState(dateToSecond(new Date(), endTime) % 60);
-
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds <= 0) {
-        if (minutes <= 0) {
-          clearInterval(countdown);
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        }
-      }
-    }, 1000);
-    return () => clearInterval(countdown);
-  }, [minutes, seconds]);
 
   return (
     <StyledTestHeaderContentBox>

@@ -8,16 +8,23 @@ import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setChooseAnswer } from "@/stores/exam/exam";
 
-interface Iprops {
+interface Iprops extends IStudyTimeLimit {
   idx: number;
   text: string;
   isSelected: boolean;
 }
 
-export default function TestProblemAnswerNumber({ isSelected, idx, text }: Iprops) {
+export default function TestProblemAnswerNumber({
+  isSelected,
+  idx,
+  text,
+  minutes,
+  seconds,
+}: Iprops) {
   const dispatch = useDispatch();
   const { curProblemNum } = useSelector((state: RootState) => state.exam);
   const chooseAnswer = () => {
+    if (minutes <= 0 && seconds <= 0) return;
     dispatch(setChooseAnswer({ problemNum: curProblemNum, userAnswer: `${idx + 1}` }));
   };
 
