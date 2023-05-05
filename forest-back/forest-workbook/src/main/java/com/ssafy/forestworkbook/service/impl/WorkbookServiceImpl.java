@@ -1,5 +1,7 @@
 package com.ssafy.forestworkbook.service.impl;
 
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -14,15 +16,19 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -42,6 +48,10 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ClassRepository classRepository;
     private final ClassStudyResultRepository classStudyResultRepository;
     private final ResponseUtil responseUtil;
+
+    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+    private String bucketName;
+    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -380,9 +390,9 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        // 배포 했는데 비공개인 경우 공개 여부 변경
+        // 배포 했는 경우
         if (workbook.getIsExecuted() && workbook.getIsPublic()) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DEPLOY);
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_ALREADY_DEPLOY);
         }
 
         workbook.changeIsPublic(true);
@@ -397,10 +407,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         // 1. 문제집 만들기
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 스크랩 불가능 -> 사본 생성 불가능
-        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
+        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
 
         Workbook workbookCopy = Workbook.builder()
@@ -425,6 +436,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 2. 문제 만들기
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
+
         // 문제 복사 리스트
         List<Problem> problems = new ArrayList();
         List<Integer> problemNumList = new ArrayList<>();
@@ -650,6 +662,26 @@ public class WorkbookServiceImpl implements WorkbookService {
         workbook.updateVolume(problemUpdateInfoDto.getProblemList().size());
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CREATE);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException {
+        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+
+        // Cloud에 이미지 업로드
+        BlobInfo blobInfo = storage.create(
+                BlobInfo.newBuilder(bucketName, uuid)
+                        .setContentType(ext)
+                        .build(),
+                file.getInputStream()
+        );
+
+        ImagePathDto imagePathDto = ImagePathDto.builder()
+                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
+                .build();
+
+        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
     @Override

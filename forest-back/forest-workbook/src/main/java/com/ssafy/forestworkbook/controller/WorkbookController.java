@@ -13,8 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 @Api("Workbook Controller")
@@ -171,6 +173,18 @@ public class WorkbookController {
         log.info("{}", userId);
 //        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
+    }
+
+    @PatchMapping("/problem/img")
+    @ApiOperation(value = "문제 이미지 등록하기", notes = "문제 이미지를 등록합니다.")
+    public ResponseSuccessDto<?> createProblemImg(
+            HttpServletRequest request,
+            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
+        return workbookService.createProblemImg(userId, file);
     }
 
     @DeleteMapping ("/problem/{problemId}")
