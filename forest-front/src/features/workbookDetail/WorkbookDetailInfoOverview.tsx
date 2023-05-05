@@ -83,15 +83,17 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {usedCnt}
               </div>
             </StyledWorkbookReactionBtnsBox>
-            <div>
-              {isEditing ? (
-                <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
-              ) : (
-                <StyledTextBtn onClick={handleClickEditing}>수정</StyledTextBtn>
-              )}
-              <span>|</span>
-              <StyledTextBtn>삭제</StyledTextBtn>
-            </div>
+            {workbook.isOriginal && (
+              <div>
+                {isEditing ? (
+                  <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
+                ) : (
+                  <StyledTextBtn onClick={handleClickEditing}>수정</StyledTextBtn>
+                )}
+                <span>|</span>
+                <StyledTextBtn>삭제</StyledTextBtn>
+              </div>
+            )}
           </StyledWorkbookBtnsBox>
           <StyledWorkbookDetailDescBox isFolded={isFolded}>
             {isEditing ? (

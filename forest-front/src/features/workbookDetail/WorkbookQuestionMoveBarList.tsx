@@ -2,6 +2,8 @@ import { QuestionSummType } from "@/types/Workbook";
 import { useRef } from "react";
 import { StyledWorkbookQuestionMoveBarListBox } from "./WorkbookDetail.style";
 import WorkbookQuestionMoveBar from "./WorkbookQuestionMoveBar";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface IProps {
   questionSumm: QuestionSummType[];
@@ -16,6 +18,8 @@ function WorkbookQuestionMoveBarList({
   curQuestion,
   setCurQuestion,
 }: IProps) {
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+
   const handleClickMoveBar = (id: number) => {
     setCurQuestion(id);
   };
@@ -51,8 +55,6 @@ function WorkbookQuestionMoveBarList({
     draggingItemIndex.current = draggingOverItemIndex.current;
     draggingOverItemIndex.current = -1; //5
     setQuestionSum(copyListItems);
-
-    console.log(questionSumm)
   };
 
   const onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -72,9 +74,9 @@ function WorkbookQuestionMoveBarList({
         <div
           key={question.id}
           onClick={() => handleClickMoveBar(question.id)}
-          onDragStart={(e) => onDragStart(e, i)}
-          onDragEnter={(e) => onDragEnter(e, i)}
-          onDragEnd={(e) => onDragEnd(e)}
+          onDragStart={(e) => workbook.isOriginal && onDragStart(e, i)}
+          onDragEnter={(e) => workbook.isOriginal && onDragEnter(e, i)}
+          onDragEnd={(e) => workbook.isOriginal && onDragEnd(e)}
           draggable
         >
           <WorkbookQuestionMoveBar

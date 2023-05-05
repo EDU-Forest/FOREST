@@ -2,6 +2,8 @@ import { QuestionSummType } from "@/types/Workbook";
 import { AiOutlineHolder } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import { StyledWorkbookQuestionMoveBar } from "./WorkbookDetail.style";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface IProps {
   num: number;
@@ -20,6 +22,8 @@ function WorkbookQuestionMoveBar({
   setQuestionSum,
   setCurQuestion,
 }: IProps) {
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+
   const handleClickDelete = (e: any) => {
     e.stopPropagation();
     
@@ -43,10 +47,10 @@ function WorkbookQuestionMoveBar({
 
   return (
     <StyledWorkbookQuestionMoveBar isSelected={isSelected} draggable>
-      <AiOutlineHolder />
+      {workbook.isOriginal && <AiOutlineHolder />}
       <span>{num}.&nbsp;</span>
       <span>{question?.title}</span>
-      <FaTrashAlt onClick={handleClickDelete} />
+      {workbook.isOriginal && <FaTrashAlt onClick={handleClickDelete} />}
     </StyledWorkbookQuestionMoveBar>
   );
 }
