@@ -5,7 +5,7 @@ interface IData {
   workbookId: string;
   problemList: {
     problemNo: string;
-    type: string; 
+    type: string;
     title: string;
     path: string;
     text: string;
@@ -29,9 +29,7 @@ const fetcher = async (data: IData) =>
 
 const useSaveEditedWorkbookPost = () => {
   return useMutation(fetcher, {
-    onSuccess: (data) => {
-      console.log("저장 성공 post", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 
