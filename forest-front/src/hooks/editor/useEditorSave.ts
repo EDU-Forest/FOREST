@@ -7,10 +7,11 @@ function useEditorSave() {
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { deleteAnswers } = useSelector((state: RootState) => state.editQuestions);
   const { data: res, mutate: saveApi } = useSaveEditedWorkbookPost();
+  const { curWorkbookIdx, workbooksBySelf } = useSelector(
+    (state: RootState) => state.editorWorkbook,
+  );
 
-  // dummy id
-  const id = 1;
-  const workbookId: string = id.toString();
+  const workbookId: string = workbooksBySelf[curWorkbookIdx].workbookId.toString();
   const problemList = questions.map((question: QuestionType, i) => {
     return {
       problemNo: (i + 1).toString(),
