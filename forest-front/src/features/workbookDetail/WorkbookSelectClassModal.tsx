@@ -92,8 +92,6 @@ function WorkbookSelectClassModal({
     if (selectedClass.length >= 1) {
       setIsOpen(false);
       setIsSettingOpen(true);
-      // 선택 클래스 초기화
-      setSelectedClass([]);
     }
   };
 
