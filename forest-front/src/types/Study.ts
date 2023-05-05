@@ -9,6 +9,8 @@ interface IStudyInfo {
 }
 
 interface IStudyModal {
+  minutes: number;
+  seconds: number;
   toggleModal: boolean;
   setToggleModal: (toggleModal: boolean) => void;
 }
@@ -29,4 +31,9 @@ interface IStudyResult {
   volume: number;
   startTime: Date;
   endTime: Date;
+}
+
+interface IStudyTimeLimit {
+  minutes: number;
+  seconds: number;
 }
