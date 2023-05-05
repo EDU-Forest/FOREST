@@ -6,6 +6,7 @@ import { MdOutlineFileCopy, MdOutlineFileUpload, MdSave } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import { StyledWorkbookDetailBtnsBox, WorkbookSaveBtn } from "./WorkbookDetail.style";
+import useWorkbookCopyPostQuery from "@/apis/workbookDetail/useWorkbookDetailCopyQuery";
 
 interface IProps {
   setIsExportOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
   const { questions } = useSelector((state: RootState) => state.editQuestions);
 
   const { isLoading, mutate: saveWorkbookApiCall } = useWorkbookDetailSaveQuery();
+  const { mutate: copyWorkbookApiCall } = useWorkbookCopyPostQuery(workbook.workbookId);
 
   const handleClickSave = () => {
     const workbookInfo = {
@@ -46,6 +48,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
 
   const handleClickCopy = () => {
     // copy api call
+    copyWorkbookApiCall()
   };
 
   const handleClickExport = () => {

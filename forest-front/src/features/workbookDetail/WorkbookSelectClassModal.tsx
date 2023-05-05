@@ -6,6 +6,7 @@ import {
   WorkbookClassModalFooterBox,
   WorkbookSelectClassModalBox,
 } from "./WorkbookModal.style";
+import useClassListQuery from "@/apis/class/useClassListQuery";
 
 interface ClassType {
   classId: number;
@@ -25,44 +26,51 @@ function WorkbookSelectClassModal({
   setSelectedClass,
 }: IProps) {
   // dummy
-  const classes = [
-    {
-      classId: 1,
-      name: "A반",
-    },
-    {
-      classId: 2,
-      name: "B반",
-    },
-    {
-      classId: 3,
-      name: "C반",
-    },
-    {
-      classId: 4,
-      name: "A반",
-    },
-    {
-      classId: 5,
-      name: "B반",
-    },
-    {
-      classId: 6,
-      name: "C반",
-    },
-    {
-      classId: 7,
-      name: "A반",
-    },
-    {
-      classId: 8,
-      name: "B반",
-    },
-    {
-      classId: 9,
-      name: "C반",
-    },
-  ];
+  // const classes = [
+  //   {
+  //     classId: 1,
+  //     name: "A반",
+  //   },
+  //   {
+  //     classId: 2,
+  //     name: "B반",
+  //   },
+  //   {
+  //     classId: 3,
+  //     name: "C반",
+  //   },
+  //   {
+  //     classId: 4,
+  //     name: "A반",
+  //   },
+  //   {
+  //     classId: 5,
+  //     name: "B반",
+  //   },
+  //   {
+  //     classId: 6,
+  //     name: "C반",
+  //   },
+  //   {
+  //     classId: 7,
+  //     name: "A반",
+  //   },
+  //   {
+  //     classId: 8,
+  //     name: "B반",
+  //   },
+  //   {
+  //     classId: 9,
+  //     name: "C반",
+  //   },
+  // ];
+
+  const classInit = {
+    classId: 0,
+    className: "",
+  };
+
+  const { data: classes = [classInit] } = useClassListQuery();
 
   const handleClickCancel = () => {
     setIsOpen(false);
@@ -96,16 +104,20 @@ function WorkbookSelectClassModal({
   return (
     <WorkbookSelectClassModalBox>
       <p>출제할 클래스를 선택해주세요.</p>
-      <WorkbookClassBtnsBox>
-        {classes.map((classItem) => (
-          <WorkbookClassBtn
-            onClick={() => handleClickClass(classItem.classId)}
-            isSelected={isSelected(classItem.classId)}
-          >
-            {classItem.name}
-          </WorkbookClassBtn>
-        ))}
-      </WorkbookClassBtnsBox>
+      {classes.length === 0 ? (
+        <p>클래스가 없습니다</p>
+      ) : (
+        <WorkbookClassBtnsBox>
+          {classes.map((classItem: ClassList) => (
+            <WorkbookClassBtn
+              onClick={() => handleClickClass(classItem.classId)}
+              isSelected={isSelected(classItem.classId)}
+            >
+              {classItem.className}
+            </WorkbookClassBtn>
+          ))}
+        </WorkbookClassBtnsBox>
+      )}
       <WorkbookClassModalFooterBox>
         <p>총 {selectedClass.length}개의 클래스가 선택되었습니다.</p>
         <ModalBtnsBox>
