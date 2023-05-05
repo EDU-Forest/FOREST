@@ -8,12 +8,19 @@ import {
 
 interface IProps {
   type: string;
+  startTime: any;
+  setStartTime: any;
+  endTime: any;
+  setEndTime: any;
 }
 
-function WorkbookSettingModalInputs({ type }: IProps) {
-  const [startTime, setStartTime] = useState<string>();
-  const [endTime, setEndTime] = useState<string>();
-
+function WorkbookSettingModalInputs({
+  type,
+  startTime,
+  setStartTime,
+  endTime,
+  setEndTime,
+}: IProps) {
   const handleChangeStartTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStartTime(e.target.value);
   };

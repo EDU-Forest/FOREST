@@ -14,9 +14,16 @@ interface IProps {
   curQuestion: number;
   setCurQuestion: React.Dispatch<React.SetStateAction<number>>;
   questionSumm: QuestionSummType[];
+  isOriginal: boolean;
 }
 
-function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questionSumm }: IProps) {
+function WorkbookDetailQuestion({
+  question,
+  curQuestion,
+  setCurQuestion,
+  questionSumm,
+  isOriginal,
+}: IProps) {
   const [curQuestionNum, setCurQuestionNum] = useState(1);
 
   const getQuestionNum = (): void => {
@@ -27,6 +34,10 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
     }
   };
 
+  const handleClickEdit = () => {
+    
+  }
+
   useEffect(() => {
     getQuestionNum();
   }, [questionSumm, curQuestion]);
@@ -36,7 +47,8 @@ function WorkbookDetailQuestion({ question, curQuestion, setCurQuestion, questio
       <StyledQuestionDetailTitleBox>
         <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
         <span>{question?.title}</span>
-        <StyledTextBtn>수정</StyledTextBtn>
+        {/* 내가 원작자여야만 수정 가능 */}
+        {isOriginal && <StyledTextBtn>수정</StyledTextBtn>} 
       </StyledQuestionDetailTitleBox>
 
       {/* 지문이 있다면 지문 렌더링 */}

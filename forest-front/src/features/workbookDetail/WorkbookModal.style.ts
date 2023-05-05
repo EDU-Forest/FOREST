@@ -173,6 +173,7 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
     width: 100%;
     border: none;
     outline: none;
+    background: transparent;
 
     :disabled {
       background: transparent;

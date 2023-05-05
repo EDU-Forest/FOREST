@@ -2,6 +2,8 @@ import { QuestionSummType } from "@/types/Workbook";
 import { StyledWorkbookDetailQuestionListBox } from "./WorkbookDetail.style";
 import WorkbookDetailQuestionListContent from "./WorkbookDetailQuestionListContent";
 import WorkbookDetailQuestionVisibility from "./WorkbookDetailQuestionVisibility";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface IProps {
   questionCnt: number;
@@ -18,9 +20,11 @@ function WorkbookDetailQuestionList({
   curQuestion,
   setCurQuestion,
 }: IProps) {
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+
   return (
     <StyledWorkbookDetailQuestionListBox>
-      <WorkbookDetailQuestionVisibility />
+      {workbook.isOriginal && <WorkbookDetailQuestionVisibility />}
       <WorkbookDetailQuestionListContent
         questionCnt={questionCnt}
         questionSumm={questionSumm}
