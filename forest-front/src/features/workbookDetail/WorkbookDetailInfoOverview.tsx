@@ -58,6 +58,8 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const handleClickImgEdit = () => {
     setIsOpenImgEdit(true);
   };
+  const handleClickDelete = () => {
+  };
 
   useEffect(() => {
     setEditedImg(`/images/Workbook_Type_${selectedImg}.png`);
