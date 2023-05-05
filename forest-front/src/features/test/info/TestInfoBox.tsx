@@ -8,11 +8,12 @@ import {
 } from "./TestInfo.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { dateToMinute } from "@/utils";
 
 export default function TestInfoBox() {
   const router = useRouter();
 
-  const { presenter, startTime, endTime, volume } = useSelector((state: RootState) => state.exam);
+  const { userName, startTime, endTime, volume } = useSelector((state: RootState) => state.exam);
 
   const studyId = router.query?.studyId;
   useGetStudyInfo({
@@ -21,9 +22,9 @@ export default function TestInfoBox() {
 
   const labels = ["출제자", "문항 수", "제한시간"];
   const testInfoData = [
-    presenter,
+    userName,
     `${volume} 문항`,
-    startTime && endTime ? `${endTime} 분` : "제한시간 없음",
+    startTime && endTime ? `${dateToMinute(startTime, endTime)} 분` : "제한시간 없음",
   ];
 
   return (

@@ -9,20 +9,34 @@ import {
   ClassSelectCircle,
   ClassSelectNoClass,
 } from "../class/ClassSelect.style";
-import { setClass } from "@/stores/class/classInfo";
-import { openAddClassModal } from "@/stores/class/classModal";
-import useClassListQuery from "@/apis/class/useClassListQuery";
-import AddClassModal from "../class/teacher/AddClassModal";
-import { IWorkbookBySelf } from "@/types/Workbook";
 import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 import { openAddWorkBookModal } from "@/stores/editor/editorModal";
+import { useEffect } from "react";
 
-export default function EditorSelectDropdown() {
+interface Iprops {
+  setControlDropdown: (controlDropdown: boolean) => void;
+}
+
+export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
-  const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
   const { curWorkbookIdx, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
+
+  useEffect(() => {
+    console.log(curWorkbookIdx, workbooksBySelf);
+  }, []);
+
+  const addWorkbookHandler = () => {
+    dispatch(openAddWorkBookModal());
+    setControlDropdown(false);
+  };
+
+  const selectWorkbookHandler = (idx: number) => {
+    dispatch(setSelectWorkbook(idx));
+    setControlDropdown(false);
+  };
+
   return (
     <ClassSelectDropdownContainer>
       {workbooksBySelf?.length > 0 ? (
@@ -30,23 +44,20 @@ export default function EditorSelectDropdown() {
           <ClassSelectDropdownEach>
             {workbooksBySelf?.map((item, idx) => (
               <ClassSelectDropdownEachItem
-                key={item.workbookId}
-                onClick={() => dispatch(setSelectWorkbook(idx))}
+                key={`workbook-${idx}`}
+                onClick={() => selectWorkbookHandler(idx)}
               >
-                {item.workbookId === curWorkbookIdx && <ClassSelectCircle />} {item.workbookTitle}
+                {idx === curWorkbookIdx && <ClassSelectCircle />} {item.title}
               </ClassSelectDropdownEachItem>
             ))}
           </ClassSelectDropdownEach>
         </>
       ) : (
-        <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
+        <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
       )}
 
-      <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}>
-        + 새 클래스 추가
-      </ClassSelectDropdownAdd>
-
-      {isOpenAddClassModal && <AddClassModal />}
+      {/* <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}> */}
+      <ClassSelectDropdownAdd onClick={addWorkbookHandler}>+ 새 문제집 추가</ClassSelectDropdownAdd>
     </ClassSelectDropdownContainer>
   );
 }

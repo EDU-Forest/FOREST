@@ -18,6 +18,7 @@ import { Container, FullScreen } from "@/styles/container";
 import { useSelector } from "react-redux";
 import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
 import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
+import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -26,9 +27,11 @@ export default function Editor() {
 
   const [workbooksBySelf, setWorkbooksBySelf] = useState<IWorkbookBySelf[]>();
   const [selectQuestionType, setSelectQuestionType] = useState("");
+  const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
+
   // const [questions, setQuestions] = useState<QuestionType[]>([]);
 
-  useGetWorkbooksBySelf({ setWorkbooksBySelf });
+  useGetWorkbooksBySelf();
 
   // 현재 문제집 id가 dummy. 추후 수정
   const {} = useWorkbookDetailQuery(Number(1));
@@ -41,6 +44,7 @@ export default function Editor() {
   return (
     <FullScreen>
       <EditorNav setSelectQuestionType={setSelectQuestionType} />
+      {isOpenAddWorkbookModal && <AddWorkbookModal />}
       <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
           <EditorTitle />

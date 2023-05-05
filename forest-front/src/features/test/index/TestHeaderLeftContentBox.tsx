@@ -11,7 +11,7 @@ interface Iprops {
 }
 
 export default function TestHeaderLeftContentBox({ page, setToggleModal }: Iprops) {
-  const { examTitle } = useSelector((state: RootState) => state.exam);
+  const { studyName } = useSelector((state: RootState) => state.exam);
   const router = useRouter();
 
   const clickHandler = () => {
@@ -23,7 +23,7 @@ export default function TestHeaderLeftContentBox({ page, setToggleModal }: Iprop
     <StyledTestHeaderContentBox>
       {/* 시험일 경우 경고 모달, 자습일 경우 저장 모달? */}
       {page !== "result" && <AiOutlineArrowLeft className="icon" onClick={clickHandler} />}
-      <StyledTestHeaderTitle>{examTitle}</StyledTestHeaderTitle>
+      <StyledTestHeaderTitle>{studyName}</StyledTestHeaderTitle>
     </StyledTestHeaderContentBox>
   );
 }

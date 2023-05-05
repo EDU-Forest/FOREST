@@ -67,6 +67,16 @@ const TestResultTotalContentGraphBox = styled.div`
 const TestResultTotalContentDetailLeftItemBox = styled.div`
   display: flex;
 `;
+const TestResultTotalContentDetailRightItemBox = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  > p:first-child {
+    font-weight: 700;
+    margin-right: 0.25rem;
+    font-size: 1rem;
+  }
+`;
 
 const TestResultLabelText = styled.div`
   font-size: 1rem;
@@ -80,7 +90,6 @@ const TestResultQuestionBox = styled.div`
   background-color: white;
   border-radius: 1rem;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
-  margin-bottom: 40px;
 `;
 
 const TestResultTitleBox = styled.div`
@@ -109,7 +118,6 @@ const TestResultOkBtn = styled(StyledTestCommonBtn)`
 const TestResultContentBox = styled.div`
   margin: 3.75rem 6rem;
   width: 30rem;
-  height: 12rem;
 `;
 
 const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
@@ -176,6 +184,7 @@ export {
   TestResultTotalContentDetailBox,
   TestResultTotalContentDetailItemBox,
   TestResultTotalContentDetailLeftItemBox,
+  TestResultTotalContentDetailRightItemBox,
   TestResultTotalContentGraphBox,
   TestResultLabelText,
   TestResultQuestionBox,

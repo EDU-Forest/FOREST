@@ -3,7 +3,6 @@ import TestHeader from "@/features/test/index/TestHeader";
 import { StyledTestContainer } from "@/features/test/index/TextIndex.style";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestEndModal from "@/features/test/index/TestEndModal";
 
 export default function Test() {
