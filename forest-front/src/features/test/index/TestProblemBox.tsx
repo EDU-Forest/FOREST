@@ -55,14 +55,14 @@ export default function TestProblemBox() {
       {type === "OX" && <TestProblemOXAnswer />}
       {type === "SUBJECTIVE" && (
         <StyledTestProblemShortAnswer
-          value={userAnswer}
+          value={userAnswer ? userAnswer : ""}
           onChange={onChange}
           placeholder="정답을 입력하세요"
         />
       )}
       {type === "DESCRIPT" && (
         <StyledTestProblemEssayAnswer
-          value={userAnswer}
+          value={userAnswer ? userAnswer : ""}
           onChange={onChange}
           placeholder="정답을 입력하세요"
         />
