@@ -8,7 +8,6 @@ import com.ssafy.forestauth.auth.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,14 +18,11 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity
 public class SecurityConfig implements WebMvcConfigurer {
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -47,33 +43,21 @@ public class SecurityConfig implements WebMvcConfigurer {
                 // 요청 URL 권한
                 .authorizeRequests()
                 .antMatchers(
-                        "**/api/user/search/**",
-                        "**/api/user/check/**",
-                        "**/api/user/common/**",
-                        "**/api/user/login/**",
-                        "**/api/msg/**",
-                        "**/api/class/search/**",
-                        "**/api/workbook/search/**",
-                        "**/api/workbook/best/**",
-                        "**/api/workbook/recent/**",
-                        "**/api/oauth2/**",
-                        "**/api/login/**",
-                        "**/api/auth/reissue/**",
-
-                        // Swagger
-                        "**/api/swagger-ui.html/**",
-                        "**/api/webjars/**",
-                        "**/api/swagger-resources/**",
-                        "**/api/v2/api-docs/**",
-                        "**/api/"
+                        "/api/user/check",
+                        "/api/user/search",
+                        "/api/user/common",
+                        "/api/user/login",
+                        "/api/oauth2/authorization/kakao",
+                        "/api/auth/reissue",
+                        "/api/msg",
+                        "/api/class/search"
                 ).permitAll()
-                .antMatchers("**/api/**").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .anyRequest().permitAll()
 
                 // JWT
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(jwtFilter, JwtFilter.class)
 
                 // 예외 처리
                 .exceptionHandling()
@@ -98,39 +82,13 @@ public class SecurityConfig implements WebMvcConfigurer {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true);
 
-//        List<String> allowedOrigin = new ArrayList<>();
-//        allowedOrigin.add("localhost");
-//        allowedOrigin.add("k8b105.p.ssafy.io");
-//        allowedOrigin.add("k8b105.p.ssafy.io:3000");
-//        allowedOrigin.add("k8b105.p.ssafy.io:443");
-//        configuration.setAllowedOrigins(allowedOrigin);
-//
-//        List<String> allowedHeaders = new ArrayList<>();
-//        allowedHeaders.add("Content-Type");
-//        configuration.setAllowedHeaders(allowedHeaders);
-//
-//        List<String> allowedMethods = new ArrayList<>();
-//        allowedMethods.add("GET");
-//        allowedMethods.add("POST");
-//        allowedMethods.add("PATCH");
-//        allowedMethods.add("OPTIONS");
-//        configuration.setAllowedMethods(allowedMethods);
-
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
-//        configuration.setAllowedHeaders();
-//        configuration.setAllowedMethods();
-
-//        configuration.addAllowedOrigin("*");
-//        configuration.addAllowedHeader("*");
-//        configuration.addAllowedMethod("*");
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
