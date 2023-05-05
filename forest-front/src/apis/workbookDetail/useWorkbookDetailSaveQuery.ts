@@ -5,7 +5,7 @@ interface DataType {
   workbookInfo: {
     workbookId: number;
     title: string;
-    workbookImgId: number;
+    workbookImgId: number | string;
     description: string;
   };
   problemList: {

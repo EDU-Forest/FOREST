@@ -62,6 +62,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   };
 
   useEffect(() => {
+    dispatch(setWorkbook({ ...workbook, workbookImgPath: selectedImg }));
     setEditedImg(`/images/Workbook_Type_${selectedImg}.png`);
   }, [selectedImg]);
 
@@ -110,7 +111,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
             {!isFolded && (
               <WorkbookDetailWorkbookImgBox>
                 {selectedImg === 0 ? (
-                  <img src={cover} />
+                  <img src={workbook.workbookImgPath} />
                 ) : (
                   <WorkbookImgTypeBox type={selectedImg}>{workbook.title}</WorkbookImgTypeBox>
                 )}

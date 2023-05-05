@@ -25,7 +25,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
     const workbookInfo = {
       workbookId: workbook.workbookId,
       title: workbook.title,
-      workbookImgId: 1,
+      workbookImgId: workbook.workbookImgPath,
       description: workbook.description,
     };
 
