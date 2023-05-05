@@ -1,6 +1,7 @@
 import { theme } from "./../../styles/theme";
 import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
 import { WorkbookImg } from "@/components/Workbook/Workbook.style";
+import { ModalBox } from "@/styles/modal";
 import styled, { keyframes } from "styled-components";
 
 export const StyledWorkbookDetailBox = styled.div`
@@ -72,13 +73,6 @@ export const StyledWorkbookDetailInfoOverviewBox = styled.div`
 
     margin-left: 24px;
     gap: 24px;
-  }
-
-  img {
-    width: 5rem;
-    height: auto;
-
-    margin-left: auto;
   }
 `;
 
@@ -401,5 +395,50 @@ export const WorkBookPdfHeaderBox = styled.div`
   // 문항 수
   > p:nth-child(2) {
     font-size: 16px;
+  }
+`;
+
+export const WorkbookImgEditModalBox = styled(ModalBox)`
+  display: flex;
+  gap: 1.5rem;
+`;
+
+export const WorkbookImgEditModalImgBox = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  gap: 1.5rem;
+`;
+
+export const WorkbookImgTypeBox = styled.div<{ type: number }>`
+  width: 150px;
+  height: 200px;
+
+  padding: 1rem;
+
+  font-weight: 600;
+  background-image: ${({ type }) =>
+    type === 1
+      ? 'url("/images/Workbook_Type_1.png")'
+      : type === 2
+      ? 'url("/images/Workbook_Type_2.png")'
+      : type === 3 && 'url("/images/Workbook_Type_3.png")'};
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+`;
+
+export const WorkbookDetailWorkbookImgBox = styled.div`
+  width: 5rem;
+  height: 6.25rem;
+  img, div {
+    width: 100%;
+    height: 100%;
+  }
+
+  > div {
+    font-size:14px;
+    overflow: hidden;
   }
 `;

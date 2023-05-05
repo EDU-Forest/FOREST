@@ -79,8 +79,6 @@ function WorkbookDetail() {
         <WorkbookDetailInfoOverview
           id={workbook?.workbookId}
           cover={workbook?.workbookImgPath}
-          title={workbook?.title}
-          desc={workbook?.description}
           likeCnt={workbook?.bookmarkCount}
           usedCnt={workbook?.scrapCount}
         />
