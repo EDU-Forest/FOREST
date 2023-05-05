@@ -45,6 +45,8 @@ export const EditorBtnsBox = styled(StyledWorkbookDetailBtnsBox)`
   }
 `;
 
-export const EditorTitleBox = styled(ClassSelectWrapper)``;
+export const EditorTitleBox = styled(ClassSelectWrapper)`
+  padding-bottom: 1rem;
+`;
 
 export const EditorSelectedTitle = styled(ClassSelectedTitle)``;

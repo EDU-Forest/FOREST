@@ -1,25 +1,20 @@
 import workbookAxios from "@/utils/workbookAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
-import { IWorkbookBySelf } from "@/types/Workbook";
-
-interface Iprops {
-  setWorkbooksBySelf: (workbooksBySelf: IWorkbookBySelf[]) => void;
-}
+import { useDispatch } from "react-redux";
+import { addWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 
 const fetcher = () =>
   workbookAxios.get("/api/workbook/editor").then(({ data }) => {
-    console.log(data);
     return data;
   });
 
-const useGetWorkbooksBySelf = ({ setWorkbooksBySelf }: Iprops) => {
+const useGetWorkbooksBySelf = () => {
+  const dispatch = useDispatch();
   return useQuery(queryKeys.WORKBOOKS_BY_SELF, () => fetcher(), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("success", data);
-      // 연결 시 수정해야 할 듯
-      setWorkbooksBySelf(data.data);
+      dispatch(setWorkbookBySelf(data.data.workbookList));
     },
   });
 };

@@ -41,9 +41,13 @@ const editorModalSlice = createSlice({
     },
     openAddWorkBookModal(state) {
       state.isOpenAddWorkbookModal = true;
+      console.log(state.isOpenAddWorkbookModal);
     },
 
     closeAddWorkBookModal(state) {
+      state.isOpenAddWorkbookModal = false;
+    },
+    controlEditorDropdown(state) {
       state.isOpenAddWorkbookModal = false;
     },
   },
@@ -58,6 +62,7 @@ export const {
   closePartPdfModal,
   openAddWorkBookModal,
   closeAddWorkBookModal,
+  controlEditorDropdown,
 } = editorModalSlice.actions;
 
 export default editorModalSlice.reducer;

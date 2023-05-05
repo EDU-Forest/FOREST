@@ -14,13 +14,18 @@ import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
 import useCheckClassNameQuery from "@/apis/class/teacher/useCheckClassNameQuery";
 import useClassAdd from "@/apis/class/teacher/useClassAdd";
+import { closeAddWorkBookModal } from "@/stores/editor/editorModal";
+import useAddWorkBook from "@/apis/editor/useAddWorkbookQuery";
+import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 
 export default function AddWorkbookModal() {
   const dispatch = useDispatch();
   const [workbookTitle, setWorkbookTitle] = useState<string>("");
+  const { mutate } = useAddWorkBook();
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const addWorkBook = () => {
+    mutate(workbookTitle);
+    dispatch(closeAddWorkBookModal());
   };
 
   return (
@@ -35,8 +40,8 @@ export default function AddWorkbookModal() {
         />
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
-        <SmallBtn children="취소" onClick={() => dispatch(closeAddClassModal())} />
-        <SmallBtn children="확인" disabled={!workbookTitle} colored onClick={confirm} />
+        <SmallBtn children="취소" onClick={() => dispatch(closeAddWorkBookModal())} />
+        <SmallBtn children="확인" disabled={!workbookTitle} colored onClick={addWorkBook} />
       </ClassInputBtnWrapper>
     </ClassAddModalContainer>
   );

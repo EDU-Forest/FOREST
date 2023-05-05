@@ -17,20 +17,23 @@ import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
 import { useSelector } from "react-redux";
 import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
+import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 
 export default function Editor() {
   const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
 
   const [workbooksBySelf, setWorkbooksBySelf] = useState<IWorkbookBySelf[]>();
   const [selectQuestionType, setSelectQuestionType] = useState("");
+  const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
+
   // const [questions, setQuestions] = useState<QuestionType[]>([]);
 
-  const dispatch = useDispatch();
-  useGetWorkbooksBySelf({ setWorkbooksBySelf });
+  useGetWorkbooksBySelf();
 
   return (
     <FullScreen>
       <EditorNav setSelectQuestionType={setSelectQuestionType} />
+      {isOpenAddWorkbookModal && <AddWorkbookModal />}
       <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
           <EditorTitle />

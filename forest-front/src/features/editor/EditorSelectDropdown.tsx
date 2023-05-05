@@ -9,17 +9,34 @@ import {
   ClassSelectCircle,
   ClassSelectNoClass,
 } from "../class/ClassSelect.style";
-import AddClassModal from "../class/teacher/AddClassModal";
 import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 import { openAddWorkBookModal } from "@/stores/editor/editorModal";
-import AddWorkbookModal from "./AddWorkbookModal";
+import { useEffect } from "react";
 
-export default function EditorSelectDropdown() {
+interface Iprops {
+  setControlDropdown: (controlDropdown: boolean) => void;
+}
+
+export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
-  const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
   const { curWorkbookIdx, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
+
+  useEffect(() => {
+    console.log(curWorkbookIdx, workbooksBySelf);
+  }, []);
+
+  const addWorkbookHandler = () => {
+    dispatch(openAddWorkBookModal());
+    setControlDropdown(false);
+  };
+
+  const selectWorkbookHandler = (idx: number) => {
+    dispatch(setSelectWorkbook(idx));
+    setControlDropdown(false);
+  };
+
   return (
     <ClassSelectDropdownContainer>
       {workbooksBySelf?.length > 0 ? (
@@ -27,10 +44,10 @@ export default function EditorSelectDropdown() {
           <ClassSelectDropdownEach>
             {workbooksBySelf?.map((item, idx) => (
               <ClassSelectDropdownEachItem
-                key={item.workbookId}
-                onClick={() => dispatch(setSelectWorkbook(idx))}
+                key={`workbook-${idx}`}
+                onClick={() => selectWorkbookHandler(idx)}
               >
-                {item.workbookId === curWorkbookIdx && <ClassSelectCircle />} {item.workbookTitle}
+                {idx === curWorkbookIdx && <ClassSelectCircle />} {item.title}
               </ClassSelectDropdownEachItem>
             ))}
           </ClassSelectDropdownEach>
@@ -39,11 +56,8 @@ export default function EditorSelectDropdown() {
         <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
       )}
 
-      <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}>
-        + 새 문제집 추가
-      </ClassSelectDropdownAdd>
-
-      {isOpenAddWorkbookModal && <AddWorkbookModal />}
+      {/* <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}> */}
+      <ClassSelectDropdownAdd onClick={addWorkbookHandler}>+ 새 문제집 추가</ClassSelectDropdownAdd>
     </ClassSelectDropdownContainer>
   );
 }
