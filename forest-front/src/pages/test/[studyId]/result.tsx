@@ -1,3 +1,4 @@
+import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestHeader from "@/features/test/index/TestHeader";
 import TestResultQuestion from "@/features/test/result/TestResultQuestion";
 import TestResultTotal from "@/features/test/result/TestResultTotal";
@@ -8,7 +9,9 @@ import { useSelector } from "react-redux";
 
 export default function Result() {
   const router = useRouter();
+  const studyId = router.query.studyId;
   const { role } = useSelector((state: RootState) => state.user);
+  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
   const clickHandler = () => {
     router.push(`/${role.toLowerCase()}/dashboard`);
   };
