@@ -1,12 +1,13 @@
 import { PieChart } from "react-minimal-pie-chart";
-import { StudentScoreChartLabel, SummaryChartWrapper } from "../ClassSummary.style";
+import { ClassLabelBox, StudentScoreChartLabel, SummaryChartWrapper } from "../ClassSummary.style";
 import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
 
 interface Iprops {
   answerRate: AnswerRate;
+  page?: string;
 }
 
-export default function CorrectRateDonut({ answerRate }: Iprops) {
+export default function CorrectRateDonut({ answerRate, page }: Iprops) {
   return (
     <SummaryChartWrapper>
       <PieChart
@@ -42,16 +43,16 @@ export default function CorrectRateDonut({ answerRate }: Iprops) {
         labelPosition={0}
       />
 
-      <div>
-        <LabelCircle isCorrect />
+      <ClassLabelBox page={page ? page : ""}>
+        <LabelCircle page={page ? page : ""} isCorrect />
         <AnalysisText isGray> 정답</AnalysisText>
-        <LabelCircle />
+        <LabelCircle page={page ? page : ""} />
         <AnalysisText isGray> 오답</AnalysisText>
-        <LabelCircle notYet />
+        <LabelCircle page={page ? page : ""} notYet />
         <AnalysisText isGray noMargin>
           미채점
         </AnalysisText>
-      </div>
+      </ClassLabelBox>
     </SummaryChartWrapper>
   );
 }

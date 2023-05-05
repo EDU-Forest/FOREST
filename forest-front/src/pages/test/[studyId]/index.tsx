@@ -64,7 +64,7 @@ export default function Test() {
       {minutes <= 0 && seconds <= 0 ? (
         <TestEnd />
       ) : (
-        <TestContent toggleModal={toggleModal} setToggleModal={setToggleModal} />
+        <TestContent minutes={minutes} seconds={seconds} toggleModal={toggleModal} setToggleModal={setToggleModal} />
       )} */}
     </StyledTestContainer>
   );

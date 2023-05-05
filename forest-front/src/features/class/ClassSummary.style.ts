@@ -181,6 +181,11 @@ const ClassSummaryIcon = styled.div`
   }
 `;
 
+const ClassLabelBox = styled.div<{ page: string }>`
+  width: 240px;
+  text-align: center;
+`;
+
 export {
   ClassSummaryTitle,
   ClassSummaryWrapper,
@@ -199,4 +204,5 @@ export {
   ClassSummaryText,
   ClassSummaryValue,
   ClassSummaryIcon,
+  ClassLabelBox,
 };

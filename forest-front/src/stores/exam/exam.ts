@@ -57,6 +57,9 @@ const examSlice = createSlice({
       //   ...state,
       //   ...action.payload,
       // };
+      state.volume = action.payload.volume;
+      state.startTime = action.payload.startTime;
+      state.endTime = action.payload.endTime;
       state.problem = action.payload.problem;
     },
     setChooseAnswer(state, action) {
