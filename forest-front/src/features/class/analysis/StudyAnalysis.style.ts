@@ -67,7 +67,7 @@ const AnalysisText = styled(ClassSummaryText)<{
     `}
 `;
 
-const LabelCircle = styled.div<{ isCorrect?: boolean; notYet?: boolean }>`
+const LabelCircle = styled.div<{ isCorrect?: boolean; notYet?: boolean; page: string }>`
   display: inline-block;
   width: 0.875rem;
   height: 0.875rem;
@@ -79,7 +79,7 @@ const LabelCircle = styled.div<{ isCorrect?: boolean; notYet?: boolean }>`
       : notYet
       ? theme.colors.Gray[300]
       : theme.colors.Orange[400]};
-  margin-left: 1rem;
+  margin-left: ${({ page }) => (page === "studyResult" ? "0.5rem" : "1rem")};
   margin-right: 0.25rem;
 `;
 
