@@ -38,5 +38,5 @@ export interface QuestionSummType {
 
 export interface IWorkbookBySelf {
   workbookId: number;
-  workbookTitle: string;
+  title: string;
 }
