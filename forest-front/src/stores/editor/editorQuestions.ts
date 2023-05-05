@@ -18,8 +18,8 @@ const initialState: editorQuestions = {
       answer: "",
       point: 0,
       problemImgPath: "",
-      imgIsEmpty: false, 
-      textIsEmpty: false, 
+      imgIsEmpty: false,
+      textIsEmpty: false,
       itemList: [
         {
           id: 0,
@@ -62,6 +62,9 @@ const questionSlice = createSlice({
     initCurQuestion(state) {
       state.curQuestion = initialState.curQuestion;
     },
+    initQuestions(state) {
+      state.questions = initialState.questions;
+    },
     setCurQuestion(state, action) {
       state.curQuestion = action.payload;
     },
@@ -71,7 +74,7 @@ const questionSlice = createSlice({
   },
 });
 
-export const { setQuestions, initCurQuestion, setCurQuestion, setDeleteAnswers } =
+export const { setQuestions, initCurQuestion, initQuestions, setCurQuestion, setDeleteAnswers } =
   questionSlice.actions;
 
 export default questionSlice.reducer;

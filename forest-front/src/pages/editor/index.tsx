@@ -8,7 +8,7 @@ import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
-import { initCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
+import { initCurQuestion, initQuestions, setQuestions } from "@/stores/editor/editorQuestions";
 import { IWorkbookBySelf, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -34,6 +34,7 @@ export default function Editor() {
   const {} = useWorkbookDetailQuery(Number(1));
 
   useEffect(() => {
+    dispatch(initCurQuestion());
     dispatch(setQuestions);
   }, []);
 
