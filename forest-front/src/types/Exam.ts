@@ -1,11 +1,11 @@
 interface examState {
   isStarted: boolean;
   curProblemNum: number;
-  examTitle: string;
   volume: number;
-  startTime: number;
-  endTime: number;
-  presenter: string;
+  startTime: Date;
+  endTime: Date;
+  userName: string;
+  studyName: string;
   problem: {
     studentStudyProblemId: number;
     problemNum: number;

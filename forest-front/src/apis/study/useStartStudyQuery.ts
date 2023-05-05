@@ -5,10 +5,11 @@ import { useDispatch } from "react-redux";
 
 const fetcher = (studyId: number) =>
   studyAxios.post("/api/study/start", { studyId }).then(({ data }) => {
+    console.log(data);
     return data;
   });
 
-const useStartStudy = (studyId: number) => {
+const useStartStudy = () => {
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: () => {

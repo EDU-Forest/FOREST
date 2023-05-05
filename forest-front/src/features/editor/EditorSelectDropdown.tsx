@@ -9,17 +9,14 @@ import {
   ClassSelectCircle,
   ClassSelectNoClass,
 } from "../class/ClassSelect.style";
-import { setClass } from "@/stores/class/classInfo";
-import { openAddClassModal } from "@/stores/class/classModal";
-import useClassListQuery from "@/apis/class/useClassListQuery";
 import AddClassModal from "../class/teacher/AddClassModal";
-import { IWorkbookBySelf } from "@/types/Workbook";
 import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 import { openAddWorkBookModal } from "@/stores/editor/editorModal";
+import AddWorkbookModal from "./AddWorkbookModal";
 
 export default function EditorSelectDropdown() {
   const dispatch = useDispatch();
-  const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
+  const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
   const { curWorkbookIdx, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
@@ -39,14 +36,14 @@ export default function EditorSelectDropdown() {
           </ClassSelectDropdownEach>
         </>
       ) : (
-        <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
+        <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
       )}
 
       <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}>
-        + 새 클래스 추가
+        + 새 문제집 추가
       </ClassSelectDropdownAdd>
 
-      {isOpenAddClassModal && <AddClassModal />}
+      {isOpenAddWorkbookModal && <AddWorkbookModal />}
     </ClassSelectDropdownContainer>
   );
 }

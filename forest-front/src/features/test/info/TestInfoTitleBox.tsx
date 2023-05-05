@@ -3,7 +3,7 @@ import { StyledTestInfoTitleBox } from "./TestInfo.style";
 import { RootState } from "@/stores/store";
 
 export default function TestInfoTitleBox() {
-  const { examTitle } = useSelector((state: RootState) => state.exam);
+  const { studyName } = useSelector((state: RootState) => state.exam);
 
-  return <StyledTestInfoTitleBox>{examTitle}</StyledTestInfoTitleBox>;
+  return <StyledTestInfoTitleBox>{studyName}</StyledTestInfoTitleBox>;
 }

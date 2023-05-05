@@ -2,7 +2,7 @@ import studyAxios from "@/utils/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import { useDispatch } from "react-redux";
-import { setStudyInfo, setinitProblem } from "@/stores/exam/exam";
+import { setStudyInfo } from "@/stores/exam/exam";
 
 interface Iprops {
   studyId: number;

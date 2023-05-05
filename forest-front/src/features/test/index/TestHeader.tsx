@@ -11,7 +11,7 @@ export default function TestHeader({ page, setToggleModal }: Iprops) {
   return (
     <StyledTestHeader>
       <TestHeaderLeftContentBox page={page} setToggleModal={setToggleModal} />
-      <TestHeaderRightContentBox />
+      <TestHeaderRightContentBox page={page} />
     </StyledTestHeader>
   );
 }

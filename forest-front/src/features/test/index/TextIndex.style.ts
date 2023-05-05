@@ -7,6 +7,15 @@ import styled from "styled-components";
 
 const StyledTestContainer = styled.div`
   /* width: 100vw; */
+
+  .scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scroll::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const StyledAnswerBox = styled.div`
@@ -19,7 +28,7 @@ const StyledAnswerBox = styled.div`
 
 const StyledTestHeader = styled.div`
   width: 100%;
-  height: 80px;
+  height: 5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,13 +74,13 @@ const StyledTestContent = styled.div`
 const StyledTestProblemBox = styled.div`
   /* width: calc(100vw - 20rem); */
   width: 70%;
+  height: calc(90% - 5rem);
   min-width: 33.5rem;
-  max-height: 50%;
   padding: 2.5rem 2.5rem 1.125rem 2.5rem;
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
-  overflow-y: auto;
+  overflow: auto;
   ${scrollBar(0.75)}
 `;
 
