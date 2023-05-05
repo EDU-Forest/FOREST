@@ -12,6 +12,7 @@ import {
 import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 import { openAddWorkBookModal } from "@/stores/editor/editorModal";
 import { useEffect } from "react";
+import useEditorSave from "@/hooks/editor/useEditorSave";
 
 interface Iprops {
   setControlDropdown: (controlDropdown: boolean) => void;
@@ -19,21 +20,31 @@ interface Iprops {
 
 export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
+  const { editorSave } = useEditorSave();
   const { curWorkbookIdx, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
-
-  useEffect(() => {
-    console.log(curWorkbookIdx, workbooksBySelf);
-  }, []);
 
   const addWorkbookHandler = () => {
     dispatch(openAddWorkBookModal());
     setControlDropdown(false);
   };
 
-  const selectWorkbookHandler = (idx: number) => {
+  // 1. 데이터 저장
+  const saveData = (callback: Function) => {
+    editorSave();
+    callback();
+  };
+
+  // 2. 현재 문제집 변경
+  const selectWorkbook = (idx: number) => {
     dispatch(setSelectWorkbook(idx));
+  };
+
+  const selectWorkbookHandler = (idx: number) => {
+    saveData(() => {
+      selectWorkbook(idx);
+    });
     setControlDropdown(false);
   };
 
