@@ -5,6 +5,9 @@ import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
 import { WorkbookExportModalBox } from "./WorkbookModal.style";
 import WorkbookPdfSave from "./WorkbookPdfSave";
+import useWorkbookDetailReleasePatch from "@/apis/workbookDetail/useWorkbookDetailReleasePatch";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,6 +22,8 @@ interface ExportType {
 
 function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   const [isSavePdf, setIsSavePdf] = useState(false);
+  const { data, mutate: releaseWorkbookApi } = useWorkbookDetailReleasePatch();
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
   const chosenSet = () => {
     setIsOpen(false);
@@ -26,7 +31,8 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   };
 
   const chosenRelease = () => {
-    console.log("배포한다");
+    console.log(data);
+    releaseWorkbookApi(workbook.workbookId);
   };
 
   const chosenPdf = async () => {

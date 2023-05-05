@@ -4,11 +4,11 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useRouter } from "next/router";
 
 const fetcher = async (wId: number) =>
-  await workbookAxios.post(`/api/workbook/export/${wId}`).then(({ data }) => {
+  await workbookAxios.patch(`/api/workbook/export/${wId}`).then(({ data }) => {
     return data;
   });
 
-const useWorkbookDetailSetPost = () => {
+const useWorkbookDetailReleasePatch = () => {
   const router = useRouter();
 
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], fetcher, {
@@ -19,4 +19,4 @@ const useWorkbookDetailSetPost = () => {
   });
 };
 
-export default useWorkbookDetailSetPost;
+export default useWorkbookDetailReleasePatch;
