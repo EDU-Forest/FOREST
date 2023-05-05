@@ -8,7 +8,10 @@ interface Iprops {
 }
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/student/result/${studyId}`).then(({ data }) => data);
+  studyAxios.get(`/api/study/student/result/${studyId}`).then(({ data }) => {
+    console.log(data);
+    return data;
+  });
 
 const useGetStudyResult = ({ studyId, setStudyResult }: Iprops) => {
   return useQuery(queryKeys.GET_STUDY_RESULT, () => fetcher(studyId), {
