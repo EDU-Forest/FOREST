@@ -7,8 +7,11 @@ import {
   StyledTestProblemBox,
   StyledTestProblemEssayAnswer,
   StyledTestProblemShortAnswer,
+  TestProblemAnswerBox,
   TestProblemBtn,
   TestProblemBtnBox,
+  TestProblemContentBox,
+  TestProblemSection,
 } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
@@ -16,12 +19,17 @@ import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 import { useRouter } from "next/router";
 
-export default function TestProblemBox() {
+interface Iprops {
+  minutes: number;
+  seconds: number;
+}
+
+export default function TestProblemBox({ minutes, seconds }: Iprops) {
   const router = useRouter();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { type, studentStudyProblemId, userAnswer } = problem[curProblemNum - 1];
+  const { type, studentStudyProblemId, userAnswer, problemAnswer } = problem[curProblemNum - 1];
   const dispatch = useDispatch();
 
   const payload = {
@@ -49,24 +57,38 @@ export default function TestProblemBox() {
 
   return (
     <StyledTestProblemBox>
-      <TestProblemTitle />
-      <TestProblemText />
-      {type === "MULTIPLE" && <TestProblemMultipleChoiceAnswer />}
-      {type === "OX" && <TestProblemOXAnswer />}
-      {type === "SUBJECTIVE" && (
-        <StyledTestProblemShortAnswer
-          value={userAnswer ? userAnswer : ""}
-          onChange={onChange}
-          placeholder="정답을 입력하세요"
-        />
-      )}
-      {type === "DESCRIPT" && (
-        <StyledTestProblemEssayAnswer
-          value={userAnswer ? userAnswer : ""}
-          onChange={onChange}
-          placeholder="정답을 입력하세요"
-        />
-      )}
+      <TestProblemSection>
+        <TestProblemContentBox>
+          <TestProblemTitle />
+          <TestProblemText />
+          {type === "MULTIPLE" && (
+            <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
+          )}
+          {type === "OX" && <TestProblemOXAnswer minutes={minutes} seconds={seconds} />}
+          {type === "SUBJECTIVE" && (
+            <StyledTestProblemShortAnswer
+              disabled={minutes <= 0 && seconds <= 0}
+              value={userAnswer ? userAnswer : ""}
+              onChange={onChange}
+              placeholder="정답을 입력하세요"
+            />
+          )}
+          {type === "DESCRIPT" && (
+            <StyledTestProblemEssayAnswer
+              disabled={minutes <= 0 && seconds <= 0}
+              value={userAnswer ? userAnswer : ""}
+              onChange={onChange}
+              placeholder="정답을 입력하세요"
+            />
+          )}
+          {minutes <= 0 && seconds <= 0 && (
+            <TestProblemAnswerBox>
+              {type === "DESCRIPT" ? <div>핵심 단어</div> : <div>정답</div>}
+              <div>{problemAnswer}</div>
+            </TestProblemAnswerBox>
+          )}
+        </TestProblemContentBox>
+      </TestProblemSection>
       <TestProblemBtnBox>
         <TestProblemBtn onClick={goToPrevProblem} disabled={curProblemNum === 1 ? true : false}>
           이전

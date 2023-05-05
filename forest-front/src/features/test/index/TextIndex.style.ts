@@ -4,9 +4,12 @@ import { ModalBox } from "@/styles/modal";
 import { Title } from "@/styles/text";
 import { scrollBar } from "@/styles/theme";
 import styled from "styled-components";
+import { StyledTestCommonBtn } from "../common/TextCommon.style";
 
 const StyledTestContainer = styled.div`
   /* width: 100vw; */
+  position: relative;
+  height: 100vh;
 
   .scroll {
     -ms-overflow-style: none;
@@ -69,19 +72,14 @@ const StyledTestContent = styled.div`
   padding: 1.5rem 2rem 1.5rem 2rem;
   display: flex;
   justify-content: center;
+  height: calc(100% - 5rem);
 `;
 
 const StyledTestProblemBox = styled.div`
   /* width: calc(100vw - 20rem); */
-  width: 70%;
-  height: calc(90% - 5rem);
+  width: 100%;
+  height: 100%;
   min-width: 33.5rem;
-  padding: 2.5rem 2.5rem 1.125rem 2.5rem;
-  background-color: white;
-  box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
-  border-radius: 1.5rem;
-  overflow: auto;
-  ${scrollBar(0.75)}
 `;
 
 const StyledTestProblemTitle = styled.div`
@@ -157,11 +155,11 @@ const StyledTestAnswerTable = styled.table`
   width: 100%;
   table-layout: fixed;
 
-  tbody:last-child {
-    & :first-child {
+  tbody tr:last-child {
+    td:first-child {
       border-radius: 0 0 0 0.5rem;
     }
-    & :last-child {
+    td:last-child {
       border-radius: 0 0 0.5rem 0;
     }
   }
@@ -187,16 +185,27 @@ const StyledTestAnswerTable = styled.table`
       white-space: nowrap;
       word-break: break-all;
     }
-    & td:nth-child(1) {
-      width: 10%;
-      background-color: ${({ theme }) => theme.colors.Lime[50]};
-      color: ${({ theme }) => theme.colors.Lime[700]};
-    }
 
     & td:nth-child(2) {
       background-color: white;
     }
   }
+`;
+
+const ProblemNumTd = styled.td<{ isEnded: boolean; isCorrect: boolean }>`
+  width: 10%;
+  background-color: ${({ isEnded, isCorrect, theme }) =>
+    isEnded
+      ? isCorrect
+        ? theme.colors.Lime[200]
+        : theme.colors.Orange[200]
+      : theme.colors.Lime[500]};
+  color: ${({ isEnded, isCorrect, theme }) =>
+    isEnded
+      ? isCorrect
+        ? theme.colors.Lime[700]
+        : theme.colors.Orange[700]
+      : theme.colors.Lime[700]};
 `;
 
 const StyledTestSubmitBtn = styled(StyledCommonBtn)`
@@ -328,6 +337,68 @@ const TestWarningBox = styled.div`
   }
 `;
 
+const TestEndBox = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    font-size: 1.375rem;
+    font-weight: 700;
+  }
+`;
+
+const TestEndBtn = styled(StyledTestCommonBtn)`
+  margin-top: 2rem;
+`;
+
+const TestProblemAnswerBox = styled.div`
+  margin-top: 2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid ${({ theme }) => theme.colors.Orange[900]};
+
+  & div:first-child {
+    padding: 0.75rem;
+    background-color: ${({ theme }) => theme.colors.Orange[200]};
+    border-radius: 0.5rem 0rem 0rem 0.5rem;
+    color: ${({ theme }) => theme.colors.Orange[900]};
+  }
+
+  & div:last-child {
+    padding: 0.75rem 2rem;
+    /* background-color: ${({ theme }) => theme.colors.Gray[100]}; */
+    color: ${({ theme }) => theme.colors.Gray[700]};
+    border-radius: 0rem 0.5rem 0.5rem 0rem;
+  }
+`;
+
+const TestProblemSection = styled.section`
+  height: calc(100% - 4rem);
+  padding: 1.5rem 0rem 1.5rem 1.5rem;
+  background-color: white;
+  box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
+  border-radius: 1.5rem;
+`;
+
+const TestProblemContentBox = styled.div`
+  width: 99%;
+  padding: 1.5rem;
+  height: 100%;
+  overflow: auto;
+  ${scrollBar(0.75)}
+`;
+
 export {
   StyledTestContainer,
   StyledAnswerBox,
@@ -347,6 +418,7 @@ export {
   StyledTestNumberText,
   StyledUsername,
   StyledTestAnswerTable,
+  ProblemNumTd,
   StyledTestSubmitBtn,
   StyledTestProblemShortAnswer,
   StyledTestProblemEssayAnswer,
@@ -355,4 +427,9 @@ export {
   TestProblemBtn,
   TestEndModalBox,
   TestWarningBox,
+  TestEndBox,
+  TestEndBtn,
+  TestProblemAnswerBox,
+  TestProblemSection,
+  TestProblemContentBox,
 };

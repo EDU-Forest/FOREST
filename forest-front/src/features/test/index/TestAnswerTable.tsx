@@ -1,9 +1,15 @@
 import { useSelector } from "react-redux";
-import { StyledTestAnswerTable } from "./TextIndex.style";
+import { ProblemNumTd, StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 
-export default function TestAnswerTable() {
-  const { problem } = useSelector((state: RootState) => state.exam);
+interface Iprops {
+  minutes: number;
+  seconds: number;
+}
+
+export default function TestAnswerTable({ minutes, seconds }: Iprops) {
+  const { curProblemNum, problem } = useSelector((state: RootState) => state.exam);
+  const { userAnswer, problemAnswer } = problem[curProblemNum - 1];
   return (
     <StyledTestAnswerTable>
       <thead>
@@ -14,7 +20,12 @@ export default function TestAnswerTable() {
       <tbody>
         {problem.map((data, idx) => (
           <tr key={`user-answer-${idx}`}>
-            <td>{idx + 1}</td>
+            <ProblemNumTd
+              isEnded={minutes <= 0 && seconds <= 0}
+              isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
+            >
+              {idx + 1}
+            </ProblemNumTd>
             <td colSpan={3}>{data.userAnswer ? data.userAnswer : ""}</td>
           </tr>
         ))}
