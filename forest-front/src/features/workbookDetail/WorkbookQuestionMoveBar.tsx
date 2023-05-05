@@ -4,6 +4,8 @@ import { FaTrashAlt } from "react-icons/fa";
 import { StyledWorkbookQuestionMoveBar } from "./WorkbookDetail.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import useWorkbookDetailQuestionDelete from "@/apis/workbookDetail/useWorkbookDetailQuestionDelete";
+import { useEffect } from "react";
 
 interface IProps {
   num: number;
@@ -23,11 +25,15 @@ function WorkbookQuestionMoveBar({
   setCurQuestion,
 }: IProps) {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+  const { data, mutate: deleteApiCall } = useWorkbookDetailQuestionDelete();
 
   const handleClickDelete = (e: any) => {
     e.stopPropagation();
-    
+
+    deleteApiCall(question.id);
+
     let deletedIdx = 0;
+
     const deletedQuestions = questionSumm.filter((summ, i) => {
       if (i + 1 === num) {
         deletedIdx = i;
@@ -44,6 +50,10 @@ function WorkbookQuestionMoveBar({
       setCurQuestion(questionSumm[deletedIdx + 1].id);
     }
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data])
 
   return (
     <StyledWorkbookQuestionMoveBar isSelected={isSelected} draggable>
