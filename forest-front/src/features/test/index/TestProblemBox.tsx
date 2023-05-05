@@ -29,7 +29,8 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { type, studentStudyProblemId, userAnswer, problemAnswer } = problem[curProblemNum - 1];
+  const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
+    problem[curProblemNum - 1];
   const dispatch = useDispatch();
 
   const payload = {
@@ -60,7 +61,7 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />
-          <TestProblemText />
+          {text && <TestProblemText />}
           {type === "MULTIPLE" && (
             <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
           )}

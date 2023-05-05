@@ -54,6 +54,10 @@ const StyledTestHeaderContentBox = styled.div`
       color: ${({ theme }) => theme.colors.Lime[900]};
     }
   }
+
+  .logo-img {
+    width: 5rem;
+  }
 `;
 
 const StyledTestHeaderTitle = styled.div`
@@ -263,6 +267,7 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5rem;
 
   .correct-icon {
     width: 9.25rem;

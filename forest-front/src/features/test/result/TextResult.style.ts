@@ -26,6 +26,7 @@ const TestResultTotalContentBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 
   .icon {
     width: 60px;
@@ -177,6 +178,13 @@ const TestBtnBox = styled.div`
   }
 `;
 
+const TestResultNotOpenBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
+
 export {
   TestResultTotalBox,
   TestResultTotalTitleBox,
@@ -194,4 +202,5 @@ export {
   TestResultOkBtn,
   TestResultContentBox,
   TestBtnBox,
+  TestResultNotOpenBox,
 };

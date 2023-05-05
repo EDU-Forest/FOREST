@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TestResultTotalContentDetail from "./TestResultTotalContentDetail";
 import TestResultTotalContentGraph from "./TestResultTotalContentGraph";
-import { TestResultTotalContentBox } from "./TextResult.style";
+import { TestResultNotOpenBox, TestResultTotalContentBox } from "./TextResult.style";
 import useGetStudyResult from "@/apis/study/useGetStudyResultQuery";
 import { useRouter } from "next/router";
 
@@ -24,10 +24,19 @@ export default function TestResultTotalContent() {
   });
 
   return (
-    <TestResultTotalContentBox>
-      <TestResultTotalContentDetail studyResult={studyResult} />
-      <img src={"/images/Test_Result_Total_Content_Arrow.png"} className="icon" />
-      <TestResultTotalContentGraph />
-    </TestResultTotalContentBox>
+    <>
+      {/* 추후 수정(희제) : 느낌표 빼야함 */}
+      {!studyResult.isGraded ? (
+        <TestResultTotalContentBox>
+          <TestResultTotalContentDetail studyResult={studyResult} />
+          <img src={"/images/Test_Result_Total_Content_Arrow.png"} className="icon" />
+          <TestResultTotalContentGraph />
+        </TestResultTotalContentBox>
+      ) : (
+        <TestResultTotalContentBox>
+          <TestResultNotOpenBox>종료 시간 이후 공개됩니다.</TestResultNotOpenBox>
+        </TestResultTotalContentBox>
+      )}
+    </>
   );
 }

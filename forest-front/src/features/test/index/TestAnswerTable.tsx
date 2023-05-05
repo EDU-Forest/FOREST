@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { ProblemNumTd, StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
+import { useDispatch } from "react-redux";
+import { setCurProblemNum } from "@/stores/exam/exam";
 
 interface Iprops {
   minutes: number;
@@ -10,6 +12,12 @@ interface Iprops {
 export default function TestAnswerTable({ minutes, seconds }: Iprops) {
   const { curProblemNum, problem } = useSelector((state: RootState) => state.exam);
   const { userAnswer, problemAnswer } = problem[curProblemNum - 1];
+  const dispatch = useDispatch();
+
+  const changeCurProblemNum = (idx: number) => {
+    dispatch(setCurProblemNum({ curProblemNum: idx }));
+  };
+
   return (
     <StyledTestAnswerTable>
       <thead>
@@ -19,7 +27,7 @@ export default function TestAnswerTable({ minutes, seconds }: Iprops) {
       </thead>
       <tbody>
         {problem.map((data, idx) => (
-          <tr key={`user-answer-${idx}`}>
+          <tr key={`user-answer-${idx}`} onClick={() => changeCurProblemNum(idx + 1)}>
             <ProblemNumTd
               isEnded={minutes <= 0 && seconds <= 0}
               isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
