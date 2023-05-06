@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
+import WorkbookDeleteModal from "./WorkbookDeleteModal";
 
 interface IProps {
   id: number;
@@ -34,6 +35,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const [selectedImg, setSelectedImg] = useState(0);
 
   const [isOpenImgEdit, setIsOpenImgEdit] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
   // true(접혀있는 상태)라면 '펼치기' 문구
   // false(펼쳐져있는 상태)라면 '접기' 문구
   const [isFolded, setIsFolded] = useState(true);
@@ -59,6 +61,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     setIsOpenImgEdit(true);
   };
   const handleClickDelete = () => {
+    setIsOpenDelete(true);
   };
 
   useEffect(() => {
@@ -94,7 +97,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                   <StyledTextBtn onClick={handleClickEditing}>수정</StyledTextBtn>
                 )}
                 <span>|</span>
-                <StyledTextBtn>삭제</StyledTextBtn>
+                <StyledTextBtn onClick={handleClickDelete}>삭제</StyledTextBtn>
               </div>
             )}
           </StyledWorkbookBtnsBox>
@@ -129,6 +132,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
           setIsOpenImgEdit={setIsOpenImgEdit}
         />
       )}
+      {isOpenDelete && <WorkbookDeleteModal setIsOpenDelete={setIsOpenDelete} />}
     </>
   );
 }
