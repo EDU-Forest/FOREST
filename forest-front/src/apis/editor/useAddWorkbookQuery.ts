@@ -19,8 +19,7 @@ const useAddWorkBook = () => {
         title,
       };
       dispatch(addWorkbook(payload));
-      console.log("ff", workbooksBySelf.length);
-      dispatch(setSelectWorkbook(workbooksBySelf.length));
+      dispatch(setSelectWorkbook({ workbookId, title }));
     },
   });
 };

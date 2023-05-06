@@ -5,64 +5,65 @@ import styled from "styled-components";
 
 // 내보내기 유형 선택 모달
 export const WorkbookExportModalBox = styled(ModalBox)`
-  gap: 1.5rem;
+  gap: 24px;
 `;
 
 // 출제할 클래스 선택 모달
 export const WorkbookSelectClassModalBox = styled(ModalBox)`
-  width: 640px;
-  max-height: 640px;
+  width: 40rem;
+  max-height: 40rem;
 
-  padding: 0 80px;
-  padding-top: 64px;
-  padding-bottom: 48px;
+  padding: 0 5rem;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
 
   // 모달 타이틀
   > p:first-child {
-    margin-bottom: 48px;
+    margin-bottom: 3rem;
   }
 `;
 
 export const WorkbookExportRadioBox = styled.div`
   display: flex;
 
-  gap: 32px;
+  gap: 2rem;
 `;
 
 export const WorkbookExportRadioCircle = styled.div`
   /*  */
   position: absolute;
   top: 25%;
-  left: 4px;
-  width: 24px;
-  height: 24px;
+  left: 0.25rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
   background: white;
-  border: 1px solid #ccc;
+  border: 0.0625rem solid #ccc;
 `;
 
-export const WorkbookExportRadioLabel = styled.label<{ isChecked: boolean }>`
+export const WorkbookExportRadioLabel = styled.label<{ isDisabled: boolean; isChecked: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  padding: 1rem 2rem;
+  padding: 16px 32px;
 
-  background: ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[50] : "white")};
-  border: 0.0625rem solid
+  background: ${({ theme, isDisabled, isChecked }) =>
+    isDisabled ? theme.colors.Gray[100] : isChecked ? theme.colors.Lime[50] : "white"};
+  border: 1px solid
     ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[700] : theme.colors.Gray[500])};
   color: ${({ theme, isChecked }) => (isChecked ? theme.colors.Lime[700] : theme.colors.Gray[500])};
   font-weight: bold;
-  border-radius: 1rem;
+  border-radius: 16px;
 
   cursor: pointer;
 
   svg {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
 
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
   }
 `;
 
@@ -72,23 +73,23 @@ export const WorkbookClassBtnsBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 16px;
+  gap: 1rem;
   overflow: auto;
 `;
 
 export const WorkbookClassBtn = styled.button<{ isSelected: boolean }>`
-  min-width: 25rem;
+  min-width: 400px;
 
-  padding: 12px 1rem;
+  padding: 0.75rem 16px;
 
   background: ${({ theme, isSelected }) => (isSelected ? theme.colors.Lime[700] : "white")};
-  border: 2px solid ${({ theme }) => theme.colors.Lime[700]};
-  border-radius: 24px;
+  border: 0.125rem solid ${({ theme }) => theme.colors.Lime[700]};
+  border-radius: 1.5rem;
   font-weight: 600;
   color: ${({ theme, isSelected }) => (isSelected ? "white" : theme.colors.Lime[700])};
 
   @media ${({ theme }) => theme.tablet} {
-    min-width: 25rem;
+    min-width: 400px;
   }
 `;
 
@@ -98,12 +99,12 @@ export const WorkbookClassModalFooterBox = styled.div`
   flex-direction: column;
   justify-content: flex-end;
 
-  gap: 1.5rem;
-  margin-top: 72px;
+  gap: 24px;
+  margin-top: 4.5rem;
 
   // 클래스 선택 문구
   p {
-    font-size: 14px;
+    font-size: 0.875rem;
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
 
@@ -115,28 +116,28 @@ export const WorkbookClassModalFooterBox = styled.div`
 
 // 출제 세팅 모달
 export const WorkbookSettingModalBox = styled(ModalBox)`
-  width: 640px;
-  min-height: 640px;
+  width: 40rem;
+  min-height: 40rem;
 
-  padding: 0 80px;
-  padding-top: 64px;
-  padding-bottom: 48px;
+  padding: 0 5rem;
+  padding-top: 4rem;
+  padding-bottom: 3rem;
 
   > div {
     width: 100%;
   }
 
   p {
-    margin-bottom: 1rem;
+    margin-bottom: 16px;
 
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
 
   hr {
     width: 100%;
-    height: 0.8px;
+    height: 0.05rem;
 
-    margin: 24px 0;
+    margin: 1.5rem 0;
 
     background-color: ${({ theme }) => theme.colors.Gray[300]};
     border: none;
@@ -146,11 +147,11 @@ export const WorkbookSettingModalBox = styled(ModalBox)`
 export const WorkbookSettingTitleInput = styled.input`
   width: 100%;
 
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 3rem;
+  padding: 4px 8px;
+  margin-bottom: 48px;
 
   border: none;
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: bold;
   text-align: center;
 
@@ -159,8 +160,8 @@ export const WorkbookSettingTitleInput = styled.input`
   }
 
   :focus {
-    outline: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
-    border-radius: 4px;
+    outline: 0.0313rem solid ${({ theme }) => theme.colors.Gray[500]};
+    border-radius: 0.25rem;
   }
 `;
 
@@ -184,12 +185,12 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
   /* input[type="time"]::-webkit-datetime-edit-hour-field {
     background-color: #f2f4f5;
     border-radius: 15%;
-    padding: 19px 13px;
+    padding: 1.1875rem .8125rem;
   }
   input[type="time"]::-webkit-datetime-edit-minute-field {
     background-color: #f2f4f5;
     border-radius: 15%;
-    padding: 19px 13px;
+    padding: 1.1875rem .8125rem;
   } */
 
   /* input[type="time"]::-webkit-inner-spin-button {
@@ -197,7 +198,7 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
   } */
 
   /* input[type="time"]::-webkit-calendar-picker-indicator {
-    border: 1px solid red;
+    border: .0625rem solid red;
     background-color: red;
     fill: red;
     color: red;
@@ -213,10 +214,10 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
 export const WorkbookSettingRadioBox = styled.div`
   display: flex;
 
-  gap: 32px;
+  gap: 2rem;
 
   input {
-    margin-right: 8px;
+    margin-right: 0.5rem;
   }
 `;
 
@@ -224,11 +225,19 @@ export const WorkbookSettingModalInputsBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 24px;
+  gap: 1.5rem;
 `;
 
 export const WorkbookSettingModalTimeBox = styled.div<{ disabled: boolean }>`
   > p {
     color: ${({ theme, disabled }) => disabled && theme.colors.Gray[300]};
   }
+`;
+
+export const NotOriginalParagraph = styled.p`
+  background-color: ${({ theme }) => theme.colors.Orange[100]};
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: ${({ theme }) => theme.colors.Orange[900]};
+  font-size: 0.875rem;
 `;

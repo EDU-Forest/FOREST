@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface WorkbookDetailState {
   workbook: WorkbookType;
-//   questionSummary: {
-//     id: number;
-//     title: string;
-//   }[];
+  //   questionSummary: {
+  //     id: number;
+  //     title: string;
+  //   }[];
 }
 
 const initialState: WorkbookDetailState = {
@@ -21,12 +21,12 @@ const initialState: WorkbookDetailState = {
     volume: 0,
     isOriginal: false,
   },
-//   questionSummary: [
-//     {
-//       title: "",
-//       id: 0,
-//     },
-//   ],
+  //   questionSummary: [
+  //     {
+  //       title: "",
+  //       id: 0,
+  //     },
+  //   ],
 };
 
 const workbookDetailSlice = createSlice({
@@ -39,9 +39,12 @@ const workbookDetailSlice = createSlice({
     // setQuestionSummary(state, action) {
     //   state.questionSummary = action.payload;
     // },
+    setIsPublic(state) {
+      state.workbook.isPublic = !state.workbook.isPublic;
+    },
   },
 });
 
-export const { setWorkbook } = workbookDetailSlice.actions;
+export const { setWorkbook, setIsPublic } = workbookDetailSlice.actions;
 
 export default workbookDetailSlice.reducer;
