@@ -82,7 +82,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
       return;
     }
     // if (methodType === "POST") {
-      postMutate(id);
+    postMutate(id);
     // } else {
     //   patchMutate(id);
     // }
@@ -127,7 +127,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {usedCnt}
               </div>
             </StyledWorkbookReactionBtnsBox> */}
-            {workbook.isOriginal && (
+            {workbook.isOriginal && !workbook.isDeploy && (
               <div>
                 {isEditing ? (
                   <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
