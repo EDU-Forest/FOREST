@@ -31,8 +31,10 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   };
 
   const chosenRelease = () => {
-    console.log(data);
     releaseWorkbookApi(workbook.workbookId);
+    if (data.code === 204) {
+      setIsOpen(false);
+    }
   };
 
   const chosenPdf = async () => {
