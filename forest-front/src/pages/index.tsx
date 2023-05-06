@@ -7,8 +7,9 @@ import { useRouter } from "next/router";
 import EmailAuth from "@/features/home/EmailAuth";
 import UserForm from "@/features/home/UserForm";
 import Spinner from "@/components/Spinner/Spinner";
+import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
 
-export default function Home() {
+function Home() {
   const router = useRouter();
   const [modalState, setModalState] = useState("");
 
@@ -35,3 +36,5 @@ export default function Home() {
     </FullScreen>
   );
 }
+
+export default avoidDuplicateLoginAuth(Home);
