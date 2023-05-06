@@ -667,7 +667,7 @@ public class StudyService {
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
 
         if (problemList == null)
-            return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
 
 
         List<GetDescriptionResponseDto> descript = new ArrayList<>();
@@ -793,7 +793,7 @@ public class StudyService {
 
         /* 반 문항별 정답율 업데이트 */
         ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, problemList)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_ANSWER_NOT_FOUND));
 
         classAnswerRate.updateClassAnswerRate(numOfCorrectStudent * 100 / ssp.size(), 0);
 
@@ -851,9 +851,11 @@ public class StudyService {
                     correctNum++;
             }
             int correctRate = correctNum * 100 / studentStudyProblemResult.size();
-            ClassAnswerRate classAnswerRate = new ClassAnswerRate();
-            classAnswerRate.createClassAnswerRate(study, list, correctRate, 100 - correctRate);
-            classAnswerRateRepository.save(classAnswerRate);
+            /* 반 문항별 정답율 업데이트 */
+            ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, list)
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_ANSWER_NOT_FOUND));
+            classAnswerRate.updateClassAnswerRateAll(study, list, correctRate, 100 - correctRate);
+
             if (list.getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
                 descriptNum++;
 
