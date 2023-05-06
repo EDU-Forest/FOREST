@@ -1,6 +1,7 @@
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
 import { AnalysisTitle } from "@/features/class/analysis/StudyAnalysis.style";
 import { FullScreen } from "@/styles/container";
+import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
 
 interface ServerProps {
@@ -13,7 +14,7 @@ interface Iprops {
   studyId: number;
 }
 
-export default function StudyAnalysisStudent({ studyId }: Iprops) {
+function StudyAnalysisStudent({ studyId }: Iprops) {
   const router = useRouter();
   const goToBack = () => {
     router.back();
@@ -37,3 +38,5 @@ export const getServerSideProps = async ({ query: { id } }: ServerProps) => {
     },
   };
 };
+
+export default withAuth(StudyAnalysisStudent);

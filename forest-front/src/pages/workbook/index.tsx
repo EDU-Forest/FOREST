@@ -6,9 +6,10 @@ import MadeOneselfWorkbook from "@/features/workbook/MadeOneselfWorkbook";
 import UsedWorkbook from "@/features/workbook/UsedWorkbook";
 import WorkbookTab from "@/features/workbook/WorkbookTab";
 import { Container, FullScreen } from "@/styles/container";
+import withAuth from "@/utils/withAuth";
 import { useEffect, useState } from "react";
 
-export default function Workbook() {
+function Workbook() {
   const [selectedType, setSelectedType] = useState("like");
 
   const { data: { workbookList: list } = { workbookList: [] }, refetch } =
@@ -36,3 +37,5 @@ export default function Workbook() {
     </FullScreen>
   );
 }
+
+export default withAuth(Workbook);

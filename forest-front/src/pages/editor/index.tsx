@@ -26,8 +26,9 @@ import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery
 import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 import { resetSelectWorkbook, setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
+import withAuth from "@/utils/withAuth";
 
-export default function Editor() {
+function Editor() {
   const dispatch = useDispatch();
 
   const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
@@ -81,3 +82,5 @@ export default function Editor() {
     </FullScreen>
   );
 }
+
+export default withAuth(Editor);

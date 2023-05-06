@@ -8,8 +8,9 @@ import { dateToMinute, dateToSecond } from "@/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import TestEnd from "@/features/test/index/TestEnd";
+import withAuth from "@/utils/withAuth";
 
-export default function Test() {
+function Test() {
   const { endTime } = useSelector((state: RootState) => state.exam);
 
   const [toggleModal, setToggleModal] = useState(false);
@@ -69,6 +70,8 @@ export default function Test() {
     </StyledTestContainer>
   );
 }
+
+export default withAuth(Test);
 
 export async function getServerSideProps({ params: { id } }: { params: { id: string } }) {
   return {

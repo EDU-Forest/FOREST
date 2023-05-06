@@ -15,6 +15,7 @@ import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal
 import { RootState } from "@/stores/store";
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
+import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -136,4 +137,4 @@ function WorkbookDetail() {
   );
 }
 
-export default WorkbookDetail;
+export default withAuth(WorkbookDetail);

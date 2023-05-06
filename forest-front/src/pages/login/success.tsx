@@ -4,11 +4,12 @@ import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { FullScreen } from "@/styles/container";
 import { setLocalStorage } from "@/utils/localStorage";
+import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-export default function LoginSuccess() {
+function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -42,6 +43,8 @@ export default function LoginSuccess() {
     </LoginSuccessLayout>
   );
 }
+
+export default withAuth(LoginSuccess);
 
 export async function getServerSideProps() {
   return {
