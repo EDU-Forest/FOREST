@@ -3,6 +3,7 @@ import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { FullScreen } from "@/styles/container";
+import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
 import { setLocalStorage } from "@/utils/localStorage";
 import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
@@ -44,7 +45,7 @@ function LoginSuccess() {
   );
 }
 
-export default LoginSuccess;
+export default avoidDuplicateLoginAuth(LoginSuccess);
 
 export async function getServerSideProps() {
   return {
