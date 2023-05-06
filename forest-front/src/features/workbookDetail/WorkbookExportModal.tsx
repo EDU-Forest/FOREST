@@ -3,11 +3,13 @@ import { ModalBtnsBox } from "@/styles/modal";
 import { useState } from "react";
 import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/ai";
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
-import { WorkbookExportModalBox } from "./WorkbookModal.style";
+import { NotOriginalParagraph, WorkbookExportModalBox } from "./WorkbookModal.style";
 import WorkbookPdfSave from "./WorkbookPdfSave";
 import useWorkbookDetailReleasePatch from "@/apis/workbookDetail/useWorkbookDetailReleasePatch";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+// import useIsOriginalWorkbook from "@/apis/workbookDetail/useIsOriginalWorkbookQuery";
+// import { useRouter } from "next/router";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +26,12 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   const [isSavePdf, setIsSavePdf] = useState(false);
   const { data, mutate: releaseWorkbookApi } = useWorkbookDetailReleasePatch();
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
+  const { isOriginal } = workbook;
+
+  // const router = useRouter();
+  // const wId = router.query.wId;
+
+  // useIsOriginalWorkbook(typeof wId === "string" ? parseInt(wId) : -1);
 
   const chosenSet = () => {
     setIsOpen(false);
@@ -31,7 +39,6 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   };
 
   const chosenRelease = () => {
-    console.log(data);
     releaseWorkbookApi(workbook.workbookId);
   };
 
@@ -40,9 +47,9 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   };
 
   const exports: ExportType[] = [
+    { value: "pdf", text: "PDF", img: <AiOutlineFilePdf />, action: chosenPdf },
     { value: "set", text: "출제", img: <AiOutlineEdit />, action: chosenSet },
     { value: "release", text: "배포", img: <AiOutlineShareAlt />, action: chosenRelease },
-    { value: "pdf", text: "PDF", img: <AiOutlineFilePdf />, action: chosenPdf },
   ];
 
   const [value, setValue] = useState(exports[0].value);
@@ -67,7 +74,17 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
       ) : (
         <WorkbookExportModalBox>
           <p>내보내기 방식을 선택해주세요.</p>
-          <WorkbookExportRadioGroup exports={exports} value={value} setValue={setValue} />
+          {!isOriginal && (
+            <NotOriginalParagraph>
+              직접 제작한 문제집 외에는 PDF 기능만 사용 가능합니다.
+            </NotOriginalParagraph>
+          )}
+          <WorkbookExportRadioGroup
+            isOriginal={isOriginal}
+            exports={exports}
+            value={value}
+            setValue={setValue}
+          />
           <ModalBtnsBox>
             <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
             <SmallBtn onClick={handleClickChoose} colored={true}>

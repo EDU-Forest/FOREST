@@ -2,12 +2,14 @@ import { IWorkbookBySelf } from "@/types/Workbook";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface EditorWorkbookState {
-  curWorkbookIdx: number;
+  curWorkbookId: number;
+  curWorkbookTitle: string;
   workbooksBySelf: IWorkbookBySelf[];
 }
 
 const initialState: EditorWorkbookState = {
-  curWorkbookIdx: 0,
+  curWorkbookId: 0,
+  curWorkbookTitle: "",
   workbooksBySelf: [{ workbookId: -1, title: "" }],
 };
 
@@ -16,7 +18,8 @@ const editorWorkbookSlice = createSlice({
   initialState,
   reducers: {
     setSelectWorkbook(state, action) {
-      state.curWorkbookIdx = action.payload;
+      state.curWorkbookId = action.payload.workbookId;
+      state.curWorkbookTitle = action.payload.title;
     },
     setWorkbookBySelf(state, action) {
       state.workbooksBySelf = action.payload;

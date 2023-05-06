@@ -21,7 +21,7 @@ interface Iprops {
 export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
   const { editorSave } = useEditorSave();
-  const { curWorkbookIdx, workbooksBySelf } = useSelector(
+  const { curWorkbookId, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
 
@@ -37,13 +37,13 @@ export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   };
 
   // 2. 현재 문제집 변경
-  const selectWorkbook = (idx: number) => {
-    dispatch(setSelectWorkbook(idx));
+  const selectWorkbook = (workbookId: number, title: string) => {
+    dispatch(setSelectWorkbook({ workbookId, title }));
   };
 
-  const selectWorkbookHandler = (idx: number) => {
+  const selectWorkbookHandler = (workbookId: number, title: string) => {
     saveData(() => {
-      selectWorkbook(idx);
+      selectWorkbook(workbookId, title);
     });
     setControlDropdown(false);
   };
@@ -56,9 +56,9 @@ export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
             {workbooksBySelf?.map((item, idx) => (
               <ClassSelectDropdownEachItem
                 key={`workbook-${idx}`}
-                onClick={() => selectWorkbookHandler(idx)}
+                onClick={() => selectWorkbookHandler(item.workbookId, item.title)}
               >
-                {idx === curWorkbookIdx && <ClassSelectCircle />} {item.title}
+                {item.workbookId === curWorkbookId && <ClassSelectCircle />} {item.title}
               </ClassSelectDropdownEachItem>
             ))}
           </ClassSelectDropdownEach>
