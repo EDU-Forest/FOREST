@@ -22,6 +22,10 @@ services:
       S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
       S3_BUCKET: ${S3_BUCKET}
+      GCP_LOCATION: ${GCP_LOCATION}
+      GCP_ID: ${GCP_ID}
+      GCP_BUCKET: ${GCP_BUCKET}
+
     ports:
       - 9011:9011
     restart: always
