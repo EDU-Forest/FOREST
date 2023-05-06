@@ -14,15 +14,17 @@ public class TeacherWorkbookDto {
     private String title;
     private String workbookImgPath;
     private Boolean isBookmarked;
+    private Boolean isPublic;
     private int bookmarkCount;
     private int scrapCount;
 
 
     @Builder
-    public TeacherWorkbookDto(Long workbookId, Boolean isOriginal, Boolean isBookmarked, String title, String workbookImgPath, int bookmarkCount, int scrapCount) {
+    public TeacherWorkbookDto(Long workbookId, Boolean isOriginal, Boolean isBookmarked, String title, String workbookImgPath, Boolean isPublic, int bookmarkCount, int scrapCount) {
         this.workbookId = workbookId;
         this.isOriginal = isOriginal;
         this.isBookmarked = isBookmarked;
+        this.isPublic = isPublic;
         this.title = title;
         this.workbookImgPath = workbookImgPath;
         this.bookmarkCount = bookmarkCount;
