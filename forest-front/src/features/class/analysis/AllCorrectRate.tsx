@@ -12,7 +12,6 @@ export default function AllCorrectRate() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
   const { data, isLoading } = useAllAnswerRateQuery(nowStudyId);
-  console.log("정답률", data);
 
   return (
     <>
