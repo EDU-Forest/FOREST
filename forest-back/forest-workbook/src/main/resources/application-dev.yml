@@ -30,13 +30,13 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-  cloud:
-    gcp:
-      storage:
-        credentials:
-          location: ${GCP_LOCATION}
-        project-id: ${GCP_ID}
-        bucket: ${GCP_BUCKET}
+#  cloud:
+#    gcp:
+#      storage:
+#        credentials:
+#          location: ${GCP_LOCATION}
+#        project-id: ${GCP_ID}
+#        bucket: ${GCP_BUCKET}
 
 notification:
   mattermost:

@@ -175,7 +175,7 @@ public class WorkbookController {
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
-    @PatchMapping("/problem/img")
+    @PostMapping ("/problem/img")
     @ApiOperation(value = "문제 이미지 등록하기", notes = "문제 이미지를 등록합니다.")
     public ResponseSuccessDto<?> createProblemImg(
             HttpServletRequest request,
