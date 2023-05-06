@@ -3,9 +3,6 @@ import html2canvas from "html2canvas";
 import jspdf from "jspdf";
 import { useEffect } from "react";
 import {
-  StyledQuestionChoiceNumBox,
-  StyledQuestionDetailChoiceBox,
-  StyledQuestionDetailChoiceListBox,
   StyledQuestionDetailNumBox,
   StyledQuestionDetailTextBox,
   StyledQuestionDetailTitleBox,
@@ -13,142 +10,17 @@ import {
   WorkBookPdfBoxQuestionsBox,
   WorkBookPdfHeaderBox,
 } from "./WorkbookDetail.style";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import QuestionChoiceList from "@/components/Question/QuestionChoiceList";
 
 interface IProps {
   setIsSavePdf: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function WorkbookPdfSave({ setIsSavePdf }: IProps) {
-  const workbook: WorkbookType = {
-    workbookId: 1,
-    title: "수능 100제",
-    image: "",
-    description: `ENGLISH 평가문제집 설명글`,
-    // desc: `ENGLISH 평가문제집 설명글입니다.
-    // 설명글은 글자 제한이 있어야할 것 같습니다.
-    // 현재 화면 기준으로`,
-    isPublic: true,
-    bookmarkCount: 12,
-    scrapCount: 1,
-    volume: 4,
-  };
-
-  let questions: QuestionType[] = [
-    {
-      problemId: 1,
-      problemNum: 1,
-      type: "객관식",
-      title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
-      text: `It is very unfortunate that I need to be drafting this letter. However, the worsening situation has forced me to submit a formal complaint. I have been renting from you for 0 years and you would agree that there is no doubt that I have paid rent every month either on time or even sometimes early. However, despite this, there has been no effort whatsoever on your part to deal with the noise disturbance of the neighboring unit I have brought to your attention multiple times. The noise which I have to deal with in the wee hours is terrible. I am afraid that I cannot stand the loud music happening at all hours in the next unit any more. Besides this, they leave a pile of garbage at my doorstep almost every other day. I hope you look into this matter at your earliest convenience.`,
-      point: 10,
-      answer: "",
-      problemImgPath: "",
-      imgIsEmpty: false,
-      textIsEmpty: false,
-      itemList: [
-        {
-          id: 1,
-          no: 1,
-          content: "컨텐트",
-          isImage: true,
-        },
-        {
-          id: 1,
-          no: 2,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 3,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 4,
-          content: "컨텐트",
-          isImage: false,
-        },
-      ],
-    },
-    {
-      problemId: 1,
-      problemNum: 1,
-      type: "객관식",
-      title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
-      text: `It is very unfortunate that I need to be drafting this letter. However, the worsening situation has forced me to submit a formal complaint. I have been renting from you for 0 years and you would agree that there is no doubt that I have paid rent every month either on time or even sometimes early. However, despite this, there has been no effort whatsoever on your part to deal with the noise disturbance of the neighboring unit I have brought to your attention multiple times. The noise which I have to deal with in the wee hours is terrible. I am afraid that I cannot stand the loud music happening at all hours in the next unit any more. Besides this, they leave a pile of garbage at my doorstep almost every other day. I hope you look into this matter at your earliest convenience.`,
-      point: 10,
-      answer: "",
-      problemImgPath: "",
-      imgIsEmpty: false,
-      textIsEmpty: false,
-      itemList: [
-        {
-          id: 1,
-          no: 1,
-          content: "컨텐트",
-          isImage: true,
-        },
-        {
-          id: 1,
-          no: 2,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 3,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 4,
-          content: "컨텐트",
-          isImage: false,
-        },
-      ],
-    },
-    {
-      problemId: 1,
-      problemNum: 1,
-      type: "객관식",
-      title: "다음 글의 제목으로 가장 적절한 것을 고르시오",
-      text: `It is very unfortunate that I need to be drafting this letter. However, the worsening situation has forced me to submit a formal complaint. I have been renting from you for 0 years and you would agree that there is no doubt that I have paid rent every month either on time or even sometimes early. However, despite this, there has been no effort whatsoever on your part to deal with the noise disturbance of the neighboring unit I have brought to your attention multiple times. The noise which I have to deal with in the wee hours is terrible. I am afraid that I cannot stand the loud music happening at all hours in the next unit any more. Besides this, they leave a pile of garbage at my doorstep almost every other day. I hope you look into this matter at your earliest convenience.`,
-      point: 10,
-      answer: "",
-      problemImgPath: "",
-      imgIsEmpty: false,
-      textIsEmpty: false,
-      itemList: [
-        {
-          id: 1,
-          no: 1,
-          content: "컨텐트",
-          isImage: true,
-        },
-        {
-          id: 1,
-          no: 2,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 3,
-          content: "컨텐트",
-          isImage: false,
-        },
-        {
-          id: 1,
-          no: 4,
-          content: "컨텐트",
-          isImage: false,
-        },
-      ],
-    },
-  ];
+  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
   useEffect(() => {
     const savePdf = async () => {
@@ -205,27 +77,22 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       <WorkBookPdfBoxQuestionsBox>
         {questions.map((question, i) => (
           <div>
-            <StyledQuestionDetailTitleBox>
-              <StyledQuestionDetailNumBox>{i + 1}</StyledQuestionDetailNumBox>
-              <span>{question?.title}</span>
-            </StyledQuestionDetailTitleBox>
-
-            {/* 지문이 있다면 지문 렌더링 */}
-            {question.text && (
-              <StyledQuestionDetailTextBox>{question.text}</StyledQuestionDetailTextBox>
+            {/* 문항이 존재할 경우에만 렌더링 */}
+            {question && (
+              <StyledQuestionDetailTitleBox>
+                <StyledQuestionDetailNumBox>{i + 1}</StyledQuestionDetailNumBox>
+                <span>{question?.title}</span>
+              </StyledQuestionDetailTitleBox>
             )}
+            {/* 지문이 있다면 지문 렌더링 */}
+            {question?.text && (
+              <StyledQuestionDetailTextBox>{question?.text}</StyledQuestionDetailTextBox>
+            )}
+            {/* 이미지가 있다면 이미지 렌더링 */}
+            {question?.problemImgPath && <img src={question?.problemImgPath} alt="question" />}
 
             {/* 객관식 보기 */}
-            <StyledQuestionDetailChoiceListBox>
-              {question.itemList.map((item) => {
-                return (
-                  <StyledQuestionDetailChoiceBox>
-                    <StyledQuestionChoiceNumBox>{item.no}</StyledQuestionChoiceNumBox>
-                    <span>{item.content}</span>
-                  </StyledQuestionDetailChoiceBox>
-                );
-              })}
-            </StyledQuestionDetailChoiceListBox>
+            {question?.type === "MULTIPLE" && <QuestionChoiceList items={question?.itemList} />}
           </div>
         ))}
       </WorkBookPdfBoxQuestionsBox>
