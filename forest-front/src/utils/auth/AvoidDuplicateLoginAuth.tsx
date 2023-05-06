@@ -2,7 +2,7 @@ import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getLocalStorage } from "./localStorage";
+import { getLocalStorage } from "../localStorage";
 
 const avoidDuplicateLoginAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
   const AuthComponent = (props: P) => {

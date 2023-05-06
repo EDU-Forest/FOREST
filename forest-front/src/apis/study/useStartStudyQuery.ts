@@ -1,5 +1,5 @@
 import { setStudyStart } from "@/stores/exam/exam";
-import studyAxios from "@/utils/studyAxios";
+import studyAxios from "@/utils/customAxios/studyAxios";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 

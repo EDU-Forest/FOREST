@@ -7,7 +7,7 @@ import DashboardBanner from "@/features/dashboard/DashboardBanner";
 import Schedule from "@/features/dashboard/Schedule";
 import Memo from "@/features/dashboard/teacher/Memo";
 import { FullScreen } from "@/styles/container";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 
 function TeacherDashBoard() {
   return (

@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
 
 interface IData {

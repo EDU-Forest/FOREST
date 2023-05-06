@@ -1,7 +1,7 @@
 import ArrowLeft from "@/components/Arrow/ArrowLeft";
 import { AnalysisTitle } from "@/features/class/analysis/StudyAnalysis.style";
 import { FullScreen } from "@/styles/container";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 
 interface ServerProps {

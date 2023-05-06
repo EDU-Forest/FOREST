@@ -1,6 +1,6 @@
 // 문제집 공개 여부 수정
 
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
 
 const fetcher = (workbookId: number) =>

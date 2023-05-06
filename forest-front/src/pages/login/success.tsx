@@ -3,9 +3,9 @@ import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { FullScreen } from "@/styles/container";
-import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
+import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
 import { setLocalStorage } from "@/utils/localStorage";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -45,7 +45,7 @@ function LoginSuccess() {
   );
 }
 
-export default avoidDuplicateLoginAuth(LoginSuccess);
+export default LoginSuccess;
 
 export async function getServerSideProps() {
   return {

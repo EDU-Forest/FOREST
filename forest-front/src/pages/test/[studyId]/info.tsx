@@ -5,7 +5,7 @@ import { FullScreen } from "@/styles/container";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 
 function TestInfo() {
   const dispatch = useDispatch();

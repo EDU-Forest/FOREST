@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";

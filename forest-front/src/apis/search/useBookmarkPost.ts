@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 

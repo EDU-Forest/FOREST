@@ -6,7 +6,7 @@ import MadeOneselfWorkbook from "@/features/workbook/MadeOneselfWorkbook";
 import UsedWorkbook from "@/features/workbook/UsedWorkbook";
 import WorkbookTab from "@/features/workbook/WorkbookTab";
 import { Container, FullScreen } from "@/styles/container";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useEffect, useState } from "react";
 
 function Workbook() {

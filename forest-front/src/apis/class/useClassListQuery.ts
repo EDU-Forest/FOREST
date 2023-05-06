@@ -1,4 +1,4 @@
-import authAxios from "@/utils/authAxios";
+import authAxios from "@/utils/customAxios/authAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 

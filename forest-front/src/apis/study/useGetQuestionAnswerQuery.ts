@@ -1,6 +1,6 @@
 // 문제 받을 때 답까지 줘서 필요없을 것 같습니다.
 
-// import studyAxios from "@/utils/studyAxios";
+// import studyAxios from "@/utils/customAxios/studyAxios";
 // import { useQuery } from "react-query";
 // import * as queryKeys from "@/constants/queryKeys"
 
