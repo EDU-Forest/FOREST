@@ -280,7 +280,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 내 문제집인 경우 - 삭제, 유저 북마크 전체 삭제
         else {
-            workbookRepository.deleteById(workbookId);
+            workbook.changeIsDeleted(true);
+//            workbookRepository.deleteById(workbookId);
             List<UserWorkbook> userWorkbookList = userWorkbookRepository.findAllByWorkbookId(workbookId);
             for (UserWorkbook userWorkbook : userWorkbookList) {
                 userWorkbook.updateIsScraped(false);
@@ -650,7 +651,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 itemRepository.saveAll(itemList);
             }
 
-            // 문제 리스트 만들기
+            // 문제 만들기
             ProblemList problemList = ProblemList.builder()
                     .workbook(workbook)
                     .problem(problem)
