@@ -60,7 +60,8 @@ public class WorkbookController {
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
 //        userId = Long.valueOf(1);
         return workbookService.getWorkbookAllInfo(userId, workbookId);
     }

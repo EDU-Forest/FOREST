@@ -142,7 +142,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         List<ProblemAllInfoDto> problemAllInfoDtoList = new ArrayList<>();
 
         // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 조회 불가능
-        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
+        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_LIST);
 
         for (ProblemList problemList : problemLists) {
