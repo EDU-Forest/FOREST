@@ -51,7 +51,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
-//    private final Storage storage;
+    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
