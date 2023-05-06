@@ -20,29 +20,9 @@ import EachResult from "./EachResult";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import DescriptiveForm from "./DescriptiveForm";
-import useQuestionAnswerRateQuery from "@/apis/class/analysis/useQuestionAnswerRateQuery";
 import AllCorrectRate from "./AllCorrectRate";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
-
-const examResult: TeacherExamResult = {
-  studyId: 1,
-  title: "킹규림의 수능 100제",
-  startTime: "2023-04-27",
-  endTime: "2023-04-28",
-  userName: "킹규림",
-  studyType: "SELF",
-  scheduleType: "ONGOING",
-  studyCreatedDate: "2023.04.27", // 출제일
-  workbookCreatedDate: "2023.04.27", // 출판일
-  volume: 10, // 문항 수
-  isPublic: false,
-  average: 80,
-  standardDeviation: 8.5, //표준편차
-  averageSolvingTime: 25,
-  totalStudent: 20,
-  participantStudent: 15,
-  takeRate: 80,
-};
+import Loading from "@/components/Loading/Loading";
 
 export default function StudyAnalysis() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
@@ -52,16 +32,13 @@ export default function StudyAnalysis() {
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
-  const { data } = useStudyResultQuery(nowStudyId);
-  console.log("데ㅇㄴ마인ㅁㅇ", data);
-
-  // const { data } = useQuestionAnswerRateQuery(nowStudyId);
+  const { data, isLoading } = useStudyResultQuery(nowStudyId);
 
   return (
     <>
       <AnalysisTitle>
         <ArrowLeft onClick={goToBack} />
-        <p style={{ marginLeft: "2rem" }}>{examResult.title}</p>
+        <p style={{ marginLeft: "2rem" }}>{data?.title}</p>
       </AnalysisTitle>
       <AnalysisContent>
         <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
@@ -73,35 +50,49 @@ export default function StudyAnalysis() {
                 <AllCorrectRate />
               </AnalysisUpperItem>
               <AnalysisUpperItem>
-                <TotalResult
-                  noMargin
-                  average={data?.average}
-                  standardDeviation={data?.standardDeviation}
-                  averageSolvingTime={data?.averageSolvingTime}
-                />
+                {isLoading ? (
+                  <Loading width={5} height={5} />
+                ) : (
+                  <TotalResult
+                    noMargin
+                    average={data?.average}
+                    standardDeviation={data?.standardDeviation}
+                    averageSolvingTime={data?.averageSolvingTime}
+                  />
+                )}
               </AnalysisUpperItem>
               <AnalysisUpperItem>
-                <AnalysisSubTitle>응시율</AnalysisSubTitle>
-                <TakeRateChart
-                  noTitle
-                  totalStudent={data?.totalStudent}
-                  participantStudent={data?.participantStudent}
-                  takeRate={data?.takeRate}
-                />
-                <div style={{ textAlign: "center" }}>
-                  <StyledWorkbookStatus status="ONGOING">
-                    {data?.participantStudent}명의 학생이 응시하였습니다
-                  </StyledWorkbookStatus>
-                </div>
+                {isLoading ? (
+                  <Loading width={5} height={5} />
+                ) : (
+                  <>
+                    <AnalysisSubTitle>응시율</AnalysisSubTitle>
+                    <TakeRateChart
+                      noTitle
+                      totalStudent={data?.totalStudent}
+                      participantStudent={data?.participantStudent}
+                      takeRate={data?.takeRate}
+                    />
+                    <div style={{ textAlign: "center" }}>
+                      <StyledWorkbookStatus status="ONGOING">
+                        {data?.participantStudent}명의 학생이 응시하였습니다
+                      </StyledWorkbookStatus>
+                    </div>
+                  </>
+                )}
               </AnalysisUpperItem>
               <AnalysisUpperItem>
-                <ClassWorkbookInfo
-                  noMargin
-                  studyCreatedDate={data?.studyCreatedDate}
-                  studyType={data?.studyType}
-                  volume={data?.volume}
-                  isPublic={data?.isPublic}
-                />
+                {isLoading ? (
+                  <Loading width={5} height={5} />
+                ) : (
+                  <ClassWorkbookInfo
+                    noMargin
+                    studyCreatedDate={data?.studyCreatedDate}
+                    studyType={data?.studyType}
+                    volume={data?.volume}
+                    isPublic={data?.isPublic}
+                  />
+                )}
               </AnalysisUpperItem>
             </AnalysisUpper>
             {/* 문항별 정답률 */}

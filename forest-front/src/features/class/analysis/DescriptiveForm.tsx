@@ -1,5 +1,10 @@
 import SmallBtn from "@/components/Button/SmallBtn";
-import { DescriptiveFormBtn, DescriptiveFormWrapper } from "./DescriptiveForm.style";
+import {
+  DescriptiveFormBtn,
+  DescriptiveFormUpperBox,
+  DescriptiveFormWrapper,
+  NoDescription,
+} from "./DescriptiveForm.style";
 import DescriptiveFormItem from "./DescriptiveFormItem";
 import DescriptiveFormAnswer from "./DescriptiveFormAnswer";
 import { useSelector } from "react-redux";
@@ -60,7 +65,10 @@ export default function DescriptiveForm() {
       ) : (
         <>
           {!data ? (
-            <>데이터 없음</>
+            <NoDescription>
+              <img src="/images/Banner_Teacher.png" />
+              <span>채점이 완료되었습니다.</span>
+            </NoDescription>
           ) : (
             <>
               <DescriptiveFormBtn>
