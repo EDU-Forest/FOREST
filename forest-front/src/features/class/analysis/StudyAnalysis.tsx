@@ -14,7 +14,6 @@ import AnalysisToggle from "./AnalysisToggle";
 import TotalResult from "../TotalResult";
 import ClassWorkbookInfo from "../ClassWorkbookInfo";
 import TakeRateChart from "../TakeRateChart";
-import CorrectRateDonut from "./CorrectRateDonut";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
 import QuestionCorrectRate from "./QuestionCorrectRate";
 import EachResult from "./EachResult";
@@ -22,7 +21,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import DescriptiveForm from "./DescriptiveForm";
 import useQuestionAnswerRateQuery from "@/apis/class/analysis/useQuestionAnswerRateQuery";
-import useAllAnswerRateQuery from "@/apis/class/analysis/useAllAnswerRateQuery";
+import AllCorrectRate from "./AllCorrectRate";
+import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 
 const examResult: TeacherExamResult = {
   studyId: 1,
@@ -44,12 +44,6 @@ const examResult: TeacherExamResult = {
   takeRate: 80,
 };
 
-const answerRate: AnswerRate = {
-  correctAnswerRate: 70,
-  incorrectAnswerRate: 20,
-  ungradedAnswerRate: 10,
-};
-
 export default function StudyAnalysis() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
   const router = useRouter();
@@ -58,9 +52,10 @@ export default function StudyAnalysis() {
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
-  const { data } = useQuestionAnswerRateQuery(nowStudyId);
-  // const { data } = useAllAnswerRateQuery(studyId as number);
-  console.log("데이터", data);
+  const { data } = useStudyResultQuery(nowStudyId);
+  console.log("데ㅇㄴ마인ㅁㅇ", data);
+
+  // const { data } = useQuestionAnswerRateQuery(nowStudyId);
 
   return (
     <>
@@ -75,43 +70,37 @@ export default function StudyAnalysis() {
           <>
             <AnalysisUpper>
               <AnalysisUpperItem>
-                <AnalysisSubTitle>정답률</AnalysisSubTitle>
-                <CorrectRateDonut answerRate={answerRate} />
-                <div style={{ textAlign: "center" }}>
-                  <StyledWorkbookStatus status="BEFORE">
-                    학생들이 평균적으로 {answerRate.correctAnswerRate}%의 문제를 맞췄습니다
-                  </StyledWorkbookStatus>
-                </div>
+                <AllCorrectRate />
               </AnalysisUpperItem>
               <AnalysisUpperItem>
                 <TotalResult
                   noMargin
-                  average={examResult.average}
-                  standardDeviation={examResult.standardDeviation}
-                  averageSolvingTime={examResult.averageSolvingTime}
+                  average={data?.average}
+                  standardDeviation={data?.standardDeviation}
+                  averageSolvingTime={data?.averageSolvingTime}
                 />
               </AnalysisUpperItem>
               <AnalysisUpperItem>
                 <AnalysisSubTitle>응시율</AnalysisSubTitle>
                 <TakeRateChart
                   noTitle
-                  totalStudent={examResult.totalStudent}
-                  participantStudent={examResult.participantStudent}
-                  takeRate={examResult.takeRate}
+                  totalStudent={data?.totalStudent}
+                  participantStudent={data?.participantStudent}
+                  takeRate={data?.takeRate}
                 />
                 <div style={{ textAlign: "center" }}>
                   <StyledWorkbookStatus status="ONGOING">
-                    {examResult.participantStudent}명의 학생이 응시하였습니다
+                    {data?.participantStudent}명의 학생이 응시하였습니다
                   </StyledWorkbookStatus>
                 </div>
               </AnalysisUpperItem>
               <AnalysisUpperItem>
                 <ClassWorkbookInfo
                   noMargin
-                  studyCreatedDate={examResult.studyCreatedDate}
-                  studyType={examResult.studyType}
-                  volume={examResult.volume}
-                  isPublic={examResult.isPublic}
+                  studyCreatedDate={data?.studyCreatedDate}
+                  studyType={data?.studyType}
+                  volume={data?.volume}
+                  isPublic={data?.isPublic}
                 />
               </AnalysisUpperItem>
             </AnalysisUpper>

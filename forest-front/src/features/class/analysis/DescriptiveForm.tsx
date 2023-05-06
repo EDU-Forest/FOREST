@@ -59,7 +59,7 @@ export default function DescriptiveForm() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          {data?.count === 0 ? (
+          {!data ? (
             <>데이터 없음</>
           ) : (
             <>
