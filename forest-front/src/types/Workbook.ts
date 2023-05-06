@@ -1,5 +1,6 @@
 export interface WorkbookType {
   workbookId: number;
+  workbookImgId: number;
   workbookImgPath: string;
   title: string;
   description: string;
