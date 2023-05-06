@@ -27,9 +27,7 @@ import java.io.UnsupportedEncodingException;
 public class WorkbookController {
 
     private final WorkbookService workbookService;
-//    private final JwtDecoder jwtDecoder;
 
-    // TODO path -> MultipartFile file로 바꾸기
     @GetMapping
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList(
@@ -183,7 +181,7 @@ public class WorkbookController {
 //        JwtDecoder jwtDecoder = new JwtDecoder();
 //        Long userId = jwtDecoder.verifyJWT(request);
 //        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        Long userId = Long.valueOf(0);
         return workbookService.createProblemImg(userId, file);
     }
 
