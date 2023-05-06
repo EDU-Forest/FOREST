@@ -10,6 +10,7 @@ const useWorkbookDetailDelete = () => {
   return useMutation(fetcher, {
     onSuccess: (data) => {
       console.log("문제집 삭제 성공 post", data);
+      return data;
     },
   });
 };

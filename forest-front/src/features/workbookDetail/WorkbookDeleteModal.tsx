@@ -3,12 +3,15 @@ import SmallBtn from "@/components/Button/SmallBtn";
 import { ModalBox, ModalBtnsBox } from "@/styles/modal";
 import { RootState } from "@/stores/store";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface IProps {
   setIsOpenDelete: any;
 }
 
 function WorkbookDeleteModal({ setIsOpenDelete }: IProps) {
+  const router = useRouter();
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
   const { data: res, mutate: workbookDeleteApi } = useWorkbookDetailDelete();
@@ -20,9 +23,14 @@ function WorkbookDeleteModal({ setIsOpenDelete }: IProps) {
   const handleClickDeleteConfirm = () => {
     // api call,성공 후 모달 close
     workbookDeleteApi(workbook.workbookId);
-    console.log(res)
-    setIsOpenDelete(false);
   };
+
+  useEffect(() => {
+    if (res?.code === 204) {
+      setIsOpenDelete(false);
+      router.push(`/workbook`);
+    }
+  }, [res]);
 
   return (
     <ModalBox>
