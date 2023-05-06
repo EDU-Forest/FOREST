@@ -13,7 +13,7 @@ function EditorShortAnswer() {
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
-    setAnswer(questions[curQuestion - 1].answer);
+    setAnswer(questions[curQuestion - 1]?.answer);
   }, [questions[curQuestion - 1]]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
