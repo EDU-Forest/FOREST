@@ -5,8 +5,9 @@ import { FullScreen } from "@/styles/container";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import withAuth from "@/utils/withAuth";
 
-export default function TestInfo() {
+function TestInfo() {
   const dispatch = useDispatch();
   const router = useRouter();
   const studyId = router.query.studyId;
@@ -22,6 +23,8 @@ export default function TestInfo() {
     </FullScreen>
   );
 }
+
+export default withAuth(TestInfo);
 
 export async function getServerSideProps({ params: { studyId } }: { params: { studyId: string } }) {
   return {
