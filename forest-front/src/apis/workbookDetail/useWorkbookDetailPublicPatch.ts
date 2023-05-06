@@ -4,20 +4,16 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useRouter } from "next/router";
 
 const fetcher = async (wId: number) =>
-  await workbookAxios.patch(`/api/workbook/export/${wId}`).then(({ data }) => {
+  await workbookAxios.patch(`/api/workbook/public/${wId}`).then(({ data }) => {
     return data;
   });
 
-const useWorkbookDetailReleasePatch = () => {
-  // const router = useRouter();
-
+const useWorkbookDetailPublicPatch = () => {
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], fetcher, {
     onSuccess: (data) => {
-      // console.log("배포 성공 post", data);
-      // router.push(`/workbook/${data.data.role.workbookInfo.workbookId}`);
-      return data;
+      return data
     },
   });
 };
 
-export default useWorkbookDetailReleasePatch;
+export default useWorkbookDetailPublicPatch;

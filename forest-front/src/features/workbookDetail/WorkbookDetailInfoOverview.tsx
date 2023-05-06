@@ -1,5 +1,9 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
-import { WorkbookIcon } from "@/components/Workbook/Workbook.style";
+import {
+  WorkbookContent,
+  WorkbookContentWrapper,
+  WorkbookIcon,
+} from "@/components/Workbook/Workbook.style";
 import { useEffect, useState } from "react";
 import {
   StyledWorkbookBtnsBox,
@@ -16,6 +20,11 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
+import WorkbookDeleteModal from "./WorkbookDeleteModal";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface IProps {
   id: number;
@@ -34,6 +43,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const [selectedImg, setSelectedImg] = useState(0);
 
   const [isOpenImgEdit, setIsOpenImgEdit] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
   // true(접혀있는 상태)라면 '펼치기' 문구
   // false(펼쳐져있는 상태)라면 '접기' 문구
   const [isFolded, setIsFolded] = useState(true);
@@ -59,6 +69,23 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     setIsOpenImgEdit(true);
   };
   const handleClickDelete = () => {
+    setIsOpenDelete(true);
+  };
+
+  const patchMutate = useBookmarkPatch().mutate;
+  const postMutate = useBookmarkPost().mutate;
+  const deleteMutate = useBookmarkDelete().mutate;
+
+  const pressHeart = () => {
+    if (workbook.isBookmarked) {
+      deleteMutate(id);
+      return;
+    }
+    // if (methodType === "POST") {
+      postMutate(id);
+    // } else {
+    //   patchMutate(id);
+    // }
   };
 
   useEffect(() => {
@@ -76,7 +103,21 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
             <div>{workbook.title}</div>
           )}
           <StyledWorkbookBtnsBox>
-            <StyledWorkbookReactionBtnsBox>
+            {(workbook.bookmarkCount || workbook.bookmarkCount === 0) && (
+              <WorkbookContentWrapper>
+                <WorkbookContent bg>
+                  <span>{workbook.scrapCount} </span>
+                  명이 이용 중이에요
+                </WorkbookContent>
+                <div>
+                  <WorkbookIcon onClick={pressHeart}>
+                    {workbook.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+                  </WorkbookIcon>
+                  <WorkbookContent>{workbook.bookmarkCount}</WorkbookContent>
+                </div>
+              </WorkbookContentWrapper>
+            )}
+            {/* <StyledWorkbookReactionBtnsBox>
               <div>
                 <WorkbookIcon>🧡</WorkbookIcon>
                 {likeCnt}
@@ -85,7 +126,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 <WorkbookIcon>📝</WorkbookIcon>
                 {usedCnt}
               </div>
-            </StyledWorkbookReactionBtnsBox>
+            </StyledWorkbookReactionBtnsBox> */}
             {workbook.isOriginal && (
               <div>
                 {isEditing ? (
@@ -94,7 +135,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                   <StyledTextBtn onClick={handleClickEditing}>수정</StyledTextBtn>
                 )}
                 <span>|</span>
-                <StyledTextBtn>삭제</StyledTextBtn>
+                <StyledTextBtn onClick={handleClickDelete}>삭제</StyledTextBtn>
               </div>
             )}
           </StyledWorkbookBtnsBox>
@@ -129,6 +170,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
           setIsOpenImgEdit={setIsOpenImgEdit}
         />
       )}
+      {isOpenDelete && <WorkbookDeleteModal setIsOpenDelete={setIsOpenDelete} />}
     </>
   );
 }

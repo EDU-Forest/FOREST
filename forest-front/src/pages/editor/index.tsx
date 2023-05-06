@@ -8,7 +8,12 @@ import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
-import { initCurQuestion, initQuestions, setQuestions } from "@/stores/editor/editorQuestions";
+import {
+  initCurQuestion,
+  initDeleteAnswers,
+  initQuestions,
+  setQuestions,
+} from "@/stores/editor/editorQuestions";
 import { IWorkbookBySelf, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -24,22 +29,25 @@ export default function Editor() {
   const dispatch = useDispatch();
 
   const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
+  const { curWorkbookIdx } = useSelector((state: RootState) => state.editorWorkbook);
+  const { workbooksBySelf } = useSelector((state: RootState) => state.editorWorkbook);
 
-  const [workbooksBySelf, setWorkbooksBySelf] = useState<IWorkbookBySelf[]>();
   const [selectQuestionType, setSelectQuestionType] = useState("");
   const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
-
-  // const [questions, setQuestions] = useState<QuestionType[]>([]);
 
   useGetWorkbooksBySelf();
 
   // 현재 문제집 id가 dummy. 추후 수정
-  const {} = useWorkbookDetailQuery(Number(1));
+  const { refetch: getWorkbookApi } = useWorkbookDetailQuery(
+    workbooksBySelf[curWorkbookIdx].workbookId,
+  );
 
   useEffect(() => {
     dispatch(initCurQuestion());
-    dispatch(setQuestions);
-  }, []);
+    dispatch(initDeleteAnswers());
+    dispatch(initQuestions());
+    getWorkbookApi();
+  }, [curWorkbookIdx]);
 
   return (
     <FullScreen>
