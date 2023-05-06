@@ -1,5 +1,9 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
-import { WorkbookIcon } from "@/components/Workbook/Workbook.style";
+import {
+  WorkbookContent,
+  WorkbookContentWrapper,
+  WorkbookIcon,
+} from "@/components/Workbook/Workbook.style";
 import { useEffect, useState } from "react";
 import {
   StyledWorkbookBtnsBox,
@@ -17,6 +21,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
 import WorkbookDeleteModal from "./WorkbookDeleteModal";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface IProps {
   id: number;
@@ -64,6 +72,22 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     setIsOpenDelete(true);
   };
 
+  const patchMutate = useBookmarkPatch().mutate;
+  const postMutate = useBookmarkPost().mutate;
+  const deleteMutate = useBookmarkDelete().mutate;
+
+  const pressHeart = () => {
+    if (workbook.isBookmarked) {
+      deleteMutate(id);
+      return;
+    }
+    // if (methodType === "POST") {
+      postMutate(id);
+    // } else {
+    //   patchMutate(id);
+    // }
+  };
+
   useEffect(() => {
     dispatch(setWorkbook({ ...workbook, workbookImgPath: selectedImg }));
     setEditedImg(`/images/Workbook_Type_${selectedImg}.png`);
@@ -79,7 +103,21 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
             <div>{workbook.title}</div>
           )}
           <StyledWorkbookBtnsBox>
-            <StyledWorkbookReactionBtnsBox>
+            {(workbook.bookmarkCount || workbook.bookmarkCount === 0) && (
+              <WorkbookContentWrapper>
+                <WorkbookContent bg>
+                  <span>{workbook.scrapCount} </span>
+                  명이 이용 중이에요
+                </WorkbookContent>
+                <div>
+                  <WorkbookIcon onClick={pressHeart}>
+                    {workbook.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+                  </WorkbookIcon>
+                  <WorkbookContent>{workbook.bookmarkCount}</WorkbookContent>
+                </div>
+              </WorkbookContentWrapper>
+            )}
+            {/* <StyledWorkbookReactionBtnsBox>
               <div>
                 <WorkbookIcon>🧡</WorkbookIcon>
                 {likeCnt}
@@ -88,7 +126,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 <WorkbookIcon>📝</WorkbookIcon>
                 {usedCnt}
               </div>
-            </StyledWorkbookReactionBtnsBox>
+            </StyledWorkbookReactionBtnsBox> */}
             {workbook.isOriginal && (
               <div>
                 {isEditing ? (
