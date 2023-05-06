@@ -14,8 +14,8 @@ function EditorQuestionText({ question }: IProps) {
   const {toChangeQuestions} = useEditor();
 
   useEffect(() => {
-    setText(question.text);
-  }, [question.text]);
+    setText(question?.text);
+  }, [question?.text]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);

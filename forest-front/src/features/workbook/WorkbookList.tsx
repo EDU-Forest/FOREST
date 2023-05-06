@@ -27,7 +27,9 @@ function WorkbookList({ list }: IProps) {
             id={item?.workbookId}
             title={item?.title}
             bookmarkCount={item?.bookmarkCount}
+            isBookmarked={item.isBookmarked}
             scrapCount={item?.scrapCount}
+            methodType={item?.isBookmarked ? 'DELETE' : 'POST'}
             clickAction={handleClickWorkbook}
           />
         );

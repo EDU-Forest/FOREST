@@ -8,10 +8,11 @@ export interface WorkbookType {
   scrapCount: number;
   volume: number;
   isOriginal: boolean;
+  isBookmarked?: boolean;
 }
 
 export interface QuestionItemType {
-  id: number;
+  itemId: number;
   no: number;
   content: string;
   isImage: boolean;

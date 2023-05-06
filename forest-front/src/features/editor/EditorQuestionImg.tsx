@@ -40,8 +40,8 @@ function EditorQuestionImg({ question }: IProps) {
   };
 
   useEffect(() => {
-    setImgFile(question.problemImgPath);
-  }, [question.problemImgPath]);
+    setImgFile(question?.problemImgPath);
+  }, [question?.problemImgPath]);
 
   return (
     <EditorQuestionImgBox>

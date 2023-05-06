@@ -28,7 +28,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
   const [question, setQuestion] = useState<QuestionType>({
     problemId: 0,
     problemNum: 0,
-    type: "multipleChoice",
+    type: "MULTIPLE",
     title: "",
     text: "",
     answer: "1",
@@ -50,8 +50,8 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
 
   useEffect(() => {
     // 현재 문항의 타이틀이 변경되면 타이틀을 초기화 또는 변경
-    setTitle(question.title);
-  }, [question.title]);
+    setTitle(question?.title);
+  }, [question?.title]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -80,22 +80,22 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
           onChange={handleChangeTitle}
         />
         {/* 지문 여부에 따라 지문 렌더링 */}
-        {!question.textIsEmpty && <EditorQuestionTextInput question={question} />}
+        {!question?.textIsEmpty && <EditorQuestionTextInput question={question} />}
         {/* 이미지 여부에 따라 이미지 렌더링 */}
-        {!question.imgIsEmpty && <EditorQuestionImg question={question} />}
+        {!question?.imgIsEmpty && <EditorQuestionImg question={question} />}
         {/* 객관식 */}
-        {question.type === "MULTIPLE" && (
+        {question?.type === "MULTIPLE" && (
           <EditorMultipleChoice
             question={question}
             curQuestion={curQuestion}
           ></EditorMultipleChoice>
         )}
         {/* ox */}
-        {question.type === "OX" && <EditorOX question={question} curQuestion={curQuestion} />}
+        {question?.type === "OX" && <EditorOX question={question} curQuestion={curQuestion} />}
         {/* 단답식 */}
-        {question.type === "SUBJECTIVE" && <EditorShortAnswer />}
+        {question?.type === "SUBJECTIVE" && <EditorShortAnswer />}
         {/* 서술형 */}
-        {question.type === "DESCRIPT" && <EditorEssay question={question} />}
+        {question?.type === "DESCRIPT" && <EditorEssay question={question} />}
       </EditorQuestionContentBox>
     </>
   );

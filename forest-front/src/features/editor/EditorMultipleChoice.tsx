@@ -33,7 +33,7 @@ function EditorMultipleChoice({ question, curQuestion }: IProps) {
     setItems([
       ...items,
       {
-        id: 0,
+        itemId: 0,
         no: items.length + 1,
         content: "",
         isImage: false,
@@ -43,7 +43,7 @@ function EditorMultipleChoice({ question, curQuestion }: IProps) {
     itemChange([
       ...items,
       {
-        id: 0,
+        itemId: 0,
         no: items.length + 1,
         content: "",
         isImage: false,

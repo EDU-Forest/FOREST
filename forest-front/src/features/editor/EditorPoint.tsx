@@ -16,7 +16,7 @@ function EditorPoint({ curQuestion }: IProps) {
   const [point, setPoint] = useState<number>(0);
 
   useEffect(() => {
-    setPoint(questions[curQuestion - 1].point);
+    setPoint(questions[curQuestion - 1]?.point);
   }, [questions, curQuestion]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
