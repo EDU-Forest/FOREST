@@ -1,4 +1,4 @@
-import studyAxios from "@/utils/studyAxios";
+import studyAxios from "@/utils/customAxios/studyAxios";
 import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 
