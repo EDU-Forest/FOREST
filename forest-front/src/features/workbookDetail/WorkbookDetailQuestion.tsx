@@ -34,9 +34,7 @@ function WorkbookDetailQuestion({
     }
   };
 
-  const handleClickEdit = () => {
-    
-  }
+  const handleClickEdit = () => {};
 
   useEffect(() => {
     getQuestionNum();
@@ -44,12 +42,15 @@ function WorkbookDetailQuestion({
 
   return (
     <StyledWorkbookDetailQuestionBox>
-      <StyledQuestionDetailTitleBox>
-        <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
-        <span>{question?.title}</span>
-        {/* 내가 원작자여야만 수정 가능 */}
-        {isOriginal && <StyledTextBtn>수정</StyledTextBtn>} 
-      </StyledQuestionDetailTitleBox>
+      {/* 문항이 존재할 경우에만 렌더링 */}
+      {question && (
+        <StyledQuestionDetailTitleBox>
+          <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
+          <span>{question?.title}</span>
+          {/* 내가 원작자여야만 수정 가능 */}
+          {isOriginal && <StyledTextBtn>수정</StyledTextBtn>}
+        </StyledQuestionDetailTitleBox>
+      )}
 
       {/* 지문이 있다면 지문 렌더링 */}
       {question?.text && (
