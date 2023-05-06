@@ -28,7 +28,7 @@ function WorkbookDetailQuestionVisibility() {
       <span>공개 여부</span>
       <ToggleBox>
         <span>{isPublic ? "공개" : "비공개"}</span>
-        <Toggle isPublic={isPublic} />
+        <Toggle isPublic={isPublic} setIsPublic={setIsPublic}/>
       </ToggleBox>
     </StyledWorkbookDetailQuestionVisibilityBox>
   );
