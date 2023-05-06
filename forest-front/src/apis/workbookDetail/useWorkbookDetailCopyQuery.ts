@@ -14,7 +14,7 @@ const useWorkbookCopyPostQuery = (wId: number) => {
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], () => fetcher(wId), {
     onSuccess: (data) => {
       console.log("사본 성공 post", data);
-      router.push(`/workbook/${data.data.role.workbookInfo.workbookId}`);
+      router.push(`/workbook/${data.workbookInfoDto.workbookId}`);
     },
   });
 };
