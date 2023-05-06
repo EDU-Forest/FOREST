@@ -21,6 +21,10 @@ const editorWorkbookSlice = createSlice({
       state.curWorkbookId = action.payload.workbookId;
       state.curWorkbookTitle = action.payload.title;
     },
+    resetSelectWorkbook(state) {
+      state.curWorkbookId = initialState.curWorkbookId;
+      state.curWorkbookTitle = initialState.curWorkbookTitle;
+    },
     setWorkbookBySelf(state, action) {
       state.workbooksBySelf = action.payload;
     },
@@ -30,6 +34,6 @@ const editorWorkbookSlice = createSlice({
   },
 });
 
-export const { setSelectWorkbook, setWorkbookBySelf, addWorkbook } = editorWorkbookSlice.actions;
+export const { setSelectWorkbook, resetSelectWorkbook, setWorkbookBySelf, addWorkbook } = editorWorkbookSlice.actions;
 
 export default editorWorkbookSlice.reducer;

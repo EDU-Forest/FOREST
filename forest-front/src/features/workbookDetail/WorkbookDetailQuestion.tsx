@@ -8,6 +8,12 @@ import {
   StyledQuestionDetailTitleBox,
   StyledWorkbookDetailQuestionBox,
 } from "./WorkbookDetail.style";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import { setIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
+import { useRouter } from "next/router";
+import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 
 interface IProps {
   question: QuestionType;
@@ -24,7 +30,11 @@ function WorkbookDetailQuestion({
   questionSumm,
   isOriginal,
 }: IProps) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
   const [curQuestionNum, setCurQuestionNum] = useState(1);
+  const { workbooksBySelf } = useSelector((state: RootState) => state.editorWorkbook);
 
   const getQuestionNum = (): void => {
     for (let i = 0; i < questionSumm.length; i++) {
@@ -34,7 +44,10 @@ function WorkbookDetailQuestion({
     }
   };
 
-  const handleClickEdit = () => {};
+  const handleClickEdit = () => {
+    dispatch(setIsMoveToEditor(true));
+    router.push("/editor");
+  };
 
   useEffect(() => {
     getQuestionNum();
@@ -48,7 +61,7 @@ function WorkbookDetailQuestion({
           <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
           <span>{question?.title}</span>
           {/* 내가 원작자여야만 수정 가능 */}
-          {isOriginal && <StyledTextBtn>수정</StyledTextBtn>}
+          {isOriginal && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
         </StyledQuestionDetailTitleBox>
       )}
 
