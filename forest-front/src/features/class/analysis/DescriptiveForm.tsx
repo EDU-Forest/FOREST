@@ -8,6 +8,7 @@ import useDescriptionQuery from "@/apis/class/analysis/useDescriptionQuery";
 import Loading from "@/components/Loading/Loading";
 import { useEffect, useState } from "react";
 import useDescriptionScoring from "@/apis/class/analysis/useDescriptionScoring";
+import useExamFinish from "@/apis/class/analysis/useExamFinish";
 
 interface StudentPointList {
   studentNum: number;
@@ -17,18 +18,17 @@ interface StudentPointList {
 export default function DescriptiveForm() {
   const { nowStudyId, studentPointList } = useSelector((state: RootState) => state.class);
   const [nowIdx, setNowIdx] = useState<number>(0);
-  const { mutate } = useDescriptionScoring();
+  const scoringMutate = useDescriptionScoring().mutate;
+  const finishMutate = useExamFinish().mutate;
   const { data, isLoading } = useDescriptionQuery(nowStudyId);
 
-  // 버튼 문구 다음 / 종료
   const handleClick = () => {
-    // 다음으로 !
     const newStudentPointList = [];
 
     const maxNum = data?.descript[nowIdx].studentList.length as number;
 
     for (let i = 0; i < maxNum; i++) {
-      newStudentPointList.push({ studentNum: i, score: studentPointList[`score_${i}`] });
+      newStudentPointList.push({ studentNum: i + 1, score: studentPointList[`score_${i}`] });
     }
     console.log("newStudentPointList", newStudentPointList);
     let isLast;
@@ -46,7 +46,11 @@ export default function DescriptiveForm() {
       isLast: isLast,
       studentPointList: newStudentPointList, // 얘가 문제....
     };
-    mutate(payload);
+    scoringMutate(payload);
+
+    if (isLast) {
+      finishMutate(nowStudyId);
+    }
   };
 
   return (
@@ -55,20 +59,30 @@ export default function DescriptiveForm() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          <DescriptiveFormBtn>
-            <span>1 / {data?.count}</span>
-            <SmallBtn children={nowIdx === data?.count ? "다음" : "완료"} onClick={handleClick} />
-          </DescriptiveFormBtn>
+          {data?.count === 0 ? (
+            <>데이터 없음</>
+          ) : (
+            <>
+              <DescriptiveFormBtn>
+                <span>1 / {data?.count}</span>
+                <SmallBtn
+                  children={nowIdx === data?.count ? "다음" : "완료"}
+                  onClick={handleClick}
+                />
+              </DescriptiveFormBtn>
 
-          <DescriptiveFormItem
-            title={data?.descript[nowIdx].title}
-            keywordList={data?.descript[nowIdx].keywordList}
-            point={data?.descript[nowIdx].point}
-          />
-          <DescriptiveFormAnswer
-            keywordNum={data?.descript[nowIdx].keywordNum}
-            studentList={data?.descript[nowIdx].studentList}
-          />
+              <DescriptiveFormItem
+                title={data?.descript[nowIdx].title}
+                keywordList={data?.descript[nowIdx].keywordList}
+                point={data?.descript[nowIdx].point}
+              />
+              <DescriptiveFormAnswer
+                keywordNum={data?.descript[nowIdx].keywordNum}
+                studentList={data?.descript[nowIdx].studentList}
+                maxScore={data?.descript[nowIdx].point as number}
+              />
+            </>
+          )}
         </>
       )}
     </DescriptiveFormWrapper>

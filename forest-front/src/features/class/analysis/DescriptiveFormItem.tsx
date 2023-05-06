@@ -10,15 +10,6 @@ import { ClassSummaryText, ClassSummaryTextWrapper } from "../ClassSummary.style
 import { AiOutlineRight } from "react-icons/ai";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { setMaxScore } from "@/stores/analysis/analysis";
-
-const dummy = {
-  title:
-    "이 문제는 영국에서 시작되어.... 싸피 어쩌고저쩌고 자율 프로젝트 너무 힘들어요오오오오오오 ㅏ아ㅏㅏㅏ... 오늘도 열심히 개발하자! ",
-  keyword: ["리액트", "샤브샤브", "커피", "코딩", "집에보내줘", "하하", "졸려", "잠와"],
-  score: 10,
-};
 
 interface Keyword {
   keyword: string;
@@ -30,13 +21,6 @@ interface Iprops {
 }
 
 export default function DescriptiveFormItem({ title, keywordList, point }: Iprops) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // 나중에 쿼리 안으로 옮겨주기
-    dispatch(setMaxScore(dummy.score));
-  }, []);
-
   const goToProblem = () => {
     // 문제 보기
   };

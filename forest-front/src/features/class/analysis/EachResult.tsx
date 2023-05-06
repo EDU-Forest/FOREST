@@ -82,12 +82,12 @@ const studentStudyResultList = [
 ];
 
 export default function EachResult() {
-  const { studyId } = useSelector((state: RootState) => state.analysis);
+  const { nowStudyId } = useSelector((state: RootState) => state.class);
   const goToGrade = () => {
     // 상세 성적으로 이동
   };
 
-  const { data } = useStudentAnsweRate(studyId as number);
+  const { data } = useStudentAnsweRate(nowStudyId);
   console.log("응시자별 data", data);
 
   const correctColor = (correctRate: number) => {

@@ -51,14 +51,14 @@ const answerRate: AnswerRate = {
 };
 
 export default function StudyAnalysis() {
-  const { studyId } = useSelector((state: RootState) => state.analysis);
+  const { nowStudyId } = useSelector((state: RootState) => state.class);
   const router = useRouter();
   const goToBack = () => {
     router.back();
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
-  const { data } = useQuestionAnswerRateQuery(studyId as number);
+  const { data } = useQuestionAnswerRateQuery(nowStudyId);
   // const { data } = useAllAnswerRateQuery(studyId as number);
   console.log("데이터", data);
 

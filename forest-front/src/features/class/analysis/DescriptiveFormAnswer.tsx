@@ -19,12 +19,11 @@ interface ObjType {
 interface Iprops {
   studentList?: StudentList[];
   keywordNum?: number;
+  maxScore: number;
 }
 
-export default function DescriptiveFormAnswer({ studentList, keywordNum }: Iprops) {
+export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScore }: Iprops) {
   const [scoreList, setScoreList] = useState<ObjType>({});
-  const { maxScore } = useSelector((state: RootState) => state.analysis);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

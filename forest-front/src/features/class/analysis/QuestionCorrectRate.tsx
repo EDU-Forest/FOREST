@@ -84,7 +84,7 @@ const classAnswerRateList = [
 ];
 
 export default function QuestionCorrectRate() {
-  const { studyId } = useSelector((state: RootState) => state.analysis);
+  const { nowStudyId } = useSelector((state: RootState) => state.class);
   const options = {
     responsive: true,
     interaction: {
