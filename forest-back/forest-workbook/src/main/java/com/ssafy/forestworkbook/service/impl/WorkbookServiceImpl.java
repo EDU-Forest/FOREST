@@ -2,6 +2,7 @@ package com.ssafy.forestworkbook.service.impl;
 
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.vision.v1.*;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -681,8 +682,27 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .path("https://storage.googleapis.com/" + bucketName + "/" + uuid)
                 .build();
 
+        testing("gs://" + bucketName + "/" + uuid);
+
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
 //        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+    }
+
+    public String testing(String filePath) throws IOException {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
+
+        Image img = Image.newBuilder().setSource(imgSource).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            System.out.println("nnnnnnnnn");
+        }
+        return "떳나";
+
     }
 
     @Override
