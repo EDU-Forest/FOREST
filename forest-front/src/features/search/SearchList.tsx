@@ -1,76 +1,45 @@
 import CommonWorkbook from "@/components/Workbook/CommonWorkbook";
 import { SearchListWrapper, SearchListItem } from "./SearchList.style";
+import useSearchWorkbookQuery from "@/apis/search/useSearchWorkbookQuery";
+import { useRouter } from "next/router";
+import Loading from "@/components/Loading/Loading";
 
 interface Iprops {
   keyword: string;
 }
 
-const searchList: SearchWorkbook[] = [
-  {
-    workbookId: 1,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 2,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 3,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: true,
-    isBookmarked: true,
-  },
-  {
-    workbookId: 4,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: false,
-  },
-  {
-    workbookId: 5,
-    title: "킹규림의 수능 100제",
-    workbookImgPath: "",
-    bookmarkCount: 10,
-    scrapCount: 7,
-    methodType: "PATCH",
-    isScraped: false,
-    isBookmarked: true,
-  },
-];
-
 export default function SearchList({ keyword }: Iprops) {
+  const router = useRouter();
+  const { data, isLoading } = useSearchWorkbookQuery(keyword);
+
+  // console.log(keyword);
+
+  const goToDetail = (id: number) => {
+    router.push(`/workbook/${id}`);
+  };
+
   return (
     <SearchListWrapper>
-      {searchList.map((item, idx) => (
-        <SearchListItem>
-          <CommonWorkbook
-            id={idx}
-            title={item.title}
-            bookmarkCount={item.bookmarkCount}
-            scrapCount={item.scrapCount}
-          />
-        </SearchListItem>
-      ))}
+      {isLoading ? (
+        <Loading width={15} height={15} />
+      ) : (
+        <>
+          {data?.workbookList?.map((item: SearchWorkbook) => (
+            <SearchListItem key={item.workbookId}>
+              <CommonWorkbook
+                id={item.workbookId}
+                title={item.title}
+                bookmarkCount={item.bookmarkCount}
+                scrapCount={item.scrapCount}
+                isBookmarked={item.isBookmarked}
+                workbookImgPath={item.workbookImgPath}
+                methodType={item.methodType}
+                clickAction={() => goToDetail(item.workbookId)}
+              />
+            </SearchListItem>
+          ))}
+        </>
+      )}
     </SearchListWrapper>
   );
 }

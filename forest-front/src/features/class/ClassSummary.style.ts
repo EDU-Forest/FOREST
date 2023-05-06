@@ -164,7 +164,7 @@ const ClassSummaryText = styled.p<{ isGray?: boolean; isGreen?: boolean }>`
 
 const ClassSummaryValue = styled.div`
   text-align: left;
-  width: 5rem;
+  width: 6rem;
 `;
 
 const ClassSummaryIcon = styled.div`

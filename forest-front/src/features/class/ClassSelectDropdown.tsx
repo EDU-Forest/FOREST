@@ -28,7 +28,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   return (
     <ClassSelectDropdownContainer>
       {isLoading ? (
-        <Loading width={100} height={100} />
+        <Loading width={2} height={2} />
       ) : (
         <>
           {data?.length > 0 ? (

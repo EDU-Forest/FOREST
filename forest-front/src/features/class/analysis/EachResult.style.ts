@@ -55,6 +55,7 @@ const ResultTableItemBig = styled.div<{ isLabel?: boolean }>`
   width: 22%;
   text-align: center;
 `;
+
 const ResultTableItemSmall = styled(ResultTableItemBig)<{
   isIdx?: boolean;
   isOrange?: boolean;
