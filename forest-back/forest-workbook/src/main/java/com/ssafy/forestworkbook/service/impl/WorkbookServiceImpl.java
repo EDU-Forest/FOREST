@@ -1,5 +1,7 @@
 package com.ssafy.forestworkbook.service.impl;
 
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -14,6 +16,7 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -45,9 +49,9 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ClassStudyResultRepository classStudyResultRepository;
     private final ResponseUtil responseUtil;
 
-//    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
-//    private String bucketName;
-//    private final Storage storage;
+    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+    private String bucketName;
+    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -662,23 +666,23 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     @Override
     public ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException {
-//        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
-//        String ext = file.getContentType(); // 파일의 형식 ex) JPG
-//
-//        // Cloud에 이미지 업로드
-//        BlobInfo blobInfo = storage.create(
-//                BlobInfo.newBuilder(bucketName, uuid)
-//                        .setContentType(ext)
-//                        .build(),
-//                file.getInputStream()
-//        );
-//
-//        ImagePathDto imagePathDto = ImagePathDto.builder()
-//                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
-//                .build();
+        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        String ext = file.getContentType(); // 파일의 형식 ex) JPG
 
-//        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
-        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+        // Cloud에 이미지 업로드
+        BlobInfo blobInfo = storage.create(
+                BlobInfo.newBuilder(bucketName, uuid)
+                        .setContentType(ext)
+                        .build(),
+                file.getInputStream()
+        );
+
+        ImagePathDto imagePathDto = ImagePathDto.builder()
+                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
+                .build();
+
+        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+//        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
     @Override
