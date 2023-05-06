@@ -43,14 +43,17 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
   };
 
   const handleClickDelete = (id: number, i: number) => {
-    console.log(deleteAnswers);
     setItems(items.filter((item, idx) => idx !== i));
 
     itemChange(items.filter((item, idx) => idx !== i));
 
-    const copyArr = [...deleteAnswers];
-    copyArr.push(id);
-    dispatch(setDeleteAnswers(copyArr));
+    // 새로 만들어진 item은 id가 0. DB에 저장되어 있는 item만 배열에 담는다
+    if (id !== 0) {
+      // 초기에는 deleteAnswers가 빈 배열이기 때문에 undefined 처리됨
+      const copyArr = deleteAnswers ? [...deleteAnswers] : [];
+      copyArr.push(id);
+      dispatch(setDeleteAnswers([...copyArr]));
+    }
   };
 
   // 정답으로 체크
@@ -68,7 +71,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
 
   return (
     <EditorQuestionChoiceListBox>
-      {items.map((item, i: number) => {
+      {items.map((item: QuestionItemType, i: number) => {
         return (
           <div key={`item-${i}`}>
             <EditorQuestionChoiceBox isCorrect={corret === i + 1}>
@@ -80,10 +83,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
               </EditorChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? (
-                <EditorItemImg
-                  question={question}
-                  curItem={i + 1}
-                />
+                <EditorItemImg question={question} curItem={i + 1} />
               ) : (
                 <>
                   <input
@@ -99,7 +99,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
                 curItem={i + 1}
               />
             </EditorQuestionChoiceBox>
-            <AiOutlineMinusCircle onClick={() => handleClickDelete(item.id, i)} />
+            <AiOutlineMinusCircle onClick={() => handleClickDelete(item.itemId, i)} />
           </div>
         );
       })}

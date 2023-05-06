@@ -37,34 +37,37 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
 
   const questionInit = {
     withItems: {
-      id: 0,
+      problemId: 0,
       problemNum: 0,
-      type: "multipleChoice",
+      type: "MULTIPLE",
       title: "",
       text: "",
+      answer: "",
       point: 0,
-      image: "",
-      items: [
+      problemImgPath: "",
+      imgIsEmpty: true,
+      textIsEmpty: true,
+      itemList: [
         {
-          id: 0,
+          itemId: 0,
           no: 1,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 2,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 3,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 4,
           content: "",
           isImage: false,
@@ -72,19 +75,22 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       ],
     },
     withoutItems: {
-      id: 0,
+      problemId: 0,
       problemNum: 0,
       type: "",
       title: "",
       text: "",
+      answer: "",
       point: 0,
-      image: "",
-      items: [],
+      problemImgPath: "",
+      imgIsEmpty: true,
+      textIsEmpty: true,
+      itemList: [],
     },
   };
 
   const handleClickQuestionType = (type: string) => {
-    type === "multipleChoice"
+    type === "MULTIPLE"
       ? dispatch(setQuestions([...questions, { ...questionInit.withItems }]))
       : dispatch(setQuestions([...questions, { ...questionInit.withoutItems, type: type }]));
     dispatch(setCurQuestion(questions.length + 1));
@@ -100,6 +106,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
     }
   };
 
+  // MULTIPLE, SUBJECTIVE(주관식, 단답식), DESCRIPT(서술형), OX
   return (
     <StyledEditorNav>
       <ArrowDiv>
@@ -107,22 +114,22 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       </ArrowDiv>
       <EditorNavDivTitle isObject={false}>새로 만들기</EditorNavDivTitle>
       <EditorNavDiv>
-        <EditorNavDivInner onClick={() => handleClickQuestionType("multipleChoice")}>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("MULTIPLE")}>
           <MdOutlineFormatListNumbered className="icon" />
           객관식
         </EditorNavDivInner>
-        <EditorNavDivInner onClick={() => handleClickQuestionType("oxChoice")}>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("OX")}>
           <div className="ox-div">
             <span>O</span>
             <span>X</span>
           </div>
           OX 선택
         </EditorNavDivInner>
-        <EditorNavDivInner onClick={() => handleClickQuestionType("shortAnswer")}>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("SUBJECTIVE")}>
           <MdOutlinePowerInput className="icon" />
           단답식
         </EditorNavDivInner>
-        <EditorNavDivInner onClick={() => handleClickQuestionType("essay")}>
+        <EditorNavDivInner onClick={() => handleClickQuestionType("DESCRIPT")}>
           <MdOutlineLineStyle className="icon" />
           서술형
         </EditorNavDivInner>

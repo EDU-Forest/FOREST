@@ -22,25 +22,25 @@ const initialState: editorQuestions = {
       textIsEmpty: false,
       itemList: [
         {
-          id: 0,
+          itemId: 0,
           no: 1,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 2,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 3,
           content: "",
           isImage: false,
         },
         {
-          id: 0,
+          itemId: 0,
           no: 4,
           content: "",
           isImage: false,
@@ -65,6 +65,9 @@ const questionSlice = createSlice({
     initQuestions(state) {
       state.questions = initialState.questions;
     },
+    initDeleteAnswers(state) {
+      state.deleteAnswers = initialState.deleteAnswers;
+    },
     setCurQuestion(state, action) {
       state.curQuestion = action.payload;
     },
@@ -74,7 +77,13 @@ const questionSlice = createSlice({
   },
 });
 
-export const { setQuestions, initCurQuestion, initQuestions, setCurQuestion, setDeleteAnswers } =
-  questionSlice.actions;
+export const {
+  setQuestions,
+  initCurQuestion,
+  initQuestions,
+  initDeleteAnswers,
+  setCurQuestion,
+  setDeleteAnswers,
+} = questionSlice.actions;
 
 export default questionSlice.reducer;

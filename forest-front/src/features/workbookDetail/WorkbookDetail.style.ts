@@ -283,6 +283,11 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   background: #ffffff;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
+
+  img {
+    width: 5rem;
+    height: auto;
+  }
 `;
 
 // 문제 숫자, 제목
