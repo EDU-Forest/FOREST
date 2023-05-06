@@ -678,7 +678,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         );
 
         ImagePathDto imagePathDto = ImagePathDto.builder()
-                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
+                .path("https://storage.googleapis.com/" + bucketName + "/" + uuid)
                 .build();
 
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
