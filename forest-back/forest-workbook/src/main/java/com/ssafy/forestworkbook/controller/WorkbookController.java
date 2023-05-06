@@ -94,11 +94,11 @@ public class WorkbookController {
     public ResponseSuccessDto<?> deleteWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("userID : {}", userId);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-        Long userId = Long.valueOf(9);
+//        Long userId = Long.valueOf(9);
         return workbookService.deleteWorkbook(userId, workbookId);
     }
 
