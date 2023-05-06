@@ -34,6 +34,7 @@ export const GET_WORKBOOK_LIST = "/getWorkbookList";
 export const GET_WORKBOOK_DETAIL = "/getWorkbookDetail";
 export const COPY_WORKBOOK_DETAIL = "/copyWorkbookDetail";
 export const GET_STUDY_RESULT = "/getStudyResult";
+export const IS_ORIGINAL = "/isOriginal";
 
 // canvas
 export const CANVAS_RECORD = "/canvasRecord";

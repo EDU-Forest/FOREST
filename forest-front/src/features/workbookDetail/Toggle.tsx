@@ -1,13 +1,21 @@
+import { useDispatch } from "react-redux";
 import { StyledToggleBtn, StyledToggleCircleBtn } from "./WorkbookDetail.style";
+import { setIsPublic } from "@/stores/workbookDetail/workbookDetail";
+import useIsPublicWorkbook from "@/apis/workbookDetail/useIsPublicWorkbookQuery";
+import { useRouter } from "next/router";
 
 interface IProps {
   isPublic: boolean;
-  setIsPublic: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Toggle({ isPublic, setIsPublic }: IProps) {
+function Toggle({ isPublic }: IProps) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const wId = router.query.wId;
+  const { mutate } = useIsPublicWorkbook();
   const handleClickToggle = () => {
-    setIsPublic(!isPublic);
+    dispatch(setIsPublic());
+    mutate(typeof wId === "string" ? parseInt(wId) : -1);
   };
 
   return (

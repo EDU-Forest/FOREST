@@ -11,18 +11,12 @@ export default function EditorTitle() {
   const dispatch = useDispatch();
   // const { isOpenDropdown } = useSelector((state: RootState) => state.editorModal);
   const [controlDropdown, setControlDropdown] = useState(false);
-  const { curWorkbookIdx, workbooksBySelf } = useSelector(
-    (state: RootState) => state.editorWorkbook,
-  );
-
-  useEffect(() => {
-    console.log(workbooksBySelf, curWorkbookIdx);
-  }, []);
+  const { curWorkbookTitle } = useSelector((state: RootState) => state.editorWorkbook);
 
   return (
     <EditorTitleBox>
       <EditorSelectedTitle>
-        {workbooksBySelf[curWorkbookIdx].title}
+        {curWorkbookTitle}
         {/* <AiFillCaretDown onClick={() => dispatch(controlEditorDropdown())} className="icon" /> */}
         <AiFillCaretDown onClick={() => setControlDropdown(!controlDropdown)} className="icon" />
       </EditorSelectedTitle>

@@ -33,7 +33,7 @@ export const StyledDashboardClassItem = styled.div`
   // 클래스 타이틀
   span {
     margin-left: 24px;
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   // 화살표 아이콘
