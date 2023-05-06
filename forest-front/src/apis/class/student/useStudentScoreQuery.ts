@@ -7,7 +7,7 @@ const fetcher = (studyId: number) =>
 
 // 학생(클래스) 선택한 문제집 성적 조회
 const useStudentScoreQuery = (studyId: number) => {
-  return useQuery([queryKeys.STUDENT_SCORE], () => fetcher(studyId), {
+  return useQuery([queryKeys.STUDENT_SCORE, studyId], () => fetcher(studyId), {
     enabled: !!studyId,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
