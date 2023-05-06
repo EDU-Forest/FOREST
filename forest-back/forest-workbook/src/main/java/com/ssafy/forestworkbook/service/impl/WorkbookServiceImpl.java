@@ -48,6 +48,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final StudyRepository studyRepository;
     private final ClassRepository classRepository;
     private final ClassStudyResultRepository classStudyResultRepository;
+    private final ClassAnswerRateRepository classAnswerRateRepository;
     private final ResponseUtil responseUtil;
 
     @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
@@ -59,11 +60,13 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
+
+        // TODO 북마크 중복, 사본 만든 문제집?, isPublic 추가
         // 좋아하는 문제집
         // 스크랩 한 것도 좋아하는 문제집에
         if (Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks =
-                    userWorkbookRepository.findAllByUserAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(user, pageable);
+                    userWorkbookRepository.findAllByUserIdAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .isOriginal(w.getWorkbook().getCreator().getId() == userId)
@@ -180,6 +183,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             problemAllInfoDtoList.add(problemAllInfoDto);
         }
 
+        // TODO 북마크 여부
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbook.getId())
                 .title(workbook.getTitle())
@@ -361,6 +365,19 @@ public class WorkbookServiceImpl implements WorkbookService {
         classStudyResultRepository.save(classStudyResult);
 
         StudyIdDto studyIdDto = StudyIdDto.builder().studyId(study.getId()).build();
+
+        List<ProblemList> problemListList = problemListRepository.findAllByWorkbookId(workbook.getId());
+
+        List<ClassAnswerRate> classAnswerRateList = new ArrayList<>();
+        for (ProblemList problemList : problemListList) {
+            ClassAnswerRate classAnswerRate = ClassAnswerRate.builder()
+                    .study(study)
+                    .problemList(problemList)
+                    .build();
+            classAnswerRateList.add(classAnswerRate);
+        }
+
+        classAnswerRateRepository.saveAll(classAnswerRateList);
 
         return responseUtil.successResponse(studyIdDto, ForestStatus.WORKBOOK_SUCCESS_EXECUTE);
     }
