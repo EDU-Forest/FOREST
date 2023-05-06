@@ -21,69 +21,6 @@ import useQuestionAnswerRateQuery from "@/apis/class/analysis/useQuestionAnswerR
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const classAnswerRateList = [
-  {
-    problemNum: 1,
-    correctRate: 80,
-    incorrectRate: 20,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 2,
-    correctRate: 70,
-    incorrectRate: 30,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 3,
-    correctRate: 0,
-    incorrectRate: 0,
-    ungradedRate: 100,
-  },
-  {
-    problemNum: 4,
-    correctRate: 40,
-    incorrectRate: 60,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 5,
-    correctRate: 90,
-    incorrectRate: 10,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 6,
-    correctRate: 100,
-    incorrectRate: 0,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 7,
-    correctRate: 0,
-    incorrectRate: 100,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 8,
-    correctRate: 80,
-    incorrectRate: 20,
-    ungradedRate: 0,
-  },
-  {
-    problemNum: 9,
-    correctRate: 0,
-    incorrectRate: 0,
-    ungradedRate: 100,
-  },
-  {
-    problemNum: 10,
-    correctRate: 50,
-    incorrectRate: 50,
-    ungradedRate: 0,
-  },
-];
-
 export default function QuestionCorrectRate() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
