@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useInfiniteQuery, useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 

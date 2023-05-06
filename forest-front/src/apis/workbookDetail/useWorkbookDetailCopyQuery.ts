@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation, useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import { useRouter } from "next/router";

@@ -1,4 +1,4 @@
-import beforeAuthAxios from "@/utils/beforeAuthAxios";
+import beforeAuthAxios from "@/utils/customAxios/beforeAuthAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import { checkEmail } from "@/utils";

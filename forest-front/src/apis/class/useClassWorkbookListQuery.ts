@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 
 interface Payload {
   classId: number;

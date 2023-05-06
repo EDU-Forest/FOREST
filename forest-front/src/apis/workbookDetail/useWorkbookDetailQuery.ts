@@ -1,7 +1,7 @@
 import * as queryKeys from "@/constants/queryKeys";
 import { setQuestions } from "@/stores/editor/editorQuestions";
 import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 

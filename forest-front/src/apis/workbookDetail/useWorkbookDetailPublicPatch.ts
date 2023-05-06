@@ -1,4 +1,4 @@
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation, useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import { useRouter } from "next/router";
@@ -11,7 +11,7 @@ const fetcher = async (wId: number) =>
 const useWorkbookDetailPublicPatch = () => {
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], fetcher, {
     onSuccess: (data) => {
-      return data
+      return data;
     },
   });
 };

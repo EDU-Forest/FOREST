@@ -1,5 +1,5 @@
 import { setRole, setUsername } from "@/stores/user/user";
-import authAxios from "@/utils/authAxios";
+import authAxios from "@/utils/customAxios/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";

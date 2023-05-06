@@ -1,5 +1,5 @@
 import { setRole, setUsername } from "@/stores/user/user";
-import beforeAuthAxios from "@/utils/beforeAuthAxios";
+import beforeAuthAxios from "@/utils/customAxios/beforeAuthAxios";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
