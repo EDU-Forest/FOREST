@@ -14,15 +14,17 @@ const NoDescription = styled.div`
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
   width: 100%;
-  margin: 1.5rem 0;
-  padding: 4rem 5rem;
+  margin-top: 1.5rem;
+  padding: 2rem 5rem;
+  height: calc(100vh - 15rem);
 
   img {
-    width: 7.5rem;
+    width: 10rem;
   }
 
   span {
     font-weight: 700;
+    font-size: 1.375rem;
   }
 `;
 

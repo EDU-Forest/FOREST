@@ -15,11 +15,6 @@ import { useEffect, useState } from "react";
 import useDescriptionScoring from "@/apis/class/analysis/useDescriptionScoring";
 import useExamFinish from "@/apis/class/analysis/useExamFinish";
 
-interface StudentPointList {
-  studentNum: number;
-  score: number;
-}
-
 export default function DescriptiveForm() {
   const { nowStudyId, studentPointList } = useSelector((state: RootState) => state.class);
   const [nowIdx, setNowIdx] = useState<number>(0);
@@ -35,7 +30,7 @@ export default function DescriptiveForm() {
     for (let i = 0; i < maxNum; i++) {
       newStudentPointList.push({ studentNum: i + 1, score: studentPointList[`score_${i}`] });
     }
-    console.log("newStudentPointList", newStudentPointList);
+
     let isLast;
     if (nowIdx === (data?.count as number) - 1) {
       isLast = true;
