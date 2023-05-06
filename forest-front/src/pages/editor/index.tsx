@@ -25,6 +25,7 @@ export default function Editor() {
 
   const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
 
+  // 새 출제집
   const [workbooksBySelf, setWorkbooksBySelf] = useState<IWorkbookBySelf[]>();
   const [selectQuestionType, setSelectQuestionType] = useState("");
   const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
