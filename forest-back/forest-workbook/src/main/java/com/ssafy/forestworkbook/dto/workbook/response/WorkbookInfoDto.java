@@ -14,13 +14,14 @@ public class WorkbookInfoDto {
         private String description;
         private Boolean isPublic;
         private Boolean isDeploy;
+        private Boolean iSBookmarked;
         private Boolean isOriginal;
         private int volume;
         private int bookmarkCount;
         private int scrapCount;
 
         @Builder
-        public WorkbookInfoDto(Long workbookId, String title, String workbookImgPath, String description, Boolean isOriginal, Boolean isPublic, Boolean isDeploy, int bookmarkCount, int scrapCount, int volume) {
+        public WorkbookInfoDto(Long workbookId, String title, String workbookImgPath, String description, Boolean isOriginal, Boolean isPublic, Boolean iSBookmarked, Boolean isDeploy, int bookmarkCount, int scrapCount, int volume) {
             this.workbookId = workbookId;
             this.title = title;
             this.workbookImgPath = workbookImgPath;
@@ -28,6 +29,7 @@ public class WorkbookInfoDto {
             this.isPublic = isPublic;
             this.isDeploy = isDeploy;
             this.isOriginal = isOriginal;
+            this.iSBookmarked = iSBookmarked;
             this.volume = volume;
             this.bookmarkCount = bookmarkCount;
             this.scrapCount = scrapCount;

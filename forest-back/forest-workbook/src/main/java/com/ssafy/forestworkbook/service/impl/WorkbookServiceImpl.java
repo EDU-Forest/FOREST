@@ -61,7 +61,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
 
-        // TODO 북마크 중복, 사본 만든 문제집?, isPublic 추가
+        // TODO 북마크 중복
         // 좋아하는 문제집
         // 스크랩 한 것도 좋아하는 문제집에
         if (Objects.equals(search, "like")) {
@@ -70,6 +70,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .isOriginal(w.getWorkbook().getCreator().getId() == userId)
+                    .isPublic(w.getWorkbook().getIsPublic())
                     .isBookmarked(w.getIsBookmarked())
                     .title(w.getWorkbook().getTitle())
                     .workbookImgPath(w.getWorkbook().getWorkbookImg().getPath())
@@ -81,6 +82,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         // 사용한 문제집
+        // TODO 사본 만든 문제집 추가
         else if (search.equals("use")) {
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdAndIsExecuted(userId, true, pageable);
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
@@ -978,8 +980,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                 .workbookId(w.getId())
                 .isOriginal(w.getCreator().getId() == userId)
-                .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId , w.getId())
-                        .orElse(null) == null ? false : true)
+                .isPublic(w.getIsPublic())
+                .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, w.getId())
+                        .orElse(null) != null)
                 .title(w.getTitle())
                 .workbookImgPath(w.getWorkbookImg().getPath())
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
