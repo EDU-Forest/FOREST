@@ -1,7 +1,5 @@
 package com.ssafy.forestworkbook.service.impl;
 
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -16,7 +14,6 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,7 +25,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,7 +47,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
-    private final Storage storage;
+//    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
