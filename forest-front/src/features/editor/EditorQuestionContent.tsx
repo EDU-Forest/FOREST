@@ -28,7 +28,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
   const [question, setQuestion] = useState<QuestionType>({
     problemId: 0,
     problemNum: 0,
-    type: "multipleChoice",
+    type: "MULTIPLE",
     title: "",
     text: "",
     answer: "1",

@@ -29,7 +29,7 @@ function useEditor() {
       ...payload,
     });
 
-    toChangeQuestions("items", copyItemsArr);
+    toChangeQuestions("itemList", copyItemsArr);
   };
 
   return { toChangeQuestions, toChangeItem };

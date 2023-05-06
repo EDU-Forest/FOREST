@@ -11,7 +11,7 @@ export interface WorkbookType {
 }
 
 export interface QuestionItemType {
-  id: number;
+  itemId: number;
   no: number;
   content: string;
   isImage: boolean;
