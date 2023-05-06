@@ -49,8 +49,8 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ClassStudyResultRepository classStudyResultRepository;
     private final ResponseUtil responseUtil;
 
-    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
-    private String bucketName;
+//    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+//    private String bucketName;
 //    private final Storage storage;
 
     @Override
