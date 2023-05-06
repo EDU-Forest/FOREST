@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface WorkbookDetailState {
   workbook: WorkbookType;
+  isMoveToEditor: boolean;
   //   questionSummary: {
   //     id: number;
   //     title: string;
@@ -21,6 +22,7 @@ const initialState: WorkbookDetailState = {
     volume: 0,
     isOriginal: false,
   },
+  isMoveToEditor: false,
   //   questionSummary: [
   //     {
   //       title: "",
@@ -42,9 +44,15 @@ const workbookDetailSlice = createSlice({
     setIsPublic(state) {
       state.workbook.isPublic = !state.workbook.isPublic;
     },
+    setIsMoveToEditor(state, action) {
+      state.isMoveToEditor = action.payload;
+    },
+    resetIsMoveToEditor(state) {
+      state.isMoveToEditor = initialState.isMoveToEditor;
+    },
   },
 });
 
-export const { setWorkbook, setIsPublic } = workbookDetailSlice.actions;
+export const { setWorkbook, setIsPublic, setIsMoveToEditor, resetIsMoveToEditor } = workbookDetailSlice.actions;
 
 export default workbookDetailSlice.reducer;

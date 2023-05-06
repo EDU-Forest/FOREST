@@ -13,9 +13,11 @@ import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
 import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
 import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
 import { RootState } from "@/stores/store";
+import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
@@ -28,6 +30,7 @@ export async function getServerSideProps({ params: { wId } }: { params: { wId: s
 function WorkbookDetail() {
   const router = useRouter();
   const wId = router.query.wId;
+  const dispatch = useDispatch();
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const { questions } = useSelector((state: RootState) => state.editQuestions);
@@ -57,6 +60,10 @@ function WorkbookDetail() {
   const getCurQuestionIdx = (): number => {
     return questions.findIndex((question) => question.problemId === curQuestion);
   };
+
+  useEffect(() => {
+    dispatch(resetIsMoveToEditor);
+  }, []);
 
   useEffect(() => {
     getCurQuestionIdx();
