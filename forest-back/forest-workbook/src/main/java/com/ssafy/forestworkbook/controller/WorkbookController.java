@@ -6,6 +6,7 @@ import com.ssafy.forestworkbook.dto.workbook.request.ExcuteDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookUpdateInfoDto;
+import com.ssafy.forestworkbook.enumeration.response.ForestStatus;
 import com.ssafy.forestworkbook.service.WorkbookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -88,15 +89,16 @@ public class WorkbookController {
         return workbookService.updateWorkbook(userId, workbookUpdateInfoDto);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{workbookId}")
     @ApiOperation(value = "문제집 삭제하기", notes = "문제집을 삭제합니다.")
     public ResponseSuccessDto<?> deleteWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
+        Long userId = Long.valueOf(9);
         return workbookService.deleteWorkbook(userId, workbookId);
     }
 
@@ -107,7 +109,8 @@ public class WorkbookController {
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
 //        userId = Long.valueOf(1);
         return workbookService.changeWorkbookIsPublic(userId, workbookId);
     }
@@ -119,7 +122,8 @@ public class WorkbookController {
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
 //        userId = Long.valueOf(1);
         return workbookService.checkExportRange(userId, workbookId);
     }
@@ -131,7 +135,7 @@ public class WorkbookController {
             @RequestBody ExcuteDto excuteDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
 //        Long userId = Long.valueOf(9);
         return workbookService.executeWorkbook(userId, excuteDto);
 
@@ -144,7 +148,8 @@ public class WorkbookController {
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
 //        userId = Long.valueOf(1);
         return workbookService.delpoyWorkbook(userId, workbookId);
     }
@@ -156,7 +161,8 @@ public class WorkbookController {
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
+        log.info("workbookID : {}", workbookId);
 //        Long userId = Long.valueOf(10);
         return workbookService.copyWorkbook(userId, workbookId);
     }
@@ -168,7 +174,7 @@ public class WorkbookController {
             @RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+        log.info("userID : {}", userId);
 //        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }

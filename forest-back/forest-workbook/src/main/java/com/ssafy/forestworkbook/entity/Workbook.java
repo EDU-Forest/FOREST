@@ -98,4 +98,7 @@ public class Workbook {
     public void changeIsExcuted(boolean isExecuted) {
         this.isExecuted = isExecuted;
     }
+    public void changeIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 }
