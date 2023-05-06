@@ -17,6 +17,7 @@ const initialState: WorkbookDetailState = {
     title: "",
     description: "",
     isPublic: false,
+    isDeploy: false,
     bookmarkCount: 0,
     scrapCount: 0,
     volume: 0,
