@@ -682,13 +682,13 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .path("https://storage.googleapis.com/" + bucketName + "/" + uuid)
                 .build();
 
-        testing("gs://" + bucketName + "/" + uuid);
+        log.info("{}", testing("gs://" + bucketName + "/" + uuid));
 
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
 //        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
-    public String testing(String filePath) throws IOException {
+    public String testing(String filePath) {
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
@@ -700,6 +700,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
             System.out.println("nnnnnnnnn");
+        } catch (IOException e) {
+            log.info("안됨ㅋ");
         }
         return "떳나";
 
