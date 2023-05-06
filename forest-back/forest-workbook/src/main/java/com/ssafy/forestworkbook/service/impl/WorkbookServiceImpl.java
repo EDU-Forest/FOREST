@@ -136,14 +136,15 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
-
-        List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
-        List<ProblemAllInfoDto> problemAllInfoDtoList = new ArrayList<>();
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 조회 불가능
         if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_LIST);
+
+        List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
+        List<ProblemAllInfoDto> problemAllInfoDtoList = new ArrayList<>();
 
         for (ProblemList problemList : problemLists) {
             Problem problem = problemRepository.findById(problemList.getProblem().getId())
@@ -186,6 +187,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .description(workbook.getDescription())
                 .volume(workbook.getVolume())
                 .isPublic(workbook.getIsPublic())
+                .isDeploy(workbook.getIsDeploy())
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
@@ -195,7 +197,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .workbookInfoDto(workbookInfoDto)
                 .problemList(problemAllInfoDtoList)
                 .build();
-
 
         return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
@@ -222,6 +223,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .workbookImgPath(workbookImg.getPath())
                 .description(workbook.getDescription())
                 .isPublic(workbook.getIsPublic())
+                .isDeploy(false)
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .volume(workbook.getVolume())
                 .bookmarkCount(0)
@@ -528,7 +530,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .description(workbookCopy.getDescription())
                 .volume(workbookCopy.getVolume())
                 .isPublic(workbookCopy.getIsPublic())
-                .isOriginal(false)
+                .isDeploy(false)
+                .isOriginal(userId == workbook.getCreator().getId())
                 .bookmarkCount(0)
                 .scrapCount(0)
                 .build();
