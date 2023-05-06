@@ -1,4 +1,5 @@
 import UserForm from "@/features/home/UserForm";
+import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
 import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -21,4 +22,4 @@ function MoreInfo() {
   return <UserForm type={"moreinfo"} onClose={movePageHandler} />;
 }
 
-export default MoreInfo;
+export default avoidDuplicateLoginAuth(MoreInfo);
