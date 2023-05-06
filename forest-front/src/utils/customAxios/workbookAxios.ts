@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import authAxios from "./authAxios";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
+import { getLocalStorage, setLocalStorage } from "../localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 

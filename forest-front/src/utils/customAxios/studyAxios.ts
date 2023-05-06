@@ -1,30 +1,32 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { getLocalStorage, setLocalStorage } from "./localStorage";
+import { getLocalStorage, setLocalStorage } from "../localStorage";
+import authAxios from "./authAxios";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
 const AxiosConFigure: AxiosRequestConfig = {
-  baseURL: `${NEXT_PUBLIC_SERVER_URL}:9010`,
+  baseURL: `${NEXT_PUBLIC_SERVER_URL}:9012`,
   timeout: 5000,
   withCredentials: true,
 };
 
-const authAxios = axios.create(AxiosConFigure);
+const studyAxios = axios.create(AxiosConFigure);
 
-authAxios.interceptors.request.use(
+studyAxios.interceptors.request.use(
   (config) => {
     const forestToken = getLocalStorage("forest_access_token");
     if (!config.headers.Authorization && forestToken) {
+      // config.headers.Authorization = JSON.parse("Bearer " + forestToken);
       // config.headers.Authorization = `Bearer ${JSON.parse(forestToken)}`;
       config.headers.Authorization = `Bearer ${forestToken}`;
     }
 
     return config;
   },
-  (error) => error,
+  (error) => Promise.reject(error),
 );
 
-authAxios.interceptors.response.use(
+studyAxios.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -35,16 +37,15 @@ authAxios.interceptors.response.use(
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
         const { token } = response.data.data;
-
         return token;
       };
       const accessToken = await newAccessToken();
       setLocalStorage("forest_access_token", accessToken);
       prevRequest.headers.Authorization = `Bearer ${accessToken}`;
-      return authAxios(prevRequest);
+      return studyAxios(prevRequest);
     }
-    return Promise.reject(error);
+    return studyAxios;
   },
 );
 
-export default authAxios;
+export default studyAxios;

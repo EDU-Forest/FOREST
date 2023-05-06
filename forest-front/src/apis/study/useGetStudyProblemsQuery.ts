@@ -1,6 +1,6 @@
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
-import studyAxios from "@/utils/studyAxios";
+import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
 import { setStudyProblems } from "@/stores/exam/exam";
 import { useSelector } from "react-redux";

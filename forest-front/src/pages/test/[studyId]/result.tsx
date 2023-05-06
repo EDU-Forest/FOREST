@@ -4,7 +4,7 @@ import TestResultQuestion from "@/features/test/result/TestResultQuestion";
 import TestResultTotal from "@/features/test/result/TestResultTotal";
 import { ResultContainer, TestResultOkBtn } from "@/features/test/result/TextResult.style";
 import { RootState } from "@/stores/store";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 

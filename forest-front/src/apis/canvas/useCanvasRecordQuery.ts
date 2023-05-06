@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import studyAxios from "@/utils/studyAxios";
+import studyAxios from "@/utils/customAxios/studyAxios";
 
 const fetcher = (studentStudyProblemId: number) =>
   studyAxios.get(`/api/canvas/${studentStudyProblemId}`).then(({ data }) => data.data);

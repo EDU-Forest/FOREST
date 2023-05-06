@@ -1,6 +1,6 @@
 import UserForm from "@/features/home/UserForm";
-import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
-import withAuth from "@/utils/withAuth";
+import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 

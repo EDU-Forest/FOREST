@@ -1,4 +1,4 @@
-import studyAxios from "@/utils/studyAxios";
+import studyAxios from "@/utils/customAxios/studyAxios";
 import { useMutation } from "react-query";
 
 const fetcher = (studyId: number) =>
