@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UserWorkbookRepository extends JpaRepository<UserWorkbook, Long> {
 
-    Page<UserWorkbook> findAllByUserAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(User user, Pageable pageable);
+    Page<UserWorkbook> findAllByUserIdAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(Long userId, Pageable pageable);
     int countByWorkbookIdAndIsBookmarkedIsTrue(Long workbookId);
     int countByWorkbookIdAndIsScrapedIsTrue(Long workbookId);
     Optional<UserWorkbook> findByUserIdAndWorkbookId(Long userId, Long workbookId);

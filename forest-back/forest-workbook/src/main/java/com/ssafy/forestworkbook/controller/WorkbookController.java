@@ -53,6 +53,7 @@ public class WorkbookController {
         return workbookService.getClassWorkbook(userId, classId, search);
     }
 
+    // TODO 북마크 여부, 이미지 ID
     @GetMapping("/{workbookId}")
     @ApiOperation(value = "문제집 상세 조회", notes = "문제집 전체 내용을 조회합니다.")
     public ResponseSuccessDto<?> getWorkbookAllInfo(
@@ -129,6 +130,8 @@ public class WorkbookController {
         return workbookService.checkExportRange(userId, workbookId);
     }
 
+
+    // TODO 문제집 ID 리스트, 빈 껍데기
     @PostMapping("/export")
     @ApiOperation(value = "문제집 출제하기", notes = "문제집을 출제합니다.")
     public ResponseSuccessDto<?> executeWorkbook(
