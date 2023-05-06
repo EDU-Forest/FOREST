@@ -51,7 +51,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
     private String bucketName;
-    private final Storage storage;
+//    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -666,22 +666,23 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     @Override
     public ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException {
-        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
-        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+//        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+//        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+//
+//        // Cloud에 이미지 업로드
+//        BlobInfo blobInfo = storage.create(
+//                BlobInfo.newBuilder(bucketName, uuid)
+//                        .setContentType(ext)
+//                        .build(),
+//                file.getInputStream()
+//        );
+//
+//        ImagePathDto imagePathDto = ImagePathDto.builder()
+//                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
+//                .build();
 
-        // Cloud에 이미지 업로드
-        BlobInfo blobInfo = storage.create(
-                BlobInfo.newBuilder(bucketName, uuid)
-                        .setContentType(ext)
-                        .build(),
-                file.getInputStream()
-        );
-
-        ImagePathDto imagePathDto = ImagePathDto.builder()
-                .path("https://storage.cloud.google.com/" + bucketName + "/" + uuid)
-                .build();
-
-        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+//        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
     @Override
