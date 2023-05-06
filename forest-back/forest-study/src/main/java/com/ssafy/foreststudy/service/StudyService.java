@@ -649,7 +649,7 @@ public class StudyService {
     }
 
     /* (선생님) 서술형 문제 채점 목록 조회 */
-    public ResponseSuccessDto<GetDescriptionListResponseDto> getDescriptionList(Long studyId) {
+    public ResponseSuccessDto<?> getDescriptionList(Long studyId) {
 
         /*
             1. 시험의 문제집 ID로 문제 목록 불러오기
@@ -692,9 +692,6 @@ public class StudyService {
             // 학생 답안 리스트
             List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
             List<GetStudentAnswerListResponseDto> studentList = new ArrayList<>();
-
-            if (problemList == null)
-                return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
 
             int index = 1;
             for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
