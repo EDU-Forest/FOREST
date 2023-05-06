@@ -12,7 +12,7 @@ export default function Loading({ width, height }: Iprops) {
         loop
         path="/lottieJson/loadingGreen.json"
         play
-        style={{ width: `${width}`, height: `${height}` }}
+        style={{ width: `${width}rem`, height: `${height}rem`, margin: "auto" }}
       />
     </>
   );

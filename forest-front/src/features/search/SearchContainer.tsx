@@ -13,11 +13,8 @@ export default function SearchContainer() {
     setInputSearch(e.target.value);
   };
 
-  const [keyword, setKeyword] = useState<string>("");
-
   const searchKeyword = (value: string) => {
     setInputSearch(value);
-    setKeyword(value);
   };
 
   return (
@@ -27,8 +24,9 @@ export default function SearchContainer() {
         <HashTag value="수능대비" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="영어" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="싸피" onClick={(value: string) => searchKeyword(value)} />
+        <HashTag value="바이블" onClick={(value: string) => searchKeyword(value)} />
       </SearchContainerInput>
-      {inputSearch ? <SearchList keyword={keyword} /> : <SearchDefaultList />}
+      {inputSearch ? <SearchList keyword={inputSearch} /> : <SearchDefaultList />}
     </SearchContainerWrapper>
   );
 }

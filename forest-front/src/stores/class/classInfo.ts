@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface ObjType {
+  [index: string]: number;
+}
+
 interface ClassState {
   nowClassName: string;
   nowClassId: number;
   nowStudyId: number;
   deleteStudentNum: number;
+  studentPointList: ObjType;
 }
 
 const initialState: ClassState = {
@@ -12,6 +17,7 @@ const initialState: ClassState = {
   nowClassId: -1,
   nowStudyId: -1,
   deleteStudentNum: -1,
+  studentPointList: {},
 };
 
 const classSlice = createSlice({
@@ -28,9 +34,12 @@ const classSlice = createSlice({
     setDeleteStudentNum(state, action) {
       state.deleteStudentNum = action.payload;
     },
+    setStudentPointList(state, action) {
+      state.studentPointList = action.payload;
+    },
   },
 });
 
-export const { setClass, setStudy, setDeleteStudentNum } = classSlice.actions;
+export const { setClass, setStudy, setDeleteStudentNum, setStudentPointList } = classSlice.actions;
 
 export default classSlice.reducer;

@@ -10,23 +10,17 @@ import { ClassSummaryText, ClassSummaryTextWrapper } from "../ClassSummary.style
 import { AiOutlineRight } from "react-icons/ai";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { setMaxScore } from "@/stores/analysis/analysis";
 
-const dummy = {
-  title:
-    "이 문제는 영국에서 시작되어.... 싸피 어쩌고저쩌고 자율 프로젝트 너무 힘들어요오오오오오오 ㅏ아ㅏㅏㅏ... 오늘도 열심히 개발하자! ",
-  keyword: ["리액트", "샤브샤브", "커피", "코딩", "집에보내줘", "하하", "졸려", "잠와"],
-  score: 10,
-};
-export default function DescriptiveFormItem() {
-  const dispatch = useDispatch();
+interface Keyword {
+  keyword: string;
+}
+interface Iprops {
+  title?: string;
+  keywordList?: Keyword[];
+  point?: number;
+}
 
-  useEffect(() => {
-    // 나중에 쿼리 안으로 옮겨주기
-    dispatch(setMaxScore(dummy.score));
-  }, []);
-
+export default function DescriptiveFormItem({ title, keywordList, point }: Iprops) {
   const goToProblem = () => {
     // 문제 보기
   };
@@ -44,14 +38,14 @@ export default function DescriptiveFormItem() {
             <AiOutlineRight className="icon" />
           </ClassSummaryText>
         </ClassSummaryTextWrapper>
-        <DescriptiveFormUpperTitle>{dummy.title}</DescriptiveFormUpperTitle>
+        <DescriptiveFormUpperTitle>{title}</DescriptiveFormUpperTitle>
       </DescriptiveFormUpperBox>
       <DescriptiveFormUpperBox className="item2">
         <AnalysisSubTitle>핵심 키워드</AnalysisSubTitle>
         <DescriptiveFormUpperItem>
-          {dummy.keyword.map((item, idx) => (
+          {keywordList?.map((item, idx) => (
             <StyledWorkbookStatus key={idx} status="BEFORE">
-              {item}
+              {item.keyword}
             </StyledWorkbookStatus>
           ))}
         </DescriptiveFormUpperItem>
@@ -59,7 +53,7 @@ export default function DescriptiveFormItem() {
       <DescriptiveFormUpperBox className="item3">
         <AnalysisSubTitle>배점</AnalysisSubTitle>
 
-        <DescriptiveFormUpperScore>{dummy.score}</DescriptiveFormUpperScore>
+        <DescriptiveFormUpperScore>{point}</DescriptiveFormUpperScore>
       </DescriptiveFormUpperBox>
     </DescriptiveFormUpper>
   );

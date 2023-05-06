@@ -7,6 +7,27 @@ const DescriptiveFormWrapper = styled.div`
   position: relative;
 `;
 
+const NoDescription = styled.div`
+  ${flexBox("row", "center", "center")}
+  gap: 2rem;
+  background-color: white;
+  box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
+  border-radius: 1.5rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 2rem 5rem;
+  height: calc(100vh - 15rem);
+
+  img {
+    width: 10rem;
+  }
+
+  span {
+    font-weight: 700;
+    font-size: 1.375rem;
+  }
+`;
+
 const DescriptiveFormBtn = styled.div`
   position: absolute;
   right: 0;
@@ -83,6 +104,7 @@ const TableItemAnswer = styled(ResultTableItemBig)`
 
 export {
   DescriptiveFormWrapper,
+  NoDescription,
   DescriptiveFormBtn,
   DescriptiveFormUpper,
   DescriptiveFormUpperBox,
