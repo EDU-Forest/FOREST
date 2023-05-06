@@ -44,7 +44,7 @@ export default function ClassSummaryTeacher() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
   const examResult = useStudyResultQuery(nowStudyId).data;
-  console.log("data", examResult);
+  console.log("data 이거", examResult);
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);

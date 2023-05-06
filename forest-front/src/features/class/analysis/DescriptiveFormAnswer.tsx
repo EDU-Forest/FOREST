@@ -9,51 +9,8 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import useDescriptionScoring from "@/apis/class/analysis/useDescriptionScoring";
-
-const dummy = [
-  {
-    answer:
-      "학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-  {
-    answer: "도언아 안녕 도언아 안녕 ",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-  {
-    answer:
-      "학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-  {
-    answer:
-      "학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-  {
-    answer:
-      "학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-  {
-    answer:
-      "학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안 학생의 답안",
-    similarity: 80,
-    allKeyword: 5,
-    keyword: 3,
-  },
-];
+import { useDispatch } from "react-redux";
+import { setStudentPointList } from "@/stores/class/classInfo";
 
 interface ObjType {
   [index: string]: number;
@@ -68,7 +25,7 @@ export default function DescriptiveFormAnswer({ studentList, keywordNum }: Iprop
   const [scoreList, setScoreList] = useState<ObjType>({});
   const { maxScore } = useSelector((state: RootState) => state.analysis);
 
-  const { mutate } = useDescriptionScoring();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     studentList?.map((item, idx) => (scoreList[`score_${idx}`] = 0));
@@ -86,6 +43,12 @@ export default function DescriptiveFormAnswer({ studentList, keywordNum }: Iprop
       ...scoreList,
       [`score_${idx}`]: numberScore,
     });
+    dispatch(
+      setStudentPointList({
+        ...scoreList,
+        [`score_${idx}`]: numberScore,
+      }),
+    );
   };
 
   return (

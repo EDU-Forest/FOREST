@@ -19,6 +19,10 @@ const useClassWorkbookListQuery = (classId: number, type: string) => {
     () => fetcher({ classId, type }),
     {
       enabled: !!classId,
+      refetchOnWindowFocus: false,
+      onSuccess: (data) => {
+        console.log("클래스 내 문제집 ", data);
+      },
     },
   );
 };
