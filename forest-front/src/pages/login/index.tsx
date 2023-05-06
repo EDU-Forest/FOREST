@@ -4,4 +4,4 @@ import withAuth from "@/utils/withAuth";
 function AuthLogin() {
   return <Login />;
 }
-export default withAuth(AuthLogin);
+export default AuthLogin;

@@ -21,4 +21,4 @@ function MoreInfo() {
   return <UserForm type={"moreinfo"} onClose={movePageHandler} />;
 }
 
-export default withAuth(MoreInfo);
+export default MoreInfo;

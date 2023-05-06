@@ -11,4 +11,4 @@ function Signup({ onClose }: Iprops) {
   return <UserForm type={"signup"} onClose={onClose} />;
 }
 
-export default withAuth(Signup);
+export default Signup;
