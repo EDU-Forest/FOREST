@@ -9,7 +9,7 @@ import { RootState } from "@/stores/store";
 
 function WorkbookDetailQuestionVisibility() {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const [isPublic, setIsPublic] = useState(true);
+  const [isPublic, setIsPublic] = useState(true); 
 
   // git conflict
   // function WorkbookDetailQuestionVisibility() {
