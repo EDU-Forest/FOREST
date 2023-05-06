@@ -4,6 +4,7 @@ export interface WorkbookType {
   title: string;
   description: string;
   isPublic: boolean;
+  isDeploy: boolean;
   bookmarkCount: number;
   scrapCount: number;
   volume: number;
