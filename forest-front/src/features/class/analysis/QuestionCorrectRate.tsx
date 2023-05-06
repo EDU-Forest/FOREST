@@ -18,13 +18,14 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useQuestionAnswerRateQuery from "@/apis/class/analysis/useQuestionAnswerRateQuery";
+import Loading from "@/components/Loading/Loading";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 export default function QuestionCorrectRate() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const { data } = useQuestionAnswerRateQuery(nowStudyId);
+  const { data, isLoading } = useQuestionAnswerRateQuery(nowStudyId);
 
   const options = {
     responsive: true,
@@ -64,24 +65,24 @@ export default function QuestionCorrectRate() {
     },
   };
 
-  const labels = data?.map((item) => `문항 ${item.problemNum}`);
+  const labels = data && data?.map((item) => `문항 ${item.problemNum}`);
 
   const barData = {
     labels,
     datasets: [
       {
         label: "정답",
-        data: data?.map((item) => item.correctRate),
+        data: data && data?.map((item) => item.correctRate),
         backgroundColor: "#94D82D",
       },
       {
         label: "오답",
-        data: data?.map((item) => item.incorrectRate),
+        data: data && data?.map((item) => item.incorrectRate),
         backgroundColor: "#FF922B",
       },
       {
         label: "미채점",
-        data: data?.map((item) => item.ungradedRate),
+        data: data && data?.map((item) => item.ungradedRate),
         backgroundColor: "#DEE2E6",
       },
     ],
@@ -105,7 +106,7 @@ export default function QuestionCorrectRate() {
         </AnalysisText>
       </CorrectRateLabelWrapper>
       <BarWrapper>
-        <Bar options={options} data={barData} />
+        {isLoading ? <Loading width={10} height={10} /> : <Bar options={options} data={barData} />}
       </BarWrapper>
     </CorrectRateWrapper>
   );
