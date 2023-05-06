@@ -7,8 +7,9 @@ import {
 import DashboardBanner from "@/features/dashboard/DashboardBanner";
 import Schedule from "@/features/dashboard/Schedule";
 import DashboardClass from "@/features/dashboard/student/DashboardClass";
+import withAuth from "@/utils/withAuth";
 
-export default function StudentDashBoard() {
+function StudentDashBoard() {
   return (
     <FullScreen>
       <StudentNav nowLocation={"dashboard"} />
@@ -22,3 +23,5 @@ export default function StudentDashBoard() {
     </FullScreen>
   );
 }
+
+export default withAuth(StudentDashBoard);

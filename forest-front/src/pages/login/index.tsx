@@ -1,5 +1,7 @@
 import Login from "@/features/home/Login";
+import withAuth from "@/utils/withAuth";
 
-export default function Signup() {
+function AuthLogin() {
   return <Login />;
 }
+export default withAuth(AuthLogin);

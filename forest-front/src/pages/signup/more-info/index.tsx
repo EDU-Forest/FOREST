@@ -1,8 +1,9 @@
 import UserForm from "@/features/home/UserForm";
+import withAuth from "@/utils/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function MoreInfo() {
+function MoreInfo() {
   const router = useRouter();
   // const [email, setEmail] = useState("");
 
@@ -19,3 +20,5 @@ export default function MoreInfo() {
 
   return <UserForm type={"moreinfo"} onClose={movePageHandler} />;
 }
+
+export default withAuth(MoreInfo);

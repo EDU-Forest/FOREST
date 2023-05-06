@@ -1,8 +1,9 @@
 import TeacherNav from "@/components/Nav/TeacherNav";
 import SearchContainer from "@/features/search/SearchContainer";
 import { Container, FullScreen } from "@/styles/container";
+import withAuth from "@/utils/withAuth";
 
-export default function Search() {
+function Search() {
   return (
     <FullScreen>
       <TeacherNav nowLocation={"search"} />
@@ -12,3 +13,5 @@ export default function Search() {
     </FullScreen>
   );
 }
+
+export default withAuth(Search);

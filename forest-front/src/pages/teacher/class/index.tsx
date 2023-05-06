@@ -13,10 +13,11 @@ import { closeAllModal } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
 import { Title } from "@/styles/text";
+import withAuth from "@/utils/withAuth";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function TeacherClass() {
+function TeacherClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
   const studyId = useRecentStudyIdQuery(nowClassId).data;
@@ -52,3 +53,5 @@ export default function TeacherClass() {
     </FullScreen>
   );
 }
+
+export default withAuth(TeacherClass);

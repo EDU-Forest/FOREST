@@ -1,5 +1,6 @@
 import StudyAnalysis from "@/features/class/analysis/StudyAnalysis";
 import { AnalysisFullScreen } from "@/features/class/analysis/StudyAnalysis.style";
+import withAuth from "@/utils/withAuth";
 
 interface ServerProps {
   query: {
@@ -7,13 +8,15 @@ interface ServerProps {
   };
 }
 
-export default function StudyAnalysisPage({ studyId }: IStudyId) {
+function StudyAnalysisPage({ studyId }: IStudyId) {
   return (
     <AnalysisFullScreen>
       <StudyAnalysis />
     </AnalysisFullScreen>
   );
 }
+
+export default withAuth(StudyAnalysisPage);
 
 export const getServerSideProps = async ({ query: { id } }: ServerProps) => {
   const studyId = id;
