@@ -44,7 +44,7 @@ function LoginSuccess() {
   );
 }
 
-export default withAuth(LoginSuccess);
+export default LoginSuccess;
 
 export async function getServerSideProps() {
   return {
