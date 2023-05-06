@@ -130,8 +130,6 @@ public class WorkbookController {
         return workbookService.checkExportRange(userId, workbookId);
     }
 
-
-    // TODO 문제집 ID 리스트, 빈 껍데기
     @PostMapping("/export")
     @ApiOperation(value = "문제집 출제하기", notes = "문제집을 출제합니다.")
     public ResponseSuccessDto<?> executeWorkbook(
