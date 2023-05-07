@@ -447,9 +447,8 @@ public class StudyService {
         if (schedule.equals("BEFORE"))
             return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_NOT_YET);
         else if (schedule.equals("ONGOING")) {
-            StudentStudyResult studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user)
-                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
-            if (studentStudyResult.getIsSubmitted())
+            Optional<StudentStudyResult> studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user);
+            if (studentStudyResult.isPresent() && studentStudyResult.get().getIsSubmitted())
                 return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_SUBMIT_ALREADY);
             else
                 return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_ONGOING);
