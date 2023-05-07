@@ -22,7 +22,8 @@ const useLogin = () => {
     onSuccess: (data) => {
       const { name, role, accessToken } = data.data;
       setLocalStorage("forest_access_token", accessToken);
-      router.push(`/login/success`, { query: { name, role, accessToken } });
+      // router.push(`/login/success`, { query: { name, role, accessToken } });
+      router.push({ pathname: `/login/success`, query: { name, role, accessToken } });
     },
     onError: (error) => {
       // 아직 미구현

@@ -12,6 +12,18 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
+import { ParsedUrlQuery } from "querystring";
+
+interface IServerSideprops {
+  query: ParsedUrlQuery;
+}
+
+interface Iprops {
+  name: string;
+  role: string;
+  email: string;
+  accessToken: string;
+}
 
 function LoginSuccess() {
   const router = useRouter();
@@ -20,8 +32,11 @@ function LoginSuccess() {
   useRecentClassIdQuery();
 
   useEffect(() => {
+    if (!router.isReady) return;
+    const data = router?.query;
+    console.log("ssss", data);
+
     const accessToken = router.query?.accessToken;
-    console.log("dd");
     if (typeof accessToken === "string") {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
@@ -61,8 +76,9 @@ function LoginSuccess() {
 
 export default LoginSuccess;
 
-export async function getServerSideProps() {
+export const getServerSideProps = async ({ query }: IServerSideprops) => {
+  // const {name, role, email, accessToken} = query
   return {
     props: {},
   };
-}
+};
