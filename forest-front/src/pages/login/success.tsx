@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
@@ -9,6 +10,8 @@ import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Lottie from "react-lottie-player";
+import treeJson from "../../../public/lottieJson/tree.json";
 
 function LoginSuccess() {
   const router = useRouter();
@@ -38,9 +41,19 @@ function LoginSuccess() {
       });
     }
   }, []);
+
+  const treeStyle: CSSProperties = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "9.375rem",
+    height: "9.375rem",
+  };
+
   return (
     <LoginSuccessLayout>
-      <Spinner />
+      <Lottie loop animationData={treeJson} play style={treeStyle} />
     </LoginSuccessLayout>
   );
 }
