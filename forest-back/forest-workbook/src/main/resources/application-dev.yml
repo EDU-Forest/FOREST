@@ -20,7 +20,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
     open-in-view: false
 
@@ -29,6 +29,14 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
+
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: ${GCP_LOCATION}
+        project-id: ${GCP_ID}
+        bucket: ${GCP_BUCKET}
 
 notification:
   mattermost:

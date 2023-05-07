@@ -649,7 +649,7 @@ public class StudyService {
     }
 
     /* (선생님) 서술형 문제 채점 목록 조회 */
-    public ResponseSuccessDto<GetDescriptionListResponseDto> getDescriptionList(Long studyId) {
+    public ResponseSuccessDto<?> getDescriptionList(Long studyId) {
 
         /*
             1. 시험의 문제집 ID로 문제 목록 불러오기
@@ -663,11 +663,16 @@ public class StudyService {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
+        ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+        if (classStudyResult.getUngradedAnswerRate() == 0)
+            return responseUtil.successResponse("", SuccessCode.STUDY_END);
+
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
 
         if (problemList == null)
-            return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
 
 
         List<GetDescriptionResponseDto> descript = new ArrayList<>();
@@ -687,9 +692,6 @@ public class StudyService {
             // 학생 답안 리스트
             List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
             List<GetStudentAnswerListResponseDto> studentList = new ArrayList<>();
-
-            if (problemList == null)
-                return responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_RESULT_DESCRIPT_LIST);
 
             int index = 1;
             for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
@@ -793,7 +795,7 @@ public class StudyService {
 
         /* 반 문항별 정답율 업데이트 */
         ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, problemList)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_ANSWER_NOT_FOUND));
 
         classAnswerRate.updateClassAnswerRate(numOfCorrectStudent * 100 / ssp.size(), 0);
 
@@ -819,7 +821,7 @@ public class StudyService {
 
             ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
                     .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
-            classStudyResult.updateClassAnswerRate(study, average, standardDeviation, correctAnswerRate);
+            classStudyResult.updateClassStudyResult(study, average, standardDeviation, correctAnswerRate);
         }
 
         PatchResponseDto patchResponseDto = PatchResponseDto.builder()
@@ -842,7 +844,7 @@ public class StudyService {
         /* 서술형 문항 개수 */
         int descriptNum = 0;
 
-        /* 반 문항별 정답률 테이블 생성 */
+        /* 반 문항별 정답률 테이블 수정 (생성은 출제 시) */
         for (ProblemList list : problemList) {
             int correctNum = 0;
             List<StudentStudyProblemResult> studentStudyProblemResult = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
@@ -851,9 +853,11 @@ public class StudyService {
                     correctNum++;
             }
             int correctRate = correctNum * 100 / studentStudyProblemResult.size();
-            ClassAnswerRate classAnswerRate = new ClassAnswerRate();
-            classAnswerRate.createClassAnswerRate(study, list, correctRate, 100 - correctRate);
-            classAnswerRateRepository.save(classAnswerRate);
+            /* 반 문항별 정답율 업데이트 */
+            ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, list)
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_ANSWER_NOT_FOUND));
+            classAnswerRate.updateClassAnswerRateAll(study, list, correctRate, 100 - correctRate);
+
             if (list.getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
                 descriptNum++;
 
@@ -882,13 +886,20 @@ public class StudyService {
         long averageSolvingTime = solvingTime / participateNum;
         int correctAnswerRate = correctRate / participateNum;
         int volume = study.getWorkbook().getVolume();
-        int ungradedAnswerRate = (volume - descriptNum) * 100 / volume;
+        int ungradedAnswerRate = 0;
+
+        List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudy(study);
+        for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
+            if (studentStudyProblemResult.getIsGraded())
+                ungradedAnswerRate++;
+        }
+        ungradedAnswerRate = ungradedAnswerRate * 100 / ssp.size();
 
         /* 반 시험 결과 리포트 테이블 수정 (생성은 출제 시) */
         ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
-                        .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
-        classStudyResult.createClassAnswerRate(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
+        classStudyResult.createClassStudyResult(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
 
         PostResponseDto postResponseDto = PostResponseDto.builder()
                 .message("학습 종료")

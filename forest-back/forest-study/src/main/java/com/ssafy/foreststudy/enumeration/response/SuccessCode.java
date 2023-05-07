@@ -26,6 +26,7 @@ public enum SuccessCode {
     STUDY_SAVE_STUDENT_RESULT(HttpStatus.NO_CONTENT,"학생 학습 종료"),
     STUDY_SUCCESS_RESULT_DESCRIPT_LIST(HttpStatus.OK,"서술형 문제 채점 목록 조회 성공"),
     STUDY_NONE_RESULT_DESCRIPT_LIST(HttpStatus.OK,"서술형 문제 목록 없음"),
+    STUDY_END(HttpStatus.OK,"시험 종료"),
     STUDY_SAVE_DESCRIPT(HttpStatus.OK,"서술형 채점 성공"),
     STUDY_SUCCESS_EXIT(HttpStatus.OK,"클래스 학습 종료"),
     STUDY_SUCCESS_INFO(HttpStatus.OK,"시험 시작하기 정보 조회 성공"),

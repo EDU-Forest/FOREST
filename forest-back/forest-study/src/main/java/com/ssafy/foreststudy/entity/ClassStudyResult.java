@@ -53,7 +53,7 @@ public class ClassStudyResult {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
-    public void createClassAnswerRate(Study study, int takeRate, double average, double standardDeviation, Long averageSolvingTime, int correctAnswerRate, int ungradedAnswerRate, int totalStudent, int participantStudent) {
+    public void createClassStudyResult(Study study, int takeRate, double average, double standardDeviation, Long averageSolvingTime, int correctAnswerRate, int ungradedAnswerRate, int totalStudent, int participantStudent) {
         this.study = study;
         this.takeRate = takeRate;
         this.average = average;
@@ -65,7 +65,7 @@ public class ClassStudyResult {
         this.participantStudent = participantStudent;
     }
 
-    public void updateClassAnswerRate(Study study,  double average, double standardDeviation, int correctAnswerRate) {
+    public void updateClassStudyResult(Study study,  double average, double standardDeviation, int correctAnswerRate) {
         this.study = study;
         this.average = average;
         this.standardDeviation = standardDeviation;

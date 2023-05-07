@@ -1,5 +1,8 @@
 package com.ssafy.forestworkbook.service.impl;
 
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.vision.v1.*;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -14,15 +17,19 @@ import com.ssafy.forestworkbook.service.WorkbookService;
 import com.ssafy.forestworkbook.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -41,21 +48,27 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final StudyRepository studyRepository;
     private final ClassRepository classRepository;
     private final ClassStudyResultRepository classStudyResultRepository;
+    private final ClassAnswerRateRepository classAnswerRateRepository;
     private final ResponseUtil responseUtil;
+
+    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+    private String bucketName;
+    private final Storage storage;
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        // 좋아하는 문제집
-        // 스크랩 한 것도 좋아하는 문제집에
+
+        // 좋아하는 문제집, 스크랩한 문제집
         if (Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks =
-                    userWorkbookRepository.findAllByUserAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(user, pageable);
+                    userWorkbookRepository.findAllByUserIdANdWorkbookIdAndIsBookmarkedOrIsScraped(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .isOriginal(w.getWorkbook().getCreator().getId() == userId)
+                    .isPublic(w.getWorkbook().getIsPublic())
                     .isBookmarked(w.getIsBookmarked())
                     .title(w.getWorkbook().getTitle())
                     .workbookImgPath(w.getWorkbook().getWorkbookImg().getPath())
@@ -67,6 +80,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         // 사용한 문제집
+        // TODO 사본 만든 문제집 추가
         else if (search.equals("use")) {
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdAndIsExecuted(userId, true, pageable);
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
@@ -125,14 +139,15 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+
+        // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 조회 불가능
+        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_LIST);
 
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
         List<ProblemAllInfoDto> problemAllInfoDtoList = new ArrayList<>();
-
-        // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 조회 불가능
-        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_LIST);
 
         for (ProblemList problemList : problemLists) {
             Problem problem = problemRepository.findById(problemList.getProblem().getId())
@@ -171,20 +186,23 @@ public class WorkbookServiceImpl implements WorkbookService {
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbook.getId())
                 .title(workbook.getTitle())
+                .workbookImgId(workbook.getWorkbookImg().getId())
                 .workbookImgPath(workbook.getWorkbookImg().getPath())
                 .description(workbook.getDescription())
                 .volume(workbook.getVolume())
                 .isPublic(workbook.getIsPublic())
+                .isDeploy(workbook.getIsDeploy())
+                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                        .orElse(null) != null)
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
                 .build();
 
         WorkbookToDto workbookToDto = WorkbookToDto.builder()
-                .workbookInfoDto(workbookInfoDto)
+                .workbookInfo(workbookInfoDto)
                 .problemList(problemAllInfoDtoList)
                 .build();
-
 
         return responseUtil.successResponse(workbookToDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
@@ -208,9 +226,13 @@ public class WorkbookServiceImpl implements WorkbookService {
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbook.getId())
                 .title(workbook.getTitle())
+                .workbookImgId(workbook.getWorkbookImg().getId())
                 .workbookImgPath(workbookImg.getPath())
                 .description(workbook.getDescription())
                 .isPublic(workbook.getIsPublic())
+                .isDeploy(false)
+                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
+                        .orElse(null) != null)
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .volume(workbook.getVolume())
                 .bookmarkCount(0)
@@ -269,7 +291,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 내 문제집인 경우 - 삭제, 유저 북마크 전체 삭제
         else {
-            workbookRepository.deleteById(workbookId);
+            workbook.changeIsDeleted(true);
+//            workbookRepository.deleteById(workbookId);
             List<UserWorkbook> userWorkbookList = userWorkbookRepository.findAllByWorkbookId(workbookId);
             for (UserWorkbook userWorkbook : userWorkbookList) {
                 userWorkbook.updateIsScraped(false);
@@ -305,6 +328,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
     }
 
+    // TODO 출제 로직 수정이 필요할 듯 ..
+    // 내 문제집 -> 출제
+    // 스크랩 -> 어떻게 처리하징?
     @Override
     public ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto) {
         User user = userRepository.findById(userId)
@@ -317,6 +343,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
 
         EnumStudyTypeStatus enumStudyTypeStatus;
+
         if (excuteDto.getType().equals("exam")) {
             enumStudyTypeStatus = EnumStudyTypeStatus.EXAM;
         } else if (excuteDto.getType().equals("homework")) {
@@ -348,6 +375,19 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         StudyIdDto studyIdDto = StudyIdDto.builder().studyId(study.getId()).build();
 
+        List<ProblemList> problemListList = problemListRepository.findAllByWorkbookId(workbook.getId());
+
+        List<ClassAnswerRate> classAnswerRateList = new ArrayList<>();
+        for (ProblemList problemList : problemListList) {
+            ClassAnswerRate classAnswerRate = ClassAnswerRate.builder()
+                    .study(study)
+                    .problemList(problemList)
+                    .build();
+            classAnswerRateList.add(classAnswerRate);
+        }
+
+        classAnswerRateRepository.saveAll(classAnswerRateList);
+
         return responseUtil.successResponse(studyIdDto, ForestStatus.WORKBOOK_SUCCESS_EXECUTE);
     }
 
@@ -368,7 +408,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
-    public ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId) {
+    public ResponseSuccessDto<?> deployWorkbook(Long userId, Long workbookId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -380,9 +420,9 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        // 배포 했는데 비공개인 경우 공개 여부 변경
+        // 배포 했는 경우
         if (workbook.getIsExecuted() && workbook.getIsPublic()) {
-            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DEPLOY);
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_ALREADY_DEPLOY);
         }
 
         workbook.changeIsPublic(true);
@@ -397,10 +437,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         // 1. 문제집 만들기
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
+        Workbook workbook = workbookRepository.findById(workbookId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 스크랩 불가능 -> 사본 생성 불가능
-        if (workbook.getCreator().getId() != userId && workbook.getIsPublic() == false)
+        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
 
         Workbook workbookCopy = Workbook.builder()
@@ -425,6 +466,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 2. 문제 만들기
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
+
         // 문제 복사 리스트
         List<Problem> problems = new ArrayList();
         List<Integer> problemNumList = new ArrayList<>();
@@ -510,11 +552,15 @@ public class WorkbookServiceImpl implements WorkbookService {
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbookCopy.getId())
                 .title(workbookCopy.getTitle())
+                .workbookImgId(workbookCopy.getWorkbookImg().getId())
                 .workbookImgPath(workbookCopy.getWorkbookImg().getPath())
                 .description(workbookCopy.getDescription())
                 .volume(workbookCopy.getVolume())
                 .isPublic(workbookCopy.getIsPublic())
-                .isOriginal(false)
+                .isDeploy(false)
+                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                        .orElse(null) != null)
+                .isOriginal(userId == workbook.getCreator().getId())
                 .bookmarkCount(0)
                 .scrapCount(0)
                 .build();
@@ -564,7 +610,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         WorkbookToDto workbookToDto = WorkbookToDto.builder()
-                .workbookInfoDto(workbookInfoDto)
+                .workbookInfo(workbookInfoDto)
                 .problemList(problemList)
                 .build();
 
@@ -637,7 +683,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 itemRepository.saveAll(itemList);
             }
 
-            // 문제 리스트 만들기
+            // 문제 만들기
             ProblemList problemList = ProblemList.builder()
                     .workbook(workbook)
                     .problem(problem)
@@ -650,6 +696,48 @@ public class WorkbookServiceImpl implements WorkbookService {
         workbook.updateVolume(problemUpdateInfoDto.getProblemList().size());
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CREATE);
+    }
+
+    @Override
+    public ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException {
+        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+
+        // Cloud에 이미지 업로드
+        BlobInfo blobInfo = storage.create(
+                BlobInfo.newBuilder(bucketName, uuid)
+                        .setContentType(ext)
+                        .build(),
+                file.getInputStream()
+        );
+
+        ImagePathDto imagePathDto = ImagePathDto.builder()
+                .path("https://storage.googleapis.com/" + bucketName + "/" + uuid)
+                .build();
+
+        log.info("{}", testing("gs://" + bucketName + "/" + uuid));
+
+        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+//        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+    }
+
+    public String testing(String filePath) {
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
+
+        Image img = Image.newBuilder().setSource(imgSource).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            System.out.println("nnnnnnnnn");
+        } catch (IOException e) {
+            log.info("안됨ㅋ");
+        }
+        return "떳나";
+
     }
 
     @Override
@@ -902,8 +990,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                 .workbookId(w.getId())
                 .isOriginal(w.getCreator().getId() == userId)
-                .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId , w.getId())
-                        .orElse(null) == null ? false : true)
+                .isPublic(w.getIsPublic())
+                .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, w.getId())
+                        .orElse(null) != null)
                 .title(w.getTitle())
                 .workbookImgPath(w.getWorkbookImg().getPath())
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
