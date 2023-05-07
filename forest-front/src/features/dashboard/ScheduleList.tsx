@@ -20,7 +20,7 @@ function ScheduleList() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          {data ? (
+          {data && data?.length > 0 ? (
             <>
               {data?.map((item, idx) => {
                 return (
