@@ -81,9 +81,15 @@ const StyledTestContent = styled.div`
 
 const StyledTestProblemBox = styled.div`
   /* width: calc(100vw - 20rem); */
+  position: relative;
   width: 100%;
   height: 100%;
   min-width: 33.5rem;
+`;
+
+const TestCanvas = styled.div`
+  position: absolute;
+  top: -1.5rem;
 `;
 
 const StyledTestProblemTitle = styled.div`
@@ -437,4 +443,5 @@ export {
   TestProblemAnswerBox,
   TestProblemSection,
   TestProblemContentBox,
+  TestCanvas,
 };

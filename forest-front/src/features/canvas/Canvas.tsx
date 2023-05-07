@@ -7,7 +7,6 @@ import {
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
 import { CanvasDrawSection } from "./Canvas.style";
-import useCanvasPost from "@/apis/canvas/useCanvasPost";
 
 interface StoredData {
   drawMode: boolean;
@@ -31,8 +30,8 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "60vw",
-    height: "40vw",
+    width: "70vw",
+    height: "calc(100vh - 13.5rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
@@ -113,15 +112,6 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   //   canvasRef.current?.loadPaths(storedData);
   // }, [isOpenCanvas]);
 
-  // API POST
-  const { mutate } = useCanvasPost();
-  const gogo = () => {
-    const payload = {
-      studentStudyProblemId: 1,
-      line: paths,
-    };
-    mutate(payload);
-  };
   return (
     <>
       <CanvasBar

@@ -160,9 +160,6 @@ const CanvasBarWrapper = styled.div<{
             color: black;
           }
         `}
-
-  margin-top: 100px;
-  margin-left: 30px;
 `;
 
 const CanvasBarItems = styled.div<{ isOpenCanvas?: boolean }>`
@@ -253,6 +250,7 @@ const CanvasWidthSelector = styled.div<{ width?: number }>`
 
 const CanvasDrawSection = styled.div<{ nowTab?: string }>`
   animation: ${canvasBlur} 1s 1;
+  height: calc(100% - 4rem);
   position: absolute;
   ${({ nowTab }) =>
     nowTab === "pen"

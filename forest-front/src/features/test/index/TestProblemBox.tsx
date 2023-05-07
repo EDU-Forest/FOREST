@@ -7,6 +7,7 @@ import {
   StyledTestProblemBox,
   StyledTestProblemEssayAnswer,
   StyledTestProblemShortAnswer,
+  TestCanvas,
   TestProblemAnswerBox,
   TestProblemBtn,
   TestProblemBtnBox,
@@ -18,6 +19,10 @@ import { useDispatch } from "react-redux";
 import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 import { useRouter } from "next/router";
+import Canvas from "@/features/canvas/Canvas";
+import { useState } from "react";
+import { CanvasPath } from "react-sketch-canvas";
+import useCanvasPost from "@/apis/canvas/useCanvasPost";
 
 interface Iprops {
   minutes: number;
@@ -28,6 +33,7 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
   const router = useRouter();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
+  const canvasMutate = useCanvasPost().mutate;
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
     problem[curProblemNum - 1];
@@ -51,13 +57,25 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
   };
   const goToNextProblem = () => {
+    const canvasPayload = {
+      studentStudyProblemId: studentStudyProblemId,
+      line: allPaths,
+    };
+    console.log("canvasPayload", canvasPayload);
     mutate(payload);
+    canvasMutate(canvasPayload);
     if (curProblemNum === problem.length) return;
+
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
   };
 
+  const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
+
   return (
     <StyledTestProblemBox>
+      <TestCanvas>
+        <Canvas allPaths={allPaths} setAllPaths={setAllPaths} />
+      </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />

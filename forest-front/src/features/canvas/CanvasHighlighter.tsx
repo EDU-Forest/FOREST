@@ -66,12 +66,8 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {highlighterColors.map((item, idx) => (
-          <CanvasColorSelectorSelected selected={item.colorCode === color ? true : false}>
-            <CanvasColorSelector
-              key={idx}
-              color={item.viewCode}
-              onClick={() => setColor(item.colorCode)}
-            />
+          <CanvasColorSelectorSelected key={idx} selected={item.colorCode === color ? true : false}>
+            <CanvasColorSelector color={item.viewCode} onClick={() => setColor(item.colorCode)} />
           </CanvasColorSelectorSelected>
         ))}
       </CanvasSelectorSection>
