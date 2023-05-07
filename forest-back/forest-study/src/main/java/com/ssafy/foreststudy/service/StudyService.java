@@ -229,7 +229,7 @@ public class StudyService {
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
 
         if (csList.isEmpty()) {
-            return responseUtil.successResponse(null, SuccessCode.STUDY_NONE_RECENT);
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
         }
 
         ClassStudyResult cs = csList.get(0);
@@ -408,7 +408,7 @@ public class StudyService {
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdAndUserIdOrderByEndTime(classId, userId);
         if (csList.size() == 0)
-            return responseUtil.successResponse(null, SuccessCode.STUDY_NONE_RECENT);
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
 
         ClassStudyResult cs = csList.get(0);
         String schedule = getScheduleType(cs);
@@ -678,13 +678,13 @@ public class StudyService {
         ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
         if (classStudyResult.getUngradedAnswerRate() == 0)
-            return responseUtil.successResponse(null, SuccessCode.STUDY_END);
+            return responseUtil.successResponse("", SuccessCode.STUDY_END);
 
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
 
         if (problemList == null)
-            return responseUtil.successResponse(null, SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
+            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
 
 
         List<GetDescriptionResponseDto> descript = new ArrayList<>();
