@@ -60,7 +60,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     // TODO 사본 만들기는 내거만
 
     @Override
-    public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
+    public ResponseSuccessDto getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -187,6 +187,9 @@ public class WorkbookServiceImpl implements WorkbookService {
             problemAllInfoDtoList.add(problemAllInfoDto);
         }
 
+        UserWorkbook checkBookmark = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbook.getId())
                 .title(workbook.getTitle())
@@ -196,8 +199,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .volume(workbook.getVolume())
                 .isPublic(workbook.getIsPublic())
                 .isDeploy(workbook.getIsDeploy())
-                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
-                        .orElse(null) != null)
+                .iSBookmarked(checkBookmark != null && checkBookmark.getIsBookmarked())
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
@@ -575,6 +577,9 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         problemListRepository.saveAll(problemListsCopy);
 
+        UserWorkbook checkBookmark = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
+                .orElse(null);
+
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbookCopy.getId())
                 .title(workbookCopy.getTitle())
@@ -584,8 +589,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .volume(workbookCopy.getVolume())
                 .isPublic(workbookCopy.getIsPublic())
                 .isDeploy(false)
-                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
-                        .orElse(null) != null)
+                .iSBookmarked(checkBookmark != null || checkBookmark.getIsBookmarked())
                 .isOriginal(userId == workbook.getCreator().getId())
                 .bookmarkCount(0)
                 .scrapCount(0)
