@@ -54,7 +54,8 @@ public class Problem {
         this.point = point;
     }
 
-    public void updateProblem(String title, String path, String text, String answer, int point) {
+    public void updateProblem(EnumProblemTypeStatus type, String title, String path, String text, String answer, int point) {
+        this.type = type;
         this.title = title;
         this.path = path;
         this.text = text;

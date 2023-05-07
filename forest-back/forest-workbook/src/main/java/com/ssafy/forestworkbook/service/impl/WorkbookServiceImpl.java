@@ -373,9 +373,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
     }
 
-    // TODO 출제 로직 수정이 필요할 듯 ..
-    // 내 문제집 -> 출제
-    // 스크랩 -> 어떻게 처리하징?
     @Override
     public ResponseSuccessDto<?> executeWorkbook(Long userId, ExecuteDto executeDto) {
         User user = userRepository.findById(userId)
@@ -403,7 +400,10 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.STUDY_TYPE_NO_VAILD);
         }
 
-        workbook.changeIsExecuted(true);
+        // 내 문제집만 출제 여부 변경
+        if (userId == workbook.getCreator().getId()) {
+            workbook.changeIsExecuted(true);
+        }
 
         List<StudyIdDto> studyIdDtoList = new ArrayList<>();
         List<ProblemList> problemListList = problemListRepository.findAllByWorkbookId(workbook.getId());
@@ -706,44 +706,56 @@ public class WorkbookServiceImpl implements WorkbookService {
                 throw new CustomException(WorkbookErrorCode.PROBLEM_TYPE_NO_VAILD);
             }
 
-            Problem problem = Problem.builder()
-                    .type(enumProblemTypeStatus)
-                    .title(problemDto.getTitle())
-                    .path(problemDto.getPath())
-                    .text(problemDto.getText())
-                    .answer(problemDto.getAnswer())
-                    .point(problemDto.getPoint())
-                    .build();
+            // 문제 ID 오는 경우 수정
+            if (problemDto.getProblemId() != null || !problemDto.getProblemId().equals("")) {
+                Problem problem = problemRepository.findById(problemDto.getProblemId())
+                        .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
-            problemRepository.save(problem);
-
-            // 항목 만들기
-            if (enumProblemTypeStatus.equals(EnumProblemTypeStatus.MULTIPLE)
-                    && problemDto.getItemList() !=
-                    null && !problemDto.getItemList().isEmpty()) {
-
-                List<Item> itemList = new ArrayList<>();
-                for (ItemContentDto itemContent : problemDto.getItemList()) {
-                    Item item = Item.builder()
-                            .problem(problem)
-                            .no(itemContent.getItemNo())
-                            .content(itemContent.getContent())
-                            .isImage(itemContent.getIsImage())
-                            .build();
-
-                    itemList.add(item);
-                }
-                itemRepository.saveAll(itemList);
+                problem.updateProblem(enumProblemTypeStatus, problemDto.getTitle(), problemDto.getPath(),
+                        problemDto.getText(), problemDto.getAnswer(), problemDto.getPoint());
             }
 
-            // 문제 만들기
-            ProblemList problemList = ProblemList.builder()
-                    .workbook(workbook)
-                    .problem(problem)
-                    .problemNum(problemDto.getProblemNo())
-                    .build();
+            // 문제 ID 없는 경우 생성
+            else {
+                Problem problem = Problem.builder()
+                        .type(enumProblemTypeStatus)
+                        .title(problemDto.getTitle())
+                        .path(problemDto.getPath())
+                        .text(problemDto.getText())
+                        .answer(problemDto.getAnswer())
+                        .point(problemDto.getPoint())
+                        .build();
 
-            problemListRepository.save(problemList);
+                problemRepository.save(problem);
+
+                // 항목 만들기
+                if (enumProblemTypeStatus.equals(EnumProblemTypeStatus.MULTIPLE)
+                        && problemDto.getItemList() !=
+                        null && !problemDto.getItemList().isEmpty()) {
+
+                    List<Item> itemList = new ArrayList<>();
+                    for (ItemContentDto itemContent : problemDto.getItemList()) {
+                        Item item = Item.builder()
+                                .problem(problem)
+                                .no(itemContent.getItemNo())
+                                .content(itemContent.getContent())
+                                .isImage(itemContent.getIsImage())
+                                .build();
+
+                        itemList.add(item);
+                    }
+                    itemRepository.saveAll(itemList);
+                }
+
+                // 문제 만들기
+                ProblemList problemList = ProblemList.builder()
+                        .workbook(workbook)
+                        .problem(problem)
+                        .problemNum(problemDto.getProblemNo())
+                        .build();
+
+                problemListRepository.save(problemList);
+            }
         }
 
         workbook.updateVolume(problemUpdateInfoDto.getProblemList().size());
