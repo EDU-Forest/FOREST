@@ -25,8 +25,8 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
       hibernate:
-        show_sql: true
-        format_sql: true
+        show_sql: false
+        format_sql: false
     open-in-view: false
 
   datasource:
@@ -66,3 +66,7 @@ notification:
     enabled: true
     webhook-url: ${MM_WEBHOOK_URL}
     channel :
+
+logging:
+  level:
+    root: info
