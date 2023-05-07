@@ -21,14 +21,14 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
   const { questions } = useSelector((state: RootState) => state.editQuestions);
 
   const { isLoading, mutate: saveWorkbookApiCall } = useWorkbookDetailSaveQuery();
-  const { mutate: copyWorkbookApiCall } = useWorkbookCopyPostQuery(workbook.workbookId);
+  const { mutate: copyWorkbookApiCall } = useWorkbookCopyPostQuery(workbook?.workbookId);
 
   const handleClickSave = () => {
     const workbookInfo = {
-      workbookId: workbook.workbookId,
-      title: workbook.title,
-      workbookImgId: workbook.workbookImgPath,
-      description: workbook.description,
+      workbookId: workbook?.workbookId,
+      title: workbook?.title,
+      workbookImgId: workbook?.workbookImgId,
+      description: workbook?.description,
     };
 
     const problemList = questionSummary.map((problem, i) => {
@@ -58,7 +58,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
 
   return (
     <StyledWorkbookDetailBtnsBox>
-      {workbook.isOriginal && (
+      {workbook?.isOriginal && (
         <WorkbookSaveBtn onClick={handleClickSave}>
           {isLoading ? (
             <>

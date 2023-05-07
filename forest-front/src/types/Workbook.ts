@@ -1,9 +1,11 @@
 export interface WorkbookType {
   workbookId: number;
+  workbookImgId: number;
   workbookImgPath: string;
   title: string;
   description: string;
   isPublic: boolean;
+  isDeploy: boolean;
   bookmarkCount: number;
   scrapCount: number;
   volume: number;

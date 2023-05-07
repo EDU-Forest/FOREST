@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import authAxios from "@/utils/authAxios";
+import authAxios from "@/utils/customAxios/authAxios";
 
 const fetcher = (classId: number) =>
   authAxios.get(`/api/class/${classId}/student`).then(({ data }) => data.data);

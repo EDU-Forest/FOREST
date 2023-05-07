@@ -14,9 +14,11 @@ const initialState: WorkbookDetailState = {
   workbook: {
     workbookId: 0,
     workbookImgPath: "",
+    workbookImgId: 1,
     title: "",
     description: "",
     isPublic: false,
+    isDeploy: false,
     bookmarkCount: 0,
     scrapCount: 0,
     volume: 0,
@@ -53,6 +55,7 @@ const workbookDetailSlice = createSlice({
   },
 });
 
-export const { setWorkbook, setIsPublic, setIsMoveToEditor, resetIsMoveToEditor } = workbookDetailSlice.actions;
+export const { setWorkbook, setIsPublic, setIsMoveToEditor, resetIsMoveToEditor } =
+  workbookDetailSlice.actions;
 
 export default workbookDetailSlice.reducer;

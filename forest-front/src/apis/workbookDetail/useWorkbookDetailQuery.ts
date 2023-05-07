@@ -1,7 +1,7 @@
 import * as queryKeys from "@/constants/queryKeys";
 import { setQuestions } from "@/stores/editor/editorQuestions";
 import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
-import workbookAxios from "@/utils/workbookAxios";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 
@@ -16,7 +16,7 @@ const useWorkbookDetailQuery = (wId: number) => {
   return useQuery([queryKeys.GET_WORKBOOK_DETAIL], () => fetcher(wId), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      dispatch(setWorkbook(data.workbookInfoDto));
+      dispatch(setWorkbook(data.workbookInfo));
 
       data.problemList.sort(function compare(a: any, b: any) {
         return a.problemNum - b.problemNum;

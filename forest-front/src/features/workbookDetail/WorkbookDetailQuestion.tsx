@@ -34,7 +34,9 @@ function WorkbookDetailQuestion({
   const router = useRouter();
 
   const [curQuestionNum, setCurQuestionNum] = useState(1);
-  const { workbooksBySelf } = useSelector((state: RootState) => state.editorWorkbook);
+  const {
+    workbook: { isDeploy } = {workbook: {isDeploy: false}}
+  } = useSelector((state: RootState) => state.workbookDetail);
 
   const getQuestionNum = (): void => {
     for (let i = 0; i < questionSumm.length; i++) {
@@ -60,8 +62,8 @@ function WorkbookDetailQuestion({
         <StyledQuestionDetailTitleBox>
           <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
           <span>{question?.title}</span>
-          {/* 내가 원작자여야만 수정 가능 */}
-          {isOriginal && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
+          {/* 내가 원작자이며, 배포 되지 않아야 수정 가능 */}
+          {isOriginal && !isDeploy && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
         </StyledQuestionDetailTitleBox>
       )}
 

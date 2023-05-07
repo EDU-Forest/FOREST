@@ -15,7 +15,7 @@ import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal
 import { RootState } from "@/stores/store";
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -91,7 +91,7 @@ function WorkbookDetail() {
           usedCnt={workbook?.scrapCount}
         />
         <WorkbookDetailQuestion
-          isOriginal={workbook.isOriginal}
+          isOriginal={workbook?.isOriginal}
           question={questions[getCurQuestionIdx()]} /* 현재 선택된 문제 */
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}

@@ -26,7 +26,7 @@ import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery
 import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 import { resetSelectWorkbook, setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 
 function Editor() {
   const dispatch = useDispatch();

@@ -76,7 +76,7 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       </WorkBookPdfHeaderBox>
       <WorkBookPdfBoxQuestionsBox>
         {questions.map((question, i) => (
-          <div>
+          <div key={`question-${i}`}>
             {/* 문항이 존재할 경우에만 렌더링 */}
             {question && (
               <StyledQuestionDetailTitleBox>

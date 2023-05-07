@@ -1,7 +1,7 @@
 import TeacherNav from "@/components/Nav/TeacherNav";
 import SearchContainer from "@/features/search/SearchContainer";
 import { Container, FullScreen } from "@/styles/container";
-import withAuth from "@/utils/withAuth";
+import withAuth from "@/utils/auth/withAuth";
 
 function Search() {
   return (

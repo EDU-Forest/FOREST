@@ -13,6 +13,7 @@ export default function TestCommonBtn() {
   const startTestHandler = () => {
     if (new Date(endTime).getTime() >= new Date().getTime()) {
       mutate(typeof studyId === "string" ? parseInt(studyId) : -1);
+      router.push(`/test/${studyId}`);
     } else {
       alert("종료된 시험입니다.");
       goToResultHandler();

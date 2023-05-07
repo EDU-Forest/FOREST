@@ -15,7 +15,7 @@ function WorkbookSettingModalTypeSelect({ types, setType }: IProps) {
       <p>출제 유형</p>
       <WorkbookSettingRadioBox>
         {types.map((item, i) => (
-          <label key={i}>
+          <label key={`type-${i}`}>
             <input
               defaultChecked={i === 0 && true}
               type="radio"

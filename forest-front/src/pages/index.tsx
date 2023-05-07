@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import EmailAuth from "@/features/home/EmailAuth";
 import UserForm from "@/features/home/UserForm";
 import Spinner from "@/components/Spinner/Spinner";
-import avoidDuplicateLoginAuth from "@/utils/AvoidDuplicateLoginAuth";
+import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
 
 function Home() {
   const router = useRouter();

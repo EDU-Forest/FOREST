@@ -1,6 +1,6 @@
 // // 문제집 내보내기 가능 범위 확인
 
-// import workbookAxios from "@/utils/workbookAxios";
+// import workbookAxios from "@/utils/customAxios/workbookAxios";
 // import { useQuery } from "react-query";
 // import * as queryKeys from "@/constants/queryKeys";
 

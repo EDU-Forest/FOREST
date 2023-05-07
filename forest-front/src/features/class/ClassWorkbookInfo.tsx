@@ -7,7 +7,7 @@ import {
   ClassSummaryText,
   ClassSummaryValue,
 } from "./ClassSummary.style";
-import date from "@/utils/Date";
+import date from "@/utils/date";
 
 interface Iprops {
   noMargin?: boolean;

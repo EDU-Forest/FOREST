@@ -49,7 +49,7 @@ function EditorEssay({ question }: IProps) {
       <EditorEssayKeywordsBox>
         {answers.map((ans: string, i) => (
           <input
-            key={i}
+            key={`answer-input-${i}`}
             value={ans}
             placeholder="단어"
             onChange={(e) => handleChangeAnswer(i, e)}

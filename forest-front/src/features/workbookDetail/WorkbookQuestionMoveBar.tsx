@@ -51,16 +51,12 @@ function WorkbookQuestionMoveBar({
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data])
-
   return (
     <StyledWorkbookQuestionMoveBar isSelected={isSelected} draggable>
-      {workbook.isOriginal && <AiOutlineHolder />}
+      {workbook?.isOriginal && !workbook?.isDeploy && <AiOutlineHolder />}
       <span>{num}.&nbsp;</span>
       <span>{question?.title}</span>
-      {workbook.isOriginal && <FaTrashAlt onClick={handleClickDelete} />}
+      {workbook?.isOriginal && !workbook?.isDeploy && <FaTrashAlt onClick={handleClickDelete} />}
     </StyledWorkbookQuestionMoveBar>
   );
 }
