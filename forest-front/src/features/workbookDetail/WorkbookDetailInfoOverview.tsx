@@ -89,7 +89,6 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     );
   }, [selectedImg]);
 
-  console.log(workbook);
   return (
     <>
       <StyledWorkbookDetailInfoOverviewBox>
