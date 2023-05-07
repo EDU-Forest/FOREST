@@ -7,5 +7,6 @@ import lombok.Getter;
 @Builder
 public class SaveClassResponseDto {
     private Long classId;
+    private String className;
     private String message;
 }
