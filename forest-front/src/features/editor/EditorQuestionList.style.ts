@@ -15,6 +15,14 @@ export const EditorQuestionListBox = styled(StyledWorkbookDetailQuestionListCont
   flex-direction: column;
 
   padding: 24px;
+
+  /* 빈 화면 문구  */
+  > span {
+    display: flex;
+    justify-content: center;
+
+    color: ${({ theme }) => theme.colors.Lime[600]};
+  }
 `;
 
 export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`

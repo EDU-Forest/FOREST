@@ -6,9 +6,10 @@ import { StyledWorkbookListBox } from "./Workbook.style";
 
 interface IProps {
   list: WorkbookType[];
+  isWorkbookPage: boolean
 }
 
-function WorkbookList({ list }: IProps) {
+function WorkbookList({ list, isWorkbookPage }: IProps) {
   const router = useRouter();
 
   const handleClickWorkbook = (id: number) => {
@@ -31,6 +32,7 @@ function WorkbookList({ list }: IProps) {
             scrapCount={item?.scrapCount}
             methodType={item?.isBookmarked ? 'DELETE' : 'POST'}
             clickAction={handleClickWorkbook}
+            isWorkbookPage={isWorkbookPage}
           />
         );
       })}

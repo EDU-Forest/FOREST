@@ -1,3 +1,4 @@
+import { theme } from "@/styles/theme";
 import { Container } from "@/styles/container";
 import styled from "styled-components";
 import { StyledWorkbookDetailBtnsBox } from "../workbookDetail/WorkbookDetail.style";
@@ -8,6 +9,12 @@ export const EditorContainer = styled(Container)`
 
   padding: 32px;
   gap: 24px;
+
+  @media ${({ theme }) => theme.tablet} {
+    /* width: auto !important; */
+    /* width: calc(100% - 14rem) !important; */
+    width: calc(100% - 10.75rem) !important;
+  }
 `;
 
 export const EditorTitleAndQuestionBox = styled.div`
@@ -31,6 +38,14 @@ export const QuestionEditAreaBox = styled.div`
   background: #ffffff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
+
+  /* 빈 화면 문구  */
+  > span {
+    display: flex;
+    justify-content: center;
+
+    color: ${({ theme }) => theme.colors.Lime[600]};
+  }
 `;
 
 export const EditorBtnsBox = styled(StyledWorkbookDetailBtnsBox)`
