@@ -151,8 +151,6 @@ public class StudyService {
         } else {
             List<ClassUser> classUser = classUserRepository.findAllByUser(user);
             for (ClassUser cu : classUser) {
-                classRepository.findById(cu.getId())
-                        .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
                 List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
                 studyList.addAll(classStudyList);
             }
