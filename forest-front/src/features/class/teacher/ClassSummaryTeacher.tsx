@@ -18,60 +18,69 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 import arrangeDate from "@/utils/arrangeDate";
+import Loading from "@/components/Loading/Loading";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-  const examResult = useStudyResultQuery(nowStudyId).data;
+  const { data, isLoading } = useStudyResultQuery(nowStudyId);
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);
   };
 
   return (
-    <ClassSummaryWrapper small={examResult?.scheduleType === "AFTER" ? false : true}>
-      <ClassSummaryTextWrapper>
-        <ClassSummaryTextItem>
-          <ClassSummaryTitle>{examResult?.title}</ClassSummaryTitle>
-          <WorkbookStatus status={examResult?.scheduleType} />
-        </ClassSummaryTextItem>
-        {examResult?.scheduleType === "AFTER" && (
-          <ClassSummaryText
-            isGray
-            style={{ cursor: "pointer", margin: "0px" }}
-            onClick={() => goToDetail(examResult?.studyId)}
-          >
-            자세히 보기
-            <AiOutlineRight className="icon" />
-          </ClassSummaryText>
-        )}
-      </ClassSummaryTextWrapper>
-      <ClassSummaryDeadline>~ {arrangeDate(examResult?.endTime)}</ClassSummaryDeadline>
-
-      {examResult?.scheduleType === "AFTER" ? (
-        <ClassSummaryItemWrapper>
-          <ClassWorkbookInfo
-            studyCreatedDate={examResult?.studyCreatedDate}
-            studyType={examResult?.studyType}
-            volume={examResult?.volume}
-            isPublic={examResult?.isPublic}
-          />
-          <TotalResult
-            average={examResult?.average}
-            standardDeviation={examResult?.standardDeviation}
-            averageSolvingTime={examResult?.averageSolvingTime}
-          />
-          <TakeRateChart
-            totalStudent={examResult?.totalStudent}
-            participantStudent={examResult?.participantStudent}
-            takeRate={examResult?.takeRate}
-          />
-        </ClassSummaryItemWrapper>
+    <>
+      {isLoading ? (
+        <ClassSummaryWrapper small={true} style={{ display: "flex", alignItems: "center" }}>
+          <Loading width={10} height={10} />
+        </ClassSummaryWrapper>
       ) : (
-        <ClassSummaryItemWrapperNoResult>
-          시험 결과가 등록되지 않았습니다.
-        </ClassSummaryItemWrapperNoResult>
+        <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
+          <ClassSummaryTextWrapper>
+            <ClassSummaryTextItem>
+              <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
+              <WorkbookStatus status={data?.scheduleType} />
+            </ClassSummaryTextItem>
+            {data?.scheduleType === "AFTER" && (
+              <ClassSummaryText
+                isGray
+                style={{ cursor: "pointer", margin: "0px" }}
+                onClick={() => goToDetail(data?.studyId)}
+              >
+                자세히 보기
+                <AiOutlineRight className="icon" />
+              </ClassSummaryText>
+            )}
+          </ClassSummaryTextWrapper>
+          <ClassSummaryDeadline>~ {arrangeDate(data?.endTime)}</ClassSummaryDeadline>
+
+          {data?.scheduleType === "AFTER" ? (
+            <ClassSummaryItemWrapper>
+              <ClassWorkbookInfo
+                studyCreatedDate={data?.studyCreatedDate}
+                studyType={data?.studyType}
+                volume={data?.volume}
+                isPublic={data?.isPublic}
+              />
+              <TotalResult
+                average={data?.average}
+                standardDeviation={data?.standardDeviation}
+                averageSolvingTime={data?.averageSolvingTime}
+              />
+              <TakeRateChart
+                totalStudent={data?.totalStudent}
+                participantStudent={data?.participantStudent}
+                takeRate={data?.takeRate}
+              />
+            </ClassSummaryItemWrapper>
+          ) : (
+            <ClassSummaryItemWrapperNoResult>
+              시험 결과가 등록되지 않았습니다.
+            </ClassSummaryItemWrapperNoResult>
+          )}
+        </ClassSummaryWrapper>
       )}
-    </ClassSummaryWrapper>
+    </>
   );
 }
