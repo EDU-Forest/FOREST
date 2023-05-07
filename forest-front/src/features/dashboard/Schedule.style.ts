@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledScheduleTop = styled.div`
   display: flex;
@@ -10,10 +10,11 @@ export const StyledScheduleStatus = styled.div`
 `;
 
 export const StyledScheduleStatusCircle = styled.div<{ status: string }>`
-  width: 14px;
-  height: 14px;
+  width: 0.875rem;
+  height: 0.875rem;
+  margin-top: 0.125rem;
 
-  margin-right: 8px;
+  margin-right: 0.5rem;
 
   background-color: ${({ status, theme }) =>
     status === "ONGOING"
@@ -29,15 +30,15 @@ export const StyledStatusNotification = styled.div`
   flex-direction: column;
   align-content: flex-end;
   align-items: flex-end;
-  gap: 16px;
+  gap: 1rem;
 
   color: ${({ theme }) => theme.colors.Gray[700]};
-  font-size: 14px;
+  font-size: 0.875rem;
 
   // 상태 레이블
   > div {
     display: flex;
-    gap: 16px;
+    gap: 1rem;
   }
 
   p {
@@ -45,8 +46,15 @@ export const StyledStatusNotification = styled.div`
   }
 `;
 
-export const StyledScheduleItem = styled.div`
-  margin: 0px 8px;
+export const StyledScheduleItem = styled.div<{ isLast?: boolean }>`
+  margin: 1rem 0.5rem;
+
+  ${({ isLast }) =>
+    !isLast &&
+    css`
+      border-bottom: 0.0625rem solid ${({ theme }) => theme.colors.Gray[400]};
+      padding-bottom: 1rem;
+    `}
 
   // 기간
   > span {
@@ -73,7 +81,7 @@ export const StyledScheduleListBox = styled.div`
   margin-top: 2rem;
 
   hr {
-    height: 0.5008px;
+    height: 0.0313rem;
 
     margin: 1rem 0;
 
@@ -90,8 +98,8 @@ export const StyledClassLabel = styled.div`
   padding: 0.25rem 0.5rem;
 
   background-color: ${({ theme }) => theme.colors.Orange[50]};
-  border-radius: 4px;
+  border-radius: 0.25rem;
   color: ${({ theme }) => theme.colors.Orange[600]};
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
 `;

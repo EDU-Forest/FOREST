@@ -4,8 +4,8 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 
 const fetcher = () =>
   studyAxios.get(`/api/study/calendar`).then(({ data }) => {
-    console.log(data);
-    return data.data;
+    const studyList: ScheduleList[] = data.data.studyList;
+    return studyList;
   });
 
 const useScheduleQuery = () => {

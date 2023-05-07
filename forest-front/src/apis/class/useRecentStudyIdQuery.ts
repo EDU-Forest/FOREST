@@ -17,14 +17,11 @@ const useRecentStudyIdQuery = (classId: number) => {
     enabled: !!classId,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      dispatch(setStudy(data.studyId));
-    },
-    onError: (err) => {
-      console.log("err", err);
-    },
-    onSettled(data, error) {
-      console.log("data", data);
-      console.log("error", error);
+      if (data) {
+        dispatch(setStudy(data.studyId));
+      } else {
+        dispatch(setStudy(-1));
+      }
     },
   });
 };

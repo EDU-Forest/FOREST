@@ -20,18 +20,20 @@ interface StoredData {
 }
 interface Iprops {
   storedData?: any;
+  allPaths?: CanvasPath[];
+  setAllPaths: (allPaths: CanvasPath[]) => void;
 }
 
-export default function Canvas({ storedData }: Iprops) {
+export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   const canvasRef = createRef<ReactSketchCanvasRef>();
 
   const [nowTab, setNowTab] = useState<string>("");
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "100vw",
-    height: "80vw",
-    backgroundImage: "images/test.png",
+    width: "60vw",
+    height: "40vw",
+    backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
     eraserWidth: 5,
@@ -99,12 +101,17 @@ export default function Canvas({ storedData }: Iprops) {
   const ControlCanvas = () => {
     // 캔버스 닫기
     setIsOpenCanvas(!isOpenCanvas);
+    setAllPaths(paths);
   };
 
-  // API GET한 기록 그리기
   useEffect(() => {
-    canvasRef.current?.loadPaths(storedData);
+    canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
   }, [isOpenCanvas]);
+
+  // API GET한 기록 그리기
+  // useEffect(() => {
+  //   canvasRef.current?.loadPaths(storedData);
+  // }, [isOpenCanvas]);
 
   // API POST
   const { mutate } = useCanvasPost();
@@ -140,9 +147,9 @@ export default function Canvas({ storedData }: Iprops) {
           />
         </CanvasDrawSection>
       )}
-      <button onClick={gogo}>해보자!</button>
+      {/* <button onClick={gogo}>해보자!</button> */}
 
-      <label htmlFor="pathsToLoad" className="form-label">
+      {/* <label htmlFor="pathsToLoad" className="form-label">
         Paths to load
       </label>
       <textarea
@@ -165,7 +172,7 @@ export default function Canvas({ storedData }: Iprops) {
         }}
       >
         Load Paths
-      </button>
+      </button> */}
     </>
   );
 }

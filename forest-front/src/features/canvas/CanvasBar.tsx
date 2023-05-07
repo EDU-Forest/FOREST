@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CanvasBarWrapper } from "./Canvas.style";
+import { CanvasBarItems, CanvasBarWrapper } from "./Canvas.style";
 import { BsPencilFill, BsFillEraserFill, BsTrash } from "react-icons/bs";
 import { FaHighlighter } from "react-icons/fa";
 import { BiUndo, BiRedo } from "react-icons/bi";
@@ -114,20 +114,32 @@ export default function CanvasBar({
   useEffect(() => {
     if (isPen) {
       changeStroke(penColor, penWidth);
-    } else {
+    }
+    if (isHighlighter) {
       changeStroke(highlighterColor, highlighterWidth);
     }
   }, [isPen, isHighlighter, penColor, penWidth, highlighterColor, highlighterWidth]);
 
   return (
-    <CanvasBarWrapper isOpenController={isOpenController} nowTab={nowTab}>
-      <img src="/icons/icon-72x72.png" style={{ width: "40px" }} onClick={ControlCanvas} />
-      <BsPencilFill onClick={openPenController} className="pen" />
-      <FaHighlighter onClick={openHighliterController} className="highlighter" />
-      <BsFillEraserFill onClick={openEraserController} className="eraser" />
-      <BiUndo onClick={clickUndo} />
-      <BiRedo onClick={clickRedo} />
-      <BsTrash onClick={clickClear} />
+    <CanvasBarWrapper
+      isOpenCanvas={isOpenCanvas}
+      isOpenController={isOpenController}
+      nowTab={nowTab}
+    >
+      <div className="img-div">
+        <div className="info">연습장을 사용해보세요</div>
+
+        <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} />
+      </div>
+
+      <CanvasBarItems isOpenCanvas={isOpenCanvas}>
+        <BsPencilFill onClick={openPenController} className="pen" />
+        <FaHighlighter onClick={openHighliterController} className="highlighter" />
+        <BsFillEraserFill onClick={openEraserController} className="eraser" />
+        <BiUndo onClick={clickUndo} />
+        <BiRedo onClick={clickRedo} />
+        <BsTrash onClick={clickClear} />
+      </CanvasBarItems>
 
       {isPen && (
         <CanvasPen

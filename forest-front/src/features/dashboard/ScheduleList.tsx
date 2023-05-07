@@ -7,69 +7,47 @@ import {
 } from "./Schedule.style";
 import useScheduleQuery from "@/apis/dashboard/useScheduleQuery";
 import { ClassSummaryItemWrapperNoResult } from "../class/ClassSummary.style";
+import Loading from "@/components/Loading/Loading";
+import arrangeDate from "@/utils/arrangeDate";
 
 function ScheduleList() {
-  const ScheduleList: ScheduleList[] = useScheduleQuery().data?.studyList;
-
-  // 더미 데이터
-  const list: ScheduleList[] = [
-    {
-      studyId: 1,
-      title: "모의고사",
-      startTime: "23.04.16 09:00",
-      endTime: "23.04.21 18:00",
-      className: "싸피 고등학교 3반",
-      studyType: "ONGOING",
-      scheduleType: "EXAM",
-    },
-    {
-      studyId: 2,
-      title: "모의고사",
-      startTime: "23.04.16 09:00",
-      endTime: "23.04.21 18:00",
-      className: "싸피중 1반",
-      studyType: "AFTER",
-      scheduleType: "SELF",
-    },
-    {
-      studyId: 3,
-      title: "모의고사",
-      startTime: "23.04.16 09:00",
-      endTime: "23.04.21 18:00",
-      className: "싸피 고등학교 3반",
-      studyType: "BEFORE",
-      scheduleType: "HOMEWORK",
-    },
-  ];
+  const { data, isLoading } = useScheduleQuery();
+  console.log(data);
 
   return (
     <StyledScheduleListBox>
-      {ScheduleList?.length > 0 ? (
-        <>
-          {ScheduleList?.map((item) => {
-            return (
-              <>
-                <StyledScheduleItem>
-                  <StyledScheduleItemTop>
-                    <div>
-                      <StyledScheduleStatusCircle status={item.studyType} />
-                      <span>{item.title}</span>
-                    </div>
-                    <ClassLabel classTitle={item.className} />
-                  </StyledScheduleItemTop>
-                  <span>
-                    {item.startTime} ~ {item.endTime}
-                  </span>
-                </StyledScheduleItem>
-                <hr />
-              </>
-            );
-          })}
-        </>
+      {isLoading ? (
+        <Loading width={10} height={10} />
       ) : (
-        <ClassSummaryItemWrapperNoResult>
-          <p style={{ marginBottom: "1rem" }}>등록된 스케줄이 없습니다</p>
-        </ClassSummaryItemWrapperNoResult>
+        <>
+          {data ? (
+            <>
+              {data?.map((item, idx) => {
+                return (
+                  <StyledScheduleItem
+                    key={item.studyId}
+                    isLast={idx === data.length - 1 ? true : false}
+                  >
+                    <StyledScheduleItemTop>
+                      <div>
+                        <StyledScheduleStatusCircle status={item.scheduleType} />
+                        <span>{item.title}</span>
+                      </div>
+                      <ClassLabel classTitle={item.className} />
+                    </StyledScheduleItemTop>
+                    <span>
+                      {arrangeDate(item.startTime)} ~ {arrangeDate(item.endTime)}
+                    </span>
+                  </StyledScheduleItem>
+                );
+              })}
+            </>
+          ) : (
+            <ClassSummaryItemWrapperNoResult>
+              <p style={{ marginBottom: "1rem" }}>등록된 스케줄이 없습니다</p>
+            </ClassSummaryItemWrapperNoResult>
+          )}
+        </>
       )}
     </StyledScheduleListBox>
   );
