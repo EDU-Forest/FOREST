@@ -176,18 +176,19 @@ const CanvasBarItems = styled.div<{ isOpenCanvas?: boolean }>`
     `}
 `;
 
-const CanvasSelectorWrapper = styled.div<{ isEraser?: boolean }>`
+const CanvasSelectorWrapper = styled.div`
   ${flexBox("row", "center", "space-between")}
   position: absolute;
   padding: 0 24px;
   gap: 12px;
   top: 60px;
-  width: ${({ isEraser }) => (isEraser ? "320px" : "380px")};
+  width: 380px;
   height: 48px;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: white;
   color: black;
+  z-index: 10;
 `;
 
 const CanvasSelectorSection = styled.div<{ width?: number }>`

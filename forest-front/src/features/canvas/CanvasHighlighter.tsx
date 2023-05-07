@@ -35,15 +35,34 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
   const highlighterWidth = [10, 15, 20];
 
   return (
-    <CanvasSelectorWrapper>
-      <CanvasSelectorSection width={3}>
-        {highlighterWidth.map((item, idx) => (
+    <CanvasSelectorWrapper style={{ width: "440px" }}>
+      <CanvasSelectorSection width={8}>
+        {/* {highlighterWidth.map((item, idx) => (
           <CanvasColorSelectorSelected selected={item === width ? true : false}>
             <p key={idx} onClick={() => setWidth(item)}>
               {item}
             </p>
           </CanvasColorSelectorSelected>
-        ))}
+        ))} */}
+
+        <CanvasColorSelectorSelected
+          selected={10 === width ? true : false}
+          onClick={() => setWidth(10)}
+        >
+          <img src="/images/thinH.png" style={{ width: "24px" }} />
+        </CanvasColorSelectorSelected>
+        <CanvasColorSelectorSelected
+          selected={15 === width ? true : false}
+          onClick={() => setWidth(15)}
+        >
+          <img src="/images/regularH.png" style={{ width: "26px" }} />
+        </CanvasColorSelectorSelected>
+        <CanvasColorSelectorSelected
+          selected={20 === width ? true : false}
+          onClick={() => setWidth(20)}
+        >
+          <img src="/images/boldH.png" style={{ width: "28px" }} />
+        </CanvasColorSelectorSelected>
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {highlighterColors.map((item, idx) => (

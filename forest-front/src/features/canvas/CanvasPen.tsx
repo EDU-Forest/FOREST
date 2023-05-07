@@ -39,13 +39,31 @@ export default function CanvasPen({ color, width, setColor, setWidth }: Iprops) 
   return (
     <CanvasSelectorWrapper>
       <CanvasSelectorSection width={8}>
-        {penWidth.map((item, idx) => (
+        {/* {penWidth.map((item, idx) => (
           <CanvasColorSelectorSelected key={idx} selected={item === width ? true : false}>
             <CanvasWidthSelectorWrapper>
               <CanvasWidthSelector onClick={() => setWidth(item)} width={widthToCss(item)} />
             </CanvasWidthSelectorWrapper>
           </CanvasColorSelectorSelected>
-        ))}
+        ))} */}
+        <CanvasColorSelectorSelected
+          selected={3 === width ? true : false}
+          onClick={() => setWidth(3)}
+        >
+          <img src="/images/thin.png" style={{ width: "28px" }} />
+        </CanvasColorSelectorSelected>
+        <CanvasColorSelectorSelected
+          selected={6 === width ? true : false}
+          onClick={() => setWidth(6)}
+        >
+          <img src="/images/regular.png" style={{ width: "28px" }} />
+        </CanvasColorSelectorSelected>
+        <CanvasColorSelectorSelected
+          selected={9 === width ? true : false}
+          onClick={() => setWidth(9)}
+        >
+          <img src="/images/bold.png" style={{ width: "28px" }} />
+        </CanvasColorSelectorSelected>
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {penColors.map((item, idx) => (
