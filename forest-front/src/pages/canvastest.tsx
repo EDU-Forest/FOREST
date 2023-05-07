@@ -121,6 +121,7 @@ export default function CanvasTest() {
     <main>
       {/* <Canvas storedData={record?.line} /> */}
       <Canvas />
+      <img src="/images/test.png" alt="" />
       {/* <CanvasPen canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
       <CanvasHighlighter canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
       <CanvasRecode canvasProps={canvasProps} setCanvasProps={setCanvasProps} />

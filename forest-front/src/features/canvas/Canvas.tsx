@@ -29,9 +29,9 @@ export default function Canvas({ storedData }: Iprops) {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "80vw",
-    height: "60vw",
-    backgroundImage: "images/test.png",
+    width: "60vw",
+    height: "40vw",
+    backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
     eraserWidth: 5,
@@ -140,9 +140,9 @@ export default function Canvas({ storedData }: Iprops) {
           />
         </CanvasDrawSection>
       )}
-      <button onClick={gogo}>해보자!</button>
+      {/* <button onClick={gogo}>해보자!</button> */}
 
-      <label htmlFor="pathsToLoad" className="form-label">
+      {/* <label htmlFor="pathsToLoad" className="form-label">
         Paths to load
       </label>
       <textarea
@@ -165,7 +165,7 @@ export default function Canvas({ storedData }: Iprops) {
         }}
       >
         Load Paths
-      </button>
+      </button> */}
     </>
   );
 }

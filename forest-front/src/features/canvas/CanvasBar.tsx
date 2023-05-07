@@ -126,7 +126,12 @@ export default function CanvasBar({
       isOpenController={isOpenController}
       nowTab={nowTab}
     >
-      <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} />
+      <div className="img-div">
+        <div className="info">연습장을 사용해보세요</div>
+
+        <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} />
+      </div>
+
       <CanvasBarItems isOpenCanvas={isOpenCanvas}>
         <BsPencilFill onClick={openPenController} className="pen" />
         <FaHighlighter onClick={openHighliterController} className="highlighter" />

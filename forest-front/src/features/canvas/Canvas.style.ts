@@ -51,6 +51,16 @@ const show = keyframes`
 }
 `;
 
+const canvasBlur = keyframes`
+0% {
+  backdrop-filter: blur(2px);
+}
+
+100% {
+  backdrop-filter: blur(0px)
+}
+`;
+
 const CanvasBarWrapper = styled.div<{
   isOpenCanvas?: boolean;
   isOpenController?: boolean;
@@ -65,13 +75,37 @@ const CanvasBarWrapper = styled.div<{
   border-radius: 24px;
   background-color: white;
 
-  animation: ${closeSlide} 0.5s 1;
+  animation: ${closeSlide} 0.4s 1;
 
-  .logo {
-    width: 36px;
+  .img-div {
     position: absolute;
     left: 7px;
     animation: ${moveToLeft} 0.5s 1;
+
+    .logo {
+      width: 36px;
+    }
+
+    &:hover {
+      .info {
+        display: block;
+      }
+    }
+  }
+
+  .info {
+    display: none;
+
+    position: absolute;
+    top: 44px;
+    left: -20px;
+    width: 120px;
+    height: 24px;
+    font-size: 13px;
+    background-color: ${({ theme }) => theme.colors.Lime[50]};
+    border-radius: 12px;
+    text-align: center;
+    line-height: 24px;
   }
 
   svg {
@@ -84,9 +118,15 @@ const CanvasBarWrapper = styled.div<{
       animation: ${openSlide} 0.5s 1;
       width: 440px;
 
-      .logo {
+      .img-div {
         animation: ${moveToRight} 0.5s 1;
         left: 16px;
+
+        &:hover {
+          .info {
+            display: none;
+          }
+        }
       }
 
       svg {
@@ -140,6 +180,7 @@ const CanvasSelectorWrapper = styled.div<{ isEraser?: boolean }>`
   ${flexBox("row", "center", "space-between")}
   position: absolute;
   padding: 0 24px;
+  gap: 12px;
   top: 60px;
   width: ${({ isEraser }) => (isEraser ? "320px" : "380px")};
   height: 48px;
@@ -210,6 +251,8 @@ const CanvasWidthSelector = styled.div<{ width?: number }>`
 `;
 
 const CanvasDrawSection = styled.div<{ nowTab?: string }>`
+  animation: ${canvasBlur} 1s 1;
+  position: absolute;
   ${({ nowTab }) =>
     nowTab === "pen"
       ? css`
