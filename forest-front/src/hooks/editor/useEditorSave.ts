@@ -13,6 +13,7 @@ function useEditorSave() {
   const problemList = questions.map((question: QuestionType, i) => {
     return {
       problemNo: i + 1,
+      problemId: question.problemId !== 0 ? question.problemId : null,
       type: question.type,
       title: question.title,
       path: question.problemImgPath === null ? "" : question.problemImgPath,
