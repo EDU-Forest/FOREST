@@ -6,7 +6,6 @@ import { RootState } from "@/stores/store";
 export default function TestProblemTitle() {
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
   const { title } = problem[curProblemNum - 1];
-  console.log(title, problem);
   return (
     <StyledTestProblemTitle>
       <TestProblemTitleLabel />

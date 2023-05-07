@@ -203,7 +203,7 @@ const ProblemNumTd = styled.td<{ isEnded: boolean; isCorrect: boolean }>`
       ? isCorrect
         ? theme.colors.Lime[200]
         : theme.colors.Orange[200]
-      : theme.colors.Lime[500]};
+      : theme.colors.Lime[200]};
   color: ${({ isEnded, isCorrect, theme }) =>
     isEnded
       ? isCorrect

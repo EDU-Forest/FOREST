@@ -7,7 +7,10 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { StyledNav, TeacherNavDiv, NavInner } from "./Nav.style";
+import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph } from "./Nav.style";
+import { useDispatch } from "react-redux";
+import { setLogout } from "@/stores/user/user";
+import { removeItemLocalStorage } from "@/utils/localStorage";
 
 interface Iprops {
   nowLocation: string;
@@ -15,6 +18,7 @@ interface Iprops {
 
 export default function TeacherNav({ nowLocation }: Iprops) {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // 페이지 이동
   const movePage = (path: string) => {
@@ -28,6 +32,12 @@ export default function TeacherNav({ nowLocation }: Iprops) {
     } else {
       return false;
     }
+  };
+
+  const logoutHandler = () => {
+    dispatch(setLogout());
+    removeItemLocalStorage("forest_access_token");
+    router.push("/");
   };
 
   return (
@@ -58,6 +68,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
           탐색
         </NavInner>
       </TeacherNavDiv>
+      <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
     </StyledNav>
   );
 }
