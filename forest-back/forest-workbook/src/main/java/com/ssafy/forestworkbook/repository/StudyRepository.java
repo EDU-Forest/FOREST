@@ -1,5 +1,6 @@
 package com.ssafy.forestworkbook.repository;
 
+import com.ssafy.forestworkbook.entity.Workbook;
 import org.springframework.data.domain.Page;
 import com.ssafy.forestworkbook.entity.Study;
 import com.ssafy.forestworkbook.enumeration.EnumStudyTypeStatus;
@@ -12,13 +13,14 @@ import java.util.List;
 public interface StudyRepository extends JpaRepository<Study, Long> {
 
     List<Study> findAllByClassesIdAndType(Long ClassId, EnumStudyTypeStatus type);
+    int countByWorkbook(Workbook workbook);
 
     @Query (value = "select s from Study s " +
             "join fetch s.user u " +
             "join fetch s.workbook w " +
             "where s.user.id = :userId " +
             "group by s.workbook.id",
-            countQuery = "select count(s) from Study s where s.user.id = :userId group by s.workbook.id")
+            countQuery = "select count(s) from Study s where s.user.id = :userId")
     Page<Study> findAllByUserGroupByWorkbookId(Long userId, Pageable pageable);
 
 }
