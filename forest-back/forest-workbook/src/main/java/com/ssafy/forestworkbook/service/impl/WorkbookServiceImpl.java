@@ -86,8 +86,19 @@ public class WorkbookServiceImpl implements WorkbookService {
         // 출제한 문제집
         else if (search.equals("use")) {
             Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
-            Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdAndIsExecuted(userId, true, pageable);
-            TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
+            Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
+                    .workbookId(s.getWorkbook().getId())
+                    .isOriginal(s.getWorkbook().getCreator().getId() == userId)
+                    .isPublic(s.getWorkbook().getIsPublic())
+                    .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, s.getWorkbook().getId())
+                            .orElse(null) != null)
+                    .title(s.getWorkbook().getTitle())
+                    .workbookImgPath(s.getWorkbook().getWorkbookImg().getPath())
+                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(s.getWorkbook().getId()))
+                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(s.getWorkbook().getId()))
+                    .build());
+
+            TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
@@ -110,6 +121,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         List<ClassWorkbookDto> classWorkbookDtoList = new ArrayList<>();
+
+        // 클래스 소속인지 확인하는게 필요할듯
 
         // EXAM
         if (search.equals("exam")) {
@@ -187,9 +200,6 @@ public class WorkbookServiceImpl implements WorkbookService {
             problemAllInfoDtoList.add(problemAllInfoDto);
         }
 
-        UserWorkbook checkBookmark = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
-                .orElse(null);
-
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbook.getId())
                 .title(workbook.getTitle())
@@ -199,7 +209,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .volume(workbook.getVolume())
                 .isPublic(workbook.getIsPublic())
                 .isDeploy(workbook.getIsDeploy())
-                .iSBookmarked(checkBookmark != null && checkBookmark.getIsBookmarked())
+                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, workbook.getId())
+                        .orElse(null) != null)
                 .isOriginal(workbook.getCreator().getId() == userId)
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
@@ -577,9 +588,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         problemListRepository.saveAll(problemListsCopy);
 
-        UserWorkbook checkBookmark = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
-                .orElse(null);
-
         WorkbookInfoDto workbookInfoDto = WorkbookInfoDto.builder()
                 .workbookId(workbookCopy.getId())
                 .title(workbookCopy.getTitle())
@@ -589,7 +597,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .volume(workbookCopy.getVolume())
                 .isPublic(workbookCopy.getIsPublic())
                 .isDeploy(false)
-                .iSBookmarked(checkBookmark != null || checkBookmark.getIsBookmarked())
+                .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, workbook.getId())
+                        .orElse(null) != null)
                 .isOriginal(userId == workbook.getCreator().getId())
                 .bookmarkCount(0)
                 .scrapCount(0)
