@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class SaveClassResponseDto {
+    private Long classId;
     private String message;
 }
