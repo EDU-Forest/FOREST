@@ -24,7 +24,7 @@ function WorkbookDetailQuestionList({
 
   return (
     <StyledWorkbookDetailQuestionListBox>
-      {workbook.isOriginal && <WorkbookDetailQuestionVisibility />}
+      {workbook?.isOriginal && <WorkbookDetailQuestionVisibility />}
       <WorkbookDetailQuestionListContent
         questionCnt={questionCnt}
         questionSumm={questionSumm}

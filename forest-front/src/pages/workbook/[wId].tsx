@@ -91,7 +91,7 @@ function WorkbookDetail() {
           usedCnt={workbook?.scrapCount}
         />
         <WorkbookDetailQuestion
-          isOriginal={workbook.isOriginal}
+          isOriginal={workbook?.isOriginal}
           question={questions[getCurQuestionIdx()]} /* 현재 선택된 문제 */
           curQuestion={curQuestion}
           setCurQuestion={setCurQuestion}

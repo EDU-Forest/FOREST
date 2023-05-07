@@ -76,7 +76,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const deleteMutate = useBookmarkDelete().mutate;
 
   const pressHeart = () => {
-    if (workbook.isBookmarked) {
+    if (workbook?.isBookmarked) {
       deleteMutate(id);
       return;
     }
@@ -93,29 +93,30 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     );
   }, [selectedImg]);
 
+  console.log(workbook)
   return (
     <>
       <StyledWorkbookDetailInfoOverviewBox>
         <div>
           {isEditing ? (
-            <CommonInput value={workbook.title} onChange={handleChangeTitle}></CommonInput>
+            <CommonInput value={workbook?.title} onChange={handleChangeTitle}></CommonInput>
           ) : (
-            <div>{workbook.title}</div>
+            <div>{workbook?.title}</div>
           )}
           <StyledWorkbookBtnsBox>
-            {(workbook.bookmarkCount || workbook.bookmarkCount === 0) && (
+            {(workbook?.bookmarkCount || workbook?.bookmarkCount === 0) && (
               <WorkbookContentWrapper>
                 <WorkbookContent bg>
-                  <span>{workbook.scrapCount} </span>
+                  <span>{workbook?.scrapCount} </span>
                   명이 이용 중이에요
                 </WorkbookContent>
                 {/* 공개된 문제집만 북마크 가능 */}
-                {workbook.isPublic && (
+                {workbook?.isPublic && (
                   <div>
                     <WorkbookIcon onClick={pressHeart}>
-                      {workbook.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+                      {workbook?.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
                     </WorkbookIcon>
-                    <WorkbookContent>{workbook.bookmarkCount}</WorkbookContent>
+                    <WorkbookContent>{workbook?.bookmarkCount}</WorkbookContent>
                   </div>
                 )}
               </WorkbookContentWrapper>
@@ -130,7 +131,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {usedCnt}
               </div>
             </StyledWorkbookReactionBtnsBox> */}
-            {workbook.isOriginal && !workbook.isDeploy && (
+            {workbook?.isOriginal && !workbook?.isDeploy && (
               <div>
                 {isEditing ? (
                   <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
@@ -144,9 +145,9 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
           </StyledWorkbookBtnsBox>
           <StyledWorkbookDetailDescBox isFolded={isFolded}>
             {isEditing ? (
-              <CommonInput value={workbook.description} onChange={handleChangeDesc} />
+              <CommonInput value={workbook?.description} onChange={handleChangeDesc} />
             ) : (
-              <>{workbook.description}</>
+              <>{workbook?.description}</>
             )}
           </StyledWorkbookDetailDescBox>
         </div>
@@ -155,9 +156,9 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
             {!isFolded && (
               <WorkbookDetailWorkbookImgBox>
                 {selectedImg === 0 ? (
-                  <img src={workbook.workbookImgPath} />
+                  <img src={workbook?.workbookImgPath} />
                 ) : (
-                  <WorkbookImgTypeBox type={selectedImg}>{workbook.title}</WorkbookImgTypeBox>
+                  <WorkbookImgTypeBox type={selectedImg}>{workbook?.title}</WorkbookImgTypeBox>
                 )}
                 {isEditing && <label onClick={handleClickImgEdit}>수정</label>}
               </WorkbookDetailWorkbookImgBox>
@@ -168,7 +169,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
       </StyledWorkbookDetailInfoOverviewBox>
       {isOpenImgEdit && (
         <WorkbookImgEditModal
-          title={workbook.title}
+          title={workbook?.title}
           setSelectedImg={setSelectedImg}
           setIsOpenImgEdit={setIsOpenImgEdit}
         />

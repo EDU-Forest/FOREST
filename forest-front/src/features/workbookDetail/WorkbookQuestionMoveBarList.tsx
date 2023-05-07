@@ -19,8 +19,8 @@ function WorkbookQuestionMoveBarList({
   setCurQuestion,
 }: IProps) {
   const {
-    workbook: { isOriginal },
-    workbook: { isDeploy },
+    workbook: { isOriginal } = { workbook: { isOriginal: false } },
+    workbook: { isDeploy } = { workbook: { isDeploy: false } },
   } = useSelector((state: RootState) => state.workbookDetail);
 
   const handleClickMoveBar = (id: number) => {
