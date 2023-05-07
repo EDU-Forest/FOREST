@@ -71,20 +71,15 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     setIsOpenDelete(true);
   };
 
-  const patchMutate = useBookmarkPatch().mutate;
-  const postMutate = useBookmarkPost().mutate;
-  const deleteMutate = useBookmarkDelete().mutate;
+  const postMutate = useBookmarkPost(true).mutate;
+  const deleteMutate = useBookmarkDelete(true).mutate;
 
   const pressHeart = () => {
     if (workbook?.isBookmarked) {
       deleteMutate(id);
       return;
     }
-    // if (methodType === "POST") {
     postMutate(id);
-    // } else {
-    //   patchMutate(id);
-    // }
   };
 
   useEffect(() => {
