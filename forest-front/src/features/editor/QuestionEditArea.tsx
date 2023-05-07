@@ -13,7 +13,11 @@ function QuestionEditArea({ selectQuestionType }: IProps) {
   return (
     <QuestionEditAreaBox>
       {/* 문항이 있을 경우에만 렌더링 */}
-      {questions.length !== 0 && <EditorQuestionContent selectQuestionType={selectQuestionType} />}
+      {questions.length !== 0 ? (
+        <EditorQuestionContent selectQuestionType={selectQuestionType} />
+      ) : (
+        <span>문항이 없습니다</span>
+      )}
     </QuestionEditAreaBox>
   );
 }
