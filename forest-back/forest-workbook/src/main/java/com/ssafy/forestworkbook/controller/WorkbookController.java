@@ -34,10 +34,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getTeacherWorkbookList(
             HttpServletRequest request,
             @RequestParam String search, Pageable pageable) throws UnsupportedEncodingException{
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(10);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
 
@@ -53,7 +53,6 @@ public class WorkbookController {
         return workbookService.getClassWorkbook(userId, classId, search);
     }
 
-    // TODO 북마크 여부, 이미지 ID
     @GetMapping("/{workbookId}")
     @ApiOperation(value = "문제집 상세 조회", notes = "문제집 전체 내용을 조회합니다.")
     public ResponseSuccessDto<?> getWorkbookAllInfo(

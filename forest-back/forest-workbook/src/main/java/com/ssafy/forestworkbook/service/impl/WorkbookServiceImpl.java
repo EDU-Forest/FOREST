@@ -61,12 +61,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
 
-        // TODO 북마크 중복
-        // 좋아하는 문제집
-        // 스크랩 한 것도 좋아하는 문제집에
+        // 좋아하는 문제집, 스크랩한 문제집
         if (Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks =
-                    userWorkbookRepository.findAllByUserIdAndWorkbookIsPublicIsTrueAndWorkbookIsDeployIsTrueAndIsBookmarkedIsTrueOrIsScrapedIsTrue(userId, pageable);
+                    userWorkbookRepository.findAllByUserIdANdWorkbookIdAndIsBookmarkedOrIsScraped(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
                     .isOriginal(w.getWorkbook().getCreator().getId() == userId)
