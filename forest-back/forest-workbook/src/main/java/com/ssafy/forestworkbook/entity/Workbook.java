@@ -95,7 +95,7 @@ public class Workbook {
     }
 
     // 출제 여부
-    public void changeIsExcuted(boolean isExecuted) {
+    public void changeIsExecuted(boolean isExecuted) {
         this.isExecuted = isExecuted;
     }
     public void changeIsDeleted(boolean isDeleted) {

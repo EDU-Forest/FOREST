@@ -2,7 +2,7 @@ package com.ssafy.forestworkbook.controller;
 
 import com.ssafy.forest.jwt.JwtDecoder;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
-import com.ssafy.forestworkbook.dto.workbook.request.ExcuteDto;
+import com.ssafy.forestworkbook.dto.workbook.request.ExecuteDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookUpdateInfoDto;
@@ -138,12 +138,12 @@ public class WorkbookController {
     @ApiOperation(value = "문제집 출제하기", notes = "문제집을 출제합니다.")
     public ResponseSuccessDto<?> executeWorkbook(
             HttpServletRequest request,
-            @RequestBody ExcuteDto excuteDto) throws UnsupportedEncodingException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("userID : {}", userId);
-        Long userId = Long.valueOf(9);
-        return workbookService.excuteWorkbook(userId, excuteDto);
+            @RequestBody ExecuteDto executeDto) throws UnsupportedEncodingException {
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("userID : {}", userId);
+//        Long userId = Long.valueOf(9);
+        return workbookService.executeWorkbook(userId, executeDto);
 
     }
 

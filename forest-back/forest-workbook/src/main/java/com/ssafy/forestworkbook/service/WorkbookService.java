@@ -1,7 +1,7 @@
 package com.ssafy.forestworkbook.service;
 
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
-import com.ssafy.forestworkbook.dto.workbook.request.ExcuteDto;
+import com.ssafy.forestworkbook.dto.workbook.request.ExecuteDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookUpdateInfoDto;
@@ -20,7 +20,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> updateWorkbook(Long userId, WorkbookUpdateInfoDto workbookUpdateInfoDto);
     ResponseSuccessDto<?> deleteWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId);
-    ResponseSuccessDto<?> excuteWorkbook(Long userId, ExcuteDto excuteDto);
+    ResponseSuccessDto<?> executeWorkbook(Long userId, ExecuteDto executeDto);
     ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId);
     ResponseSuccessDto<?> deployWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId);
