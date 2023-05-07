@@ -52,8 +52,8 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
       classIdList,
       type: type,
       name: settingTitle,
-      startTime: `${startDay}T${startTime}`,
-      endTime: `${endDay}T${endTime}`,
+      startTime: startDay && startTime && `${startDay}T${startTime}`,
+      endTime: endDay && endTime && `${endDay}T${endTime}`,
     };
 
     setWorkbookApi(data);
