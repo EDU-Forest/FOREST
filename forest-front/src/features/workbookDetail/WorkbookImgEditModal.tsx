@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   WorkbookImgEditModalBox,
   WorkbookImgEditModalImgBox,
   WorkbookImgTypeBox,
 } from "./WorkbookDetail.style";
 import SmallBtn from "@/components/Button/SmallBtn";
+import useWorkbookDetailImgQuery from "@/apis/workbookDetail/useWorkbookDetailImgQuery";
 
 interface IProps {
   title: string;
   setSelectedImg: any;
   setIsOpenImgEdit: any;
+  imgPath: string;
+  setImgPath: any;
 }
 
-function WorkbookImgEditModal({ title, setSelectedImg, setIsOpenImgEdit }: IProps) {
+function WorkbookImgEditModal({
+  title,
+  setSelectedImg,
+  setIsOpenImgEdit,
+  imgPath,
+  setImgPath,
+}: IProps) {
+  const { data: { workbookImgList: imgs } = { workbookImgList: [] } } = useWorkbookDetailImgQuery();
+
+  console.log(imgs[0]?.workbookImgPath);
+
   const handleClick = (type: number) => {
     setSelectedImg(type);
     setIsOpenImgEdit(false);
+    setImgPath(imgs[type - 1]?.workbookImgPath);
   };
 
   const handleClickCancel = () => {
@@ -25,13 +39,13 @@ function WorkbookImgEditModal({ title, setSelectedImg, setIsOpenImgEdit }: IProp
   return (
     <WorkbookImgEditModalBox>
       <WorkbookImgEditModalImgBox>
-        <WorkbookImgTypeBox type={1} onClick={() => handleClick(1)}>
+        <WorkbookImgTypeBox path={imgs[0]?.workbookImgPath} onClick={() => handleClick(1)}>
           {title}
         </WorkbookImgTypeBox>
-        <WorkbookImgTypeBox type={2} onClick={() => handleClick(2)}>
+        <WorkbookImgTypeBox path={imgs[1]?.workbookImgPath} onClick={() => handleClick(2)}>
           {title}
         </WorkbookImgTypeBox>
-        <WorkbookImgTypeBox type={3} onClick={() => handleClick(3)}>
+        <WorkbookImgTypeBox path={imgs[2]?.workbookImgPath} onClick={() => handleClick(3)}>
           {title}
         </WorkbookImgTypeBox>
       </WorkbookImgEditModalImgBox>
