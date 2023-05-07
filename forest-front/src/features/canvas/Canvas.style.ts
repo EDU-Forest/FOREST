@@ -1,19 +1,98 @@
 import { flexBox } from "@/styles/theme";
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
-const CanvasBarWrapper = styled.div<{ isOpenController?: boolean; nowTab?: string }>`
+const openSlide = keyframes`
+0% {
+  width: 56px;
+}
+
+100% {
+  width: 440px;
+}
+`;
+
+const closeSlide = keyframes`
+0% {
+  width: 440px;
+}
+
+100% {
+  width: 56px;
+}
+`;
+
+const moveToLeft = keyframes`
+0% {
+  left: 16px;
+}
+
+100% {
+  left: 7px;
+}
+`;
+
+const moveToRight = keyframes`
+0% {
+  left: 7px;
+}
+
+100% {
+  left: 16px;
+}
+`;
+
+const show = keyframes`
+0% {
+  opacity: 0
+}
+
+100% {
+  opacity: 1
+}
+`;
+
+const CanvasBarWrapper = styled.div<{
+  isOpenCanvas?: boolean;
+  isOpenController?: boolean;
+  nowTab?: string;
+}>`
   ${flexBox("row", "center", "space-around")}
   position: relative;
-  width: 440px;
+  width: 50px;
   padding: 0 16px;
   height: 50px;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
   background-color: white;
 
+  animation: ${closeSlide} 0.5s 1;
+
+  .logo {
+    width: 36px;
+    position: absolute;
+    left: 7px;
+    animation: ${moveToLeft} 0.5s 1;
+  }
+
   svg {
     font-size: 24px;
   }
+
+  ${({ isOpenCanvas }) =>
+    isOpenCanvas &&
+    css`
+      animation: ${openSlide} 0.5s 1;
+      width: 440px;
+
+      .logo {
+        animation: ${moveToRight} 0.5s 1;
+        left: 16px;
+      }
+
+      svg {
+        animation: ${show} 0.5s 1;
+      }
+    `}
 
   ${({ isOpenController }) =>
     isOpenController &&
@@ -43,6 +122,18 @@ const CanvasBarWrapper = styled.div<{ isOpenController?: boolean; nowTab?: strin
         `}
 
   margin-top: 100px;
+  margin-left: 30px;
+`;
+
+const CanvasBarItems = styled.div<{ isOpenCanvas?: boolean }>`
+  ${flexBox("row", "center", "space-around")}
+  margin-left: 40px;
+  width: 340px;
+  ${({ isOpenCanvas }) =>
+    !isOpenCanvas &&
+    css`
+      width: 0px;
+    `}
 `;
 
 const CanvasSelectorWrapper = styled.div<{ isEraser?: boolean }>`
@@ -136,6 +227,7 @@ const CanvasDrawSection = styled.div<{ nowTab?: string }>`
 
 export {
   CanvasBarWrapper,
+  CanvasBarItems,
   CanvasSelectorWrapper,
   CanvasSelectorSection,
   CanvasColorSelector,

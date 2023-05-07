@@ -115,11 +115,12 @@ export default function CanvasTest() {
   };
   const studentStudyProblemId = 1;
 
-  const record = useCanvasRecordQuery(studentStudyProblemId).data;
+  // const record = useCanvasRecordQuery(studentStudyProblemId).data;
 
   return (
     <main>
-      <Canvas storedData={record?.line} />
+      {/* <Canvas storedData={record?.line} /> */}
+      <Canvas />
       {/* <CanvasPen canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
       <CanvasHighlighter canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
       <CanvasRecode canvasProps={canvasProps} setCanvasProps={setCanvasProps} />

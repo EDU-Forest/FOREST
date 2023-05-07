@@ -29,8 +29,8 @@ export default function Canvas({ storedData }: Iprops) {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "100vw",
-    height: "80vw",
+    width: "80vw",
+    height: "60vw",
     backgroundImage: "images/test.png",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
@@ -102,9 +102,9 @@ export default function Canvas({ storedData }: Iprops) {
   };
 
   // API GET한 기록 그리기
-  useEffect(() => {
-    canvasRef.current?.loadPaths(storedData);
-  }, [isOpenCanvas]);
+  // useEffect(() => {
+  //   canvasRef.current?.loadPaths(storedData);
+  // }, [isOpenCanvas]);
 
   // API POST
   const { mutate } = useCanvasPost();
