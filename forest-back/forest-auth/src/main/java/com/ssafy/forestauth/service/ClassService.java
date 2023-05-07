@@ -100,6 +100,7 @@ public class ClassService {
 
         SaveClassResponseDto saveClassResponseDto = SaveClassResponseDto.builder()
                 .classId(classes.getId())
+                .className(classes.getName())
                 .message(SuccessCode.AUTH_SAVE_CLASS.getMessage())
                 .build();
 
