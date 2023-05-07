@@ -30,7 +30,7 @@ export default function CorrectRateDonut({ answerRate, page }: Iprops) {
         ]}
         style={{ width: "152px" }}
         lineWidth={18}
-        background="white"
+        background="#ffffff"
         lengthAngle={360}
         startAngle={270}
         animate

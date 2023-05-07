@@ -62,7 +62,6 @@ const TestResultTotalContentGraphBox = styled.div`
   width: 9.5rem;
   height: 9.5rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.Orange[50]};
 `;
 
 const TestResultTotalContentDetailLeftItemBox = styled.div`
