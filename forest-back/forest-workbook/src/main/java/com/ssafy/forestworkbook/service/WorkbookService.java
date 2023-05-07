@@ -15,6 +15,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> getTeacherWorkbookList(Long userId, String search, Pageable pageable);
     ResponseSuccessDto<?> getClassWorkbook(Long userID, Long classId, String search);
     ResponseSuccessDto<?> getWorkbookAllInfo(Long userId, Long workbookId);
+    ResponseSuccessDto<?> getWorkbookImg();
     ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto);
     ResponseSuccessDto<?> updateWorkbook(Long userId, WorkbookUpdateInfoDto workbookUpdateInfoDto);
     ResponseSuccessDto<?> deleteWorkbook(Long userId, Long workbookId);
