@@ -157,7 +157,7 @@ public class StudyController {
     }
 
     @ApiOperation(value = "(클래스) 시험 종료", notes = "시험을 종료합니다.")
-    @PostMapping("/exit/{studyId}")
+    @PatchMapping("/exit/{studyId}")
     public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);

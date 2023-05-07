@@ -50,6 +50,9 @@ public class StudentStudyResult {
     @Column(name = "is_graded", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isGraded = false;
 
+    @Column(name = "is_submitted", columnDefinition = "tinyint(1) default 0", nullable = false)
+    private Boolean isSubmitted = false;
+
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
@@ -65,5 +68,6 @@ public class StudentStudyResult {
         this.score = score;
         this.correctRate = correctRate;
         this.isGraded = isGraded;
+        this.isSubmitted = true;
     }
 }
