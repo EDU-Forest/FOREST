@@ -39,7 +39,6 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const [editedImg, setEditedImg] = useState<string>("");
   const [selectedImg, setSelectedImg] = useState(0);
 
   const [isOpenImgEdit, setIsOpenImgEdit] = useState(false);
@@ -82,15 +81,16 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
       return;
     }
     // if (methodType === "POST") {
-      postMutate(id);
+    postMutate(id);
     // } else {
     //   patchMutate(id);
     // }
   };
 
   useEffect(() => {
-    dispatch(setWorkbook({ ...workbook, workbookImgPath: selectedImg }));
-    setEditedImg(`/images/Workbook_Type_${selectedImg}.png`);
+    dispatch(
+      setWorkbook({ ...workbook, workbookImgPath: selectedImg, workbookImgId: selectedImg }),
+    );
   }, [selectedImg]);
 
   return (
@@ -127,7 +127,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {usedCnt}
               </div>
             </StyledWorkbookReactionBtnsBox> */}
-            {workbook.isOriginal && (
+            {workbook.isOriginal && !workbook.isDeploy && (
               <div>
                 {isEditing ? (
                   <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
