@@ -35,9 +35,14 @@ export default function StudentNav({ nowLocation }: Iprops) {
     router.push("/");
   };
 
+  // 홈으로 이동
+  const goToDashBoard = () => {
+    router.push(`/student/dashboard`);
+  };
+
   return (
     <StyledNav>
-      <img src={"/images/Forest_Logo.png"} className="logo-img" />
+      <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goToDashBoard} />
       <StudentNavDiv>
         <NavInner
           selected={checkSelection("dashboard")}
