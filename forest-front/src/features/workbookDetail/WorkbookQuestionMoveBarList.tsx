@@ -19,8 +19,8 @@ function WorkbookQuestionMoveBarList({
   setCurQuestion,
 }: IProps) {
   const {
-    workbook: { isOriginal },
-    workbook: { isDeploy },
+    workbook: { isOriginal } = { workbook: { isOriginal: false } },
+    workbook: { isDeploy } = { workbook: { isDeploy: false } },
   } = useSelector((state: RootState) => state.workbookDetail);
 
   const handleClickMoveBar = (id: number) => {
@@ -75,7 +75,7 @@ function WorkbookQuestionMoveBarList({
     <StyledWorkbookQuestionMoveBarListBox onDragOver={(e) => onDragOver(e)}>
       {questionSumm?.map((question, i) => (
         <div
-          key={question.id}
+          key={`question-move-bar-${question.id}`}
           onClick={() => handleClickMoveBar(question.id)}
           onDragStart={(e) => isOriginal && !isDeploy && onDragStart(e, i)}
           onDragEnter={(e) => isOriginal && !isDeploy && onDragEnter(e, i)}

@@ -18,7 +18,7 @@ function WorkbookExportRadioGroup({ value, isOriginal, setValue, exports }: IPro
     <WorkbookExportRadioBox>
       {exports.map((item, i) => (
         <WorkbookExportRadio
-          key={i}
+          key={`export-radio-${i}`}
           thisValue={item.value}
           text={item.text}
           img={item.img}

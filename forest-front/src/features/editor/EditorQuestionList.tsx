@@ -10,7 +10,7 @@ function EditorQuestionList() {
     <EditorQuestionListBox>
       <p>문제 ({questions.length})</p>
       {questions.map((question, i) => (
-        <EditorQuestionBar key={i} question={question} num={i + 1}/>
+        <EditorQuestionBar key={`question-${i}`} question={question} num={i + 1}/>
       ))}
     </EditorQuestionListBox>
   );

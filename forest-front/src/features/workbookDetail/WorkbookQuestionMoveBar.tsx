@@ -53,10 +53,10 @@ function WorkbookQuestionMoveBar({
 
   return (
     <StyledWorkbookQuestionMoveBar isSelected={isSelected} draggable>
-      {workbook.isOriginal && !workbook.isDeploy && <AiOutlineHolder />}
+      {workbook?.isOriginal && !workbook?.isDeploy && <AiOutlineHolder />}
       <span>{num}.&nbsp;</span>
       <span>{question?.title}</span>
-      {workbook.isOriginal && !workbook.isDeploy && <FaTrashAlt onClick={handleClickDelete} />}
+      {workbook?.isOriginal && !workbook?.isDeploy && <FaTrashAlt onClick={handleClickDelete} />}
     </StyledWorkbookQuestionMoveBar>
   );
 }

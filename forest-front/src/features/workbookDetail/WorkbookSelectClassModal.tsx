@@ -106,8 +106,9 @@ function WorkbookSelectClassModal({
         <p>클래스가 없습니다</p>
       ) : (
         <WorkbookClassBtnsBox>
-          {classes.map((classItem: ClassList) => (
+          {classes.map((classItem: ClassList, i: number) => (
             <WorkbookClassBtn
+              key={`class-${i}`}
               onClick={() => handleClickClass(classItem.classId)}
               isSelected={isSelected(classItem.classId)}
             >

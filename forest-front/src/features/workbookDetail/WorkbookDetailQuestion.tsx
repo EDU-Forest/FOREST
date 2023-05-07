@@ -35,7 +35,7 @@ function WorkbookDetailQuestion({
 
   const [curQuestionNum, setCurQuestionNum] = useState(1);
   const {
-    workbook: { isDeploy },
+    workbook: { isDeploy } = {workbook: {isDeploy: false}}
   } = useSelector((state: RootState) => state.workbookDetail);
 
   const getQuestionNum = (): void => {
