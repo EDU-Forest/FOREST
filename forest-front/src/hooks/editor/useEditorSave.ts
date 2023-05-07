@@ -12,7 +12,7 @@ function useEditorSave() {
   const workbookId: string = curWorkbookId?.toString();
   const problemList = questions.map((question: QuestionType, i) => {
     return {
-      problemNo: (i + 1).toString(),
+      problemNo: i + 1,
       type: question.type,
       title: question.title,
       path: question.problemImgPath === null ? "" : question.problemImgPath,
