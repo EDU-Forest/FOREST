@@ -20,6 +20,7 @@ interface Iprops {
   workbookImgPath?: string;
   methodType?: string;
   clickAction?: (id: number) => void;
+  isWorkbookPage?: boolean;
 }
 
 export default function CommonWorkbook({
@@ -31,10 +32,11 @@ export default function CommonWorkbook({
   workbookImgPath,
   methodType,
   clickAction,
+  isWorkbookPage
 }: Iprops) {
   const patchMutate = useBookmarkPatch().mutate;
-  const postMutate = useBookmarkPost().mutate;
-  const deleteMutate = useBookmarkDelete().mutate;
+  const postMutate = useBookmarkPost(isWorkbookPage).mutate;
+  const deleteMutate = useBookmarkDelete(isWorkbookPage).mutate;
   const pressHeart = () => {
     if (isBookmarked) {
       deleteMutate(id);

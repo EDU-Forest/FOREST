@@ -6,13 +6,17 @@ const fetcher = (workbookId: number) =>
   workbookAxios.post(`/api/workbook/bookmark/${workbookId}`).then(({ data }) => data);
 
 // 문제집 북마크 (최초) - OK
-const useBookmarkPost = () => {
+const useBookmarkPost = (isWorkbookPage?: boolean) => {
   const queryClient = useQueryClient();
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(queryKeys.RECENT_WORKBOOK_LIST);
-      queryClient.invalidateQueries(queryKeys.POPULAR_WORKBOOK_LIST);
-      queryClient.invalidateQueries(queryKeys.SEARCH_LIST);
+      if (isWorkbookPage) {
+        queryClient.invalidateQueries(queryKeys.GET_WORKBOOK_LIST);
+      } else {
+        queryClient.invalidateQueries(queryKeys.RECENT_WORKBOOK_LIST);
+        queryClient.invalidateQueries(queryKeys.POPULAR_WORKBOOK_LIST);
+        queryClient.invalidateQueries(queryKeys.SEARCH_LIST);
+      }
     },
   });
 };

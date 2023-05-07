@@ -8,7 +8,7 @@ interface IProps {
 function LikeWorkbook({ list }: IProps) {
   return (
     <div>
-      <WorkbookList list={list} />
+      <WorkbookList list={list} isWorkbookPage />
     </div>
   );
 }
