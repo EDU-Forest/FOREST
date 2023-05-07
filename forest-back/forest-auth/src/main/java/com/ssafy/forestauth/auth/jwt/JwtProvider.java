@@ -89,10 +89,7 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
-        System.out.println("accessToken = " + accessToken);
         Claims claims = parseClaims(accessToken);
-
-        System.out.println("Claims = " + claims.toString());
         String userId = ((Map<String, Object>) claims).get("userId").toString();
 
         Collection<? extends GrantedAuthority> authorities =

@@ -48,7 +48,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
 
         if(skipFilterUrl(requestURI)) {
-            System.out.println("!! SKIP !!");
+            log.info("skip url : {}", requestURI);
             filterChain.doFilter(request, response);
             return;
         }
@@ -73,7 +73,6 @@ public class JwtFilter extends OncePerRequestFilter {
             log.info("유효하지 않은 토큰");
             errorResponseMethod(response, ErrorCode.AUTH_NOT_VALID_TOKEN);
             return;
-//            request.setAttribute("exception", ErrorCode.AUTH_NOT_VALID_TOKEN);
         } catch (ExpiredJwtException e) {
             log.info("만료된 토큰");
             errorResponseMethod(response, ErrorCode.AUTH_EXPIRED_TOKEN);
@@ -82,12 +81,10 @@ public class JwtFilter extends OncePerRequestFilter {
             log.info("지원하지 않은 토큰");
             errorResponseMethod(response, ErrorCode.AUTH_UNSUPPORTED_TOKEN);
             return;
-//            request.setAttribute("exception", ErrorCode.AUTH_UNSUPPORTED_TOKEN);
         } catch (JwtException e) {
             log.info("잘못된 토큰");
             errorResponseMethod(response, ErrorCode.AUTH_WRONG_TOKEN);
             return;
-//            request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
         } catch(Exception e) {
             log.info("JWT 값이 : {}", jwt);
             request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
