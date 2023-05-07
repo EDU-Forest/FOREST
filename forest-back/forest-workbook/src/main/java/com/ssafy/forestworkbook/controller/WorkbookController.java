@@ -173,7 +173,7 @@ public class WorkbookController {
         return workbookService.copyWorkbook(userId, workbookId);
     }
 
-    @PatchMapping("/problem")
+    @PostMapping("/problem")
     @ApiOperation(value = "문제 만들기 및 수정하기", notes = "문제를 만들고 수정합니다.")
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
