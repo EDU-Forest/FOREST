@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import Loading from "@/components/Loading/Loading";
 import useStudentScoreQuery from "@/apis/class/student/useStudentScoreQuery";
+import arrangeDate from "@/utils/arrangeDate";
 
 export default function ClassSummaryStudent() {
   const router = useRouter();
@@ -26,6 +27,10 @@ export default function ClassSummaryStudent() {
 
   const goToDetail = (studyId: number) => {
     router.push(`/student/class/study/${studyId}`);
+  };
+
+  const goToTest = (studyId: number) => {
+    router.push(`/test/${studyId}/info`);
   };
 
   return (
@@ -37,13 +42,13 @@ export default function ClassSummaryStudent() {
       ) : (
         <>
           {data ? (
-            <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
+            <ClassSummaryWrapper small={data?.data.scheduleType === "AFTER" ? false : true}>
               <ClassSummaryTextWrapper>
                 <ClassSummaryTextItem>
-                  <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
-                  <WorkbookStatus status={data?.scheduleType} />
+                  <ClassSummaryTitle>{data?.data.title}</ClassSummaryTitle>
+                  <WorkbookStatus status={data?.data.scheduleType} />
                 </ClassSummaryTextItem>
-                {data?.scheduleType === "AFTER" && (
+                {data?.status === "STUDY_SUCCESS_INFO_AFTER" && (
                   <ClassSummaryText
                     isGray
                     style={{ cursor: "pointer", margin: "0px" }}
@@ -53,28 +58,44 @@ export default function ClassSummaryStudent() {
                     <AiOutlineRight className="icon" />
                   </ClassSummaryText>
                 )}
+                {data?.status === "STUDY_ONGOING" && (
+                  <ClassSummaryText
+                    isGray
+                    style={{ cursor: "pointer", margin: "0px" }}
+                    onClick={() => goToTest(data?.studyId)}
+                  >
+                    문제 풀기
+                    <AiOutlineRight className="icon" />
+                  </ClassSummaryText>
+                )}
               </ClassSummaryTextWrapper>
-              <ClassSummaryDeadline>~ {data?.endTime}</ClassSummaryDeadline>
-              {data?.scheduleType === "AFTER" ? (
+              {data?.status === "STUDY_NOT_YET" ? (
+                <ClassSummaryDeadline>{arrangeDate(data?.data.startTime)} ~ </ClassSummaryDeadline>
+              ) : (
+                <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>
+              )}
+              {data?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
                 <ClassSummaryItemWrapper>
                   <ClassScoreChart
-                    myScore={data?.studentResult.studentScore}
-                    totalScore={data?.studentResult.totalScore}
+                    myScore={data?.data.studentResult.studentScore}
+                    totalScore={data?.data.studentResult.totalScore}
                   />
                   <ClassMyResult
-                    percentage={data?.studentResult.percentage}
-                    correctNum={data?.studentResult.correctNum}
-                    solvingTime={data?.studentResult.solvingTime}
+                    percentage={data?.data.studentResult.percentage}
+                    correctNum={data?.data.studentResult.correctNum}
+                    solvingTime={data?.data.studentResult.solvingTime}
                   />
                   <TotalResult
-                    average={data?.classResult.average}
-                    standardDeviation={data?.classResult.standardDeviation}
-                    averageSolvingTime={data?.classResult.averageSolvingTime}
+                    average={data?.data.classResult.average}
+                    standardDeviation={data?.data.classResult.standardDeviation}
+                    averageSolvingTime={data?.data.classResult.averageSolvingTime}
                   />
                 </ClassSummaryItemWrapper>
               ) : (
                 <ClassSummaryItemWrapperNoResult>
-                  문제 풀이가 종료되지 않았습니다.
+                  {data?.status === "STUDY_ONGOING" && "아직 문제를 풀지 않았습니다."}
+                  {data?.status === "STUDY_SUBMIT_ALREADY" && "채점을 기다리는 중입니다."}
+                  {data?.status === "STUDY_NOT_YET" && "시작되지 않은 시험입니다."}
                 </ClassSummaryItemWrapperNoResult>
               )}
             </ClassSummaryWrapper>
