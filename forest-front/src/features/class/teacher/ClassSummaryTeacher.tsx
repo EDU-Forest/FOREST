@@ -19,32 +19,10 @@ import { RootState } from "@/stores/store";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 import arrangeDate from "@/utils/arrangeDate";
 
-const examResult: TeacherExamResult = {
-  studyId: 1,
-  title: "킹규림의 수능 100제",
-  startTime: "2023-04-27",
-  endTime: "2023-04-28",
-  userName: "킹규림",
-  studyType: "SELF",
-  scheduleType: "ONGOING",
-  studyCreatedDate: "2023.04.27", // 출제일
-  workbookCreatedDate: "2023.04.27", // 출판일
-  volume: 10, // 문항 수
-  isPublic: false,
-  average: 80,
-  standardDeviation: 8.5, //표준편차
-  averageSolvingTime: 25,
-  totalStudent: 20,
-  participantStudent: 15,
-  takeRate: 80,
-};
-
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-
   const examResult = useStudyResultQuery(nowStudyId).data;
-  console.log("data 이거", examResult);
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);

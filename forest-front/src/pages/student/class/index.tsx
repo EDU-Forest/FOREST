@@ -20,7 +20,7 @@ import { useDispatch } from "react-redux";
 function StudentClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
-  const studyId = useRecentStudyIdQuery(nowClassId).data;
+  const { data } = useRecentStudyIdQuery(nowClassId);
 
   useEffect(() => {
     dispatch(closeAllModal());
@@ -33,7 +33,7 @@ function StudentClass() {
         {nowClassId !== -1 ? (
           <>
             <ClassSelect isStudent />
-            {studyId < 1 ? (
+            {!data ? (
               <ClassSummaryWrapper small>
                 <ClassSummaryItemWrapperNoResult>
                   최근 진행한 스터디가 없습니다.
