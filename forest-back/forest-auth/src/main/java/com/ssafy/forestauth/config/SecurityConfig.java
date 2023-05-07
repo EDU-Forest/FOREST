@@ -83,7 +83,7 @@ public class SecurityConfig implements WebMvcConfigurer {
         configuration.setAllowCredentials(true);
 
         configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
 
