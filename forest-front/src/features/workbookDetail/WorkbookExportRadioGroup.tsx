@@ -9,11 +9,12 @@ interface exportType {
 interface IProps {
   value: string;
   isOriginal: boolean;
+  isDeploy: boolean;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   exports: exportType[];
 }
 
-function WorkbookExportRadioGroup({ value, isOriginal, setValue, exports }: IProps) {
+function WorkbookExportRadioGroup({ value, isOriginal, isDeploy, setValue, exports }: IProps) {
   return (
     <WorkbookExportRadioBox>
       {exports.map((item, i) => (
@@ -26,6 +27,7 @@ function WorkbookExportRadioGroup({ value, isOriginal, setValue, exports }: IPro
           setValue={setValue}
           isDefault={i === 0} // 첫번째 버튼을 디폴트로
           isOriginal={item.value === "pdf" || isOriginal}
+          isDeploy={isDeploy}
         />
       ))}
     </WorkbookExportRadioBox>

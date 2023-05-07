@@ -12,15 +12,16 @@ interface IProps {
 function QuestionChoiceList({ items }: IProps) {
   return (
     <StyledQuestionDetailChoiceListBox>
-      {items.map((item, i) => {
-        return (
-          <StyledQuestionDetailChoiceBox>
-            <StyledQuestionChoiceNumBox>{i + 1}</StyledQuestionChoiceNumBox>
-            {/* 이미지 형식의 보기라면 이미지 렌더링 */}
-            {item.isImage ? <img src={item.content} alt="item" /> : <span>{item.content}</span>}
-          </StyledQuestionDetailChoiceBox>
-        );
-      })}
+      {items &&
+        items.map((item, i) => {
+          return (
+            <StyledQuestionDetailChoiceBox>
+              <StyledQuestionChoiceNumBox>{i + 1}</StyledQuestionChoiceNumBox>
+              {/* 이미지 형식의 보기라면 이미지 렌더링 */}
+              {item.isImage ? <img src={item.content} alt="item" /> : <span>{item.content}</span>}
+            </StyledQuestionDetailChoiceBox>
+          );
+        })}
     </StyledQuestionDetailChoiceListBox>
   );
 }

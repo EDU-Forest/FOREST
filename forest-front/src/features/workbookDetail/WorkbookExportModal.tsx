@@ -26,7 +26,7 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
   const [isSavePdf, setIsSavePdf] = useState(false);
   const { data, mutate: releaseWorkbookApi } = useWorkbookDetailReleasePatch();
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const { isOriginal } = workbook;
+  const { isOriginal, isDeploy } = workbook;
 
   // const router = useRouter();
   // const wId = router.query.wId;
@@ -84,6 +84,7 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
           )}
           <WorkbookExportRadioGroup
             isOriginal={isOriginal}
+            isDeploy={isDeploy}
             exports={exports}
             value={value}
             setValue={setValue}

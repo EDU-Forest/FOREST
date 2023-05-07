@@ -9,13 +9,17 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import TestEnd from "@/features/test/index/TestEnd";
 import withAuth from "@/utils/auth/withAuth";
+import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 
 function Test() {
+  const router = useRouter();
+  const studyId = router.query.studyId;
   const { endTime } = useSelector((state: RootState) => state.exam);
 
   const [toggleModal, setToggleModal] = useState(false);
   const [minutes, setMinutes] = useState(dateToMinute(new Date(), endTime));
   const [seconds, setSeconds] = useState(dateToSecond(new Date(), endTime) % 60);
+  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     const countdown = setInterval(() => {

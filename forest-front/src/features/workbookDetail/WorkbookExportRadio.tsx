@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { WorkbookExportRadioLabel } from "./WorkbookModal.style";
 
 interface IProps {
   isDefault?: boolean;
+  isDeploy: boolean;
   thisValue: string;
   text: string;
   img: any;
@@ -12,6 +14,7 @@ interface IProps {
 
 function WorkbookExportRadio({
   isDefault,
+  isDeploy,
   thisValue,
   text,
   img,
@@ -23,6 +26,10 @@ function WorkbookExportRadio({
     setValue(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(thisValue === "release", isDeploy);
+  }, []);
+
   return (
     <WorkbookExportRadioLabel isChecked={thisValue === value} isDisabled={!isOriginal}>
       <input
@@ -31,7 +38,7 @@ function WorkbookExportRadio({
         value={thisValue}
         defaultChecked={isDefault}
         onChange={handleChange}
-        disabled={!isOriginal}
+        disabled={!isOriginal || (thisValue === "release" && isDeploy)}
       />
       {img}
       {text}
