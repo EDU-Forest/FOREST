@@ -200,7 +200,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .build();
 
         WorkbookToDto workbookToDto = WorkbookToDto.builder()
-                .workbookInfoDto(workbookInfoDto)
+                .workbookInfo(workbookInfoDto)
                 .problemList(problemAllInfoDtoList)
                 .build();
 
@@ -328,6 +328,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_CHANGE_ISPUBLIC);
     }
 
+    // TODO 출제 로직 수정이 필요할 듯 ..
+    // 내 문제집 -> 출제
+    // 스크랩 -> 어떻게 처리하징?
     @Override
     public ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto) {
         User user = userRepository.findById(userId)
@@ -340,6 +343,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
 
         EnumStudyTypeStatus enumStudyTypeStatus;
+
         if (excuteDto.getType().equals("exam")) {
             enumStudyTypeStatus = EnumStudyTypeStatus.EXAM;
         } else if (excuteDto.getType().equals("homework")) {
@@ -404,7 +408,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
-    public ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId) {
+    public ResponseSuccessDto<?> deployWorkbook(Long userId, Long workbookId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -606,7 +610,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         WorkbookToDto workbookToDto = WorkbookToDto.builder()
-                .workbookInfoDto(workbookInfoDto)
+                .workbookInfo(workbookInfoDto)
                 .problemList(problemList)
                 .build();
 

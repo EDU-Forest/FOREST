@@ -21,7 +21,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId);
     ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto);
     ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId);
-    ResponseSuccessDto<?> delpoyWorkbook(Long userId, Long workbookId);
+    ResponseSuccessDto<?> deployWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> updateProblem(Long userId, ProblemUpdateInfoDto problemUpdateInfoDto);
     ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException;

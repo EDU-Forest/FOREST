@@ -1,5 +1,6 @@
 package com.ssafy.forestworkbook.dto.workbook.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ public class WorkbookInfoDto {
         private String description;
         private Boolean isPublic;
         private Boolean isDeploy;
+        @JsonProperty("isBookmarked")
         private Boolean iSBookmarked;
         private Boolean isOriginal;
         private int volume;
