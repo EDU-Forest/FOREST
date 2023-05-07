@@ -10,12 +10,12 @@ import java.util.List;
 @ToString
 public class WorkbookToDto {
 
-    private WorkbookInfoDto workbookInfoDto;
+    private WorkbookInfoDto workbookInfo;
     private List<ProblemAllInfoDto> problemList;
 
     @Builder
-    public WorkbookToDto(WorkbookInfoDto workbookInfoDto, List<ProblemAllInfoDto> problemList) {
-        this.workbookInfoDto = workbookInfoDto;
+    public WorkbookToDto(WorkbookInfoDto workbookInfo, List<ProblemAllInfoDto> problemList) {
+        this.workbookInfo = workbookInfo;
         this.problemList = problemList;
     }
 }

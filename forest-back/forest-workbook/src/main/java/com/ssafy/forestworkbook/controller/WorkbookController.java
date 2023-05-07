@@ -6,7 +6,6 @@ import com.ssafy.forestworkbook.dto.workbook.request.ExcuteDto;
 import com.ssafy.forestworkbook.dto.workbook.request.ProblemUpdateInfoDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookTitleDto;
 import com.ssafy.forestworkbook.dto.workbook.request.WorkbookUpdateInfoDto;
-import com.ssafy.forestworkbook.enumeration.response.ForestStatus;
 import com.ssafy.forestworkbook.service.WorkbookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -152,7 +151,7 @@ public class WorkbookController {
         log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
 //        userId = Long.valueOf(1);
-        return workbookService.delpoyWorkbook(userId, workbookId);
+        return workbookService.deployWorkbook(userId, workbookId);
     }
 
     @PostMapping("/{workbookId}")
