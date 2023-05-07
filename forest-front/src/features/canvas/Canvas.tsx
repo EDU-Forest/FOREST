@@ -20,9 +20,11 @@ interface StoredData {
 }
 interface Iprops {
   storedData?: any;
+  allPaths?: CanvasPath[];
+  setAllPaths: (allPaths: CanvasPath[]) => void;
 }
 
-export default function Canvas({ storedData }: Iprops) {
+export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   const canvasRef = createRef<ReactSketchCanvasRef>();
 
   const [nowTab, setNowTab] = useState<string>("");
@@ -99,7 +101,12 @@ export default function Canvas({ storedData }: Iprops) {
   const ControlCanvas = () => {
     // 캔버스 닫기
     setIsOpenCanvas(!isOpenCanvas);
+    setAllPaths(paths);
   };
+
+  useEffect(() => {
+    canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
+  }, [isOpenCanvas]);
 
   // API GET한 기록 그리기
   // useEffect(() => {

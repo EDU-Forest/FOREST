@@ -35,7 +35,7 @@ export default function CanvasTest() {
 
   const canvasRef = createRef<ReactSketchCanvasRef>();
 
-  const [paths, setPaths] = useState<CanvasPath[]>([]);
+  const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
   const [lastStroke, setLastStroke] = useState<{
     stroke: CanvasPath | null;
     isEraser: boolean | null;
@@ -110,17 +110,19 @@ export default function CanvasTest() {
     ["Eraser", eraserHandler, "secondary"],
   ];
 
-  const onChange = (updatedPaths: CanvasPath[]): void => {
-    setPaths(updatedPaths);
-  };
+  // const onChange = (updatedPaths: CanvasPath[]): void => {
+  //   setPaths(updatedPaths);
+  // };
   const studentStudyProblemId = 1;
+
+  console.log("allPaths", allPaths);
 
   // const record = useCanvasRecordQuery(studentStudyProblemId).data;
 
   return (
     <main>
       {/* <Canvas storedData={record?.line} /> */}
-      <Canvas />
+      <Canvas allPaths={allPaths} setAllPaths={setAllPaths} />
       <img src="/images/test.png" alt="" />
       {/* <CanvasPen canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
       <CanvasHighlighter canvasProps={canvasProps} setCanvasProps={setCanvasProps} />
