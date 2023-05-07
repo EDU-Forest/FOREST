@@ -109,12 +109,15 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                   <span>{workbook.scrapCount} </span>
                   명이 이용 중이에요
                 </WorkbookContent>
-                <div>
-                  <WorkbookIcon onClick={pressHeart}>
-                    {workbook.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
-                  </WorkbookIcon>
-                  <WorkbookContent>{workbook.bookmarkCount}</WorkbookContent>
-                </div>
+                {/* 공개된 문제집만 북마크 가능 */}
+                {workbook.isPublic && (
+                  <div>
+                    <WorkbookIcon onClick={pressHeart}>
+                      {workbook.isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+                    </WorkbookIcon>
+                    <WorkbookContent>{workbook.bookmarkCount}</WorkbookContent>
+                  </div>
+                )}
               </WorkbookContentWrapper>
             )}
             {/* <StyledWorkbookReactionBtnsBox>
