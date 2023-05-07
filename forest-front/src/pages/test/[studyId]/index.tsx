@@ -37,7 +37,7 @@ function Test() {
   return (
     <StyledTestContainer>
       {/* 테스트용 */}
-      {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
+      {/* {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
       <TestHeader
         page={"study"}
         minutes={minutes}
@@ -53,9 +53,9 @@ function Test() {
           toggleModal={toggleModal}
           setToggleModal={setToggleModal}
         />
-      )}
+      )} */}
       {/* 아래가 원본 */}
-      {/* {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
+      {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
       <TestHeader
         page={"study"}
         minutes={minutes}
@@ -65,8 +65,13 @@ function Test() {
       {minutes <= 0 && seconds <= 0 ? (
         <TestEnd />
       ) : (
-        <TestContent minutes={minutes} seconds={seconds} toggleModal={toggleModal} setToggleModal={setToggleModal} />
-      )} */}
+        <TestContent
+          minutes={minutes}
+          seconds={seconds}
+          toggleModal={toggleModal}
+          setToggleModal={setToggleModal}
+        />
+      )}
     </StyledTestContainer>
   );
 }

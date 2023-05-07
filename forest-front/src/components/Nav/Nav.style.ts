@@ -141,7 +141,7 @@ const EditorNavDivInner = styled.div`
 const LogoutParagraph = styled.p`
   position: absolute;
   top: 95%;
-  left: 75%;
+  left: 50%;
   transform: translate(-50%, -50%);
 
   color: ${({ theme }) => theme.colors.Gray[500]};
