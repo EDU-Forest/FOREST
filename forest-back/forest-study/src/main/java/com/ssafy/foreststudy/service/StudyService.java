@@ -683,7 +683,7 @@ public class StudyService {
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
 
-        if (problemList == null)
+        if (problemList.isEmpty())
             return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
 
 
