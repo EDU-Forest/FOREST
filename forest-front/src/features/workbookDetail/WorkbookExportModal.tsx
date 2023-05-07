@@ -40,7 +40,7 @@ function WorkbookExportModal({ setIsOpen, setIsSelectClassOpen }: IProps) {
 
   const chosenRelease = () => {
     releaseWorkbookApi(workbook.workbookId);
-    if (data.code === 204) {
+    if (data?.code === 204) {
       setIsOpen(false);
     }
   };
