@@ -7,6 +7,7 @@ import { TestBtnBox } from "../result/TextResult.style";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useEndStudy from "@/apis/study/useEndStudyQuery";
+import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 
 interface Iprops {
   setToggleModal: (toggled: boolean) => void;
@@ -14,9 +15,12 @@ interface Iprops {
 
 export default function TestEndModal({ setToggleModal }: Iprops) {
   const router = useRouter();
-  const { mutate } = useEndStudy();
   const studyId = router.query.studyId;
-  const { problem } = useSelector((state: RootState) => state.exam);
+
+  const { mutate: endStudy } = useEndStudy();
+  const { mutate: saveAnswer } = useSaveAnswer();
+  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { studentStudyProblemId, userAnswer, type } = problem[curProblemNum - 1];
   const [remainProblem, setRemainProblem] = useState(0);
 
   useEffect(() => {
@@ -32,7 +36,15 @@ export default function TestEndModal({ setToggleModal }: Iprops) {
   };
 
   const okHandler = () => {
-    mutate(typeof studyId === "string" ? parseInt(studyId) : -1);
+    const payload = {
+      studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
+      studentStudyProblemId,
+      userAnswer,
+      type,
+    };
+
+    saveAnswer(payload);
+    endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
     setToggleModal(false);
     router.push(`/test/${router.query.studyId}/result`);
   };
