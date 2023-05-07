@@ -11,3 +11,7 @@ export const setLocalStorage = (key: string, value: string) => {
 
   localStorage.setItem(key, toJson);
 };
+
+export const removeItemLocalStorage = (key: string) => {
+  localStorage.removeItem(key);
+};

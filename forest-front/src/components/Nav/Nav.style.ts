@@ -138,6 +138,23 @@ const EditorNavDivInner = styled.div`
   }
 `;
 
+const LogoutParagraph = styled.p`
+  position: absolute;
+  top: 95%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+
+  color: ${({ theme }) => theme.colors.Gray[500]};
+  font-size: 0.875rem;
+
+  overflow: hidden;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    left: 50%;
+  }
+`;
+
 export {
   StyledNav,
   TeacherNavDiv,
@@ -148,4 +165,5 @@ export {
   EditorNavDivTitle,
   EditorNavDiv,
   EditorNavDivInner,
+  LogoutParagraph,
 };
