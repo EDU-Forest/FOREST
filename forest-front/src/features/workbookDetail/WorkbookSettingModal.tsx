@@ -39,11 +39,15 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
   };
 
   const handleClickSet = () => {
-    console.log(selectedClass, settingTitle);
+    const classIdList = selectedClass.map((classId: number) => {
+      return {
+        classId: classId,
+      };
+    });
 
     const data = {
       workbookId: workbook.workbookId,
-      classId: [...selectedClass],
+      classIdList,
       type: type,
       name: settingTitle,
       startTime: startTime,
@@ -54,7 +58,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
   };
 
   useEffect(() => {
-    if (data?.code === 204) {
+    if (data?.code === 201) {
       setIsOpen(false);
     }
   }, [data]);
