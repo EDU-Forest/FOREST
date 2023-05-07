@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
+import { setClass } from "@/stores/class/classInfo";
 
 const fetcher = (name: string) => authAxios.post("/api/class", { name }).then(({ data }) => data);
 
@@ -13,6 +14,7 @@ const useClassAdd = () => {
   return useMutation(fetcher, {
     onSuccess: (data) => {
       dispatch(closeAddClassModal());
+      dispatch(setClass(data.data));
       return queryClient.invalidateQueries(queryKeys.CLASS_LIST);
     },
   });
