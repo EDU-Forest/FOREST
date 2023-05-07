@@ -77,7 +77,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(w.getWorkbook().getTitle())
                     .workbookImgPath(w.getWorkbook().getWorkbookImg().getPath())
                     .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getWorkbook().getId()))
-                    .scrapCount(0)
+                    .scrapCount(studyRepository.countByWorkbook(w.getWorkbook()))
                     .build());
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
