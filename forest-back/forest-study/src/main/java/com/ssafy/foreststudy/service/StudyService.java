@@ -5,6 +5,7 @@ import com.ssafy.foreststudy.dto.common.response.ResponseSuccessDto;
 import com.ssafy.foreststudy.dto.study.*;
 import com.ssafy.foreststudy.entity.*;
 import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
+import com.ssafy.foreststudy.enumeration.EnumUserRoleStatus;
 import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import com.ssafy.foreststudy.errorhandling.exception.StudyErrorCode;
 import com.ssafy.foreststudy.repository.*;
@@ -136,14 +137,25 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<ClassUser> classUser = classUserRepository.findAllByUser(user);
-
         List<Study> studyList = new ArrayList<>();
-        for (ClassUser cu : classUser) {
-            classRepository.findById(cu.getId())
-                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
-            List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
-            studyList.addAll(classStudyList);
+
+        /* 유저가 선생님이면 */
+        if (user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
+            List<ClassEntity> classes = classRepository.findAllByOwner(user);
+            if (classes.isEmpty())
+                throw new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND);
+            for (ClassEntity aClass : classes) {
+                List<Study> classStudyList = studyRepository.findAllListByClassId(aClass.getId());
+                studyList.addAll(classStudyList);
+            }
+        } else {
+            List<ClassUser> classUser = classUserRepository.findAllByUser(user);
+            for (ClassUser cu : classUser) {
+                classRepository.findById(cu.getId())
+                        .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
+                List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
+                studyList.addAll(classStudyList);
+            }
         }
 
 
