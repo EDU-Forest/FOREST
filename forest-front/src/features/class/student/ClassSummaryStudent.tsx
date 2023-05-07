@@ -35,47 +35,57 @@ export default function ClassSummaryStudent() {
           <Loading width={10} height={10} />
         </ClassSummaryWrapper>
       ) : (
-        <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
-          <ClassSummaryTextWrapper>
-            <ClassSummaryTextItem>
-              <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
-              <WorkbookStatus status={data?.scheduleType} />
-            </ClassSummaryTextItem>
-            {data?.scheduleType === "AFTER" && (
-              <ClassSummaryText
-                isGray
-                style={{ cursor: "pointer", margin: "0px" }}
-                onClick={() => goToDetail(data?.studyId)}
-              >
-                자세히 보기
-                <AiOutlineRight className="icon" />
-              </ClassSummaryText>
-            )}
-          </ClassSummaryTextWrapper>
-          <ClassSummaryDeadline>~ {data?.endTime}</ClassSummaryDeadline>
-          {data?.scheduleType === "AFTER" ? (
-            <ClassSummaryItemWrapper>
-              <ClassScoreChart
-                myScore={data?.studentResult.studentScore}
-                totalScore={data?.studentResult.totalScore}
-              />
-              <ClassMyResult
-                percentage={data?.studentResult.percentage}
-                correctNum={data?.studentResult.correctNum}
-                solvingTime={data?.studentResult.solvingTime}
-              />
-              <TotalResult
-                average={data?.classResult.average}
-                standardDeviation={data?.classResult.standardDeviation}
-                averageSolvingTime={data?.classResult.averageSolvingTime}
-              />
-            </ClassSummaryItemWrapper>
+        <>
+          {data ? (
+            <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
+              <ClassSummaryTextWrapper>
+                <ClassSummaryTextItem>
+                  <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
+                  <WorkbookStatus status={data?.scheduleType} />
+                </ClassSummaryTextItem>
+                {data?.scheduleType === "AFTER" && (
+                  <ClassSummaryText
+                    isGray
+                    style={{ cursor: "pointer", margin: "0px" }}
+                    onClick={() => goToDetail(data?.studyId)}
+                  >
+                    자세히 보기
+                    <AiOutlineRight className="icon" />
+                  </ClassSummaryText>
+                )}
+              </ClassSummaryTextWrapper>
+              <ClassSummaryDeadline>~ {data?.endTime}</ClassSummaryDeadline>
+              {data?.scheduleType === "AFTER" ? (
+                <ClassSummaryItemWrapper>
+                  <ClassScoreChart
+                    myScore={data?.studentResult.studentScore}
+                    totalScore={data?.studentResult.totalScore}
+                  />
+                  <ClassMyResult
+                    percentage={data?.studentResult.percentage}
+                    correctNum={data?.studentResult.correctNum}
+                    solvingTime={data?.studentResult.solvingTime}
+                  />
+                  <TotalResult
+                    average={data?.classResult.average}
+                    standardDeviation={data?.classResult.standardDeviation}
+                    averageSolvingTime={data?.classResult.averageSolvingTime}
+                  />
+                </ClassSummaryItemWrapper>
+              ) : (
+                <ClassSummaryItemWrapperNoResult>
+                  문제 풀이가 종료되지 않았습니다.
+                </ClassSummaryItemWrapperNoResult>
+              )}
+            </ClassSummaryWrapper>
           ) : (
-            <ClassSummaryItemWrapperNoResult>
-              문제 풀이가 종료되지 않았습니다.
-            </ClassSummaryItemWrapperNoResult>
+            <ClassSummaryWrapper small>
+              <ClassSummaryItemWrapperNoResult>
+                최근 진행한 스터디가 없습니다.
+              </ClassSummaryItemWrapperNoResult>
+            </ClassSummaryWrapper>
           )}
-        </ClassSummaryWrapper>
+        </>
       )}
     </>
   );
