@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-public class ExcuteDto {
+public class ExecuteDto {
 
     private Long workbookId;
     private List<ClassIdDto> classIdList;

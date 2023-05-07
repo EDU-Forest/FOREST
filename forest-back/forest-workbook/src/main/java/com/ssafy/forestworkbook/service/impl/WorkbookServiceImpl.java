@@ -83,9 +83,9 @@ public class WorkbookServiceImpl implements WorkbookService {
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
-        // 사용한 문제집
-        // TODO 사본 만든 문제집 추가
+        // 출제한 문제집
         else if (search.equals("use")) {
+            Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdAndIsExecuted(userId, true, pageable);
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = workbooksToDto(workbooks, userId);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
@@ -352,15 +352,15 @@ public class WorkbookServiceImpl implements WorkbookService {
     // 내 문제집 -> 출제
     // 스크랩 -> 어떻게 처리하징?
     @Override
-    public ResponseSuccessDto<?> excuteWorkbook(Long userId, ExcuteDto excuteDto) {
+    public ResponseSuccessDto<?> executeWorkbook(Long userId, ExecuteDto executeDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        Workbook workbook = workbookRepository.findById(excuteDto.getWorkbookId())
+        Workbook workbook = workbookRepository.findById(executeDto.getWorkbookId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         List<ClassEntity> classEntityList = new ArrayList<>();
-        for (ClassIdDto classId : excuteDto.getClassIdList()) {
+        for (ClassIdDto classId : executeDto.getClassIdList()) {
             ClassEntity classEntity = classRepository.findById(classId.getClassId())
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
             classEntityList.add(classEntity);
@@ -368,17 +368,17 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         EnumStudyTypeStatus enumStudyTypeStatus;
 
-        if (excuteDto.getType().equals("exam")) {
+        if (executeDto.getType().equals("exam")) {
             enumStudyTypeStatus = EnumStudyTypeStatus.EXAM;
-        } else if (excuteDto.getType().equals("homework")) {
+        } else if (executeDto.getType().equals("homework")) {
             enumStudyTypeStatus = EnumStudyTypeStatus.HOMEWORK;
-        } else if (excuteDto.getType().equals("self")) {
+        } else if (executeDto.getType().equals("self")) {
             enumStudyTypeStatus = EnumStudyTypeStatus.SELF;
         } else {
             throw new CustomException(WorkbookErrorCode.STUDY_TYPE_NO_VAILD);
         }
 
-        workbook.changeIsExcuted(true);
+        workbook.changeIsExecuted(true);
 
         List<StudyIdDto> studyIdDtoList = new ArrayList<>();
         List<ProblemList> problemListList = problemListRepository.findAllByWorkbookId(workbook.getId());
@@ -388,10 +388,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .classes(classEntity)
                     .workbook(workbook)
                     .user(user)
-                    .name(excuteDto.getName())
+                    .name(executeDto.getName())
                     .type(enumStudyTypeStatus)
-                    .startTime(excuteDto.getStartTime())
-                    .endTime(excuteDto.getEndTime())
+                    .startTime(executeDto.getStartTime())
+                    .endTime(executeDto.getEndTime())
                     .build();
 
             studyRepository.save(study);
