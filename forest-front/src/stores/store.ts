@@ -8,6 +8,7 @@ import userSlice from "./user/user";
 import questionSlice from "./editor/editorQuestions";
 import editorModalSlice from "./editor/editorModal";
 import editorWorkbookSlice from "./editor/editorWorkbook";
+import workbookDetailSlice from "./workbookDetail/workbookDetail";
 
 const reducers = combineReducers({
   user: userSlice,
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   editQuestions: questionSlice,
   editorModal: editorModalSlice,
   editorWorkbook: editorWorkbookSlice,
+  workbookDetail: workbookDetailSlice,
 });
 
 const persistConfig = {
