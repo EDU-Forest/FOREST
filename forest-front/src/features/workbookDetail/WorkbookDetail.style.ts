@@ -415,19 +415,14 @@ export const WorkbookImgEditModalImgBox = styled.div`
   gap: 1.5rem;
 `;
 
-export const WorkbookImgTypeBox = styled.div<{ type: number }>`
+export const WorkbookImgTypeBox = styled.div<{ path: string }>`
   width: 150px;
   height: 200px;
 
   padding: 1rem;
 
   font-weight: 600;
-  background-image: ${({ type }) =>
-    type === 1
-      ? 'url("/images/Workbook_Type_1.png")'
-      : type === 2
-      ? 'url("/images/Workbook_Type_2.png")'
-      : type === 3 && 'url("/images/Workbook_Type_3.png")'};
+  background-image: url(${({ path }) => path});
   background-size: cover;
   background-repeat: no-repeat;
   box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.2);
@@ -437,13 +432,14 @@ export const WorkbookImgTypeBox = styled.div<{ type: number }>`
 export const WorkbookDetailWorkbookImgBox = styled.div`
   width: 5rem;
   height: 6.25rem;
-  img, div {
+  img,
+  div {
     width: 100%;
     height: 100%;
   }
 
   > div {
-    font-size:14px;
+    font-size: 14px;
     overflow: hidden;
   }
 `;

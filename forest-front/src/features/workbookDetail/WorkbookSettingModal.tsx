@@ -18,7 +18,9 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
   const [settingTitle, setSettingTitle] = useState(title);
   const [type, setType] = useState<string>("self");
   const [startTime, setStartTime] = useState<string>();
+  const [startDay, setStartDay] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
+  const [endDay, setEndDay] = useState<string>();
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
@@ -50,8 +52,8 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
       classIdList,
       type: type,
       name: settingTitle,
-      startTime: startTime,
-      endTime: endTime,
+      startTime: startDay && startTime && `${startDay}T${startTime}`,
+      endTime: endDay && endTime && `${endDay}T${endTime}`,
     };
 
     setWorkbookApi(data);
@@ -76,8 +78,12 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
         type={type}
         startTime={startTime}
         setStartTime={setStartTime}
+        startDay={startDay}
+        setStartDay={setStartDay}
         endTime={endTime}
         setEndTime={setEndTime}
+        endDay={endDay}
+        setEndDay={setEndDay}
       />
       <ModalBtnsBox>
         <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>

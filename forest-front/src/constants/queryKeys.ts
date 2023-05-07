@@ -39,6 +39,7 @@ export const RECENT_WORKBOOK_LIST = "/recentWorkbookList";
 export const WORKBOOKS_BY_SELF = "/workbooksBySelf";
 export const GET_WORKBOOK_LIST = "/getWorkbookList";
 export const GET_WORKBOOK_DETAIL = "/getWorkbookDetail";
+export const GET_WORKBOOK_IMGS = "/getWorkbookImgs";
 export const COPY_WORKBOOK_DETAIL = "/copyWorkbookDetail";
 export const GET_STUDY_RESULT = "/getStudyResult";
 export const IS_ORIGINAL = "/isOriginal";

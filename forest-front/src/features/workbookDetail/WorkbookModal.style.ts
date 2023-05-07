@@ -170,6 +170,8 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
   justify-content: space-between;
   align-items: center;
 
+  gap: 24px;
+
   > input {
     width: 100%;
     border: none;
@@ -180,6 +182,10 @@ export const WorkbookSettingTimeInputBox = styled(CommonInput)`
       background: transparent;
       color: ${({ theme }) => theme.colors.Gray[300]};
     }
+  }
+
+  > span {
+    color: ${({ theme }) => theme.colors.Gray[500]};
   }
 
   /* input[type="time"]::-webkit-datetime-edit-hour-field {

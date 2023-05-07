@@ -40,6 +40,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const [selectedImg, setSelectedImg] = useState(0);
+  const [imgPath, setImgPath] = useState("");
 
   const [isOpenImgEdit, setIsOpenImgEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -88,7 +89,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
     );
   }, [selectedImg]);
 
-  console.log(workbook)
+  console.log(workbook);
   return (
     <>
       <StyledWorkbookDetailInfoOverviewBox>
@@ -153,7 +154,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {selectedImg === 0 ? (
                   <img src={workbook?.workbookImgPath} />
                 ) : (
-                  <WorkbookImgTypeBox type={selectedImg}>{workbook?.title}</WorkbookImgTypeBox>
+                  <WorkbookImgTypeBox path={imgPath}>{workbook?.title}</WorkbookImgTypeBox>
                 )}
                 {isEditing && <label onClick={handleClickImgEdit}>수정</label>}
               </WorkbookDetailWorkbookImgBox>
@@ -167,6 +168,8 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
           title={workbook?.title}
           setSelectedImg={setSelectedImg}
           setIsOpenImgEdit={setIsOpenImgEdit}
+          imgPath={imgPath}
+          setImgPath={setImgPath}
         />
       )}
       {isOpenDelete && <WorkbookDeleteModal setIsOpenDelete={setIsOpenDelete} />}
