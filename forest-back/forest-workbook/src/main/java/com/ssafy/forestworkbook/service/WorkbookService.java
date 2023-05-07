@@ -20,7 +20,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> updateWorkbook(Long userId, WorkbookUpdateInfoDto workbookUpdateInfoDto);
     ResponseSuccessDto<?> deleteWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> changeWorkbookIsPublic(Long userId, Long workbookId);
-    ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto);
+    ResponseSuccessDto<?> excuteWorkbook(Long userId, ExcuteDto excuteDto);
     ResponseSuccessDto<?> checkExportRange(Long userId, Long workbookId);
     ResponseSuccessDto<?> deployWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId);

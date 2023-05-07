@@ -51,9 +51,13 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ClassAnswerRateRepository classAnswerRateRepository;
     private final ResponseUtil responseUtil;
 
-    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+    @Value("${spring.cloud.gcp.storage.bucket}")
     private String bucketName;
     private final Storage storage;
+
+    // TODO 스크랩은 사본이 아님
+    // TODO 출제여부는 Study에서 찾아서 쓰기
+    // TODO 사본 만들기는 내거만
 
     @Override
     public ResponseSuccessDto<Page<TeacherWorkbookDto>> getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -346,15 +350,19 @@ public class WorkbookServiceImpl implements WorkbookService {
     // 내 문제집 -> 출제
     // 스크랩 -> 어떻게 처리하징?
     @Override
-    public ResponseSuccessDto<?> executeWorkbook(Long userId, ExcuteDto excuteDto) {
+    public ResponseSuccessDto<?> excuteWorkbook(Long userId, ExcuteDto excuteDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         Workbook workbook = workbookRepository.findById(excuteDto.getWorkbookId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        ClassEntity classEntity = classRepository.findById(excuteDto.getClassId())
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
+        List<ClassEntity> classEntityList = new ArrayList<>();
+        for (ClassIdDto classId : excuteDto.getClassIdList()) {
+            ClassEntity classEntity = classRepository.findById(classId.getClassId())
+                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
+            classEntityList.add(classEntity);
+        }
 
         EnumStudyTypeStatus enumStudyTypeStatus;
 
@@ -370,39 +378,43 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         workbook.changeIsExcuted(true);
 
-        Study study = Study.builder()
-                .classes(classEntity)
-                .workbook(workbook)
-                .user(user)
-                .name(excuteDto.getName())
-                .type(enumStudyTypeStatus)
-                .startTime(excuteDto.getStartTime())
-                .endTime(excuteDto.getEndTime())
-                .build();
-
-        studyRepository.save(study);
-
-        ClassStudyResult classStudyResult = ClassStudyResult.builder()
-                .study(study).build();
-
-        classStudyResultRepository.save(classStudyResult);
-
-        StudyIdDto studyIdDto = StudyIdDto.builder().studyId(study.getId()).build();
-
+        List<StudyIdDto> studyIdDtoList = new ArrayList<>();
         List<ProblemList> problemListList = problemListRepository.findAllByWorkbookId(workbook.getId());
 
-        List<ClassAnswerRate> classAnswerRateList = new ArrayList<>();
-        for (ProblemList problemList : problemListList) {
-            ClassAnswerRate classAnswerRate = ClassAnswerRate.builder()
-                    .study(study)
-                    .problemList(problemList)
+        for (ClassEntity classEntity : classEntityList) {
+            Study study = Study.builder()
+                    .classes(classEntity)
+                    .workbook(workbook)
+                    .user(user)
+                    .name(excuteDto.getName())
+                    .type(enumStudyTypeStatus)
+                    .startTime(excuteDto.getStartTime())
+                    .endTime(excuteDto.getEndTime())
                     .build();
-            classAnswerRateList.add(classAnswerRate);
+
+            studyRepository.save(study);
+
+            ClassStudyResult classStudyResult = ClassStudyResult.builder()
+                    .study(study).build();
+
+            classStudyResultRepository.save(classStudyResult);
+
+            StudyIdDto studyIdDto = StudyIdDto.builder().studyId(study.getId()).build();
+
+            List<ClassAnswerRate> classAnswerRateList = new ArrayList<>();
+            for (ProblemList problemList : problemListList) {
+                ClassAnswerRate classAnswerRate = ClassAnswerRate.builder()
+                        .study(study)
+                        .problemList(problemList)
+                        .build();
+                classAnswerRateList.add(classAnswerRate);
+            }
+
+            classAnswerRateRepository.saveAll(classAnswerRateList);
+            studyIdDtoList.add(studyIdDto);
         }
 
-        classAnswerRateRepository.saveAll(classAnswerRateList);
-
-        return responseUtil.successResponse(studyIdDto, ForestStatus.WORKBOOK_SUCCESS_EXECUTE);
+        return responseUtil.successResponse(new StudyIdListDto(studyIdDtoList), ForestStatus.WORKBOOK_SUCCESS_EXECUTE);
     }
 
     @Override
@@ -454,8 +466,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 스크랩 불가능 -> 사본 생성 불가능
-        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
+        // 내가 만든 문제집만 사본 생성 가능
+        if (workbook.getCreator().getId() != userId)
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
 
         Workbook workbookCopy = Workbook.builder()
