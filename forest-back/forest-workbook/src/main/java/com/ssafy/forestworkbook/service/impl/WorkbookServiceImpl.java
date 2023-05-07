@@ -58,6 +58,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     // TODO 스크랩은 사본이 아님
     // TODO 출제여부는 Study에서 찾아서 쓰기
     // TODO 사본 만들기는 내거만
+    // TODO 스크랩 수 -> 출제 한 횟수
 
     @Override
     public ResponseSuccessDto getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -136,7 +137,12 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         List<ClassWorkbookDto> classWorkbookDtoList = new ArrayList<>();
 
-        // TODO 클래스 소속인지 확인하는게 필요할듯
+        // 클래스 선생님이 아닌 경우 조회 불가
+        ClassEntity classEntity = classRepository.findById(classId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
+        if (userId != classEntity.getOwner().getId()) {
+            throw new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO);
+        }
 
         // EXAM
         if (search.equals("exam")) {
@@ -707,7 +713,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             }
 
             // 문제 ID 오는 경우 수정
-            if (problemDto.getProblemId() != null || !problemDto.getProblemId().equals("")) {
+            if (problemDto.getProblemId() != null) {
                 Problem problem = problemRepository.findById(problemDto.getProblemId())
                         .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
@@ -765,6 +771,9 @@ public class WorkbookServiceImpl implements WorkbookService {
 
     @Override
     public ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
         String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
         String ext = file.getContentType(); // 파일의 형식 ex) JPG
 
@@ -1059,7 +1068,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .studyId(study.getId())
                     .title(study.getName())
                     .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
-                    .isFinished((study.getEndTime().isAfter(now)))
+                    .isFinished(study.getType().equals(EnumStudyTypeStatus.SELF) ? false : study.getEndTime ().isAfter(now))
                     .build();
 
             classWorkbookDtoList.add(classWorkbookDto);
