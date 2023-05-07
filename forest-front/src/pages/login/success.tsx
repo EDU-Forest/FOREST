@@ -21,6 +21,7 @@ function LoginSuccess() {
 
   useEffect(() => {
     const accessToken = router.query?.accessToken;
+    console.log("dd");
     if (typeof accessToken === "string") {
       setLocalStorage("forest_access_token", accessToken);
     } else return;

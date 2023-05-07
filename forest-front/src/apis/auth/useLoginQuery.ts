@@ -12,20 +12,17 @@ const fetcher = (payload: Login) =>
       pw: payload.password,
     })
     .then(({ data }) => {
-      console.log(data);
       return data;
     });
 
 const useLogin = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      dispatch(setUsername(data.data.name));
-      dispatch(setRole(data.data.role));
-      setLocalStorage("forest_access_token", data.data.accessToken);
-      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
+      const { name, role, accessToken } = data.data;
+      setLocalStorage("forest_access_token", accessToken);
+      router.push(`/login/success`, { query: { name, role, accessToken } });
     },
     onError: (error) => {
       // 아직 미구현
