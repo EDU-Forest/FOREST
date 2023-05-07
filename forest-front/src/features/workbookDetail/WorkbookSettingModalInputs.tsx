@@ -73,10 +73,10 @@ function WorkbookSettingModalInputs({
         <WorkbookSettingTimeInputBox as="div">
           <input
             type="date"
-            placeholder="시작 날짜를 선택하세요"
+            placeholder="종료 날짜를 선택하세요"
             value={endDay}
             onChange={(e) => handleChangeEnd(e, "date")}
-            disabled={type !== "exam"}
+            disabled={type === "self"}
           />
           <span>|</span>
           <input
