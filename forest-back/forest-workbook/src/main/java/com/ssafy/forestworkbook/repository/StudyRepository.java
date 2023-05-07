@@ -20,7 +20,15 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
             "join fetch s.workbook w " +
             "where s.user.id = :userId " +
             "group by s.workbook.id",
-            countQuery = "select count(s) from Study s where s.user.id = :userId")
+            countQuery = "select count(s) from Study s where s.user.id = :userId group by s.workbook")
     Page<Study> findAllByUserGroupByWorkbookId(Long userId, Pageable pageable);
+
+    @Query (value = "select s from Study s " +
+            "join fetch s.user u " +
+            "join fetch s.workbook w " +
+            "where s.user.id = :userId " +
+            "group by s.workbook.id")
+    List<Study> findAllByUserId(Long userId);
+
 
 }
