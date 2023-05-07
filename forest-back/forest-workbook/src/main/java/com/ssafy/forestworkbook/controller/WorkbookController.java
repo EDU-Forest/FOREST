@@ -65,6 +65,12 @@ public class WorkbookController {
         return workbookService.getWorkbookAllInfo(userId, workbookId);
     }
 
+    @GetMapping("/img")
+    @ApiOperation(value = "문제집 이미지 목록 조회", notes = "문제집 이미지 목록을 조회합니다.")
+    public ResponseSuccessDto<?> getWorkbookImg (HttpServletRequest request) throws UnsupportedEncodingException {
+        return workbookService.getWorkbookImg();
+    }
+
     @PostMapping
     @ApiOperation(value = "문제집 생성하기", notes = "새로운 문제집을 생성합니다.")
     public ResponseSuccessDto<?> createWorkbook(
@@ -167,7 +173,7 @@ public class WorkbookController {
         return workbookService.copyWorkbook(userId, workbookId);
     }
 
-    @PatchMapping("/problem")
+    @PostMapping("/problem")
     @ApiOperation(value = "문제 만들기 및 수정하기", notes = "문제를 만들고 수정합니다.")
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,

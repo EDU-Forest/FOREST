@@ -208,6 +208,20 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     @Override
+    public ResponseSuccessDto<?> getWorkbookImg() {
+        List<WorkbookImg> workbookImgList = workbookImgRepository.findAll();
+
+        List<ImgDto> ImgDtoList = workbookImgList.stream()
+                .map(w -> ImgDto.builder()
+                        .workbookImgId(w.getId())
+                        .workbookImgPath(w.getPath())
+                        .build())
+                .collect(Collectors.toList());
+
+        return responseUtil.successResponse(new ImgListDto(ImgDtoList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+    }
+
+    @Override
     public ResponseSuccessDto<?> createWorkbook(Long userId, WorkbookTitleDto workbookTitleDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
@@ -1008,7 +1022,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         for (Study study : studyList) {
             ClassWorkbookDto classWorkbookDto = ClassWorkbookDto.builder()
                     .studyId(study.getId())
-                    .title(study.getWorkbook().getTitle())
+                    .title(study.getName())
                     .workbookImgPath(study.getWorkbook().getWorkbookImg().getPath())
                     .isFinished((study.getEndTime().isAfter(now)))
                     .build();
