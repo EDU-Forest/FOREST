@@ -368,7 +368,7 @@ public class StudyService {
         return res;
     }
 
-    /* (개인) 시험 결과 조회 */
+    /* (학생) 시험 결과 조회 */
     public ResponseSuccessDto<GetStudentResultResponseDto> getStudentResult(Long studyId, Long userId) {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
@@ -391,7 +391,7 @@ public class StudyService {
                 .endTime(cs.getStudy().getEndTime())
                 .build();
 
-        ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_ALL);
+        ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_USER);
         return res;
     }
 
@@ -434,17 +434,26 @@ public class StudyService {
         String schedule = getScheduleType(cs);
 
 
-        if (schedule.equals("BEFORE") || schedule.equals("ONGOING")) {
-            GetStudyBeforeAndOngoingResponseDto getStudyBeforeAndOngoingResponseDto = GetStudyBeforeAndOngoingResponseDto.builder()
-                    .studyId(cs.getStudy().getId())
-                    .title(cs.getStudy().getName())
-                    .startTime(cs.getStudy().getStartTime())
-                    .endTime(cs.getStudy().getEndTime())
-                    .userName(cs.getStudy().getUser().getName())
-                    .studyType(cs.getStudy().getType().toString())
-                    .scheduleType(schedule)
-                    .build();
-            return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_SUCCESS_INFO_BEFORE);
+        GetStudyBeforeAndOngoingResponseDto getStudyBeforeAndOngoingResponseDto = GetStudyBeforeAndOngoingResponseDto.builder()
+                .studyId(cs.getStudy().getId())
+                .title(cs.getStudy().getName())
+                .startTime(cs.getStudy().getStartTime())
+                .endTime(cs.getStudy().getEndTime())
+                .userName(cs.getStudy().getUser().getName())
+                .studyType(cs.getStudy().getType().toString())
+                .scheduleType(schedule)
+                .build();
+
+        if (schedule.equals("BEFORE"))
+            return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_NOT_YET);
+        else if (schedule.equals("ONGOING")) {
+            StudentStudyResult studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user)
+                    .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+            if (studentStudyResult.getIsSubmitted())
+                return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_SUBMIT_ALREADY);
+            else
+                return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_ONGOING);
+
         } else {
             GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
 
