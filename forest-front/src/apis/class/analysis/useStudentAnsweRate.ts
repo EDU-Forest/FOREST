@@ -9,6 +9,7 @@ interface StudentStudyResultList {
   exitTime: string;
   correctNum: number;
   correctRate: number;
+  studentStudyResultId: number;
 }
 
 const fetcher = (studyId: number) =>
@@ -21,6 +22,9 @@ const useStudentAnsweRate = (studyId: number) => {
   return useQuery([queryKeys.STUDENT_ANSWER_RATE, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId,
+    onSuccess: (data) => {
+      console.log("ㅇㅇㅇ", data);
+    },
   });
 };
 

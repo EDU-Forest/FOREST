@@ -15,11 +15,13 @@ import { RootState } from "@/stores/store";
 import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
 import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
+import { useRouter } from "next/router";
 
 export default function EachResult() {
+  const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-  const goToGrade = () => {
-    // 상세 성적으로 이동
+  const goToGrade = (studentStudyResultId: number) => {
+    router.push({ pathname: `/test/${nowStudyId}/result`, query: { studentStudyResultId } });
   };
 
   const { data, isLoading } = useStudentAnsweRate(nowStudyId);
@@ -62,7 +64,10 @@ export default function EachResult() {
                   <span>{item.correctRate}</span>%
                 </ResultTableItemSmall>
                 <ResultTableItemSmall>
-                  <MdEqualizer className="icon" onClick={goToGrade} />
+                  <MdEqualizer
+                    className="icon"
+                    onClick={() => goToGrade(item.studentStudyResultId)}
+                  />
                 </ResultTableItemSmall>
               </ResultTableList>
             ))}
