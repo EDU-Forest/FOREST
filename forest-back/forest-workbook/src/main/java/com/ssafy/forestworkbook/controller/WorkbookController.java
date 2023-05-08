@@ -202,11 +202,11 @@ public class WorkbookController {
     public ResponseSuccessDto<?> ocrImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
-        return workbookService.createProblemImg(userId, file);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(1);
+        return workbookService.ocrImg(userId, file);
     }
 
     @DeleteMapping ("/problem/{problemId}")

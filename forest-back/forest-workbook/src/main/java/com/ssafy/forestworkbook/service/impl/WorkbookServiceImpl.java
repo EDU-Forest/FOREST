@@ -798,13 +798,13 @@ public class WorkbookServiceImpl implements WorkbookService {
         String path = imgToUrl(file);
 
         ImagePathDto imagePathDto = ImagePathDto.builder()
-                .path("https://storage.googleapis.com/" + file)
+                .path("https://storage.googleapis.com/" + path)
                 .build();
 
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
-    public String ocrImg(Long userId, MultipartFile file) throws IOException {
+    public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -840,7 +840,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
             String[] txt = originList.get(0).toString().split("\\n");
             System.out.println(Arrays.toString(txt));
-            return Arrays.toString(txt);
+            return responseUtil.successResponse(Arrays.toString(txt), ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
