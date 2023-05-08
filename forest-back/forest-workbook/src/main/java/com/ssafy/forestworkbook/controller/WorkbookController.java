@@ -190,10 +190,22 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createProblemImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
+        return workbookService.createProblemImg(userId, file);
+    }
+
+    @PostMapping ("/ocr/img")
+    @ApiOperation(value = "문제 이미지 등록하기", notes = "문제 이미지를 등록합니다.")
+    public ResponseSuccessDto<?> ocrImg(
+            HttpServletRequest request,
+            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
 //        JwtDecoder jwtDecoder = new JwtDecoder();
 //        Long userId = jwtDecoder.verifyJWT(request);
 //        log.info("{}", userId);
-        Long userId = Long.valueOf(1);
+        Long userId = Long.valueOf(9);
         return workbookService.createProblemImg(userId, file);
     }
 
