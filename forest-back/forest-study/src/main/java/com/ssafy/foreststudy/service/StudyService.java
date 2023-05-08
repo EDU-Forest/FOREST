@@ -166,7 +166,7 @@ public class StudyService {
             LocalDateTime endTime = study.getEndTime();
 
             String schedule = null;
-            if (study.getEndTime() == null)
+            if (startTime == null || endTime == null)
                 schedule = "ONGOING";
             else {
                 if (now.isBefore(startTime))
