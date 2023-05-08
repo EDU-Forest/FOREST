@@ -1,6 +1,7 @@
 import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestHeader from "@/features/test/index/TestHeader";
 import TestResultQuestion from "@/features/test/result/TestResultQuestion";
+import TestResultSection from "@/features/test/result/TestResultSection";
 import TestResultTotal from "@/features/test/result/TestResultTotal";
 import { ResultContainer, TestResultOkBtn } from "@/features/test/result/TextResult.style";
 import { RootState } from "@/stores/store";
@@ -11,17 +12,12 @@ import { useSelector } from "react-redux";
 function Result() {
   const router = useRouter();
   const studyId = router.query.studyId;
-  const { role } = useSelector((state: RootState) => state.user);
   useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
-  const clickHandler = () => {
-    router.push(`/${role.toLowerCase()}/dashboard`);
-  };
+
   return (
     <ResultContainer>
       <TestHeader page={"result"} />
-      <TestResultTotal />
-      <TestResultQuestion />
-      <TestResultOkBtn onClick={clickHandler}>확인</TestResultOkBtn>
+      <TestResultSection />
     </ResultContainer>
   );
 }

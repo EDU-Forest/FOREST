@@ -17,7 +17,6 @@ const useGetStudyResult = ({ studyId, setStudyResult }: Iprops) => {
   return useQuery(queryKeys.GET_STUDY_RESULT, () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("sss", data);
       setStudyResult(data.data);
     },
   });
