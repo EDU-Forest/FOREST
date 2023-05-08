@@ -15,14 +15,13 @@ import { RootState } from "@/stores/store";
 import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
 import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
-import { useRouter } from "next/router";
 
-export default function EachResult() {
-  const router = useRouter();
+interface Iprops {
+  goToGrade: (item: StudentStudyResultList) => void;
+}
+
+export default function EachResult({ goToGrade }: Iprops) {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-  const goToGrade = (studentStudyResultId: number) => {
-    router.push({ pathname: `/test/${nowStudyId}/result`, query: { studentStudyResultId } });
-  };
 
   const { data, isLoading } = useStudentAnsweRate(nowStudyId);
 
@@ -64,10 +63,7 @@ export default function EachResult() {
                   <span>{item.correctRate}</span>%
                 </ResultTableItemSmall>
                 <ResultTableItemSmall>
-                  <MdEqualizer
-                    className="icon"
-                    onClick={() => goToGrade(item.studentStudyResultId)}
-                  />
+                  <MdEqualizer className="icon" onClick={() => goToGrade(item)} />
                 </ResultTableItemSmall>
               </ResultTableList>
             ))}
