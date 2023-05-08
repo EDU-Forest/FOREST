@@ -164,6 +164,14 @@ public class StudyController {
         return ResponseEntity.ok(studyService.postExitStudy(studyId));
     }
 
+    @ApiOperation(value = "시험 시작하기 정보 조회", notes = "시험 시작하기 정보를 조회합니다.")
+    @GetMapping("/info/{studyId}")
+    public ResponseEntity<ResponseSuccessDto<GetStudyInfoResponseDto>> getStudyInfo(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        return ResponseEntity.ok(studyService.getStudyInfo(studyId,userId));
+    }
+
     @ApiOperation(value = "(선생님) 학생 성적 상세 조회 - 시험 결과", notes = "선생님이 학생 성적 상세 정보를 조회합니다.")
     @GetMapping("/detail/result/{studentStudyResultId}")
     public ResponseEntity<ResponseSuccessDto<GetStudentResultResponseDto>> getStudentDetailResult(HttpServletRequest request,@PathVariable("studentStudyResultId") Long studentStudyResultId) throws UnsupportedEncodingException {
