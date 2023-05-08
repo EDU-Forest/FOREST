@@ -96,6 +96,7 @@ export default function ClassSummaryStudent() {
                   {data?.status === "STUDY_ONGOING" && "아직 문제를 풀지 않았습니다."}
                   {data?.status === "STUDY_SUBMIT_ALREADY" && "채점을 기다리는 중입니다."}
                   {data?.status === "STUDY_NOT_YET" && "시작되지 않은 시험입니다."}
+                  {data?.status === "STUDY_NOT_PARTICIPATE" && "응시하지 않은 시험입니다."}
                 </ClassSummaryItemWrapperNoResult>
               )}
             </ClassSummaryWrapper>
