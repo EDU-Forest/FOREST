@@ -1,4 +1,3 @@
-import { theme } from "./../../styles/theme";
 import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
 import { WorkbookImg } from "@/components/Workbook/Workbook.style";
 import { ModalBox } from "@/styles/modal";
@@ -129,6 +128,8 @@ export const StyledWorkbookDetailQuestionListBox = styled.div`
 `;
 
 export const WorkbookDetailQuestionOverviewAndContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
 `;
 
@@ -202,6 +203,13 @@ export const StyledWorkbookDetailQuestionListContentBox = styled.div`
 
   p {
     font-weight: bold;
+  }
+
+  /* 빈 문항 */
+  > span {
+    color: ${({ theme }) => theme.colors.Lime[600]};
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -278,6 +286,8 @@ export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>
 
 // 문제 스타일
 export const StyledWorkbookDetailQuestionBox = styled.div`
+  flex: 1;
+
   padding: 40px 2rem;
 
   background: #ffffff;
@@ -287,6 +297,13 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   img {
     width: 5rem;
     height: auto;
+  }
+
+  /* 빈 문구 */
+  > span {
+    color: ${({ theme }) => theme.colors.Lime[600]};
+    display: flex;
+    justify-content: center;
   }
 `;
 
