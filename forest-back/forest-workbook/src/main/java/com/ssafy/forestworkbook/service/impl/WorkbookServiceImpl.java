@@ -47,6 +47,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     private final ItemRepository itemRepository;
     private final StudyRepository studyRepository;
     private final ClassRepository classRepository;
+    private final ClassUserRepository classUserRepository;
     private final ClassStudyResultRepository classStudyResultRepository;
     private final ClassAnswerRateRepository classAnswerRateRepository;
     private final ResponseUtil responseUtil;
@@ -144,7 +145,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         log.info("userId : {}, classId : {}, ownerId : {}", userId, classId, classEntity.getOwner().getId());
 
         if (userId != classEntity.getOwner().getId()) {
-            throw new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO);
+            ClassUser classUser = classUserRepository.findByClassesAndUser(classEntity, user)
+                    .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO));
         }
 
         // EXAM
@@ -424,7 +426,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .user(user)
                     .name(executeDto.getName())
                     .type(enumStudyTypeStatus)
-                    .startTime(executeDto.getStartTime())
+                    .startTime(executeDto.getStartTime() == null ?
+                            LocalDateTime.now() : executeDto.getStartTime())
                     .endTime(executeDto.getEndTime())
                     .build();
 
