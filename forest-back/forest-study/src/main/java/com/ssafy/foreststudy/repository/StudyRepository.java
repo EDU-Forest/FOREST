@@ -11,7 +11,6 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     @Query("select s from Study s where s.classes.id = :classId")
     List<Study> findAllListByClassId(Long classId);
 
-
     //@Query("select s from Study s where s.classes.id = :classId and DATEDIFF(now(), s.endTime) > 0 order by s.endTime desc ")
     //Study findAllByClassId(Long classId);
 

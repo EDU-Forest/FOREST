@@ -1,12 +1,12 @@
 package com.ssafy.forestworkbook.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,35 +26,27 @@ public class ClassStudyResult {
     private Study study;
 
     @Column(name = "take_rate", columnDefinition = "int")
-    private int takeRate = 0;
+    private int takeRate;
 
     /* double? decimal? */
     @Column(name = "average", columnDefinition = "double")
-    private double average = 0;
+    private double average;
 
     @Column(name = "standard_deviation", columnDefinition = "double")
-    private double standardDeviation = 0;
+    private double standardDeviation;
 
-    @Column(name = "average_solving_time", columnDefinition = "bigint")
-    private Long averageSolvingTime = Long.valueOf(0);
+    @Column(name = "average_solving_time", columnDefinition = "timestamp")
+    private LocalDateTime averageSolvingTime;
 
     @Column(name = "correct_answer_rate", columnDefinition = "int")
-    private int correctAnswerRate = 0;
-
-    @Column(name = "ungraded_answer_rate", columnDefinition = "int")
-    private int ungradedAnswerRate = 0;
-
-    @Column(name = "total_student", columnDefinition = "int")
-    private int totalStudent = 0;
-
-    @Column(name = "participant_student", columnDefinition = "int")
-    private int participantStudent = 0;
+    private int correctAnswerRate;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
-    @Builder
-    public ClassStudyResult(Study study) {
-        this.study = study;
-    }
+    @Column(name = "total_student", columnDefinition = "int")
+    private int totalStudent;
+
+    @Column(name = "participant_student", columnDefinition = "int")
+    private int participantStudent;
 }

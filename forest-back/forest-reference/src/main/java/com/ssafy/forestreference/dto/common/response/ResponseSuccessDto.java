@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructorstudy
 public class ResponseSuccessDto<T> extends ResponseCommonDto {
 
     private T data;

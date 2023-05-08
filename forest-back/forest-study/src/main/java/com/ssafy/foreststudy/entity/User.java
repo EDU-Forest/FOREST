@@ -29,10 +29,10 @@ public class User {
     @Column(name = "email", columnDefinition = "varchar(50)", nullable = false)
     private String email;
 
-    @Column(name = "name", columnDefinition = "varchar(20)")
+    @Column(name = "name", columnDefinition = "varchar(20)", nullable = false)
     private String name;
 
-    @Column(name = "password", columnDefinition = "varchar(60)")
+    @Column(name = "password", columnDefinition = "varchar(20)")
     private String password;
 
     @Column(name = "phone", columnDefinition = "varchar(20)")
