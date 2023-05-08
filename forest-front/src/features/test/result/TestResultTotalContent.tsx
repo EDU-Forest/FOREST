@@ -12,7 +12,7 @@ interface Iprops {
 export default function TestResultTotalContent({ studyResult }: Iprops) {
   return (
     <>
-      {studyResult.isGraded && studyResult.isSubmitted ? (
+      {!studyResult.isGraded && studyResult.isSubmitted ? (
         <TestResultTotalContentBox>
           <TestResultTotalContentDetail studyResult={studyResult} />
           <img src={"/images/Test_Result_Total_Content_Arrow.png"} className="icon" />
