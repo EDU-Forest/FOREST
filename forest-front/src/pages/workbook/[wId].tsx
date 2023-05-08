@@ -18,8 +18,7 @@ import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
 export async function getServerSideProps({ params: { wId } }: { params: { wId: string } }) {
@@ -36,10 +35,7 @@ function WorkbookDetail() {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const { questions } = useSelector((state: RootState) => state.editQuestions);
 
-  const {
-    // data: { workbookInfoDto: workbook } = { workbookInfoDto: [] },
-    // data: { problemList: questions } = { problemList: [] },
-  } = useWorkbookDetailQuery(Number(wId));
+  const { isSuccess } = useWorkbookDetailQuery(Number(wId));
 
   // 현재 문제
   // 문제집 내에 문제가 없는 경우에는 첫 문제를 세팅
@@ -74,8 +70,9 @@ function WorkbookDetail() {
     setQuestionSummary(getQuestionSummary);
 
     // questions가 초기화된 후에 curQuestion 지정
-    // questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
-    if (curQuestion === 0 && questions.length !== 0) {
+    // 1) questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
+    // 2) 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, questions 응답이 성공했을 때만 수행
+    if (curQuestion === 0 && questions.length !== 0 && isSuccess) {
       setCurQuestion(questions[0].problemId);
     }
   }, [questions]);

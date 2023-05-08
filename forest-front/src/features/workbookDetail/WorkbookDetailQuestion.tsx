@@ -1,19 +1,17 @@
 import { StyledTextBtn } from "@/components/Button/Btn.style";
 import QuestionChoiceList from "@/components/Question/QuestionChoiceList";
+import { RootState } from "@/stores/store";
+import { setIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import { QuestionSummType, QuestionType } from "@/types/Workbook";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   StyledQuestionDetailNumBox,
   StyledQuestionDetailTextBox,
   StyledQuestionDetailTitleBox,
   StyledWorkbookDetailQuestionBox,
 } from "./WorkbookDetail.style";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import { setIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
-import { useRouter } from "next/router";
-import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 
 interface IProps {
   question: QuestionType;
@@ -34,9 +32,9 @@ function WorkbookDetailQuestion({
   const router = useRouter();
 
   const [curQuestionNum, setCurQuestionNum] = useState(1);
-  const {
-    workbook: { isDeploy } = {workbook: {isDeploy: false}}
-  } = useSelector((state: RootState) => state.workbookDetail);
+  const { workbook: { isDeploy } = { workbook: { isDeploy: false } } } = useSelector(
+    (state: RootState) => state.workbookDetail,
+  );
 
   const getQuestionNum = (): void => {
     for (let i = 0; i < questionSumm.length; i++) {
@@ -65,7 +63,9 @@ function WorkbookDetailQuestion({
           {/* 내가 원작자이며, 배포 되지 않아야 수정 가능 */}
           {isOriginal && !isDeploy && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
         </StyledQuestionDetailTitleBox>
-      ) : (<span>문항이 없습니다</span>)}
+      ) : (
+        <span>문항이 없습니다</span>
+      )}
 
       {/* 지문이 있다면 지문 렌더링 */}
       {question?.text && (
@@ -75,7 +75,9 @@ function WorkbookDetailQuestion({
       {question?.problemImgPath && <img src={question?.problemImgPath} alt="question" />}
 
       {/* 객관식 보기 */}
-      {question?.type === "MULTIPLE" && <QuestionChoiceList items={question?.itemList} />}
+      {question?.type === "MULTIPLE" && question.itemList && (
+        <QuestionChoiceList items={question?.itemList} />
+      )}
     </StyledWorkbookDetailQuestionBox>
   );
 }

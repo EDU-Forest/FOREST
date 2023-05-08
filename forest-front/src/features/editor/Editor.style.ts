@@ -1,3 +1,4 @@
+import { scrollBar } from './../../styles/theme';
 import { theme } from "@/styles/theme";
 import { Container } from "@/styles/container";
 import styled from "styled-components";
@@ -38,6 +39,9 @@ export const QuestionEditAreaBox = styled.div`
   background: #ffffff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
+
+  overflow: auto;
+  ${scrollBar(0.75)}
 
   /* 빈 화면 문구  */
   > span {

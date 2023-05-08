@@ -26,18 +26,27 @@ export const EditorQuestionListBox = styled(StyledWorkbookDetailQuestionListCont
 `;
 
 export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`
+  display: flex;
+
   padding: 0.5rem 1rem;
 
   background: ${({ theme, isCur }) => (isCur ? theme.colors.Lime[600] : theme.colors.Gray[100])};
   color: ${({ isCur }) => isCur && "white"};
   border-radius: 20px;
 
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; */
 
   // 문제 번호
   > span:first-child {
     font-weight: bold;
+  }
+
+  // 문제명
+  > span:nth-child(2) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
