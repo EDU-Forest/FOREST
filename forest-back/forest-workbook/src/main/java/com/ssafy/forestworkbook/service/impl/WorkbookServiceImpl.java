@@ -811,6 +811,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         String path = imgToUrl(file);
         String filePath = "gs://" + path;
 
+        log.info("{}", filePath);
+
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
