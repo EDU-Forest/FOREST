@@ -730,7 +730,7 @@ public class StudyService {
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
                         .answer(userAnswer)
-//                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
+                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
