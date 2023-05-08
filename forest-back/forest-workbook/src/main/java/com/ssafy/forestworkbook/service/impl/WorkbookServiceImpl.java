@@ -140,6 +140,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         // 클래스 선생님이 아닌 경우 조회 불가
         ClassEntity classEntity = classRepository.findById(classId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
+
+        log.info("userId : {}, classId : {}, ownerId : {}", userId, classId, classEntity.getOwner().getId());
+
         if (userId != classEntity.getOwner().getId()) {
             throw new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO);
         }
