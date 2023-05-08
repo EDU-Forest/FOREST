@@ -21,4 +21,6 @@ services:
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     ports:
       - 9010:9010
+    volume:
+      - /home/ubuntu/jenkins/env:/workbook
     restart: always
