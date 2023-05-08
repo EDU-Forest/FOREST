@@ -44,7 +44,6 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
     allowOnlyPointerType: "all",
   });
 
-  const [paths, setPaths] = useState<CanvasPath[]>([]);
   const [lastStroke, setLastStroke] = useState<{
     stroke: CanvasPath | null;
     isEraser: boolean | null;
@@ -54,7 +53,6 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
-    // setPaths(updatedPaths);
     setAllPaths(updatedPaths);
   };
 

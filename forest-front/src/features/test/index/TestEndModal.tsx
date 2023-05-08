@@ -8,12 +8,15 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useEndStudy from "@/apis/study/useEndStudyQuery";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
+import { CanvasPath } from "react-sketch-canvas";
+import useCanvasPost from "@/apis/canvas/useCanvasPost";
 
 interface Iprops {
+  allPaths: CanvasPath[];
   setToggleModal: (toggled: boolean) => void;
 }
 
-export default function TestEndModal({ setToggleModal }: Iprops) {
+export default function TestEndModal({ allPaths, setToggleModal }: Iprops) {
   const router = useRouter();
   const studyId = router.query.studyId;
 
@@ -22,6 +25,7 @@ export default function TestEndModal({ setToggleModal }: Iprops) {
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
   const { studentStudyProblemId, userAnswer, type } = problem[curProblemNum - 1];
   const [remainProblem, setRemainProblem] = useState(0);
+  const canvasMutate = useCanvasPost().mutate;
 
   useEffect(() => {
     setRemainProblem(
@@ -42,6 +46,13 @@ export default function TestEndModal({ setToggleModal }: Iprops) {
       userAnswer,
       type,
     };
+
+    const canvasPayload = {
+      studentStudyProblemId: studentStudyProblemId,
+      line: allPaths,
+    };
+    console.log("canvasPayload", canvasPayload);
+    canvasMutate(canvasPayload);
 
     saveAnswer(payload);
     endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);

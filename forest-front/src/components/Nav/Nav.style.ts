@@ -44,6 +44,11 @@ const NavInner = styled.div<{ selected: boolean }>`
     margin: 1.25rem 1.75rem 1.25rem 2rem;
   }
 
+  &:hover {
+    color: ${({ theme }) => theme.colors.Gray[600]};
+    background-color: ${({ theme }) => theme.colors.Gray[100]};
+  }
+
   @media ${({ theme }) => theme.tablet} {
     ${flexBox("column", "center", "center")}
     width: 5rem;
@@ -59,9 +64,14 @@ const NavInner = styled.div<{ selected: boolean }>`
     selected &&
     css`
       font-weight: 700;
-      color: ${({ theme }) => theme.colors.Lime[900]};
+      color: ${({ theme }) => theme.colors.Lime[800]};
       background-color: ${({ theme }) => theme.colors.Lime[50]};
-      border-left: 0.1875rem solid ${({ theme }) => theme.colors.Lime[900]};
+      border-left: 0.1875rem solid ${({ theme }) => theme.colors.Lime[800]};
+
+      &:hover {
+        color: ${({ theme }) => theme.colors.Lime[900]};
+        background-color: ${({ theme }) => theme.colors.Lime[100]};
+      }
     `}
 `;
 
@@ -141,7 +151,7 @@ const EditorNavDivInner = styled.div`
 const LogoutParagraph = styled.p`
   position: absolute;
   top: 95%;
-  left: 50%;
+  right: 5%;
   transform: translate(-50%, -50%);
 
   color: ${({ theme }) => theme.colors.Gray[500]};
@@ -149,9 +159,17 @@ const LogoutParagraph = styled.p`
 
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 
-  @media (max-width: 768px) {
+  &:hover {
+    color: ${({ theme }) => theme.colors.Gray[600]};
+  }
+
+  @media (max-width: 1440px) {
+    text-align: center;
+    width: 80%;
     left: 50%;
+    font-size: 0.75rem;
   }
 `;
 
