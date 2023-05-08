@@ -59,19 +59,19 @@ export default function DescriptiveForm() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          {data.status === "STUDY_END" && (
+          {data?.status === "STUDY_END" && (
             <NoDescription>
               <img src="/images/Banner_Teacher.png" />
               <span>채점이 완료되었습니다.</span>
             </NoDescription>
           )}
-          {data.status === "STUDY_NONE_RESULT_DESCRIPT_LIST" && (
+          {data?.status === "STUDY_NONE_RESULT_DESCRIPT_LIST" && (
             <NoDescription>
               <img src="/images/Banner_Teacher.png" />
               <span>서술형 문제가 없습니다.</span>
             </NoDescription>
           )}
-          {data.status === "STUDY_SUCCESS_RESULT_DESCRIPT_LIST" && (
+          {data?.status === "STUDY_SUCCESS_RESULT_DESCRIPT_LIST" && (
             <>
               <DescriptiveFormBtn>
                 <span>1 / {data?.data.count}</span>
