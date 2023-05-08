@@ -13,7 +13,7 @@ const useWorkbookListQuery = (type: string) => {
   return useQuery([queryKeys.GET_WORKBOOK_LIST], () => fetcher(type), {
     refetchOnWindowFocus: false,
     // onSuccess: (data) => {
-    //   console.log(data);
+    //   console.log("이고얌", data);
     // },
   });
   // return useInfiniteQuery(

@@ -9,7 +9,10 @@ const fetcher = (type: string) =>
         search: type,
       },
     })
-    .then(({ data }) => data.data);
+    .then(({ data }) => {
+      const popularList = data.data.workbookList as SearchWorkbook[];
+      return popularList;
+    });
 
 // 탐색 페이지 최고 인기 문제집 - OK
 const usePopularWorkbookListQuery = (type: string) => {

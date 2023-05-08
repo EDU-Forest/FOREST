@@ -54,7 +54,8 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
-    setPaths(updatedPaths);
+    // setPaths(updatedPaths);
+    setAllPaths(updatedPaths);
   };
 
   const penHandler = () => {
@@ -100,7 +101,6 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   const ControlCanvas = () => {
     // 캔버스 닫기
     setIsOpenCanvas(!isOpenCanvas);
-    setAllPaths(paths);
   };
 
   useEffect(() => {
