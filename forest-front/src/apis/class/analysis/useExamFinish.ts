@@ -10,6 +10,7 @@ const useExamFinish = () => {
     onSuccess: (data) => {
       console.log("시험 종료됨~");
       queryClient.invalidateQueries(queryKeys.DESCRIPTION);
+      queryClient.invalidateQueries(queryKeys.STUDY_RESULT);
     },
   });
 };
