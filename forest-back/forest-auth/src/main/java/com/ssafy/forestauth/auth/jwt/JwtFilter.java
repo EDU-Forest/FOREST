@@ -87,7 +87,8 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         } catch(Exception e) {
             log.info("JWT 값이 : {}", jwt);
-            request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
+//            request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
+            errorResponseMethod(response, ErrorCode.AUTH_WRONG_TOKEN);
         }
 
         filterChain.doFilter(request, response);
