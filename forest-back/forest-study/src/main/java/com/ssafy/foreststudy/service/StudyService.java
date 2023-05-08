@@ -72,14 +72,16 @@ public class StudyService {
         LocalDateTime startTime = cs.getStudy().getStartTime();
         LocalDateTime endTime = cs.getStudy().getEndTime();
         String schedule = null;
-        if (now.isBefore(startTime)) {
-            schedule = "BEFORE";
-        } else if (now.isAfter(endTime)) {
-            schedule = "AFTER";
-        } else {
+        if (startTime == null || endTime == null)
             schedule = "ONGOING";
+        else {
+            if (now.isBefore(startTime))
+                schedule = "BEFORE";
+            else if (now.isAfter(endTime))
+                schedule = "AFTER";
+            else
+                schedule = "ONGOING";
         }
-
         return schedule;
     }
 
