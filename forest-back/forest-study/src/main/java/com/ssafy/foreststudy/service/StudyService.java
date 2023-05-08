@@ -900,7 +900,7 @@ public class StudyService {
 
         List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudy(study);
         for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
-            if (studentStudyProblemResult.getIsGraded())
+            if (!studentStudyProblemResult.getIsGraded())
                 ungradedAnswerRate++;
         }
         ungradedAnswerRate = ungradedAnswerRate * 100 / ssp.size();
@@ -922,7 +922,6 @@ public class StudyService {
     /* 자카드 유사도 계산 로직 */
     public int getJaccardSimilarity(String s1, String s2) {
         // WebClient로 Flask 통신
-        disableSslVerification();
 
         WebClient webClient = WebClient.builder()
                 .baseUrl("https://k8b105.p.ssafy.io:5000")
@@ -1025,41 +1024,4 @@ public class StudyService {
         return res;
     }
 
-    // ssl security Exception 방지
-    public void disableSslVerification(){
-        // TODO Auto-generated method stub
-        try
-        {
-            // Create a trust manager that does not validate certificate chains
-            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return null;
-                }
-                public void checkClientTrusted(X509Certificate[] certs, String authType){
-                }
-                public void checkServerTrusted(X509Certificate[] certs, String authType){
-                }
-            }
-            };
-
-            // Install the all-trusting trust manager
-            SSLContext sc = SSLContext.getInstance("SSL");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
-            // Create all-trusting host name verifier
-            HostnameVerifier allHostsValid = new HostnameVerifier() {
-                public boolean verify(String hostname, SSLSession session){
-                    return true;
-                }
-            };
-
-            // Install the all-trusting host verifier
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        }
-    }
 }
