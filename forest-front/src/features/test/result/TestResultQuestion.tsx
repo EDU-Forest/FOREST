@@ -1,11 +1,15 @@
 import TestResultContent from "./TestResultContent";
 import { TestResultQuestionBox, TestResultTitleBox } from "./TextResult.style";
 
-export default function TestResultQuestion() {
+interface Iprops {
+  studyResult: IStudyResult;
+}
+
+export default function TestResultQuestion({ studyResult }: Iprops) {
   return (
     <TestResultQuestionBox>
       <TestResultTitleBox>문항별 정답 여부</TestResultTitleBox>
-      <TestResultContent />
+      <TestResultContent studyResult={studyResult} />
     </TestResultQuestionBox>
   );
 }

@@ -28,6 +28,7 @@ interface IStudyResult {
   solvingTime: number;
   correctRate: number;
   isGraded: boolean;
+  isSubmitted: boolean;
   volume: number;
   startTime: Date;
   endTime: Date;
