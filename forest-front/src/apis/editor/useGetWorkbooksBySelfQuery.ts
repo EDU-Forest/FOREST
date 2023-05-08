@@ -7,6 +7,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { resetIsMoveToEditor, setIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 
+interface Iprops {
+  workbookId: number;
+  title: string;
+  isDeploy: boolean;
+  isExecute: boolean;
+}
+
 const fetcher = () =>
   workbookAxios.get("/api/workbook/editor").then(({ data }) => {
     return data;
@@ -19,13 +26,16 @@ const useGetWorkbooksBySelf = () => {
   return useQuery(queryKeys.WORKBOOKS_BY_SELF, () => fetcher(), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      dispatch(setWorkbookBySelf(data?.data?.workbookList));
+      const workbookList = data?.data?.workbookList.filter(
+        (item: Iprops) => !item.isDeploy && !item.isExecute,
+      );
+      dispatch(setWorkbookBySelf(workbookList));
 
       if (!isMoveToEditor) {
         dispatch(
           setSelectWorkbook({
-            workbookId: data?.data?.workbookList[0].workbookId,
-            title: data?.data?.workbookList[0].title,
+            workbookId: workbookList[0].workbookId,
+            title: workbookList[0].title,
           }),
         );
       }
