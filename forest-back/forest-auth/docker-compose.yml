@@ -21,6 +21,6 @@ services:
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
     ports:
       - 9010:9010
-    volume:
+    volumes:
       - /home/ubuntu/jenkins/env:/auth
     restart: always
