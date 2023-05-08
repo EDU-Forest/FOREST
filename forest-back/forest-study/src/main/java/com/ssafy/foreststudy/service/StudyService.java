@@ -167,18 +167,16 @@ public class StudyService {
 
             String schedule = null;
             if (startTime == null || endTime == null)
-                schedule = "ONGOING";
-            else {
-                if (now.isBefore(startTime))
-                    schedule = "BEFORE";
-                else if (now.isAfter(endTime)) {
-                    if (ChronoUnit.DAYS.between(endTime, now) > 3)
-                        continue;
-                    schedule = "AFTER";
-                } else
-                    schedule = "ONGOING";
+                continue;
 
-            }
+            if (now.isBefore(startTime))
+                schedule = "BEFORE";
+            else if (now.isAfter(endTime)) {
+                if (ChronoUnit.DAYS.between(endTime, now) > 3)
+                    continue;
+                schedule = "AFTER";
+            } else
+                schedule = "ONGOING";
 
             GetScheduleResponseDto getScheduleResponseDto = GetScheduleResponseDto.builder()
                     .studyId(study.getId())
@@ -191,6 +189,8 @@ public class StudyService {
                     .build();
             result.get("studyList").add(getScheduleResponseDto);
         }
+
+
 
         /* scheduleType 기준으로 ONGOING/BEFORE/AFTER 정렬 */
         Collections.sort(result.get("studyList"),
