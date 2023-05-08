@@ -733,6 +733,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         Item createItem = Item.builder()
                                 .problem(problem)
                                 .no(itemContentDto.getItemNo())
+                                .content(itemContentDto.getContent())
                                 .isImage(itemContentDto.getIsImage())
                                 .build();
                         itemRepository.save(createItem);
