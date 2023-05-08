@@ -24,9 +24,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.*;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -863,16 +860,20 @@ public class StudyService {
         /* 반 문항별 정답률 테이블 수정 (생성은 출제 시) */
         for (ProblemList list : problemList) {
             int correctNum = 0;
+            int ungradeNum = 0;
             List<StudentStudyProblemResult> studentStudyProblemResult = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
             for (StudentStudyProblemResult studyProblemResult : studentStudyProblemResult) {
                 if (studyProblemResult.getIsCorrected())
                     correctNum++;
+                if (!studyProblemResult.getIsGraded())
+                    ungradeNum++;
             }
             int correctRate = correctNum * 100 / studentStudyProblemResult.size();
+            int ungradeRate = ungradeNum * 100 / studentStudyProblemResult.size();
             /* 반 문항별 정답율 업데이트 */
             ClassAnswerRate classAnswerRate = classAnswerRateRepository.findAllByStudyAndProblemList(study, list)
                     .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_ANSWER_NOT_FOUND));
-            classAnswerRate.updateClassAnswerRateAll(study, list, correctRate, 100 - correctRate);
+            classAnswerRate.updateClassAnswerRateAll(study, list, correctRate, ungradeRate);
 
             if (list.getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
                 descriptNum++;
@@ -1038,5 +1039,4 @@ public class StudyService {
         ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION_USER);
         return res;
     }
-
 }
