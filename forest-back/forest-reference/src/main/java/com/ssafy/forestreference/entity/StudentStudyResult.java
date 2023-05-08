@@ -45,9 +45,6 @@ public class StudentStudyResult {
     @Column(name = "correct_rate", columnDefinition = "int default 0", nullable = false)
     private int correctRate;
 
-    @Column(name = "is_graded", columnDefinition = "tinyint(1) default 0", nullable = false)
-    private Boolean isGraded = false;
-
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 }

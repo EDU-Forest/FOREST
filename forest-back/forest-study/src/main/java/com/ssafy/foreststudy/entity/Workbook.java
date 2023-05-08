@@ -49,9 +49,6 @@ public class Workbook {
     @Column(name = "is_public", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isPublic = false;
 
-    @Column(name = "is_deploy", columnDefinition = "tinyint(1) default 0", nullable = false)
-    private Boolean isDeploy = false;
-
     @CreatedDate
     @Column(name = "created_date", updatable = false, nullable = false)
     private LocalDateTime createdDate;

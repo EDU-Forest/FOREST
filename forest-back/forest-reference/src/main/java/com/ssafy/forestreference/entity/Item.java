@@ -31,8 +31,8 @@ public class Item {
     @Column(name = "content", columnDefinition = "varchar(200)")
     private String content;
 
-    @Column(name = "is_image", columnDefinition = "tinyint(1) default 0", nullable = false)
-    private Boolean isImage = false;
+    @Column(name = "path", columnDefinition = "varchar(255)")
+    private String path;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;

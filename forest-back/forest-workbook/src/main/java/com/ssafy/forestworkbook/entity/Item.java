@@ -2,10 +2,8 @@ package com.ssafy.forestworkbook.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -15,7 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "items")
 @Where(clause = "is_deleted = false")
-@SQLDelete(sql = "UPDATE items SET is_deleted = true WHERE id = ?")
 public class Item {
 
     @Id
@@ -39,23 +36,4 @@ public class Item {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
-
-    @Builder
-    public Item(Problem problem, int no, String content, Boolean isImage) {
-        this.problem = problem;
-        this.no = no;
-        this.content = content;
-        this.isImage = isImage;
-    }
-
-    public void updateItem(int no, String content, Boolean isImage) {
-        this.no = no;
-        this.content = content;
-        this.isImage = isImage;
-    }
-
-    public void deleteById(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
 }
