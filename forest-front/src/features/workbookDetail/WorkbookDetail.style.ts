@@ -1,10 +1,11 @@
 import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
 import { WorkbookImg } from "@/components/Workbook/Workbook.style";
 import { ModalBox } from "@/styles/modal";
+import { scrollBar } from "@/styles/theme";
 import styled, { keyframes } from "styled-components";
 
 export const StyledWorkbookDetailBox = styled.div`
-  min-height: 100vh;
+  height: 100vh;
 
   display: flex;
 
@@ -12,6 +13,8 @@ export const StyledWorkbookDetailBox = styled.div`
   gap: 24px;
 
   background-color: ${({ theme }) => theme.colors.Gray[50]};
+
+  overflow: hidden;
 `;
 
 export const WorkbookDetailSideReturnBtnBox = styled.button`
@@ -125,6 +128,8 @@ export const StyledWorkbookDetailQuestionListBox = styled.div`
   background: ${({ theme }) => theme.colors.Gray[100]};
   border: 0.0625rem solid ${({ theme }) => theme.colors.Gray[500]};
   border-radius: 1.5rem;
+
+  overflow: hidden;
 `;
 
 export const WorkbookDetailQuestionOverviewAndContentBox = styled.div`
@@ -201,6 +206,9 @@ export const StyledWorkbookDetailQuestionListContentBox = styled.div`
   background: #ffffff;
   border-radius: 0.5rem;
 
+  overflow: auto;
+  ${scrollBar(0.75)};
+
   p {
     font-weight: bold;
   }
@@ -218,6 +226,9 @@ export const StyledWorkbookQuestionMoveBarListBox = styled.div`
   flex-direction: column;
 
   gap: 1rem;
+
+  overflow: auto;
+  ${scrollBar(0.75)};
 `;
 
 export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>`
@@ -293,6 +304,9 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   background: #ffffff;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
+
+  overflow: auto;
+  ${scrollBar(0.75)};
 
   img {
     width: 5rem;

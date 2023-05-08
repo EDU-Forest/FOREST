@@ -1,5 +1,4 @@
 import { CommonInput } from "@/components/Input/Input.style";
-import { theme } from "./../../styles/theme";
 import { ModalBox } from "@/styles/modal";
 import styled from "styled-components";
 
