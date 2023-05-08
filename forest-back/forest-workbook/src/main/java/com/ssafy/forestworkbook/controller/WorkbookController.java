@@ -178,10 +178,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
-//        Long userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("userID : {}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
@@ -190,9 +190,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createProblemImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(1);
         return workbookService.createProblemImg(userId, file);
     }
 
