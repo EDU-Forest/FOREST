@@ -23,6 +23,7 @@ import Canvas from "@/features/canvas/Canvas";
 import { useState } from "react";
 import { CanvasPath } from "react-sketch-canvas";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
+import TestProblemImg from "./TestProblemImg";
 
 interface Iprops {
   minutes: number;
@@ -85,7 +86,7 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />
-          {/* {problemImgPath ? <img src={problemImgPath} /> */}
+          {problemImgPath && <TestProblemImg problemImgPath={problemImgPath} />}
           {text && <TestProblemText />}
           {type === "MULTIPLE" && (
             <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
