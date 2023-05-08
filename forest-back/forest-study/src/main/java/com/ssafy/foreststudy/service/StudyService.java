@@ -328,6 +328,7 @@ public class StudyService {
 
         for (StudentStudyResult studentStudyResult : ssr) {
             GetStudyResultStudentResponseDto getStudyResultQuestionResponseDtoList = GetStudyResultStudentResponseDto.builder()
+                    .studentStudyResultId(studentStudyResult.getId())
                     .name(studentStudyResult.getUser().getName())
                     .email(studentStudyResult.getUser().getEmail())
                     .enterTime(studentStudyResult.getEnterTime())
