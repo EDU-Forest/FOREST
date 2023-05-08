@@ -27,13 +27,13 @@ const moveToLeft = keyframes`
 }
 
 100% {
-  left: 7px;
+  left: 10px;
 }
 `;
 
 const moveToRight = keyframes`
 0% {
-  left: 7px;
+  left: 10px;
 }
 
 100% {
@@ -79,14 +79,14 @@ const CanvasBarWrapper = styled.div<{
 
   .img-div {
     position: absolute;
-    left: 7px;
+    left: 10px;
     animation: ${moveToLeft} 0.5s 1;
     /* background-color: ${({ theme }) => theme.colors.Lime[100]};
     padding: 0 4px;
     border-radius: 16px; */
 
     .logo {
-      width: 36px;
+      width: 30px;
     }
 
     &:hover {
