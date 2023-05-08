@@ -454,9 +454,13 @@ public class StudyService {
                 return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_ONGOING);
 
         } else {
-            GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
-
-            return responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO_AFTER);
+            Optional<StudentStudyResult> studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user);
+            if (studentStudyResult.isEmpty())
+                return responseUtil.successResponse(getStudyBeforeAndOngoingResponseDto, SuccessCode.STUDY_NOT_PARTICIPATE);
+            else {
+                GetStudentRecentResponseDto result = GetStudentStudyResult(user, cs, schedule);
+                return responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO_AFTER);
+            }
         }
     }
 
