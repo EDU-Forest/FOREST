@@ -85,7 +85,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
-        // 출제한 문제집
+        // TODO 출제한 문제집
         else if (search.equals("use")) {
             studyRepository.findAllByUserId(userId);
 //            Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
@@ -733,8 +733,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                         Item createItem = Item.builder()
                                 .problem(problem)
                                 .no(itemContentDto.getItemNo())
+                                .content(itemContentDto.getContent())
                                 .isImage(itemContentDto.getIsImage())
                                 .build();
+                        itemRepository.save(createItem);
                     }
 
                     // item 있는 경우 -> 수정
@@ -829,12 +831,30 @@ public class WorkbookServiceImpl implements WorkbookService {
         requests.add(request);
 
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-            System.out.println("nnnnnnnnn");
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+            ArrayList<Object> originList = new ArrayList<>();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    throw new IllegalArgumentException("실패");
+                }
+
+                // 사용가능한 annotations 전체 목록 참고 : http://g.co/cloud/vision/docs
+                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+                    // 데이터를 배열에 add
+                    originList.add(annotation.getDescription());
+                }
+            }
+            // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
+            String[] txt = originList.get(0).toString().split("\\n");
+            System.out.println(txt.toString());
         } catch (IOException e) {
             log.info("안됨ㅋ");
+            e.printStackTrace();
         }
         return "떳나";
-
     }
 
     @Override
