@@ -10,13 +10,16 @@ import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import com.ssafy.foreststudy.errorhandling.exception.StudyErrorCode;
 import com.ssafy.foreststudy.repository.*;
 import com.ssafy.foreststudy.util.ResponseUtil;
+import io.netty.handler.ssl.SslContextBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.*;
 import java.security.KeyManagementException;
@@ -924,6 +927,9 @@ public class StudyService {
         // WebClient로 Flask 통신
 
         WebClient webClient = WebClient.builder()
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create()
+                                .secure(spec -> spec.sslContext(SslContextBuilder.forClient()))))
                 .baseUrl("https://k8b105.p.ssafy.io:5000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
