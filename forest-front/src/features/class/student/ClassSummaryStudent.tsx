@@ -69,11 +69,18 @@ export default function ClassSummaryStudent() {
                   </ClassSummaryText>
                 )}
               </ClassSummaryTextWrapper>
-              {data?.status === "STUDY_NOT_YET" ? (
-                <ClassSummaryDeadline>{arrangeDate(data?.data.startTime)} ~ </ClassSummaryDeadline>
-              ) : (
-                <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>
+              {data?.data.studyType !== "SELF" && (
+                <>
+                  {data?.status === "STUDY_NOT_YET" ? (
+                    <ClassSummaryDeadline>
+                      {arrangeDate(data?.data.startTime)} ~{" "}
+                    </ClassSummaryDeadline>
+                  ) : (
+                    <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>
+                  )}
+                </>
               )}
+
               {data?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
                 <ClassSummaryItemWrapper>
                   <ClassScoreChart
