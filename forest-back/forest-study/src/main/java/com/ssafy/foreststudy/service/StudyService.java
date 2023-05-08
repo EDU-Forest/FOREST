@@ -987,4 +987,60 @@ public class StudyService {
         ResponseSuccessDto<GetStudyInfoResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO);
         return res;
     }
+
+    /* (선생님) 학생 성적 상세 조회 - 시험 결과 */
+    public ResponseSuccessDto<GetStudentResultResponseDto> getStudentDetailResult(Long studentStudyResultId, Long userId) {
+
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
+
+        StudentStudyResult cs = studentStudyResultRepository.findAllById(studentStudyResultId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        Duration duration = Duration.between(cs.getEnterTime(), cs.getExitTime());
+
+        GetStudentResultResponseDto result = GetStudentResultResponseDto.builder()
+                .score(cs.getScore())
+                .correctNum(cs.getCorrectNum())
+                .solvingTime(duration.getSeconds() / 60) // 소요 풀이 시간 분 단위로 보냄
+                .correctRate(cs.getCorrectRate())
+                .isGraded(cs.getIsGraded())
+                .volume(cs.getStudy().getWorkbook().getVolume())
+                .startTime(cs.getStudy().getStartTime())
+                .endTime(cs.getStudy().getEndTime())
+                .isSubmitted(cs.getIsSubmitted())
+                .build();
+
+        ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_USER);
+        return res;
+
+    }
+
+    /* (선생님) 학생 성적 상세 조회 - 문항별 정답률 */
+    public ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> getStudentDetailQuestion(Long studentStudyResultId, Long userId) {
+
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
+
+        StudentStudyResult cs = studentStudyResultRepository.findAllById(studentStudyResultId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_NOT_FOUND));
+
+        List<StudentStudyProblemResult> ssr = studentStudyProblemResultRepository.findAllByStudyAndUser(cs.getStudy(), cs.getUser());
+        Map<String, List<GetStudentResultQuestionResponseDto>> result = new HashMap<>();
+        result.put("studentStudyProblemResultList", new ArrayList<>());
+
+        for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
+            GetStudentResultQuestionResponseDto getStudyResultQuestionResponseDtoList = GetStudentResultQuestionResponseDto.builder()
+                    .problemNum(studentStudyProblemResult.getProblemList().getProblemNum())
+                    .isCorrected(studentStudyProblemResult.getIsCorrected())
+                    .build();
+
+            result.get("studentStudyProblemResultList").add(getStudyResultQuestionResponseDtoList);
+        }
+
+        ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION_USER);
+        return res;
+    }
 }

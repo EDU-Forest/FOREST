@@ -14,4 +14,5 @@ public interface StudentStudyResultRepository extends JpaRepository<StudentStudy
     @Query("select ssr from StudentStudyResult ssr where ssr.study = :study  order by ssr.user.name asc ")
     List<StudentStudyResult> findAllByStudy(Study study);
     Optional<StudentStudyResult> findAllByStudyAndUser(Study study, User user);
+    Optional<StudentStudyResult> findAllById(Long id);
 }
