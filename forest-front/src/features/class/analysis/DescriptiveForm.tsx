@@ -18,9 +18,10 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 export default function DescriptiveForm() {
   const { nowStudyId, studentPointList } = useSelector((state: RootState) => state.class);
   const [nowIdx, setNowIdx] = useState<number>(0);
-  const scoringMutate = useDescriptionScoring().mutate;
+  const { data: scoringData, mutate: scoringMutate } = useDescriptionScoring();
   const finishMutate = useExamFinish().mutate;
   const { data, isLoading } = useDescriptionQuery(nowStudyId);
+  console.log("scoringData", scoringData);
 
   const handleClick = () => {
     const newStudentPointList = [];
@@ -47,11 +48,13 @@ export default function DescriptiveForm() {
       studentPointList: newStudentPointList, // 얘가 문제....
     };
     scoringMutate(payload);
+  };
 
-    if (isLast) {
+  useEffect(() => {
+    if (scoringData?.status === "STUDY_SAVE_DESCRIPT") {
       finishMutate(nowStudyId);
     }
-  };
+  }, [scoringData]);
 
   return (
     <DescriptiveFormWrapper>
