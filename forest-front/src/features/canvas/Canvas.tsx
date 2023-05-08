@@ -48,7 +48,6 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
     stroke: CanvasPath | null;
     isEraser: boolean | null;
   }>({ stroke: null, isEraser: null });
-  const [pathsToLoad, setPathsToLoad] = useState<string>("");
 
   const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
@@ -102,13 +101,14 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   };
 
   useEffect(() => {
-    canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
+    if ((allPaths?.length as number) > 0) {
+      canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
+      return;
+    }
+    if (storedData) {
+      canvasRef.current?.loadPaths(storedData);
+    }
   }, [isOpenCanvas]);
-
-  // API GET한 기록 그리기
-  // useEffect(() => {
-  //   canvasRef.current?.loadPaths(storedData);
-  // }, [isOpenCanvas]);
 
   return (
     <>

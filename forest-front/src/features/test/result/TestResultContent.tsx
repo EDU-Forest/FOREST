@@ -24,7 +24,7 @@ export default function TestResultContent({ studyResult }: Iprops) {
 
   return (
     <TestResultContentBox>
-      {studyResult.isGraded && studyResult.isSubmitted ? (
+      {studyResult.isSubmitted ? (
         problem.map((data, idx) => (
           <TestResultQuestionBtn
             key={`question-${idx}`}

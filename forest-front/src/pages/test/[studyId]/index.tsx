@@ -21,7 +21,7 @@ function Test() {
   const [minutes, setMinutes] = useState(dateToMinute(new Date(), endTime));
   const [seconds, setSeconds] = useState(dateToSecond(new Date(), endTime) % 60);
   const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
-  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
+  const { data } = useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -68,7 +68,7 @@ function Test() {
         seconds={seconds}
         setToggleModal={setToggleModal}
       />
-      {minutes <= 0 && seconds <= 0 ? (
+      {data?.isSubmitted ? (
         <TestEnd allPaths={allPaths} />
       ) : (
         <TestContent
@@ -78,6 +78,7 @@ function Test() {
           setToggleModal={setToggleModal}
           allPaths={allPaths}
           setAllPaths={setAllPaths}
+          isSubmitted={data?.isSubmitted}
         />
       )}
     </StyledTestContainer>
