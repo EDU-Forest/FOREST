@@ -169,6 +169,6 @@ public class StudyController {
     public ResponseEntity<ResponseSuccessDto<GetStudyInfoResponseDto>> getStudyInfo(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        return ResponseEntity.ok(studyService.getStudyInfo(studyId));
+        return ResponseEntity.ok(studyService.getStudyInfo(studyId,userId));
     }
 }
