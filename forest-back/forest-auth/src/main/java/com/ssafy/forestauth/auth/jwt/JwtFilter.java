@@ -39,7 +39,8 @@ public class JwtFilter extends OncePerRequestFilter {
             "/api/user/login",
             "/api/oauth2/authorization/kakao",
             "/api/msg",
-            "/api/class/search"
+            "/api/class/search",
+            "/api/swagger-ui.html"
     );
 
     @Override
