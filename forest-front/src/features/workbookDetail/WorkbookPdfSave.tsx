@@ -1,7 +1,9 @@
-import { QuestionType, WorkbookType } from "@/types/Workbook";
+import QuestionChoiceList from "@/components/Question/QuestionChoiceList";
+import { RootState } from "@/stores/store";
 import html2canvas from "html2canvas";
 import jspdf from "jspdf";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   StyledQuestionDetailNumBox,
   StyledQuestionDetailTextBox,
@@ -10,9 +12,6 @@ import {
   WorkBookPdfBoxQuestionsBox,
   WorkBookPdfHeaderBox,
 } from "./WorkbookDetail.style";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import QuestionChoiceList from "@/components/Question/QuestionChoiceList";
 
 interface IProps {
   setIsSavePdf: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +27,8 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       const ele: any = document.getElementById("workbook-pdf");
       const canvas = await html2canvas(ele);
       const imgData = canvas.toDataURL("image/png");
+
+      console.log(canvas);
 
       // pdf 크기: A4 기준으로 세팅
       const imgWidth = 210;
@@ -63,10 +64,43 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
       doc.save(`${workbook.title}`);
     };
 
-    savePdf();
+    // savePdf();
     // pdf 저장 후 현재 컴포넌트를 렌더링 제외
-    setIsSavePdf(false);
+    // setIsSavePdf(false);
   }, []);
+
+  const [img, setImg] = useState("");
+
+  function toDataURL(url: string, callback: any) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
+    };
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
+  }
+
+  toDataURL(
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/140px-Unofficial_JavaScript_logo_2.svg.png",
+    function (dataUrl: string) {
+      // console.log("RESULT:", dataUrl);
+    },
+  );
+
+  const test = (url: string): boolean => {
+    console.log("여기", url);
+
+    toDataURL(url, function (dataUrl: string) {
+      console.log("RESULT:", dataUrl);
+    });
+
+    return true;
+  };
 
   return (
     <WorkBookPdfBox id="workbook-pdf">
@@ -89,10 +123,15 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
               <StyledQuestionDetailTextBox>{question?.text}</StyledQuestionDetailTextBox>
             )}
             {/* 이미지가 있다면 이미지 렌더링 */}
-            {question?.problemImgPath && <img src={question?.problemImgPath} alt="question" />}
+            {question?.problemImgPath && test(question?.problemImgPath) && (
+              <img src={question?.problemImgPath} alt="question" />
+            )}
+            {/* {question?.problemImgPath && <img src={question?.problemImgPath} alt="question" />} */}
 
             {/* 객관식 보기 */}
-            {question?.type === "MULTIPLE" && <QuestionChoiceList items={question?.itemList} />}
+            {question?.type === "MULTIPLE" && question.itemList && (
+              <QuestionChoiceList items={question?.itemList} />
+            )}
           </div>
         ))}
       </WorkBookPdfBoxQuestionsBox>
