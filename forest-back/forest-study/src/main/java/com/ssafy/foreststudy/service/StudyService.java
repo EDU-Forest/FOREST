@@ -730,7 +730,7 @@ public class StudyService {
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
                         .answer(userAnswer)
-                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
+//                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
@@ -896,7 +896,6 @@ public class StudyService {
         double standardDeviation = Math.sqrt(dis / participateNum);
         long averageSolvingTime = solvingTime / participateNum;
         int correctAnswerRate = correctRate / participateNum;
-        int volume = study.getWorkbook().getVolume();
         int ungradedAnswerRate = 0;
 
         List<StudentStudyProblemResult> ssp = studentStudyProblemResultRepository.findAllByStudy(study);
@@ -930,8 +929,6 @@ public class StudyService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
-        //System.out.println("s1 = " + s1);
-        //System.out.println("s2 = " + s2);
         GetJaccardSimilarityResponseDto similarity = webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/similarity")
                         .queryParam("sentence1", s1)
