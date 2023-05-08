@@ -120,6 +120,8 @@ const TestResultOkBtn = styled(StyledTestCommonBtn)`
 const TestResultContentBox = styled.div`
   margin: 3.75rem 6rem;
   width: 30rem;
+  height: 6rem;
+  position: relative;
 `;
 
 const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
