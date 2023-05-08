@@ -1,12 +1,12 @@
+import useWorkbookDetailSetPost from "@/apis/workbookDetail/useWorkbookDetailSetPost";
+import SmallBtn from "@/components/Button/SmallBtn";
+import { RootState } from "@/stores/store";
 import { ModalBtnsBox } from "@/styles/modal";
-import { WorkbookSettingModalBox, WorkbookSettingTitleInput } from "./WorkbookModal.style";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { WorkbookSettingModalBox, WorkbookSettingTitleInput } from "./WorkbookModal.style";
 import WorkbookSettingModalInputs from "./WorkbookSettingModalInputs";
 import WorkbookSettingModalTypeSelect from "./WorkbookSettingModalTypeSelect";
-import SmallBtn from "@/components/Button/SmallBtn";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import useWorkbookDetailSetPost from "@/apis/workbookDetail/useWorkbookDetailSetPost";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,6 +21,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
   const [startDay, setStartDay] = useState<string>();
   const [endTime, setEndTime] = useState<string>();
   const [endDay, setEndDay] = useState<string>();
+  const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
@@ -52,11 +53,33 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
       classIdList,
       type: type,
       name: settingTitle,
-      startTime: startDay && startTime && `${startDay}T${startTime}`,
-      endTime: endDay && endTime && `${endDay}T${endTime}`,
+      startTime: type === "exam" ? startDay && startTime && `${startDay}T${startTime}` : null,
+      endTime: type !== "self" ? endDay && endTime && `${endDay}T${endTime}` : null,
     };
 
     setWorkbookApi(data);
+  };
+
+  const dateValidTest = () => {
+    const today = new Date();
+    const start = new Date(`${startDay}T${startTime}`);
+    const end = new Date(`${endDay}T${endTime}`);
+
+    const isAfterToday = (day: Date) => {
+      return today < day;
+    };
+
+    switch (type) {
+      case "self":
+        setIsDateValidConfirm(true);
+        break;
+      case "homework":
+        setIsDateValidConfirm(endDay && endTime && isAfterToday(end) ? true : false);
+        break;
+      case "exam":
+        setIsDateValidConfirm(isAfterToday(start) && isAfterToday(end) && start < end);
+        break;
+    }
   };
 
   useEffect(() => {
@@ -64,6 +87,10 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
       setIsOpen(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    dateValidTest();
+  }, [startDay, startTime, endDay, endTime, type]);
 
   return (
     <WorkbookSettingModalBox>
@@ -87,7 +114,11 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
       />
       <ModalBtnsBox>
         <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
-        <SmallBtn onClick={handleClickSet} colored={true}>
+        <SmallBtn
+          onClick={() => isDateValidConfirm && handleClickSet()}
+          colored={true}
+          disabled={!isDateValidConfirm}
+        >
           출제
         </SmallBtn>
       </ModalBtnsBox>
