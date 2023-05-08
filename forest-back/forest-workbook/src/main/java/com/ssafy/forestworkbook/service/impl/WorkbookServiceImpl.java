@@ -26,10 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -798,28 +795,22 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
-        String ext = file.getContentType(); // 파일의 형식 ex) JPG
-
-        // Cloud에 이미지 업로드
-        BlobInfo blobInfo = storage.create(
-                BlobInfo.newBuilder(bucketName, uuid)
-                        .setContentType(ext)
-                        .build(),
-                file.getInputStream()
-        );
+        String path = imgToUrl(file);
 
         ImagePathDto imagePathDto = ImagePathDto.builder()
-                .path("https://storage.googleapis.com/" + bucketName + "/" + uuid)
+                .path("https://storage.googleapis.com/" + file)
                 .build();
 
-        log.info("{}", testing("gs://" + bucketName + "/" + uuid));
-
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
-//        return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
-    public String testing(String filePath) {
+    public String ocrImg(Long userId, MultipartFile file) throws IOException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        String path = imgToUrl(file);
+        String filePath = "gs://" + path;
+
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
         ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
@@ -848,12 +839,12 @@ public class WorkbookServiceImpl implements WorkbookService {
             }
             // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
             String[] txt = originList.get(0).toString().split("\\n");
-            System.out.println(txt.toString());
+            System.out.println(Arrays.toString(txt));
+            return Arrays.toString(txt);
         } catch (IOException e) {
-            log.info("안됨ㅋ");
             e.printStackTrace();
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
         }
-        return "떳나";
     }
 
     @Override
@@ -1146,5 +1137,20 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             exploreWorkbookDtoList.add(exploreWorkbookDto);
         }
+    }
+
+    public String imgToUrl(MultipartFile file) throws IOException {
+        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+
+        // Cloud에 이미지 업로드
+        BlobInfo blobInfo = storage.create(
+                BlobInfo.newBuilder(bucketName, uuid)
+                        .setContentType(ext)
+                        .build(),
+                file.getInputStream()
+        );
+
+        return bucketName + "/" + uuid;
     }
 }

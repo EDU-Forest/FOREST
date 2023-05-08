@@ -28,6 +28,7 @@ public enum WorkbookErrorCode implements Codable {
     PROBLEM_TYPE_NO_VAILD(HttpStatus.BAD_REQUEST, "사용할 수 없는 문제 타입입니다.", true),
     WORKBOOK_ALREADY_DEPLOY(HttpStatus.BAD_REQUEST, "이미 배포된 문제집입니다.", true),
     CLASS_NOT_BELONG_TO(HttpStatus.BAD_REQUEST, "속해있지 않은 클래스 입니다.", true),
+    WORKBOOK_OCR_FAIL(HttpStatus.BAD_REQUEST, "OCR 서버 연결에 실패했습니다.", true),
     ;
     private final String message;
     private final HttpStatus status;
