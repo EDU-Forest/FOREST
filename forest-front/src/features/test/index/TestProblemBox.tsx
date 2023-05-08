@@ -48,8 +48,9 @@ export default function TestProblemBox({
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
-
   const record = useCanvasRecordQuery(studentStudyProblemId).data;
+
+  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -71,6 +72,8 @@ export default function TestProblemBox({
     mutate(payload);
     canvasMutate(canvasPayload);
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
   };
 
   const goToNextProblem = () => {
@@ -82,12 +85,20 @@ export default function TestProblemBox({
     mutate(payload);
     canvasMutate(canvasPayload);
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
   };
 
   return (
     <StyledTestProblemBox>
       <TestCanvas>
-        <Canvas allPaths={allPaths} setAllPaths={setAllPaths} storedData={record?.line} />
+        <Canvas
+          allPaths={allPaths}
+          setAllPaths={setAllPaths}
+          storedData={record?.line}
+          isOpenCanvas={isOpenCanvas}
+          setIsOpenCanvas={setIsOpenCanvas}
+        />
       </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>

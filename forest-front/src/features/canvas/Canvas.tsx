@@ -21,9 +21,17 @@ interface Iprops {
   storedData?: any;
   allPaths?: CanvasPath[];
   setAllPaths: (allPaths: CanvasPath[]) => void;
+  isOpenCanvas: boolean;
+  setIsOpenCanvas: (type: boolean) => void;
 }
 
-export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
+export default function Canvas({
+  storedData,
+  allPaths,
+  setAllPaths,
+  isOpenCanvas,
+  setIsOpenCanvas,
+}: Iprops) {
   const canvasRef = createRef<ReactSketchCanvasRef>();
 
   const [nowTab, setNowTab] = useState<string>("");
@@ -49,7 +57,7 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
     isEraser: boolean | null;
   }>({ stroke: null, isEraser: null });
 
-  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
+  // const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
     setAllPaths(updatedPaths);
