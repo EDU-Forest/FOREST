@@ -40,7 +40,18 @@ public class JwtFilter extends OncePerRequestFilter {
             "/api/oauth2/authorization/kakao",
             "/api/msg",
             "/api/class/search",
-            "/api/swagger-ui.html"
+
+            // swagger
+            "/api/swagger-ui.html",
+            "/api/webjars/springfox-swagger-ui/springfox.css",
+            "/api/webjars/springfox-swagger-ui/swagger-ui.css",
+            "/api/webjars/springfox-swagger-ui/swagger-ui-standalone-preset.js",
+            "/api/webjars/springfox-swagger-ui/springfox.js",
+            "/api/webjars/springfox-swagger-ui/swagger-ui-bundle.js",
+            "/api/webjars/springfox-swagger-ui/favicon-32x32.png",
+            "/api/webjars/springfox-swagger-ui/favicon-16x16.png",
+            "/api/webjars/springfox-swagger-ui/favicon-32x32.png",
+            "/api/webjars/springfox-swagger-ui/favicon-16x16.png"
     );
 
     @Override
