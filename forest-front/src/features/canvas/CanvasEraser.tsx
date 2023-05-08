@@ -1,6 +1,7 @@
 import { ReactSketchCanvasProps } from "react-sketch-canvas";
 import {
   CanvasColorSelectorSelected,
+  CanvasSelectorArrow,
   CanvasSelectorWrapper,
   CanvasWidthSelector,
 } from "./Canvas.style";
@@ -30,7 +31,8 @@ export default function CanvasEraser({ canvasProps, setCanvasProps }: Iprops) {
   };
 
   return (
-    <CanvasSelectorWrapper style={{ width: "320px" }}>
+    <CanvasSelectorWrapper style={{ width: "20rem" }}>
+      <CanvasSelectorArrow style={{ left: "9rem" }} />
       {eraserWidth.map((item, idx) => (
         <CanvasColorSelectorSelected selected={item === canvasProps.eraserWidth ? true : false}>
           <BsFillEraserFill key={idx} onClick={() => changeEraser(item)} size={widthToCss(item)} />

@@ -127,7 +127,10 @@ export default function CanvasBar({
       nowTab={nowTab}
     >
       <div className="img-div">
-        <div className="info">연습장을 사용해보세요</div>
+        <div className="info">
+          연습장을 사용해보세요
+          <p>(시험 종료 후에도 확인할 수 있습니다)</p>
+        </div>
 
         <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} />
       </div>
