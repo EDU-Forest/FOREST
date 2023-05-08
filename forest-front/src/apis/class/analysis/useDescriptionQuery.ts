@@ -9,8 +9,9 @@ interface Description {
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/descript/${studyId}`).then(({ data }) => {
-    const descript = data.data as Description;
-    return descript;
+    // const descript = data.data as Description;
+    // return descript;
+    return data;
   });
 
 const useDescriptionQuery = (studyId: number) => {

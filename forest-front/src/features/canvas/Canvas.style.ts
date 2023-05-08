@@ -72,7 +72,7 @@ const CanvasBarWrapper = styled.div<{
   padding: 0 16px;
   height: 50px;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 24px;
+  border-radius: 8px;
   background-color: white;
 
   animation: ${closeSlide} 0.4s 1;
@@ -81,6 +81,9 @@ const CanvasBarWrapper = styled.div<{
     position: absolute;
     left: 7px;
     animation: ${moveToLeft} 0.5s 1;
+    /* background-color: ${({ theme }) => theme.colors.Lime[100]};
+    padding: 0 4px;
+    border-radius: 16px; */
 
     .logo {
       width: 36px;
@@ -95,17 +98,21 @@ const CanvasBarWrapper = styled.div<{
 
   .info {
     display: none;
-
+    clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 23% 75%, 18% 100%, 12% 76%, 0% 75%);
     position: absolute;
-    top: 44px;
-    left: -20px;
-    width: 120px;
-    height: 24px;
+    top: -54px;
+    left: -32px;
+    width: 200px;
+    height: 52px;
     font-size: 13px;
-    background-color: ${({ theme }) => theme.colors.Lime[50]};
-    border-radius: 12px;
+    background-color: ${({ theme }) => theme.colors.Lime[200]};
     text-align: center;
-    line-height: 24px;
+    padding-top: 6px;
+
+    p {
+      font-size: 11px;
+      color: ${({ theme }) => theme.colors.Gray[700]};
+    }
   }
 
   svg {
@@ -188,6 +195,16 @@ const CanvasSelectorWrapper = styled.div`
   z-index: 10;
 `;
 
+const CanvasSelectorArrow = styled.div`
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  position: absolute;
+  top: -8px;
+  left: 56px;
+  transform: rotate(45deg);
+`;
+
 const CanvasSelectorSection = styled.div<{ width?: number }>`
   ${flexBox("row", "center", "space-evenly")}
   width: ${({ width }) => width && `${width}rem`};
@@ -207,6 +224,7 @@ const CanvasColorSelectorSelected = styled.div<{ selected?: boolean }>`
   border-radius: 8px;
   width: 40px;
   height: 40px;
+  z-index: 20;
 
   ${({ selected }) =>
     selected &&
@@ -271,6 +289,7 @@ export {
   CanvasBarWrapper,
   CanvasBarItems,
   CanvasSelectorWrapper,
+  CanvasSelectorArrow,
   CanvasSelectorSection,
   CanvasColorSelector,
   CanvasColorSelectorSelected,

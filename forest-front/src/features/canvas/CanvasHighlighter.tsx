@@ -1,6 +1,7 @@
 import {
   CanvasColorSelector,
   CanvasColorSelectorSelected,
+  CanvasSelectorArrow,
   CanvasSelectorSection,
   CanvasSelectorWrapper,
 } from "./Canvas.style";
@@ -35,33 +36,26 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
   const highlighterWidth = [10, 15, 20];
 
   return (
-    <CanvasSelectorWrapper style={{ width: "440px" }}>
+    <CanvasSelectorWrapper style={{ width: "27.5rem" }}>
+      <CanvasSelectorArrow style={{ left: "9rem" }} />
       <CanvasSelectorSection width={8}>
-        {/* {highlighterWidth.map((item, idx) => (
-          <CanvasColorSelectorSelected selected={item === width ? true : false}>
-            <p key={idx} onClick={() => setWidth(item)}>
-              {item}
-            </p>
-          </CanvasColorSelectorSelected>
-        ))} */}
-
         <CanvasColorSelectorSelected
           selected={10 === width ? true : false}
           onClick={() => setWidth(10)}
         >
-          <img src="/images/thinH.png" style={{ width: "24px" }} />
+          <img src="/images/thinH.png" style={{ width: "1.5rem" }} />
         </CanvasColorSelectorSelected>
         <CanvasColorSelectorSelected
           selected={15 === width ? true : false}
           onClick={() => setWidth(15)}
         >
-          <img src="/images/regularH.png" style={{ width: "26px" }} />
+          <img src="/images/regularH.png" style={{ width: "1.625rem" }} />
         </CanvasColorSelectorSelected>
         <CanvasColorSelectorSelected
           selected={20 === width ? true : false}
           onClick={() => setWidth(20)}
         >
-          <img src="/images/boldH.png" style={{ width: "28px" }} />
+          <img src="/images/boldH.png" style={{ width: "1.75rem" }} />
         </CanvasColorSelectorSelected>
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
