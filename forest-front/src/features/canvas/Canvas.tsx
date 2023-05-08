@@ -21,9 +21,17 @@ interface Iprops {
   storedData?: any;
   allPaths?: CanvasPath[];
   setAllPaths: (allPaths: CanvasPath[]) => void;
+  isOpenCanvas: boolean;
+  setIsOpenCanvas: (type: boolean) => void;
 }
 
-export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
+export default function Canvas({
+  storedData,
+  allPaths,
+  setAllPaths,
+  isOpenCanvas,
+  setIsOpenCanvas,
+}: Iprops) {
   const canvasRef = createRef<ReactSketchCanvasRef>();
 
   const [nowTab, setNowTab] = useState<string>("");
@@ -48,9 +56,8 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
     stroke: CanvasPath | null;
     isEraser: boolean | null;
   }>({ stroke: null, isEraser: null });
-  const [pathsToLoad, setPathsToLoad] = useState<string>("");
 
-  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
+  // const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
     setAllPaths(updatedPaths);
@@ -102,13 +109,14 @@ export default function Canvas({ storedData, allPaths, setAllPaths }: Iprops) {
   };
 
   useEffect(() => {
-    canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
+    if ((allPaths?.length as number) > 0) {
+      canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
+      return;
+    }
+    if (storedData) {
+      canvasRef.current?.loadPaths(storedData);
+    }
   }, [isOpenCanvas]);
-
-  // API GET한 기록 그리기
-  // useEffect(() => {
-  //   canvasRef.current?.loadPaths(storedData);
-  // }, [isOpenCanvas]);
 
   return (
     <>

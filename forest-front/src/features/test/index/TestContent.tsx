@@ -9,6 +9,7 @@ import { CanvasPath } from "react-sketch-canvas";
 interface Iprops extends IStudyModal {
   allPaths: CanvasPath[];
   setAllPaths: (allPaths: CanvasPath[]) => void;
+  isSubmitted?: boolean;
 }
 
 export default function TestContent({
@@ -18,6 +19,7 @@ export default function TestContent({
   setToggleModal,
   allPaths,
   setAllPaths,
+  isSubmitted,
 }: Iprops) {
   return (
     <StyledTestContent>
@@ -26,12 +28,15 @@ export default function TestContent({
         seconds={seconds}
         allPaths={allPaths}
         setAllPaths={setAllPaths}
+        isSubmitted={isSubmitted}
       />
       <TestAnswerBox
         minutes={minutes}
         seconds={seconds}
         toggleModal={toggleModal}
         setToggleModal={setToggleModal}
+        allPaths={allPaths}
+        isSubmitted={isSubmitted}
       />
     </StyledTestContent>
   );
