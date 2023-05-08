@@ -6,8 +6,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useState } from "react";
 import useGetStudyResult from "@/apis/study/useGetStudyResultQuery";
+import { useDispatch } from "react-redux";
+import { setStudy } from "@/stores/class/classInfo";
 
 export default function TestResultSection() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { role } = useSelector((state: RootState) => state.user);
   const studyId = router.query.studyId;
@@ -28,7 +31,8 @@ export default function TestResultSection() {
   });
 
   const clickHandler = () => {
-    router.push(`/${role.toLowerCase()}/dashboard`);
+    dispatch(setStudy(studyId));
+    router.push(`/${role.toLowerCase()}/class`);
   };
 
   return (
