@@ -157,13 +157,13 @@ public class StudyService {
         }
 
 
-        System.out.println("studyList = " + studyList);
+        //System.out.println("studyList = " + studyList);
 
         Map<String, List<GetScheduleResponseDto>> result = new HashMap<>();
         result.put("studyList", new ArrayList<>());
         //List<GetScheduleResponseDto> result = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
-        System.out.println("now = " + now);
+       // System.out.println("now = " + now);
         for (Study study : studyList) {
             LocalDateTime startTime = study.getStartTime();
             LocalDateTime endTime = study.getEndTime();
@@ -939,8 +939,8 @@ public class StudyService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
-        System.out.println("s1 = " + s1);
-        System.out.println("s2 = " + s2);
+        //System.out.println("s1 = " + s1);
+        //System.out.println("s2 = " + s2);
         GetJaccardSimilarityResponseDto similarity = webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/similarity")
                         .queryParam("sentence1", s1)
