@@ -594,30 +594,17 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-        if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
-            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
-            PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
-                    .message("문제 답안 저장 완료")
-                    .build();
-
-            return responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
-        }
+//        if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+//            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
+//            PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
+//                    .message("문제 답안 저장 완료")
+//                    .build();
+//
+//            return responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
+//        }
 
         /* 서술형이라면 */
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
-            // 코사인 유사도 분석 코드 추가 예정
-            /*  키워드 포함 개수 분석 코드 -> 서술형 채점 부분으로 옮길 것
-                String getAnswer = spr.getProblemList().getProblem().getAnswer();
-                String[] keyWords = getAnswer.split(",");
-                for (String keyWord : keyWords) {
-                    int num = 0;
-                    if(patchNextProblemRequestDto.getUserAnswer().contains(keyWord)){
-                        num++;
-                    }
-                }
-            */
-
-
             spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
         } else {
             /* 정답이 맞을 때 */
@@ -744,7 +731,7 @@ public class StudyService {
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
                         .answer(userAnswer)
-                        //.similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
+                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
