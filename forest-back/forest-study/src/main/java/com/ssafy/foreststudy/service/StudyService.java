@@ -10,7 +10,9 @@ import com.ssafy.foreststudy.enumeration.response.SuccessCode;
 import com.ssafy.foreststudy.errorhandling.exception.StudyErrorCode;
 import com.ssafy.foreststudy.repository.*;
 import com.ssafy.foreststudy.util.ResponseUtil;
+import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -673,7 +675,7 @@ public class StudyService {
     }
 
     /* (선생님) 서술형 문제 채점 목록 조회 */
-    public ResponseSuccessDto<?> getDescriptionList(Long studyId) {
+    public ResponseSuccessDto<?> getDescriptionList(Long studyId) throws SSLException {
 
         /*
             1. 시험의 문제집 ID로 문제 목록 불러오기
@@ -923,13 +925,20 @@ public class StudyService {
     }
 
     /* 자카드 유사도 계산 로직 */
-    public int getJaccardSimilarity(String s1, String s2) {
+    public int getJaccardSimilarity(String s1, String s2) throws SSLException {
         // WebClient로 Flask 통신
 
+        SslContext sslContext = SslContextBuilder
+                .forClient()
+                .trustManager(InsecureTrustManagerFactory.INSTANCE)
+                .build();
+
+        HttpClient httpClient = HttpClient.create()
+                .secure(t ->
+                        t.sslContext(sslContext));
+
         WebClient webClient = WebClient.builder()
-                .clientConnector(new ReactorClientHttpConnector(
-                        HttpClient.create()
-                                .secure(spec -> spec.sslContext(SslContextBuilder.forClient()))))
+                .clientConnector(new ReactorClientHttpConnector(httpClient))
                 .baseUrl("https://k8b105.p.ssafy.io:5000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
