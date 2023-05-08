@@ -594,15 +594,6 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-//        if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
-//            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
-//            PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
-//                    .message("문제 답안 저장 완료")
-//                    .build();
-//
-//            return responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
-//        }
-
         /* 서술형이라면 */
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
             spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
@@ -611,6 +602,10 @@ public class StudyService {
             if (patchNextProblemRequestDto.getUserAnswer().equals(spr.getProblemList().getProblem().getAnswer())) {
                 int partPoint = spr.getProblemList().getProblem().getPoint();
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), partPoint, true, true);
+            }
+            /* 빈 답안 제출 시 */
+            else if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+                spr.updateStudentStudyProblemResult(null, 0, false, true);
             } else {
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, true);
             }
