@@ -13,4 +13,5 @@ public class GetStudyInfoResponseDto {
     private int volume;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private Boolean isSubmitted;
 }

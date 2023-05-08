@@ -12,5 +12,6 @@ public class GetProblemResponseDto {
     private int volume;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+    private Boolean isSubmitted;
     private List<GetProblemListResponseDto> problem;
 }

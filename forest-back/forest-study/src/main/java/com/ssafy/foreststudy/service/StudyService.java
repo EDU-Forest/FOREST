@@ -163,7 +163,7 @@ public class StudyService {
         result.put("studyList", new ArrayList<>());
         //List<GetScheduleResponseDto> result = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
-       // System.out.println("now = " + now);
+        // System.out.println("now = " + now);
         for (Study study : studyList) {
             LocalDateTime startTime = study.getStartTime();
             LocalDateTime endTime = study.getEndTime();
@@ -243,7 +243,7 @@ public class StudyService {
         return res;
     }
 
-    /* 시험 결과 조회(클릭 시) */
+    /* (선생님) 시험 결과 조회 */
     public ResponseSuccessDto<?> getStudyResult(Long studyId) {
 
         Study study = studyRepository.findById(studyId)
@@ -389,6 +389,7 @@ public class StudyService {
                 .volume(cs.getStudy().getWorkbook().getVolume())
                 .startTime(cs.getStudy().getStartTime())
                 .endTime(cs.getStudy().getEndTime())
+                .isSubmitted(cs.getIsSubmitted())
                 .build();
 
         ResponseSuccessDto<GetStudentResultResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_USER);
@@ -507,10 +508,16 @@ public class StudyService {
                     .build());
         }
 
+        Optional<StudentStudyResult> studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user);
+        Boolean isSubmitted = false;
+        if (studentStudyResult.isPresent())
+            isSubmitted = studentStudyResult.get().getIsSubmitted();
+
         GetProblemResponseDto result = GetProblemResponseDto.builder()
                 .volume(study.getWorkbook().getVolume())
                 .startTime(study.getStartTime())
                 .endTime(study.getEndTime())
+                .isSubmitted(isSubmitted)
                 .problem(problem)
                 .build();
 
@@ -954,9 +961,19 @@ public class StudyService {
     }
 
     /* 시험 시작하기 정보 조회 */
-    public ResponseSuccessDto<GetStudyInfoResponseDto> getStudyInfo(Long studyId) {
+    public ResponseSuccessDto<GetStudyInfoResponseDto> getStudyInfo(Long studyId, Long userId) {
+        /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
+
+        /* 존재하지 않는 유저 ID 체크 */
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
+
+        Optional<StudentStudyResult> studentStudyResult = studentStudyResultRepository.findAllByStudyAndUser(study, user);
+        Boolean isSubmitted = false;
+        if (studentStudyResult.isPresent())
+            isSubmitted = studentStudyResult.get().getIsSubmitted();
 
         GetStudyInfoResponseDto result = GetStudyInfoResponseDto.builder()
                 .userName(study.getUser().getName())
@@ -964,6 +981,7 @@ public class StudyService {
                 .volume(study.getWorkbook().getVolume())
                 .startTime(study.getStartTime())
                 .endTime(study.getEndTime())
+                .isSubmitted(isSubmitted)
                 .build();
 
         ResponseSuccessDto<GetStudyInfoResponseDto> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_INFO);
