@@ -229,7 +229,10 @@ public class StudyService {
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
 
         if (csList.isEmpty()) {
-            return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
+            csList = classStudyResultRepository.findTop1ByClassId(classId);
+            if (csList.isEmpty()) {
+                return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RECENT);
+            }
         }
 
         ClassStudyResult cs = csList.get(0);
@@ -741,7 +744,7 @@ public class StudyService {
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
                         .answer(userAnswer)
-                        .similarity(getJaccardSimilarity(userAnswer,workbookAnswer)) //유사도 체크 로직
+                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
