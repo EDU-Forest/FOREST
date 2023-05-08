@@ -1,0 +1,77 @@
+server:
+  port: 9010
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  ssl:
+    enabled: true
+    key-store: ${KEY_STORE}
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-store-type: ${KEY_STORE_TYPE}
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+    open-in-view: false
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  security:
+    oauth2:
+      client:
+        # KAKAO
+        registration:
+          kakao:
+            client-id: ${KAKAO_CLIENT_ID}
+            client-secret: ${KAKAO_CLIENT_SECRET}
+            redirect-uri: ${KAKAO_REDIRECT_URI}
+            authorization-grant-type: ${KAKAO_AUTHORIZATION_GRANT_TYPE}
+            client-name: ${KAKAO_CLIENT_NAME}
+            client-authentication-method: ${KAKAO_CLIENT_AUTHENTICATION_METHOD}
+        # KAKAO Provider
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
+jwt:
+#  redirect-url: https://k8b105.p.ssafy.io/login/success
+  redirect-url: https://localhost:3000/login/success
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+
+notification:
+  mattermost:
+    enabled: true
+    webhook-url: ${MM_WEBHOOK_URL}
+    channel :
+
+logging:
+  level:
+    root: info
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: false
+      multiline: false

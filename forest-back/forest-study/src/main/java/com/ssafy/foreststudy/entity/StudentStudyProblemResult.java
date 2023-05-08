@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -49,4 +50,22 @@ public class StudentStudyProblemResult {
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
 
+    public void createStudentStudyProblemResult(Study study, User user, ProblemList problemList) {
+        this.study = study;
+        this.user = user;
+        this.problemList = problemList;
+    }
+
+    public void updateStudentStudyProblemResult(String userAnswer, int partPoint, Boolean isCorrected, Boolean isGraded){
+        this.userAnswer = userAnswer;
+        this.partPoint = partPoint;
+        this.isCorrected = isCorrected;
+        this.isGraded = isGraded;
+    }
+
+    public void updateDescript(int partPoint, Boolean isCorrected, Boolean isGraded){
+        this.partPoint = partPoint;
+        this.isCorrected = isCorrected;
+        this.isGraded = isGraded;
+    }
 }

@@ -1,5 +1,12 @@
 server:
   port: 9012
+  servlet:
+    context-path: /api
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   ssl:
     enabled: true
     key-store: ${KEY_STORE}
@@ -12,6 +19,16 @@ spring:
   config:
     activate:
       on-profile: dev
+
+  data:
+    mongodb:
+      host: 13.124.81.117
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: B105FOREST
+      database: admin
+      # uri: mongodb: //546.465.445:27017/qwerqwer
 
   jpa:
     hibernate:
@@ -31,7 +48,8 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-study:
+notification:
   mattermost:
     enabled: true
     webhook-url: ${MM_WEBHOOK_URL}
+    channel :

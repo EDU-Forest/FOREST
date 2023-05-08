@@ -22,4 +22,15 @@ public class ResponseUtil<T> {
                 .build();
         return res;
     }
+
+    public ResponseSuccessDto<T> successResponse(ForestStatus status) {
+        ResponseSuccessDto<T> res = ResponseSuccessDto
+                .<T>builder()
+                .timeStamp(ZonedDateTime.now(TimeZone.getTimeZone("Asia/Seoul").toZoneId()))
+                .code(status.getStatus().value())
+                .status(status.name())
+                .build();
+        return res;
+    }
 }
+

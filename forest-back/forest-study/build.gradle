@@ -14,6 +14,13 @@ configurations {
 	}
 }
 
+allprojects {
+	repositories {
+		mavenCentral()
+		maven { url 'https://jitpack.io' }
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -27,11 +34,23 @@ dependencies {
 	// swagger2
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0'
+
+	// jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+
+	// Mattermost
+	implementation 'com.github.lmghee:forest-noti:60d98a7d18'
 
 	// gson
 	implementation 'com.google.code.gson:gson:2.10.1'
+
+	// webClient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// mongoDB
+	implementation ('org.springframework.boot:spring-boot-starter-data-mongodb')
 
 	// spring-boot-configuration-processor
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
