@@ -22,5 +22,5 @@ services:
     ports:
       - 9010:9010
     volume:
-      - /home/ubuntu/jenkins/env:/workbook
+      - /home/ubuntu/jenkins/env:/auth
     restart: always
