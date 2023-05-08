@@ -725,7 +725,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         problemDto.getText(), problemDto.getAnswer(), problemDto.getPoint());
 
                 for (ItemContentDto itemContentDto : problemDto.getItemList()) {
-                    Item item = itemRepository.findByProlbemIdAndNo(problemDto.getProblemId(), itemContentDto.getItemNo())
+                    Item item = itemRepository.findByProblemAndNo(problem, itemContentDto.getItemNo())
                             .orElse(null);
 
                     // item 없는 경우 -> 생성
