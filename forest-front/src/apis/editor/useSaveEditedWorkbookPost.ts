@@ -1,5 +1,6 @@
+import * as queryKeys from "@/constants/queryKeys";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
-import { useMutation } from "react-query";
+import { QueryClient, useMutation, useQueryClient } from "react-query";
 
 interface IData {
   workbookId: string;
@@ -28,8 +29,12 @@ const fetcher = async (data: IData) =>
   });
 
 const useSaveEditedWorkbookPost = () => {
+  const queryClient = useQueryClient();
+  
   return useMutation(fetcher, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(queryKeys.GET_WORKBOOK_DETAIL);
+    },
   });
 };
 
