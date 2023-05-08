@@ -265,6 +265,8 @@ export default function UserForm({ type }: Iprops) {
               id="birth"
               name="birth"
               type="date"
+              min={"1930-01-01"}
+              max={"2020-12-31"}
               isShort={true}
               placeholder="생년을 선택하세요"
               value={userData.birth}

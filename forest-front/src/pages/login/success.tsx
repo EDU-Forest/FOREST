@@ -28,6 +28,7 @@ interface Iprops {
 function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
+  console.log("지나감");
 
   useRecentClassIdQuery();
 

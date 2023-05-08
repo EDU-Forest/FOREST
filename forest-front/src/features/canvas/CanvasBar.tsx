@@ -132,7 +132,8 @@ export default function CanvasBar({
           <p>(시험 종료 후에도 확인할 수 있습니다)</p>
         </div>
 
-        <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} />
+        <img src="/images/pallete.png" className="logo" onClick={ControlCanvas} />
+        {/* <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} /> */}
       </div>
 
       <CanvasBarItems isOpenCanvas={isOpenCanvas}>
