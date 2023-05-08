@@ -154,7 +154,7 @@ public class StudyService {
                 throw new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS);
             }
             for (ClassUser cu : classUser) {
-                List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
+                List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getClasses().getId());
                 studyList.addAll(classStudyList);
             }
         }
