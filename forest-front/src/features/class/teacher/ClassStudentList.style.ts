@@ -19,6 +19,10 @@ const StudentAddText = styled(StudentListText)`
   font-size: 1rem;
   cursor: pointer;
 
+  &:hover {
+    color: ${({ theme }) => theme.colors.Gray[600]};
+  }
+
   .icon {
     font-size: 1.5rem;
     margin-right: 0.5rem;
