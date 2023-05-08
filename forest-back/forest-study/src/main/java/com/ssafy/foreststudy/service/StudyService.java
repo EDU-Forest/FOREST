@@ -143,16 +143,15 @@ public class StudyService {
         if (user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
             List<ClassEntity> classes = classRepository.findAllByOwner(user);
             if (classes.isEmpty())
-                throw new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND);
+                responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_CALENDAR);
             for (ClassEntity aClass : classes) {
                 List<Study> classStudyList = studyRepository.findAllListByClassId(aClass.getId());
                 studyList.addAll(classStudyList);
             }
         } else {
             List<ClassUser> classUser = classUserRepository.findAllByUser(user);
-            if (classUser.isEmpty()) {
-                throw new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS);
-            }
+            if (classUser.isEmpty())
+                responseUtil.successResponse("", SuccessCode.STUDY_SUCCESS_CALENDAR);
             for (ClassUser cu : classUser) {
                 List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getClasses().getId());
                 studyList.addAll(classStudyList);
