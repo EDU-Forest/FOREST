@@ -20,6 +20,13 @@ export const StyledWorkbookTabItem = styled.div<{ isSelected: boolean }>`
 
   cursor: pointer;
 
+  &:hover {
+    color: ${({ isSelected, theme }) =>
+      isSelected ? theme.colors.Lime[700] : theme.colors.Gray[600]};
+    border-bottom: ${({ isSelected, theme }) =>
+      isSelected && `2px solid ${theme.colors.Lime[700]}`};
+  }
+
   @media ${({ theme }) => theme.tablet} {
     font-size: 1rem;
   }

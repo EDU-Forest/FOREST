@@ -37,7 +37,7 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
   const { mutate } = useSaveAnswer();
   const canvasMutate = useCanvasPost().mutate;
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
+  const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
 
@@ -85,6 +85,7 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />
+          {/* {problemImgPath ? <img src={problemImgPath} /> */}
           {text && <TestProblemText />}
           {type === "MULTIPLE" && (
             <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
