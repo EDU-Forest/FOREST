@@ -7,14 +7,16 @@ import styled, { keyframes } from "styled-components";
 export const StyledWorkbookDetailBox = styled.div`
   height: 100vh;
 
+  position: relative;
   display: flex;
+  /* flex-direction: column; */
 
   padding: 32px;
   gap: 24px;
 
   background-color: ${({ theme }) => theme.colors.Gray[50]};
 
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 export const WorkbookDetailSideReturnBtnBox = styled.button`
@@ -404,7 +406,13 @@ export const WorkbookSaveBtn = styled(StyledRoundSolid600Btn)`
 `;
 
 export const WorkBookPdfBox = styled.div`
+  /* position: absolute;
+  width: 100vw;
+  height: inherit;
+  background-color: white; */
+  background-color: white;
   padding: 56px 80px;
+  /* overflow: auto; */
 `;
 
 export const WorkBookPdfBoxQuestionsBox = styled.div`
