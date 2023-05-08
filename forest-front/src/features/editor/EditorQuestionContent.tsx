@@ -84,7 +84,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
         {/* 이미지 여부에 따라 이미지 렌더링 */}
         {!question?.imgIsEmpty && <EditorQuestionImg question={question} />}
         {/* 객관식 */}
-        {question?.type === "MULTIPLE" && (
+        {question?.type === "MULTIPLE" && question.itemList && (
           <EditorMultipleChoice
             question={question}
             curQuestion={curQuestion}
