@@ -26,6 +26,7 @@ public interface WorkbookService {
     ResponseSuccessDto<?> copyWorkbook(Long userId, Long workbookId);
     ResponseSuccessDto<?> updateProblem(Long userId, ProblemUpdateInfoDto problemUpdateInfoDto);
     ResponseSuccessDto<?> createProblemImg(Long userId, MultipartFile file) throws IOException;
+    ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException;
     ResponseSuccessDto<?> deleteProblem(Long userId, Long problemId);
     ResponseSuccessDto<?> createBookmark(Long userId, Long workbookId, boolean isNew);
     ResponseSuccessDto<?> deleteBookmark(Long userId, Long workbookId);

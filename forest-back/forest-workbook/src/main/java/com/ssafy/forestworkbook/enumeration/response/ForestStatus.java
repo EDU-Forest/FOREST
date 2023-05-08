@@ -20,6 +20,7 @@ public enum ForestStatus {
     WORKBOOK_SUCCESS_DELETE_PROBLEM(HttpStatus.NO_CONTENT),
     WORKBOOK_SUCCESS_EXECUTE(HttpStatus.CREATED),
     WORKBOOK_SUCCESS_UPLOAD_IMG(HttpStatus.CREATED),
+    WORKBOOK_SUCCESS_UPLOAD_OCR(HttpStatus.CREATED),
     ;
 
     private final HttpStatus status;
