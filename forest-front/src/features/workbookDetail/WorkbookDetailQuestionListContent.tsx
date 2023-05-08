@@ -20,12 +20,18 @@ function WorkbookDetailQuestionListContent({
   return (
     <StyledWorkbookDetailQuestionListContentBox>
       <p>문제 ({questionCnt})</p>
-      <WorkbookQuestionMoveBarList
-        questionSumm={questionSumm}
-        setQuestionSum={setQuestionSum}
-        curQuestion={curQuestion}
-        setCurQuestion={setCurQuestion}
-      />
+      <>
+        {questionCnt !== 0 ? (
+          <WorkbookQuestionMoveBarList
+            questionSumm={questionSumm}
+            setQuestionSum={setQuestionSum}
+            curQuestion={curQuestion}
+            setCurQuestion={setCurQuestion}
+          />
+        ) : (
+          <span>문항이 없습니다</span>
+        )}
+      </>
     </StyledWorkbookDetailQuestionListContentBox>
   );
 }

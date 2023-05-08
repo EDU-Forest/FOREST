@@ -58,14 +58,14 @@ function WorkbookDetailQuestion({
   return (
     <StyledWorkbookDetailQuestionBox>
       {/* 문항이 존재할 경우에만 렌더링 */}
-      {question && (
+      {question ? (
         <StyledQuestionDetailTitleBox>
           <StyledQuestionDetailNumBox>{curQuestionNum}</StyledQuestionDetailNumBox>
           <span>{question?.title}</span>
           {/* 내가 원작자이며, 배포 되지 않아야 수정 가능 */}
           {isOriginal && !isDeploy && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
         </StyledQuestionDetailTitleBox>
-      )}
+      ) : (<span>문항이 없습니다</span>)}
 
       {/* 지문이 있다면 지문 렌더링 */}
       {question?.text && (
