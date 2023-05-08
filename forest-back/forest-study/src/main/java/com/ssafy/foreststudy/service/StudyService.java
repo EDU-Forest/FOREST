@@ -150,6 +150,9 @@ public class StudyService {
             }
         } else {
             List<ClassUser> classUser = classUserRepository.findAllByUser(user);
+            if(classUser.isEmpty()){
+                throw new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS);
+            }
             for (ClassUser cu : classUser) {
                 List<Study> classStudyList = studyRepository.findAllListByClassId(cu.getId());
                 studyList.addAll(classStudyList);
