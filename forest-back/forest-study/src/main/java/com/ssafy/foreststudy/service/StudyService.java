@@ -18,6 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import javax.net.ssl.*;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -594,15 +598,6 @@ public class StudyService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-//        if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
-//            spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
-//            PatchResponseDto patchNextProblemResponseDto = PatchResponseDto.builder()
-//                    .message("문제 답안 저장 완료")
-//                    .build();
-//
-//            return responseUtil.successResponse(patchNextProblemResponseDto, SuccessCode.STUDY_SUCCESS_UPDATE_PROBLEM_RESULT);
-//        }
-
         /* 서술형이라면 */
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
             spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
@@ -611,6 +606,10 @@ public class StudyService {
             if (patchNextProblemRequestDto.getUserAnswer().equals(spr.getProblemList().getProblem().getAnswer())) {
                 int partPoint = spr.getProblemList().getProblem().getPoint();
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), partPoint, true, true);
+            }
+            /* 빈 답안 제출 시 */
+            else if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+                spr.updateStudentStudyProblemResult(null, 0, false, true);
             } else {
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, true);
             }
@@ -924,6 +923,8 @@ public class StudyService {
     /* 자카드 유사도 계산 로직 */
     public int getJaccardSimilarity(String s1, String s2) {
         // WebClient로 Flask 통신
+        disableSslVerification();
+
         WebClient webClient = WebClient.builder()
                 .baseUrl("https://k8b105.p.ssafy.io:5000")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -1025,5 +1026,43 @@ public class StudyService {
 
         ResponseSuccessDto<Map<String, List<GetStudentResultQuestionResponseDto>>> res = responseUtil.successResponse(result, SuccessCode.STUDY_SUCCESS_RESULT_QUESTION_USER);
         return res;
+    }
+
+    // ssl security Exception 방지
+    public void disableSslVerification(){
+        // TODO Auto-generated method stub
+        try
+        {
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType){
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType){
+                }
+            }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session){
+                    return true;
+                }
+            };
+
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
     }
 }
