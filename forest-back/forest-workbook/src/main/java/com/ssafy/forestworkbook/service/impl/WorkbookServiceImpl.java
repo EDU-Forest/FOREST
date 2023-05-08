@@ -851,6 +851,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             System.out.println(txt.toString());
         } catch (IOException e) {
             log.info("안됨ㅋ");
+            e.printStackTrace();
         }
         return "떳나";
     }
