@@ -9,11 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface StudyRepository extends JpaRepository<Study, Long> {
 
     List<Study> findAllByClassesIdAndType(Long ClassId, EnumStudyTypeStatus type);
     int countByWorkbook(Workbook workbook);
+    Optional<Study> findTop1ByWorkbookId(Long workbookId);
 
     @Query (value = "select s from Study s " +
             "join fetch s.user u " +

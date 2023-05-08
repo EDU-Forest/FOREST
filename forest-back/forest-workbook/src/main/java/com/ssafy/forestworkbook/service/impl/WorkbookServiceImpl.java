@@ -66,7 +66,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-
         // 좋아하는 문제집, 스크랩한 문제집
         if (Objects.equals(search, "like")) {
             Page<UserWorkbook> userWorkbooks =
@@ -1044,6 +1043,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .map(w -> WorkbookEditorDto.builder()
                         .workbookId(w.getId())
                         .title(w.getTitle())
+                        .isDeploy(w.getIsDeploy())
+                        .isExecute(studyRepository.findTop1ByWorkbookId(w.getId())
+                                .orElse(null) != null) // 내 클래스에서 출제 했는지 여부
                         .build())
                 .collect(Collectors.toList());
 
