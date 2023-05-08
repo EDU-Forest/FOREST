@@ -10,7 +10,6 @@ export default function TestProblemMultipleChoiceAnswer({ minutes, seconds }: IS
     <StyledTestProblemMultipleChoiceAnswer>
       {item &&
         item.map((item, idx) => (
-          // key 임시로 지정해준거 -> 바꿔야함! (희제)
           <TestProblemAnswerNumber
             isSelected={userAnswer === `${idx + 1}`}
             key={`problem-item-${idx}`}
@@ -18,6 +17,7 @@ export default function TestProblemMultipleChoiceAnswer({ minutes, seconds }: IS
             text={item.content}
             minutes={minutes}
             seconds={seconds}
+            isImage={item.isImage}
           />
         ))}
     </StyledTestProblemMultipleChoiceAnswer>
