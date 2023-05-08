@@ -17,12 +17,11 @@ const useWorkbookDetailQuery = (wId: number) => {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       dispatch(setWorkbook(data.workbookInfo));
-
-      data.problemList.sort(function compare(a: any, b: any) {
+      const problemList = data.problemList.slice().sort(function compare(a: any, b: any) {
         return a.problemNum - b.problemNum;
       });
 
-      dispatch(setQuestions(data.problemList));
+      dispatch(setQuestions(problemList));
     },
     onError: (error) => {
       console.log("--useGetStudyInfoError --", error);
