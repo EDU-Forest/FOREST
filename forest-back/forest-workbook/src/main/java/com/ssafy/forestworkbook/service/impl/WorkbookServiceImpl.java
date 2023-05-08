@@ -804,6 +804,63 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
+    public void ocrTest(MultipartFile file) throws IOException {
+        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        System.out.println(uuid);
+
+        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+
+        // Cloud에 이미지 업로드
+        BlobInfo blobInfo = storage.create(
+                BlobInfo.newBuilder(bucketName, uuid)
+                        .setContentType(ext)
+                        .build(),
+                file.getInputStream()
+        );
+
+        String filePath = "gs://" + bucketName + "/" + uuid;
+
+        gs://forest_ocr_bucket/10d6f534-d981-4e6e-9cc7-429ec609e805
+        System.out.println(filePath);
+//        System.out.println(aa.toString());
+
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
+
+        Image img = Image.newBuilder().setSource(imgSource).build();
+        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
+        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            System.out.println("여기2");
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            System.out.println("여기3");
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+            ArrayList<Object> originList = new ArrayList<>();
+
+            for (AnnotateImageResponse res : responses) {
+                if (res.hasError()) {
+                    System.out.format("Error: %s%n", res.getError().getMessage());
+                    throw new IllegalArgumentException("실패");
+                }
+
+                // 사용가능한 annotations 전체 목록 참고 : http://g.co/cloud/vision/docs
+                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+                    // 데이터를 배열에 add
+                    originList.add(annotation.getDescription());
+                }
+            }
+            // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
+            String[] txt = originList.get(0).toString().split("\\n");
+            System.out.println(txt.toString());
+        }
+    }
+
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
