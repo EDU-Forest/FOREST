@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.SSLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
@@ -142,7 +143,7 @@ public class StudyController {
 
     @ApiOperation(value = "서술형 문제 채점 목록 조회", notes = "서술형 문제 채점 목록을 조회합니다.")
     @GetMapping("/descript/{studyId}")
-    public ResponseEntity<ResponseSuccessDto<?>> getDescriptionList(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
+    public ResponseEntity<ResponseSuccessDto<?>> getDescriptionList(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException, SSLException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getDescriptionList(studyId));
