@@ -4,7 +4,7 @@ export const theme: DefaultTheme = {
   colors: {
     Lime: {
       50: "#F4FCE3",
-      100: "#F4FCE3",
+      100: "#E9FAC8",
       200: "#D8F5A2",
       300: "#C0EB75",
       400: "#A9E34B",

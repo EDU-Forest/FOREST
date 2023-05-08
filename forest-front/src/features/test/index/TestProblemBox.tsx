@@ -27,9 +27,11 @@ import useCanvasPost from "@/apis/canvas/useCanvasPost";
 interface Iprops {
   minutes: number;
   seconds: number;
+  allPaths: CanvasPath[];
+  setAllPaths: (allPaths: CanvasPath[]) => void;
 }
 
-export default function TestProblemBox({ minutes, seconds }: Iprops) {
+export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths }: Iprops) {
   const router = useRouter();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
@@ -52,11 +54,6 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
 
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
-
-    mutate(payload);
-    dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
-  };
-  const goToNextProblem = () => {
     const canvasPayload = {
       studentStudyProblemId: studentStudyProblemId,
       line: allPaths,
@@ -64,12 +61,21 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
     console.log("canvasPayload", canvasPayload);
     mutate(payload);
     canvasMutate(canvasPayload);
+
+    dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
+  };
+  const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
+    const canvasPayload = {
+      studentStudyProblemId: studentStudyProblemId,
+      line: allPaths,
+    };
+    console.log("canvasPayload", canvasPayload);
+    mutate(payload);
+    canvasMutate(canvasPayload);
 
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
   };
-
-  const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
 
   return (
     <StyledTestProblemBox>
