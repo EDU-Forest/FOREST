@@ -190,9 +190,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createProblemImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(1);
         return workbookService.createProblemImg(userId, file);
     }
 

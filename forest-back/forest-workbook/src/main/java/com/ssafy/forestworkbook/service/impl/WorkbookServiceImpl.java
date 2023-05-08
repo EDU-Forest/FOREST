@@ -142,8 +142,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         ClassEntity classEntity = classRepository.findById(classId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
 
-        log.info("userId : {}, classId : {}, ownerId : {}", userId, classId, classEntity.getOwner().getId());
-
         if (userId != classEntity.getOwner().getId()) {
             ClassUser classUser = classUserRepository.findByClassesAndUser(classEntity, user)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO));
@@ -725,6 +723,25 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 problem.updateProblem(enumProblemTypeStatus, problemDto.getTitle(), problemDto.getPath(),
                         problemDto.getText(), problemDto.getAnswer(), problemDto.getPoint());
+
+                for (ItemContentDto itemContentDto : problemDto.getItemList()) {
+                    Item item = itemRepository.findByProblemAndNo(problem, itemContentDto.getItemNo())
+                            .orElse(null);
+
+                    // item 없는 경우 -> 생성
+                    if (item == null) {
+                        Item createItem = Item.builder()
+                                .problem(problem)
+                                .no(itemContentDto.getItemNo())
+                                .isImage(itemContentDto.getIsImage())
+                                .build();
+                    }
+
+                    // item 있는 경우 -> 수정
+                    else {
+                        item.updateItem(itemContentDto.getItemNo(), itemContentDto.getContent(), itemContentDto.getIsImage());
+                    }
+                }
             }
 
             // 문제 ID 없는 경우 생성
