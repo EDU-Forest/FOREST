@@ -193,7 +193,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             Problem problem = problemRepository.findById(problemList.getProblem().getId())
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_PROBLEM));
 
-            List<Item> itemList = itemRepository.findAllByProblemId(problem.getId());
+            List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problem.getId());
             List<ItemResDto> itemResList = new ArrayList<>();
 
             for (Item item : itemList) {
@@ -576,7 +576,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             if (checked == -1) continue;
             else {
 
-                List<Item> itemList = itemRepository.findAllByProblemId(problemLists.get(checked).getId());
+                List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(checked).getId());
                 itemListSize = itemList.size();
 
                 for (Item item : itemList) {
@@ -879,7 +879,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
-        List<Item> itemList = itemRepository.findAllByProblemId(problemId);
+        List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemId);
 
         if (!itemList.isEmpty()) {
             for (Item item : itemList) {

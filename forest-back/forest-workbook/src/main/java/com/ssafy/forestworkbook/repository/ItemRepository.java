@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    List<Item> findAllByProblemId(Long problemId);
+    List<Item> findAllByProblemIdOrderByNo(Long problemId);
     Optional<Item> findByProblemAndNo(Problem problem, int no);
 
 }
