@@ -34,17 +34,12 @@ export default function TestResultContent({ studyResult }: Iprops) {
 
   return (
     <TestResultContentBox>
-<<<<<<< forest-front/src/features/test/result/TestResultContent.tsx
       {!studyResult.isGraded && studyResult.isSubmitted ? (
         <TestResultNotOpenBox>채점 후 공개됩니다.</TestResultNotOpenBox>
       ) : !studyResult.isSubmitted ? (
         <TestResultNotOpenBox>유효하지 않은 접근입니다.</TestResultNotOpenBox>
       ) : (
         questionResult.map((data, idx) => (
-=======
-      {studyResult.isSubmitted ? (
-        problem.map((data, idx) => (
->>>>>>> forest-front/src/features/test/result/TestResultContent.tsx
           <TestResultQuestionBtn
             key={`question-${idx}`}
             isCorrect={data.isCorrected}
