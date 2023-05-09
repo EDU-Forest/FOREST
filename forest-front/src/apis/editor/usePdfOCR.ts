@@ -8,7 +8,10 @@ const fetcher = (file: FormData) =>
         "Content-Type": "multipart/form-data",
       },
     })
-    .then(({ data }) => data);
+    .then(({ data }) => {
+      console.log("ocr 반환", data);
+      return data;
+    });
 
 const usePdfOCR = () => {
   return useMutation(fetcher, {

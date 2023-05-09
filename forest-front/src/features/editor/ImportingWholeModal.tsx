@@ -40,7 +40,6 @@ export default function ImportingWholeModal() {
       console.log("dlrp Wld", formData.get("file"));
       mutate(formData);
     }
-    // 했으
   };
 
   return (
