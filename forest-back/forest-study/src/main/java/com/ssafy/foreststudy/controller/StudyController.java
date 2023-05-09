@@ -45,7 +45,7 @@ public class StudyController {
         return ResponseEntity.ok(studyService.getStudyRecent(classId));
     }
 
-    @ApiOperation(value = "시험 결과 조회", notes = "클릭한 클래스 시험 결과를 조회합니다.")
+    @ApiOperation(value = "(선생님) 시험 결과 조회", notes = "클릭한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/{studyId}")
     public ResponseEntity<ResponseSuccessDto<?>> getStudyResult(HttpServletRequest request, @PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
