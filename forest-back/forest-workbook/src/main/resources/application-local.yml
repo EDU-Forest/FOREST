@@ -6,6 +6,11 @@ spring:
     activate:
       on-profile:
 
+  http:
+    multipart:
+      max-file-size:
+      max-request-size:
+
   jpa:
     hibernate:
       ddl-auto:
@@ -22,6 +27,14 @@ spring:
     url:
     username:
     password:
+
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location:
+        project-id:
+        bucket:
 
 jwt:
   redirect-url:
