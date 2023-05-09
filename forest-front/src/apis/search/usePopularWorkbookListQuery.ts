@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
+import { ISearchWorkbook } from "@/types/Workbook";
 
 const fetcher = (type: string) =>
   workbookAxios
@@ -10,7 +11,7 @@ const fetcher = (type: string) =>
       },
     })
     .then(({ data }) => {
-      const popularList = data.data.workbookList as SearchWorkbook[];
+      const popularList = data.data.workbookList as ISearchWorkbook[];
       return popularList;
     });
 
