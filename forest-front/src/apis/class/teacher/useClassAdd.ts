@@ -4,17 +4,22 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
 import { setClass } from "@/stores/class/classInfo";
+import { IClassList } from "@/types/ClassList";
 
-const fetcher = (name: string) => authAxios.post("/api/class", { name }).then(({ data }) => data);
+const fetcher = (name: string) =>
+  authAxios.post("/api/class", { name }).then(({ data }) => {
+    const classInfo: IClassList = data.data;
+    return classInfo;
+  });
 
 // 클래스 추가 - OK
 const useClassAdd = () => {
   const dispatch = useDispatch();
   const queryClient = useQueryClient();
   return useMutation(fetcher, {
-    onSuccess: (data) => {
+    onSuccess: (classInfo) => {
       dispatch(closeAddClassModal());
-      dispatch(setClass(data.data));
+      dispatch(setClass(classInfo));
       return queryClient.invalidateQueries(queryKeys.CLASS_LIST);
     },
   });
