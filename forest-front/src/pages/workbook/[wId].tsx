@@ -10,6 +10,7 @@ import WorkbookDetailQuestion from "@/features/workbookDetail/WorkbookDetailQues
 import WorkbookDetailQuestionList from "@/features/workbookDetail/WorkbookDetailQuestionList";
 import WorkbookSideReturn from "@/features/workbookDetail/WorkbookDetailSideReturn";
 import WorkbookExportModal from "@/features/workbookDetail/WorkbookExportModal";
+import WorkbookPdfSave from "@/features/workbookDetail/WorkbookPdfSave";
 import WorkbookSelectClassModal from "@/features/workbookDetail/WorkbookSelectClassModal";
 import WorkbookSettingModal from "@/features/workbookDetail/WorkbookSettingModal";
 import { RootState } from "@/stores/store";
@@ -47,6 +48,7 @@ function WorkbookDetail() {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   // 선택한 출제 클래스
   const [selectedClass, setSelectedClass] = useState<number[]>([]);
+  const [isSavePdf, setIsSavePdf] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question: QuestionType) => {
@@ -78,59 +80,64 @@ function WorkbookDetail() {
   }, [questions]);
 
   return (
-    <StyledWorkbookDetailBox>
-      <WorkbookSideReturn />
-      <WorkbookDetailQuestionOverviewAndContentBox>
-        <WorkbookDetailInfoOverview
-          id={workbook?.workbookId}
-          cover={workbook?.workbookImgPath}
-          likeCnt={workbook?.bookmarkCount}
-          usedCnt={workbook?.scrapCount}
-        />
-        <WorkbookDetailQuestion
-          isOriginal={workbook?.isOriginal}
-          question={questions[getCurQuestionIdx()]} /* 현재 선택된 문제 */
-          curQuestion={curQuestion}
-          setCurQuestion={setCurQuestion}
-          questionSumm={questionSummary}
-        />
-      </WorkbookDetailQuestionOverviewAndContentBox>
-      <WorkbookDetailQuestionBtnAndVisibilityBox>
-        <WorkbookDetailBtns setIsExportOpen={setIsExportOpen} questionSummary={questionSummary} />
-        <WorkbookDetailQuestionList
-          curQuestion={curQuestion}
-          setCurQuestion={setCurQuestion}
-          questionCnt={questions.length}
-          questionSumm={questionSummary}
-          setQuestionSum={setQuestionSummary}
-        />
-      </WorkbookDetailQuestionBtnAndVisibilityBox>
+    <div>
+      <StyledWorkbookDetailBox>
+        <WorkbookSideReturn />
+        <WorkbookDetailQuestionOverviewAndContentBox>
+          <WorkbookDetailInfoOverview
+            id={workbook?.workbookId}
+            cover={workbook?.workbookImgPath}
+            likeCnt={workbook?.bookmarkCount}
+            usedCnt={workbook?.scrapCount}
+          />
+          <WorkbookDetailQuestion
+            isOriginal={workbook?.isOriginal}
+            question={questions[getCurQuestionIdx()]} /* 현재 선택된 문제 */
+            curQuestion={curQuestion}
+            setCurQuestion={setCurQuestion}
+            questionSumm={questionSummary}
+          />
+        </WorkbookDetailQuestionOverviewAndContentBox>
+        <WorkbookDetailQuestionBtnAndVisibilityBox>
+          <WorkbookDetailBtns setIsExportOpen={setIsExportOpen} questionSummary={questionSummary} />
+          <WorkbookDetailQuestionList
+            curQuestion={curQuestion}
+            setCurQuestion={setCurQuestion}
+            questionCnt={questions.length}
+            questionSumm={questionSummary}
+            setQuestionSum={setQuestionSummary}
+          />
+        </WorkbookDetailQuestionBtnAndVisibilityBox>
 
-      {/* 내보내기 모달 */}
-      {isExportOpen && (
-        <WorkbookExportModal
-          setIsOpen={setIsExportOpen}
-          setIsSelectClassOpen={setIsSelectClassOpen}
-        />
-      )}
-      {/* 내보내기 모달 */}
-      {isSelectClassOpen && (
-        <WorkbookSelectClassModal
-          setIsOpen={setIsSelectClassOpen}
-          setIsSettingOpen={setIsSettingOpen}
-          selectedClass={selectedClass}
-          setSelectedClass={setSelectedClass}
-        />
-      )}
-      {/* 출제 세팅 모달 */}
-      {isSettingOpen && (
-        <WorkbookSettingModal
-          setIsOpen={setIsSettingOpen}
-          selectedClass={selectedClass}
-          title={workbook.title}
-        />
-      )}
-    </StyledWorkbookDetailBox>
+        {/* 내보내기 모달 */}
+        {isExportOpen && (
+          <WorkbookExportModal
+            setIsOpen={setIsExportOpen}
+            setIsSelectClassOpen={setIsSelectClassOpen}
+            isSavePdf={isSavePdf}
+            setIsSavePdf={setIsSavePdf}
+          />
+        )}
+        {/* 내보내기 모달 */}
+        {isSelectClassOpen && (
+          <WorkbookSelectClassModal
+            setIsOpen={setIsSelectClassOpen}
+            setIsSettingOpen={setIsSettingOpen}
+            selectedClass={selectedClass}
+            setSelectedClass={setSelectedClass}
+          />
+        )}
+        {/* 출제 세팅 모달 */}
+        {isSettingOpen && (
+          <WorkbookSettingModal
+            setIsOpen={setIsSettingOpen}
+            selectedClass={selectedClass}
+            title={workbook.title}
+          />
+        )}
+      </StyledWorkbookDetailBox>
+      {isSavePdf && <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />}
+    </div>
   );
 }
 

@@ -90,3 +90,7 @@ export const StyledMemoListItemTopBox = styled.div`
     }
   }
 `;
+
+export const MemoContentText = styled.span`
+  word-break: break-all;
+`;
