@@ -85,6 +85,7 @@ function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectCl
           </NotOriginalParagraph>
         )}
         <WorkbookExportRadioGroup
+          isDeploy={isDeploy}
           isOriginal={isOriginal}
           exports={exports}
           value={value}
