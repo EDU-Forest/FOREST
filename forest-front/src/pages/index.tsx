@@ -1,17 +1,19 @@
 import { FullScreen } from "@/styles/container";
 import { ForestLargeLogo, AuthSection } from "../features/home/index.style";
 import KakaoLogin from "@/features/home/KakaoLogin";
-import { useState } from "react";
-import LoginModal from "@/features/home/Login";
 import { useRouter } from "next/router";
 import EmailAuth from "@/features/home/EmailAuth";
-import UserForm from "@/features/home/UserForm";
-import Spinner from "@/components/Spinner/Spinner";
 import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
+import { useEffect } from "react";
 
 function Home() {
   const router = useRouter();
-  const [modalState, setModalState] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== undefined && window.innerWidth < 768) {
+      router.push("/mobile");
+    }
+  }, []);
 
   const handleModal = (text: string) => {
     // setModalState(text);
@@ -24,10 +26,7 @@ function Home() {
 
   return (
     <FullScreen isColumn={true}>
-      {/* {modalState === "signup" && <UserForm type={"signup"} onClose={() => handleModal("")} />} */}
-      {/* {modalState === "login" && <LoginModal onClose={() => handleModal("")} />} */}
       <AuthSection>
-        <Spinner />
         <ForestLargeLogo onClick={goToDash} src={"/images/Forest_Logo.png"} />
         <KakaoLogin />
         <EmailAuth handleModal={handleModal} />
