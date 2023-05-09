@@ -72,9 +72,8 @@ function WorkbookDetail() {
     setQuestionSummary(getQuestionSummary);
 
     // questions가 초기화된 후에 curQuestion 지정
-    // 1) questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
-    // 2) 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, questions 응답이 성공했을 때만 수행
-    if (curQuestion === 0 && questions.length !== 0 && isSuccess) {
+    // 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, 현재 문제집일 때만 수형
+    if (curQuestion === 0 && Number(wId) === workbook.workbookId) {
       setCurQuestion(questions[0].problemId);
     }
   }, [questions]);
