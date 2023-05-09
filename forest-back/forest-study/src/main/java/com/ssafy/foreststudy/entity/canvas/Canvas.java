@@ -14,4 +14,9 @@ public class Canvas {
     @Id
     private Long studentStudyProblemId;
     private List<Line> line;
+
+    public void createCanvas(Long studentStudyProblemId, List<Line> line) {
+        this.studentStudyProblemId = studentStudyProblemId;
+        this.line = line;
+    }
 }

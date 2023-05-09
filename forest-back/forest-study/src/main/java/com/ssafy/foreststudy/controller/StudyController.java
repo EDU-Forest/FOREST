@@ -41,15 +41,15 @@ public class StudyController {
     @GetMapping("/recent/{classId}")
     public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudyRecent(HttpServletRequest request, @PathVariable("classId") Long classId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getStudyRecent(classId));
     }
 
-    @ApiOperation(value = "시험 결과 조회", notes = "클릭한 클래스 시험 결과를 조회합니다.")
+    @ApiOperation(value = "(선생님) 시험 결과 조회", notes = "클릭한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/{studyId}")
     public ResponseEntity<ResponseSuccessDto<?>> getStudyResult(HttpServletRequest request, @PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getStudyResult(studyId));
     }
 
@@ -57,7 +57,7 @@ public class StudyController {
     @GetMapping("/class/result/question/{studyId}")
     public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudyResultQuestionResponseDto>>>> getStudyResultQuestion(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getStudyResultQuestion(studyId));
     }
 
@@ -65,7 +65,7 @@ public class StudyController {
     @GetMapping("/class/result/all/{studyId}")
     public ResponseEntity<ResponseSuccessDto<GetStudyResultAllResponseDto>> getStudyResultAll(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getStudyResultAll(studyId));
     }
 
@@ -73,7 +73,7 @@ public class StudyController {
     @GetMapping("/class/result/student/{studyId}")
     public ResponseEntity<ResponseSuccessDto<Map<String, List<GetStudyResultStudentResponseDto>>>> getStudyResultStudent(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getStudyResultStudent(studyId));
     }
 
@@ -145,7 +145,7 @@ public class StudyController {
     @GetMapping("/descript/{studyId}")
     public ResponseEntity<ResponseSuccessDto<?>> getDescriptionList(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException, SSLException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getDescriptionList(studyId));
     }
 
@@ -153,7 +153,7 @@ public class StudyController {
     @PatchMapping("/descript")
     public ResponseEntity<ResponseSuccessDto<PatchResponseDto>> patchExitStudy(HttpServletRequest request,@RequestBody @Valid PatchDescriptionListRequestDto patchDescriptionListRequestDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.patchDescription(patchDescriptionListRequestDto));
     }
 
@@ -161,7 +161,7 @@ public class StudyController {
     @PatchMapping("/exit/{studyId}")
     public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postExitStudy(HttpServletRequest request,@PathVariable("studyId") Long studyId) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
+        jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.postExitStudy(studyId));
     }
 

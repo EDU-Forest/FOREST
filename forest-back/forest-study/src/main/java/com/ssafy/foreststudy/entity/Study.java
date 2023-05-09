@@ -58,4 +58,8 @@ public class Study {
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void updateEndTime(LocalDateTime endTime){
+        this.endTime = endTime;
+    }
 }

@@ -29,15 +29,18 @@ public class CanvasService {
     private final UserRepository userRepository;
 
     /* 캔버스 풀이 저장 */
-    public ResponseSuccessDto<PostResponseDto> postCanvas(Canvas canvas, Long userId) {
+    public ResponseSuccessDto<PostResponseDto> postCanvas(GetCanvasResponseDto getCanvasResponseDto, Long userId) {
 
         /* 존재하지 않는 개인 시험 문제 결과 ID 체크 */
-        StudentStudyProblemResult studentStudyProblemResult = studentStudyProblemResultRepository.findAllById(canvas.getStudentStudyProblemId())
+        StudentStudyProblemResult studentStudyProblemResult = studentStudyProblemResultRepository.findAllById(getCanvasResponseDto.getStudentStudyProblemId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_STUDENT_RESULT_PROBLEM_NOT_FOUND));
-        canvasRepository.deleteCanvasByStudentStudyProblemId(canvas.getStudentStudyProblemId());
+        canvasRepository.deleteCanvasByStudentStudyProblemId(getCanvasResponseDto.getStudentStudyProblemId());
 
-
+        /* 캔버스 생성 */
+        Canvas canvas = new Canvas();
+        canvas.createCanvas(getCanvasResponseDto.getStudentStudyProblemId(),getCanvasResponseDto.getLine());
         canvasRepository.save(canvas);
+
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));

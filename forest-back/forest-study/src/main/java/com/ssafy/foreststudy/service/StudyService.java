@@ -21,6 +21,7 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 import javax.net.ssl.*;
@@ -67,6 +68,7 @@ public class StudyService {
                 .totalStudent(cs.getTotalStudent())
                 .participantStudent(cs.getParticipantStudent())
                 .takeRate(cs.getTakeRate())
+                .isFinished(cs.getIsFinished())
                 .build();
 
         return getStudyRecentResponseDto;
@@ -229,8 +231,6 @@ public class StudyService {
 
     /* 최근 진행한 시험 결과 조회 */
     public ResponseSuccessDto<GetStudyIdResponseDto> getStudyRecent(Long classId) {
-        classRepository.findById(classId)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
 
         List<ClassStudyResult> csList = classStudyResultRepository.findTop1ByClassIdOrderByEndTime(classId);
 
@@ -245,7 +245,6 @@ public class StudyService {
 
         String schedule = getScheduleType(cs);
 
-        // GetStudyRecentResponseDto getStudyRecentResponseDto = getStudyInfoResponse(cs, schedule);
         GetStudyIdResponseDto getStudyRecentResponseDto = GetStudyIdResponseDto.builder()
                 .studyId(cs.getStudy().getId())
                 .build();
@@ -411,9 +410,6 @@ public class StudyService {
     /* (학생) 최근 진행한 문제집 성적 조회 */
     public ResponseSuccessDto<GetStudyIdResponseDto> getStudentRecent(Long classId, Long userId) {
 
-        classRepository.findById(classId)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_NOT_FOUND));
-
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -546,10 +542,6 @@ public class StudyService {
         /* 존재하지 않는 유저 ID 체크 */
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
-
-        /* 해당 유저 클래스 회원이 아닌 경우 체크 */
-        classUserRepository.findAllByClassesAndUser(study.getClasses(), user)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_IN_CLASS));
 
         /* 재입장 여부 체크 */
         Optional<StudentStudyResult> ssr = studentStudyResultRepository.findAllByStudyAndUser(study, user);
@@ -854,6 +846,10 @@ public class StudyService {
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
 
+        LocalDateTime now = LocalDateTime.now();
+        if (study.getEndTime().isAfter(now))
+            study.updateEndTime(now);
+
         /* 서술형 문항 개수 */
         int descriptNum = 0;
 
@@ -944,14 +940,17 @@ public class StudyService {
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
-        GetJaccardSimilarityResponseDto similarity = webClient.get()
+        Mono<GetJaccardSimilarityResponseDto> response = webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/similarity")
                         .queryParam("sentence1", s1)
                         .queryParam("sentence2", s2)
                         .build())
                 .retrieve()
-                .bodyToMono(GetJaccardSimilarityResponseDto.class)
-                .block();
+                .bodyToMono(GetJaccardSimilarityResponseDto.class);
+
+        GetJaccardSimilarityResponseDto similarity = response.block();
+
+        assert similarity != null;
 
         return similarity.getSimilarity();
     }

@@ -29,10 +29,10 @@ public class CanvasController {
 
     @ApiOperation(value = "캔버스 풀이 저장", notes = "캔버스 풀이를 저장합니다.")
     @PostMapping()
-    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postCanvas(HttpServletRequest request, @RequestBody @Valid Canvas studentStudyProblem) throws UnsupportedEncodingException {
+    public ResponseEntity<ResponseSuccessDto<PostResponseDto>> postCanvas(HttpServletRequest request, @RequestBody @Valid GetCanvasResponseDto getCanvasResponseDto) throws UnsupportedEncodingException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        return ResponseEntity.ok(canvasService.postCanvas(studentStudyProblem,userId));
+        return ResponseEntity.ok(canvasService.postCanvas(getCanvasResponseDto,userId));
     }
 
     @ApiOperation(value = "캔버스 풀이 조회", notes = "캔버스 풀이를 조회합니다.")

@@ -1,6 +1,5 @@
 package com.ssafy.foreststudy.dto.study;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -26,4 +25,5 @@ public class GetStudyRecentResponseDto {
     private int totalStudent;
     private int participantStudent;
     private int takeRate;
+    private Boolean isFinished;
 }

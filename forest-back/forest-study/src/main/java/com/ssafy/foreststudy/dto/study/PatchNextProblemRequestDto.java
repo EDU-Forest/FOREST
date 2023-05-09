@@ -1,7 +1,6 @@
 package com.ssafy.foreststudy.dto.study;
 
 import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
-import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
