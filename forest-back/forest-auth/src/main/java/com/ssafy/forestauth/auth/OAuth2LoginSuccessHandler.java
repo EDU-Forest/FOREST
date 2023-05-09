@@ -1,8 +1,10 @@
 package com.ssafy.forestauth.auth;
 
+import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestauth.auth.jwt.JwtProvider;
 import com.ssafy.forestauth.entity.User;
 import com.ssafy.forestauth.enumeration.EnumUserRoleStatus;
+import com.ssafy.forestauth.enumeration.response.ErrorCode;
 import com.ssafy.forestauth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +61,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             response.addHeader("Set-Cookie", refreshCookie.toString());
 
             String targetUrl;
-            User user = userRepository.findById(userId).get();
+
+            User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
             log.info("user : {}", user.getName());
             user.updateRefreshToken(refreshToken);
             log.info("user's refresh token : {}", user.getRefreshToken());
