@@ -575,13 +575,12 @@ public class WorkbookServiceImpl implements WorkbookService {
             int itemListSize = 0;
             if (checked == -1) continue;
             else {
-
                 List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(count).getId());
                 itemListSize = itemList.size();
 
                 for (Item item : itemList) {
                     Item itemCopy = Item.builder()
-                            .problem(problems.get(checked))
+                            .problem(problems.get(count))
                             .no(item.getNo())
                             .content(item.getContent())
                             .isImage(item.getIsImage())
