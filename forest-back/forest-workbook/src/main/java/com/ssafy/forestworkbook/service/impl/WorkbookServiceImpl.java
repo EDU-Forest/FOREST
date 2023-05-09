@@ -88,22 +88,22 @@ public class WorkbookServiceImpl implements WorkbookService {
         // TODO 출제한 문제집
         else if (search.equals("use")) {
             studyRepository.findAllByUserId(userId);
-//            Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
-//            Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
-//                    .workbookId(s.getWorkbook().getId())
-//                    .isOriginal(s.getWorkbook().getCreator().getId() == userId)
-//                    .isPublic(s.getWorkbook().getIsPublic())
-//                    .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, s.getWorkbook().getId())
-//                            .orElse(null) != null)
-//                    .title(s.getWorkbook().getTitle())
-//                    .workbookImgPath(s.getWorkbook().getWorkbookImg().getPath())
-//                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(s.getWorkbook().getId()))
-//                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(s.getWorkbook().getId()))
-//                    .build());
-//
-//            TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
-//            return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
-            return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+            Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
+            Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
+                    .workbookId(s.getWorkbook().getId())
+                    .isOriginal(s.getWorkbook().getCreator().getId() == userId)
+                    .isPublic(s.getWorkbook().getIsPublic())
+                    .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, s.getWorkbook().getId())
+                            .orElse(null) != null)
+                    .title(s.getWorkbook().getTitle())
+                    .workbookImgPath(s.getWorkbook().getWorkbookImg().getPath())
+                    .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(s.getWorkbook().getId()))
+                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(s.getWorkbook().getId()))
+                    .build());
+
+            TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
+            return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+//            return responseUtil.successResponse( ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
         // 내가 만든 문제집
