@@ -1,17 +1,26 @@
-// 문제 받을 때 답까지 줘서 필요없을 것 같습니다.
+import studyAxios from "@/utils/customAxios/studyAxios";
+import { useQuery } from "react-query";
+import * as queryKeys from "@/constants/queryKeys";
+import { IQuestionResult } from "@/types/Exam";
 
-// import studyAxios from "@/utils/customAxios/studyAxios";
-// import { useQuery } from "react-query";
-// import * as queryKeys from "@/constants/queryKeys"
+interface Iprops {
+  studyId: number;
+  setQuestionResult: (questionResult: IQuestionResult[]) => void;
+}
 
-// const fetcher = (studyId: number) =>
-//   studyAxios.get(`/api/study/student/result/question/${studyId}`).then(({data}) => {console.log(data); return data})
+const fetcher = (studyId: number) =>
+  studyAxios.get(`/api/study/student/result/question/${studyId}`).then(({ data }) => {
+    console.log(data);
+    return data;
+  });
 
-// const useGetQuestionAnswer = (studyId: number) => {
-//   return useQuery(queryKeys.STUDY_QUESTION_ANSWER, () => fetcher(studyId), {
-//     refetchOnWindowFocus: false,
-//     onSuccess: () => {
+const useGetQuestionAnswer = ({ studyId, setQuestionResult }: Iprops) => {
+  return useQuery(queryKeys.STUDY_QUESTION_ANSWER, () => fetcher(studyId), {
+    refetchOnWindowFocus: false,
+    onSuccess: (data) => {
+      setQuestionResult(data.data.studentStudyProblemResultList);
+    },
+  });
+};
 
-//     }
-//   })
-// }
+export default useGetQuestionAnswer;

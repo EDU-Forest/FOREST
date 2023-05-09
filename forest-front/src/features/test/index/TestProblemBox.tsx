@@ -37,7 +37,7 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
   const canvasMutate = useCanvasPost().mutate;
-  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
@@ -94,7 +94,7 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
           {type === "OX" && <TestProblemOXAnswer minutes={minutes} seconds={seconds} />}
           {type === "SUBJECTIVE" && (
             <StyledTestProblemShortAnswer
-              disabled={minutes <= 0 && seconds <= 0}
+              disabled={isSubmitted}
               value={userAnswer ? userAnswer : ""}
               onChange={onChange}
               placeholder="정답을 입력하세요"
@@ -102,13 +102,13 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
           )}
           {type === "DESCRIPT" && (
             <StyledTestProblemEssayAnswer
-              disabled={minutes <= 0 && seconds <= 0}
+              disabled={isSubmitted}
               value={userAnswer ? userAnswer : ""}
               onChange={onChange}
               placeholder="정답을 입력하세요"
             />
           )}
-          {minutes <= 0 && seconds <= 0 && (
+          {isSubmitted && (
             <TestProblemAnswerBox>
               {type === "DESCRIPT" ? <div>핵심 단어</div> : <div>정답</div>}
               <div>{problemAnswer}</div>
