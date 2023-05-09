@@ -14,7 +14,7 @@ import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import Loading from "@/components/Loading/Loading";
-import { ClassList } from "@/types/ClassList";
+import { IClassList } from "@/types/ClassList";
 
 interface Iprops {
   nowClassId: number;
@@ -35,7 +35,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
           {data?.length > 0 ? (
             <>
               <ClassSelectDropdownEach>
-                {data?.map((item: ClassList) => (
+                {data?.map((item: IClassList) => (
                   <ClassSelectDropdownEachItem
                     key={item.classId}
                     onClick={() => dispatch(setClass(item))}
