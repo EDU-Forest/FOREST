@@ -805,10 +805,12 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     public void ocrTest(MultipartFile file) throws IOException {
-        String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
+        // Google Cloud Storage에 저장될 파일 이름
+        String uuid = UUID.randomUUID().toString();
         System.out.println(uuid);
 
-        String ext = file.getContentType(); // 파일의 형식 ex) JPG
+        // 파일의 형식 ex) JPG
+        String ext = file.getContentType();
 
         // Cloud에 이미지 업로드
         BlobInfo blobInfo = storage.create(
@@ -819,10 +821,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         );
 
         String filePath = "gs://" + bucketName + "/" + uuid;
-
-        gs://forest_ocr_bucket/10d6f534-d981-4e6e-9cc7-429ec609e805
-        System.out.println(filePath);
-//        System.out.println(aa.toString());
 
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -837,9 +835,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         // once, and can be reused for multiple requests. After completing all of your requests, call
         // the "close" method on the client to safely clean up any remaining background resources.
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-            System.out.println("여기2");
             BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-            System.out.println("여기3");
             List<AnnotateImageResponse> responses = response.getResponsesList();
             ArrayList<Object> originList = new ArrayList<>();
 
@@ -862,11 +858,12 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         String path = imgToUrl(file);
-        String filePath = "gs://" + path;
+//        String filePath = "gs://" + path;
+        String filePath = "gs://forest_ocr_bucket/046a5cf3-789f-4e3c-929f-fdbb94f6cee7";
 
         log.info("{}", filePath);
 

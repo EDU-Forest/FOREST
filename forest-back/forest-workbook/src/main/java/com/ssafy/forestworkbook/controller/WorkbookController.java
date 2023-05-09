@@ -214,6 +214,18 @@ public class WorkbookController {
     public ResponseSuccessDto<?> ocrImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(1);
+        return workbookService.ocrImg(userId, file);
+    }
+
+    @PostMapping ("/ocr/pdf")
+    @ApiOperation(value = "pdf ocr", notes = "pdf를 대상으로 OCR을 실시합니다.")
+    public ResponseSuccessDto<?> ocrPdf(
+            HttpServletRequest request,
+            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("{}", userId);
