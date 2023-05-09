@@ -17,11 +17,11 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     int countByWorkbook(Workbook workbook);
     Optional<Study> findTop1ByWorkbookId(Long workbookId);
 
-    @Query (value = "select s from Study s " +
+    @Query (value = "select s.workbook from Study s " +
             "join fetch s.user u " +
             "join fetch s.workbook w " +
             "where s.user.id = :userId " +
-            "group by s.workbook.id",
+            "group by s.workbook",
             countQuery = "select count(s) from Study s where s.user.id = :userId group by s.workbook")
     Page<Study> findAllByUserGroupByWorkbookId(Long userId, Pageable pageable);
 
