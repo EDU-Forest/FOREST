@@ -21,7 +21,6 @@ public class SecurityConfig implements WebMvcConfigurer {
         return http
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
-                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/")
                 .permitAll()
