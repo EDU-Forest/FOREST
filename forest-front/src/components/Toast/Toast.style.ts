@@ -41,13 +41,14 @@ export const ToastBox = styled.div`
 
     fill: ${({ theme }) => theme.colors.Lime[600]};
   }
-`;
 
-export const ToastTitleBox = styled.div`
-  display: flex;
-  flex-direction: column;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-  gap: 4px;
+    gap: 4px;
+  }
 
   /* sub title */
   p:nth-child(1) {
@@ -55,7 +56,7 @@ export const ToastTitleBox = styled.div`
     font-size: 14px;
   }
   /* title */
-  p:nth-child(2) {
+  p:last-child {
     color: white;
     font-size: 1rem;
   }

@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react";
-import { ToastTitleBox } from "./Toast.style";
+import { ToastBox } from "./Toast.style";
 
 function Toast({ children }: PropsWithChildren) {
-  return <ToastTitleBox>{children}</ToastTitleBox>;
+  return <ToastBox>{children}</ToastBox>;
 }
 
 export default Toast;
