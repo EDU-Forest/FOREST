@@ -813,11 +813,11 @@ public class WorkbookServiceImpl implements WorkbookService {
 //                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         String path = fileToUrl(file);
-//        String filePath = "gs://" + path;
+        String filePath = "gs://" + path;
 
 //        String filePath = "gs://forest_ocr_bucket/046a5cf3-789f-4e3c-929f-fdbb94f6cee7";
 //        String filePath = "gs://forest_ocr_bucket/0f794bc0-a6e6-4abf-b98c-147731dee552";
-        String filePath = "gs://forest_ocr_bucket/427f9ffb-1e7d-4f29-a575-bbc27f10b543";
+//        String filePath = "gs://forest_ocr_bucket/427f9ffb-1e7d-4f29-a575-bbc27f10b543";
 
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -920,16 +920,10 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
-    /**
-     * Performs document text OCR with PDF/TIFF as source files on Google Cloud Storage.
-     *
-     * @param gcsSourcePath The path to the remote file on Google Cloud Storage to detect document
-     *     text on.
-     * @param gcsDestinationPath The path to the remote file on Google Cloud Storage to store the
-     *     results on.
-     * @throws Exception on errors while closing the client.
-     */
     public void detectDocumentsGcs(MultipartFile file) throws Exception {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
         String uuid = UUID.randomUUID().toString();
         String path = fileToUrl(file);
 
