@@ -596,14 +596,14 @@ public class StudyService {
         if (patchNextProblemRequestDto.getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
             spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
         } else {
+            /* 빈 답안 제출 시 */
+            if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+                spr.updateStudentStudyProblemResult(null, 0, false, true);
+            }
             /* 정답이 맞을 때 */
-            if (patchNextProblemRequestDto.getUserAnswer().equals(spr.getProblemList().getProblem().getAnswer())) {
+            else if (patchNextProblemRequestDto.getUserAnswer().equals(spr.getProblemList().getProblem().getAnswer())) {
                 int partPoint = spr.getProblemList().getProblem().getPoint();
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), partPoint, true, true);
-            }
-            /* 빈 답안 제출 시 */
-            else if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
-                spr.updateStudentStudyProblemResult(null, 0, false, true);
             } else {
                 spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, true);
             }
