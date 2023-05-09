@@ -15,13 +15,14 @@ import { useDispatch } from "react-redux";
 import { openAddStudentModal } from "@/stores/class/classModal";
 import DeleteStudentModal from "./DeleteStudentModal";
 import useClassStudentListQuery from "@/apis/class/teacher/useClassStudentListQuery";
+import { IStudent } from "@/types/Student";
 
 export default function ClassStudentList() {
   const dispatch = useDispatch();
   const classId = useSelector((state: RootState) => state.class.nowClassId);
   const { isOpenAddStudentModal } = useSelector((state: RootState) => state.classModal);
   const { isOpenDeleteStudentModal } = useSelector((state: RootState) => state.classModal);
-  const studentList: Student[] = useClassStudentListQuery(classId).data;
+  const studentList: IStudent[] = useClassStudentListQuery(classId).data;
 
   return (
     <>
