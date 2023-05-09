@@ -10,9 +10,10 @@ import { useDispatch } from "react-redux";
 import { openDeleteStudentModal } from "@/stores/class/classModal";
 import { useEffect } from "react";
 import { setDeleteStudentNum } from "@/stores/class/classInfo";
+import { IStudent } from "@/types/Student";
 
 interface Iprops {
-  studentInfo: Student;
+  studentInfo: IStudent;
 }
 
 export default function StudentInfoCard({ studentInfo }: Iprops) {
