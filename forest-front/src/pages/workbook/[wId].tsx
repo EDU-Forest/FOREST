@@ -1,4 +1,5 @@
 import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
+import Toast from "@/components/Toast/Toast";
 import {
   StyledWorkbookDetailBox,
   WorkbookDetailQuestionBtnAndVisibilityBox,
@@ -19,6 +20,7 @@ import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { AiOutlineShareAlt } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
@@ -48,7 +50,9 @@ function WorkbookDetail() {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   // 선택한 출제 클래스
   const [selectedClass, setSelectedClass] = useState<number[]>([]);
+
   const [isSavePdf, setIsSavePdf] = useState(false);
+  const [isReleaseSuccess, setIsReleaseSuccess] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question: QuestionType) => {
@@ -77,6 +81,13 @@ function WorkbookDetail() {
       setCurQuestion(questions[0].problemId);
     }
   }, [questions]);
+
+  useEffect(() => {
+    // 1.5초 후 토스트 팝업 사라짐
+    isReleaseSuccess && setTimeout(() => {
+      setIsReleaseSuccess(false);
+    }, 1500);
+  }, [isReleaseSuccess]);
 
   return (
     <div>
@@ -115,6 +126,7 @@ function WorkbookDetail() {
             setIsSelectClassOpen={setIsSelectClassOpen}
             isSavePdf={isSavePdf}
             setIsSavePdf={setIsSavePdf}
+            setIsReleaseSuccess={setIsReleaseSuccess}
           />
         )}
         {/* 내보내기 모달 */}
@@ -136,6 +148,14 @@ function WorkbookDetail() {
         )}
       </StyledWorkbookDetailBox>
       {isSavePdf && <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />}
+      {isReleaseSuccess && (
+        <Toast>
+          <AiOutlineShareAlt />
+          <div>
+            <p>배포 완료</p>
+          </div>
+        </Toast>
+      )}
     </div>
   );
 }
