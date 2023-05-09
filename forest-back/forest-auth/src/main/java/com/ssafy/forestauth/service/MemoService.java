@@ -30,7 +30,7 @@ public class MemoService {
 
     public ResponseSuccessDto<List<SelectMemoResponseDto>> selectMemo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
-        List<Memo> memoList = memoRepository.findAllByUser(user);
+        List<Memo> memoList = memoRepository.findAllByUserOrderByCreatedDateDesc(user);
 
         List<SelectMemoResponseDto> memos = new ArrayList<>();
         for (Memo memo : memoList) {
