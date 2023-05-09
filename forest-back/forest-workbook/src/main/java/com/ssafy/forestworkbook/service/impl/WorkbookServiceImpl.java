@@ -1,8 +1,9 @@
 package com.ssafy.forestworkbook.service.impl;
 
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
+import com.google.api.gax.longrunning.OperationFuture;
+import com.google.cloud.storage.*;
 import com.google.cloud.vision.v1.*;
+import com.google.protobuf.util.JsonFormat;
 import com.ssafy.forest.exception.CustomException;
 import com.ssafy.forestworkbook.dto.common.response.ResponseSuccessDto;
 import com.ssafy.forestworkbook.dto.workbook.request.*;
@@ -27,6 +28,9 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -69,7 +73,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     userWorkbookRepository.findAllByUserIdANdWorkbookIdAndIsBookmarkedOrIsScraped(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = userWorkbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getWorkbook().getId())
-                    .isOriginal(w.getWorkbook().getCreator().getId() == userId)
+                    .isOriginal(checkIsOriginal(w.getWorkbook().getCreator().getId(), userId))
                     .isPublic(w.getWorkbook().getIsPublic())
                     .isBookmarked(w.getIsBookmarked())
                     .title(w.getWorkbook().getTitle())
@@ -107,7 +111,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             Page<Workbook> workbooks = workbookRepository.findAllByCreatorId(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getId())
-                    .isOriginal(w.getCreator().getId() == userId)
+                    .isOriginal(checkIsOriginal(w.getCreator().getId(), userId))
                     .isPublic(w.getIsPublic())
                     .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, w.getId())
                             .orElse(null) != null)
@@ -138,7 +142,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         ClassEntity classEntity = classRepository.findById(classId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_FOUND));
 
-        if (userId != classEntity.getOwner().getId()) {
+        if (!userId.equals(classEntity.getOwner().getId())) {
             ClassUser classUser = classUserRepository.findByClassesAndUser(classEntity, user)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.CLASS_NOT_BELONG_TO));
         }
@@ -179,7 +183,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 공개되지 않았으면서 내가 만든 문제집이 아닌 경우 -> 조회 불가능
-        if (workbook.getCreator().getId() != userId && !workbook.getIsPublic())
+        if (!workbook.getCreator().getId().equals(userId) && !workbook.getIsPublic())
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_LIST);
 
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
@@ -230,7 +234,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .isDeploy(workbook.getIsDeploy())
                 .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, workbook.getId())
                         .orElse(null) != null)
-                .isOriginal(workbook.getCreator().getId() == userId)
+                .isOriginal(checkIsOriginal(workbook.getCreator().getId(), userId))
                 .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
                 .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
                 .build();
@@ -283,7 +287,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .isDeploy(false)
                 .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbook.getId())
                         .orElse(null) != null)
-                .isOriginal(workbook.getCreator().getId() == userId)
+                .isOriginal(checkIsOriginal(workbook.getCreator().getId(), userId))
                 .volume(workbook.getVolume())
                 .bookmarkCount(0)
                 .scrapCount(0)
@@ -303,7 +307,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         WorkbookImg workbookImg = workbookImgRepository.findById(workbookUpdateInfoDto.getWorkbookInfo().getWorkbookImgId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_IMG_NOT_FOUND));
 
-        if (userId != workbook.getCreator().getId()) {
+        if (!userId.equals(workbook.getCreator().getId())) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_UPADATE);
         }
 
@@ -332,7 +336,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 내 문제집이 아닌 경우 - 북마크 삭제
-        if (user.getId() != workbook.getCreator().getId()) {
+        if (!user.getId().equals(workbook.getCreator().getId()))  {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
                     .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_GET_USERWORKBOOK));
             userWorkbook.updateIsBookmarked(false);
@@ -364,7 +368,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 내가 만든 문제집만 공개 여부 설정 가능
-        if (workbook.getCreator().getId() != userId) {
+        if (!workbook.getCreator().getId().equals(userId)) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
@@ -406,7 +410,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
 
         // 내 문제집만 출제 여부 변경
-        if (userId == workbook.getCreator().getId()) {
+        if (userId.equals(workbook.getCreator().getId()))  {
             workbook.changeIsExecuted(true);
         }
 
@@ -475,7 +479,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 내가 만든 문제집만 배포 가능
-        if (workbook.getCreator().getId() != userId) {
+        if (!workbook.getCreator().getId().equals(userId)) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
@@ -500,7 +504,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
         // 내가 만든 문제집만 사본 생성 가능
-        if (workbook.getCreator().getId() != userId)
+        if (!workbook.getCreator().getId().equals(userId))
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_COPY);
 
         Workbook workbookCopy = Workbook.builder()
@@ -513,7 +517,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         workbookRepository.save(workbookCopy);
 
-        if (workbookCopy.getCreator().getId() != userId) {
+        if (!workbookCopy.getCreator().getId().equals(userId)) {
             UserWorkbook userWorkbook = UserWorkbook.builder()
                     .user(user)
                     .workbook(workbookCopy)
@@ -619,7 +623,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 .isDeploy(false)
                 .iSBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, workbook.getId())
                         .orElse(null) != null)
-                .isOriginal(userId == workbook.getCreator().getId())
+                .isOriginal(checkIsOriginal(userId, workbook.getCreator().getId()))
                 .bookmarkCount(0)
                 .scrapCount(0)
                 .build();
@@ -684,7 +688,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(problemUpdateInfoDto.getWorkbookId())
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
-        if (userId != workbook.getCreator().getId()) {
+        if (!userId.equals(workbook.getCreator().getId())) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
@@ -795,7 +799,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        String path = imgToUrl(file);
+        String path = fileToUrl(file);
 
         ImagePathDto imagePathDto = ImagePathDto.builder()
                 .path("https://storage.googleapis.com/" + path)
@@ -804,68 +808,16 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
-    public void ocrTest(MultipartFile file) throws IOException {
-        // Google Cloud Storage에 저장될 파일 이름
-        String uuid = UUID.randomUUID().toString();
-        System.out.println(uuid);
-
-        // 파일의 형식 ex) JPG
-        String ext = file.getContentType();
-
-        // Cloud에 이미지 업로드
-        BlobInfo blobInfo = storage.create(
-                BlobInfo.newBuilder(bucketName, uuid)
-                        .setContentType(ext)
-                        .build(),
-                file.getInputStream()
-        );
-
-        String filePath = "gs://" + bucketName + "/" + uuid;
-
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-
-        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(filePath).build();
-
-        Image img = Image.newBuilder().setSource(imgSource).build();
-        Feature feat = Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build();
-        AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-        requests.add(request);
-
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. After completing all of your requests, call
-        // the "close" method on the client to safely clean up any remaining background resources.
-        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-            List<AnnotateImageResponse> responses = response.getResponsesList();
-            ArrayList<Object> originList = new ArrayList<>();
-
-            for (AnnotateImageResponse res : responses) {
-                if (res.hasError()) {
-                    System.out.format("Error: %s%n", res.getError().getMessage());
-                    throw new IllegalArgumentException("실패");
-                }
-
-                // 사용가능한 annotations 전체 목록 참고 : http://g.co/cloud/vision/docs
-                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-                    // 데이터를 배열에 add
-                    originList.add(annotation.getDescription());
-                }
-            }
-            // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
-            String[] txt = originList.get(0).toString().split("\\n");
-            System.out.println(txt.toString());
-        }
-    }
-
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
 //        User user = userRepository.findById(userId)
 //                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        String path = imgToUrl(file);
+        String path = fileToUrl(file);
 //        String filePath = "gs://" + path;
-        String filePath = "gs://forest_ocr_bucket/046a5cf3-789f-4e3c-929f-fdbb94f6cee7";
 
-        log.info("{}", filePath);
+//        String filePath = "gs://forest_ocr_bucket/046a5cf3-789f-4e3c-929f-fdbb94f6cee7";
+//        String filePath = "gs://forest_ocr_bucket/0f794bc0-a6e6-4abf-b98c-147731dee552";
+        String filePath = "gs://forest_ocr_bucket/427f9ffb-1e7d-4f29-a575-bbc27f10b543";
 
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -887,19 +839,212 @@ public class WorkbookServiceImpl implements WorkbookService {
                     throw new IllegalArgumentException("실패");
                 }
 
+                System.out.println("시작");
+                System.out.format("Text: %s%n", res.getTextAnnotationsList().get(0).getDescription());
+
                 // 사용가능한 annotations 전체 목록 참고 : http://g.co/cloud/vision/docs
                 for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
+
+                    System.out.format("Text: %s%n", annotation.getDescription());
+                    System.out.println("??????????");
+                    System.out.format("Position : %s%n", annotation.getBoundingPoly());
+                    System.out.println("--------------");
                     // 데이터를 배열에 add
                     originList.add(annotation.getDescription());
                 }
             }
             // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
             String[] txt = originList.get(0).toString().split("\\n");
+            int j = 0;
+            boolean isMultiple = false;
+            boolean isTitle = false;
+
+            for (int i = 0; i < txt.length; i++) {
+                String temp = txt[i];
+
+                // 점수 확인
+                if (temp.contains("[")) {
+                    int start = temp.indexOf('[');
+                    int end = temp.indexOf(']');
+                    System.out.println("점수 : " + temp.substring(start+1, end));
+                }
+
+                // 문제 확인
+                if (!isTitle && temp.contains("?")) {
+                    System.out.println("문제 제목임");
+                }
+
+
+                // 문장에 숫자 포함 여부
+                if (temp.matches(".*[0-9].*")) {
+                    System.out.println("숫자가 포함됩니당.");
+
+                    // 숫자로 시작여부
+                    if (temp.substring(0, 1).matches("^[0-9]+$")) {
+                        System.out.println("번호입니당");
+
+                        // 문제 번호
+                        if (j == 0) {
+                            int end = temp.indexOf('.');
+                            System.out.println(end);
+//                            System.out.println("번호: " + temp.substring(0, end));
+                            j++;
+                        }
+
+                        // 항목 번호
+                        else if (j > 0 && txt.length - i <= 5){
+                            System.out.println("항목 : " + temp);
+                            isMultiple = true;
+                        }
+                    }
+
+                    // 중간에 항목이거나 지문 중 숫자이거나
+                    else {
+                        
+                    }
+                }
+
+
+
+                // 마지막 내용 숫자 인식 안될 경우
+                if (isMultiple && i == txt.length - 1) {
+                    System.out.println("마지막");
+                    System.out.println(temp);
+                }
+            }
             System.out.println(Arrays.toString(txt));
             return responseUtil.successResponse(Arrays.toString(txt), ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
+        }
+    }
+
+    /**
+     * Performs document text OCR with PDF/TIFF as source files on Google Cloud Storage.
+     *
+     * @param gcsSourcePath The path to the remote file on Google Cloud Storage to detect document
+     *     text on.
+     * @param gcsDestinationPath The path to the remote file on Google Cloud Storage to store the
+     *     results on.
+     * @throws Exception on errors while closing the client.
+     */
+    public void detectDocumentsGcs(MultipartFile file) throws Exception {
+        String uuid = UUID.randomUUID().toString();
+        String path = fileToUrl(file);
+
+//        String gcsSourcePath = "gs://cloud-samples-data/vision/pdf_tiff/census2010.pdf";
+        String gcsSourcePath = "gs://" + path;
+        String gcsDestinationPath = "gs://forest_ocr_bucket/"+uuid;
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            List<AsyncAnnotateFileRequest> requests = new ArrayList<>();
+
+            // Set the GCS source path for the remote file.
+            GcsSource gcsSource = GcsSource.newBuilder().setUri(gcsSourcePath).build();
+
+            // Create the configuration with the specified MIME (Multipurpose Internet Mail Extensions)
+            // types
+            InputConfig inputConfig =
+                    InputConfig.newBuilder()
+                            .setMimeType(
+                                    "application/pdf") // Supported MimeTypes: "application/pdf", "image/tiff"
+                            .setGcsSource(gcsSource)
+                            .build();
+
+            // Set the GCS destination path for where to save the results.
+            GcsDestination gcsDestination =
+                    GcsDestination.newBuilder().setUri(gcsDestinationPath).build();
+
+            // Create the configuration for the System.output with the batch size.
+            // The batch size sets how many pages should be grouped into each json System.output file.
+            OutputConfig outputConfig =
+                    OutputConfig.newBuilder().setBatchSize(2).setGcsDestination(gcsDestination).build();
+
+            // Select the Feature required by the vision API
+            Feature feature = Feature.newBuilder().setType(Feature.Type.DOCUMENT_TEXT_DETECTION).build();
+
+            // Build the OCR request
+            AsyncAnnotateFileRequest request =
+                    AsyncAnnotateFileRequest.newBuilder()
+                            .addFeatures(feature)
+                            .setInputConfig(inputConfig)
+                            .setOutputConfig(outputConfig)
+                            .build();
+
+            requests.add(request);
+
+            // Perform the OCR request
+            OperationFuture<AsyncBatchAnnotateFilesResponse, OperationMetadata> response =
+                    client.asyncBatchAnnotateFilesAsync(requests);
+
+            System.out.println("Waiting for the operation to finish.");
+
+            // Wait for the request to finish. (The result is not used, since the API saves the result to
+            // the specified location on GCS.)
+            List<AsyncAnnotateFileResponse> result =
+                    response.get(180, TimeUnit.SECONDS).getResponsesList();
+
+            // Once the request has completed and the System.output has been
+            // written to GCS, we can list all the System.output files.
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+
+            // Get the destination location from the gcsDestinationPath
+            Pattern pattern = Pattern.compile("gs://([^/]+)/(.+)");
+            Matcher matcher = pattern.matcher(gcsDestinationPath);
+
+            if (matcher.find()) {
+                String bucketName = matcher.group(1);
+                String prefix = matcher.group(2);
+
+                // Get the list of objects with the given prefix from the GCS bucket
+                Bucket bucket = storage.get(bucketName);
+                com.google.api.gax.paging.Page<Blob> pageList = bucket.list(Storage.BlobListOption.prefix(prefix));
+
+                Blob firstOutputFile = null;
+
+                // List objects with the given prefix.
+                System.out.println("Output files:");
+                for (Blob blob : pageList.iterateAll()) {
+                    System.out.println(blob.getName());
+
+                    // Process the first System.output file from GCS.
+                    // Since we specified batch size = 2, the first response contains
+                    // the first two pages of the input file.
+                    if (firstOutputFile == null) {
+                        firstOutputFile = blob;
+
+                    }
+                }
+
+                // Get the contents of the file and convert the JSON contents to an AnnotateFileResponse
+                // object. If the Blob is small read all its content in one request
+                // (Note: the file is a .json file)
+                // Storage guide: https://cloud.google.com/storage/docs/downloading-objects
+                String jsonContents = new String(firstOutputFile.getContent());
+
+                AnnotateFileResponse.Builder builder = AnnotateFileResponse.newBuilder();
+                JsonFormat.parser().merge(jsonContents, builder);
+
+
+                // Build the AnnotateFileResponse object
+                AnnotateFileResponse annotateFileResponse = builder.build();
+
+                // Parse through the object to get the actual response for the first page of the input file.
+                AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(0);
+
+                // Here we print the full text from the first page.
+                // The response contains more information:
+                // annotation/pages/blocks/paragraphs/words/symbols
+                // including confidence score and bounding boxes
+                System.out.format("%nText: %s%n", annotateImageResponse.getFullTextAnnotation().getText());
+            } else {
+                System.out.println("No MATCH");
+
+            }
         }
     }
 
@@ -921,7 +1066,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DELETE_PROBLEM);
         }
 
-        if (workbook.getCreator().getId() != userId) {
+        if (!workbook.getCreator().getId().equals(userId)) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_OWN);
         }
 
@@ -1168,7 +1313,7 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     public boolean checkIsOriginal(Long creatorId, Long userId) {
-        if (creatorId != userId) {
+        if (!creatorId.equals(userId)) {
             return false;
         }
         return true;
@@ -1195,17 +1340,20 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
-    public String imgToUrl(MultipartFile file) throws IOException {
+    public String fileToUrl(MultipartFile file) throws IOException {
         String uuid = UUID.randomUUID().toString(); // Google Cloud Storage에 저장될 파일 이름
         String ext = file.getContentType(); // 파일의 형식 ex) JPG
+        System.out.println(ext);
 
-        // Cloud에 이미지 업로드
+        // Cloud에 파일 업로드
         BlobInfo blobInfo = storage.create(
                 BlobInfo.newBuilder(bucketName, uuid)
                         .setContentType(ext)
                         .build(),
                 file.getInputStream()
         );
+
+        log.info("파일 업로드 완료 : {}", uuid);
 
         return bucketName + "/" + uuid;
     }
