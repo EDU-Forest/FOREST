@@ -1,4 +1,4 @@
-export interface TeacherExamResult {
+export interface ITeacherExamResultAFTER {
   studyId: number;
   title: string;
   startTime: string;
@@ -16,4 +16,14 @@ export interface TeacherExamResult {
   totalStudent: number;
   participantStudent: number;
   takeRate: number;
+}
+
+export interface ITeacherExamResultBEFORE {
+  studyId: number;
+  title: string;
+  startTime: string;
+  endTime: string;
+  userName: string;
+  studyType: string;
+  scheduleType: string;
 }

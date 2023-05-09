@@ -9,7 +9,8 @@ import { closeAllModal } from "@/stores/class/classModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useClassWorkbookListQuery from "@/apis/class/useClassWorkbookListQuery";
-import { ClassWorkbooks } from "@/types/ClassWorkbooks";
+import Loading from "@/components/Loading/Loading";
+import { IClassWorkbooks } from "@/types/ClassWorkbooks";
 
 interface Iprops {
   type: string;
@@ -23,22 +24,26 @@ export default function ClassWorkbookList({ type }: Iprops) {
     dispatch(closeAllModal());
   };
 
-  const workbooks: ClassWorkbooks[] = useClassWorkbookListQuery(classId, type).data?.workbookList;
+  const { data: workbooks, isLoading } = useClassWorkbookListQuery(classId, type);
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-        {workbooks?.map((item) => (
-          <SwiperSlide key={item.studyId}>
-            <CommonWorkbook
-              id={item.studyId}
-              title={item.title}
-              clickAction={() => changeWorkbookSummary(item.studyId)}
-              workbookImgPath={item.workbookImgPath}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {isLoading ? (
+        <Loading width={8} height={8} />
+      ) : (
+        <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
+          {workbooks?.map((item: IClassWorkbooks) => (
+            <SwiperSlide key={item.studyId}>
+              <CommonWorkbook
+                id={item.studyId}
+                title={item.title}
+                clickAction={() => changeWorkbookSummary(item.studyId)}
+                workbookImgPath={item.workbookImgPath}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 }

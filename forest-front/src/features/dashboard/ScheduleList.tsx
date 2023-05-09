@@ -11,8 +11,7 @@ import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
 
 function ScheduleList() {
-  const { data, isLoading } = useScheduleQuery();
-  console.log(data);
+  const { data: studyList, isLoading } = useScheduleQuery();
 
   return (
     <StyledScheduleListBox>
@@ -20,13 +19,13 @@ function ScheduleList() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          {data && data?.length > 0 ? (
+          {studyList && studyList?.length > 0 ? (
             <>
-              {data?.map((item, idx) => {
+              {studyList?.map((item, idx) => {
                 return (
                   <StyledScheduleItem
                     key={item.studyId}
-                    isLast={idx === data.length - 1 ? true : false}
+                    isLast={idx === studyList.length - 1 ? true : false}
                   >
                     <StyledScheduleItemTop>
                       <div>
