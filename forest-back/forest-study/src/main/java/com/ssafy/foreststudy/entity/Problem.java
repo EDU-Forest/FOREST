@@ -1,6 +1,5 @@
 package com.ssafy.foreststudy.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssafy.foreststudy.enumeration.EnumProblemTypeStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
