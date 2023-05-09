@@ -82,7 +82,7 @@ export default function ClassSummaryStudent() {
               )}
 
               {data?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
-                <ClassSummaryItemWrapper>
+                <ClassSummaryItemWrapper userRole="STUDENT">
                   <ClassScoreChart
                     myScore={data?.data.studentResult.studentScore}
                     totalScore={data?.data.studentResult.totalScore}

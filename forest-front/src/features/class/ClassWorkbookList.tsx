@@ -32,16 +32,17 @@ export default function ClassWorkbookList({ type }: Iprops) {
         <Loading width={8} height={8} />
       ) : (
         <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-          {workbooks?.map((item: IClassWorkbooks) => (
-            <SwiperSlide key={item.studyId}>
-              <CommonWorkbook
-                id={item.studyId}
-                title={item.title}
-                clickAction={() => changeWorkbookSummary(item.studyId)}
-                workbookImgPath={item.workbookImgPath}
-              />
-            </SwiperSlide>
-          ))}
+          {workbooks &&
+            workbooks?.map((item: IClassWorkbooks) => (
+              <SwiperSlide key={item.studyId}>
+                <CommonWorkbook
+                  id={item.studyId}
+                  title={item.title}
+                  clickAction={() => changeWorkbookSummary(item.studyId)}
+                  workbookImgPath={item.workbookImgPath}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
       )}
     </div>
