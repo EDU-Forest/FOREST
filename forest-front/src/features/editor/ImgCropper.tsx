@@ -7,6 +7,7 @@ import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { closePartPdfModal } from "@/stores/editor/editorModal";
 import Loading from "@/components/Loading/Loading";
+import useImgOCR from "@/apis/editor/useImgOCR";
 
 interface Iprops {
   imageData: string;
@@ -15,6 +16,7 @@ interface Iprops {
 
 export default function ImgCropper({ imageData }: Iprops) {
   const dispatch = useDispatch();
+  const { mutate } = useImgOCR();
   const { isFinished } = useSelector((state: RootState) => state.editorModal);
   // const [image, setImage] = useState("");
   // const [cropData, setCropData] = useState("#");
@@ -35,8 +37,9 @@ export default function ImgCropper({ imageData }: Iprops) {
       // setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
       cropperRef.current?.cropper.getCroppedCanvas().toBlob((blob) => {
         const formData = new FormData();
-        formData.append("img", blob as Blob);
-        console.log(formData.get("img"));
+        formData.append("file", blob as Blob);
+        console.log("dddddd", formData.get("file"));
+        mutate(formData);
       });
       console.log("된당");
       // 요기서 요청해야함!!!!!

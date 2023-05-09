@@ -15,22 +15,31 @@ import {
 } from "@/components/Input/Input.style";
 import { MdOutlineFileCopy } from "react-icons/md";
 import CommonBtn from "@/components/Button/CommonBtn";
+import usePdfOCR from "@/apis/editor/usePdfOCR";
 
 export default function ImportingWholeModal() {
   const dispatch = useDispatch();
+  const { mutate } = usePdfOCR();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [targetFile, setTargetFile] = useState<FileList | null>(null);
+  const [targetFile, setTargetFile] = useState<File>();
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     //파일 업로드
     if (e.target.files) {
-      setTargetFile(e.target.files);
+      setTargetFile(e.target.files[0]);
       setIsSuccess(true);
       const fileName = e.target.files[0].name;
+      console.log(e.target.files[0]);
     }
   };
 
   const completeSelection = () => {
+    if (targetFile) {
+      let formData = new FormData();
+      formData.append("file", targetFile as File);
+      console.log("dlrp Wld", formData.get("file"));
+      mutate(formData);
+    }
     // 했으
   };
 
@@ -49,7 +58,7 @@ export default function ImportingWholeModal() {
         ) : (
           <StyledFileSelectedName>
             <label id="pdfInput">
-              <MdOutlineFileCopy /> {targetFile && targetFile[0].name}
+              <MdOutlineFileCopy /> {targetFile && targetFile.name}
               <StyledFileInput
                 id="pdfInput"
                 onChange={uploadFile}
