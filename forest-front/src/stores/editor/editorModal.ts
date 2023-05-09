@@ -31,7 +31,6 @@ const editorModalSlice = createSlice({
     closeWholePdfModal(state) {
       state.isOpenWholePdfModal = false;
     },
-
     openPartPdfModal(state) {
       state.isOpenPartPdfModal = true;
       state.isOpenWholePdfModal = false;

@@ -8,11 +8,11 @@ import FileInput from "@/components/Input/FileInput";
 import ImportingModalPdfViewer from "./ImportingModalPdfViewer";
 import { useDispatch } from "react-redux";
 import { HiXMark } from "react-icons/hi2";
-import { closePdfModal } from "@/stores/editor/editorModal";
+import { closePartPdfModal } from "@/stores/editor/editorModal";
 import ImgCropper from "./ImgCropper";
 import ImportingModalImgViewer from "./ImportingModalImgViewer";
 
-export default function ImportingModal() {
+export default function ImportingPartModal() {
   const dispatch = useDispatch();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [targetFile, setTargetFile] = useState<FileList | null>(null);
@@ -43,13 +43,13 @@ export default function ImportingModal() {
   };
   return (
     <ImportingModalWrapper>
-      <PdfViewerXmark onClick={() => dispatch(closePdfModal())}>
+      <PdfViewerXmark onClick={() => dispatch(closePartPdfModal())}>
         <HiXMark />
       </PdfViewerXmark>
 
       {!isSuccess ? (
         <ImportingModalInsideLine>
-          <FileInput onChange={uploadFile} />
+          <FileInput onChange={uploadFile} text={"PDF 또는 이미지 불러오기"} />
         </ImportingModalInsideLine>
       ) : (
         <>

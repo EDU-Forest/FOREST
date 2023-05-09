@@ -1,5 +1,5 @@
 import useEditor from "@/hooks/editor/useEditor";
-import { openPdfModal } from "@/stores/editor/editorModal";
+import { openWholePdfModal, openPartPdfModal } from "@/stores/editor/editorModal";
 import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
@@ -136,8 +136,8 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       </EditorNavDiv>
       <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
       <EditorNavDiv>
-        <p>전체 영역</p>
-        <p onClick={() => dispatch(openPdfModal())}>일부 영역</p>
+        <p onClick={() => dispatch(openWholePdfModal())}>전체 영역</p>
+        <p onClick={() => dispatch(openPartPdfModal())}>일부 영역</p>
       </EditorNavDiv>
       <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
       <EditorNavDiv>

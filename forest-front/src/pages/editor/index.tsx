@@ -14,12 +14,11 @@ import {
   initQuestions,
   setQuestions,
 } from "@/stores/editor/editorQuestions";
-import { IWorkbookBySelf, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import ImportingModal from "@/features/editor/ImportingModal";
+import ImportingPartModal from "@/features/editor/ImportingPartModal";
 import { RootState } from "@/stores/store";
-import { Container, FullScreen } from "@/styles/container";
+import { FullScreen } from "@/styles/container";
 import { useSelector } from "react-redux";
 import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
 import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
@@ -27,11 +26,14 @@ import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 import { resetSelectWorkbook, setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import withAuth from "@/utils/auth/withAuth";
+import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
 
 function Editor() {
   const dispatch = useDispatch();
 
-  const { isOpenModal } = useSelector((state: RootState) => state.editorModal);
+  const { isOpenWholePdfModal, isOpenPartPdfModal } = useSelector(
+    (state: RootState) => state.editorModal,
+  );
   const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
@@ -76,8 +78,8 @@ function Editor() {
           <EditorBtns />
           <EditorQuestionList />
         </EditorBtnsAndListBox>
-        {/* <PdfViewer /> */}
-        {isOpenModal && <ImportingModal />}
+        {isOpenWholePdfModal && <ImportingWholeModal />}
+        {isOpenPartPdfModal && <ImportingPartModal />}
       </EditorContainer>
     </FullScreen>
   );
