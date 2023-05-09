@@ -531,7 +531,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         List<ProblemList> problemLists = problemListRepository.findAllByWorkbookId(workbookId);
 
         // 문제 복사 리스트
-        List<Problem> problems = new ArrayList();
+        List<Problem> problems = new ArrayList<>();
         List<Integer> problemNumList = new ArrayList<>();
 
         // 문제 항목 복사 필요 여부
@@ -554,13 +554,13 @@ public class WorkbookServiceImpl implements WorkbookService {
             problems.add(problemCopy);
             problemNumList.add(problemList.getProblemNum());
 
-            if (problemCopy.getType().equals(EnumProblemTypeStatus.MULTIPLE)) {
-                itemIsMultiple[check] = check;
+            if (problem.getType().equals(EnumProblemTypeStatus.MULTIPLE)) {
+                itemIsMultiple[check] = 1;
             } else {
                 itemIsMultiple[check] = -1;
             }
             check++;
-
+            log.info(Arrays.toString(itemIsMultiple));
         }
         problemRepository.saveAll(problems);
 
@@ -576,7 +576,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             if (checked == -1) continue;
             else {
 
-                List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(checked).getId());
+                List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(count).getId());
                 itemListSize = itemList.size();
 
                 for (Item item : itemList) {
@@ -598,7 +598,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 4. 문제 목록 만들기
         // 문제 목록 복사 리스트
-        List<ProblemList> problemListsCopy = new ArrayList();
+        List<ProblemList> problemListsCopy = new ArrayList<>();
 
         for (int i = 0; i < problems.size(); i++) {
             Problem problem = problems.get(i);
