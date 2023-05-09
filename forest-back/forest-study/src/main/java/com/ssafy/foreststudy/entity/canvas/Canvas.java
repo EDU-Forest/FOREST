@@ -1,8 +1,5 @@
 package com.ssafy.foreststudy.entity.canvas;
 
-import com.ssafy.foreststudy.entity.ProblemList;
-import com.ssafy.foreststudy.entity.Study;
-import com.ssafy.foreststudy.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
