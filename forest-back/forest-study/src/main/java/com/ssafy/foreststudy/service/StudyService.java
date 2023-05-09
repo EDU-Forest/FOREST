@@ -67,6 +67,7 @@ public class StudyService {
                 .totalStudent(cs.getTotalStudent())
                 .participantStudent(cs.getParticipantStudent())
                 .takeRate(cs.getTakeRate())
+                .isFinished(cs.getIsFinished())
                 .build();
 
         return getStudyRecentResponseDto;
@@ -245,7 +246,6 @@ public class StudyService {
 
         String schedule = getScheduleType(cs);
 
-        // GetStudyRecentResponseDto getStudyRecentResponseDto = getStudyInfoResponse(cs, schedule);
         GetStudyIdResponseDto getStudyRecentResponseDto = GetStudyIdResponseDto.builder()
                 .studyId(cs.getStudy().getId())
                 .build();
