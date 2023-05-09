@@ -1,5 +1,5 @@
 import { setRole, setUsername } from "@/stores/user/user";
-import { Login } from "@/types/Login";
+import { Login } from "@/types/Auth";
 import beforeAuthAxios from "@/utils/customAxios/beforeAuthAxios";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
