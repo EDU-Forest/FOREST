@@ -5,6 +5,7 @@ import { setChooseAnswer } from "@/stores/exam/exam";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { IStudyTimeLimit } from "@/types/Study";
 
 export default function TestProblemOXAnswer({ minutes, seconds }: IStudyTimeLimit) {
   // const [selectedMenu, setSelectedMenu] = useState("");

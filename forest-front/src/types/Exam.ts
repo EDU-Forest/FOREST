@@ -1,4 +1,4 @@
-interface examState {
+export interface examState {
   isStarted: boolean;
   curProblemNum: number;
   volume: number;

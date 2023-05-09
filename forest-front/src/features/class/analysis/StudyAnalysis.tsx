@@ -23,16 +23,7 @@ import DescriptiveForm from "./DescriptiveForm";
 import AllCorrectRate from "./AllCorrectRate";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 import Loading from "@/components/Loading/Loading";
-
-interface StudentStudyResultList {
-  name: string;
-  email: string;
-  enterTime: string;
-  exitTime: string;
-  correctNum: number;
-  correctRate: number;
-  studentStudyResultId: number;
-}
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 export default function StudyAnalysis() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);

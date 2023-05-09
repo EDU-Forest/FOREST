@@ -1,4 +1,4 @@
-export default interface StudentStudyResultList {
+export interface StudentStudyResultList {
   name: string;
   email: string;
   enterTime: string;

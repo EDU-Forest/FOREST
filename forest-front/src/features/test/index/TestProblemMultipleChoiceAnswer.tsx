@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import TestProblemAnswerNumber from "./TestProblemAnswerNumber";
 import { StyledTestProblemMultipleChoiceAnswer } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
+import { IStudyTimeLimit } from "@/types/Study";
 
 export default function TestProblemMultipleChoiceAnswer({ minutes, seconds }: IStudyTimeLimit) {
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);

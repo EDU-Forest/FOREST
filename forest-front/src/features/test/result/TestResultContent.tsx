@@ -8,6 +8,7 @@ import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
 import { useRouter } from "next/router";
+import { IStudyResult } from "@/types/Study";
 
 interface Iprops {
   studyResult: IStudyResult;

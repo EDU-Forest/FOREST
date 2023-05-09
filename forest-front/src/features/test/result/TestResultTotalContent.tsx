@@ -4,6 +4,7 @@ import TestResultTotalContentGraph from "./TestResultTotalContentGraph";
 import { TestResultNotOpenBox, TestResultTotalContentBox } from "./TextResult.style";
 import useGetStudyResult from "@/apis/study/useGetStudyResultQuery";
 import { useRouter } from "next/router";
+import { IStudyResult } from "@/types/Study";
 
 interface Iprops {
   studyResult: IStudyResult;

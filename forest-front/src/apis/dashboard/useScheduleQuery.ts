@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
+import { ScheduleList } from "@/types/ScheduleList";
 
 const fetcher = () =>
   studyAxios.get(`/api/study/calendar`).then(({ data }) => {

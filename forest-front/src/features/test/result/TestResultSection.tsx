@@ -8,6 +8,7 @@ import { useState } from "react";
 import useGetStudyResult from "@/apis/study/useGetStudyResultQuery";
 import { useDispatch } from "react-redux";
 import { setStudy } from "@/stores/class/classInfo";
+import { IStudyResult } from "@/types/Study";
 
 export default function TestResultSection() {
   const dispatch = useDispatch();

@@ -14,6 +14,7 @@ import AddClassModal from "./teacher/AddClassModal";
 import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import Loading from "@/components/Loading/Loading";
+import { ClassList } from "@/types/ClassList";
 
 interface Iprops {
   nowClassId: number;

@@ -1,3 +1,4 @@
+import { UserData } from "@/types/Userdata";
 import { StyledRoleBtn } from "./Btn.style";
 import { AiOutlineCheck } from "react-icons/ai";
 

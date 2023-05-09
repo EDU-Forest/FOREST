@@ -1,3 +1,4 @@
+import { examState } from "@/types/Exam";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: examState = {

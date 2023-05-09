@@ -1,6 +1,7 @@
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
+import { IStudyResult } from "@/types/Study";
 
 interface Iprops {
   studyId: number;

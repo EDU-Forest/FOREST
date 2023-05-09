@@ -1,6 +1,7 @@
 import { PieChart } from "react-minimal-pie-chart";
 import { ClassLabelBox, StudentScoreChartLabel, SummaryChartWrapper } from "../ClassSummary.style";
 import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
+import { AnswerRate } from "@/types/AnswerRate";
 
 interface Iprops {
   answerRate: AnswerRate;

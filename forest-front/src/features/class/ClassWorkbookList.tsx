@@ -9,6 +9,7 @@ import { closeAllModal } from "@/stores/class/classModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useClassWorkbookListQuery from "@/apis/class/useClassWorkbookListQuery";
+import { ClassWorkbooks } from "@/types/ClassWorkbooks";
 
 interface Iprops {
   type: string;

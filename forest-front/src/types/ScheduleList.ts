@@ -1,4 +1,4 @@
-interface ScheduleList {
+export interface ScheduleList {
   studyId: number;
   title: string;
   startTime: string;

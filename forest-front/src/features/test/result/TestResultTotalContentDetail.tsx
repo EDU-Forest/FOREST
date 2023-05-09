@@ -1,3 +1,4 @@
+import { IStudyResult } from "@/types/Study";
 import TestResultTotalContentDetailItem from "./TestResultTotalContentDetailItem";
 import { TestResultTotalContentDetailBox } from "./TextResult.style";
 

@@ -6,6 +6,7 @@ import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import { CanvasPath } from "react-sketch-canvas";
+import { IStudyModal } from "@/types/Study";
 
 interface Iprops extends IStudyModal {
   allPaths: CanvasPath[];

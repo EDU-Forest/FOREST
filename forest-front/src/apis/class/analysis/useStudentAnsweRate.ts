@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
-import StudentStudyResultList from "@/types/StudentStudyResultList";
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/class/result/student/${studyId}`).then(({ data }) => {

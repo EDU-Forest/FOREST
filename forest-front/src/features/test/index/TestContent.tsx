@@ -5,6 +5,7 @@ import { StyledTestContent } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useEffect, useState } from "react";
 import { CanvasPath } from "react-sketch-canvas";
+import { IStudyModal } from "@/types/Study";
 
 interface Iprops extends IStudyModal {
   allPaths: CanvasPath[];

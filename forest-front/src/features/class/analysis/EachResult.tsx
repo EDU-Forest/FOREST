@@ -15,7 +15,7 @@ import { RootState } from "@/stores/store";
 import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
 import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
-import StudentStudyResultList from "@/types/StudentStudyResultList";
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 interface Iprops {
   goToGrade: (item: StudentStudyResultList) => void;

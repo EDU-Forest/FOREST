@@ -3,6 +3,7 @@ import { StyledMemoListBox, StyledMemoListItemBox, StyledMemoListItemTopBox } fr
 import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
 import useMemoDelete from "@/apis/dashboard/useMemoDelete";
 import arrangeDate from "@/utils/arrangeDate";
+import { Memo } from "@/types/Memo";
 
 function MemoList() {
   const memoList: Memo[] = useMemoListQuery().data;
