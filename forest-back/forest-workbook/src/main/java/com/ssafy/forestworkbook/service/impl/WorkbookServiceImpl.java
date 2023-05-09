@@ -590,9 +590,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                     itemCopyList.add(itemCopy);
                 }
                 itemCount[count] = itemListSize;
+                log.info("itemList Size : {}", itemListSize);
             }
         }
         itemRepository.saveAll(itemCopyList);
+        log.info("itemCopyList Size : {}", itemCopyList.size());
 
         // 4. 문제 목록 만들기
         // 문제 목록 복사 리스트
@@ -641,6 +643,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             if (itemIsMultiple[i] != -1) {
                 for (int k = 0; k < itemCount[i]; k++) {
+                    log.info("실행중");
                     Item tempItem = itemCopyList.get(j);
 
                     ItemResDto itemRes = ItemResDto.builder()
@@ -653,6 +656,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     j++;
                 }
+                log.info("ItemResList Size : {}", itemResList);
             }
 
             ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
