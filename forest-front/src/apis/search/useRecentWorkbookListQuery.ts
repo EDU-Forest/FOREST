@@ -1,10 +1,11 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
+import { ISearchWorkbook } from "@/types/Workbook";
 
 const fetcher = () =>
   workbookAxios.get("/api/workbook/recent").then(({ data }) => {
-    const recentList = data.data.workbookList as SearchWorkbook[];
+    const recentList = data.data.workbookList as ISearchWorkbook[];
     return recentList;
   });
 
