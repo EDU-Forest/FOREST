@@ -26,7 +26,8 @@ services:
       GCP_ID: ${GCP_ID}
       GCP_BUCKET: ${GCP_BUCKET}
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
-
     ports:
       - 9011:9011
+    volumes:
+      - /home/ubuntu/jenkins/env:/workbook
     restart: always
