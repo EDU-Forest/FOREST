@@ -15,11 +15,16 @@ import {
 
 interface Iprops {
   setControlDropdown: (controlDropdown: boolean) => void;
+  editorSave: () => void;
+  isSuccess: boolean;
 }
 
-export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
+export default function EditorSelectDropdown({
+  setControlDropdown,
+  editorSave,
+  isSuccess,
+}: Iprops) {
   const dispatch = useDispatch();
-  const { editorSave, isLoading, isSuccess } = useEditorSave();
   const { curWorkbookId, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
@@ -72,8 +77,6 @@ export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
           + 새 문제집 추가
         </ClassSelectDropdownAdd>
       </ClassSelectDropdownContainer>
-      {isSuccess && alert("완료")}
-      {/* {isSuccess && <ModalBox>저장이 완료되었습니다</ModalBox>} */}
     </>
   );
 }

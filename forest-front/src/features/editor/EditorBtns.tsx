@@ -4,9 +4,12 @@ import { MdSave } from "react-icons/md";
 import { ClipLoader } from "react-spinners";
 import { EditorBtnsBox } from "./Editor.style";
 
-function EditorBtns() {
-  const { editorSave, isLoading  } = useEditorSave();
+interface IProps {
+  editorSave: () => void;
+  isLoading: boolean;
+}
 
+function EditorBtns({ editorSave, isLoading }: IProps) {
   const handleClickSave = () => {
     editorSave();
   };

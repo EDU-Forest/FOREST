@@ -27,6 +27,7 @@ import { resetSelectWorkbook, setSelectWorkbook } from "@/stores/editor/editorWo
 import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import withAuth from "@/utils/auth/withAuth";
 import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
+import useEditorSave from "@/hooks/editor/useEditorSave";
 
 function Editor() {
   const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function Editor() {
   const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
   const { isMoveToEditor } = useSelector((state: RootState) => state.workbookDetail);
   const {} = useSelector((state: RootState) => state.editorWorkbook);
+  const { editorSave, isLoading, isSuccess } = useEditorSave();
 
   useGetWorkbooksBySelf();
 
@@ -71,11 +73,11 @@ function Editor() {
       {isOpenAddWorkbookModal && <AddWorkbookModal />}
       <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
-          <EditorTitle />
+          <EditorTitle editorSave={editorSave} isSuccess={isSuccess} />
           <QuestionEditArea selectQuestionType={selectQuestionType} />
         </EditorTitleAndQuestionBox>
         <EditorBtnsAndListBox>
-          <EditorBtns />
+          <EditorBtns editorSave={editorSave} isLoading={isLoading} />
           <EditorQuestionList />
         </EditorBtnsAndListBox>
         {isOpenWholePdfModal && <ImportingWholeModal />}
