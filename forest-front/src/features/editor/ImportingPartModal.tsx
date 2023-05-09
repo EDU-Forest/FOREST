@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ImportingModalInsideLine,
   ImportingModalWrapper,
@@ -8,9 +8,12 @@ import FileInput from "@/components/Input/FileInput";
 import ImportingModalPdfViewer from "./ImportingModalPdfViewer";
 import { useDispatch } from "react-redux";
 import { HiXMark } from "react-icons/hi2";
-import { closePartPdfModal } from "@/stores/editor/editorModal";
+import { closePartPdfModal, setFinish } from "@/stores/editor/editorModal";
 import ImgCropper from "./ImgCropper";
 import ImportingModalImgViewer from "./ImportingModalImgViewer";
+import Loading from "@/components/Loading/Loading";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 export default function ImportingPartModal() {
   const dispatch = useDispatch();
@@ -18,6 +21,10 @@ export default function ImportingPartModal() {
   const [targetFile, setTargetFile] = useState<FileList | null>(null);
   const [isPdf, setIsPdf] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
+
+  useEffect(() => {
+    dispatch(setFinish(false));
+  }, []);
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     //파일 업로드
@@ -41,6 +48,7 @@ export default function ImportingPartModal() {
       }
     }
   };
+
   return (
     <ImportingModalWrapper>
       <PdfViewerXmark onClick={() => dispatch(closePartPdfModal())}>

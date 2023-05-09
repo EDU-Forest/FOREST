@@ -34,7 +34,6 @@ export default function ImportingWholeModal() {
     // 했으
   };
 
-  console.log(targetFile);
   return (
     <ImportingModalWrapper style={{ width: "30rem", height: "20rem" }}>
       <PdfViewerXmark onClick={() => dispatch(closeWholePdfModal())}>

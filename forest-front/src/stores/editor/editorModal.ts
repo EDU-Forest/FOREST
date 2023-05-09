@@ -5,6 +5,7 @@ interface EditorModalState {
   isOpenAddWorkbookModal: boolean;
   isOpenWholePdfModal: boolean;
   isOpenPartPdfModal: boolean;
+  isFinished: boolean;
 }
 
 const initialState: EditorModalState = {
@@ -12,6 +13,7 @@ const initialState: EditorModalState = {
   isOpenAddWorkbookModal: false,
   isOpenWholePdfModal: false,
   isOpenPartPdfModal: false,
+  isFinished: false,
 };
 
 const editorModalSlice = createSlice({
@@ -49,6 +51,9 @@ const editorModalSlice = createSlice({
     controlEditorDropdown(state) {
       state.isOpenAddWorkbookModal = false;
     },
+    setFinish(state, action) {
+      state.isFinished = action.payload;
+    },
   },
 });
 
@@ -62,6 +67,7 @@ export const {
   openAddWorkBookModal,
   closeAddWorkBookModal,
   controlEditorDropdown,
+  setFinish,
 } = editorModalSlice.actions;
 
 export default editorModalSlice.reducer;
