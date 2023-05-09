@@ -3,6 +3,7 @@ import { SearchListWrapper, SearchListItem } from "./SearchList.style";
 import useSearchWorkbookQuery from "@/apis/search/useSearchWorkbookQuery";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading/Loading";
+import { ISearchWorkbook } from "@/types/Workbook";
 
 interface Iprops {
   keyword: string;
@@ -24,7 +25,7 @@ export default function SearchList({ keyword }: Iprops) {
         <Loading width={15} height={15} />
       ) : (
         <>
-          {data?.workbookList?.map((item: SearchWorkbook) => (
+          {data?.workbookList?.map((item: ISearchWorkbook) => (
             <SearchListItem key={item.workbookId}>
               <CommonWorkbook
                 id={item.workbookId}
