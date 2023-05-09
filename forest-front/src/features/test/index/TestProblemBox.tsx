@@ -66,12 +66,16 @@ export default function TestProblemBox({
 
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
     mutate(payload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
+
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
     setIsOpenCanvas(false);
     setAllPaths([]);
@@ -79,12 +83,16 @@ export default function TestProblemBox({
 
   const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
     mutate(payload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
+
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
     setIsOpenCanvas(false);
     setAllPaths([]);

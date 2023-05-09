@@ -31,12 +31,14 @@ export default function TestAnswerBox({
   };
 
   const goToResultHandler = () => {
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
-    console.log("canvasPayload", canvasPayload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
 
     router.push(`/test/${router.query.studyId}/result`);
   };
