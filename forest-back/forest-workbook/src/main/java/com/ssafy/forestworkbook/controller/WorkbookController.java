@@ -221,9 +221,7 @@ public class WorkbookController {
         log.info("{}", userId);
         log.info("{}", file.isEmpty());
 //        Long userId = Long.valueOf(9);
-        workbookService.detectDocumentsGcs(file);
-        return new ResponseSuccessDto<>(HttpStatus.OK);
-//        return workbookService.ocrImg(userId, file);
+        return workbookService.detectDocumentsGcs(file);
     }
 
     @DeleteMapping ("/problem/{problemId}")

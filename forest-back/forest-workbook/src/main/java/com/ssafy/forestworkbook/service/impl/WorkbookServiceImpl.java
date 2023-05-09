@@ -920,7 +920,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
-    public void detectDocumentsGcs(MultipartFile file) throws Exception {
+    public ResponseSuccessDto<?> detectDocumentsGcs(MultipartFile file) throws Exception {
 //        User user = userRepository.findById(userId)
 //                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -1040,6 +1040,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             }
         }
+        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
     }
 
     @Override

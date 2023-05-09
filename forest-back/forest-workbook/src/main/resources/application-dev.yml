@@ -8,6 +8,9 @@ server:
   http2:
     enabled: true
 
+  tomcat:
+    max-http-form-post-size: 100MB
+
 spring:
   config:
     activate:
@@ -24,7 +27,7 @@ spring:
         format_sql: true
     open-in-view: false
 
-  http:
+  servlet:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
@@ -42,6 +45,7 @@ spring:
           location: ${GCP_LOCATION}
         project-id: ${GCP_ID}
         bucket: ${GCP_BUCKET}
+
 
 notification:
   mattermost:
