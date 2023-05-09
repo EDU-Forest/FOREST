@@ -1,9 +1,11 @@
 import { StyledRoundSolid600Btn } from "@/components/Button/Btn.style";
-import { EditorBtnsBox } from "./Editor.style";
 import useEditorSave from "@/hooks/editor/useEditorSave";
+import { MdSave } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
+import { EditorBtnsBox } from "./Editor.style";
 
 function EditorBtns() {
-  const { editorSave } = useEditorSave();
+  const { editorSave, isLoading  } = useEditorSave();
 
   const handleClickSave = () => {
     editorSave();
@@ -11,7 +13,19 @@ function EditorBtns() {
 
   return (
     <EditorBtnsBox>
-      <StyledRoundSolid600Btn onClick={handleClickSave}>완료</StyledRoundSolid600Btn>
+      <StyledRoundSolid600Btn onClick={handleClickSave}>
+        {isLoading ? (
+          <>
+            <ClipLoader color="white" size={18} speedMultiplier={0.7} />
+            <span>저장 중</span>
+          </>
+        ) : (
+          <>
+            <MdSave />
+            <span>저장</span>
+          </>
+        )}
+      </StyledRoundSolid600Btn>
     </EditorBtnsBox>
   );
 }
