@@ -10,6 +10,8 @@ server:
 
   tomcat:
     max-http-form-post-size: 100MB
+    threads:
+      max: 200
 
 spring:
   config:
