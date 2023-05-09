@@ -1,18 +1,17 @@
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import useEditorSave from "@/hooks/editor/useEditorSave";
+import { openAddWorkBookModal } from "@/stores/editor/editorModal";
+import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
+import { ModalBox } from "@/styles/modal";
+import { useDispatch, useSelector } from "react-redux";
 import {
+  ClassSelectCircle,
+  ClassSelectDropdownAdd,
   ClassSelectDropdownContainer,
   ClassSelectDropdownEach,
   ClassSelectDropdownEachItem,
-  ClassSelectDropdownAdd,
-  ClassSelectCircle,
   ClassSelectNoClass,
 } from "../class/ClassSelect.style";
-import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
-import { openAddWorkBookModal } from "@/stores/editor/editorModal";
-import { useEffect } from "react";
-import useEditorSave from "@/hooks/editor/useEditorSave";
 
 interface Iprops {
   setControlDropdown: (controlDropdown: boolean) => void;
@@ -20,7 +19,7 @@ interface Iprops {
 
 export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
-  const { editorSave } = useEditorSave();
+  const { editorSave, isLoading, isSuccess } = useEditorSave();
   const { curWorkbookId, workbooksBySelf } = useSelector(
     (state: RootState) => state.editorWorkbook,
   );
@@ -49,26 +48,32 @@ export default function EditorSelectDropdown({ setControlDropdown }: Iprops) {
   };
 
   return (
-    <ClassSelectDropdownContainer>
-      {workbooksBySelf?.length > 0 ? (
-        <>
-          <ClassSelectDropdownEach>
-            {workbooksBySelf?.map((item, idx) => (
-              <ClassSelectDropdownEachItem
-                key={`workbook-${idx}`}
-                onClick={() => selectWorkbookHandler(item.workbookId, item.title)}
-              >
-                {item.workbookId === curWorkbookId && <ClassSelectCircle />} {item.title}
-              </ClassSelectDropdownEachItem>
-            ))}
-          </ClassSelectDropdownEach>
-        </>
-      ) : (
-        <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
-      )}
+    <>
+      <ClassSelectDropdownContainer>
+        {workbooksBySelf?.length > 0 ? (
+          <>
+            <ClassSelectDropdownEach>
+              {workbooksBySelf?.map((item, idx) => (
+                <ClassSelectDropdownEachItem
+                  key={`workbook-${idx}`}
+                  onClick={() => selectWorkbookHandler(item.workbookId, item.title)}
+                >
+                  {item.workbookId === curWorkbookId && <ClassSelectCircle />} {item.title}
+                </ClassSelectDropdownEachItem>
+              ))}
+            </ClassSelectDropdownEach>
+          </>
+        ) : (
+          <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
+        )}
 
-      {/* <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}> */}
-      <ClassSelectDropdownAdd onClick={addWorkbookHandler}>+ 새 문제집 추가</ClassSelectDropdownAdd>
-    </ClassSelectDropdownContainer>
+        {/* <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}> */}
+        <ClassSelectDropdownAdd onClick={addWorkbookHandler}>
+          + 새 문제집 추가
+        </ClassSelectDropdownAdd>
+      </ClassSelectDropdownContainer>
+      {isSuccess && alert("완료")}
+      {/* {isSuccess && <ModalBox>저장이 완료되었습니다</ModalBox>} */}
+    </>
   );
 }
