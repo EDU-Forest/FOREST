@@ -1,4 +1,4 @@
-interface AuthValidation {
+export interface AuthValidation {
   email: string;
   emailDuplicate: string;
   username: string;

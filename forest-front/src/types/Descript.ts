@@ -1,4 +1,4 @@
-interface Descript {
+export interface Descript {
   problemListId: number;
   title: string;
   point: number; // 배점

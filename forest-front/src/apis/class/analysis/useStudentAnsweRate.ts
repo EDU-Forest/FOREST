@@ -1,16 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
-
-interface StudentStudyResultList {
-  name: string;
-  email: string;
-  enterTime: string;
-  exitTime: string;
-  correctNum: number;
-  correctRate: number;
-  studentStudyResultId: number;
-}
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/class/result/student/${studyId}`).then(({ data }) => {

@@ -28,6 +28,7 @@ import { SignupLayout } from "../signup/Signup.style";
 import useCheckEmail from "@/apis/auth/useCheckEmailQuery";
 import useSignup from "@/apis/auth/useSignupQuery";
 import { sign } from "crypto";
+import { UserData } from "@/types/Userdata";
 
 interface Iprops {
   onClose: () => void;

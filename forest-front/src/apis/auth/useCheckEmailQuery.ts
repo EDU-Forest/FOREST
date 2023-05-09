@@ -2,6 +2,7 @@ import beforeAuthAxios from "@/utils/customAxios/beforeAuthAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import { checkEmail } from "@/utils";
+import { AuthValidation } from "@/types/AuthValidation";
 
 interface Iprops {
   email: string;

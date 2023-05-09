@@ -19,9 +19,6 @@ const useCanvasPost = () => {
     onSuccess: (data) => {
       console.log("그림을 보내자!", data);
     },
-    onMutate(variables) {
-      console.log("variables", variables);
-    },
   });
 };
 

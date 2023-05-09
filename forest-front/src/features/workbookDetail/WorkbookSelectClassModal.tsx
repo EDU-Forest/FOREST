@@ -7,6 +7,7 @@ import {
   WorkbookSelectClassModalBox,
 } from "./WorkbookModal.style";
 import useClassListQuery from "@/apis/class/useClassListQuery";
+import { ClassList } from "@/types/ClassList";
 
 interface ClassType {
   classId: number;
@@ -25,46 +26,6 @@ function WorkbookSelectClassModal({
   selectedClass,
   setSelectedClass,
 }: IProps) {
-  // dummy
-  // const classes = [
-  //   {
-  //     classId: 1,
-  //     name: "A반",
-  //   },
-  //   {
-  //     classId: 2,
-  //     name: "B반",
-  //   },
-  //   {
-  //     classId: 3,
-  //     name: "C반",
-  //   },
-  //   {
-  //     classId: 4,
-  //     name: "A반",
-  //   },
-  //   {
-  //     classId: 5,
-  //     name: "B반",
-  //   },
-  //   {
-  //     classId: 6,
-  //     name: "C반",
-  //   },
-  //   {
-  //     classId: 7,
-  //     name: "A반",
-  //   },
-  //   {
-  //     classId: 8,
-  //     name: "B반",
-  //   },
-  //   {
-  //     classId: 9,
-  //     name: "C반",
-  //   },
-  // ];
-
   const classInit = {
     classId: 0,
     className: "",

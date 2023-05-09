@@ -1,28 +1,28 @@
-interface IStudyId {
+export interface IStudyId {
   studyId: number;
 }
 
-interface IStudyInfo {
+export interface IStudyInfo {
   studyPresenter: string;
   studyVolume: number;
   studyTimeLimit: number;
 }
 
-interface IStudyModal {
+export interface IStudyModal {
   minutes: number;
   seconds: number;
   toggleModal: boolean;
   setToggleModal: (toggleModal: boolean) => void;
 }
 
-interface IStudySaveAnswer {
+export interface IStudySaveAnswer {
   studentStudyProblemId: number;
   studyId: number;
   userAnswer: string;
   type: string;
 }
 
-interface IStudyResult {
+export interface IStudyResult {
   score: number;
   correctNum: number;
   solvingTime: number;
@@ -34,7 +34,7 @@ interface IStudyResult {
   endTime: Date;
 }
 
-interface IStudyTimeLimit {
+export interface IStudyTimeLimit {
   minutes: number;
   seconds: number;
 }

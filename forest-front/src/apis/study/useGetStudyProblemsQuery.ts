@@ -20,7 +20,7 @@ const useGetStudyProblems = (studyId: number) => {
     // enabled: !!isStarted,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log(data.data);
+      console.log("dsdsd", data.data);
       dispatch(setStudyProblems(data.data));
       // router.push(`/test/${studyId}`);
     },

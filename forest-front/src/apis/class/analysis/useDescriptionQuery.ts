@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
+import { Descript } from "@/types/Descript";
 
 interface Description {
   count: number;

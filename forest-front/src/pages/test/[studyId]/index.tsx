@@ -21,7 +21,7 @@ function Test() {
   const [minutes, setMinutes] = useState(endTime ? dateToMinute(new Date(), endTime) : 0);
   const [seconds, setSeconds] = useState(endTime ? dateToSecond(new Date(), endTime) % 60 : 0);
   const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
-  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
+  const { data } = useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -42,25 +42,6 @@ function Test() {
 
   return (
     <StyledTestContainer>
-      {/* 테스트용 */}
-      {/* {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
-      <TestHeader
-        page={"study"}
-        minutes={minutes}
-        seconds={seconds}
-        setToggleModal={setToggleModal}
-      />
-      {minutes > 0 && seconds > 0 ? (
-        <TestEnd />
-      ) : (
-        <TestContent
-          minutes={minutes}
-          seconds={seconds}
-          toggleModal={toggleModal}
-          setToggleModal={setToggleModal}
-        />
-      )} */}
-      {/* 아래가 원본 */}
       {toggleModal && <TestEndModal setToggleModal={setToggleModal} allPaths={allPaths} />}
       <TestHeader
         page={"study"}
@@ -79,6 +60,7 @@ function Test() {
           setToggleModal={setToggleModal}
           allPaths={allPaths}
           setAllPaths={setAllPaths}
+          isSubmitted={data?.isSubmitted}
         />
       )}
     </StyledTestContainer>

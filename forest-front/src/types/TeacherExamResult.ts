@@ -1,4 +1,4 @@
-interface TeacherExamResult {
+export interface TeacherExamResult {
   studyId: number;
   title: string;
   startTime: string;

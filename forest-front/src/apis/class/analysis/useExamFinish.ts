@@ -8,8 +8,9 @@ const useExamFinish = () => {
   const queryClient = useQueryClient();
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      console.log("시험 종료됨~");
+      console.log("시험 종료됨~", data);
       queryClient.invalidateQueries(queryKeys.DESCRIPTION);
+      queryClient.invalidateQueries(queryKeys.STUDY_RESULT);
     },
   });
 };

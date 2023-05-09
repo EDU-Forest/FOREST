@@ -24,15 +24,23 @@ import { useState } from "react";
 import { CanvasPath } from "react-sketch-canvas";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import TestProblemImg from "./TestProblemImg";
+import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
 
 interface Iprops {
   minutes: number;
   seconds: number;
   allPaths: CanvasPath[];
   setAllPaths: (allPaths: CanvasPath[]) => void;
+  isSubmitted?: boolean;
 }
 
-export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths }: Iprops) {
+export default function TestProblemBox({
+  minutes,
+  seconds,
+  allPaths,
+  setAllPaths,
+  isSubmitted,
+}: Iprops) {
   const router = useRouter();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
@@ -41,6 +49,9 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
+  const record = useCanvasRecordQuery(studentStudyProblemId).data;
+
+  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -59,29 +70,36 @@ export default function TestProblemBox({ minutes, seconds, allPaths, setAllPaths
       studentStudyProblemId: studentStudyProblemId,
       line: allPaths,
     };
-    console.log("canvasPayload", canvasPayload);
     mutate(payload);
     canvasMutate(canvasPayload);
-
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
   };
+
   const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
     const canvasPayload = {
       studentStudyProblemId: studentStudyProblemId,
       line: allPaths,
     };
-    console.log("canvasPayload", canvasPayload);
     mutate(payload);
     canvasMutate(canvasPayload);
-
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
   };
 
   return (
     <StyledTestProblemBox>
       <TestCanvas>
-        <Canvas allPaths={allPaths} setAllPaths={setAllPaths} />
+        <Canvas
+          allPaths={allPaths}
+          setAllPaths={setAllPaths}
+          storedData={record?.line}
+          isOpenCanvas={isOpenCanvas}
+          setIsOpenCanvas={setIsOpenCanvas}
+        />
       </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>

@@ -23,6 +23,7 @@ import DescriptiveForm from "./DescriptiveForm";
 import AllCorrectRate from "./AllCorrectRate";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 import Loading from "@/components/Loading/Loading";
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 export default function StudyAnalysis() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
@@ -33,6 +34,22 @@ export default function StudyAnalysis() {
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
   const { data, isLoading } = useStudyResultQuery(nowStudyId);
+
+  const goToGrade = (student: StudentStudyResultList) => {
+    // 상세 성적으로 이동
+    router.push(
+      {
+        pathname: `/teacher/class/study/${nowStudyId}/student`,
+        query: {
+          studentStudyResultId: student.studentStudyResultId,
+          name: student.name,
+          email: student.email,
+          title: data?.title,
+        },
+      },
+      `/teacher/class/study/${nowStudyId}/student`,
+    );
+  };
 
   return (
     <>
@@ -98,7 +115,7 @@ export default function StudyAnalysis() {
             {/* 문항별 정답률 */}
             <QuestionCorrectRate />
             {/* 응시자별 성취도 */}
-            <EachResult />
+            <EachResult goToGrade={goToGrade} />
           </>
         ) : (
           <DescriptiveForm />

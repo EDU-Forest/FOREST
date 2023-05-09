@@ -1,4 +1,4 @@
-interface KakaoLoginMoreInfo {
+export interface KakaoLoginMoreInfo {
   username: string;
   phoneNumber: string;
   birth: string;

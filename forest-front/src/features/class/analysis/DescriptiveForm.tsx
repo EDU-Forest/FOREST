@@ -18,9 +18,10 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 export default function DescriptiveForm() {
   const { nowStudyId, studentPointList } = useSelector((state: RootState) => state.class);
   const [nowIdx, setNowIdx] = useState<number>(0);
-  const scoringMutate = useDescriptionScoring().mutate;
+  const { data: scoringData, mutate: scoringMutate } = useDescriptionScoring();
   const finishMutate = useExamFinish().mutate;
   const { data, isLoading } = useDescriptionQuery(nowStudyId);
+  console.log("scoringData", scoringData);
 
   const handleClick = () => {
     const newStudentPointList = [];
@@ -47,11 +48,13 @@ export default function DescriptiveForm() {
       studentPointList: newStudentPointList, // 얘가 문제....
     };
     scoringMutate(payload);
+  };
 
-    if (isLast) {
+  useEffect(() => {
+    if (scoringData?.status === "STUDY_SAVE_DESCRIPT") {
       finishMutate(nowStudyId);
     }
-  };
+  }, [scoringData]);
 
   return (
     <DescriptiveFormWrapper>
@@ -59,19 +62,19 @@ export default function DescriptiveForm() {
         <Loading width={10} height={10} />
       ) : (
         <>
-          {data.status === "STUDY_END" && (
+          {data?.status === "STUDY_END" && (
             <NoDescription>
               <img src="/images/Banner_Teacher.png" />
               <span>채점이 완료되었습니다.</span>
             </NoDescription>
           )}
-          {data.status === "STUDY_NONE_RESULT_DESCRIPT_LIST" && (
+          {data?.status === "STUDY_NONE_RESULT_DESCRIPT_LIST" && (
             <NoDescription>
               <img src="/images/Banner_Teacher.png" />
               <span>서술형 문제가 없습니다.</span>
             </NoDescription>
           )}
-          {data.status === "STUDY_SUCCESS_RESULT_DESCRIPT_LIST" && (
+          {data?.status === "STUDY_SUCCESS_RESULT_DESCRIPT_LIST" && (
             <>
               <DescriptiveFormBtn>
                 <span>1 / {data?.data.count}</span>

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { IStudyResult } from "@/types/Study";
 
 interface Iprops {
   studyId: number;
