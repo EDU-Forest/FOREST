@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -197,18 +198,6 @@ public class WorkbookController {
         return workbookService.createProblemImg(userId, file);
     }
 
-    @PostMapping ("/ocrTest")
-    @ApiOperation(value = "문제 이미지 등록하기", notes = "문제 이미지를 등록합니다.")
-    public void ocrTest(
-            HttpServletRequest request,
-            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
-        workbookService.ocrTest(file);
-    }
-
     @PostMapping ("/ocr/img")
     @ApiOperation(value = "이미지 ocr", notes = "이미지를 대상으로 OCR을 실시합니다.")
     public ResponseSuccessDto<?> ocrImg(
@@ -217,20 +206,22 @@ public class WorkbookController {
 //        JwtDecoder jwtDecoder = new JwtDecoder();
 //        Long userId = jwtDecoder.verifyJWT(request);
 //        log.info("{}", userId);
-        Long userId = Long.valueOf(1);
+        Long userId = Long.valueOf(9);
         return workbookService.ocrImg(userId, file);
     }
 
     @PostMapping ("/ocr/pdf")
     @ApiOperation(value = "pdf ocr", notes = "pdf를 대상으로 OCR을 실시합니다.")
-    public ResponseSuccessDto<?> ocrPdf(
+    public ResponseSuccessDto<?> ocrPdf (
             HttpServletRequest request,
-            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(1);
-        return workbookService.ocrImg(userId, file);
+            @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
+        workbookService.detectDocumentsGcs(file);
+        return new ResponseSuccessDto<>(HttpStatus.OK);
+//        return workbookService.ocrImg(userId, file);
     }
 
     @DeleteMapping ("/problem/{problemId}")
