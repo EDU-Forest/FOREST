@@ -1,8 +1,13 @@
-import { useEffect } from "react";
-import { StyledMemoListBox, StyledMemoListItemBox, StyledMemoListItemTopBox } from "./Memo.style";
-import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
 import useMemoDelete from "@/apis/dashboard/useMemoDelete";
+import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
 import arrangeDate from "@/utils/arrangeDate";
+import { useEffect } from "react";
+import {
+  MemoContentText,
+  StyledMemoListBox,
+  StyledMemoListItemBox,
+  StyledMemoListItemTopBox,
+} from "./Memo.style";
 
 function MemoList() {
   const memoList: Memo[] = useMemoListQuery().data;
@@ -38,7 +43,7 @@ function MemoList() {
               <span>{arrangeDate(item.createdDate)}</span>
               <button onClick={() => deleteMemo(item.memoId)}>삭제</button>
             </StyledMemoListItemTopBox>
-            <div>{item.content}</div>
+            <MemoContentText>{item.content}</MemoContentText>
           </StyledMemoListItemBox>
         );
       })}
