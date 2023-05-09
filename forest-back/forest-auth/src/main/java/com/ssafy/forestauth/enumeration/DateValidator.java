@@ -22,9 +22,10 @@ public class DateValidator implements ConstraintValidator<ValidDate, String> {
   public boolean isValid(String value, ConstraintValidatorContext context) {
 
     try {
-      LocalDate.from(LocalDate.parse(value, DateTimeFormatter.ofPattern(this.pattern)));
+      LocalDate localDate = LocalDate.from(LocalDate.parse(value, DateTimeFormatter.ofPattern(this.pattern)));
+      log.info("localDate : {}", localDate);
     } catch (DateTimeParseException e) {
-      log.error("DateValidator : {}", e);
+      log.error("DateValidator : {}", e.getMessage());
       return false;
     }
     return true;

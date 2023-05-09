@@ -61,7 +61,6 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             if(jwt == null) {
                 log.info("JWT 값이 NULL 입니다!!");
-                log.info("exception occurred : {}", jwt.getBytes(StandardCharsets.UTF_8));
                 request.setAttribute("exception", ErrorCode.AUTH_WRONG_TOKEN);
             }
             else if(StringUtils.hasText(jwt) && jwtProvider.validateToken(jwt)) {
