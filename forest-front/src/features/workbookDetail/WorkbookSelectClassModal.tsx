@@ -7,7 +7,7 @@ import {
   WorkbookSelectClassModalBox,
 } from "./WorkbookModal.style";
 import useClassListQuery from "@/apis/class/useClassListQuery";
-import { ClassList } from "@/types/ClassList";
+import { IClassList } from "@/types/ClassList";
 
 interface ClassType {
   classId: number;
@@ -67,7 +67,7 @@ function WorkbookSelectClassModal({
         <p>클래스가 없습니다</p>
       ) : (
         <WorkbookClassBtnsBox>
-          {classes.map((classItem: ClassList, i: number) => (
+          {classes.map((classItem: IClassList, i: number) => (
             <WorkbookClassBtn
               key={`class-${i}`}
               onClick={() => handleClickClass(classItem.classId)}
