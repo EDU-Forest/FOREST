@@ -8,7 +8,6 @@ import { ClipLoader } from "react-spinners";
 import { StyledWorkbookDetailBtnsBox, WorkbookSaveBtn } from "./WorkbookDetail.style";
 import useWorkbookCopyPostQuery from "@/apis/workbookDetail/useWorkbookDetailCopyQuery";
 import { ModalBox } from "@/styles/modal";
-import { ToastBox, ToastTitleBox } from "@/components/Toast/Toast.style";
 import Toast from "@/components/Toast/Toast";
 
 interface IProps {
@@ -98,13 +97,13 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
         </StyledRoundGhostBtn>
       </StyledWorkbookDetailBtnsBox>
       {isCopySuccess && (
-        <ToastBox>
+        <Toast>
           <MdOutlineFileCopy />
-          <Toast>
+          <div>
             <p>사본 생성 완료</p>
             <p>사본으로 이동했습니다</p>
-          </Toast>
-        </ToastBox>
+          </div>
+        </Toast>
       )}
     </>
   );
