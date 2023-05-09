@@ -1,7 +1,7 @@
 server:
   port: 9011
   ssl:
-    enabled: true
+    enabled: false
     key-store: ${KEY_STORE}
     key-store-password: ${KEY_STORE_PASSWORD}
     key-store-type: ${KEY_STORE_TYPE}
@@ -12,7 +12,6 @@ server:
     max-http-form-post-size: 100MB
     threads:
       max: 200
-    connection-timeout: 3m
 
 spring:
   config:
@@ -48,7 +47,6 @@ spring:
           location: ${GCP_LOCATION}
         project-id: ${GCP_ID}
         bucket: ${GCP_BUCKET}
-
 
 notification:
   mattermost:
