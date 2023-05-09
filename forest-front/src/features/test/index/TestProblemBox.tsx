@@ -49,9 +49,8 @@ export default function TestProblemBox({
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
-  const record = useCanvasRecordQuery(studentStudyProblemId).data;
-
   const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
+  const record = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas).data;
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,

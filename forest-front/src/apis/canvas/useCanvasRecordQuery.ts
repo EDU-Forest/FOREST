@@ -5,13 +5,14 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 const fetcher = (studentStudyProblemId: number) =>
   studyAxios.get(`/api/canvas/${studentStudyProblemId}`).then(({ data }) => data.data);
 
-const useCanvasRecordQuery = (studentStudyProblemId: number) => {
+const useCanvasRecordQuery = (studentStudyProblemId: number, isOpenCanvas: boolean) => {
   return useQuery(
     [queryKeys.CANVAS_RECORD, studentStudyProblemId],
     () => fetcher(studentStudyProblemId),
     {
       refetchOnWindowFocus: false,
-      enabled: !!studentStudyProblemId,
+      enabled: !!studentStudyProblemId && !!isOpenCanvas,
+      onSuccess: (data) => console.log("그림 불러오기 ~", data),
     },
   );
 };
