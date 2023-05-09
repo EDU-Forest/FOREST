@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -64,11 +66,14 @@ public class CanvasService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.AUTH_USER_NOT_FOUND));
 
-        Canvas canvas = canvasRepository.findAllByStudentStudyProblemId(studentStudyProblemId);
+        Optional<Canvas> canvas = canvasRepository.findAllByStudentStudyProblemId(studentStudyProblemId);
+        if(canvas.isEmpty())
+            return responseUtil.successResponse("", SuccessCode.CANVAS_GET_NONE);
+
 
         GetCanvasResponseDto result = GetCanvasResponseDto.builder()
-                .studentStudyProblemId(canvas.getStudentStudyProblemId())
-                .line(canvas.getLine())
+                .studentStudyProblemId(canvas.get().getStudentStudyProblemId())
+                .line(canvas.get().getLine())
                 .build();
 
         ResponseSuccessDto<GetCanvasResponseDto> res = responseUtil.successResponse(result, SuccessCode.CANVAS_GET_SUCCESS);
