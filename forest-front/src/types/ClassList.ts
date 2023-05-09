@@ -1,4 +1,4 @@
-export interface ClassList {
+export interface IClassList {
   classId: number;
   className: string;
 }
