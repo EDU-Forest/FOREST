@@ -13,6 +13,9 @@ plugins {
     // Query DSL
     id "io.franzbecker.gradle-lombok" version "3.0.0"
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
+    // sonaQube
+    id "org.sonarqube" version "4.0.0.2929"
 }
 
 group = 'com.ssafy'
