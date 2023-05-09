@@ -12,22 +12,22 @@ interface Iprops {
 }
 
 export default function TestHeaderRightContentBox({ page, minutes, seconds }: Iprops) {
-  const { volume, startTime, endTime } = useSelector((state: RootState) => state.exam);
+  const { volume, startTime, endTime, isSubmitted } = useSelector((state: RootState) => state.exam);
 
   return (
     <StyledTestHeaderContentBox>
       <StyledTestHeaderText>총 {volume}문항</StyledTestHeaderText>
       <StyledTestHeaderText>|</StyledTestHeaderText>
       <StyledTestHeaderText>
-        {page === "study"
+        {isSubmitted
+          ? "시험 종료"
+          : !startTime || !endTime
+          ? "제한 시간 없음"
+          : page === "study"
           ? minutes <= 0 && seconds <= 0
             ? "시험 종료"
-            : startTime && endTime
-            ? `남은 시간 : ${minutes < 0 ? 0 : minutes} 분 ${seconds < 0 ? 0 : seconds} 초`
-            : "제한 시간 없음"
-          : page === "result"
-          ? "시험 종료"
-          : `제한 시간 : ${dateToMinute(startTime, endTime)} 분`}
+            : `남은 시간 : ${minutes < 0 ? 0 : minutes} 분 ${seconds < 0 ? 0 : seconds} 초`
+          : "시험 종료"}
       </StyledTestHeaderText>
     </StyledTestHeaderContentBox>
   );
