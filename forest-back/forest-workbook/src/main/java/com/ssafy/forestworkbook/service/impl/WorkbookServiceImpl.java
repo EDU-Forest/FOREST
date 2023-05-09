@@ -87,7 +87,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // TODO 출제한 문제집
         else if (search.equals("use")) {
-            studyRepository.findAllByUserId(userId);
+//            studyRepository.findAllByUserId(userId);
             Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
 //            Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
 //                    .workbookId(s.getWorkbook().getId())
