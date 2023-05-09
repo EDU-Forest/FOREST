@@ -31,6 +31,7 @@ public enum SuccessCode {
     STUDY_SUCCESS_EXIT(HttpStatus.OK,"클래스 학습 종료"),
     STUDY_SUCCESS_INFO(HttpStatus.OK,"시험 시작하기 정보 조회 성공"),
     CANVAS_GET_SUCCESS(HttpStatus.OK,"캔버스 풀이 조회 성공"),
+    CANVAS_GET_NONE(HttpStatus.OK,"캔버스 풀이 없음"),
     CANVAS_POST_SUCCESS(HttpStatus.OK,"캔버스 풀이 저장 성공"),
     STUDY_STUDENT_ENTER(HttpStatus.OK,"재입장 성공"),
     STUDY_SUCCESS_RESULT_USER(HttpStatus.OK,"개인 시험 결과 조회 성공"),
