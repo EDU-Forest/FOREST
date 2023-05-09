@@ -1,6 +1,7 @@
 import { PieChart } from "react-minimal-pie-chart";
 import { ClassLabelBox, StudentScoreChartLabel, SummaryChartWrapper } from "../ClassSummary.style";
 import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
+import { AnswerRate } from "@/types/AnswerRate";
 
 interface Iprops {
   answerRate: AnswerRate;
@@ -30,7 +31,7 @@ export default function CorrectRateDonut({ answerRate, page }: Iprops) {
         ]}
         style={{ width: "152px" }}
         lineWidth={18}
-        background="white"
+        background="#ffffff"
         lengthAngle={360}
         startAngle={270}
         animate

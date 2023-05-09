@@ -11,7 +11,6 @@ function TestInfo() {
   const dispatch = useDispatch();
   const router = useRouter();
   const studyId = router.query.studyId;
-  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     dispatch(setinitProblem());

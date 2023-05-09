@@ -1,4 +1,4 @@
-interface ClassWorkbooks {
+export interface ClassWorkbooks {
   studyId: number;
   title: string;
   workbookImgPath: string;

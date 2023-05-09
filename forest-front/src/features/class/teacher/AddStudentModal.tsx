@@ -23,16 +23,17 @@ import { AiOutlineCheckCircle, AiOutlineClose } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useClassStudentAdd from "@/apis/class/teacher/useClassStudentAdd";
+import { IStudent } from "@/types/Student";
 
 export default function AddStudentModal() {
   const dispatch = useDispatch();
   const classId = useSelector((state: RootState) => state.class.nowClassId);
   const [inputValue, setInputValue] = useState<string>("");
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
-  const [studentList, setStudentList] = useState<Student[]>([]);
+  const [studentList, setStudentList] = useState<IStudent[]>([]);
   const { mutate } = useClassStudentAdd();
 
-  const searchList: Student[] = useSearchClassStudentQuery(inputValue, classId).data;
+  const searchList: IStudent[] = useSearchClassStudentQuery(inputValue, classId).data;
 
   useEffect(() => {
     if (studentList.length > 0) {
@@ -42,14 +43,14 @@ export default function AddStudentModal() {
     }
   }, [studentList]);
 
-  const addStudent = (student: Student) => {
+  const addStudent = (student: IStudent) => {
     if (studentList.includes(student)) {
       return;
     }
     setStudentList([...studentList, student]);
   };
 
-  const deleteStudent = (student: Student) => {
+  const deleteStudent = (student: IStudent) => {
     const newList = studentList.filter((item) => item !== student);
     setStudentList(newList);
   };

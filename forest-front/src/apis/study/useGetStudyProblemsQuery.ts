@@ -14,14 +14,13 @@ const fetcher = (studyId: number) =>
   });
 
 const useGetStudyProblems = (studyId: number) => {
-  const router = useRouter();
   const { isStarted } = useSelector((state: RootState) => state.exam);
   const dispatch = useDispatch();
   return useQuery([queryKeys.STUDY_PROBLEMS, isStarted], () => fetcher(studyId), {
     // enabled: !!isStarted,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log(data.data);
+      console.log("dsdsd", data.data);
       dispatch(setStudyProblems(data.data));
       // router.push(`/test/${studyId}`);
     },

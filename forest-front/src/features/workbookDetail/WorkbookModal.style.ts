@@ -40,7 +40,10 @@ export const WorkbookExportRadioCircle = styled.div`
   border: 0.0625rem solid #ccc;
 `;
 
-export const WorkbookExportRadioLabel = styled.label<{ isDisabled: boolean; isChecked: boolean }>`
+export const WorkbookExportRadioLabel = styled.label<{
+  isDisabled: boolean;
+  isChecked: boolean;
+}>`
   display: flex;
   flex-direction: column;
   justify-content: center;

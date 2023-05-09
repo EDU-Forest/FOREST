@@ -8,6 +8,7 @@ import {
   StyledMemoListItemBox,
   StyledMemoListItemTopBox,
 } from "./Memo.style";
+import { Memo } from "@/types/Memo";
 
 function MemoList() {
   const memoList: Memo[] = useMemoListQuery().data;

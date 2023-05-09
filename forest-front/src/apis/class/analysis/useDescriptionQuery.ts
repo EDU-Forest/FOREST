@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
+import { Descript } from "@/types/Descript";
 
 interface Description {
   count: number;
@@ -9,8 +10,9 @@ interface Description {
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/descript/${studyId}`).then(({ data }) => {
-    const descript = data.data as Description;
-    return descript;
+    // const descript = data.data as Description;
+    // return descript;
+    return data;
   });
 
 const useDescriptionQuery = (studyId: number) => {

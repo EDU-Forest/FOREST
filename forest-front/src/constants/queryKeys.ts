@@ -6,6 +6,8 @@ export const CHECK_EMAIL = "/checkEmail";
 export const STUDY_PROBLEMS = "/studyProblems";
 export const STUDY_INFO = "/studyInfo";
 export const STUDY_QUESTION_ANSWER = "/studyQuestionAnswer";
+export const STUDENT_DETAIL_RESULT = "/studentDetailResult";
+export const STUDENT_QUESTION_RESULT = "/studentQuestionResult";
 
 // dashboard
 export const CHEER_MSG = "/cheerMsg";

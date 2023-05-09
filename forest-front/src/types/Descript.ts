@@ -1,17 +1,17 @@
-interface Descript {
+export interface Descript {
   problemListId: number;
   title: string;
   point: number; // 배점
   keywordNum: number;
   keywordList: Keyword[];
-  studentList: StudentList[];
+  studentList: IStudentList[];
 }
 
-interface Keyword {
+export interface Keyword {
   keyword: string;
 }
 
-interface StudentList {
+export interface IStudentList {
   studentNum: number; // 순번
   answer: string;
   similarity: number;

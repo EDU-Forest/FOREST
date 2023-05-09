@@ -1,5 +1,6 @@
 import StudyAnalysis from "@/features/class/analysis/StudyAnalysis";
 import { AnalysisFullScreen } from "@/features/class/analysis/StudyAnalysis.style";
+import { IStudyId } from "@/types/Study";
 import withAuth from "@/utils/auth/withAuth";
 
 interface ServerProps {

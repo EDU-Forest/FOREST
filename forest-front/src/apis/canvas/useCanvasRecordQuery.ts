@@ -6,7 +6,14 @@ const fetcher = (studentStudyProblemId: number) =>
   studyAxios.get(`/api/canvas/${studentStudyProblemId}`).then(({ data }) => data.data);
 
 const useCanvasRecordQuery = (studentStudyProblemId: number) => {
-  return useQuery([queryKeys.CANVAS_RECORD], () => fetcher(studentStudyProblemId), {});
+  return useQuery(
+    [queryKeys.CANVAS_RECORD, studentStudyProblemId],
+    () => fetcher(studentStudyProblemId),
+    {
+      refetchOnWindowFocus: false,
+      enabled: !!studentStudyProblemId,
+    },
+  );
 };
 
 export default useCanvasRecordQuery;

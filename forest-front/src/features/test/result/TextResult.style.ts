@@ -1,6 +1,7 @@
 import { Title } from "@/styles/text";
 import styled from "styled-components";
 import { StyledTestCommonBtn } from "../common/TextCommon.style";
+import { scrollBar } from "@/styles/theme";
 
 const TestResultTotalBox = styled.div`
   width: 720px;
@@ -9,7 +10,7 @@ const TestResultTotalBox = styled.div`
   background-color: ${({ theme }) => theme.colors.Lime[50]};
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  margin-top: 144px;
+  margin-top: 2rem;
   margin-bottom: 24px;
 `;
 
@@ -62,7 +63,6 @@ const TestResultTotalContentGraphBox = styled.div`
   width: 9.5rem;
   height: 9.5rem;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.Orange[50]};
 `;
 
 const TestResultTotalContentDetailLeftItemBox = styled.div`
@@ -100,6 +100,7 @@ const TestResultTitleBox = styled.div`
 
 const ResultContainer = styled.div`
   width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,7 +109,7 @@ const ResultContainer = styled.div`
 
 const TestResultOkBtn = styled(StyledTestCommonBtn)`
   height: 64px;
-  font-size: 1.375rem;
+  font-size: 1rem;
   margin-bottom: 2rem;
 
   &:hover {
@@ -119,6 +120,8 @@ const TestResultOkBtn = styled(StyledTestCommonBtn)`
 const TestResultContentBox = styled.div`
   margin: 3.75rem 6rem;
   width: 30rem;
+  height: 6rem;
+  position: relative;
 `;
 
 const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
@@ -185,6 +188,16 @@ const TestResultNotOpenBox = styled.div`
   transform: translate(-50%, -50%);
 `;
 
+const TestResultSectionBox = styled.div`
+  width: 100%;
+  height: calc(100% - 5rem);
+  overflow: auto;
+  ${scrollBar(0.75)}
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export {
   TestResultTotalBox,
   TestResultTotalTitleBox,
@@ -203,4 +216,5 @@ export {
   TestResultContentBox,
   TestBtnBox,
   TestResultNotOpenBox,
+  TestResultSectionBox,
 };

@@ -1,9 +1,11 @@
-interface examState {
+export interface examState {
+  isSubmitted: boolean;
+  isEnded: boolean;
   isStarted: boolean;
   curProblemNum: number;
   volume: number;
-  startTime: Date;
-  endTime: Date;
+  startTime: Date | null;
+  endTime: Date | null;
   userName: string;
   studyName: string;
   problem: {
@@ -22,4 +24,9 @@ interface examState {
       isImage: boolean;
     }[];
   }[];
+}
+
+export interface IQuestionResult {
+  problemNum: number;
+  isCorrected: boolean;
 }

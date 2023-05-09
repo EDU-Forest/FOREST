@@ -23,21 +23,35 @@ import Canvas from "@/features/canvas/Canvas";
 import { useState } from "react";
 import { CanvasPath } from "react-sketch-canvas";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
+import TestProblemImg from "./TestProblemImg";
+import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
 
 interface Iprops {
   minutes: number;
   seconds: number;
+  allPaths: CanvasPath[];
+  setAllPaths: (allPaths: CanvasPath[]) => void;
+  isSubmitted?: boolean;
 }
 
-export default function TestProblemBox({ minutes, seconds }: Iprops) {
+export default function TestProblemBox({
+  minutes,
+  seconds,
+  allPaths,
+  setAllPaths,
+  isSubmitted,
+}: Iprops) {
   const router = useRouter();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
   const canvasMutate = useCanvasPost().mutate;
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
+  const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
+  const record = useCanvasRecordQuery(studentStudyProblemId).data;
+
+  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -52,33 +66,45 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
 
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
-
-    mutate(payload);
-    dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
-  };
-  const goToNextProblem = () => {
     const canvasPayload = {
       studentStudyProblemId: studentStudyProblemId,
       line: allPaths,
     };
-    console.log("canvasPayload", canvasPayload);
     mutate(payload);
     canvasMutate(canvasPayload);
-    if (curProblemNum === problem.length) return;
-
-    dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
+    dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
   };
 
-  const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
+  const goToNextProblem = () => {
+    if (curProblemNum === problem.length) return;
+    const canvasPayload = {
+      studentStudyProblemId: studentStudyProblemId,
+      line: allPaths,
+    };
+    mutate(payload);
+    canvasMutate(canvasPayload);
+    dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
+    setIsOpenCanvas(false);
+    setAllPaths([]);
+  };
 
   return (
     <StyledTestProblemBox>
       <TestCanvas>
-        <Canvas allPaths={allPaths} setAllPaths={setAllPaths} />
+        <Canvas
+          allPaths={allPaths}
+          setAllPaths={setAllPaths}
+          storedData={record?.line}
+          isOpenCanvas={isOpenCanvas}
+          setIsOpenCanvas={setIsOpenCanvas}
+        />
       </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />
+          {problemImgPath && <TestProblemImg problemImgPath={problemImgPath} />}
           {text && <TestProblemText />}
           {type === "MULTIPLE" && (
             <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
@@ -86,7 +112,7 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
           {type === "OX" && <TestProblemOXAnswer minutes={minutes} seconds={seconds} />}
           {type === "SUBJECTIVE" && (
             <StyledTestProblemShortAnswer
-              disabled={minutes <= 0 && seconds <= 0}
+              disabled={isSubmitted}
               value={userAnswer ? userAnswer : ""}
               onChange={onChange}
               placeholder="정답을 입력하세요"
@@ -94,13 +120,13 @@ export default function TestProblemBox({ minutes, seconds }: Iprops) {
           )}
           {type === "DESCRIPT" && (
             <StyledTestProblemEssayAnswer
-              disabled={minutes <= 0 && seconds <= 0}
+              disabled={isSubmitted}
               value={userAnswer ? userAnswer : ""}
               onChange={onChange}
               placeholder="정답을 입력하세요"
             />
           )}
-          {minutes <= 0 && seconds <= 0 && (
+          {isSubmitted && (
             <TestProblemAnswerBox>
               {type === "DESCRIPT" ? <div>핵심 단어</div> : <div>정답</div>}
               <div>{problemAnswer}</div>

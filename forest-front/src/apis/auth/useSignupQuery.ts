@@ -1,3 +1,4 @@
+import { Signup } from "@/types/Auth";
 import authAxios from "@/utils/customAxios/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";

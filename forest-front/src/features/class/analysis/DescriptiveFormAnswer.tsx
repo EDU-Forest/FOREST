@@ -11,13 +11,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setStudentPointList } from "@/stores/class/classInfo";
+import { IStudentList } from "@/types/Descript";
 
 interface ObjType {
   [index: string]: number;
 }
 
 interface Iprops {
-  studentList?: StudentList[];
+  studentList?: IStudentList[];
   keywordNum?: number;
   maxScore: number;
 }

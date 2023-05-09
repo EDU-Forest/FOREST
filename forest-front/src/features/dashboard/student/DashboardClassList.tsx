@@ -5,13 +5,14 @@ import useClassListQuery from "@/apis/class/useClassListQuery";
 import { useDispatch } from "react-redux";
 import { setClass } from "@/stores/class/classInfo";
 import { useRouter } from "next/router";
+import { IClassList } from "@/types/ClassList";
 
 function DashboardClassList() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const classList: ClassList[] = useClassListQuery().data;
+  const classList: IClassList[] = useClassListQuery().data;
 
-  const handleClick = (item: ClassList) => {
+  const handleClick = (item: IClassList) => {
     dispatch(setClass(item));
     router.push("/student/class");
   };

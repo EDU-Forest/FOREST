@@ -9,13 +9,19 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import TestEnd from "@/features/test/index/TestEnd";
 import withAuth from "@/utils/auth/withAuth";
+import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
+import { CanvasPath } from "react-sketch-canvas";
 
 function Test() {
-  const { endTime } = useSelector((state: RootState) => state.exam);
+  const router = useRouter();
+  const studyId = router.query.studyId;
+  const { endTime, isSubmitted } = useSelector((state: RootState) => state.exam);
 
   const [toggleModal, setToggleModal] = useState(false);
-  const [minutes, setMinutes] = useState(dateToMinute(new Date(), endTime));
-  const [seconds, setSeconds] = useState(dateToSecond(new Date(), endTime) % 60);
+  const [minutes, setMinutes] = useState(endTime ? dateToMinute(new Date(), endTime) : 0);
+  const [seconds, setSeconds] = useState(endTime ? dateToSecond(new Date(), endTime) % 60 : 0);
+  const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
+  const { data } = useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -36,40 +42,25 @@ function Test() {
 
   return (
     <StyledTestContainer>
-      {/* 테스트용 */}
-      {/* {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
+      {toggleModal && <TestEndModal setToggleModal={setToggleModal} allPaths={allPaths} />}
       <TestHeader
         page={"study"}
         minutes={minutes}
         seconds={seconds}
         setToggleModal={setToggleModal}
       />
-      {minutes > 0 && seconds > 0 ? (
-        <TestEnd />
+      {(minutes <= 0 && seconds <= 0 && !isSubmitted) ||
+      ((minutes > 0 || seconds > 0) && isSubmitted) ? (
+        <TestEnd allPaths={allPaths} />
       ) : (
         <TestContent
           minutes={minutes}
           seconds={seconds}
           toggleModal={toggleModal}
           setToggleModal={setToggleModal}
-        />
-      )} */}
-      {/* 아래가 원본 */}
-      {toggleModal && <TestEndModal setToggleModal={setToggleModal} />}
-      <TestHeader
-        page={"study"}
-        minutes={minutes}
-        seconds={seconds}
-        setToggleModal={setToggleModal}
-      />
-      {minutes <= 0 && seconds <= 0 ? (
-        <TestEnd />
-      ) : (
-        <TestContent
-          minutes={minutes}
-          seconds={seconds}
-          toggleModal={toggleModal}
-          setToggleModal={setToggleModal}
+          allPaths={allPaths}
+          setAllPaths={setAllPaths}
+          isSubmitted={data?.isSubmitted}
         />
       )}
     </StyledTestContainer>

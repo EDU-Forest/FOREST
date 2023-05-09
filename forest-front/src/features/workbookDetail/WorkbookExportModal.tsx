@@ -27,7 +27,7 @@ function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectCl
   // const [isSavePdf, setIsSavePdf] = useState(false);
   const { data, mutate: releaseWorkbookApi } = useWorkbookDetailReleasePatch();
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const { isOriginal } = workbook;
+  const { isOriginal, isDeploy } = workbook;
 
   // const router = useRouter();
   // const wId = router.query.wId;

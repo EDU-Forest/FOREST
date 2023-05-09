@@ -15,12 +15,14 @@ import { RootState } from "@/stores/store";
 import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
 import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
+import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
-export default function EachResult() {
+interface Iprops {
+  goToGrade: (item: StudentStudyResultList) => void;
+}
+
+export default function EachResult({ goToGrade }: Iprops) {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-  const goToGrade = () => {
-    // 상세 성적으로 이동
-  };
 
   const { data, isLoading } = useStudentAnsweRate(nowStudyId);
 
@@ -62,7 +64,7 @@ export default function EachResult() {
                   <span>{item.correctRate}</span>%
                 </ResultTableItemSmall>
                 <ResultTableItemSmall>
-                  <MdEqualizer className="icon" onClick={goToGrade} />
+                  <MdEqualizer className="icon" onClick={() => goToGrade(item)} />
                 </ResultTableItemSmall>
               </ResultTableList>
             ))}

@@ -1,6 +1,9 @@
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import { IStudyResult } from "@/types/Study";
 
 interface Iprops {
   studyId: number;
@@ -14,7 +17,10 @@ const fetcher = (studyId: number) =>
   });
 
 const useGetStudyResult = ({ studyId, setStudyResult }: Iprops) => {
-  return useQuery(queryKeys.GET_STUDY_RESULT, () => fetcher(studyId), {
+  const { isEnded } = useSelector((state: RootState) => state.exam);
+
+  return useQuery([queryKeys.GET_STUDY_RESULT, isEnded], () => fetcher(studyId), {
+    enabled: !!isEnded,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setStudyResult(data.data);

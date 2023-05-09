@@ -127,6 +127,11 @@ const StyledTestProblemAnswerNumber = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 22px;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+  }
 `;
 
 const StyledTestNumberBtn = styled.div<{ isSelected: boolean }>`
@@ -410,6 +415,15 @@ const TestProblemContentBox = styled.div`
   ${scrollBar(0.75)}
 `;
 
+const TestProblemImgBox = styled.div`
+  text-align: center;
+
+  img {
+    width: 25rem;
+    height: 25rem;
+  }
+`;
+
 export {
   StyledTestContainer,
   StyledAnswerBox,
@@ -444,4 +458,5 @@ export {
   TestProblemSection,
   TestProblemContentBox,
   TestCanvas,
+  TestProblemImgBox,
 };

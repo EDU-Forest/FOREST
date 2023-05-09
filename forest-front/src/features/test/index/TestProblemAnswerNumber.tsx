@@ -7,11 +7,13 @@ import {
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setChooseAnswer } from "@/stores/exam/exam";
+import { IStudyTimeLimit } from "@/types/Study";
 
 interface Iprops extends IStudyTimeLimit {
   idx: number;
   text: string;
   isSelected: boolean;
+  isImage: boolean;
 }
 
 export default function TestProblemAnswerNumber({
@@ -20,6 +22,7 @@ export default function TestProblemAnswerNumber({
   text,
   minutes,
   seconds,
+  isImage,
 }: Iprops) {
   const dispatch = useDispatch();
   const { curProblemNum } = useSelector((state: RootState) => state.exam);
@@ -33,7 +36,11 @@ export default function TestProblemAnswerNumber({
       <StyledTestNumberBtn onClick={chooseAnswer} isSelected={isSelected}>
         {idx + 1}
       </StyledTestNumberBtn>
-      <StyledTestNumberText onClick={chooseAnswer}>{text}</StyledTestNumberText>
+      {isImage ? (
+        <img src={text} onClick={chooseAnswer} />
+      ) : (
+        <StyledTestNumberText onClick={chooseAnswer}>{text}</StyledTestNumberText>
+      )}
     </StyledTestProblemAnswerNumber>
   );
 }

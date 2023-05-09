@@ -4,9 +4,14 @@ export const StyledMemoUploadInputBox = styled.div`
   display: flex;
   padding: 0.5rem;
   gap: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.Gray[100]};
 
   background-color: ${({ theme }) => theme.colors.Gray[100]};
   border-radius: 0.625rem;
+
+  &:focus-within {
+    border: 1px solid ${({ theme }) => theme.colors.Gray[500]};
+  }
 
   input {
     width: 100%;
@@ -73,8 +78,12 @@ export const StyledMemoListItemTopBox = styled.div`
 
     border: none;
     background-color: transparent;
-    color: ${({ theme }) => theme.colors.Lime[800]};
+    color: ${({ theme }) => theme.colors.Lime[700]};
     font-weight: bold;
+
+    :hover {
+      color: ${({ theme }) => theme.colors.Lime[900]};
+    }
 
     :active {
       color: ${({ theme }) => theme.colors.Lime[900]};

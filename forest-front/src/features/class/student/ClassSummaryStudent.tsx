@@ -26,7 +26,7 @@ export default function ClassSummaryStudent() {
   const { data, isLoading } = useStudentScoreQuery(nowStudyId);
 
   const goToDetail = (studyId: number) => {
-    router.push(`/student/class/study/${studyId}`);
+    router.push(`/test/${studyId}/result`);
   };
 
   const goToTest = (studyId: number) => {
@@ -52,9 +52,9 @@ export default function ClassSummaryStudent() {
                   <ClassSummaryText
                     isGray
                     style={{ cursor: "pointer", margin: "0px" }}
-                    onClick={() => goToDetail(data?.studyId)}
+                    onClick={() => goToDetail(data?.data.studyId)}
                   >
-                    자세히 보기
+                    결과 보기
                     <AiOutlineRight className="icon" />
                   </ClassSummaryText>
                 )}
@@ -62,18 +62,25 @@ export default function ClassSummaryStudent() {
                   <ClassSummaryText
                     isGray
                     style={{ cursor: "pointer", margin: "0px" }}
-                    onClick={() => goToTest(data?.studyId)}
+                    onClick={() => goToTest(data?.data.studyId)}
                   >
                     문제 풀기
                     <AiOutlineRight className="icon" />
                   </ClassSummaryText>
                 )}
               </ClassSummaryTextWrapper>
-              {data?.status === "STUDY_NOT_YET" ? (
-                <ClassSummaryDeadline>{arrangeDate(data?.data.startTime)} ~ </ClassSummaryDeadline>
-              ) : (
-                <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>
+              {data?.data.studyType !== "SELF" && (
+                <>
+                  {data?.status === "STUDY_NOT_YET" ? (
+                    <ClassSummaryDeadline>
+                      {arrangeDate(data?.data.startTime)} ~{" "}
+                    </ClassSummaryDeadline>
+                  ) : (
+                    <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>
+                  )}
+                </>
               )}
+
               {data?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
                 <ClassSummaryItemWrapper>
                   <ClassScoreChart
@@ -96,6 +103,7 @@ export default function ClassSummaryStudent() {
                   {data?.status === "STUDY_ONGOING" && "아직 문제를 풀지 않았습니다."}
                   {data?.status === "STUDY_SUBMIT_ALREADY" && "채점을 기다리는 중입니다."}
                   {data?.status === "STUDY_NOT_YET" && "시작되지 않은 시험입니다."}
+                  {data?.status === "STUDY_NOT_PARTICIPATE" && "응시하지 않은 시험입니다."}
                 </ClassSummaryItemWrapperNoResult>
               )}
             </ClassSummaryWrapper>

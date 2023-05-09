@@ -1,4 +1,4 @@
-interface StudentExamList {
+export interface StudentExamList {
   studyId: number;
   title: string;
   startTime: string;

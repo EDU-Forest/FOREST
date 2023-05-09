@@ -28,6 +28,7 @@ import { SignupLayout } from "../signup/Signup.style";
 import useCheckEmail from "@/apis/auth/useCheckEmailQuery";
 import useSignup from "@/apis/auth/useSignupQuery";
 import { sign } from "crypto";
+import { UserData } from "@/types/Userdata";
 
 interface Iprops {
   onClose: () => void;
@@ -265,6 +266,8 @@ export default function UserForm({ type }: Iprops) {
               id="birth"
               name="birth"
               type="date"
+              min={"1930-01-01"}
+              max={"2020-12-31"}
               isShort={true}
               placeholder="생년을 선택하세요"
               value={userData.birth}

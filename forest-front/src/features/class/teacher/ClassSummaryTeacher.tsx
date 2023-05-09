@@ -53,7 +53,9 @@ export default function ClassSummaryTeacher() {
               </ClassSummaryText>
             )}
           </ClassSummaryTextWrapper>
-          <ClassSummaryDeadline>~ {arrangeDate(data?.endTime)}</ClassSummaryDeadline>
+          {data?.studyType !== "SELF" && (
+            <ClassSummaryDeadline>~ {arrangeDate(data?.endTime)}</ClassSummaryDeadline>
+          )}
 
           {data?.scheduleType === "AFTER" ? (
             <ClassSummaryItemWrapper>
