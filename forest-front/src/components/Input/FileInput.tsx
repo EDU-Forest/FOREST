@@ -3,13 +3,14 @@ import { StyledFileInputLabel, StyledFileInput } from "./Input.style";
 
 interface Iprops {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
+  text: string;
 }
 
-export default function FileInput({ onChange }: Iprops) {
+export default function FileInput({ onChange, text }: Iprops) {
   return (
     <StyledFileInputLabel id="pdfInput">
       <MdOutlineFileCopy />
-      PDF 또는 이미지 불러오기
+      {text}
       <StyledFileInput id="pdfInput" onChange={onChange} type="file" accept="image/*, .pdf" />
     </StyledFileInputLabel>
   );

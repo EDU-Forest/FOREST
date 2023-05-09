@@ -49,9 +49,8 @@ export default function TestProblemBox({
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
   const dispatch = useDispatch();
-  const record = useCanvasRecordQuery(studentStudyProblemId).data;
-
   const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
+  const record = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas).data;
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -66,12 +65,16 @@ export default function TestProblemBox({
 
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
     mutate(payload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
+
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
     setIsOpenCanvas(false);
     setAllPaths([]);
@@ -79,12 +82,16 @@ export default function TestProblemBox({
 
   const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
     mutate(payload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
+
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
     setIsOpenCanvas(false);
     setAllPaths([]);

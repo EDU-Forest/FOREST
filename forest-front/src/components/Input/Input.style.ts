@@ -117,4 +117,25 @@ const StyledFileInput = styled.input`
   display: none;
 `;
 
-export { CommonInput, StyledSearchInput, SearchInputDiv, StyledFileInputLabel, StyledFileInput };
+const StyledFileSelectedName = styled.div`
+  ${flexBox("column", "center", "center")};
+  gap: 3rem;
+
+  label {
+    margin-top: 3rem;
+  }
+  svg {
+    margin-right: 8px;
+    font-size: 22px;
+    vertical-align: text-bottom;
+  }
+`;
+
+export {
+  CommonInput,
+  StyledSearchInput,
+  SearchInputDiv,
+  StyledFileInputLabel,
+  StyledFileInput,
+  StyledFileSelectedName,
+};

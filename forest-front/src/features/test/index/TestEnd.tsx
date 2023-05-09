@@ -32,13 +32,16 @@ export default function TestEnd({ allPaths }: Iprops) {
       type,
     };
 
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
-    console.log("canvasPayload", canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
+
     saveAnswer(payload);
-    canvasMutate(canvasPayload);
     endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
     router.push(`/test/${router.query.studyId}/result`);
   };

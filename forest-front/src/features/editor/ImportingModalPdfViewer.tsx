@@ -11,17 +11,19 @@ import {
 } from "./ImportingModal.style";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import CommonBtn from "@/components/Button/CommonBtn";
+import { setFinish } from "@/stores/editor/editorModal";
+import { useDispatch } from "react-redux";
 
 interface Iprops {
   targetFile: FileList | null;
 }
 export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
+  const dispatch = useDispatch();
   const [pdfFile, setPdfFile] = useState<string>("");
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pageImage, setPageImage] = useState<string>("");
   const [select, setSelect] = useState<boolean>(false);
-  const [finish, setFinish] = useState<boolean>(false);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -67,8 +69,10 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
 
   const completeSelection = () => {
     //선택 완료
-    setFinish(true);
+    dispatch(setFinish(true));
+    console.log("ㅎㅎ");
   };
+
   return (
     <>
       <PdfViewerPageController>
@@ -102,7 +106,7 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
           선택 완료
         </CommonBtn>
       </PdfViewerBtnWrapper>
-      {select && <ImgCropper imageData={pageImage} isfinish={finish} />}
+      {select && <ImgCropper imageData={pageImage} />}
     </>
   );
 }

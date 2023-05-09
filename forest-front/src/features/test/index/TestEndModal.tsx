@@ -47,12 +47,14 @@ export default function TestEndModal({ allPaths, setToggleModal }: Iprops) {
       type,
     };
 
-    const canvasPayload = {
-      studentStudyProblemId: studentStudyProblemId,
-      line: allPaths,
-    };
-    console.log("canvasPayload", canvasPayload);
-    canvasMutate(canvasPayload);
+    if (allPaths.length > 0) {
+      const canvasPayload = {
+        studentStudyProblemId: studentStudyProblemId,
+        line: allPaths,
+      };
+      console.log("canvasPayload", canvasPayload);
+      canvasMutate(canvasPayload);
+    }
 
     saveAnswer(payload);
     endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);

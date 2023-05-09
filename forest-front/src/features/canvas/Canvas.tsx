@@ -18,7 +18,7 @@ interface StoredData {
   }[];
 }
 interface Iprops {
-  storedData?: any;
+  storedData?: StoredData[];
   allPaths?: CanvasPath[];
   setAllPaths: (allPaths: CanvasPath[]) => void;
   isOpenCanvas: boolean;
@@ -56,8 +56,6 @@ export default function Canvas({
     stroke: CanvasPath | null;
     isEraser: boolean | null;
   }>({ stroke: null, isEraser: null });
-
-  // const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
 
   const onChange = (updatedPaths: CanvasPath[]): void => {
     setAllPaths(updatedPaths);
@@ -143,32 +141,6 @@ export default function Canvas({
           />
         </CanvasDrawSection>
       )}
-      {/* <button onClick={gogo}>해보자!</button> */}
-
-      {/* <label htmlFor="pathsToLoad" className="form-label">
-        Paths to load
-      </label>
-      <textarea
-        name="pathsToLoad"
-        id="pathsToLoad"
-        className="dataURICode col-12"
-        rows={5}
-        value={pathsToLoad}
-        onChange={(e) => {
-          setPathsToLoad(e.target.value);
-        }}
-      />
-      <button
-        type="button"
-        className="btn btn-primary"
-        onClick={() => {
-          const pathsToUpdate = JSON.parse(pathsToLoad);
-
-          canvasRef.current?.loadPaths(pathsToUpdate);
-        }}
-      >
-        Load Paths
-      </button> */}
     </>
   );
 }

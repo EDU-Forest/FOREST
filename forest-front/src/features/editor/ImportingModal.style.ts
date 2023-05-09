@@ -110,6 +110,15 @@ const ImgViewerBtnWrapper = styled(PdfViewerBtnWrapper)`
   transform: translate(-50%);
 `;
 
+const FinishLoading = styled.div`
+  ${flexBox("row", "center", "center")}
+  width: 100%;
+  height: 100%;
+  ${positionCenter("fixed")}
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 30;
+`;
+
 export {
   ImportingModalWrapper,
   ImportingModalInsideLine,
@@ -119,4 +128,5 @@ export {
   ImgCropperWrapper,
   PdfViewerBtnWrapper,
   ImgViewerBtnWrapper,
+  FinishLoading,
 };
