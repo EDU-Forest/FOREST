@@ -846,6 +846,10 @@ public class StudyService {
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
 
+        LocalDateTime now = LocalDateTime.now();
+        if (study.getEndTime().isAfter(now))
+            study.updateEndTime(now);
+
         /* 서술형 문항 개수 */
         int descriptNum = 0;
 
