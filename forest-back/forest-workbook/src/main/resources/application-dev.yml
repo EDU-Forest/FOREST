@@ -12,6 +12,7 @@ server:
     max-http-form-post-size: 100MB
     threads:
       max: 200
+    connection-timeout: 3m
 
 spring:
   config:
