@@ -14,7 +14,6 @@ const fetcher = (studyId: number) =>
   });
 
 const useGetStudyProblems = (studyId: number) => {
-  const router = useRouter();
   const { isStarted } = useSelector((state: RootState) => state.exam);
   const dispatch = useDispatch();
   return useQuery([queryKeys.STUDY_PROBLEMS, isStarted], () => fetcher(studyId), {

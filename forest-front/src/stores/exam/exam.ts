@@ -2,6 +2,8 @@ import { examState } from "@/types/Exam";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: examState = {
+  isSubmitted: false,
+  isEnded: false,
   isStarted: false,
   curProblemNum: 1,
   volume: 1,
@@ -82,6 +84,10 @@ const examSlice = createSlice({
       state.endTime = action.payload.endTime;
       state.userName = action.payload.userName;
       state.studyName = action.payload.studyName;
+      state.isSubmitted = action.payload.isSubmitted;
+    },
+    setEndStudy(state) {
+      state.isEnded = true;
     },
   },
 });
@@ -93,6 +99,7 @@ export const {
   setinitProblem,
   setStudyInfo,
   setStudyStart,
+  setEndStudy,
 } = examSlice.actions;
 
 export default examSlice.reducer;

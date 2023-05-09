@@ -15,11 +15,11 @@ import { CanvasPath } from "react-sketch-canvas";
 function Test() {
   const router = useRouter();
   const studyId = router.query.studyId;
-  const { endTime } = useSelector((state: RootState) => state.exam);
+  const { endTime, isSubmitted } = useSelector((state: RootState) => state.exam);
 
   const [toggleModal, setToggleModal] = useState(false);
-  const [minutes, setMinutes] = useState(dateToMinute(new Date(), endTime));
-  const [seconds, setSeconds] = useState(dateToSecond(new Date(), endTime) % 60);
+  const [minutes, setMinutes] = useState(endTime ? dateToMinute(new Date(), endTime) : 0);
+  const [seconds, setSeconds] = useState(endTime ? dateToSecond(new Date(), endTime) % 60 : 0);
   const [allPaths, setAllPaths] = useState<CanvasPath[]>([]);
   const { data } = useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
@@ -49,7 +49,8 @@ function Test() {
         seconds={seconds}
         setToggleModal={setToggleModal}
       />
-      {data?.isSubmitted ? (
+      {(minutes <= 0 && seconds <= 0 && !isSubmitted) ||
+      ((minutes > 0 || seconds > 0) && isSubmitted) ? (
         <TestEnd allPaths={allPaths} />
       ) : (
         <TestContent
