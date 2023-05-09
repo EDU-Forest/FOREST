@@ -20,7 +20,7 @@ import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { AiOutlineShareAlt } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineShareAlt } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
@@ -53,6 +53,7 @@ function WorkbookDetail() {
 
   const [isSavePdf, setIsSavePdf] = useState(false);
   const [isReleaseSuccess, setIsReleaseSuccess] = useState(false);
+  const [isSetSuccess, setIsSetSuccess] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question: QuestionType) => {
@@ -84,10 +85,18 @@ function WorkbookDetail() {
 
   useEffect(() => {
     // 1.5초 후 토스트 팝업 사라짐
-    isReleaseSuccess && setTimeout(() => {
-      setIsReleaseSuccess(false);
-    }, 1500);
+    isReleaseSuccess &&
+      setTimeout(() => {
+        setIsReleaseSuccess(false);
+      }, 1500);
   }, [isReleaseSuccess]);
+  useEffect(() => {
+    // 1.5초 후 토스트 팝업 사라짐
+    isSetSuccess &&
+      setTimeout(() => {
+        setIsSetSuccess(false);
+      }, 1500);
+  }, [isSetSuccess]);
 
   return (
     <div>
@@ -129,7 +138,7 @@ function WorkbookDetail() {
             setIsReleaseSuccess={setIsReleaseSuccess}
           />
         )}
-        {/* 내보내기 모달 */}
+        {/* 출제 클래스 선택 모달 */}
         {isSelectClassOpen && (
           <WorkbookSelectClassModal
             setIsOpen={setIsSelectClassOpen}
@@ -144,6 +153,7 @@ function WorkbookDetail() {
             setIsOpen={setIsSettingOpen}
             selectedClass={selectedClass}
             title={workbook.title}
+            setIsSetSuccess={setIsSetSuccess}
           />
         )}
       </StyledWorkbookDetailBox>
@@ -153,6 +163,15 @@ function WorkbookDetail() {
           <AiOutlineShareAlt />
           <div>
             <p>배포 완료</p>
+          </div>
+        </Toast>
+      )}
+      {isSetSuccess && (
+        <Toast>
+          <AiOutlineEdit />
+          <div>
+            <p>출제 완료</p>
+            <p>선택하신 클래스에 출제되었습니다</p>
           </div>
         </Toast>
       )}
