@@ -1,3 +1,9 @@
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import useCheckEmail from "@/apis/auth/useCheckEmailQuery";
+import useSignup from "@/apis/auth/useSignupQuery";
+
 import {
   SignupContentBox,
   SignupForm,
@@ -6,29 +12,21 @@ import {
   SignupLabel,
   SignupPasswordBox,
   SignupRoleBox,
-  // SignupInputBox,
-  // SignupLabel,
   SignupSubmitBox,
   SignupTitle,
   SignupTitleBox,
 } from "./SignupModal.style";
-import ArrowLeft from "@/components/Arrow/ArrowLeft";
-import SmallBtn from "@/components/Button/SmallBtn";
-import { useEffect, useState } from "react";
-import RoleBtn from "@/components/Button/RoleBtn";
 import { CommonInput } from "@/components/Input/Input.style";
 import { SignupLabelBox } from "./Home.style";
-import Label from "@/components/Label/Label";
-import { useRouter } from "next/router";
 import useKakaoLoginMoreInfo from "@/apis/auth/useKakaoLoginMoreInfoQuery";
-import { useDispatch } from "react-redux";
 import { setRole, setUsername } from "@/stores/user/user";
 import { checkBirthRange } from "@/utils/checkBirthRange";
 import { SignupLayout } from "../signup/Signup.style";
-import useCheckEmail from "@/apis/auth/useCheckEmailQuery";
-import useSignup from "@/apis/auth/useSignupQuery";
-import { sign } from "crypto";
 import { UserData } from "@/types/Userdata";
+import ArrowLeft from "@/components/Arrow/ArrowLeft";
+import SmallBtn from "@/components/Button/SmallBtn";
+import RoleBtn from "@/components/Button/RoleBtn";
+import Label from "@/components/Label/Label";
 
 interface Iprops {
   onClose: () => void;
@@ -52,6 +50,7 @@ export default function UserForm({ type }: Iprops) {
     birth: "",
     birthRange: "",
   });
+
   const [userData, setUserData] = useState<UserData>({
     email: "",
     username: "",
@@ -59,7 +58,7 @@ export default function UserForm({ type }: Iprops) {
     password: "",
     checkPassword: "",
     role: "STUDENT",
-    birth: "1900-01-01",
+    birth: "1980-01-01",
   });
 
   const { refetch } = useCheckEmail({ email: userData.email, validation, setValidation });
@@ -116,7 +115,6 @@ export default function UserForm({ type }: Iprops) {
   };
 
   const emailValidator = () => {
-    // useCheckEmailQuery({ email: userData.email, validation, setValidation });
     refetch();
   };
 

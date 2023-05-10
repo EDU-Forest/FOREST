@@ -8,7 +8,7 @@ interface Iprops {
 
 export default function Label({ children, status }: Iprops) {
   return (
-    <StyledLabel status={status}>
+    <StyledLabel status={status} className={status === "fail" ? "vibrate-3" : ""}>
       <BsCheckCircleFill className="icon" />
       {children}
     </StyledLabel>

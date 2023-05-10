@@ -1,3 +1,4 @@
+import { Container } from "@/styles/container";
 import styled from "styled-components";
 
 const SignupLayout = styled.div`
@@ -7,4 +8,11 @@ const SignupLayout = styled.div`
   justify-content: center;
 `;
 
-export { SignupLayout };
+const SignupContainer = styled(Container)`
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export { SignupLayout, SignupContainer };

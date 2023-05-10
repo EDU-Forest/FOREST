@@ -6,10 +6,10 @@ import { Title } from "@/styles/text";
 
 const EmailAuthBox = styled.div`
   ${flexBox("row", "center", "space-between")}
-  width: 12.75rem;
+  width: 204px;
 
   p {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 700;
     color: ${({ theme }) => theme.colors.Gray[600]};
   }
@@ -25,19 +25,19 @@ const EmailAuthBox = styled.div`
 
 // const GrayText = styled.div`
 //   font-weight: bold;
-//   font-size: 0.875rem;
+//   font-size: 14px;
 //   color: ${({ theme }) => theme.colors.Gray[600]};
 // `;
 
 // --- KakaoLogin ---
 
 const KakaoLoginBtn = styled.a`
-  width: 22.5rem;
-  height: 3rem;
-  border-radius: 0.5rem;
+  width: 360px;
+  height: 48px;
+  border-radius: 8px;
   background-color: #ffe90d;
   position: relative;
-  margin-bottom: 0.75rem;
+  margin-bottom: 12px;
   border: none;
   text-decoration: none;
   color: black;
@@ -48,17 +48,17 @@ const KakaoLoginBtn = styled.a`
 `;
 
 const KakaoLoginImg = styled.img`
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 20px;
+  height: 20px;
   position: absolute;
   top: 50%;
-  left: 1.125rem;
+  left: 18px;
   transform: translate(0%, -50%);
 `;
 
 const KakaoLoginText = styled.div`
   ${positionCenter()}
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
 `;
 
@@ -66,12 +66,12 @@ const KakaoLoginText = styled.div`
 
 const LoginForm = styled.form`
   ${positionCenter("absolute")}
-  width: 37.5rem;
-  padding: 2.5rem 2rem;
+  width: 600px;
+  padding: 40px 32px;
   background-color: white;
-  box-shadow: 0.25rem 0.25rem 0.625rem rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
-  border-radius: 16px;
+  border-radius: 1rem;
 `;
 
 const LoginTitleBox = styled.div`
@@ -80,29 +80,29 @@ const LoginTitleBox = styled.div`
 `;
 
 const LoginTitle = styled(Title)`
-  margin-left: 1rem;
-  margin-bottom: 0px;
+  margin-left: 16px;
+  margin-bottom: 0rem;
 `;
 
 const LoginHr = styled.hr`
-  margin: 1rem 0rem;
-  height: 0.0625rem;
+  margin: 16px 0px;
+  height: 1px;
   border: none;
   background-color: ${({ theme }) => theme.colors.Gray[400]};
 `;
 
 const LoginContentBox = styled.div`
-  padding: 0px 0.5rem;
+  padding: 0rem 8px;
 `;
 
 // const LoginBtn = styled.button`
-//   width: 5.75rem;
-//   height: 2.1875rem;
-//   line-height: 2.1875rem;
+//   width: 92px;
+//   height: 35px;
+//   line-height: 35px;
 //   border: none;
 //   background-color: ${({ theme }) => theme.colors.Lime[600]};
-//   border-radius: 2rem;
-//   font-size: 1rem;
+//   border-radius: 32px;
+//   font-size: 16px;
 //   color: white;
 //   font-weight: bold;
 // `;
@@ -112,7 +112,7 @@ const LoginSubmitBox = styled.div`
 `;
 
 const LoginInputBox = styled.div`
-  padding: 1rem 0px;
+  padding: 16px 0rem;
   display: flex;
   flex-direction: column;
 `;
@@ -120,7 +120,7 @@ const LoginInputBox = styled.div`
 const LoginLabel = styled.label`
   color: ${({ theme }) => theme.colors.Gray[500]};
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 
   &:focus {
     color: ${({ theme }) => theme.colors.Gray[900]};
@@ -128,8 +128,9 @@ const LoginLabel = styled.label`
 `;
 
 const LoginErrorMsg = styled.div`
-  font-size: 0.875rem;
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.Orange[500]};
+  padding-top: 0.25rem;
 `;
 
 // --- SignupInput ---
@@ -148,12 +149,12 @@ const SignupLabelBox = styled.div`
 const SignupForm = styled.form`
   ${positionCenter("absolute")}
   transform: translate(-50%, -30%);
-  width: 37.5rem;
-  padding: 2.5rem 2rem;
+  width: 600px;
+  padding: 40px 32px;
   background-color: white;
-  box-shadow: 0.25rem 0.25rem 0.625rem rgba(0, 0, 0, 0.25);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
-  border-radius: 16px;
+  border-radius: 1rem;
 `;
 
 const SignupTitleBox = styled.div`
@@ -162,29 +163,29 @@ const SignupTitleBox = styled.div`
 `;
 
 const SignupTitle = styled(Title)`
-  margin-left: 1rem;
-  margin-bottom: 0px;
+  margin-left: 16px;
+  margin-bottom: 0rem;
 `;
 
 const SignupHr = styled.hr`
-  margin: 1rem 0rem;
-  height: 0.0625rem;
+  margin: 16px 0px;
+  height: 1px;
   border: none;
   background-color: ${({ theme }) => theme.colors.Gray[400]};
 `;
 
 const SignupContentBox = styled.div`
-  padding: 0px 0.5rem;
+  padding: 0rem 8px;
 `;
 
 // const SignupBtn = styled.button`
-//   width: 5.75rem;
-//   height: 2.1875rem;
-//   line-height: 2.1875rem;
+//   width: 92px;
+//   height: 35px;
+//   line-height: 35px;
 //   border: none;
 //   background-color: ${({ theme }) => theme.colors.Lime[600]};
-//   border-radius: 2rem;
-//   font-size: 1rem;
+//   border-radius: 32px;
+//   font-size: 16px;
 //   color: white;
 //   font-weight: bold;
 // `;
@@ -194,7 +195,7 @@ const SignupSubmitBox = styled.div`
 `;
 
 const SignupInputBox = styled.div`
-  padding: 1rem 0px;
+  padding: 16px 0rem;
   display: flex;
   flex-direction: column;
 `;
@@ -202,7 +203,7 @@ const SignupInputBox = styled.div`
 const SignupLabel = styled.label`
   color: ${({ theme }) => theme.colors.Gray[500]};
   font-weight: 600;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
 
   &:focus {
     color: ${({ theme }) => theme.colors.Gray[900]};
@@ -210,7 +211,7 @@ const SignupLabel = styled.label`
 `;
 
 const SignupErrorMsg = styled.div`
-  font-size: 0.875rem;
+  font-size: 14px;
   color: ${({ theme }) => theme.colors.Orange[500]};
 `;
 
@@ -220,8 +221,10 @@ const SignupInputRowBox = styled.div`
 `;
 
 const SignupRoleBox = styled.div`
-  margin-top: 1rem;
+  margin-top: 16px;
 `;
+
+const LoginLabelBox = styled(SignupLabelBox)``;
 
 export {
   EmailAuthBox,
@@ -237,7 +240,6 @@ export {
   LoginHr,
   LoginLabel,
   LoginErrorMsg,
-  // SignupInputBox,
   SignupLabelBox,
   SignupForm,
   SignupTitleBox,
@@ -250,4 +252,5 @@ export {
   SignupLabel,
   SignupErrorMsg,
   SignupRoleBox,
+  LoginLabelBox,
 };
