@@ -801,16 +801,66 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
+    public void detectLocalizedObjectsGcs(String gcsPath) throws IOException {
+        gcsPath = "gs://forest_ocr_bucket/b4303e46-0b99-4a4f-84dc-41656ead71f0";
+        List<AnnotateImageRequest> requests = new ArrayList<>();
+
+        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(gcsPath).build();
+        Image img = Image.newBuilder().setSource(imgSource).build();
+
+        AnnotateImageRequest request =
+                AnnotateImageRequest.newBuilder()
+                        .addFeatures(Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION))
+                        .setImage(img)
+                        .build();
+        requests.add(request);
+
+        // Initialize client that will be used to send requests. This client only needs to be created
+        // once, and can be reused for multiple requests. After completing all of your requests, call
+        // the "close" method on the client to safely clean up any remaining background resources.
+        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+            // Perform the request
+            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+            List<AnnotateImageResponse> responses = response.getResponsesList();
+            client.close();
+            // Display the results
+            for (AnnotateImageResponse res : responses) {
+                for (LocalizedObjectAnnotation entity : res.getLocalizedObjectAnnotationsList()) {
+                    System.out.format("Object name: %s%n", entity.getName());
+                    System.out.format("Confidence: %s%n", entity.getScore());
+                    System.out.format("Normalized Vertices:%n");
+                    entity
+                            .getBoundingPoly()
+                            .getNormalizedVerticesList()
+                            .forEach(vertex -> System.out.format("- (%s, %s)%n", vertex.getX(), vertex.getY()));
+                }
+            }
+        }
+    }
+
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
 //        User user = userRepository.findById(userId)
 //                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        String path = fileToUrl(file);
-        String filePath = "gs://" + path;
+        // 파일이 없는 경우
+//        if (!file.isEmpty()) {
+//            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_UPLOADED_FILE);
+//        }
 
-//        String filePath = "gs://forest_ocr_bucket/046a5cf3-789f-4e3c-929f-fdbb94f6cee7";
-//        String filePath = "gs://forest_ocr_bucket/0f794bc0-a6e6-4abf-b98c-147731dee552";
-//        String filePath = "gs://forest_ocr_bucket/427f9ffb-1e7d-4f29-a575-bbc27f10b543";
+//        String path = fileToUrl(file);
+//        String filePath = "gs://" + path;
+        // 제임스 씨 심경 변화
+//        String filePath = "gs://forest_ocr_bucket/3be855d6-446e-4355-9a3a-fb01f33e5806";
+        // 어법상 틀린 거 - 항목 안됨
+//        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
+        // 34번 - 항목 안됨
+        String filePath = "gs://forest_ocr_bucket/81420e6d-704a-424d-a803-a13404347e6a";
+        // 제목으로 적절한거
+//        String filePath = "gs://forest_ocr_bucket/75662be8-23e7-4d29-af0f-102af8376313";
+        // 주제
+//        String filePath = "gs://forest_ocr_bucket/d27c5102-6cf7-4448-8281-5669a762aadc";
+
+//        detectLocalizedObjectsGcs(filePath);
 
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -826,87 +876,176 @@ public class WorkbookServiceImpl implements WorkbookService {
             List<AnnotateImageResponse> responses = response.getResponsesList();
             ArrayList<Object> originList = new ArrayList<>();
 
+            String[] txt = null;
             for (AnnotateImageResponse res : responses) {
                 if (res.hasError()) {
                     System.out.format("Error: %s%n", res.getError().getMessage());
                     throw new IllegalArgumentException("실패");
                 }
 
-                System.out.println("시작");
-                System.out.format("Text: %s%n", res.getTextAnnotationsList().get(0).getDescription());
-
-                // 사용가능한 annotations 전체 목록 참고 : http://g.co/cloud/vision/docs
-                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-
-                    System.out.format("Text: %s%n", annotation.getDescription());
-                    System.out.println("??????????");
-                    System.out.format("Position : %s%n", annotation.getBoundingPoly());
-                    System.out.println("--------------");
-                    // 데이터를 배열에 add
-                    originList.add(annotation.getDescription());
-                }
+//                System.out.format("Text: %s%n", res.getTextAnnotationsList().get(0).getDescription());
+                txt = res.getTextAnnotationsList().get(0).getDescription().toString().split("\\n");;
             }
-            // 배열의 0번째 값에 모든 데이터들이 text형식으로 담긴다
-            String[] txt = originList.get(0).toString().split("\\n");
+
             int j = 0;
+
             boolean isMultiple = false;
             boolean isTitle = false;
+            boolean isText = false;
+            boolean isItemEnd = false;
+            int maxlength = 0;
+            int point = 0;
 
+            StringBuilder title = new StringBuilder();
+            StringBuilder text = new StringBuilder();
+            List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
+
+            // 이미지 OCR 내용 읽기 실패
+            if (txt == null) {
+                throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
+            }
+
+            boolean checkNum = false;
+            boolean checkTitle = false;
+            boolean checkText = false;
+            boolean checkMultiple = false;
+            boolean checkPoint = false;
+            boolean checkItem = false;
+
+            int ocrNum = 0;
+            int ocrPoint = 0;
+
+            // 한 줄씩 확인
             for (int i = 0; i < txt.length; i++) {
                 String temp = txt[i];
+                log.info(txt[i]);
 
-                // 점수 확인
-                if (temp.contains("[")) {
-                    int start = temp.indexOf('[');
-                    int end = temp.indexOf(']');
-                    System.out.println("점수 : " + temp.substring(start+1, end));
+                // title 확인
+                if (!checkTitle && !checkText & !checkNum) {
+                    System.out.println("타이틀 확인중");
+                    if (!checkNum && temp.substring(0, 1).matches("^[0-9]+$")
+                            && (temp.substring(1, 2).equals(".") || temp.substring(2, 3).equals("."))) {
+                        checkNum = true;
+
+                        int endIndex = temp.substring(1, 2).equals(".") ? 2 : 3;
+                        ocrNum = Integer.parseInt(temp.substring(0, endIndex - 1));
+
+                        // 배점 확인
+                        if (temp.contains("[")) {
+                            int start = temp.indexOf('[');
+                            int end = temp.indexOf(']');
+                            int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
+                            System.out.println("점수 : " + temp.substring(start+1, end+endPoint));
+                            ocrPoint = Integer.parseInt(temp.substring(start+1, end+endPoint));
+                            System.out.println(temp);
+                            checkPoint = true;
+                        }
+
+                        // no Title
+                        if (!checkTitle && temp.substring(endIndex).trim().substring(0, 1).matches("^[a-zA-Z]*$")) {
+                            checkTitle = true;
+                            System.out.println(temp.substring(endIndex).trim());
+                            text.append(temp.substring(endIndex).trim());
+                        }
+
+                        // title
+                        else if (temp.substring(endIndex).trim().substring(0, 1).matches("^[가-힣]*$")) {
+                            title.append(temp.substring(endIndex).trim().substring(0));
+
+                            // 문제 유형 확인
+                            if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
+                                checkMultiple = true;
+                                checkTitle = true;
+                                checkNum = true;
+                            }
+                        }
+                    }
+                    if (!checkTitle && !checkText && checkNum) {
+                        if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
+                            checkMultiple = true;
+                            checkTitle = true;
+                            checkNum = true;
+                        }
+                    }
+
+                    // 번호 없음
+                    else if (temp.trim().substring(0, 1).matches("^[가-힣a-zA-Z]*$")) {
+                        title.append(temp.trim());
+                        if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
+                            checkMultiple = true;
+                            checkTitle = true;
+                            checkNum = true;
+                        }
+                    }
                 }
 
                 // 문제 확인
-                if (!isTitle && temp.contains("?")) {
-                    System.out.println("문제 제목임");
-                }
+                else if (checkTitle && !checkText && checkNum) {
 
+                    // 문장에 숫자 포함 여부
+                    if (checkTitle && temp.matches(".*[0-9].*")) {
 
-                // 문장에 숫자 포함 여부
-                if (temp.matches(".*[0-9].*")) {
-                    System.out.println("숫자가 포함됩니당.");
-
-                    // 숫자로 시작여부
-                    if (temp.substring(0, 1).matches("^[0-9]+$")) {
-                        System.out.println("번호입니당");
-
-                        // 문제 번호
-                        if (j == 0) {
-                            int end = temp.indexOf('.');
-                            System.out.println(end);
-//                            System.out.println("번호: " + temp.substring(0, end));
-                            j++;
-                        }
-
-                        // 항목 번호
-                        else if (j > 0 && txt.length - i <= 5){
-                            System.out.println("항목 : " + temp);
-                            isMultiple = true;
-                        }
+                        // 그냥 숫자인지 항목인지 판단하고 multiple 만 처리 해주자
                     }
 
-                    // 중간에 항목이거나 지문 중 숫자이거나
-                    else {
-                        
+                    // 배점 확인
+                    if (!checkPoint && temp.contains("[")) {
+                        int start = temp.indexOf('[');
+                        int end = temp.indexOf(']');
+                        int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
+                        ocrPoint = Integer.parseInt(temp.substring(start+1, end-endPoint));
+                        checkPoint = true;
+                        checkText = true;
+                    }
+                    text.append(temp);
+
+                    // 점수 인식 안되는 경우 항목 확인
+                    if (checkMultiple && txt.length - i <= 6) {
+                        if (i + 1 < temp.length() && temp.charAt(temp.length() - 1) == '.'
+                                && txt[i+1].trim().substring(0, 1).matches("^[가-힣a-zA-Z]*$")) {
+                            checkText = true;
+                        }
                     }
                 }
 
+                // 항목 확인
+                else if (checkTitle && checkText && checkNum && checkMultiple) {
+                    System.out.println("항목일걸");
+                    if (temp.substring(0, 1).equals("*")) {
+                        text.append(temp);
+                    }
+                    else if (temp.substring(0, 1).matches("^[0-9]*$")
+                            || (itemResExceptIdDtoList.size() == 0 ? !checkItem : checkItem)) {
 
+                        checkItem = true;
 
-                // 마지막 내용 숫자 인식 안될 경우
-                if (isMultiple && i == txt.length - 1) {
-                    System.out.println("마지막");
-                    System.out.println(temp);
+                        int beginIndex = temp.substring(0, 1).matches("^[0-9]*$") ? 2 : 0;
+
+                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                    .content(temp.substring(beginIndex).trim())
+                                    .isImage(false)
+                                    .build();
+
+                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                        checkMultiple = true;
+                    }
                 }
+
+
             }
-            System.out.println(Arrays.toString(txt));
-            return responseUtil.successResponse(Arrays.toString(txt), ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
+
+            ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
+                    .type(checkMultiple ? EnumProblemTypeStatus.MULTIPLE : EnumProblemTypeStatus.DESCRIPT)
+                    .title(title.toString())
+                    .problemImgPath(null)
+                    .imgIsEmpty(true)
+                    .text(text.toString())
+                    .textIsEmpty(text.toString() == null)
+                    .itemList(itemResExceptIdDtoList)
+                    .point(ocrPoint)
+                    .build();
+
+            return responseUtil.successResponse(problemOcrDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
         } catch (IOException e) {
             e.printStackTrace();
             throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
@@ -921,12 +1060,11 @@ public class WorkbookServiceImpl implements WorkbookService {
         String path = fileToUrl(file);
 
 //        String gcsSourcePath = "gs://cloud-samples-data/vision/pdf_tiff/census2010.pdf";
+//        String gcsDestinationPath = "gs://{bucket_name}/" + alpha
         String gcsSourcePath = "gs://" + path;
-        String gcsDestinationPath = "gs://forest_ocr_bucket/"+uuid;
+        String gcsDestinationPath = "gs://"+ bucketName + "/" +uuid;
 
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. After completing all of your requests, call
-        // the "close" method on the client to safely clean up any remaining background resources.
+        // Edit Run Configuration -> Environment variables -> GOOGLE_APPLICATION_CREDENTIALS={key.json}위치 설정 필수
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
             List<AsyncAnnotateFileRequest> requests = new ArrayList<>();
 
@@ -935,12 +1073,10 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             // Create the configuration with the specified MIME (Multipurpose Internet Mail Extensions)
             // types
-            InputConfig inputConfig =
-                    InputConfig.newBuilder()
-                            .setMimeType(
-                                    "application/pdf") // Supported MimeTypes: "application/pdf", "image/tiff"
-                            .setGcsSource(gcsSource)
-                            .build();
+            InputConfig inputConfig = InputConfig.newBuilder()
+                    .setMimeType("application/pdf") // Supported MimeTypes: "application/pdf", "image/tiff"
+                    .setGcsSource(gcsSource)
+                    .build();
 
             // Set the GCS destination path for where to save the results.
             GcsDestination gcsDestination =
@@ -955,12 +1091,11 @@ public class WorkbookServiceImpl implements WorkbookService {
             Feature feature = Feature.newBuilder().setType(Feature.Type.DOCUMENT_TEXT_DETECTION).build();
 
             // Build the OCR request
-            AsyncAnnotateFileRequest request =
-                    AsyncAnnotateFileRequest.newBuilder()
-                            .addFeatures(feature)
-                            .setInputConfig(inputConfig)
-                            .setOutputConfig(outputConfig)
-                            .build();
+            AsyncAnnotateFileRequest request = AsyncAnnotateFileRequest.newBuilder()
+                    .addFeatures(feature)
+                    .setInputConfig(inputConfig)
+                    .setOutputConfig(outputConfig)
+                    .build();
 
             requests.add(request);
 
@@ -968,7 +1103,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             OperationFuture<AsyncBatchAnnotateFilesResponse, OperationMetadata> response =
                     client.asyncBatchAnnotateFilesAsync(requests);
 
-            System.out.println("Waiting for the operation to finish.");
+//            System.out.println("Waiting for the operation to finish.");
 
             // Wait for the request to finish. (The result is not used, since the API saves the result to
             // the specified location on GCS.)

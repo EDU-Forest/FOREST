@@ -12,9 +12,9 @@ server:
     max-http-form-post-size: 100MB
     threads:
       max: 200
-    connection-timeout: 1800000
+    connection-timeout: 180000
   netty:
-    connection-timeout: 1800000
+    connection-timeout: 180000
 
 spring:
   config:
