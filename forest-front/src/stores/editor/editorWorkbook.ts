@@ -8,7 +8,7 @@ interface EditorWorkbookState {
 }
 
 const initialState: EditorWorkbookState = {
-  curWorkbookId: 0,
+  curWorkbookId: -1,
   curWorkbookTitle: "",
   workbooksBySelf: [{ workbookId: -1, title: "" }],
 };
@@ -34,6 +34,7 @@ const editorWorkbookSlice = createSlice({
   },
 });
 
-export const { setSelectWorkbook, resetSelectWorkbook, setWorkbookBySelf, addWorkbook } = editorWorkbookSlice.actions;
+export const { setSelectWorkbook, resetSelectWorkbook, setWorkbookBySelf, addWorkbook } =
+  editorWorkbookSlice.actions;
 
 export default editorWorkbookSlice.reducer;

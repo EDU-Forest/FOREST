@@ -34,8 +34,8 @@ const useGetWorkbooksBySelf = () => {
       if (!isMoveToEditor) {
         dispatch(
           setSelectWorkbook({
-            workbookId: workbookList[0].workbookId,
-            title: workbookList[0].title,
+            workbookId: workbookList.length > 0 ? workbookList[0].workbookId : -1,
+            title: workbookList.length > 0 ? workbookList[0].title : "",
           }),
         );
       }

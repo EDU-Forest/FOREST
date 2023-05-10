@@ -60,6 +60,7 @@ const ClassSelectNoClass = styled.div`
   ${flexBox("row", "center", "center")};
   color: ${({ theme }) => theme.colors.Orange[700]};
   height: 6rem;
+  font-size: 0.875rem;
 `;
 
 const ClassSelectDropdownAdd = styled.div`

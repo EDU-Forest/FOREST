@@ -11,46 +11,47 @@ interface editorQuestions {
 }
 
 const initialState: editorQuestions = {
-  questions: [
-    {
-      problemId: 0,
-      problemNum: 0,
-      type: "",
-      title: "",
-      text: "",
-      answer: "",
-      point: 0,
-      problemImgPath: "",
-      imgIsEmpty: false,
-      textIsEmpty: false,
-      itemList: [
-        {
-          itemId: 0,
-          no: 1,
-          content: "",
-          isImage: false,
-        },
-        {
-          itemId: 0,
-          no: 2,
-          content: "",
-          isImage: false,
-        },
-        {
-          itemId: 0,
-          no: 3,
-          content: "",
-          isImage: false,
-        },
-        {
-          itemId: 0,
-          no: 4,
-          content: "",
-          isImage: false,
-        },
-      ],
-    },
-  ],
+  // questions: [
+  //   {
+  //     problemId: 0,
+  //     problemNum: 0,
+  //     type: "",
+  //     title: "",
+  //     text: "",
+  //     answer: "",
+  //     point: 0,
+  //     problemImgPath: "",
+  //     imgIsEmpty: false,
+  //     textIsEmpty: false,
+  //     itemList: [
+  //       {
+  //         itemId: 0,
+  //         no: 1,
+  //         content: "",
+  //         isImage: false,
+  //       },
+  //       {
+  //         itemId: 0,
+  //         no: 2,
+  //         content: "",
+  //         isImage: false,
+  //       },
+  //       {
+  //         itemId: 0,
+  //         no: 3,
+  //         content: "",
+  //         isImage: false,
+  //       },
+  //       {
+  //         itemId: 0,
+  //         no: 4,
+  //         content: "",
+  //         isImage: false,
+  //       },
+  //     ],
+  //   },
+  // ],
+  questions: [],
   curQuestion: 1,
   deleteAnswers: [],
   isTitleValidConfirm: false,
