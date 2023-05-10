@@ -24,7 +24,6 @@ import withAuth from "@/utils/auth/withAuth";
 import { useEffect, useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { MdSave } from "react-icons/md";
-import { TiWarning } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 
 function Editor() {

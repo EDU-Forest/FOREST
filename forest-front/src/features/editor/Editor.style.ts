@@ -72,6 +72,12 @@ export const EditorTitleBox = styled(ClassSelectWrapper)`
 
 export const EditorSelectedTitle = styled(ClassSelectedTitle)`
   display: flex;
+  color: ${({ theme }) => theme.colors.Gray[700]};
+
+  p:hover,
+  svg:hover {
+    color: ${({ theme }) => theme.colors.Gray[900]};
+  }
 
   p {
     cursor: pointer;
