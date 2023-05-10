@@ -36,7 +36,7 @@ export default function ClassStudentList() {
           학생 추가
         </StudentAddText>
       </StudentListTextWrapper>
-      {isOpenAddStudentModal && <AddStudentModal />}
+      {/* {isOpenAddStudentModal && <AddStudentModal />} */}
 
       <StudentListWrapper>
         {isLoading ? (
@@ -49,7 +49,7 @@ export default function ClassStudentList() {
           </>
         )}
       </StudentListWrapper>
-      {isOpenDeleteStudentModal && <DeleteStudentModal />}
+      {/* {isOpenDeleteStudentModal && <DeleteStudentModal />} */}
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { Title } from "@/styles/text";
 import { flexBox, positionCenter, theme } from "@/styles/theme";
+import { COLORS } from "html2canvas/dist/types/css/types/color";
 import styled, { css } from "styled-components";
 
 const ClassSummaryTitle = styled(Title)`
@@ -208,8 +209,7 @@ const ClassSummaryItemSubmitBox = styled.div`
   border-radius: 1rem;
   width: calc(100% - 3rem);
   height: calc(100% - 8.5rem);
-  opacity: 0.5;
-  background-color: ${({ theme }) => theme.colors.Gray[100]};
+  background-color: rgba(241, 243, 245, 0.5);
   position: absolute;
   bottom: 1.5rem;
   left: 50%;
@@ -217,11 +217,14 @@ const ClassSummaryItemSubmitBox = styled.div`
   z-index: 10;
 
   button {
+    background-color: ${({ theme }) => theme.colors.Lime[700]};
+    border: 1px solid ${({ theme }) => theme.colors.Lime[700]};
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 1;
+    z-index: 99;
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.Lime[800]};
