@@ -25,6 +25,7 @@ function EditorQuestionText({ question }: IProps) {
   return (
     <EditorQuestionTextInput
       value={text}
+      maxLength={255}
       onChange={handleChange}
       placeholder="지문을 입력하세요"
     />

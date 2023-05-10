@@ -1,17 +1,21 @@
-import { setDeleteAnswers, setQuestions } from "@/stores/editor/editorQuestions";
+import {
+  setDeleteAnswers,
+  setIsAnswerValidConfirm,
+  setQuestions,
+} from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionItemType, QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { AiOutlineMinusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { ClassInputMsg } from "../class/teacher/AddClassModal.style";
+import EditorItemImg from "./EditorItemImg";
 import EditorItemToggleBtn from "./EditorItemToggleBtn";
 import {
   EditorChoiceNumBox,
   EditorQuestionChoiceBox,
   EditorQuestionChoiceListBox,
 } from "./EditorQuestionContent.style";
-import EditorQuestionImg from "./EditorQuestionImg";
-import EditorItemImg from "./EditorItemImg";
 
 interface IProps {
   question: QuestionType;
@@ -24,15 +28,20 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
   const dispatch = useDispatch();
 
   const [content, setContent] = useState("");
-  const [corret, setCorret] = useState(0);
+  const [correct, setCorrect] = useState(0);
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
-  const { deleteAnswers } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
+  const { deleteAnswers } = useSelector((state: RootState) => state.editorQuestions);
+  const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
   useEffect(() => {
-    setCorret(Number(question.answer));
+    setCorrect(Number(question.answer));
   }, [question]);
+
+  useEffect(() => {
+    dispatch(setIsAnswerValidConfirm(correct ? true : false));
+  }, [correct]);
 
   const handleChangeItem = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const copyArr = [...items];
@@ -58,7 +67,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
 
   // 정답으로 체크
   const handleClickItem = (num: number) => {
-    setCorret(num);
+    setCorrect(num);
 
     const copyArr = [...questions];
     copyArr.splice(curQuestion - 1, 1, {
@@ -74,10 +83,10 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
       {items.map((item: QuestionItemType, i: number) => {
         return (
           <div key={`item-${i}`}>
-            <EditorQuestionChoiceBox isCorrect={corret === i + 1}>
+            <EditorQuestionChoiceBox isCorrect={correct === i + 1}>
               <EditorChoiceNumBox
                 onClick={() => handleClickItem(i + 1)}
-                isCorrect={corret === i + 1}
+                isCorrect={correct === i + 1}
               >
                 {i + 1}
               </EditorChoiceNumBox>
@@ -94,7 +103,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
                 </>
               )}
               <EditorItemToggleBtn
-                isCorrect={corret === i + 1}
+                isCorrect={correct === i + 1}
                 question={question}
                 curItem={i + 1}
               />
@@ -103,6 +112,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
           </div>
         );
       })}
+      {!isAnswerValidConfirm && <ClassInputMsg>정답을 선택하세요</ClassInputMsg>}
     </EditorQuestionChoiceListBox>
   );
 }

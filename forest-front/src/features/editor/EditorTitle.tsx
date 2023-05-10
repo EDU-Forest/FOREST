@@ -1,20 +1,24 @@
-import { AiFillCaretDown } from "react-icons/ai";
-import { EditorSelectedTitle, EditorTitleBox } from "./Editor.style";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { AiFillCaretDown } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { EditorSelectedTitle, EditorTitleBox } from "./Editor.style";
 import EditorSelectDropdown from "./EditorSelectDropdown";
-import { controlEditorDropdown } from "@/stores/editor/editorModal";
-import { useEffect, useState } from "react";
 
 interface IProps {
   editorSave: () => void;
   isSuccess: boolean;
   controlDropdown: boolean;
   setControlDropdown: (controlDropdown: boolean) => void;
+  setIsWorkbookSwitchFail: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function EditorTitle({ editorSave, isSuccess, controlDropdown, setControlDropdown }: IProps) {
+export default function EditorTitle({
+  editorSave,
+  isSuccess,
+  controlDropdown,
+  setControlDropdown,
+  setIsWorkbookSwitchFail,
+}: IProps) {
   const dispatch = useDispatch();
   // const { isOpenDropdown } = useSelector((state: RootState) => state.editorModal);
   const { curWorkbookTitle } = useSelector((state: RootState) => state.editorWorkbook);
@@ -37,6 +41,7 @@ export default function EditorTitle({ editorSave, isSuccess, controlDropdown, se
           setControlDropdown={setControlDropdown}
           editorSave={editorSave}
           isSuccess={isSuccess}
+          setIsWorkbookSwitchFail={setIsWorkbookSwitchFail}
         />
       )}
     </EditorTitleBox>
