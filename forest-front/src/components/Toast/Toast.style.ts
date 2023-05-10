@@ -1,4 +1,3 @@
-import { theme } from "@/styles/theme";
 import styled, { keyframes } from "styled-components";
 
 const fadeInUp = keyframes`
@@ -25,7 +24,7 @@ export const ToastBox = styled.div`
   top: 30px;
   transform: translate(-50%, 15px);
 
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgb(0 0 0 / 75%);
   border-radius: 10px;
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
 
