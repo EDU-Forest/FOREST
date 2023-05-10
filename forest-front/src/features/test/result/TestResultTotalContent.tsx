@@ -12,7 +12,7 @@ interface Iprops {
 export default function TestResultTotalContent({ studyResult }: Iprops) {
   return (
     <>
-      {studyResult.isSubmitted ? (
+      {!studyResult.isGraded && studyResult.isSubmitted ? (
         <TestResultTotalContentBox>
           <TestResultNotOpenBox>채점 후 공개됩니다.</TestResultNotOpenBox>
         </TestResultTotalContentBox>
