@@ -210,14 +210,15 @@ const StyledStartBtn = styled.button`
   color: white;
 `;
 
-const StyledTextBtn = styled.button`
-  color: ${({ theme }) => theme.colors.Gray[600]};
+const StyledTextBtn = styled.button<{ isValidFail?: boolean }>`
+  color: ${({ theme, isValidFail }) =>
+    isValidFail ? theme.colors.Gray[400] : theme.colors.Gray[600]};
   background-color: transparent;
   border: none;
   padding: 0;
 
   :active {
-    color: ${({ theme }) => theme.colors.Gray[700]};
+    color: ${({ theme, isValidFail }) => !isValidFail && theme.colors.Gray[700]};
   }
 `;
 

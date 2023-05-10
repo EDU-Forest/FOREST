@@ -1,24 +1,21 @@
-import workbookAxios from "@/utils/customAxios/workbookAxios";
-import { useInfiniteQuery, useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
+import workbookAxios from "@/utils/customAxios/workbookAxios";
+import { useQuery } from "react-query";
 
-const fetcher = (type: string) =>
-  // const fetcher = (type: string, pageParam: number) =>
-  workbookAxios.get("/api/workbook", { params: { search: type } }).then(({ data }) => {
-    console.log(data);
-    return data.data;
-  });
+const fetcher = (type: string, page: number, size: number) =>
+  workbookAxios
+    .get("/api/workbook", { params: { search: type, page: page, size: size } })
+    .then(({ data }) => {
+      return data.data;
+    });
 
-const useWorkbookListQuery = (type: string) => {
-  return useQuery([queryKeys.GET_WORKBOOK_LIST], () => fetcher(type), {
+const useWorkbookListQuery = (type: string, page: number, size: number) => {
+  return useQuery([queryKeys.GET_WORKBOOK_LIST], () => fetcher(type, page, size), {
     refetchOnWindowFocus: false,
-    // onSuccess: (data) => {
-    //   console.log("이고얌", data);
-    // },
   });
   // return useInfiniteQuery(
   //   [queryKeys.GET_WORKBOOK_LIST, type],
-  //   ({ pagePasram = 0 }) => fetcher(type, pageParam),
+  //   ({ pageParam = 0 }) => fetcher(type, pageParam),
   //   {
   //     getNextPageParam: (lastPage, pages) => {
   //       return lastPage.last ? undefined : lastPage.number + 1;

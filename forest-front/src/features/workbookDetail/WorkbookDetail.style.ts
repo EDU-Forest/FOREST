@@ -114,9 +114,16 @@ export const StyledWorkbookDetailBtnsBox = styled.div`
   gap: 16px;
 
   @media ${({ theme }) => theme.tablet} {
+    min-width: auto;
+
     span {
       display: none;
     }
+  }
+
+  button {
+    flex: 1;
+    white-space: nowrap;
   }
 `;
 
@@ -299,6 +306,9 @@ export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>
 
 // 문제 스타일
 export const StyledWorkbookDetailQuestionBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
   flex: 1;
 
   padding: 40px 2rem;
@@ -311,8 +321,11 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   ${scrollBar(0.75)};
 
   img {
-    width: 5rem;
+    width: 120px;
     height: auto;
+
+    margin-top: 1.5rem;
+    align-self: center;
   }
 
   /* 빈 문구 */

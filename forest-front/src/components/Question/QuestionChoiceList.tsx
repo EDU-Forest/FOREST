@@ -15,7 +15,7 @@ function QuestionChoiceList({ items }: IProps) {
       {items &&
         items.map((item, i) => {
           return (
-            <StyledQuestionDetailChoiceBox>
+            <StyledQuestionDetailChoiceBox key={i}>
               <StyledQuestionChoiceNumBox>{i + 1}</StyledQuestionChoiceNumBox>
               {/* 이미지 형식의 보기라면 이미지 렌더링 */}
               {item.isImage ? <img src={item.content} alt="item" /> : <span>{item.content}</span>}

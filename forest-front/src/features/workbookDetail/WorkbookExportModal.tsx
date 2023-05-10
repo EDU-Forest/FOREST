@@ -2,7 +2,7 @@ import useWorkbookDetailReleasePatch from "@/apis/workbookDetail/useWorkbookDeta
 import SmallBtn from "@/components/Button/SmallBtn";
 import { RootState } from "@/stores/store";
 import { ModalBtnsBox } from "@/styles/modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
@@ -15,6 +15,7 @@ interface IProps {
   setIsSelectClassOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isSavePdf: boolean;
   setIsSavePdf: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsReleaseSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ExportType {
   value: string;
@@ -23,9 +24,15 @@ interface ExportType {
   action: () => void;
 }
 
-function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectClassOpen }: IProps) {
+function WorkbookExportModal({
+  isSavePdf,
+  setIsSavePdf,
+  setIsOpen,
+  setIsSelectClassOpen,
+  setIsReleaseSuccess,
+}: IProps) {
   // const [isSavePdf, setIsSavePdf] = useState(false);
-  const { data, mutate: releaseWorkbookApi } = useWorkbookDetailReleasePatch();
+  const { data, mutate: releaseWorkbookApi, isSuccess } = useWorkbookDetailReleasePatch();
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const { isOriginal, isDeploy } = workbook;
 
@@ -41,15 +48,17 @@ function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectCl
 
   const chosenRelease = () => {
     releaseWorkbookApi(workbook.workbookId);
-    if (data?.code === 204) {
-      setIsOpen(false);
-    }
   };
 
   const chosenPdf = async () => {
     setIsSavePdf(true);
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    setIsReleaseSuccess(isSuccess);
+    isSuccess && setIsOpen(false);
+  }, [isSuccess]);
 
   const exports: ExportType[] = [
     { value: "pdf", text: "PDF", img: <AiOutlineFilePdf />, action: chosenPdf },
@@ -72,11 +81,6 @@ function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectCl
 
   return (
     <>
-      {/* pdf 저장하기 위해 isSavePdf가 true가 되면 렌더링 */}
-      {/* 저장 직후 false되며 렌더링 사라짐 */}
-      {/* {isSavePdf ? (
-        <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />
-      ) : ( */}
       <WorkbookExportModalBox>
         <p>내보내기 방식을 선택해주세요.</p>
         {!isOriginal && (
@@ -98,7 +102,6 @@ function WorkbookExportModal({ isSavePdf, setIsSavePdf, setIsOpen, setIsSelectCl
           </SmallBtn>
         </ModalBtnsBox>
       </WorkbookExportModalBox>
-      {/* )} */}
     </>
   );
 }

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 function useEditorSave() {
   const { questions } = useSelector((state: RootState) => state.editQuestions);
   const { deleteAnswers } = useSelector((state: RootState) => state.editQuestions);
-  const { data: res, mutate: saveApi } = useSaveEditedWorkbookPost();
+  const { data: res, mutate: saveApi, isLoading, isSuccess } = useSaveEditedWorkbookPost();
   const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
 
   const workbookId: string = curWorkbookId?.toString();
@@ -50,7 +50,7 @@ function useEditorSave() {
     saveApi(data);
   };
 
-  return { editorSave };
+  return { editorSave, isLoading, isSuccess };
 }
 
 export default useEditorSave;
