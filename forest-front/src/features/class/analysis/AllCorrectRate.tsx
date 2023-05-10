@@ -11,12 +11,13 @@ import Loading from "@/components/Loading/Loading";
 export default function AllCorrectRate() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const { data, isLoading } = useAllAnswerRateQuery(nowStudyId);
+  // isLoading을 쓰고 한번 더 isSuccess 조건문을 줄ㄹ지...?
+  const { data, isSuccess } = useAllAnswerRateQuery(nowStudyId);
 
   return (
     <>
       <AnalysisSubTitle>정답률</AnalysisSubTitle>
-      {isLoading ? (
+      {!isSuccess ? (
         <Loading width={5} height={5} />
       ) : (
         <>

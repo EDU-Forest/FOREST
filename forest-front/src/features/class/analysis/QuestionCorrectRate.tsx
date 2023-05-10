@@ -25,7 +25,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 export default function QuestionCorrectRate() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const { data, isLoading } = useQuestionAnswerRateQuery(nowStudyId);
+  const { data: studentStudyProblemResultList, isLoading } = useQuestionAnswerRateQuery(nowStudyId);
 
   const options = {
     responsive: true,
@@ -65,24 +65,32 @@ export default function QuestionCorrectRate() {
     },
   };
 
-  const labels = data && data?.map((item) => `문항 ${item.problemNum}`);
+  const labels =
+    studentStudyProblemResultList &&
+    studentStudyProblemResultList?.map((item) => `문항 ${item.problemNum}`);
 
   const barData = {
     labels,
     datasets: [
       {
         label: "정답",
-        data: data && data?.map((item) => item.correctRate),
+        data:
+          studentStudyProblemResultList &&
+          studentStudyProblemResultList?.map((item) => item.correctRate),
         backgroundColor: "#94D82D",
       },
       {
         label: "오답",
-        data: data && data?.map((item) => item.incorrectRate),
+        data:
+          studentStudyProblemResultList &&
+          studentStudyProblemResultList?.map((item) => item.incorrectRate),
         backgroundColor: "#FF922B",
       },
       {
         label: "미채점",
-        data: data && data?.map((item) => item.ungradedRate),
+        data:
+          studentStudyProblemResultList &&
+          studentStudyProblemResultList?.map((item) => item.ungradedRate),
         backgroundColor: "#DEE2E6",
       },
     ],

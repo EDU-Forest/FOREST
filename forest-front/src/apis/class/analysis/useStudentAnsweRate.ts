@@ -13,9 +13,6 @@ const useStudentAnsweRate = (studyId: number) => {
   return useQuery([queryKeys.STUDENT_ANSWER_RATE, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId,
-    onSuccess: (data) => {
-      console.log("ㅇㅇㅇ", data);
-    },
   });
 };
 

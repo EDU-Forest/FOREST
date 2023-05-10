@@ -24,7 +24,7 @@ interface Iprops {
 export default function EachResult({ goToGrade }: Iprops) {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const { data, isLoading } = useStudentAnsweRate(nowStudyId);
+  const { data: studentStudyResultList, isLoading } = useStudentAnsweRate(nowStudyId);
 
   const correctColor = (correctRate: number) => {
     if (correctRate < 50) {
@@ -49,7 +49,7 @@ export default function EachResult({ goToGrade }: Iprops) {
             <ResultTableItemSmall isLabel>상세 성적</ResultTableItemSmall>
           </ResultTableList>
           <ResultTableContent>
-            {data?.map((item, idx) => (
+            {studentStudyResultList?.map((item, idx) => (
               <ResultTableList key={idx}>
                 <ResultTableItemBig>
                   <ResultTableName>
