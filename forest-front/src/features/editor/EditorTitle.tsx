@@ -7,18 +7,27 @@ import EditorSelectDropdown from "./EditorSelectDropdown";
 import { controlEditorDropdown } from "@/stores/editor/editorModal";
 import { useEffect, useState } from "react";
 
-export default function EditorTitle() {
+interface Iprops {
+  controlDropdown: boolean;
+  setControlDropdown: (controlDropdown: boolean) => void;
+}
+
+export default function EditorTitle({ controlDropdown, setControlDropdown }: Iprops) {
   const dispatch = useDispatch();
   // const { isOpenDropdown } = useSelector((state: RootState) => state.editorModal);
-  const [controlDropdown, setControlDropdown] = useState(false);
   const { curWorkbookTitle } = useSelector((state: RootState) => state.editorWorkbook);
+
+  const controlDropdownHandler = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
+    e.stopPropagation();
+    setControlDropdown(!controlDropdown);
+  };
 
   return (
     <EditorTitleBox>
       <EditorSelectedTitle>
-        {curWorkbookTitle}
+        <p onClick={controlDropdownHandler}>{curWorkbookTitle}</p>
         {/* <AiFillCaretDown onClick={() => dispatch(controlEditorDropdown())} className="icon" /> */}
-        <AiFillCaretDown onClick={() => setControlDropdown(!controlDropdown)} className="icon" />
+        <AiFillCaretDown onClick={controlDropdownHandler} className="icon" />
       </EditorSelectedTitle>
       {/* nowWorkbookId 같은 거 있어야 할 듯 */}
       {controlDropdown && <EditorSelectDropdown setControlDropdown={setControlDropdown} />}
