@@ -54,7 +54,7 @@ export const EditorPointInput = styled(CommonInput)`
 `;
 
 export const EditorPointBox = styled.div`
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 `;
 
 export const EditorQuestionTitleInput = styled.input`
@@ -93,6 +93,15 @@ export const EditorQuestionItemAddButton = styled.button`
     font-size: 0.875rem;
     font-weight: bold;
   }
+
+  &:hover {
+    border: 0.0625rem dashed ${({ theme }) => theme.colors.Lime[800]};
+    color: ${({ theme }) => theme.colors.Lime[800]};
+
+    > div {
+      background-color: ${({ theme }) => theme.colors.Lime[200]};
+    }
+  }
 `;
 
 export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceListBox)`
@@ -114,8 +123,12 @@ export const EditorQuestionChoiceListBox = styled(StyledQuestionDetailChoiceList
   > div > svg {
     width: 1.5rem;
     height: 1.5rem;
-
+    cursor: pointer;
     fill: ${({ theme }) => theme.colors.Orange[600]};
+
+    &:hover {
+      fill: ${({ theme }) => theme.colors.Orange[900]};
+    }
   }
 `;
 

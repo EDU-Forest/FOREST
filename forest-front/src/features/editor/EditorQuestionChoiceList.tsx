@@ -98,6 +98,7 @@ function EditorQuestionChoiceList({ question, items, setItems, itemChange }: IPr
                   <input
                     value={item.content}
                     placeholder="보기를 입력하세요"
+                    maxLength={200}
                     onChange={(e) => handleChangeItem(i, e)}
                   />
                 </>

@@ -118,7 +118,7 @@ const EditorNavDiv = styled.div`
     width: 100%;
     margin: 0;
     /* margin-bottom: 1.5rem; */
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     cursor: pointer;
 
     &:hover {

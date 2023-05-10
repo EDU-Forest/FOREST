@@ -31,7 +31,9 @@ export default function EditorTitle({
   return (
     <EditorTitleBox>
       <EditorSelectedTitle>
-        <p onClick={controlDropdownHandler}>{curWorkbookTitle}</p>
+        <p onClick={controlDropdownHandler}>
+          {curWorkbookTitle ? curWorkbookTitle : "문제집을 추가해주세요."}
+        </p>
         {/* <AiFillCaretDown onClick={() => dispatch(controlEditorDropdown())} className="icon" /> */}
         <AiFillCaretDown onClick={controlDropdownHandler} className="icon" />
       </EditorSelectedTitle>
