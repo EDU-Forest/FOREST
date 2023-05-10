@@ -213,7 +213,7 @@ const ClassSummaryItemSubmitBox = styled.div`
   position: absolute;
   top: 0%;
   left: 0%;
-  z-index: 99;
+  z-index: 20;
 
   button {
     position: absolute;

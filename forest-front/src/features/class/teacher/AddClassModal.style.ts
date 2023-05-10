@@ -10,6 +10,7 @@ const ClassAddModalContainer = styled.div`
   border-radius: 1rem;
   padding: 2.5rem 3.75rem;
   text-align: center;
+  z-index: 20;
 `;
 
 const ClassInputWrapper = styled.div`
