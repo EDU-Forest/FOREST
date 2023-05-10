@@ -17,19 +17,29 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
     int countByWorkbook(Workbook workbook);
     Optional<Study> findTop1ByWorkbookId(Long workbookId);
 
+//    @Query (value = "select distinct s.workbook " +
+//            "from Study s " +
+//            "join fetch s.user u " +
+//            "join fetch s.workbook w " +
+//            "where s.user.id = :userId",
+//            countQuery = "select count(distinct s.workbook) from Study s where s.user.id = :userId",
+//            nativeQuery = true)
+//    Page<Workbook> findDistinctByWorkbook(Long userId, Pageable pageable);
+
+
     @Query (value = "select s from Study s " +
             "join fetch s.user u " +
             "join fetch s.workbook w " +
             "where s.user.id = :userId " +
-            "group by s.workbook.id",
-            countQuery = "select count(s) from Study s where s.user.id = :userId group by s.workbook.id")
+            "group by s.workbook",
+            countQuery = "select count(s) from Study s where s.user.id = :userId")
     Page<Study> findAllByUserGroupByWorkbookId(Long userId, Pageable pageable);
 
-    @Query (value = "select s from Study s " +
-            "join fetch s.user u " +
-            "where s.user.id = :userId " +
-            "group by s.workbook.id")
-    List<Study> findAllByUserId(Long userId);
+//    @Query (value = "select s from Study s " +
+//            "join fetch s.user u " +
+//            "where s.user.id = :userId " +
+//            "group by s.workbook.id")
+//    List<Study> findAllByUserId(Long userId);
 
 
 }

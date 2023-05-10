@@ -87,7 +87,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // TODO 출제한 문제집
         else if (search.equals("use")) {
-            studyRepository.findAllByUserId(userId);
+//            studyRepository.findAllByUserId(userId);
             Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
 //            Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
 //                    .workbookId(s.getWorkbook().getId())
@@ -923,7 +923,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
-    public ResponseSuccessDto<?> detectDocumentsGcs(MultipartFile file) throws Exception {
+    public void detectDocumentsGcs(MultipartFile file) throws Exception {
 //        User user = userRepository.findById(userId)
 //                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
@@ -1043,7 +1043,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             }
         }
-        return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
     }
 
     @Override

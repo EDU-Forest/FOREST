@@ -34,10 +34,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getTeacherWorkbookList(
             HttpServletRequest request,
             @RequestParam String search, Pageable pageable) throws UnsupportedEncodingException{
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
 
@@ -221,7 +221,8 @@ public class WorkbookController {
         log.info("{}", userId);
         log.info("{}", file.isEmpty());
 //        Long userId = Long.valueOf(9);
-        return workbookService.detectDocumentsGcs(file);
+        workbookService.detectDocumentsGcs(file);
+        return new ResponseSuccessDto<>(HttpStatus.OK);
     }
 
     @DeleteMapping ("/problem/{problemId}")
