@@ -26,11 +26,20 @@ const PopularOption = styled.div`
 
 const PopularOptionItem = styled.span<{ selected?: boolean }>`
   cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.Gray[600]};
+  }
+
   ${({ selected }) =>
     selected &&
     css`
       font-weight: 700;
       color: black;
+
+      &:hover {
+        color: black;
+      }
     `}
 `;
 

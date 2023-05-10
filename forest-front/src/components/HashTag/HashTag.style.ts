@@ -9,6 +9,10 @@ const StyledHashTag = styled.div`
   cursor: pointer;
   margin-top: 0.75rem;
   margin-right: 1rem;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.Orange[700]};
+  }
 `;
 
 export { StyledHashTag };

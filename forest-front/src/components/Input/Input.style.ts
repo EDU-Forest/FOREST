@@ -76,6 +76,7 @@ const SearchInputDiv = styled.div`
     position: absolute;
     top: 1.125rem;
     right: 2.5rem;
+    cursor: pointer;
   }
 
   @media ${({ theme }) => theme.tablet} {
@@ -86,6 +87,7 @@ const SearchInputDiv = styled.div`
       position: absolute;
       top: 0.875rem;
       right: 2rem;
+      cursor: pointer;
     }
   }
 `;
