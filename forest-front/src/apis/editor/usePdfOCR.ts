@@ -1,9 +1,16 @@
+import { closeWholePdfModal } from "@/stores/editor/editorModal";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 
-const fetcher = (file: FormData) =>
+interface IPayload {
+  curWorkbookId: number;
+  file: FormData;
+}
+const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post("/api/workbook/ocr/pdf", file, {
+    .post(`/api/workbook/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
+      timeout: 100000,
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -14,9 +21,11 @@ const fetcher = (file: FormData) =>
     });
 
 const usePdfOCR = () => {
+  const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
       console.log("pdf OCR", data);
+      dispatch(closeWholePdfModal());
     },
     onError: (err) => {
       console.log("err", err);

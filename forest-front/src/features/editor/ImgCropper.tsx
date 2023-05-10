@@ -11,41 +11,36 @@ import useImgOCR from "@/apis/editor/useImgOCR";
 
 interface Iprops {
   imageData: string;
-  // completeSelection: () => void;
 }
 
 export default function ImgCropper({ imageData }: Iprops) {
   const dispatch = useDispatch();
   const { mutate } = useImgOCR();
+  const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
   const { isFinished } = useSelector((state: RootState) => state.editorModal);
-  // const [image, setImage] = useState("");
-  // const [cropData, setCropData] = useState("#");
   const cropperRef = createRef<ReactCropperElement>();
 
   useEffect(() => {
     if (isFinished) {
       getCropData();
-
-      setTimeout(() => {
-        dispatch(closePartPdfModal());
-      }, 3000);
     }
   }, [isFinished]);
 
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
-      // setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
       cropperRef.current?.cropper.getCroppedCanvas().toBlob((blob) => {
         const formData = new FormData();
         formData.append("file", blob as Blob);
-        console.log("dddddd", formData.get("file"));
-        mutate(formData);
+
+        const payload = {
+          curWorkbookId,
+          file: formData,
+        };
+
+        mutate(payload);
       });
-      console.log("된당");
-      // 요기서 요청해야함!!!!!
     }
   };
-  console.log(isFinished);
 
   return (
     <>

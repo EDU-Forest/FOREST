@@ -5,7 +5,6 @@ import { ITeacherExamResultAFTER, ITeacherExamResultBEFORE } from "@/types/Teach
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/${studyId}`).then(({ data }) => {
-    console.log(data);
     return data.data;
   });
 
