@@ -1,4 +1,7 @@
-import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
+import { useState } from "react";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import {
   WorkbookCard,
   WorkbookContent,
@@ -7,9 +10,6 @@ import {
   WorkbookImg,
   WorkbookTitle,
 } from "./Workbook.style";
-import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import useBookmarkPost from "@/apis/search/useBookmarkPost";
-import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface Iprops {
   id: number;
@@ -32,20 +32,24 @@ export default function CommonWorkbook({
   workbookImgPath,
   methodType,
   clickAction,
-  isWorkbookPage
+  isWorkbookPage,
 }: Iprops) {
-  const patchMutate = useBookmarkPatch().mutate;
   const postMutate = useBookmarkPost(isWorkbookPage).mutate;
   const deleteMutate = useBookmarkDelete(isWorkbookPage).mutate;
+
+  const [isNewBookmarked, setIsNewBookmarked] = useState(isBookmarked);
+  const [newBookmarkCount, setNewBookmarkCount] = useState(bookmarkCount);
+
   const pressHeart = () => {
-    if (isBookmarked) {
+    if (isNewBookmarked) {
       deleteMutate(id);
+      setIsNewBookmarked(false);
+      newBookmarkCount && setNewBookmarkCount(newBookmarkCount - 1);
       return;
-    }
-    if (methodType === "POST") {
-      postMutate(id);
     } else {
-      patchMutate(id);
+      setIsNewBookmarked(true);
+      newBookmarkCount !== undefined && setNewBookmarkCount(newBookmarkCount + 1);
+      postMutate(id);
     }
   };
 
@@ -65,9 +69,9 @@ export default function CommonWorkbook({
           </WorkbookContent>
           <div>
             <WorkbookIcon onClick={pressHeart}>
-              {isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+              {isNewBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
             </WorkbookIcon>
-            <WorkbookContent>{bookmarkCount}</WorkbookContent>
+            <WorkbookContent>{newBookmarkCount}</WorkbookContent>
           </div>
         </WorkbookContentWrapper>
       )}
