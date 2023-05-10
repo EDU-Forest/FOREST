@@ -82,6 +82,12 @@ const StyledEditorNav = styled.div`
   width: 10.75rem;
   height: 100vh;
   background-color: white;
+
+  .upload-problem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const ArrowDiv = styled.div`
@@ -105,26 +111,41 @@ const EditorNavDivTitle = styled.div<{ isObject: boolean }>`
 const EditorNavDiv = styled.div`
   ${flexBox("row", "start", "space-between")}
   flex-wrap: wrap;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
   font-weight: 600;
 
   p {
-    width: 6rem;
+    width: 100%;
     margin: 0;
-    margin-bottom: 1.5rem;
+    /* margin-bottom: 1.5rem; */
+    padding: 1.5rem 1rem;
     cursor: pointer;
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.Gray[100]};
+    }
+  }
+
+  .upload-problem {
+    background-color: pink;
   }
 `;
 
 const EditorNavDivInner = styled.div`
   ${flexBox("column", "center", "center")}
   font-size: .875rem;
-  width: 3rem;
-  margin-bottom: 1rem;
+  /* width: 3rem; */
+  width: 50%;
+  padding: 1rem;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .ox-div {
     height: 2rem;
+    margin-bottom: 0.25rem;
 
     span {
       font-weight: 700;
@@ -146,6 +167,10 @@ const EditorNavDivInner = styled.div`
     font-size: 1.5rem;
     color: ${({ theme }) => theme.colors.Gray[600]};
     margin-bottom: 0.25rem;
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.Gray[100]};
   }
 `;
 

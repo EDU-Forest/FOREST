@@ -116,7 +116,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
       <EditorNavDiv>
         <EditorNavDivInner onClick={() => handleClickQuestionType("MULTIPLE")}>
           <MdOutlineFormatListNumbered className="icon" />
-          객관식
+          <span>객관식</span>
         </EditorNavDivInner>
         <EditorNavDivInner onClick={() => handleClickQuestionType("OX")}>
           <div className="ox-div">
@@ -135,7 +135,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
         </EditorNavDivInner>
       </EditorNavDiv>
       <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
-      <EditorNavDiv>
+      <EditorNavDiv className="upload-problem">
         <p onClick={() => dispatch(openWholePdfModal())}>전체 영역</p>
         <p onClick={() => dispatch(openPartPdfModal())}>일부 영역</p>
       </EditorNavDiv>
