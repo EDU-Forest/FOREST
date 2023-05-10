@@ -11,6 +11,7 @@ import {
   ClassSelectDropdownEachItem,
   ClassSelectNoClass,
 } from "../class/ClassSelect.style";
+import { textFormatter } from "@/utils";
 
 interface Iprops {
   setControlDropdown: (controlDropdown: boolean) => void;
@@ -80,7 +81,8 @@ export default function EditorSelectDropdown({
                   key={`workbook-${idx}`}
                   onClick={() => selectWorkbookHandler(item.workbookId, item.title)}
                 >
-                  {item.workbookId === curWorkbookId && <ClassSelectCircle />} {item.title}
+                  {item.workbookId === curWorkbookId && <ClassSelectCircle />}{" "}
+                  {textFormatter(item.title)}
                 </ClassSelectDropdownEachItem>
               ))}
             </ClassSelectDropdownEach>
