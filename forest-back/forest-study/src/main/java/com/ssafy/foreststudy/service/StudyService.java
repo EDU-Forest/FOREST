@@ -597,7 +597,7 @@ public class StudyService {
             spr.updateStudentStudyProblemResult(patchNextProblemRequestDto.getUserAnswer(), 0, false, false);
         } else {
             /* 빈 답안 제출 시 */
-            if (patchNextProblemRequestDto.getUserAnswer().isEmpty()) {
+            if (patchNextProblemRequestDto.getUserAnswer() == null) {
                 spr.updateStudentStudyProblemResult(null, 0, false, true);
             }
             /* 정답이 맞을 때 */
