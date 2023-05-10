@@ -1,9 +1,8 @@
-import { QuestionType } from "@/types/Workbook";
-import { EditorQuestionBarBox } from "./EditorQuestionList.style";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 import { setCurQuestion } from "@/stores/editor/editorQuestions";
+import { RootState } from "@/stores/store";
+import { QuestionType } from "@/types/Workbook";
+import { useDispatch, useSelector } from "react-redux";
+import { EditorQuestionBarBox } from "./EditorQuestionList.style";
 
 interface IProps {
   question: QuestionType;
@@ -13,10 +12,15 @@ interface IProps {
 function EditorQuestionBar({ question, num }: IProps) {
   const dispatch = useDispatch();
 
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
+  const { isPointValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
+  const { isTitleValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
+  const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
   const handleClickBar = () => {
-    dispatch(setCurQuestion(num));
+    if (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm) {
+      dispatch(setCurQuestion(num));
+    }
   };
 
   return (

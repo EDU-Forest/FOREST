@@ -1,4 +1,8 @@
+import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
+import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
 import EditorNav from "@/components/Nav/EditorNav";
+import Toast from "@/components/Toast/Toast";
+import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
 import {
   EditorBtnsAndListBox,
   EditorContainer,
@@ -8,28 +12,20 @@ import {
 import EditorBtns from "@/features/editor/EditorBtns";
 import EditorQuestionList from "@/features/editor/EditorQuestionList";
 import EditorTitle from "@/features/editor/EditorTitle";
-import QuestionEditArea from "@/features/editor/QuestionEditArea";
-import {
-  initCurQuestion,
-  initDeleteAnswers,
-  initQuestions,
-  setQuestions,
-} from "@/stores/editor/editorQuestions";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import ImportingPartModal from "@/features/editor/ImportingPartModal";
-import { RootState } from "@/stores/store";
-import { FullScreen } from "@/styles/container";
-import { useSelector } from "react-redux";
-import useGetWorkbooksBySelf from "@/apis/editor/useGetWorkbooksBySelfQuery";
-import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
-import AddWorkbookModal from "@/features/editor/AddWorkbookModal";
-import { resetSelectWorkbook, setSelectWorkbook } from "@/stores/editor/editorWorkbook";
-import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
-import withAuth from "@/utils/auth/withAuth";
 import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
+import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import useEditorSave from "@/hooks/editor/useEditorSave";
 import { setCloseEditor } from "@/stores/editor/editorModal";
+import { initCurQuestion, initDeleteAnswers, initQuestions } from "@/stores/editor/editorQuestions";
+import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
+import { RootState } from "@/stores/store";
+import withAuth from "@/utils/auth/withAuth";
+import { useEffect, useState } from "react";
+import { IoIosWarning } from "react-icons/io";
+import { MdSave } from "react-icons/md";
+import { TiWarning } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
 
 function Editor() {
   const dispatch = useDispatch();
@@ -46,6 +42,8 @@ function Editor() {
   const { isMoveToEditor } = useSelector((state: RootState) => state.workbookDetail);
   const {} = useSelector((state: RootState) => state.editorWorkbook);
   const { editorSave, isLoading, isSuccess } = useEditorSave();
+  const [isSaveSuccess, setIsSaveSuccess] = useState(false);
+  const [isWorkbookSwitchFail, setIsWorkbookSwitchFail] = useState(false);
 
   const [controlDropdown, setControlDropdown] = useState<boolean>(false);
 
@@ -75,32 +73,68 @@ function Editor() {
     getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
 
+  useEffect(() => {
+    setIsSaveSuccess(isSuccess);
+
+    // 1.5초 후 토스트 팝업 사라짐
+    setTimeout(() => {
+      setIsSaveSuccess(false);
+    }, 1500);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    // 1.5초 후 토스트 팝업 사라짐
+    setTimeout(() => {
+      setIsWorkbookSwitchFail(false);
+    }, 1500);
+  }, [isWorkbookSwitchFail]);
+
   const hideDropdownHandler = () => {
     setControlDropdown(false);
   };
 
   return (
-    <EditorFullScreen onClick={hideDropdownHandler}>
-      <EditorNav setSelectQuestionType={setSelectQuestionType} />
-      {isOpenAddWorkbookModal && <AddWorkbookModal />}
-      <EditorContainer isEditor>
-        <EditorTitleAndQuestionBox>
-          <EditorTitle
-            editorSave={editorSave}
-            isSuccess={isSuccess}
-            controlDropdown={controlDropdown}
-            setControlDropdown={setControlDropdown}
-          />
-          <QuestionEditArea selectQuestionType={selectQuestionType} />
-        </EditorTitleAndQuestionBox>
-        <EditorBtnsAndListBox>
-          <EditorBtns editorSave={editorSave} isLoading={isLoading} />
-          <EditorQuestionList />
-        </EditorBtnsAndListBox>
-        {isOpenWholePdfModal && <ImportingWholeModal />}
-        {isOpenPartPdfModal && <ImportingPartModal />}
-      </EditorContainer>
-    </EditorFullScreen>
+    <>
+      <EditorFullScreen onClick={hideDropdownHandler}>
+        <EditorNav setSelectQuestionType={setSelectQuestionType} />
+        {isOpenAddWorkbookModal && <AddWorkbookModal />}
+        <EditorContainer isEditor>
+          <EditorTitleAndQuestionBox>
+            <EditorTitle
+              editorSave={editorSave}
+              isSuccess={isSuccess}
+              controlDropdown={controlDropdown}
+              setControlDropdown={setControlDropdown}
+              setIsWorkbookSwitchFail={setIsWorkbookSwitchFail}
+            />
+            <QuestionEditArea selectQuestionType={selectQuestionType} />
+          </EditorTitleAndQuestionBox>
+          <EditorBtnsAndListBox>
+            <EditorBtns editorSave={editorSave} isLoading={isLoading} />
+            <EditorQuestionList />
+          </EditorBtnsAndListBox>
+          {isOpenWholePdfModal && <ImportingWholeModal />}
+          {isOpenPartPdfModal && <ImportingPartModal />}
+        </EditorContainer>
+      </EditorFullScreen>
+      {isSaveSuccess && (
+        <Toast>
+          <MdSave />
+          <div>
+            <p>저장되었습니다</p>
+          </div>
+        </Toast>
+      )}
+      {isWorkbookSwitchFail && (
+        <Toast>
+          <IoIosWarning />
+          <div>
+            <p>문제집 전환 불가</p>
+            <p>문항 수정을 완료해주세요</p>
+          </div>
+        </Toast>
+      )}
+    </>
   );
 }
 

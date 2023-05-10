@@ -1,10 +1,10 @@
-import { useSelector } from "react-redux";
-import { EditorQuestionListBox } from "./EditorQuestionList.style";
 import { RootState } from "@/stores/store";
+import { useSelector } from "react-redux";
 import EditorQuestionBar from "./EditorQuestionBar";
+import { EditorQuestionListBox } from "./EditorQuestionList.style";
 
 function EditorQuestionList() {
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
   return (
     <EditorQuestionListBox>

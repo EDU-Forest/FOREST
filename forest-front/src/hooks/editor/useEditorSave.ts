@@ -4,8 +4,8 @@ import { QuestionType } from "@/types/Workbook";
 import { useSelector } from "react-redux";
 
 function useEditorSave() {
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { deleteAnswers } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { deleteAnswers } = useSelector((state: RootState) => state.editorQuestions);
   const { data: res, mutate: saveApi, isLoading, isSuccess } = useSaveEditedWorkbookPost();
   const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
 

@@ -36,7 +36,7 @@ export default function AddWorkbookModal() {
           placeholder={"문제집 이름을 입력하세요"}
           value={workbookTitle}
           onChange={(e) => setWorkbookTitle(e.target.value)}
-          maxLength={14}
+          maxLength={30}
           onKeyUp={onKeyUpHandler}
         />
       </ClassInputWrapper>

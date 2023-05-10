@@ -19,7 +19,7 @@ interface IProps {
 
 function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
   const { isLoading, mutate: saveWorkbookApiCall } = useWorkbookDetailSaveQuery();
   const { mutate: copyWorkbookApiCall, isSuccess } = useWorkbookCopyPostQuery(workbook?.workbookId);

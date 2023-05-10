@@ -14,7 +14,7 @@ interface IProps {
 function EditorMultipleChoice({ question, curQuestion }: IProps) {
   const dispatch = useDispatch();
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
   // 객관식 보기
   const [items, setItems] = useState<QuestionItemType[]>([]);

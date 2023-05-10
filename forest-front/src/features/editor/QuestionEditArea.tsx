@@ -1,14 +1,14 @@
+import { RootState } from "@/stores/store";
 import { useSelector } from "react-redux";
 import { QuestionEditAreaBox } from "./Editor.style";
 import EditorQuestionContent from "./EditorQuestionContent";
-import { RootState } from "@/stores/store";
 
 interface IProps {
   selectQuestionType: string;
 }
 
 function QuestionEditArea({ selectQuestionType }: IProps) {
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
   return (
     <QuestionEditAreaBox>

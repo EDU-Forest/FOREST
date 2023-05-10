@@ -1,10 +1,10 @@
+import { setIsAnswerValidConfirm, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ClassInputMsg } from "../class/teacher/AddClassModal.style";
 import { EditorEssayBox, EditorEssayKeywordsBox } from "./EditorQuestionContent.style";
-import { setQuestions } from "@/stores/editor/editorQuestions";
-import { useDispatch } from "react-redux";
 
 interface IProps {
   question: QuestionType;
@@ -13,14 +13,29 @@ interface IProps {
 function EditorEssay({ question }: IProps) {
   const dispatch = useDispatch();
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
+  const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
   const [answers, setAnswers] = useState<string[]>([]);
+  const maxAnswerLen = 100;
+  const [isAnswerMaxValidConfirm, setIsAnswerMaxValidConfirm] = useState(true);
 
   useEffect(() => {
     question.answer && setAnswers(question.answer.split(","));
   }, [question]);
+
+  useEffect(() => {
+    setIsAnswerMaxValidConfirm(answers.join(",").length < 100 ? true : false);
+  }, [answers]);
+
+  useEffect(() => {
+    dispatch(
+      setIsAnswerValidConfirm(
+        isAnswerMaxValidConfirm && answers.join("").length !== 0 ? true : false,
+      ),
+    );
+  }, [answers, isAnswerMaxValidConfirm]);
 
   const handleChangeAnswer = (i: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const copyArr = [...answers];
@@ -40,7 +55,7 @@ function EditorEssay({ question }: IProps) {
     dispatch(setQuestions([...copyQArr]));
   };
   const handleClickAddAnswer = () => {
-    setAnswers([...answers, ""]);
+    isAnswerMaxValidConfirm && setAnswers([...answers, ""]);
   };
 
   return (
@@ -59,6 +74,7 @@ function EditorEssay({ question }: IProps) {
           핵심 단어&nbsp;<span>+</span>
         </button>
       </EditorEssayKeywordsBox>
+      {!isAnswerValidConfirm && <ClassInputMsg>채점 기준을 입력하세요</ClassInputMsg>}
     </EditorEssayBox>
   );
 }
