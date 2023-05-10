@@ -28,7 +28,7 @@ function WorkbookDeleteModal({ setIsOpenDelete }: IProps) {
   useEffect(() => {
     if (res?.code === 204) {
       setIsOpenDelete(false);
-      router.push(`/workbook`);
+      router.push(`/workbook`, undefined, { shallow: true });
     }
   }, [res]);
 
