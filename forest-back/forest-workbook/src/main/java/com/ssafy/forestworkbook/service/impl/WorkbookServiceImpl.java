@@ -85,7 +85,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
         }
 
-        // TODO 출제한 문제집
+        // 출제한 문제집
         else if (search.equals("use")) {
             Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
@@ -570,11 +570,10 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         for (int checked : itemIsMultiple) {
             count++;
-            int itemListSize = 0;
             if (checked == -1) continue;
             else {
                 List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(count).getId());
-                itemListSize = itemList.size();
+                int itemListSize = itemList.size();
 
                 for (Item item : itemList) {
                     Item itemCopy = Item.builder()
