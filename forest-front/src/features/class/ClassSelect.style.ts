@@ -26,11 +26,11 @@ const ClassSelectDropdownContainer = styled.div`
   position: absolute;
 
   width: 11.25rem;
-  z-index: 10;
   background-color: white;
   box-shadow: 0rem 0.125rem 0.3125rem 0.0625rem rgba(0, 0, 0, 0.15);
   border-radius: 0rem 0rem 0.5rem 0.5rem;
   margin-top: 0.5rem;
+  z-index: 20;
 `;
 
 const ClassSelectDropdownEach = styled.div`

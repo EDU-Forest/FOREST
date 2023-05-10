@@ -1,10 +1,8 @@
-import { useSelector } from "react-redux";
 import {
   TestResultContentBox,
   TestResultNotOpenBox,
   TestResultQuestionBtn,
 } from "./TextResult.style";
-import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
 import { useRouter } from "next/router";
