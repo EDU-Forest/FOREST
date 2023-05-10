@@ -5,40 +5,34 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
-import { CanvasPath } from "react-sketch-canvas";
 import { IStudyModal } from "@/types/Study";
+import { useDispatch } from "react-redux";
+import { setToggleModal } from "@/stores/exam/exam";
 
-interface Iprops extends IStudyModal {
-  allPaths: CanvasPath[];
-  isSubmitted?: boolean;
-}
+// interface Iprops extends IStudyModal {
+//   isSubmitted?: boolean;
+// }
 
-export default function TestAnswerBox({
-  minutes,
-  seconds,
-  toggleModal,
-  setToggleModal,
-  allPaths,
-  isSubmitted,
-}: Iprops) {
+export default function TestAnswerBox() {
+  const dispatch = useDispatch();
   const { username } = useSelector((state: RootState) => state.user);
-  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
+  // const { paths } = useSelector((state: RootState) => state.canvas);
   const { studentStudyProblemId } = problem[curProblemNum - 1];
   const router = useRouter();
-  const canvasMutate = useCanvasPost().mutate;
+  // const canvasMutate = useCanvasPost().mutate;
   const openEndTestModalHandler = () => {
-    setToggleModal(true);
+    dispatch(setToggleModal(true));
   };
 
   const goToResultHandler = () => {
-    if (allPaths.length > 0) {
-      const canvasPayload = {
-        studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
-      };
-      console.log("canvasPayload", canvasPayload);
-      canvasMutate(canvasPayload);
-    }
+    // if (paths.length > 0) {
+    //   const canvasPayload = {
+    //     studentStudyProblemId: studentStudyProblemId,
+    //     line: paths,
+    //   };
+    //   canvasMutate(canvasPayload);
+    // }
 
     router.push(`/test/${router.query.studyId}/result`);
   };
@@ -46,7 +40,7 @@ export default function TestAnswerBox({
   return (
     <StyledAnswerBox>
       <StyledUsername>응시자 : {username}</StyledUsername>
-      <TestAnswerTable minutes={minutes} seconds={seconds} />
+      <TestAnswerTable />
       {isSubmitted ? (
         <StyledTestSubmitBtn onClick={goToResultHandler}>나가기</StyledTestSubmitBtn>
       ) : (

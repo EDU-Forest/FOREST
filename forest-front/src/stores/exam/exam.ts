@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: examState = {
   isSubmitted: false,
-  isEnded: false,
+  isEnded: false, // 시간
   isStarted: false,
   curProblemNum: 1,
   volume: 1,
@@ -49,6 +49,8 @@ const initialState: examState = {
       ],
     },
   ],
+  toggleModal: false,
+  page: "",
 };
 
 const examSlice = createSlice({
@@ -77,6 +79,7 @@ const examSlice = createSlice({
     },
     setStudyStart(state) {
       state.isStarted = true;
+      state.isEnded = false;
     },
     setStudyInfo(state, action) {
       state.volume = action.payload.volume;
@@ -88,6 +91,13 @@ const examSlice = createSlice({
     },
     setEndStudy(state) {
       state.isEnded = true;
+      state.isStarted = false;
+    },
+    setToggleModal(state, action) {
+      state.toggleModal = action.payload;
+    },
+    setPage(state, action) {
+      state.page = action.payload;
     },
   },
 });
@@ -100,6 +110,8 @@ export const {
   setStudyInfo,
   setStudyStart,
   setEndStudy,
+  setToggleModal,
+  setPage,
 } = examSlice.actions;
 
 export default examSlice.reducer;

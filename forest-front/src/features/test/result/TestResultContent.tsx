@@ -29,7 +29,6 @@ export default function TestResultContent({ studyResult }: Iprops) {
     dispatch(setCurProblemNum({ curProblemNum: idx }));
     router.push(`/test/${router.query.studyId}`);
   };
-
   return (
     <TestResultContentBox>
       {!studyResult.isGraded && studyResult.isSubmitted ? (

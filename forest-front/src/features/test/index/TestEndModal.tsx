@@ -8,20 +8,23 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useEndStudy from "@/apis/study/useEndStudyQuery";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
-import { CanvasPath } from "react-sketch-canvas";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
+import { useDispatch } from "react-redux";
+import { setToggleModal } from "@/stores/exam/exam";
 
 interface Iprops {
-  allPaths: CanvasPath[];
-  setToggleModal: (toggled: boolean) => void;
+  // setToggleModal: (toggled: boolean) => void;
 }
 
-export default function TestEndModal({ allPaths, setToggleModal }: Iprops) {
+export default function TestEndModal() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const studyId = router.query.studyId;
 
   const { mutate: endStudy } = useEndStudy();
   const { mutate: saveAnswer } = useSaveAnswer();
+
+  const { paths } = useSelector((state: RootState) => state.canvas);
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
   const { studentStudyProblemId, userAnswer, type } = problem[curProblemNum - 1];
   const [remainProblem, setRemainProblem] = useState(0);
@@ -36,7 +39,7 @@ export default function TestEndModal({ allPaths, setToggleModal }: Iprops) {
   }, []);
 
   const cancelHandler = () => {
-    setToggleModal(false);
+    dispatch(setToggleModal(false));
   };
 
   const okHandler = () => {
@@ -47,10 +50,10 @@ export default function TestEndModal({ allPaths, setToggleModal }: Iprops) {
       type,
     };
 
-    if (allPaths.length > 0) {
+    if (paths.length > 0) {
       const canvasPayload = {
         studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
+        line: paths,
       };
       console.log("canvasPayload", canvasPayload);
       canvasMutate(canvasPayload);

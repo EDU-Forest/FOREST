@@ -9,8 +9,8 @@ interface Iprops {
   seconds: number;
 }
 
-export default function TestAnswerTable({ minutes, seconds }: Iprops) {
-  const { curProblemNum, problem } = useSelector((state: RootState) => state.exam);
+export default function TestAnswerTable() {
+  const { curProblemNum, problem, isSubmitted } = useSelector((state: RootState) => state.exam);
   const { userAnswer, problemAnswer } = problem[curProblemNum - 1];
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ export default function TestAnswerTable({ minutes, seconds }: Iprops) {
         {problem.map((data, idx) => (
           <tr key={`user-answer-${idx}`} onClick={() => changeCurProblemNum(idx + 1)}>
             <ProblemNumTd
-              isEnded={minutes <= 0 && seconds <= 0}
+              isEnded={isSubmitted}
               isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
             >
               {idx + 1}
