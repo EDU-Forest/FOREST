@@ -11,7 +11,7 @@ function Home() {
 
   useEffect(() => {
     if (typeof window !== undefined && window.innerWidth < 768) {
-      router.push("/mobile");
+      router.push("/mobile", undefined, { shallow: true });
     }
   }, []);
 

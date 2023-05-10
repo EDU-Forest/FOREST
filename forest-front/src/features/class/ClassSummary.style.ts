@@ -45,7 +45,7 @@ const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: str
     userRole === "TEACHER" &&
     !isFinished &&
     css`
-      div:nth-child(n + 2) {
+      div:nth-child(n + 1) {
         filter: blur(5px);
         -webkit-filter: blur(5px);
       }

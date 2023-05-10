@@ -49,12 +49,16 @@ function LoginSuccess() {
       dispatch(setRole(role));
       router.push(`/${role.toLowerCase()}/dashboard`);
     } else {
-      router.push({
-        pathname: "/signup/more-info",
-        query: {
-          email: email,
+      router.push(
+        {
+          pathname: "/signup/more-info",
+          query: {
+            email: email,
+          },
         },
-      });
+        undefined,
+        { shallow: true },
+      );
     }
   }, []);
 

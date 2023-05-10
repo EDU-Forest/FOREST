@@ -10,9 +10,6 @@ const useStudentScoreQuery = (studyId: number) => {
   return useQuery([queryKeys.STUDENT_SCORE, studyId], () => fetcher(studyId), {
     enabled: !!studyId && studyId !== -1,
     refetchOnWindowFocus: false,
-    onSuccess: (data) => {
-      console.log("학생 성적 조회 성공 ", data);
-    },
   });
 };
 

@@ -5,8 +5,7 @@ import { ITeacherExamResultAFTER, ITeacherExamResultBEFORE } from "@/types/Teach
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/${studyId}`).then(({ data }) => {
-    console.log(data);
-    return data.data;
+    return data;
   });
 
 // 클릭 시 시험 결과 조회 (선생님 클래스)

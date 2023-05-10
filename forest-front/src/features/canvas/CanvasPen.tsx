@@ -4,8 +4,6 @@ import {
   CanvasSelectorArrow,
   CanvasSelectorSection,
   CanvasSelectorWrapper,
-  CanvasWidthSelector,
-  CanvasWidthSelectorWrapper,
 } from "./Canvas.style";
 
 interface Iprops {
@@ -41,13 +39,6 @@ export default function CanvasPen({ color, width, setColor, setWidth }: Iprops) 
     <CanvasSelectorWrapper>
       <CanvasSelectorArrow />
       <CanvasSelectorSection width={8}>
-        {/* {penWidth.map((item, idx) => (
-          <CanvasColorSelectorSelected key={idx} selected={item === width ? true : false}>
-            <CanvasWidthSelectorWrapper>
-              <CanvasWidthSelector onClick={() => setWidth(item)} width={widthToCss(item)} />
-            </CanvasWidthSelectorWrapper>
-          </CanvasColorSelectorSelected>
-        ))} */}
         <CanvasColorSelectorSelected
           selected={3 === width ? true : false}
           onClick={() => setWidth(3)}

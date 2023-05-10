@@ -26,7 +26,7 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
-  const { data, isLoading } = useStudyResultQuery(nowStudyId);
+  const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
   const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
@@ -44,8 +44,8 @@ export default function ClassSummaryTeacher() {
           <Loading width={10} height={10} />
         </ClassSummaryWrapper>
       ) : (
-        <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
-          {!isLoading && !data?.isFinished && (
+        <ClassSummaryWrapper>
+          {!isLoading && !result.data?.isFinished && (
             <ClassSummaryItemSubmitBox>
               <CommonBtn colored onClick={endTestHandler}>
                 시험 종료
@@ -54,48 +54,48 @@ export default function ClassSummaryTeacher() {
           )}
           <ClassSummaryTextWrapper>
             <ClassSummaryTextItem>
-              <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
-              <WorkbookStatus status={data?.scheduleType} />
+              <ClassSummaryTitle>{result?.data.title}</ClassSummaryTitle>
+              <WorkbookStatus status={result?.data.scheduleType} />
             </ClassSummaryTextItem>
-            {data?.scheduleType === "AFTER" && data?.isFinished && (
+            {result?.data.scheduleType === "AFTER" && result?.data.isFinished && (
               <ClassSummaryText
                 isGray
                 style={{ cursor: "pointer", margin: "0px" }}
-                onClick={() => goToDetail(data?.studyId)}
+                onClick={() => goToDetail(result?.data.studyId)}
               >
                 자세히 보기
                 <AiOutlineRight className="icon" />
               </ClassSummaryText>
             )}
           </ClassSummaryTextWrapper>
-          {data?.studyType !== "SELF" && (
-            <ClassSummaryDeadline>~ {arrangeDate(data?.endTime)}</ClassSummaryDeadline>
+          {result?.data.studyType !== "SELF" && (
+            <ClassSummaryDeadline>~ {arrangeDate(result?.data.endTime)}</ClassSummaryDeadline>
           )}
 
-          {data?.scheduleType === "AFTER" ? (
-            <ClassSummaryItemWrapper userRole="TEACHER" isFinished={data?.isFinished}>
-              <ClassWorkbookInfo
-                studyCreatedDate={data?.studyCreatedDate}
-                studyType={data?.studyType}
-                volume={data?.volume}
-                isPublic={data?.isPublic}
-              />
-              <TotalResult
-                average={data?.average}
-                standardDeviation={data?.standardDeviation}
-                averageSolvingTime={data?.averageSolvingTime}
-              />
+          <ClassSummaryItemWrapper userRole="TEACHER" isFinished={result?.data.isFinished}>
+            <ClassWorkbookInfo
+              studyCreatedDate={result?.data.studyCreatedDate}
+              studyType={result?.data.studyType}
+              volume={result?.data.volume}
+              isPublic={result?.data.isPublic}
+            />
+            <TotalResult
+              average={result?.data.average}
+              standardDeviation={result?.data.standardDeviation}
+              averageSolvingTime={result?.data.averageSolvingTime}
+            />
+            {result?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
               <TakeRateChart
-                totalStudent={data?.totalStudent}
-                participantStudent={data?.participantStudent}
-                takeRate={data?.takeRate}
+                totalStudent={result?.data.totalStudent}
+                participantStudent={result?.data.participantStudent}
+                takeRate={result?.data.takeRate}
               />
-            </ClassSummaryItemWrapper>
-          ) : (
-            <ClassSummaryItemWrapperNoResult>
-              시험 결과가 등록되지 않았습니다.
-            </ClassSummaryItemWrapperNoResult>
-          )}
+            ) : (
+              <>
+                <TakeRateChart totalStudent={0} participantStudent={0} takeRate={0} />
+              </>
+            )}
+          </ClassSummaryItemWrapper>
         </ClassSummaryWrapper>
       )}
     </>

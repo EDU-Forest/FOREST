@@ -42,7 +42,7 @@ export default function ClassSummaryStudent() {
       ) : (
         <>
           {data ? (
-            <ClassSummaryWrapper small={data?.data.scheduleType === "AFTER" ? false : true}>
+            <ClassSummaryWrapper small={data?.status === "STUDY_SUCCESS_INFO_AFTER" ? false : true}>
               <ClassSummaryTextWrapper>
                 <ClassSummaryTextItem>
                   <ClassSummaryTitle>{data?.data.title}</ClassSummaryTitle>
@@ -75,7 +75,7 @@ export default function ClassSummaryStudent() {
                 <>
                   {data?.status === "STUDY_NOT_YET" ? (
                     <ClassSummaryDeadline>
-                      {arrangeDate(data?.data.startTime)} ~{" "}
+                      {arrangeDate(data?.data.startTime)} ~
                     </ClassSummaryDeadline>
                   ) : (
                     <ClassSummaryDeadline>~ {arrangeDate(data?.data.endTime)}</ClassSummaryDeadline>

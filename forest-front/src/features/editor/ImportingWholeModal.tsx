@@ -16,8 +16,11 @@ import {
 import { MdOutlineFileCopy } from "react-icons/md";
 import CommonBtn from "@/components/Button/CommonBtn";
 import usePdfOCR from "@/apis/editor/usePdfOCR";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 export default function ImportingWholeModal() {
+  const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
   const dispatch = useDispatch();
   const { mutate } = usePdfOCR();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
@@ -38,7 +41,11 @@ export default function ImportingWholeModal() {
       let formData = new FormData();
       formData.append("file", targetFile as File);
       console.log("dlrp Wld", formData.get("file"));
-      mutate(formData);
+      const payload = {
+        curWorkbookId,
+        file: formData,
+      };
+      mutate(payload);
     }
   };
 

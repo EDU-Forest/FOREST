@@ -11,7 +11,7 @@ interface ClassAnswerRateList {
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/class/result/question/${studyId}`).then(({ data }) => {
-    const studentStudyProblemResultList = data.data.classAnswerRateList as ClassAnswerRateList[];
+    const studentStudyProblemResultList: ClassAnswerRateList[] = data.data.classAnswerRateList;
     return studentStudyProblemResultList;
   });
 

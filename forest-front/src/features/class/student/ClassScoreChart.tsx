@@ -12,7 +12,6 @@ interface Iprops {
 
 export default function ClassScoreChart({ myScore, totalScore }: Iprops) {
   const percent = (myScore / totalScore) * 100;
-  console.log(percent);
   return (
     <SummaryChartWrapper isStudent>
       <ClassSummarySubTitle>내 점수</ClassSummarySubTitle>

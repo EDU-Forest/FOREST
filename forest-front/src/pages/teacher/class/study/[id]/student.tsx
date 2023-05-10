@@ -1,16 +1,14 @@
 import useStudentDetailResultQuery from "@/apis/study/useStudentDetailResultQuery";
 import useStudentQuestionResultQuery from "@/apis/study/useStudentQuestionResultQuery";
 import Loading from "@/components/Loading/Loading";
-import TestHeader from "@/features/test/index/TestHeader";
-import TestHeaderLeftContentBox from "@/features/test/index/TestHeaderLeftContentBox";
+
 import {
   StyledTestHeader,
   StyledTestHeaderContentBox,
   StyledTestHeaderText,
   StyledTestHeaderTitle,
 } from "@/features/test/index/TextIndex.style";
-import TestResultSection from "@/features/test/result/TestResultSection";
-import TestResultTotal from "@/features/test/result/TestResultTotal";
+
 import TestResultTotalContentDetail from "@/features/test/result/TestResultTotalContentDetail";
 import TestResultTotalContentGraph from "@/features/test/result/TestResultTotalContentGraph";
 import {
