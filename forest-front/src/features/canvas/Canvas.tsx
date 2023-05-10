@@ -20,14 +20,7 @@ export default function Canvas() {
   const { paths, isOpenCanvas, studentStudyProblemId } = useSelector(
     (state: RootState) => state.canvas,
   );
-  const {
-    data: record,
-    isSuccess,
-    isLoading,
-  } = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas);
-
-  // console.log("record", record, "isSuccess", isSuccess, "isLoading", isLoading);
-  // console.log("paths", paths);
+  const { data: record, isSuccess } = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas);
 
   const { mutate: canvasMutate } = useCanvasPost();
   const [nowTab, setNowTab] = useState<string>("");

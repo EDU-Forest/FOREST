@@ -7,7 +7,6 @@ import {
   StyledTestProblemBox,
   StyledTestProblemEssayAnswer,
   StyledTestProblemShortAnswer,
-  TestCanvas,
   TestProblemAnswerBox,
   TestProblemBtn,
   TestProblemBtnBox,
@@ -19,18 +18,9 @@ import { useDispatch } from "react-redux";
 import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 import { useRouter } from "next/router";
-import Canvas from "@/features/canvas/Canvas";
 import { useEffect } from "react";
-import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import TestProblemImg from "./TestProblemImg";
-import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
-import { clearPaths, closeCanvas, setStudentStudyProblemId } from "@/stores/exam/canvas";
-
-interface Iprops {
-  minutes: number;
-  seconds: number;
-  isSubmitted?: boolean;
-}
+import { closeCanvas, setStudentStudyProblemId } from "@/stores/exam/canvas";
 
 export default function TestProblemBox() {
   const router = useRouter();
