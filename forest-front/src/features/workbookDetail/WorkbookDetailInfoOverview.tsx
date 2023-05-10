@@ -1,30 +1,28 @@
+import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
+import useBookmarkPost from "@/apis/search/useBookmarkPost";
 import { StyledTextBtn } from "@/components/Button/Btn.style";
+import { CommonInput } from "@/components/Input/Input.style";
 import {
   WorkbookContent,
   WorkbookContentWrapper,
   WorkbookIcon,
 } from "@/components/Workbook/Workbook.style";
+import { RootState } from "@/stores/store";
+import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
+import { TextMaxCnt } from "@/styles/text";
 import { useEffect, useState } from "react";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { EditorQuestionImgAddedBox } from "../editor/EditorQuestionContent.style";
+import WorkbookDeleteModal from "./WorkbookDeleteModal";
 import {
   StyledWorkbookBtnsBox,
   StyledWorkbookDetailDescBox,
   StyledWorkbookDetailInfoOverviewBox,
-  StyledWorkbookReactionBtnsBox,
   WorkbookDetailWorkbookImgBox,
   WorkbookImgTypeBox,
 } from "./WorkbookDetail.style";
-import { CommonInput } from "@/components/Input/Input.style";
-import { EditorQuestionImgAddedBox } from "../editor/EditorQuestionContent.style";
 import WorkbookImgEditModal from "./WorkbookImgEditModal";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import { setWorkbook } from "@/stores/workbookDetail/workbookDetail";
-import WorkbookDeleteModal from "./WorkbookDeleteModal";
-import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import useBookmarkPatch from "@/apis/search/useBookmarkPatch";
-import useBookmarkPost from "@/apis/search/useBookmarkPost";
-import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 
 interface IProps {
   id: number;
@@ -41,6 +39,9 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const [selectedImg, setSelectedImg] = useState(0);
   const [imgPath, setImgPath] = useState("");
+  const [isEditValidConfirm, setIsEditValidConfirm] = useState(true);
+  const titleMaxCnt = 30;
+  const descMaxCnt = 255;
 
   const [isOpenImgEdit, setIsOpenImgEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -54,6 +55,7 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setWorkbook({ ...workbook, title: e.target.value }));
+    setIsEditValidConfirm(e.target.value ? true : false);
   };
   const handleChangeDesc = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setWorkbook({ ...workbook, description: e.target.value }));
@@ -94,7 +96,16 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
       <StyledWorkbookDetailInfoOverviewBox>
         <div>
           {isEditing ? (
-            <CommonInput value={workbook?.title} onChange={handleChangeTitle}></CommonInput>
+            <>
+              <CommonInput
+                value={workbook?.title}
+                maxLength={titleMaxCnt}
+                onChange={handleChangeTitle}
+              ></CommonInput>
+              <TextMaxCnt>
+                {workbook?.title.length} / {titleMaxCnt}자
+              </TextMaxCnt>
+            </>
           ) : (
             <div>{workbook?.title}</div>
           )}
@@ -116,20 +127,15 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 )}
               </WorkbookContentWrapper>
             )}
-            {/* <StyledWorkbookReactionBtnsBox>
-              <div>
-                <WorkbookIcon>🧡</WorkbookIcon>
-                {likeCnt}
-              </div>
-              <div>
-                <WorkbookIcon>📝</WorkbookIcon>
-                {usedCnt}
-              </div>
-            </StyledWorkbookReactionBtnsBox> */}
             {workbook?.isOriginal && !workbook?.isDeploy && (
               <div>
                 {isEditing ? (
-                  <StyledTextBtn onClick={handleClickEditConfirm}>확인</StyledTextBtn>
+                  <StyledTextBtn
+                    onClick={() => isEditValidConfirm && handleClickEditConfirm()}
+                    isValidFail={!isEditValidConfirm}
+                  >
+                    확인
+                  </StyledTextBtn>
                 ) : (
                   <StyledTextBtn onClick={handleClickEditing}>수정</StyledTextBtn>
                 )}
@@ -140,7 +146,12 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
           </StyledWorkbookBtnsBox>
           <StyledWorkbookDetailDescBox isFolded={isFolded}>
             {isEditing ? (
-              <CommonInput value={workbook?.description} onChange={handleChangeDesc} />
+              <>
+                <CommonInput value={workbook?.description} onChange={handleChangeDesc} />
+                <TextMaxCnt>
+                  {workbook?.description ? workbook.description.length : 0} / {descMaxCnt}자
+                </TextMaxCnt>
+              </>
             ) : (
               <>{workbook?.description}</>
             )}

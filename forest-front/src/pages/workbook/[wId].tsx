@@ -1,4 +1,5 @@
 import useWorkbookDetailQuery from "@/apis/workbookDetail/useWorkbookDetailQuery";
+import Toast from "@/components/Toast/Toast";
 import {
   StyledWorkbookDetailBox,
   WorkbookDetailQuestionBtnAndVisibilityBox,
@@ -19,6 +20,7 @@ import { QuestionSummType, QuestionType } from "@/types/Workbook";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { AiOutlineEdit, AiOutlineShareAlt } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 // 서버사이드에서 쿼리값을 넘겨서 새로고침 시 쿼리값 증발 방지
@@ -48,7 +50,10 @@ function WorkbookDetail() {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   // 선택한 출제 클래스
   const [selectedClass, setSelectedClass] = useState<number[]>([]);
+
   const [isSavePdf, setIsSavePdf] = useState(false);
+  const [isReleaseSuccess, setIsReleaseSuccess] = useState(false);
+  const [isSetSuccess, setIsSetSuccess] = useState(false);
 
   const getQuestionSummary = (): QuestionSummType[] => {
     return questions.map((question: QuestionType) => {
@@ -72,12 +77,26 @@ function WorkbookDetail() {
     setQuestionSummary(getQuestionSummary);
 
     // questions가 초기화된 후에 curQuestion 지정
-    // 1) questions가 빈 배열이 아닌데 0번이 현재 문제로 지정되어 있다면 1번 문제로 수정
-    // 2) 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, questions 응답이 성공했을 때만 수행
-    if (curQuestion === 0 && questions.length !== 0 && isSuccess) {
+    // 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, 현재 문제집일 때만 수형
+    if (curQuestion === 0 && Number(wId) === workbook.workbookId) {
       setCurQuestion(questions[0].problemId);
     }
   }, [questions]);
+
+  useEffect(() => {
+    // 1.5초 후 토스트 팝업 사라짐
+    isReleaseSuccess &&
+      setTimeout(() => {
+        setIsReleaseSuccess(false);
+      }, 1500);
+  }, [isReleaseSuccess]);
+  useEffect(() => {
+    // 1.5초 후 토스트 팝업 사라짐
+    isSetSuccess &&
+      setTimeout(() => {
+        setIsSetSuccess(false);
+      }, 1500);
+  }, [isSetSuccess]);
 
   return (
     <div>
@@ -116,9 +135,10 @@ function WorkbookDetail() {
             setIsSelectClassOpen={setIsSelectClassOpen}
             isSavePdf={isSavePdf}
             setIsSavePdf={setIsSavePdf}
+            setIsReleaseSuccess={setIsReleaseSuccess}
           />
         )}
-        {/* 내보내기 모달 */}
+        {/* 출제 클래스 선택 모달 */}
         {isSelectClassOpen && (
           <WorkbookSelectClassModal
             setIsOpen={setIsSelectClassOpen}
@@ -133,10 +153,28 @@ function WorkbookDetail() {
             setIsOpen={setIsSettingOpen}
             selectedClass={selectedClass}
             title={workbook.title}
+            setIsSetSuccess={setIsSetSuccess}
           />
         )}
       </StyledWorkbookDetailBox>
       {isSavePdf && <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />}
+      {isReleaseSuccess && (
+        <Toast>
+          <AiOutlineShareAlt />
+          <div>
+            <p>배포 완료</p>
+          </div>
+        </Toast>
+      )}
+      {isSetSuccess && (
+        <Toast>
+          <AiOutlineEdit />
+          <div>
+            <p>출제 완료</p>
+            <p>선택하신 클래스에 출제되었습니다</p>
+          </div>
+        </Toast>
+      )}
     </div>
   );
 }

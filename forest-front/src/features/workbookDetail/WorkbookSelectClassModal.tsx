@@ -8,6 +8,7 @@ import {
 } from "./WorkbookModal.style";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import { IClassList } from "@/types/ClassList";
+import { useEffect } from "react";
 
 interface ClassType {
   classId: number;
@@ -59,6 +60,10 @@ function WorkbookSelectClassModal({
   const isSelected = (id: number): boolean => {
     return selectedClass.find((e) => e === id) ? true : false;
   };
+
+  useEffect(() => {
+    setSelectedClass([]);
+  }, []);
 
   return (
     <WorkbookSelectClassModalBox>

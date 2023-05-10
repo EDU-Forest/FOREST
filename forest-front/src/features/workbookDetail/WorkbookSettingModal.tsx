@@ -12,9 +12,10 @@ interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   selectedClass: number[];
   title: string;
+  setIsSetSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
+function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess }: IProps) {
   const [settingTitle, setSettingTitle] = useState(title);
   const [type, setType] = useState<string>("self");
   const [startTime, setStartTime] = useState<string>();
@@ -25,7 +26,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
-  const { data, mutate: setWorkbookApi } = useWorkbookDetailSetPost();
+  const { data, mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
 
   const types = [
     { value: "self", text: "자습" },
@@ -83,14 +84,13 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title }: IProps) {
   };
 
   useEffect(() => {
-    if (data?.code === 201) {
-      setIsOpen(false);
-    }
-  }, [data]);
-
-  useEffect(() => {
     dateValidTest();
   }, [startDay, startTime, endDay, endTime, type]);
+
+  useEffect(() => {
+    setIsSetSuccess(isSuccess);
+    isSuccess && setIsOpen(false);
+  }, [isSuccess]);
 
   return (
     <WorkbookSettingModalBox>

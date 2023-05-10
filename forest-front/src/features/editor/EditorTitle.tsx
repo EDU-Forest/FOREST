@@ -7,12 +7,14 @@ import EditorSelectDropdown from "./EditorSelectDropdown";
 import { controlEditorDropdown } from "@/stores/editor/editorModal";
 import { useEffect, useState } from "react";
 
-interface Iprops {
+interface IProps {
+  editorSave: () => void;
+  isSuccess: boolean;
   controlDropdown: boolean;
   setControlDropdown: (controlDropdown: boolean) => void;
 }
 
-export default function EditorTitle({ controlDropdown, setControlDropdown }: Iprops) {
+export default function EditorTitle({ editorSave, isSuccess, controlDropdown, setControlDropdown }: IProps) {
   const dispatch = useDispatch();
   // const { isOpenDropdown } = useSelector((state: RootState) => state.editorModal);
   const { curWorkbookTitle } = useSelector((state: RootState) => state.editorWorkbook);
@@ -30,7 +32,13 @@ export default function EditorTitle({ controlDropdown, setControlDropdown }: Ipr
         <AiFillCaretDown onClick={controlDropdownHandler} className="icon" />
       </EditorSelectedTitle>
       {/* nowWorkbookId 같은 거 있어야 할 듯 */}
-      {controlDropdown && <EditorSelectDropdown setControlDropdown={setControlDropdown} />}
+      {controlDropdown && (
+        <EditorSelectDropdown
+          setControlDropdown={setControlDropdown}
+          editorSave={editorSave}
+          isSuccess={isSuccess}
+        />
+      )}
     </EditorTitleBox>
   );
 }
