@@ -114,9 +114,16 @@ export const StyledWorkbookDetailBtnsBox = styled.div`
   gap: 16px;
 
   @media ${({ theme }) => theme.tablet} {
+    min-width: auto;
+
     span {
       display: none;
     }
+  }
+
+  button {
+    flex: 1;
+    white-space: nowrap;
   }
 `;
 

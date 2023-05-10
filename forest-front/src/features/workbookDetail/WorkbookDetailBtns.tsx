@@ -1,14 +1,13 @@
+import useWorkbookCopyPostQuery from "@/apis/workbookDetail/useWorkbookDetailCopyQuery";
 import useWorkbookDetailSaveQuery from "@/apis/workbookDetail/useWorkbookDetailSaveQuery";
 import { StyledRoundGhostBtn } from "@/components/Button/Btn.style";
+import Toast from "@/components/Toast/Toast";
 import { RootState } from "@/stores/store";
 import { useEffect, useState } from "react";
 import { MdOutlineFileCopy, MdOutlineFileUpload, MdSave } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import { StyledWorkbookDetailBtnsBox, WorkbookSaveBtn } from "./WorkbookDetail.style";
-import useWorkbookCopyPostQuery from "@/apis/workbookDetail/useWorkbookDetailCopyQuery";
-import { ModalBox } from "@/styles/modal";
-import Toast from "@/components/Toast/Toast";
 
 interface IProps {
   setIsExportOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -71,7 +70,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
   return (
     <>
       <StyledWorkbookDetailBtnsBox>
-        {workbook?.isOriginal && (
+        {workbook?.isOriginal && !workbook?.isDeploy && (
           <WorkbookSaveBtn onClick={handleClickSave}>
             {isLoading ? (
               <>
@@ -86,11 +85,12 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
             )}
           </WorkbookSaveBtn>
         )}
-        <StyledRoundGhostBtn onClick={handleClickCopy}>
-          <MdOutlineFileCopy />
-          <span>사본</span>
-        </StyledRoundGhostBtn>
-
+        {workbook?.isOriginal && (
+          <StyledRoundGhostBtn onClick={handleClickCopy}>
+            <MdOutlineFileCopy />
+            <span>사본</span>
+          </StyledRoundGhostBtn>
+        )}
         <StyledRoundGhostBtn onClick={handleClickExport}>
           <MdOutlineFileUpload />
           <span>내보내기</span>
