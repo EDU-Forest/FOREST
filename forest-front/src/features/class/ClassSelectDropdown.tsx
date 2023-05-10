@@ -11,7 +11,7 @@ import {
 } from "./ClassSelect.style";
 import { setClass } from "@/stores/class/classInfo";
 import AddClassModal from "./teacher/AddClassModal";
-import { openAddClassModal } from "@/stores/class/classModal";
+import { hideClassDropdown, openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import Loading from "@/components/Loading/Loading";
 
@@ -24,6 +24,11 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   const dispatch = useDispatch();
   const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
   const { data: classList, isLoading } = useClassListQuery();
+
+  const addClassModalHandler = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    dispatch(openAddClassModal());
+  };
 
   return (
     <ClassSelectDropdownContainer>
@@ -48,7 +53,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
             <ClassSelectNoClass>존재하는 클래스가 없습니다</ClassSelectNoClass>
           )}
           {!isStudent && (
-            <ClassSelectDropdownAdd onClick={() => dispatch(openAddClassModal())}>
+            <ClassSelectDropdownAdd onClick={addClassModalHandler}>
               + 새 클래스 추가
             </ClassSelectDropdownAdd>
           )}
