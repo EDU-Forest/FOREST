@@ -1,7 +1,7 @@
 export interface IStudent {
   userId: number;
   name: string;
-  age: number;
+  age?: number;
   email: string;
   phone: string;
 }

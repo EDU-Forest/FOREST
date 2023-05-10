@@ -30,7 +30,7 @@ const fetcher = async (data: IData) =>
 
 const useSaveEditedWorkbookPost = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation(fetcher, {
     onSuccess: (data) => {
       queryClient.invalidateQueries(queryKeys.GET_WORKBOOK_DETAIL);

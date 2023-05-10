@@ -1,9 +1,11 @@
-import { scrollBar } from './../../styles/theme';
+import { scrollBar } from "./../../styles/theme";
 import { theme } from "@/styles/theme";
-import { Container } from "@/styles/container";
+import { Container, FullScreen } from "@/styles/container";
 import styled from "styled-components";
 import { StyledWorkbookDetailBtnsBox } from "../workbookDetail/WorkbookDetail.style";
 import { ClassSelectWrapper, ClassSelectedTitle } from "../class/ClassSelect.style";
+
+export const EditorFullScreen = styled(FullScreen)``;
 
 export const EditorContainer = styled(Container)`
   display: flex;
@@ -68,4 +70,10 @@ export const EditorTitleBox = styled(ClassSelectWrapper)`
   padding-bottom: 1rem;
 `;
 
-export const EditorSelectedTitle = styled(ClassSelectedTitle)``;
+export const EditorSelectedTitle = styled(ClassSelectedTitle)`
+  display: flex;
+
+  p {
+    cursor: pointer;
+  }
+`;

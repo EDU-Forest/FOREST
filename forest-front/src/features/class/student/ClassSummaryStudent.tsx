@@ -53,6 +53,7 @@ export default function ClassSummaryStudent() {
                     isGray
                     style={{ cursor: "pointer", margin: "0px" }}
                     onClick={() => goToDetail(data?.data.studyId)}
+                    className="hyper-text"
                   >
                     결과 보기
                     <AiOutlineRight className="icon" />
@@ -63,6 +64,7 @@ export default function ClassSummaryStudent() {
                     isGray
                     style={{ cursor: "pointer", margin: "0px" }}
                     onClick={() => goToTest(data?.data.studyId)}
+                    className="hyper-text"
                   >
                     문제 풀기
                     <AiOutlineRight className="icon" />
@@ -82,7 +84,7 @@ export default function ClassSummaryStudent() {
               )}
 
               {data?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
-                <ClassSummaryItemWrapper>
+                <ClassSummaryItemWrapper userRole="STUDENT">
                   <ClassScoreChart
                     myScore={data?.data.studentResult.studentScore}
                     totalScore={data?.data.studentResult.totalScore}

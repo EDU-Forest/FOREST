@@ -8,7 +8,7 @@ import {
 import ClassWorkbook from "@/features/class/ClassWorkbook";
 import NoClass from "@/features/class/NoClass";
 import ClassSummaryStudent from "@/features/class/student/ClassSummaryStudent";
-import { closeAllModal } from "@/stores/class/classModal";
+import { closeAllModal, hideClassDropdown } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
 import { Title } from "@/styles/text";
@@ -26,8 +26,12 @@ function StudentClass() {
     dispatch(closeAllModal());
   }, []);
 
+  const hideDropdownHandler = () => {
+    dispatch(hideClassDropdown());
+  };
+
   return (
-    <FullScreen>
+    <FullScreen onClick={hideDropdownHandler}>
       <StudentNav nowLocation={"class"} />
       <Container padding={3}>
         {nowClassId !== -1 ? (
