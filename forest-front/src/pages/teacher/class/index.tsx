@@ -31,7 +31,9 @@ function TeacherClass() {
   };
 
   return (
-    <FullScreen onClick={hideDropdownHandler}>
+    // 모달 수정 시 필요
+    // <FullScreen onClick={hideDropdownHandler}>
+    <FullScreen>
       <TeacherNav nowLocation={"class"} />
       <Container padding={3}>
         {nowClassId !== -1 ? (
