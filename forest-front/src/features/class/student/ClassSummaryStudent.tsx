@@ -19,6 +19,7 @@ import { RootState } from "@/stores/store";
 import Loading from "@/components/Loading/Loading";
 import useStudentScoreQuery from "@/apis/class/student/useStudentScoreQuery";
 import arrangeDate from "@/utils/arrangeDate";
+import { useDispatch } from "react-redux";
 
 export default function ClassSummaryStudent() {
   const router = useRouter();

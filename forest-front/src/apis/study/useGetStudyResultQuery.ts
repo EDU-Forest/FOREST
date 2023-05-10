@@ -23,7 +23,7 @@ const useGetStudyResult = (studyId: number) => {
   const { isEnded } = useSelector((state: RootState) => state.exam);
   const dispatch = useDispatch();
   return useQuery([queryKeys.GET_STUDY_RESULT, isEnded], () => fetcher(studyId), {
-    // enabled: !!isEnded,
+    enabled: !!studyId,
     refetchOnWindowFocus: false,
     onSuccess: (result) => {
       dispatch(setResult(result));
