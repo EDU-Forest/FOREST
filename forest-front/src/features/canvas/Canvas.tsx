@@ -7,38 +7,27 @@ import {
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
 import { CanvasDrawSection } from "./Canvas.style";
+import { useDispatch } from "react-redux";
+import { controlCanvas, setPaths } from "@/stores/exam/canvas";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import useCanvasPost from "@/apis/canvas/useCanvasPost";
+import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
 
-interface StoredData {
-  drawMode: boolean;
-  strokeColor: string;
-  strokeWidth: number;
-  paths: {
-    x: number;
-    y: number;
-  }[];
-}
-interface Iprops {
-  storedData?: StoredData[];
-  allPaths?: CanvasPath[];
-  setAllPaths: (allPaths: CanvasPath[]) => void;
-  isOpenCanvas: boolean;
-  setIsOpenCanvas: (type: boolean) => void;
-}
-
-export default function Canvas({
-  storedData,
-  allPaths,
-  setAllPaths,
-  isOpenCanvas,
-  setIsOpenCanvas,
-}: Iprops) {
+export default function Canvas() {
+  const dispatch = useDispatch();
   const canvasRef = createRef<ReactSketchCanvasRef>();
+  const { paths, isOpenCanvas, studentStudyProblemId } = useSelector(
+    (state: RootState) => state.canvas,
+  );
+  const { data: record, isSuccess } = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas);
 
+  const { mutate: canvasMutate } = useCanvasPost();
   const [nowTab, setNowTab] = useState<string>("");
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "70vw",
+    width: "72vw",
     height: "calc(100vh - 13.5rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
@@ -48,17 +37,11 @@ export default function Canvas({
     canvasColor: "rgba(255,255,255, 0)",
     style: { backgroundColor: "rgba(255,255,255, 0)" },
     exportWithBackgroundImage: false,
-    // withTimestamp: true,
     allowOnlyPointerType: "all",
   });
 
-  const [lastStroke, setLastStroke] = useState<{
-    stroke: CanvasPath | null;
-    isEraser: boolean | null;
-  }>({ stroke: null, isEraser: null });
-
   const onChange = (updatedPaths: CanvasPath[]): void => {
-    setAllPaths(updatedPaths);
+    dispatch(setPaths(updatedPaths));
   };
 
   const penHandler = () => {
@@ -102,17 +85,24 @@ export default function Canvas({
   };
 
   const ControlCanvas = () => {
-    // 캔버스 닫기
-    setIsOpenCanvas(!isOpenCanvas);
+    dispatch(controlCanvas());
   };
 
   useEffect(() => {
-    if ((allPaths?.length as number) > 0) {
-      canvasRef.current?.loadPaths(allPaths as CanvasPath[]);
-      return;
+    if (isSuccess && record) {
+      canvasRef.current?.loadPaths(record.line);
     }
-    if (storedData) {
-      canvasRef.current?.loadPaths(storedData);
+  }, [isSuccess, record]);
+
+  useEffect(() => {
+    if (!isOpenCanvas) {
+      if (paths?.length > 0) {
+        const canvasPayload = {
+          studentStudyProblemId: studentStudyProblemId,
+          line: paths,
+        };
+        canvasMutate(canvasPayload);
+      }
     }
   }, [isOpenCanvas]);
 
@@ -127,18 +117,12 @@ export default function Canvas({
         redoHandler={redoHandler}
         clearHandler={clearHandler}
         ControlCanvas={ControlCanvas}
-        isOpenCanvas={isOpenCanvas}
         nowTab={nowTab}
         setNowTab={setNowTab}
       />
       {isOpenCanvas && (
         <CanvasDrawSection nowTab={nowTab}>
-          <ReactSketchCanvas
-            ref={canvasRef}
-            onChange={onChange}
-            onStroke={(stroke, isEraser) => setLastStroke({ stroke, isEraser })}
-            {...canvasProps}
-          />
+          <ReactSketchCanvas ref={canvasRef} onChange={onChange} {...canvasProps} />
         </CanvasDrawSection>
       )}
     </>

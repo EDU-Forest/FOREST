@@ -7,7 +7,6 @@ import {
   StyledTestProblemBox,
   StyledTestProblemEssayAnswer,
   StyledTestProblemShortAnswer,
-  TestCanvas,
   TestProblemAnswerBox,
   TestProblemBtn,
   TestProblemBtnBox,
@@ -19,38 +18,18 @@ import { useDispatch } from "react-redux";
 import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 import { useRouter } from "next/router";
-import Canvas from "@/features/canvas/Canvas";
-import { useState } from "react";
-import { CanvasPath } from "react-sketch-canvas";
-import useCanvasPost from "@/apis/canvas/useCanvasPost";
+import { useEffect } from "react";
 import TestProblemImg from "./TestProblemImg";
-import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
+import { closeCanvas, setStudentStudyProblemId } from "@/stores/exam/canvas";
 
-interface Iprops {
-  minutes: number;
-  seconds: number;
-  allPaths: CanvasPath[];
-  setAllPaths: (allPaths: CanvasPath[]) => void;
-  isSubmitted?: boolean;
-}
-
-export default function TestProblemBox({
-  minutes,
-  seconds,
-  allPaths,
-  setAllPaths,
-  isSubmitted,
-}: Iprops) {
+export default function TestProblemBox() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
-  const canvasMutate = useCanvasPost().mutate;
-  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
-  const dispatch = useDispatch();
-  const [isOpenCanvas, setIsOpenCanvas] = useState<boolean>(false);
-  const record = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas).data;
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -59,6 +38,10 @@ export default function TestProblemBox({
     type,
   };
 
+  useEffect(() => {
+    dispatch(setStudentStudyProblemId(studentStudyProblemId));
+  }, [studentStudyProblemId]);
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     dispatch(setChooseAnswer({ problemNum: curProblemNum, userAnswer: e.target.value }));
   };
@@ -66,57 +49,26 @@ export default function TestProblemBox({
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
     mutate(payload);
-    if (allPaths.length > 0) {
-      const canvasPayload = {
-        studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
-      };
-      console.log("canvasPayload", canvasPayload);
-      canvasMutate(canvasPayload);
-    }
-
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
-    setIsOpenCanvas(false);
-    setAllPaths([]);
+    dispatch(closeCanvas());
   };
 
   const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
     mutate(payload);
-    if (allPaths.length > 0) {
-      const canvasPayload = {
-        studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
-      };
-      console.log("canvasPayload", canvasPayload);
-      canvasMutate(canvasPayload);
-    }
-
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
-    setIsOpenCanvas(false);
-    setAllPaths([]);
+    dispatch(closeCanvas());
   };
 
   return (
     <StyledTestProblemBox>
-      <TestCanvas>
-        <Canvas
-          allPaths={allPaths}
-          setAllPaths={setAllPaths}
-          storedData={record?.line}
-          isOpenCanvas={isOpenCanvas}
-          setIsOpenCanvas={setIsOpenCanvas}
-        />
-      </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />
           {problemImgPath && <TestProblemImg problemImgPath={problemImgPath} />}
           {text && <TestProblemText />}
-          {type === "MULTIPLE" && (
-            <TestProblemMultipleChoiceAnswer minutes={minutes} seconds={seconds} />
-          )}
-          {type === "OX" && <TestProblemOXAnswer minutes={minutes} seconds={seconds} />}
+          {type === "MULTIPLE" && <TestProblemMultipleChoiceAnswer />}
+          {type === "OX" && <TestProblemOXAnswer />}
           {type === "SUBJECTIVE" && (
             <StyledTestProblemShortAnswer
               disabled={isSubmitted}

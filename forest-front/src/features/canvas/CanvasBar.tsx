@@ -7,6 +7,8 @@ import CanvasPen from "./CanvasPen";
 import CanvasHighlighter from "./CanvasHighlighter";
 import { ReactSketchCanvasProps } from "react-sketch-canvas";
 import CanvasEraser from "./CanvasEraser";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface Iprops {
   canvasProps: Partial<ReactSketchCanvasProps>;
@@ -17,7 +19,6 @@ interface Iprops {
   redoHandler: () => void;
   clearHandler: () => void;
   ControlCanvas: () => void;
-  isOpenCanvas: boolean;
   nowTab: string;
   setNowTab: (tab: string) => void;
 }
@@ -31,10 +32,11 @@ export default function CanvasBar({
   redoHandler,
   clearHandler,
   ControlCanvas,
-  isOpenCanvas,
   nowTab,
   setNowTab,
 }: Iprops) {
+  const { isOpenCanvas } = useSelector((state: RootState) => state.canvas);
+
   const [isOpenController, setIsOpenController] = useState<boolean>(false);
   const [isPen, setIsPen] = useState<boolean>(false);
   const [isHighlighter, setIsHighlighter] = useState<boolean>(false);
@@ -133,7 +135,6 @@ export default function CanvasBar({
         </div>
 
         <img src="/images/pallete.png" className="logo" onClick={ControlCanvas} />
-        {/* <img src="/icons/icon-72x72.png" className="logo" onClick={ControlCanvas} /> */}
       </div>
 
       <CanvasBarItems isOpenCanvas={isOpenCanvas}>

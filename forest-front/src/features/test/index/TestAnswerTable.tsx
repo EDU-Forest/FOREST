@@ -3,19 +3,17 @@ import { ProblemNumTd, StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
+import { closeCanvas } from "@/stores/exam/canvas";
 
-interface Iprops {
-  minutes: number;
-  seconds: number;
-}
+export default function TestAnswerTable() {
+  const { curProblemNum, problem, isSubmitted } = useSelector((state: RootState) => state.exam);
 
-export default function TestAnswerTable({ minutes, seconds }: Iprops) {
-  const { curProblemNum, problem } = useSelector((state: RootState) => state.exam);
-  const { userAnswer, problemAnswer } = problem[curProblemNum - 1];
   const dispatch = useDispatch();
 
   const changeCurProblemNum = (idx: number) => {
     dispatch(setCurProblemNum({ curProblemNum: idx }));
+
+    dispatch(closeCanvas());
   };
 
   return (
@@ -29,7 +27,7 @@ export default function TestAnswerTable({ minutes, seconds }: Iprops) {
         {problem.map((data, idx) => (
           <tr key={`user-answer-${idx}`} onClick={() => changeCurProblemNum(idx + 1)}>
             <ProblemNumTd
-              isEnded={minutes <= 0 && seconds <= 0}
+              isEnded={isSubmitted}
               isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
             >
               {idx + 1}

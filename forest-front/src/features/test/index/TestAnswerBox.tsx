@@ -1,44 +1,25 @@
-import { useState } from "react";
 import TestAnswerTable from "./TestAnswerTable";
 import { StyledAnswerBox, StyledTestSubmitBtn, StyledUsername } from "./TextIndex.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
-import useCanvasPost from "@/apis/canvas/useCanvasPost";
-import { CanvasPath } from "react-sketch-canvas";
-import { IStudyModal } from "@/types/Study";
+import { useDispatch } from "react-redux";
+import { setToggleModal } from "@/stores/exam/exam";
+import { closeCanvas } from "@/stores/exam/canvas";
 
-interface Iprops extends IStudyModal {
-  allPaths: CanvasPath[];
-  isSubmitted?: boolean;
-}
-
-export default function TestAnswerBox({
-  minutes,
-  seconds,
-  toggleModal,
-  setToggleModal,
-  allPaths,
-  isSubmitted,
-}: Iprops) {
+export default function TestAnswerBox() {
+  const dispatch = useDispatch();
   const { username } = useSelector((state: RootState) => state.user);
-  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
-  const { studentStudyProblemId } = problem[curProblemNum - 1];
+  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
+
   const router = useRouter();
-  const canvasMutate = useCanvasPost().mutate;
+
   const openEndTestModalHandler = () => {
-    setToggleModal(true);
+    dispatch(setToggleModal(true));
   };
 
   const goToResultHandler = () => {
-    if (allPaths.length > 0) {
-      const canvasPayload = {
-        studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
-      };
-      console.log("canvasPayload", canvasPayload);
-      canvasMutate(canvasPayload);
-    }
+    dispatch(closeCanvas());
 
     router.push(`/test/${router.query.studyId}/result`);
   };
@@ -46,7 +27,7 @@ export default function TestAnswerBox({
   return (
     <StyledAnswerBox>
       <StyledUsername>응시자 : {username}</StyledUsername>
-      <TestAnswerTable minutes={minutes} seconds={seconds} />
+      <TestAnswerTable />
       {isSubmitted ? (
         <StyledTestSubmitBtn onClick={goToResultHandler}>나가기</StyledTestSubmitBtn>
       ) : (

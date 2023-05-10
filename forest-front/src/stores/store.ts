@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import classSlice from "./class/classInfo";
 import classModalSlice from "./class/classModal";
 import examSlice from "./exam/exam";
+import canvasSlice from "./exam/canvas";
 import userSlice from "./user/user";
 import questionSlice from "./editor/editorQuestions";
 import editorModalSlice from "./editor/editorModal";
@@ -15,7 +16,8 @@ const reducers = combineReducers({
   class: classSlice,
   classModal: classModalSlice,
   exam: examSlice,
-  editorQuestions: questionSlice,
+  canvas: canvasSlice,
+  editQuestions: questionSlice,
   editorModal: editorModalSlice,
   editorWorkbook: editorWorkbookSlice,
   workbookDetail: workbookDetailSlice,

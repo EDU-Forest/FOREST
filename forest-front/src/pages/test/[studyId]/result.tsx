@@ -1,22 +1,26 @@
 import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestHeader from "@/features/test/index/TestHeader";
-import TestResultQuestion from "@/features/test/result/TestResultQuestion";
 import TestResultSection from "@/features/test/result/TestResultSection";
-import TestResultTotal from "@/features/test/result/TestResultTotal";
-import { ResultContainer, TestResultOkBtn } from "@/features/test/result/TextResult.style";
-import { RootState } from "@/stores/store";
+import { ResultContainer } from "@/features/test/result/TextResult.style";
+import { setPage } from "@/stores/exam/exam";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 function Result() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const studyId = router.query.studyId;
   useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
+  useEffect(() => {
+    dispatch(setPage("result"));
+  }, []);
+
   return (
     <ResultContainer>
-      <TestHeader page={"result"} />
+      <TestHeader />
       <TestResultSection />
     </ResultContainer>
   );

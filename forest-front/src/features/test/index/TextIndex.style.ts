@@ -89,8 +89,10 @@ const StyledTestProblemBox = styled.div`
 `;
 
 const TestCanvas = styled.div`
-  position: absolute;
-  top: -1.5rem;
+  position: fixed;
+  top: 5rem;
+  left: 2.25rem;
+  z-index: 30;
 `;
 
 const StyledTestProblemTitle = styled.div`

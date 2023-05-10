@@ -24,6 +24,8 @@ export interface examState {
       isImage: boolean;
     }[];
   }[];
+  toggleModal: boolean;
+  page: string;
 }
 
 export interface IQuestionResult {

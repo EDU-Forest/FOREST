@@ -6,22 +6,19 @@ import useEndStudy from "@/apis/study/useEndStudyQuery";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { CanvasPath } from "react-sketch-canvas";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 
-interface Iprops {
-  allPaths: CanvasPath[];
-}
-
-export default function TestEnd({ allPaths }: Iprops) {
+export default function TestEnd() {
   const router = useRouter();
   const { mutate: endStudy } = useEndStudy();
   const { mutate: saveAnswer } = useSaveAnswer();
+  const { mutate: canvasMutate } = useCanvasPost();
   const studyId = router.query.studyId;
 
+  const { paths } = useSelector((state: RootState) => state.canvas);
+  const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
+
   const goToResultHandler = () => {
-    const canvasMutate = useCanvasPost().mutate;
-    const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
     const { type, studentStudyProblemId, userAnswer, problemAnswer, text } =
       problem[curProblemNum - 1];
 
@@ -32,12 +29,11 @@ export default function TestEnd({ allPaths }: Iprops) {
       type,
     };
 
-    if (allPaths.length > 0) {
+    if (paths.length > 0) {
       const canvasPayload = {
         studentStudyProblemId: studentStudyProblemId,
-        line: allPaths,
+        line: paths,
       };
-      console.log("canvasPayload", canvasPayload);
       canvasMutate(canvasPayload);
     }
 
