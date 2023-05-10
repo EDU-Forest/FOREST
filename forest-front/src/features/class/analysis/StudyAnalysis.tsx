@@ -33,7 +33,7 @@ export default function StudyAnalysis() {
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
-  const { data, isLoading } = useStudyResultQuery(nowStudyId);
+  const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
 
   const goToGrade = (student: StudentStudyResultList) => {
     // 상세 성적으로 이동
@@ -44,7 +44,7 @@ export default function StudyAnalysis() {
           studentStudyResultId: student.studentStudyResultId,
           name: student.name,
           email: student.email,
-          title: data?.title,
+          title: result?.data.title,
         },
       },
       `/teacher/class/study/${nowStudyId}/student`,
@@ -55,7 +55,7 @@ export default function StudyAnalysis() {
     <>
       <AnalysisTitle>
         <ArrowLeft onClick={goToBack} />
-        <p style={{ marginLeft: "2rem" }}>{data?.title}</p>
+        <p style={{ marginLeft: "2rem" }}>{result?.data.title}</p>
       </AnalysisTitle>
       <AnalysisContent>
         <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
@@ -72,9 +72,9 @@ export default function StudyAnalysis() {
                 ) : (
                   <TotalResult
                     noMargin
-                    average={data?.average}
-                    standardDeviation={data?.standardDeviation}
-                    averageSolvingTime={data?.averageSolvingTime}
+                    average={result?.data.average}
+                    standardDeviation={result?.data.standardDeviation}
+                    averageSolvingTime={result?.data.averageSolvingTime}
                   />
                 )}
               </AnalysisUpperItem>
@@ -86,13 +86,13 @@ export default function StudyAnalysis() {
                     <AnalysisSubTitle>응시율</AnalysisSubTitle>
                     <TakeRateChart
                       noTitle
-                      totalStudent={data?.totalStudent}
-                      participantStudent={data?.participantStudent}
-                      takeRate={data?.takeRate}
+                      totalStudent={result?.data.totalStudent}
+                      participantStudent={result?.data.participantStudent}
+                      takeRate={result?.data.takeRate}
                     />
                     <div style={{ textAlign: "center" }}>
                       <StyledWorkbookStatus status="ONGOING">
-                        {data?.participantStudent}명의 학생이 응시하였습니다
+                        {result?.data.participantStudent}명의 학생이 응시하였습니다
                       </StyledWorkbookStatus>
                     </div>
                   </>
@@ -104,10 +104,10 @@ export default function StudyAnalysis() {
                 ) : (
                   <ClassWorkbookInfo
                     noMargin
-                    studyCreatedDate={data?.studyCreatedDate}
-                    studyType={data?.studyType}
-                    volume={data?.volume}
-                    isPublic={data?.isPublic}
+                    studyCreatedDate={result?.data.studyCreatedDate}
+                    studyType={result?.data.studyType}
+                    volume={result?.data.volume}
+                    isPublic={result?.data.isPublic}
                   />
                 )}
               </AnalysisUpperItem>

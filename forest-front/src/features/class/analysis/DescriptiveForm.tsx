@@ -21,7 +21,6 @@ export default function DescriptiveForm() {
   const { data: scoringData, mutate: scoringMutate } = useDescriptionScoring();
   const finishMutate = useExamFinish().mutate;
   const { data, isLoading } = useDescriptionQuery(nowStudyId);
-  console.log("scoringData", scoringData);
 
   const handleClick = () => {
     const newStudentPointList = [];
