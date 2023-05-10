@@ -122,7 +122,9 @@ const StyledTestProblemText = styled.div`
   line-height: 150%;
 `;
 
-const StyledTestProblemMultipleChoiceAnswer = styled.div``;
+const StyledTestProblemMultipleChoiceAnswer = styled.div`
+  padding-top: 2rem;
+`;
 
 const StyledTestProblemAnswerNumber = styled.div`
   display: flex;
