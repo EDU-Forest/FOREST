@@ -534,7 +534,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 문제 항목 복사 필요 여부
         int[] itemIsMultiple = new int[problemLists.size()];
-        log.info("{}", problemLists.size());
         int check = 0;
 
         for (ProblemList problemList : problemLists) {
@@ -558,7 +557,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                 itemIsMultiple[check] = -1;
             }
             check++;
-            log.info(Arrays.toString(itemIsMultiple));
         }
         problemRepository.saveAll(problems);
 
@@ -570,9 +568,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         for (int checked : itemIsMultiple) {
             count++;
-            if (checked == -1) continue;
-            else {
-                List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(count).getId());
+            if (checked == 1){
+                List<Item> itemList = itemRepository.findAllByProblemIdOrderByNo(problemLists.get(count).getProblem().getId());
                 int itemListSize = itemList.size();
 
                 for (Item item : itemList) {
@@ -586,11 +583,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                     itemCopyList.add(itemCopy);
                 }
                 itemCount[count] = itemListSize;
-                log.info("itemList Size : {}", itemListSize);
             }
         }
         itemRepository.saveAll(itemCopyList);
-        log.info("itemCopyList Size : {}", itemCopyList.size());
 
         // 4. 문제 목록 만들기
         // 문제 목록 복사 리스트
@@ -639,7 +634,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             if (itemIsMultiple[i] != -1) {
                 for (int k = 0; k < itemCount[i]; k++) {
-                    log.info("실행중");
                     Item tempItem = itemCopyList.get(j);
 
                     ItemResDto itemRes = ItemResDto.builder()
@@ -652,7 +646,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     j++;
                 }
-                log.info("ItemResList Size : {}", itemResList);
             }
 
             ProblemAllInfoDto problemAllInfoDto = ProblemAllInfoDto.builder()
