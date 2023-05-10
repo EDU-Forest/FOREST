@@ -8,7 +8,7 @@ import {
 import { ClassAddModalContainer, ClassInputBtnWrapper } from "./AddClassModal.style";
 
 const ClassStudentAddModalContainer = styled(ClassAddModalContainer)`
-  z-index: 10;
+  z-index: 30;
   height: 37.5rem;
   padding-top: 4.375rem;
 `;

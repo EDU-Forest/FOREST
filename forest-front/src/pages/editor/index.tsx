@@ -17,6 +17,7 @@ import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import useEditorSave from "@/hooks/editor/useEditorSave";
 import { initCurQuestion, initDeleteAnswers, initQuestions, setIsAnswerValidConfirm, setIsPointValidConfirm, setIsTitleValidConfirm } from "@/stores/editor/editorQuestions";
+import { setCloseEditor } from "@/stores/editor/editorModal";
 import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
 import withAuth from "@/utils/auth/withAuth";
@@ -56,6 +57,10 @@ function Editor() {
     const workbookId = workbook.workbookId;
     const title = workbook.title;
     isMoveToEditor && dispatch(setSelectWorkbook({ workbookId, title }));
+
+    return () => {
+      dispatch(setCloseEditor());
+    };
   }, []);
 
   useEffect(() => {
