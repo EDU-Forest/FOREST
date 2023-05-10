@@ -9,11 +9,11 @@ const fetcher = (studyId: number) =>
     return studentStudyResultList;
   });
 
-const useStudentAnsweRate = (studyId: number) => {
+const useStudentAnswerRate = (studyId: number) => {
   return useQuery([queryKeys.STUDENT_ANSWER_RATE, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId,
   });
 };
 
-export default useStudentAnsweRate;
+export default useStudentAnswerRate;
