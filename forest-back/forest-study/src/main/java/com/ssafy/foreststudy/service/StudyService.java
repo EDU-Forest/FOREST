@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
+import reactor.netty.tcp.SslProvider;
 
 import javax.net.ssl.*;
 import java.time.Duration;
@@ -937,9 +938,13 @@ public class StudyService {
                 .build();
 
         HttpClient httpClient = HttpClient.create()
-                .responseTimeout(Duration.ofSeconds(1))
-                .secure(t ->
-                        t.sslContext(sslContext));
+                .secure(spec -> spec.sslContext(SslContextBuilder.forClient())
+                        .defaultConfiguration(SslProvider.DefaultConfigurationType.TCP)
+                        .handshakeTimeout(Duration.ofSeconds(30))
+                        .closeNotifyFlushTimeout(Duration.ofSeconds(10))
+                        .closeNotifyReadTimeout(Duration.ofSeconds(10)));
+//                .secure(t ->
+//                        t.sslContext(sslContext));
 
         WebClient webClient = WebClient.builder()
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
