@@ -45,6 +45,13 @@ export default function ClassSummaryTeacher() {
         </ClassSummaryWrapper>
       ) : (
         <ClassSummaryWrapper small={data?.scheduleType === "AFTER" ? false : true}>
+          {!isLoading && !data?.isFinished && (
+            <ClassSummaryItemSubmitBox>
+              <CommonBtn colored onClick={endTestHandler}>
+                시험 종료
+              </CommonBtn>
+            </ClassSummaryItemSubmitBox>
+          )}
           <ClassSummaryTextWrapper>
             <ClassSummaryTextItem>
               <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
@@ -67,13 +74,6 @@ export default function ClassSummaryTeacher() {
 
           {data?.scheduleType === "AFTER" ? (
             <ClassSummaryItemWrapper userRole="TEACHER" isFinished={data?.isFinished}>
-              {!isLoading && !data?.isFinished && (
-                <ClassSummaryItemSubmitBox>
-                  <CommonBtn colored onClick={endTestHandler}>
-                    시험 종료
-                  </CommonBtn>
-                </ClassSummaryItemSubmitBox>
-              )}
               <ClassWorkbookInfo
                 studyCreatedDate={data?.studyCreatedDate}
                 studyType={data?.studyType}

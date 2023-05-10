@@ -17,6 +17,7 @@ const ClassSummaryWrapper = styled.div<{ small?: boolean }>`
   margin-top: 1.5rem;
   padding: 2rem;
   margin-bottom: 2.25rem;
+  position: relative;
 
   @media ${({ theme }) => theme.tablet} {
     height: 41rem;
@@ -39,7 +40,6 @@ const ClassSummaryItemWrapperNoResult = styled.div`
 
 const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: string }>`
   ${flexBox("row", "center", "space-between")}
-  position: relative;
 
   ${({ isFinished, userRole }) =>
     userRole === "TEACHER" &&
@@ -61,7 +61,7 @@ const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: str
 
 const ClassSummaryTextWrapper = styled.div`
   ${flexBox("row", "center", "space-between")}
-
+  height: 3rem;
   .hyper-text {
     &:hover {
       color: ${({ theme }) => theme.colors.Gray[600]};
@@ -206,20 +206,22 @@ const ClassLabelBox = styled.div<{ page: string }>`
 const ClassSummaryItemSubmitBox = styled.div`
   margin-top: 1rem;
   border-radius: 1rem;
-  width: 100%;
-  height: 100%;
+  width: calc(100% - 3rem);
+  height: calc(100% - 8.5rem);
   opacity: 0.5;
   background-color: ${({ theme }) => theme.colors.Gray[100]};
   position: absolute;
-  top: 0%;
-  left: 0%;
-  z-index: 20;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  z-index: 10;
 
   button {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    opacity: 1;
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.Lime[800]};
