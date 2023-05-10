@@ -45,7 +45,7 @@ export default function ClassSummaryTeacher() {
         </ClassSummaryWrapper>
       ) : (
         <ClassSummaryWrapper>
-          {!isLoading && !result.data?.isFinished && (
+          {!isLoading && !result?.data?.isFinished && (
             <ClassSummaryItemSubmitBox>
               <CommonBtn colored onClick={endTestHandler}>
                 시험 종료

@@ -9,6 +9,7 @@ import {
   LoginLabel,
   LoginInputBox,
   LoginErrorMsg,
+  LoginLabelBox,
 } from "./Home.style";
 import { useState } from "react";
 import { CommonInput } from "@/components/Input/Input.style";
@@ -16,12 +17,19 @@ import { checkEmail } from "@/utils";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useRouter } from "next/router";
 import useLogin from "@/apis/auth/useLoginQuery";
+import Label from "@/components/Label/Label";
 
 export default function Login() {
   const router = useRouter();
   const { mutate } = useLogin();
   const [emailErrorMsg, setEmailErrorMsg] = useState("");
   const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const [validation, setValidation] = useState({
+    email: "",
+    password: "",
+  });
+
+  // 로그인 에러 시 사용
   const [loginErrorMsg, setLoginErrorMsg] = useState("");
 
   // 서버 응답에 대한 에러 메세지
@@ -68,6 +76,20 @@ export default function Login() {
     });
   };
 
+  const emailValidator = () => {
+    setValidation({
+      ...validation,
+      email: checkEmail(userData.email.trim()) ? "pass" : "fail",
+    });
+  };
+
+  const passwordValidator = () => {
+    setValidation({
+      ...validation,
+      password: userData.password.trim() ? "pass" : "fail",
+    });
+  };
+
   return (
     <LoginForm onSubmit={loginHandler}>
       <LoginTitleBox>
@@ -84,9 +106,13 @@ export default function Login() {
             placeholder="이메일를 입력하세요"
             value={email}
             onChange={onChange}
+            onBlur={emailValidator}
             autoComplete="email"
           />
-          {emailErrorMsg && <LoginErrorMsg>{emailErrorMsg}</LoginErrorMsg>}
+          {/* {emailErrorMsg && <LoginErrorMsg>{emailErrorMsg}</LoginErrorMsg>} */}
+          <LoginLabelBox>
+            <Label status={validation.email}>이메일 형식</Label>
+          </LoginLabelBox>
         </LoginInputBox>
         <LoginInputBox>
           <LoginLabel htmlFor="password">비밀번호</LoginLabel>
@@ -97,9 +123,14 @@ export default function Login() {
             placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={onChange}
+            onBlur={passwordValidator}
             autoComplete="current-password"
           />
-          {passwordErrorMsg && <LoginErrorMsg>{passwordErrorMsg}</LoginErrorMsg>}
+          {/* {passwordErrorMsg && <LoginErrorMsg>{passwordErrorMsg}</LoginErrorMsg>} */}
+          {/* <LoginErrorMsg>{passwordErrorMsg ? passwordErrorMsg : ""}</LoginErrorMsg> */}
+          <LoginLabelBox>
+            <Label status={validation.password}>비밀번호 입력</Label>
+          </LoginLabelBox>
         </LoginInputBox>
       </LoginContentBox>
       {loginErrorMsg && <LoginErrorMsg>{loginErrorMsg}</LoginErrorMsg>}

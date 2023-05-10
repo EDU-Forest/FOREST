@@ -14,6 +14,7 @@ import AddClassModal from "./teacher/AddClassModal";
 import { hideClassDropdown, openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import Loading from "@/components/Loading/Loading";
+import { textFormatter } from "@/utils";
 
 interface Iprops {
   nowClassId: number;
@@ -44,7 +45,8 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
                     key={item.classId}
                     onClick={() => dispatch(setClass(item))}
                   >
-                    {item.classId === nowClassId && <ClassSelectCircle />} {item.className}
+                    {item.classId === nowClassId && <ClassSelectCircle />}{" "}
+                    {textFormatter(item.className)}
                   </ClassSelectDropdownEachItem>
                 ))}
               </ClassSelectDropdownEach>
