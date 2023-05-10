@@ -16,15 +16,14 @@ import ImportingPartModal from "@/features/editor/ImportingPartModal";
 import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import useEditorSave from "@/hooks/editor/useEditorSave";
+import { initCurQuestion, initDeleteAnswers, initQuestions, setIsAnswerValidConfirm, setIsPointValidConfirm, setIsTitleValidConfirm } from "@/stores/editor/editorQuestions";
 import { setCloseEditor } from "@/stores/editor/editorModal";
-import { initCurQuestion, initDeleteAnswers, initQuestions } from "@/stores/editor/editorQuestions";
 import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
 import withAuth from "@/utils/auth/withAuth";
 import { useEffect, useState } from "react";
 import { IoIosWarning } from "react-icons/io";
 import { MdSave } from "react-icons/md";
-import { TiWarning } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 
 function Editor() {
@@ -44,6 +43,7 @@ function Editor() {
   const { editorSave, isLoading, isSuccess } = useEditorSave();
   const [isSaveSuccess, setIsSaveSuccess] = useState(false);
   const [isWorkbookSwitchFail, setIsWorkbookSwitchFail] = useState(false);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   const [controlDropdown, setControlDropdown] = useState<boolean>(false);
 
@@ -72,6 +72,12 @@ function Editor() {
     }
     getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
+
+  useEffect(() => {
+    dispatch(setIsPointValidConfirm(false));
+    dispatch(setIsTitleValidConfirm(false));
+    dispatch(setIsAnswerValidConfirm(false));
+  }, [curQuestion]);
 
   useEffect(() => {
     setIsSaveSuccess(isSuccess);

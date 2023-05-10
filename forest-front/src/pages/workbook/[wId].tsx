@@ -79,7 +79,7 @@ function WorkbookDetail() {
     // questions가 초기화된 후에 curQuestion 지정
     // 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, 현재 문제집일 때만 수형
     if (curQuestion === 0 && Number(wId) === workbook.workbookId) {
-      setCurQuestion(questions[0].problemId);
+      questions.length !== 0 && setCurQuestion(questions[0].problemId) ;
     }
   }, [questions]);
 

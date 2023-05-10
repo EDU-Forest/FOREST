@@ -85,16 +85,18 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
             )}
           </WorkbookSaveBtn>
         )}
-        {workbook?.isOriginal && (
+        {workbook?.isOriginal && questions.length !== 0 && (
           <StyledRoundGhostBtn onClick={handleClickCopy}>
             <MdOutlineFileCopy />
             <span>사본</span>
           </StyledRoundGhostBtn>
         )}
-        <StyledRoundGhostBtn onClick={handleClickExport}>
-          <MdOutlineFileUpload />
-          <span>내보내기</span>
-        </StyledRoundGhostBtn>
+        {questions.length !== 0 && (
+          <StyledRoundGhostBtn onClick={handleClickExport}>
+            <MdOutlineFileUpload />
+            <span>내보내기</span>
+          </StyledRoundGhostBtn>
+        )}
       </StyledWorkbookDetailBtnsBox>
       {isCopySuccess && (
         <Toast>
