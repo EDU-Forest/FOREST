@@ -937,6 +937,7 @@ public class StudyService {
                 .build();
 
         HttpClient httpClient = HttpClient.create()
+                .responseTimeout(Duration.ofSeconds(1))
                 .secure(t ->
                         t.sslContext(sslContext));
 
