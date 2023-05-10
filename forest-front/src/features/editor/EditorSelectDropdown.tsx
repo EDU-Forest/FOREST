@@ -30,6 +30,7 @@ export default function EditorSelectDropdown({
     (state: RootState) => state.editorWorkbook,
   );
 
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
   const { isPointValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const { isTitleValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
@@ -51,7 +52,10 @@ export default function EditorSelectDropdown({
   };
 
   const selectWorkbookHandler = (workbookId: number, title: string) => {
-    if (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm) {
+    if (
+      questions.length === 0 ||
+      (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
+    ) {
       saveData(() => {
         selectWorkbook(workbookId, title);
       });
