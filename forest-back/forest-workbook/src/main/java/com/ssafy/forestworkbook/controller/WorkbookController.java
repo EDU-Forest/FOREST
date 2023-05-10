@@ -204,11 +204,11 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
         log.info("{}", file.isEmpty());
-//        Long userId = Long.valueOf(9);
+        Long userId = Long.valueOf(9);
         return workbookService.ocrImg(userId, file);
     }
 
@@ -218,11 +218,11 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
         log.info("{}", file.isEmpty());
-//        Long userId = Long.valueOf(9);
+        Long userId = Long.valueOf(9);
         workbookService.detectDocumentsGcs(file);
         return new ResponseSuccessDto<>(HttpStatus.OK);
     }
