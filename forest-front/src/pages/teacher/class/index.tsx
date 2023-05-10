@@ -9,7 +9,7 @@ import ClassWorkbook from "@/features/class/ClassWorkbook";
 import NoClass from "@/features/class/NoClass";
 import ClassStudentList from "@/features/class/teacher/ClassStudentList";
 import ClassSummaryTeacher from "@/features/class/teacher/ClassSummaryTeacher";
-import { closeAllModal } from "@/stores/class/classModal";
+import { closeAllModal, hideClassDropdown } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
 import { Title } from "@/styles/text";
@@ -26,8 +26,12 @@ function TeacherClass() {
     dispatch(closeAllModal());
   }, []);
 
+  const hideDropdownHandler = () => {
+    dispatch(hideClassDropdown());
+  };
+
   return (
-    <FullScreen>
+    <FullScreen onClick={hideDropdownHandler}>
       <TeacherNav nowLocation={"class"} />
       <Container padding={3}>
         {nowClassId !== -1 ? (
