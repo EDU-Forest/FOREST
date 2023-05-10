@@ -61,6 +61,12 @@ const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: str
 
 const ClassSummaryTextWrapper = styled.div`
   ${flexBox("row", "center", "space-between")}
+
+  .hyper-text {
+    &:hover {
+      color: ${({ theme }) => theme.colors.Gray[600]};
+    }
+  }
 `;
 
 const ClassSummaryTextItem = styled.div`

@@ -9,6 +9,7 @@ const StyledNav = styled.div`
   background-color: white;
   .logo-img {
     width: 6rem;
+    cursor: pointer;
   }
 
   @media ${({ theme }) => theme.tablet} {
