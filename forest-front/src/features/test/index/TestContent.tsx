@@ -12,9 +12,9 @@ interface Iprops extends IStudyModal {
 export default function TestContent() {
   return (
     <StyledTestContent>
-      {/* <TestCanvas> */}
-      <Canvas />
-      {/* </TestCanvas> */}
+      <TestCanvas>
+        <Canvas />
+      </TestCanvas>
       <TestProblemBox />
       <TestAnswerBox />
     </StyledTestContent>

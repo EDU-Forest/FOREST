@@ -14,10 +14,6 @@ import { RootState } from "@/stores/store";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
 
-interface Iprops {
-  studentStudyProblemId: number;
-}
-
 export default function Canvas() {
   const dispatch = useDispatch();
   const canvasRef = createRef<ReactSketchCanvasRef>();
@@ -37,7 +33,7 @@ export default function Canvas() {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "70vw",
+    width: "72vw",
     height: "calc(100vh - 13.5rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
