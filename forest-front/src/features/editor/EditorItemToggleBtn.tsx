@@ -17,8 +17,8 @@ function EditorItemToggleBtn({ isCorrect, question, curItem }: IProps) {
   const dispatch = useDispatch();
 
   const { toChangeItem } = useEditor();
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   // 1 -> 텍스트 선택
   // 2 -> 이미지 선택

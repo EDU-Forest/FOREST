@@ -36,7 +36,7 @@ function WorkbookDetail() {
   const dispatch = useDispatch();
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
   const { isSuccess } = useWorkbookDetailQuery(Number(wId));
 
@@ -162,7 +162,7 @@ function WorkbookDetail() {
         <Toast>
           <AiOutlineShareAlt />
           <div>
-            <p>배포 완료</p>
+            <p>배포 완료되었습니다</p>
           </div>
         </Toast>
       )}

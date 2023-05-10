@@ -15,7 +15,7 @@ const reducers = combineReducers({
   class: classSlice,
   classModal: classModalSlice,
   exam: examSlice,
-  editQuestions: questionSlice,
+  editorQuestions: questionSlice,
   editorModal: editorModalSlice,
   editorWorkbook: editorWorkbookSlice,
   workbookDetail: workbookDetailSlice,

@@ -1,5 +1,5 @@
 import useEditor from "@/hooks/editor/useEditor";
-import { openWholePdfModal, openPartPdfModal } from "@/stores/editor/editorModal";
+import { openPartPdfModal, openWholePdfModal } from "@/stores/editor/editorModal";
 import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
@@ -27,8 +27,8 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
   const { toChangeQuestions } = useEditor();
 
   const goToDashboard = () => {

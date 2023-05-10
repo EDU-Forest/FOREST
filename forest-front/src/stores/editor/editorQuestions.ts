@@ -5,6 +5,9 @@ interface editorQuestions {
   questions: QuestionType[];
   curQuestion: number;
   deleteAnswers: number[];
+  isTitleValidConfirm: boolean;
+  isAnswerValidConfirm: boolean;
+  isPointValidConfirm: boolean;
 }
 
 const initialState: editorQuestions = {
@@ -50,6 +53,9 @@ const initialState: editorQuestions = {
   ],
   curQuestion: 1,
   deleteAnswers: [],
+  isTitleValidConfirm: false,
+  isAnswerValidConfirm: false,
+  isPointValidConfirm: false,
 };
 
 const questionSlice = createSlice({
@@ -74,6 +80,15 @@ const questionSlice = createSlice({
     setDeleteAnswers(state, action) {
       state.deleteAnswers = action.payload;
     },
+    setIsTitleValidConfirm(state, action) {
+      state.isTitleValidConfirm = action.payload;
+    },
+    setIsAnswerValidConfirm(state, action) {
+      state.isAnswerValidConfirm = action.payload;
+    },
+    setIsPointValidConfirm(state, action) {
+      state.isPointValidConfirm = action.payload;
+    },
   },
 });
 
@@ -84,6 +99,9 @@ export const {
   initDeleteAnswers,
   setCurQuestion,
   setDeleteAnswers,
+  setIsTitleValidConfirm,
+  setIsAnswerValidConfirm,
+  setIsPointValidConfirm,
 } = questionSlice.actions;
 
 export default questionSlice.reducer;

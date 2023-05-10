@@ -34,9 +34,10 @@ export const EditorQuestionNumbox = styled.div`
   color: white;
   font-size: 20px;
   font-weight: bold;
+  align-self: end;
 `;
 
-export const EditorNumAndPointBox = styled.label`
+export const EditorNumAndPointBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -52,7 +53,9 @@ export const EditorPointInput = styled(CommonInput)`
   padding: 0.25rem 0.5rem;
 `;
 
-export const EditorPointBox = styled.div``;
+export const EditorPointBox = styled.div`
+    margin-bottom: 4px;
+`;
 
 export const EditorQuestionTitleInput = styled.input`
   width: 100%;

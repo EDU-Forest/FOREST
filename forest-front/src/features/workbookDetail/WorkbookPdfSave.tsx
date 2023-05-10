@@ -18,7 +18,7 @@ interface IProps {
 }
 
 function WorkbookPdfSave({ setIsSavePdf }: IProps) {
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
   const patchEncodedPath = (url: string) => {

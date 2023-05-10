@@ -9,8 +9,8 @@ interface IItem {
 
 function useEditor() {
   const dispatch = useDispatch();
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   const toChangeQuestions = (key: string, value: any) => {
     const copyArr = [...questions];

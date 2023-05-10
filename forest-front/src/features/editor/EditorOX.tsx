@@ -1,8 +1,9 @@
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setIsAnswerValidConfirm, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ClassInputMsg } from "../class/teacher/AddClassModal.style";
 import { EditorOXAnswerBox, EditorOXBox } from "./EditorQuestionContent.style";
 
 interface IProps {
@@ -13,13 +14,19 @@ interface IProps {
 function EditorOX({ question, curQuestion }: IProps) {
   const dispatch = useDispatch();
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
-  const [answer, setAnswer] = useState("o");
+  const [answer, setAnswer] = useState("O");
 
   useEffect(() => {
     setAnswer(question.answer);
+    console.log(question.answer);
   }, [question]);
+
+  useEffect(() => {
+    dispatch(setIsAnswerValidConfirm(answer ? true : false));
+  }, [answer]);
 
   const handleClick = (answer: string) => {
     setAnswer(answer);
@@ -34,14 +41,17 @@ function EditorOX({ question, curQuestion }: IProps) {
   };
 
   return (
-    <EditorOXBox>
-      <EditorOXAnswerBox onClick={() => handleClick("o")} isAnswer={answer === "o"}>
-        O
-      </EditorOXAnswerBox>
-      <EditorOXAnswerBox onClick={() => handleClick("x")} isAnswer={answer === "x"}>
-        X
-      </EditorOXAnswerBox>
-    </EditorOXBox>
+    <>
+      <EditorOXBox>
+        <EditorOXAnswerBox onClick={() => handleClick("O")} isAnswer={answer === "O"}>
+          O
+        </EditorOXAnswerBox>
+        <EditorOXAnswerBox onClick={() => handleClick("X")} isAnswer={answer === "X"}>
+          X
+        </EditorOXAnswerBox>
+      </EditorOXBox>
+      {!isAnswerValidConfirm && <ClassInputMsg>정답을 선택하세요</ClassInputMsg>}
+    </>
   );
 }
 

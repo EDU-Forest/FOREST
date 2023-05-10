@@ -1,20 +1,26 @@
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setIsAnswerValidConfirm, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EditorShortAnswerBox } from "./EditorQuestionContent.style";
+import { ClassInputMsg } from "../class/teacher/AddClassModal.style";
 
 function EditorShortAnswer() {
   const dispatch = useDispatch();
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
+  const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
   const [answer, setAnswer] = useState("");
 
   useEffect(() => {
     setAnswer(questions[curQuestion - 1]?.answer);
   }, [questions[curQuestion - 1]]);
+
+  useEffect(() => {
+    dispatch(setIsAnswerValidConfirm(answer ? true : false));
+  }, [answer]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(e.target.value);
@@ -30,7 +36,13 @@ function EditorShortAnswer() {
 
   return (
     <EditorShortAnswerBox>
-      <input value={answer} placeholder="정답을 입력하세요" onChange={handleChange} />
+      <input
+        value={answer}
+        maxLength={100}
+        placeholder="정답을 입력하세요"
+        onChange={handleChange}
+      />
+      {!isAnswerValidConfirm && <ClassInputMsg>정답을 입력하세요</ClassInputMsg>}
     </EditorShortAnswerBox>
   );
 }

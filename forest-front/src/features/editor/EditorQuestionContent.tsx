@@ -1,8 +1,9 @@
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setIsTitleValidConfirm, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ClassInputMsg } from "../class/teacher/AddClassModal.style";
 import EditorEssay from "./EditorEssay";
 import EditorMultipleChoice from "./EditorMultipleChoice";
 import EditorOX from "./EditorOX";
@@ -39,9 +40,11 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
     itemList: [],
   });
 
-  const { questions } = useSelector((state: RootState) => state.editQuestions);
+  const { questions } = useSelector((state: RootState) => state.editorQuestions);
   // 현재 문항 번호
-  const { curQuestion } = useSelector((state: RootState) => state.editQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
+  const { isTitleValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
+  const { isPointValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
 
   useEffect(() => {
     // view 할 문항이 바뀌거나, 현재 문항에 변동이 있을 경우에만
@@ -51,6 +54,7 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
   useEffect(() => {
     // 현재 문항의 타이틀이 변경되면 타이틀을 초기화 또는 변경
     setTitle(question?.title);
+    dispatch(setIsTitleValidConfirm(question?.title ? true : false));
   }, [question?.title]);
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,9 +80,11 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
       <EditorQuestionContentBox>
         <EditorQuestionTitleInput
           value={title}
+          maxLength={30}
           placeholder="문제를 입력하세요"
           onChange={handleChangeTitle}
         />
+        {!isTitleValidConfirm && <ClassInputMsg>문제를 입력하세요</ClassInputMsg>}
         {/* 지문 여부에 따라 지문 렌더링 */}
         {!question?.textIsEmpty && <EditorQuestionTextInput question={question} />}
         {/* 이미지 여부에 따라 이미지 렌더링 */}

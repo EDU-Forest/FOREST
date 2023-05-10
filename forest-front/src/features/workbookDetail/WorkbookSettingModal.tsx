@@ -23,6 +23,8 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   const [endTime, setEndTime] = useState<string>();
   const [endDay, setEndDay] = useState<string>();
   const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
+  const [isTitleValidConfirm, setIsTitleValidConfirm] = useState(true);
+  const titleMaxCnt = 30;
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
@@ -36,6 +38,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSettingTitle(e.target.value);
+    setIsTitleValidConfirm(e.target.value ? true : false);
   };
 
   const handleClickCancel = () => {
@@ -96,6 +99,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
     <WorkbookSettingModalBox>
       <WorkbookSettingTitleInput
         value={settingTitle}
+        maxLength={titleMaxCnt}
         placeholder="제목을 입력해주세요"
         onChange={handleChangeTitle}
       ></WorkbookSettingTitleInput>
@@ -115,9 +119,9 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
       <ModalBtnsBox>
         <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
         <SmallBtn
-          onClick={() => isDateValidConfirm && handleClickSet()}
+          onClick={() => isDateValidConfirm && isTitleValidConfirm && handleClickSet()}
           colored={true}
-          disabled={!isDateValidConfirm}
+          disabled={!isDateValidConfirm || !isTitleValidConfirm}
         >
           출제
         </SmallBtn>
