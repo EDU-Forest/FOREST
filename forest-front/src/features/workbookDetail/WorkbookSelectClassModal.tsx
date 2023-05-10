@@ -8,7 +8,7 @@ import {
 } from "./WorkbookModal.style";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import { IClassList } from "@/types/ClassList";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ClassType {
   classId: number;
@@ -33,6 +33,7 @@ function WorkbookSelectClassModal({
   };
 
   const { data: classes = [classInit] } = useClassListQuery();
+  const [isSelectValidConfirm, setIsSlecteValidConfirm] = useState(true)
 
   const handleClickCancel = () => {
     setIsOpen(false);
@@ -51,7 +52,7 @@ function WorkbookSelectClassModal({
 
   const handleClickRegister = () => {
     // 한 개 이상의 클래스가 선택됐을 때만 등록 처리
-    if (selectedClass.length >= 1) {
+    if (isSelectValidConfirm) {
       setIsOpen(false);
       setIsSettingOpen(true);
     }
@@ -64,6 +65,10 @@ function WorkbookSelectClassModal({
   useEffect(() => {
     setSelectedClass([]);
   }, []);
+
+  useEffect(() => {
+    setIsSlecteValidConfirm(selectedClass.length >= 1 ? true : false);
+  }, [selectedClass])
 
   return (
     <WorkbookSelectClassModalBox>
@@ -87,7 +92,7 @@ function WorkbookSelectClassModal({
         <p>총 {selectedClass.length}개의 클래스가 선택되었습니다.</p>
         <ModalBtnsBox>
           <SmallBtn onClick={handleClickCancel}>취소</SmallBtn>
-          <SmallBtn onClick={handleClickRegister} colored={true}>
+          <SmallBtn onClick={handleClickRegister} colored={true} disabled={!isSelectValidConfirm}>
             등록
           </SmallBtn>
         </ModalBtnsBox>
