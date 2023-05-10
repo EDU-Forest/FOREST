@@ -222,7 +222,7 @@ const StyledTextBtn = styled.button<{ isValidFail?: boolean }>`
   }
 `;
 
-const StyledRoundSolid600Btn = styled.button`
+const StyledRoundSolid600Btn = styled.button<{ disabled?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -231,7 +231,8 @@ const StyledRoundSolid600Btn = styled.button`
   padding: 0.5rem 1rem;
   gap: 0.5rem;
 
-  background-color: ${({ theme }) => theme.colors.Lime[600]};
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.Gray[400] : theme.colors.Lime[600]};
   border-radius: 24px;
   border: none;
   color: white;
@@ -244,10 +245,10 @@ const StyledRoundSolid600Btn = styled.button`
   }
 
   :hover {
-    background-color: ${({ theme }) => theme.colors.Lime[700]};
+    background-color: ${({ theme, disabled }) => !disabled && theme.colors.Lime[700]};
   }
   :active {
-    background-color: ${({ theme }) => theme.colors.Lime[800]};
+    background-color: ${({ theme, disabled }) => !disabled && theme.colors.Lime[800]};
   }
 `;
 
