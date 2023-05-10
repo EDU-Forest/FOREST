@@ -29,7 +29,7 @@ function DashboardBanner() {
           </Title>
           <span>{cheerMsg?.content}</span>
         </div>
-        <Image src={role === "TEACHER" ? TeacherImg : StudentImg} alt="role" />
+        <Image src={role === "TEACHER" ? TeacherImg : StudentImg} alt="role" priority={true} />
       </StyledDashboardBanner>
     </div>
   );
