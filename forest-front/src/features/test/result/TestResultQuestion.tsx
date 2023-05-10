@@ -6,11 +6,11 @@ interface Iprops {
   studyResult: IStudyResult;
 }
 
-export default function TestResultQuestion({ studyResult }: Iprops) {
+export default function TestResultQuestion() {
   return (
     <TestResultQuestionBox>
       <TestResultTitleBox>문항별 정답 여부</TestResultTitleBox>
-      <TestResultContent studyResult={studyResult} />
+      <TestResultContent />
     </TestResultQuestionBox>
   );
 }

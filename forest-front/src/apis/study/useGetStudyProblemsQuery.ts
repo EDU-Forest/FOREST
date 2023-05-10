@@ -2,7 +2,7 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
-import { setStudyProblems } from "@/stores/exam/exam";
+import { setStudyProblems, setToggleModal } from "@/stores/exam/exam";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useRouter } from "next/router";
@@ -22,6 +22,7 @@ const useGetStudyProblems = (studyId: number) => {
     onSuccess: (data) => {
       console.log("dsdsd", data.data);
       dispatch(setStudyProblems(data.data));
+      dispatch(setToggleModal(false));
       // router.push(`/test/${studyId}`);
     },
     onError: (error) => {

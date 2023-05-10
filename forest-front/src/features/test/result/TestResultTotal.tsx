@@ -6,11 +6,11 @@ interface Iprops {
   studyResult: IStudyResult;
 }
 
-export default function TestResultTotal({ studyResult }: Iprops) {
+export default function TestResultTotal() {
   return (
     <TestResultTotalBox>
       <TestResultTotalTitleBox>시험 결과</TestResultTotalTitleBox>
-      <TestResultTotalContent studyResult={studyResult} />
+      <TestResultTotalContent />
     </TestResultTotalBox>
   );
 }

@@ -2,7 +2,9 @@ import { examState } from "@/types/Exam";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: examState = {
+  studyId: -1,
   isSubmitted: false,
+  isGraded: false,
   isEnded: false, // 시간
   isStarted: false,
   curProblemNum: 1,
@@ -99,6 +101,13 @@ const examSlice = createSlice({
     setPage(state, action) {
       state.page = action.payload;
     },
+    setTestStudyId(state, action) {
+      state.studyId = action.payload;
+    },
+    setResult(state, action) {
+      state.isSubmitted = action.payload.isSubmitted;
+      state.isGraded = action.payload.isGraded;
+    },
   },
 });
 
@@ -112,6 +121,8 @@ export const {
   setEndStudy,
   setToggleModal,
   setPage,
+  setTestStudyId,
+  setResult,
 } = examSlice.actions;
 
 export default examSlice.reducer;

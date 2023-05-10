@@ -1,5 +1,7 @@
 export interface examState {
+  studyId: number;
   isSubmitted: boolean;
+  isGraded: boolean;
   isEnded: boolean;
   isStarted: boolean;
   curProblemNum: number;

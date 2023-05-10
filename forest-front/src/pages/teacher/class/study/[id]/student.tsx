@@ -23,6 +23,7 @@ import {
   TestResultTotalContentBox,
   TestResultTotalTitleBox,
 } from "@/features/test/result/TextResult.style";
+import { IStudentStudyProblemResultList } from "@/types/Study";
 import { useRouter } from "next/router";
 
 interface ServerProps {
@@ -32,11 +33,6 @@ interface ServerProps {
     email: string;
     title: string;
   };
-}
-
-interface StudentStudyProblemResultList {
-  problemNum: number;
-  isCorrected: boolean;
 }
 
 export default function StudyAnalysisEachStudentPage({
@@ -111,7 +107,7 @@ export default function StudyAnalysisEachStudentPage({
             ) : (
               <TestResultContentBox>
                 {problem?.studentStudyProblemResultList.map(
-                  (item: StudentStudyProblemResultList) => (
+                  (item: IStudentStudyProblemResultList) => (
                     <TestResultQuestionBtn key={item.problemNum} isCorrect={item.isCorrected}>
                       {item.problemNum}
                     </TestResultQuestionBtn>

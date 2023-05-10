@@ -38,3 +38,8 @@ export interface IStudyTimeLimit {
   minutes: number;
   seconds: number;
 }
+
+export interface IStudentStudyProblemResultList {
+  problemNum: number;
+  isCorrected: boolean;
+}

@@ -9,7 +9,11 @@ import TestEnd from "@/features/test/index/TestEnd";
 import withAuth from "@/utils/auth/withAuth";
 import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 
-function Test({ studyId }: { studyId: number }) {
+interface Iprops {
+  studyId: number;
+}
+
+function Test({ studyId }: Iprops) {
   const { isSubmitted, toggleModal, isEnded } = useSelector((state: RootState) => state.exam);
   useGetStudyProblems(studyId);
 

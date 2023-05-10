@@ -2,20 +2,22 @@ import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
 import TestHeader from "@/features/test/index/TestHeader";
 import TestResultSection from "@/features/test/result/TestResultSection";
 import { ResultContainer } from "@/features/test/result/TextResult.style";
-import { setPage } from "@/stores/exam/exam";
+import { setPage, setTestStudyId } from "@/stores/exam/exam";
 import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-function Result() {
-  const router = useRouter();
+interface Iprops {
+  studyId: number;
+}
+
+function Result({ studyId }: Iprops) {
   const dispatch = useDispatch();
-  const studyId = router.query.studyId;
-  useGetStudyProblems(typeof studyId === "string" ? parseInt(studyId) : -1);
 
   useEffect(() => {
     dispatch(setPage("result"));
+    dispatch(setTestStudyId(studyId));
   }, []);
 
   return (
@@ -28,8 +30,8 @@ function Result() {
 
 export default withAuth(Result);
 
-export async function getServerSideProps({ params: { id } }: { params: { id: string } }) {
+export async function getServerSideProps({ params: { studyId } }: { params: { studyId: string } }) {
   return {
-    props: {},
+    props: { studyId: parseInt(studyId) },
   };
 }
