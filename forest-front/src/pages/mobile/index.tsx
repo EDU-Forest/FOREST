@@ -1,7 +1,7 @@
 import Lottie from "react-lottie-player";
 import sorryFolksJson from "../../../public/lottieJson/sorryFolks.json";
 import { CSSProperties } from "react";
-import { MobileBox, MobileLayout } from "./Mobile.style";
+import { MobileBox, MobileLayout } from "../../features/mobile/Mobile.style";
 
 export default function Mobile() {
   const sorryFolksStyle: CSSProperties = {
