@@ -2,6 +2,7 @@ import EditorNav from "@/components/Nav/EditorNav";
 import {
   EditorBtnsAndListBox,
   EditorContainer,
+  EditorFullScreen,
   EditorTitleAndQuestionBox,
 } from "@/features/editor/Editor.style";
 import EditorBtns from "@/features/editor/EditorBtns";
@@ -43,6 +44,8 @@ function Editor() {
   const { isMoveToEditor } = useSelector((state: RootState) => state.workbookDetail);
   const {} = useSelector((state: RootState) => state.editorWorkbook);
 
+  const [controlDropdown, setControlDropdown] = useState<boolean>(false);
+
   useGetWorkbooksBySelf();
 
   const { refetch: getWorkbookApi } = useWorkbookDetailQuery(
@@ -65,13 +68,17 @@ function Editor() {
     getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
 
+  const hideDropdownHandler = () => {
+    setControlDropdown(false);
+  };
+
   return (
-    <FullScreen>
+    <EditorFullScreen onClick={hideDropdownHandler}>
       <EditorNav setSelectQuestionType={setSelectQuestionType} />
       {isOpenAddWorkbookModal && <AddWorkbookModal />}
       <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
-          <EditorTitle />
+          <EditorTitle controlDropdown={controlDropdown} setControlDropdown={setControlDropdown} />
           <QuestionEditArea selectQuestionType={selectQuestionType} />
         </EditorTitleAndQuestionBox>
         <EditorBtnsAndListBox>
@@ -81,7 +88,7 @@ function Editor() {
         {isOpenWholePdfModal && <ImportingWholeModal />}
         {isOpenPartPdfModal && <ImportingPartModal />}
       </EditorContainer>
-    </FullScreen>
+    </EditorFullScreen>
   );
 }
 

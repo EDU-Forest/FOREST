@@ -48,7 +48,7 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
 
   const handleClickCopy = () => {
     // copy api call
-    copyWorkbookApiCall()
+    copyWorkbookApiCall();
   };
 
   const handleClickExport = () => {
