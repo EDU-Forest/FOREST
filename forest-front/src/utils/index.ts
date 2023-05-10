@@ -22,3 +22,12 @@ export const secondToMinute = (time: number) => {
   const second = String(Math.floor(time % 60));
   return `${minute.padStart(2, "0")} 분 ${second.padStart(2, "0")} 초`;
 };
+
+// 8자 이후로 줄임말(...) 처리
+export const textFormatter = (text: string) => {
+  if (text.length <= 8) {
+    return text;
+  } else {
+    return text.slice(0, 8) + "...";
+  }
+};
