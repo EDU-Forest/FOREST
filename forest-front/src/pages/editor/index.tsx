@@ -29,6 +29,7 @@ import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 import withAuth from "@/utils/auth/withAuth";
 import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
 import useEditorSave from "@/hooks/editor/useEditorSave";
+import { setCloseEditor } from "@/stores/editor/editorModal";
 
 function Editor() {
   const dispatch = useDispatch();
@@ -58,6 +59,10 @@ function Editor() {
     const workbookId = workbook.workbookId;
     const title = workbook.title;
     isMoveToEditor && dispatch(setSelectWorkbook({ workbookId, title }));
+
+    return () => {
+      dispatch(setCloseEditor());
+    };
   }, []);
 
   useEffect(() => {
@@ -80,7 +85,12 @@ function Editor() {
       {isOpenAddWorkbookModal && <AddWorkbookModal />}
       <EditorContainer isEditor>
         <EditorTitleAndQuestionBox>
-          <EditorTitle editorSave={editorSave} isSuccess={isSuccess} controlDropdown={controlDropdown} setControlDropdown={setControlDropdown} />
+          <EditorTitle
+            editorSave={editorSave}
+            isSuccess={isSuccess}
+            controlDropdown={controlDropdown}
+            setControlDropdown={setControlDropdown}
+          />
           <QuestionEditArea selectQuestionType={selectQuestionType} />
         </EditorTitleAndQuestionBox>
         <EditorBtnsAndListBox>
