@@ -864,6 +864,9 @@ public class StudyService {
                 if (!studyProblemResult.getIsGraded())
                     ungradeNum++;
             }
+            if (studentStudyProblemResult.size() == 0) {
+                throw new CustomException(StudyErrorCode.STUDY_NONE_STUDENT);
+            }
             int correctRate = correctNum * 100 / studentStudyProblemResult.size();
             int ungradeRate = ungradeNum * 100 / studentStudyProblemResult.size();
             /* 반 문항별 정답율 업데이트 */
@@ -879,6 +882,9 @@ public class StudyService {
         List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
         List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
 
+        if (studentStudyResults.size() == 0 || classUser.size() == 0) {
+            throw new CustomException(StudyErrorCode.STUDY_NONE_STUDENT);
+        }
         int participateNum = studentStudyResults.size();
         int takeRate = participateNum * 100 / classUser.size();
         int sumScore = 0;
