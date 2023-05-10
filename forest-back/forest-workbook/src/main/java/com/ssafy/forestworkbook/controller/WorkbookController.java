@@ -198,10 +198,11 @@ public class WorkbookController {
         return workbookService.createProblemImg(userId, file);
     }
 
-    @PostMapping ("/ocr/img")
+    @PostMapping ("/ocr/img/{workbookId}")
     @ApiOperation(value = "이미지 ocr", notes = "이미지를 대상으로 OCR을 실시합니다.")
     public ResponseSuccessDto<?> ocrImg(
             HttpServletRequest request,
+            @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
@@ -211,10 +212,11 @@ public class WorkbookController {
         return workbookService.ocrImg(userId, file);
     }
 
-    @PostMapping ("/ocr/pdf")
+    @PostMapping ("/ocr/pdf/{workbookId}")
     @ApiOperation(value = "pdf ocr", notes = "pdf를 대상으로 OCR을 실시합니다.")
     public ResponseSuccessDto<?> ocrPdf (
             HttpServletRequest request,
+            @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
         JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
