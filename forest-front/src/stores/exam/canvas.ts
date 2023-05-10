@@ -28,7 +28,7 @@ const canvasSlice = createSlice({
     },
     closeCanvas(state) {
       state.isOpenCanvas = false;
-      state.paths = [];
+      // state.paths = [];
     },
     setStudentStudyProblemId(state, action) {
       state.studentStudyProblemId = action.payload;

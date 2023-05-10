@@ -14,20 +14,15 @@ const fetcher = (studentStudyProblemId: number) =>
 const useCanvasRecordQuery = (studentStudyProblemId: number, isOpenCanvas: boolean) => {
   const dispatch = useDispatch();
   return useQuery(
-    [queryKeys.CANVAS_RECORD, studentStudyProblemId],
+    [queryKeys.CANVAS_RECORD, studentStudyProblemId, isOpenCanvas],
     () => fetcher(studentStudyProblemId),
     {
       refetchOnWindowFocus: false,
       enabled: !!studentStudyProblemId && !!isOpenCanvas,
+      cacheTime: 0,
       onSuccess: (record) => {
         console.log("성공!", record);
         dispatch(setPaths(record.line));
-      },
-      onError(err) {
-        console.log("실패했어", err);
-      },
-      onSettled(data, error) {
-        console.log("보낼것임다");
       },
     },
   );

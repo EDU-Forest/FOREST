@@ -37,12 +37,9 @@ export default function TestProblemBox() {
   const dispatch = useDispatch();
   const studyId = router.query?.studyId;
   const { mutate } = useSaveAnswer();
-  const { mutate: canvasMutate } = useCanvasPost();
-  const { paths, isOpenCanvas } = useSelector((state: RootState) => state.canvas);
   const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
   const { type, studentStudyProblemId, userAnswer, problemAnswer, text, problemImgPath } =
     problem[curProblemNum - 1];
-  // const { data: record } = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas);
 
   const payload = {
     studyId: typeof studyId === "string" ? parseInt(studyId) : -1,
@@ -62,32 +59,15 @@ export default function TestProblemBox() {
   const goToPrevProblem = () => {
     if (curProblemNum === 1) return;
     mutate(payload);
-    // if (paths.length > 0) {
-    //   const canvasPayload = {
-    //     studentStudyProblemId: studentStudyProblemId,
-    //     line: paths,
-    //   };
-    //   canvasMutate(canvasPayload);
-    // }
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum - 1 }));
     dispatch(closeCanvas());
-    dispatch(clearPaths());
   };
 
   const goToNextProblem = () => {
     if (curProblemNum === problem.length) return;
     mutate(payload);
-    // if (paths.length > 0) {
-    //   const canvasPayload = {
-    //     studentStudyProblemId: studentStudyProblemId,
-    //     line: paths,
-    //   };
-    //   canvasMutate(canvasPayload);
-    // }
-
     dispatch(setCurProblemNum({ curProblemNum: curProblemNum + 1 }));
     dispatch(closeCanvas());
-    dispatch(clearPaths());
   };
 
   return (

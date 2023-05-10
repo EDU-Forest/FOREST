@@ -7,7 +7,6 @@ import {
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setChooseAnswer } from "@/stores/exam/exam";
-import { IStudyTimeLimit } from "@/types/Study";
 
 interface Iprops {
   idx: number;

@@ -3,19 +3,17 @@ import { ProblemNumTd, StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
-
-interface Iprops {
-  minutes: number;
-  seconds: number;
-}
+import { closeCanvas } from "@/stores/exam/canvas";
 
 export default function TestAnswerTable() {
   const { curProblemNum, problem, isSubmitted } = useSelector((state: RootState) => state.exam);
-  const { userAnswer, problemAnswer } = problem[curProblemNum - 1];
+
   const dispatch = useDispatch();
 
   const changeCurProblemNum = (idx: number) => {
     dispatch(setCurProblemNum({ curProblemNum: idx }));
+
+    dispatch(closeCanvas());
   };
 
   return (

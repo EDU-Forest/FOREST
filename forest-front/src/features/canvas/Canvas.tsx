@@ -27,6 +27,7 @@ export default function Canvas() {
   } = useCanvasRecordQuery(studentStudyProblemId, isOpenCanvas);
 
   // console.log("record", record, "isSuccess", isSuccess, "isLoading", isLoading);
+  // console.log("paths", paths);
 
   const { mutate: canvasMutate } = useCanvasPost();
   const [nowTab, setNowTab] = useState<string>("");
@@ -95,6 +96,12 @@ export default function Canvas() {
   };
 
   useEffect(() => {
+    if (isSuccess && record) {
+      canvasRef.current?.loadPaths(record.line);
+    }
+  }, [isSuccess, record]);
+
+  useEffect(() => {
     if (!isOpenCanvas) {
       if (paths?.length > 0) {
         const canvasPayload = {
@@ -104,13 +111,8 @@ export default function Canvas() {
         canvasMutate(canvasPayload);
       }
     }
+  }, [isOpenCanvas]);
 
-    if (!isLoading && record) {
-      canvasRef.current?.loadPaths(record?.line);
-    }
-  }, [isOpenCanvas, isLoading]);
-
-  // console.log("isLoading", isLoading);
   return (
     <>
       <CanvasBar
