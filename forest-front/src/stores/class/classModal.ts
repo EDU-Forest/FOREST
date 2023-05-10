@@ -56,6 +56,9 @@ const classModalSlice = createSlice({
       state.isOpenAddStudentModal = false;
       state.isOpenDeleteStudentModal = false;
     },
+    hideClassDropdown(state) {
+      state.isOpenDropdown = false;
+    },
   },
 });
 
@@ -68,6 +71,7 @@ export const {
   openDeleteStudentModal,
   closeDeleteStudentModal,
   closeAllModal,
+  hideClassDropdown,
 } = classModalSlice.actions;
 
 export default classModalSlice.reducer;

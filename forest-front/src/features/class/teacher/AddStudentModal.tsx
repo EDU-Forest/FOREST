@@ -33,7 +33,7 @@ export default function AddStudentModal() {
   const [studentList, setStudentList] = useState<IStudent[]>([]);
   const { mutate } = useClassStudentAdd();
 
-  const searchList: IStudent[] = useSearchClassStudentQuery(inputValue, classId).data;
+  const { data: searchList } = useSearchClassStudentQuery(inputValue, classId);
 
   useEffect(() => {
     if (studentList.length > 0) {
@@ -71,7 +71,6 @@ export default function AddStudentModal() {
       studentList: newList,
     };
 
-    console.log(payload);
     mutate(payload);
   };
 
@@ -84,7 +83,7 @@ export default function AddStudentModal() {
           <AiOutlineClose />
         </ClassStudentDeleteIcon>
       </div>
-      {searchList?.length > 0 && (
+      {searchList && searchList?.length > 0 && (
         <ClassStudentAddDropdown>
           <ClassStudentAddDropdownEach>
             {searchList?.map((item) => (

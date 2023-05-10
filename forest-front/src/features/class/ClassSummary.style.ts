@@ -37,8 +37,19 @@ const ClassSummaryItemWrapperNoResult = styled.div`
   color: ${({ theme }) => theme.colors.Lime[700]};
 `;
 
-const ClassSummaryItemWrapper = styled.div`
+const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: string }>`
   ${flexBox("row", "center", "space-between")}
+  position: relative;
+
+  ${({ isFinished, userRole }) =>
+    userRole === "TEACHER" &&
+    !isFinished &&
+    css`
+      div:nth-child(n + 2) {
+        filter: blur(5px);
+        -webkit-filter: blur(5px);
+      }
+    `}
 
   @media ${({ theme }) => theme.tablet} {
     ${flexBox("column", "center", "center")}
@@ -50,6 +61,12 @@ const ClassSummaryItemWrapper = styled.div`
 
 const ClassSummaryTextWrapper = styled.div`
   ${flexBox("row", "center", "space-between")}
+
+  .hyper-text {
+    &:hover {
+      color: ${({ theme }) => theme.colors.Gray[600]};
+    }
+  }
 `;
 
 const ClassSummaryTextItem = styled.div`
@@ -186,6 +203,31 @@ const ClassLabelBox = styled.div<{ page: string }>`
   text-align: center;
 `;
 
+const ClassSummaryItemSubmitBox = styled.div`
+  margin-top: 1rem;
+  border-radius: 1rem;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  background-color: ${({ theme }) => theme.colors.Gray[100]};
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 99;
+
+  button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &:hover {
+      background-color: ${({ theme }) => theme.colors.Lime[800]};
+      border: 1px solid ${({ theme }) => theme.colors.Lime[800]};
+    }
+  }
+`;
+
 export {
   ClassSummaryTitle,
   ClassSummaryWrapper,
@@ -205,4 +247,5 @@ export {
   ClassSummaryValue,
   ClassSummaryIcon,
   ClassLabelBox,
+  ClassSummaryItemSubmitBox,
 };

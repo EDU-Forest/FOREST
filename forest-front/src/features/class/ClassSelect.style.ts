@@ -9,6 +9,11 @@ const ClassSelectedTitle = styled.div`
   font-weight: 700;
   height: 1.5rem;
   line-height: 1.5rem;
+  display: flex;
+
+  p {
+    cursor: pointer;
+  }
 
   .icon {
     font-size: 1.375rem;

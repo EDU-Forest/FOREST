@@ -8,10 +8,10 @@ import {
   StyledMemoListItemBox,
   StyledMemoListItemTopBox,
 } from "./Memo.style";
-import { Memo } from "@/types/Memo";
+import Loading from "@/components/Loading/Loading";
 
 function MemoList() {
-  const memoList: Memo[] = useMemoListQuery().data;
+  const { data: memoList, isLoading } = useMemoListQuery();
   const { mutate } = useMemoDelete();
 
   const handleResize = (): void => {
@@ -37,17 +37,23 @@ function MemoList() {
 
   return (
     <StyledMemoListBox>
-      {memoList?.map((item) => {
-        return (
-          <StyledMemoListItemBox key={item.memoId} className="item">
-            <StyledMemoListItemTopBox>
-              <span>{arrangeDate(item.createdDate)}</span>
-              <button onClick={() => deleteMemo(item.memoId)}>삭제</button>
-            </StyledMemoListItemTopBox>
-            <MemoContentText>{item.content}</MemoContentText>
-          </StyledMemoListItemBox>
-        );
-      })}
+      {isLoading ? (
+        <Loading width={10} height={10} />
+      ) : (
+        <>
+          {memoList?.map((item) => {
+            return (
+              <StyledMemoListItemBox key={item.memoId} className="item">
+                <StyledMemoListItemTopBox>
+                  <span>{arrangeDate(item.createdDate)}</span>
+                  <button onClick={() => deleteMemo(item.memoId)}>삭제</button>
+                </StyledMemoListItemTopBox>
+                <MemoContentText>{item.content}</MemoContentText>
+              </StyledMemoListItemBox>
+            );
+          })}
+        </>
+      )}
     </StyledMemoListBox>
   );
 }

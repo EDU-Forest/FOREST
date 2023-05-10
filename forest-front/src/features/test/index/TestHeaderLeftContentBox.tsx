@@ -13,10 +13,15 @@ interface Iprops {
 export default function TestHeaderLeftContentBox({ page, isEnded, setToggleModal }: Iprops) {
   const { studyName } = useSelector((state: RootState) => state.exam);
   const router = useRouter();
+  const { role } = useSelector((state: RootState) => state.user);
 
   const clickHandler = () => {
     setToggleModal && setToggleModal(true);
     // router.push(`/test/${router.query.studyId}/info`);
+  };
+
+  const goToDashBoard = () => {
+    router.push(`/${role.toLowerCase()}/dashboard`);
   };
 
   return (
@@ -25,7 +30,7 @@ export default function TestHeaderLeftContentBox({ page, isEnded, setToggleModal
       {page !== "result" && !isEnded ? (
         <AiOutlineArrowLeft className="icon" onClick={clickHandler} />
       ) : (
-        <img src={"/images/Forest_Logo.png"} className="logo-img" />
+        <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goToDashBoard} />
       )}
       <StyledTestHeaderTitle>{studyName}</StyledTestHeaderTitle>
     </StyledTestHeaderContentBox>

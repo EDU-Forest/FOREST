@@ -57,6 +57,7 @@ const StyledTestHeaderContentBox = styled.div`
 
   .logo-img {
     width: 5rem;
+    cursor: pointer;
   }
 `;
 
@@ -193,6 +194,8 @@ const StyledTestAnswerTable = styled.table`
   }
 
   tr {
+    cursor: pointer;
+
     td {
       padding: 0.75rem;
       overflow: hidden;
@@ -203,6 +206,12 @@ const StyledTestAnswerTable = styled.table`
 
     & td:nth-child(2) {
       background-color: white;
+    }
+
+    &:hover {
+      td:first-child {
+        background-color: ${({ theme }) => theme.colors.Lime[300]};
+      }
     }
   }
 `;
@@ -416,6 +425,7 @@ const TestProblemContentBox = styled.div`
 `;
 
 const TestProblemImgBox = styled.div`
+  padding: 2rem;
   text-align: center;
 
   img {

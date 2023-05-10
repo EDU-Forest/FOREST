@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import {
   ClassSummaryDeadline,
+  ClassSummaryItemSubmitBox,
   ClassSummaryItemWrapper,
   ClassSummaryItemWrapperNoResult,
   ClassSummaryText,
@@ -19,14 +20,21 @@ import { RootState } from "@/stores/store";
 import useStudyResultQuery from "@/apis/class/teacher/useStudyResultQuery";
 import arrangeDate from "@/utils/arrangeDate";
 import Loading from "@/components/Loading/Loading";
+import CommonBtn from "@/components/Button/CommonBtn";
+import useExamFinish from "@/apis/class/analysis/useExamFinish";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
   const { data, isLoading } = useStudyResultQuery(nowStudyId);
+  const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
     router.push(`/teacher/class/study/${studyId}`);
+  };
+
+  const endTestHandler = () => {
+    mutate(nowStudyId);
   };
 
   return (
@@ -42,7 +50,7 @@ export default function ClassSummaryTeacher() {
               <ClassSummaryTitle>{data?.title}</ClassSummaryTitle>
               <WorkbookStatus status={data?.scheduleType} />
             </ClassSummaryTextItem>
-            {data?.scheduleType === "AFTER" && (
+            {data?.scheduleType === "AFTER" && data?.isFinished && (
               <ClassSummaryText
                 isGray
                 style={{ cursor: "pointer", margin: "0px" }}
@@ -58,7 +66,14 @@ export default function ClassSummaryTeacher() {
           )}
 
           {data?.scheduleType === "AFTER" ? (
-            <ClassSummaryItemWrapper>
+            <ClassSummaryItemWrapper userRole="TEACHER" isFinished={data?.isFinished}>
+              {!isLoading && !data?.isFinished && (
+                <ClassSummaryItemSubmitBox>
+                  <CommonBtn colored onClick={endTestHandler}>
+                    시험 종료
+                  </CommonBtn>
+                </ClassSummaryItemSubmitBox>
+              )}
               <ClassWorkbookInfo
                 studyCreatedDate={data?.studyCreatedDate}
                 studyType={data?.studyType}
