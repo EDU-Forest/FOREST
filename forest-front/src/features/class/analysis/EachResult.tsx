@@ -12,7 +12,7 @@ import {
 import { AnalysisSubTitle } from "./StudyAnalysis.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import useStudentAnsweRate from "@/apis/class/analysis/useStudentAnsweRate";
+import useStudentAnswerRate from "@/apis/class/analysis/useStudentAnswerRate";
 import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
 import { StudentStudyResultList } from "@/types/StudentStudyResultList";
@@ -24,7 +24,7 @@ interface Iprops {
 export default function EachResult({ goToGrade }: Iprops) {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
 
-  const { data: studentStudyResultList, isLoading } = useStudentAnsweRate(nowStudyId);
+  const { data: studentStudyResultList, isLoading } = useStudentAnswerRate(nowStudyId);
 
   const correctColor = (correctRate: number) => {
     if (correctRate < 50) {
