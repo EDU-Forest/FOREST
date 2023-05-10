@@ -16,11 +16,16 @@ export default function ClassSelect({ isStudent }: Iprops) {
 
   const { nowClassName, nowClassId } = useSelector((state: RootState) => state.class);
 
+  const controlClassDropdownHandler = (e: React.MouseEvent<HTMLElement | SVGElement>) => {
+    e.stopPropagation();
+    dispatch(controlClassDropdown());
+  };
+
   return (
     <ClassSelectWrapper>
       <ClassSelectedTitle>
-        {nowClassName}
-        <AiFillCaretDown onClick={() => dispatch(controlClassDropdown())} className="icon" />
+        <p onClick={controlClassDropdownHandler}>{nowClassName}</p>
+        <AiFillCaretDown onClick={controlClassDropdownHandler} className="icon" />
       </ClassSelectedTitle>
       {isOpenDropdown && <ClassSelectDropdown nowClassId={nowClassId} isStudent={isStudent} />}
     </ClassSelectWrapper>
