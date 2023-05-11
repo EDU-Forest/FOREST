@@ -67,4 +67,8 @@ public class StudentStudyProblemResult {
         this.isCorrected = isCorrected;
         this.isGraded = isGraded;
     }
+
+    public void updateisGraded(){
+        this.isGraded = true;
+    }
 }

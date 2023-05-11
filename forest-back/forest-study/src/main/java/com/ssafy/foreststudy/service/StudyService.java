@@ -644,8 +644,13 @@ public class StudyService {
             if (ssp.getIsCorrected())
                 correctNum++;
 
-            if (!ssp.getIsGraded())
-                check = false;
+            if (!ssp.getIsGraded()) {
+                if (!ssp.getProblemList().getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT)) {
+                    ssp.updateisGraded();
+                } else {
+                    check = false;
+                }
+            }
 
             scoreSum += ssp.getPartPoint();
         }
@@ -909,8 +914,9 @@ public class StudyService {
         }
         double average = sumScore * 1.0 / participateNum;
         double dis = 0;
-        for (StudentStudyResult ssr : studentStudyResults)
+        for (StudentStudyResult ssr : studentStudyResults) {
             dis += Math.pow(average - ssr.getScore(), 2);
+        }
 
         double standardDeviation = Math.sqrt(dis / participateNum);
         long averageSolvingTime = solvingTime / participateNum;
@@ -931,11 +937,11 @@ public class StudyService {
                 .message("학습 종료")
                 .build();
 
-        if(ungradedAnswerRate !=0)
+        if (ungradedAnswerRate != 0)
             return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_EXIST_DESCRIPT);
-        else{
+        else {
             /* 채점 목록이 없으면 */
-            
+
             return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SUCCESS_EXIT);
         }
     }
