@@ -31,9 +31,9 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   const { data, mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
 
   const types = [
+    { value: "exam", text: "시험" },
     { value: "self", text: "자습" },
     { value: "homework", text: "과제" },
-    { value: "exam", text: "시험" },
   ];
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {
