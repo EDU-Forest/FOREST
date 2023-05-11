@@ -168,8 +168,10 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
         }
 
-        ClassWorkbookListDto classWorkbookListDto = new ClassWorkbookListDto(classWorkbookDtoList);
-        return responseUtil.successResponse(classWorkbookListDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+        Map<String, List<ClassWorkbookDto>> map = new HashMap<>();
+        map.put("workbookList", classWorkbookDtoList);
+
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -851,13 +853,13 @@ public class WorkbookServiceImpl implements WorkbookService {
 //        String filePath = "gs://" + path;
         // 제임스 씨 심경 변화
 //        String filePath = "gs://forest_ocr_bucket/3be855d6-446e-4355-9a3a-fb01f33e5806";
-        // 어법상 틀린 거 - 항목 안됨
-//        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
-        // 34번 - 항목 안됨
-        String filePath = "gs://forest_ocr_bucket/81420e6d-704a-424d-a803-a13404347e6a";
+         // 어법상 틀린 거 - 항목 안됨
+        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
+        // 34번
+//        String filePath = "gs://forest_ocr_bucket/81420e6d-704a-424d-a803-a13404347e6a";
         // 제목으로 적절한거
 //        String filePath = "gs://forest_ocr_bucket/75662be8-23e7-4d29-af0f-102af8376313";
-        // 주제
+        // 주제 - 곧 죽어도 안됨
 //        String filePath = "gs://forest_ocr_bucket/d27c5102-6cf7-4448-8281-5669a762aadc";
 
 //        detectLocalizedObjectsGcs(filePath);
@@ -874,7 +876,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
             BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
             List<AnnotateImageResponse> responses = response.getResponsesList();
-            ArrayList<Object> originList = new ArrayList<>();
 
             String[] txt = null;
             for (AnnotateImageResponse res : responses) {
@@ -884,26 +885,18 @@ public class WorkbookServiceImpl implements WorkbookService {
                 }
 
 //                System.out.format("Text: %s%n", res.getTextAnnotationsList().get(0).getDescription());
-                txt = res.getTextAnnotationsList().get(0).getDescription().toString().split("\\n");;
+                txt = res.getTextAnnotationsList().get(0).getDescription().split("\\n");;
             }
-
-            int j = 0;
-
-            boolean isMultiple = false;
-            boolean isTitle = false;
-            boolean isText = false;
-            boolean isItemEnd = false;
-            int maxlength = 0;
-            int point = 0;
-
-            StringBuilder title = new StringBuilder();
-            StringBuilder text = new StringBuilder();
-            List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
             // 이미지 OCR 내용 읽기 실패
             if (txt == null) {
                 throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
             }
+
+            StringBuilder title = new StringBuilder();
+            StringBuilder text = new StringBuilder();
+            List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
+            List<ItemResExceptIdDto> tempItemResExceptIdDtoList = new ArrayList<>();
 
             boolean checkNum = false;
             boolean checkTitle = false;
@@ -914,6 +907,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             int ocrNum = 0;
             int ocrPoint = 0;
+            int midCount = 0;
 
             // 한 줄씩 확인
             for (int i = 0; i < txt.length; i++) {
@@ -945,12 +939,12 @@ public class WorkbookServiceImpl implements WorkbookService {
                         if (!checkTitle && temp.substring(endIndex).trim().substring(0, 1).matches("^[a-zA-Z]*$")) {
                             checkTitle = true;
                             System.out.println(temp.substring(endIndex).trim());
-                            text.append(temp.substring(endIndex).trim());
+                            text.append(temp.substring(endIndex).trim()).append(" ");
                         }
 
                         // title
                         else if (temp.substring(endIndex).trim().substring(0, 1).matches("^[가-힣]*$")) {
-                            title.append(temp.substring(endIndex).trim().substring(0));
+                            title.append(temp.substring(endIndex).trim().substring(0)).append(" ");
 
                             // 문제 유형 확인
                             if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
@@ -970,7 +964,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     // 번호 없음
                     else if (temp.trim().substring(0, 1).matches("^[가-힣a-zA-Z]*$")) {
-                        title.append(temp.trim());
+                        title.append(temp.trim()).append(" ");
                         if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
                             checkMultiple = true;
                             checkTitle = true;
@@ -984,8 +978,27 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     // 문장에 숫자 포함 여부
                     if (checkTitle && temp.matches(".*[0-9].*")) {
+                        String intStr = temp.replaceAll("[^0-9]", "");
+                        String indexInt = temp.replaceAll("[^0-9]", "_");
+                        System.out.println(indexInt);
+                        System.out.println(temp.lastIndexOf("[^0-9]"));
+                        System.out.println("_-------------");
+                        System.out.println(temp.split("[^0-9]"));
+                        System.out.println(intStr);
+                        System.out.println(intStr.length() == 1);
+                        if (intStr.length() == 1) {
+                            midCount++;
 
-                        // 그냥 숫자인지 항목인지 판단하고 multiple 만 처리 해주자
+                            if (title.toString().contains("밑줄")) {
+
+                            }
+                            ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                    .content(temp.substring(0).trim())
+                                    .isImage(false)
+                                    .build();
+                            tempItemResExceptIdDtoList.add(itemResExceptIdDto);
+                        }
+                        System.out.println("중간에 숫자 잇듬");
                     }
 
                     // 배점 확인
@@ -996,23 +1009,29 @@ public class WorkbookServiceImpl implements WorkbookService {
                         ocrPoint = Integer.parseInt(temp.substring(start+1, end-endPoint));
                         checkPoint = true;
                         checkText = true;
+                        temp = temp.substring(0, start).trim();
+                        System.out.println(temp);
                     }
-                    text.append(temp);
+
+                    text.append(temp).append(" ");
 
                     // 점수 인식 안되는 경우 항목 확인
                     if (checkMultiple && txt.length - i <= 6) {
-                        if (i + 1 < temp.length() && temp.charAt(temp.length() - 1) == '.'
-                                && txt[i+1].trim().substring(0, 1).matches("^[가-힣a-zA-Z]*$")) {
+                        if (i + 1 < txt.length && temp.charAt(temp.length() - 1) == '.'
+                                && (txt[i+1].trim().substring(0, 1).matches("^[가-힣a-zA-Z]*$"))) {
+                            checkText = true;
+                        } else if (i + 2 < txt.length && temp.charAt(temp.length() - 1) == '.' &&
+                                (txt[i + 1].trim().substring(0, 1).matches("^[0-9]*$") || txt[i + 2].trim().substring(0, 1).matches("^[0-9]*$"))) {
                             checkText = true;
                         }
                     }
                 }
 
                 // 항목 확인
-                else if (checkTitle && checkText && checkNum && checkMultiple) {
+                else if (checkTitle && checkText && checkNum) {
                     System.out.println("항목일걸");
                     if (temp.substring(0, 1).equals("*")) {
-                        text.append(temp);
+                        text.append(temp).append(" ");
                     }
                     else if (temp.substring(0, 1).matches("^[0-9]*$")
                             || (itemResExceptIdDtoList.size() == 0 ? !checkItem : checkItem)) {
@@ -1030,8 +1049,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                         checkMultiple = true;
                     }
                 }
+            }
 
-
+            if (midCount >= 2) {
+                System.out.println("후후후");
+                itemResExceptIdDtoList.addAll(tempItemResExceptIdDtoList);
             }
 
             ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
@@ -1044,6 +1066,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .itemList(itemResExceptIdDtoList)
                     .point(ocrPoint)
                     .build();
+
+            Map<String, ProblemOcrDto> map = new HashMap<>();
+            map.put("problem", problemOcrDto);
 
             return responseUtil.successResponse(problemOcrDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
         } catch (IOException e) {

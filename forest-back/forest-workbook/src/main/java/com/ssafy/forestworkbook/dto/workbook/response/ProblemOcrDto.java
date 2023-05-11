@@ -21,6 +21,7 @@ public class ProblemOcrDto {
     private boolean textIsEmpty;
     private int point;
     private List<ItemResExceptIdDto> itemList;
+
     @Builder
     public ProblemOcrDto(EnumProblemTypeStatus type, String title, String text, boolean textIsEmpty, int point, String problemImgPath, boolean imgIsEmpty, List<ItemResExceptIdDto> itemList) {
         this.type = type;
