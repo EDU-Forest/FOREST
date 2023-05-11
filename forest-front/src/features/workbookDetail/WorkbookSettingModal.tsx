@@ -18,7 +18,7 @@ interface IProps {
 
 function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess }: IProps) {
   const [settingTitle, setSettingTitle] = useState(title);
-  const [type, setType] = useState<string>("self");
+  const [type, setType] = useState<string>("exam");
   const [startTime, setStartTime] = useState<string>(getCurTimeToString());
   const [startDay, setStartDay] = useState<string>(getCurDayToString());
   const [endTime, setEndTime] = useState<string>(getCurTimeToString());
@@ -33,8 +33,8 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
 
   const types = [
     { value: "exam", text: "시험" },
-    { value: "self", text: "자습" },
     { value: "homework", text: "과제" },
+    { value: "self", text: "자습" },
   ];
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>): void => {

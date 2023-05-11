@@ -1,13 +1,14 @@
 import { useDispatch } from "react-redux";
 import {
+  FinishLoading,
   ImportingModalInsideLine,
   ImportingModalWrapper,
   PdfViewerXmark,
 } from "./ImportingModal.style";
 import { HiXMark } from "react-icons/hi2";
 import FileInput from "@/components/Input/FileInput";
-import { closeWholePdfModal } from "@/stores/editor/editorModal";
-import { useState } from "react";
+import { closeWholePdfModal, setFinish } from "@/stores/editor/editorModal";
+import { useEffect, useState } from "react";
 import {
   StyledFileInput,
   StyledFileInputLabel,
@@ -18,13 +19,20 @@ import CommonBtn from "@/components/Button/CommonBtn";
 import usePdfOCR from "@/apis/editor/usePdfOCR";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import Loading from "@/components/Loading/Loading";
 
 export default function ImportingWholeModal() {
   const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
+  const { isFinished } = useSelector((state: RootState) => state.editorModal);
+
   const dispatch = useDispatch();
   const { mutate } = usePdfOCR();
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [targetFile, setTargetFile] = useState<File>();
+
+  useEffect(() => {
+    dispatch(setFinish(false));
+  }, []);
 
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     //파일 업로드
@@ -32,7 +40,6 @@ export default function ImportingWholeModal() {
       setTargetFile(e.target.files[0]);
       setIsSuccess(true);
       const fileName = e.target.files[0].name;
-      console.log(e.target.files[0]);
     }
   };
 
@@ -40,12 +47,12 @@ export default function ImportingWholeModal() {
     if (targetFile) {
       let formData = new FormData();
       formData.append("file", targetFile as File);
-      console.log("dlrp Wld", formData.get("file"));
       const payload = {
         curWorkbookId,
         file: formData,
       };
       mutate(payload);
+      dispatch(setFinish(true));
     }
   };
 
@@ -79,6 +86,11 @@ export default function ImportingWholeModal() {
           </StyledFileSelectedName>
         )}
       </ImportingModalInsideLine>
+      {isFinished && (
+        <FinishLoading>
+          <Loading width={12} height={12} />
+        </FinishLoading>
+      )}
     </ImportingModalWrapper>
   );
 }

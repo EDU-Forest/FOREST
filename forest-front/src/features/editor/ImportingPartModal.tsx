@@ -9,11 +9,7 @@ import ImportingModalPdfViewer from "./ImportingModalPdfViewer";
 import { useDispatch } from "react-redux";
 import { HiXMark } from "react-icons/hi2";
 import { closePartPdfModal, setFinish } from "@/stores/editor/editorModal";
-import ImgCropper from "./ImgCropper";
 import ImportingModalImgViewer from "./ImportingModalImgViewer";
-import Loading from "@/components/Loading/Loading";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 
 export default function ImportingPartModal() {
   const dispatch = useDispatch();

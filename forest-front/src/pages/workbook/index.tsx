@@ -17,12 +17,7 @@ function Workbook() {
   const [hasNextPage, setNextPage] = useState(true);
   const [list, setList] = useState<WorkbookType[]>([]);
 
-  const {
-    data: { workbookList } = { workbookList: [] },
-    data,
-    refetch,
-    isSuccess,
-  } = useWorkbookListQuery(selectedType, page, 15);
+  const { data, refetch, isSuccess } = useWorkbookListQuery(selectedType, page, 15);
 
   useEffect(() => {
     const container: HTMLElement | null = document.getElementById("workbook-container");
@@ -58,8 +53,8 @@ function Workbook() {
 
   useEffect(() => {
     // 기존 리스트 + 무한 스크롤로 불러온 새 리스트
-    setList([...list, ...workbookList]);
-  }, [workbookList]);
+    data && setList([...list, ...data?.workbookList]);
+  }, [data?.workbookList]);
 
   useEffect(() => {
     // 새로운 데이터의 응답이 성공일 때마다 업데이트
