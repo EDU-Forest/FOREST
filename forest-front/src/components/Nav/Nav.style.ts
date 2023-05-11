@@ -24,7 +24,6 @@ const TeacherNavDiv = styled.div`
   position: absolute;
   top: 50%;
   transform: translate(0%, -50%);
-  cursor: pointer;
 `;
 
 const StudentNavDiv = styled.div`
@@ -39,6 +38,7 @@ const NavInner = styled.div<{ selected: boolean }>`
   ${flexBox("row", "center", "start")};
   width: 14rem;
   height: 5rem;
+  cursor: pointer;
 
   .icon {
     font-size: 2.5rem;
@@ -118,8 +118,9 @@ const EditorNavDiv = styled.div`
     width: 100%;
     margin: 0;
     /* margin-bottom: 1.5rem; */
-    padding: 1rem;
+    padding: 0.75rem 1rem;
     cursor: pointer;
+    font-size: 0.875rem;
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.Gray[100]};

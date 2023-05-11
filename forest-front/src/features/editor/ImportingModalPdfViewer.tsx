@@ -47,7 +47,8 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
 
   const selectSection = () => {
     setSelect(!select);
-    pdfjs.getDocument(pdfFile).promise.then(pdfToImage);
+    // pdfjs.getDocument(pdfFile).promise.then(pdfToImage);
+    svgToImg();
   };
 
   // 캔버스를 이미지 URL로 변경
@@ -73,6 +74,51 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
     console.log("ㅎㅎ");
   };
 
+  const [imgSection, setImgSection] = useState<HTMLCollectionOf<Element>>();
+
+  const svgToImg = async () => {
+    // const svg = document.getElementsByTagName("svg");
+    // const s = new XMLSerializer().serializeToString(document.getElementById("svg") as Node);
+    // const encodedData = window.btoa(s);
+    // const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
+    // console.log("dataUrl", dataUrl);
+
+    const svg = document.querySelector("svg");
+    const $svg = document.querySelectorAll("svg");
+    console.log("하...///", svg);
+    console.log(typeof $svg);
+    // console.log();
+
+    const idx = $svg.length;
+    console.log(idx);
+    const pdfSvg = $svg[idx - 1];
+    console.log("이거,,,pdfSvg /// ", pdfSvg);
+    const pdfSvgData = new XMLSerializer().serializeToString(pdfSvg);
+    console.log("pdfSvgData ??? ", pdfSvgData);
+
+    // const encodedData = window.btoa(unescape(encodeURIComponent(pdfSvgData)));
+    const encodedData = window.btoa(encodeURI(pdfSvgData));
+    const dd = window.atob(encodedData);
+    console.log("dd", dd);
+
+    console.log("encodedData", encodedData);
+    const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
+    console.log("dataUrl", dataUrl);
+
+    setPageImage(dataUrl);
+
+    // const data = new XMLSerializer().serializeToString(pdfSvg);
+    // if (svg) {
+    //   const data = new XMLSerializer().serializeToString(svg);
+    //   console.log("data ???", data);
+    //   const encodedData = window.btoa(data);
+    //   console.log("encode", encodedData);
+    //   const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
+    //   console.log("dataUrl", dataUrl);
+    //   setPageImage(dataUrl);
+    // }
+  };
+
   return (
     <>
       <PdfViewerPageController>
@@ -93,7 +139,8 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
         <Document
           file={pdfFile}
           onLoadSuccess={onDocumentLoadSuccess}
-          options={{ workerSrc: "/pdf.worker.js" }}
+          // options={{ workerSrc: "/pdf.worker.js" }}
+          renderMode={"svg"}
         >
           <Page pageNumber={pageNumber} />
         </Document>
@@ -106,6 +153,8 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
           선택 완료
         </CommonBtn>
       </PdfViewerBtnWrapper>
+      {pageImage && <img src={pageImage} alt="" style={{ width: "200px", height: "200px" }} />}
+      {/* {select && <ImgCropperTest imageData={imgSection} />} */}
       {select && <ImgCropper imageData={pageImage} />}
     </>
   );

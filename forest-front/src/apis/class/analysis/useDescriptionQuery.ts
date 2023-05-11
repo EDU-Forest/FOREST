@@ -9,11 +9,15 @@ interface Description {
 }
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/descript/${studyId}`).then(({ data }) => {
-    // const descript = data.data as Description;
-    // return descript;
-    return data;
-  });
+  studyAxios
+    .get(`/api/study/descript/${studyId}`, {
+      timeout: 100000,
+    })
+    .then(({ data }) => {
+      // const descript = data.data as Description;
+      // return descript;
+      return data;
+    });
 
 const useDescriptionQuery = (studyId: number) => {
   return useQuery([queryKeys.DESCRIPTION, studyId], () => fetcher(studyId), {

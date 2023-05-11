@@ -39,14 +39,22 @@ const ClassSummaryItemWrapperNoResult = styled.div`
   color: ${({ theme }) => theme.colors.Lime[700]};
 `;
 
-const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: string }>`
+const ClassSummaryItemWrapper = styled.div<{
+  isFinished?: boolean;
+  userRole: string;
+  isStarted?: boolean;
+}>`
   ${flexBox("row", "center", "space-between")}
 
-  ${({ isFinished, userRole }) =>
+  &.before-study-start {
+    ${positionCenter()}
+  }
+
+  ${({ isFinished, userRole, isStarted }) =>
     userRole === "TEACHER" &&
     !isFinished &&
     css`
-      div:nth-child(n + 1) {
+      .class-summary-items {
         filter: blur(5px);
         -webkit-filter: blur(5px);
       }
@@ -180,6 +188,14 @@ const ClassSummaryText = styled.p<{ isGray?: boolean; isGreen?: boolean }>`
   }
 `;
 
+const WarningIcon = styled.span`
+  font-size: 1.125rem;
+  vertical-align: text-top;
+  margin: 0 0.5rem;
+  /* color: ${({ theme }) => theme.colors.Orange[600]}; */
+  color: red;
+`;
+
 const ClassSummaryValue = styled.div`
   text-align: left;
   width: 6rem;
@@ -253,4 +269,5 @@ export {
   ClassSummaryIcon,
   ClassLabelBox,
   ClassSummaryItemSubmitBox,
+  WarningIcon,
 };

@@ -33,7 +33,7 @@ export default function ClassWorkbookInfo({
     }
   };
   return (
-    <SummaryItemWrapper>
+    <SummaryItemWrapper className="class-summary-items">
       <ClassSummarySubTitle noMargin={noMargin}>문제집 정보</ClassSummarySubTitle>
       <WorkbookInfo>
         <ClassSummaryTextWrapper>

@@ -17,8 +17,8 @@ export default function TestEndModal() {
   const dispatch = useDispatch();
   const studyId = router.query.studyId;
 
-  const { mutate: endStudy } = useEndStudy();
-  const { mutate: saveAnswer } = useSaveAnswer();
+  const { mutate: endStudy, isSuccess: endSuccess } = useEndStudy();
+  const { mutate: saveAnswer, isSuccess: saveSuccess } = useSaveAnswer();
 
   const { paths } = useSelector((state: RootState) => state.canvas);
   const { problem, curProblemNum } = useSelector((state: RootState) => state.exam);
@@ -56,10 +56,21 @@ export default function TestEndModal() {
     }
 
     saveAnswer(payload);
-    endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
+
     setToggleModal(false);
-    router.push(`/test/${router.query.studyId}/result`);
   };
+
+  useEffect(() => {
+    if (saveSuccess) {
+      endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
+    }
+  }, [saveSuccess]);
+
+  useEffect(() => {
+    if (endSuccess) {
+      router.push(`/test/${router.query.studyId}/result`);
+    }
+  }, [endSuccess]);
 
   return (
     <TestEndModalBox>

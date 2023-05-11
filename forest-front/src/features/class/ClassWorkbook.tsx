@@ -32,7 +32,7 @@ export default function ClassWorkbook() {
 
   return (
     <ClassWorkbookWrapper>
-      <WorkbookTab children="자율" selected={isSelf} space={32} onClick={changeTab} type={"self"} />
+      <WorkbookTab children="시험" selected={isExam} space={32} onClick={changeTab} type={"exam"} />
       <WorkbookTab
         children="과제"
         selected={isHomework}
@@ -40,7 +40,7 @@ export default function ClassWorkbook() {
         onClick={changeTab}
         type={"homework"}
       />
-      <WorkbookTab children="시험" selected={isExam} space={32} onClick={changeTab} type={"exam"} />
+      <WorkbookTab children="자습" selected={isSelf} space={32} onClick={changeTab} type={"self"} />
       <ClassWorkbookList type={type} />
     </ClassWorkbookWrapper>
   );

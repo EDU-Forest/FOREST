@@ -19,7 +19,7 @@ function Toast({ icon, title, subtitle, isOpen, setIsOpen }: IProps) {
   }, [isOpen]);
 
   return (
-    <ToastBox>
+    <ToastBox isOpen={isOpen}>
       {icon && icon}
       <div>
         {subtitle && <p>{subtitle}</p>}

@@ -11,26 +11,27 @@ import {
   LoginErrorMsg,
   LoginLabelBox,
 } from "./Home.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CommonInput } from "@/components/Input/Input.style";
 import { checkEmail } from "@/utils";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useRouter } from "next/router";
 import useLogin from "@/apis/auth/useLoginQuery";
 import Label from "@/components/Label/Label";
+import Toast from "@/components/Toast/Toast";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
-export default function Login() {
+interface Iprops {
+  setIsError: (isError: boolean) => void;
+}
+
+export default function Login({ setIsError }: Iprops) {
   const router = useRouter();
-  const { mutate } = useLogin();
-  const [emailErrorMsg, setEmailErrorMsg] = useState("");
-  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
+  const { mutate } = useLogin(setIsError);
   const [validation, setValidation] = useState({
     email: "",
     password: "",
   });
-
-  // 로그인 에러 시 사용
-  const [loginErrorMsg, setLoginErrorMsg] = useState("");
 
   // 서버 응답에 대한 에러 메세지
   // const [validErrorMsg, setValidErrorMsg] = useState("");
@@ -48,23 +49,7 @@ export default function Login() {
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!userData.email) {
-      setEmailErrorMsg("이메일은 필수 입력 사항입니다.");
-      return;
-    } else if (!checkEmail(userData.email)) {
-      setEmailErrorMsg("잘못된 이메일 형식입니다.");
-      return;
-    } else {
-      setEmailErrorMsg("");
-    }
-
-    if (!userData.password) {
-      setPasswordErrorMsg("비밀번호는 필수 입력 사항입니다.");
-      return;
-    }
-
-    setEmailErrorMsg("");
-    setPasswordErrorMsg("");
+    loginValidator();
     mutate(userData);
   };
 
@@ -87,6 +72,29 @@ export default function Login() {
     setValidation({
       ...validation,
       password: userData.password.trim() ? "pass" : "fail",
+    });
+  };
+
+  const loginValidator = () => {
+    if (!checkEmail(userData.email.trim())) {
+      setValidation({
+        ...validation,
+        email: "fail",
+      });
+      return;
+    }
+
+    if (!userData.password.trim()) {
+      setValidation({
+        ...validation,
+        password: "fail",
+      });
+      return;
+    }
+
+    setValidation({
+      email: "pass",
+      password: "pass",
     });
   };
 
@@ -133,7 +141,6 @@ export default function Login() {
           </LoginLabelBox>
         </LoginInputBox>
       </LoginContentBox>
-      {loginErrorMsg && <LoginErrorMsg>{loginErrorMsg}</LoginErrorMsg>}
       <LoginHr />
       <LoginSubmitBox>
         <SmallBtn colored>확인</SmallBtn>

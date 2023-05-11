@@ -236,8 +236,10 @@ export const StyledWorkbookQuestionMoveBarListBox = styled.div`
 
   gap: 1rem;
 
-  overflow: auto;
-  ${scrollBar(0.75)};
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>`

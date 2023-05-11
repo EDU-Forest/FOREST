@@ -242,10 +242,25 @@ export const WorkbookSettingModalTimeBox = styled.div<{ disabled: boolean }>`
   }
 `;
 
-export const NotOriginalParagraph = styled.p`
+export const NotOriginalBox = styled.div`
+  display: flex;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.Orange[100]};
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
   color: ${({ theme }) => theme.colors.Orange[900]};
   font-size: 0.875rem;
+
+  svg {
+    font-size: 1.25rem;
+    margin-right: 0.5rem;
+  }
+`;
+
+export const NoClassBox = styled.div`
+  text-align: center;
+
+  p {
+    padding: 0.5rem;
+  }
 `;

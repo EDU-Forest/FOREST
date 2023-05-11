@@ -47,18 +47,17 @@ export const StyledStatusNotification = styled.div`
   }
 `;
 
-export const StyledScheduleItem = styled.div<{ isLast?: boolean }>`
+export const StyledScheduleItem = styled.div<{ isLast?: boolean; clickable?: boolean }>`
   margin: 1rem 0.5rem;
-
+  cursor: ${({ clickable }) => clickable && "pointer"};
   ${({ isLast }) =>
     !isLast &&
     css`
       border-bottom: 0.0625rem solid ${({ theme }) => theme.colors.Gray[400]};
       padding-bottom: 1rem;
     `}
-
   // 기간
-  > span {
+    > span {
     color: ${({ theme }) => theme.colors.Gray[500]};
   }
 `;

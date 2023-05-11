@@ -22,7 +22,7 @@ function Workbook() {
     data,
     refetch,
     isSuccess,
-  } = useWorkbookListQuery(selectedType, page, 8);
+  } = useWorkbookListQuery(selectedType, page, 15);
 
   useEffect(() => {
     const container: HTMLElement | null = document.getElementById("workbook-container");
