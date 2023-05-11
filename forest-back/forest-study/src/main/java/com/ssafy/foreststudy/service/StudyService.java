@@ -846,6 +846,15 @@ public class StudyService {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
+        List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
+        List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
+        if (studentStudyResults.size() == 0 || classUser.size() == 0) {
+            PostResponseDto postResponseDto = PostResponseDto.builder()
+                    .message("학습 종료 - 학습에 참여한 학생이 없습니다")
+                    .build();
+            return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_NONE_STUDENT);
+        }
+
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
 
         LocalDateTime now = LocalDateTime.now();
@@ -879,13 +888,6 @@ public class StudyService {
             if (list.getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
                 descriptNum++;
 
-        }
-
-        List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
-        List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
-
-        if (studentStudyResults.size() == 0 || classUser.size() == 0) {
-            throw new CustomException(StudyErrorCode.STUDY_NONE_STUDENT);
         }
         int participateNum = studentStudyResults.size();
         int takeRate = participateNum * 100 / classUser.size();
