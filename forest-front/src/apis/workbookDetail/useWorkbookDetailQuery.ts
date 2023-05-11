@@ -14,7 +14,8 @@ const useWorkbookDetailQuery = (wId: number) => {
   const dispatch = useDispatch();
 
   return useQuery([queryKeys.GET_WORKBOOK_DETAIL, wId], () => fetcher(wId), {
-    enabled: !!wId && wId !== -1,
+    // enabled: !!wId && wId !== -1,
+    enabled: false,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       console.log("wId 테스트", wId, typeof wId, !!wId && wId !== -1);
