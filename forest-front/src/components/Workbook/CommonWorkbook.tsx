@@ -55,12 +55,20 @@ export default function CommonWorkbook({
     }
   };
 
+  const titleFormatter = (title: string) => {
+    if (title.length <= 6) {
+      return title;
+    } else {
+      return title.slice(0, 6) + "...";
+    }
+  };
+
   return (
     <WorkbookCard>
       {workbookImgPath ? (
         <WorkbookImgBox>
           <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
-          <p>{title}</p>
+          <p>{titleFormatter(title)}</p>
         </WorkbookImgBox>
       ) : (
         <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
