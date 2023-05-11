@@ -72,9 +72,15 @@ function Editor() {
     }
   }, []);
 
+  // useEffect(() => {
+  //   getWorkbookApi();
+  // }, [curWorkbookId, workbook.workbookId]);
+
   useEffect(() => {
-    getWorkbookApi();
-  }, [curWorkbookId, workbook.workbookId]);
+    if (curWorkbookId !== -1) {
+      getWorkbookApi();
+    }
+  }, [curWorkbookId]);
 
   useEffect(() => {
     setIsSaveSuccess(isSuccess);
