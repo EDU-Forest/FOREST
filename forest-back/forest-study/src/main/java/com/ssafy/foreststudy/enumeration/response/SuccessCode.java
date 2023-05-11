@@ -38,7 +38,8 @@ public enum SuccessCode {
     STUDY_ONGOING(HttpStatus.OK,"시험이 진행 중입니다"),
     STUDY_SUBMIT_ALREADY(HttpStatus.OK,"이미 제출하셨습니다"),
     STUDY_NOT_YET(HttpStatus.OK,"시작하지 않은 시험입니다"),
-    STUDY_NOT_PARTICIPATE(HttpStatus.OK,"참여하지 않은 시험입니다");
+    STUDY_NOT_PARTICIPATE(HttpStatus.OK,"참여하지 않은 시험입니다"),
+    STUDY_NONE_STUDENT(HttpStatus.OK,"학습에 참여한 학생이 없습니다");
 
 
     private final HttpStatus status;
