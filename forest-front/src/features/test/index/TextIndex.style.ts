@@ -253,6 +253,7 @@ const StyledTestProblemShortAnswer = styled.input`
   height: 3.5rem;
   line-height: 3.5rem;
   padding: 0rem 1.5rem;
+  margin: 2rem 0rem;
   background-color: ${({ theme }) => theme.colors.Gray[50]};
   border: none;
   border-radius: 0.5rem;
@@ -272,6 +273,7 @@ const StyledTestProblemEssayAnswer = styled.textarea`
   width: 100%;
   height: 11.5rem;
   padding: 1.5rem;
+  margin: 2rem 0rem;
   background-color: ${({ theme }) => theme.colors.Gray[50]};
   border: none;
   border-radius: 0.5rem;

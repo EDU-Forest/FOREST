@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { WorkbookSettingModalBox, WorkbookSettingTitleInput } from "./WorkbookModal.style";
 import WorkbookSettingModalInputs from "./WorkbookSettingModalInputs";
 import WorkbookSettingModalTypeSelect from "./WorkbookSettingModalTypeSelect";
+import { getCurDayToString, getCurTimeToString } from "@/utils/date";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,17 +19,17 @@ interface IProps {
 function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess }: IProps) {
   const [settingTitle, setSettingTitle] = useState(title);
   const [type, setType] = useState<string>("self");
-  const [startTime, setStartTime] = useState<string>();
-  const [startDay, setStartDay] = useState<string>();
-  const [endTime, setEndTime] = useState<string>();
-  const [endDay, setEndDay] = useState<string>();
+  const [startTime, setStartTime] = useState<string>(getCurTimeToString());
+  const [startDay, setStartDay] = useState<string>(getCurDayToString());
+  const [endTime, setEndTime] = useState<string>(getCurTimeToString());
+  const [endDay, setEndDay] = useState<string>(getCurDayToString());
   const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
   const [isTitleValidConfirm, setIsTitleValidConfirm] = useState(true);
   const titleMaxCnt = 30;
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
-  const { data, mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
+  const { mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
 
   const types = [
     { value: "self", text: "자습" },
@@ -70,7 +71,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
     const end = new Date(`${endDay}T${endTime}`);
 
     const isAfterToday = (day: Date) => {
-      return today <= day;
+      return new Date(today).getTime() <= new Date(day).getTime() + 1000 * 60;
     };
 
     switch (type) {
@@ -87,6 +88,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   };
 
   useEffect(() => {
+    console.log(startDay, startTime, endDay, endTime);
     dateValidTest();
   }, [startDay, startTime, endDay, endTime, type]);
 

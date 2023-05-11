@@ -31,14 +31,18 @@ function WorkbookExportRadio({
   }, []);
 
   return (
-    <WorkbookExportRadioLabel isChecked={thisValue === value} isDisabled={!isOriginal}>
+    <WorkbookExportRadioLabel
+      isChecked={thisValue === value}
+      isDisabled={!isOriginal && thisValue === "release"}
+    >
       <input
         type="radio"
         name="export"
         value={thisValue}
         defaultChecked={isDefault}
         onChange={handleChange}
-        disabled={!isOriginal || (thisValue === "release" && isDeploy)}
+        // disabled={!isOriginal || (thisValue === "release" && isDeploy)}
+        disabled={!isOriginal && thisValue === "release"}
       />
       {img}
       {text}

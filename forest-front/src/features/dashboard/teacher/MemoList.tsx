@@ -1,5 +1,6 @@
 import useMemoDelete from "@/apis/dashboard/useMemoDelete";
 import useMemoListQuery from "@/apis/dashboard/useMemoListQuery";
+import Loading from "@/components/Loading/Loading";
 import arrangeDate from "@/utils/arrangeDate";
 import { useEffect } from "react";
 import {
@@ -8,7 +9,6 @@ import {
   StyledMemoListItemBox,
   StyledMemoListItemTopBox,
 } from "./Memo.style";
-import Loading from "@/components/Loading/Loading";
 
 function MemoList() {
   const { data: memoList, isLoading } = useMemoListQuery();
@@ -19,6 +19,16 @@ function MemoList() {
     document.querySelectorAll<HTMLElement>(".item").forEach((item: HTMLElement) => {
       item.style.gridRowEnd = `span ${item.clientHeight + 20}`;
     });
+  };
+
+  const getRandomTime = (): number => {
+    // 최소 0.1 ~ 최대 2
+    return Math.random() * (1.5 - 0.1) + 0.1;
+  };
+
+  const getRandomColor = (): number => {
+    // 최소 1 ~ 최대 3
+    return Math.floor(Math.random() * 3) + 1;
   };
 
   useEffect(() => {
@@ -43,7 +53,12 @@ function MemoList() {
         <>
           {memoList?.map((item) => {
             return (
-              <StyledMemoListItemBox key={item.memoId} className="item">
+              <StyledMemoListItemBox
+                key={item.memoId}
+                className="item"
+                randomTime={getRandomTime()}
+                randomColor={getRandomColor()}
+              >
                 <StyledMemoListItemTopBox>
                   <span>{arrangeDate(item.createdDate)}</span>
                   <button onClick={() => deleteMemo(item.memoId)}>삭제</button>

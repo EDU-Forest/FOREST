@@ -24,6 +24,7 @@ import Loading from "@/components/Loading/Loading";
 import CommonBtn from "@/components/Button/CommonBtn";
 import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
+import { isStarted } from "@/utils/date";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function ClassSummaryTeacher() {
         </ClassSummaryWrapper>
       ) : (
         <ClassSummaryWrapper>
-          {!isLoading && !result?.data?.isFinished && (
+          {!result?.data?.isFinished && isStarted(result?.data?.startTime) && (
             <ClassSummaryItemSubmitBox>
               <CommonBtn colored onClick={endTestHandler}>
                 시험 종료
@@ -76,33 +77,41 @@ export default function ClassSummaryTeacher() {
             )}
           </ClassSummaryTextWrapper>
           {result?.data.studyType !== "SELF" && (
-            <ClassSummaryDeadline>~ {arrangeDate(result?.data.endTime)}</ClassSummaryDeadline>
+            <ClassSummaryDeadline>
+              {arrangeDate(result?.data.startTime)} ~ {arrangeDate(result?.data.endTime)}
+            </ClassSummaryDeadline>
           )}
 
-          <ClassSummaryItemWrapper userRole="TEACHER" isFinished={result?.data.isFinished}>
-            <ClassWorkbookInfo
-              studyCreatedDate={result?.data.studyCreatedDate}
-              studyType={result?.data.studyType}
-              volume={result?.data.volume}
-              isPublic={result?.data.isPublic}
-            />
-            <TotalResult
-              average={result?.data.average}
-              standardDeviation={result?.data.standardDeviation}
-              averageSolvingTime={result?.data.averageSolvingTime}
-            />
-            {result?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
-              <TakeRateChart
-                totalStudent={result?.data.totalStudent}
-                participantStudent={result?.data.participantStudent}
-                takeRate={result?.data.takeRate}
+          {!isStarted(result?.data?.startTime) ? (
+            <ClassSummaryItemWrapper userRole="TEACHER" className="before-study-start">
+              <ClassSummaryItemWrapperNoResult>시험 시작 전입니다.</ClassSummaryItemWrapperNoResult>
+            </ClassSummaryItemWrapper>
+          ) : (
+            <ClassSummaryItemWrapper userRole="TEACHER" isFinished={result?.data.isFinished}>
+              <ClassWorkbookInfo
+                studyCreatedDate={result?.data.studyCreatedDate}
+                studyType={result?.data.studyType}
+                volume={result?.data.volume}
+                isPublic={result?.data.isPublic}
               />
-            ) : (
-              <>
-                <TakeRateChart totalStudent={0} participantStudent={0} takeRate={0} />
-              </>
-            )}
-          </ClassSummaryItemWrapper>
+              <TotalResult
+                average={result?.data.average}
+                standardDeviation={result?.data.standardDeviation}
+                averageSolvingTime={result?.data.averageSolvingTime}
+              />
+              {result?.status === "STUDY_SUCCESS_INFO_AFTER" ? (
+                <TakeRateChart
+                  totalStudent={result?.data.totalStudent}
+                  participantStudent={result?.data.participantStudent}
+                  takeRate={result?.data.takeRate}
+                />
+              ) : (
+                <>
+                  <TakeRateChart totalStudent={0} participantStudent={0} takeRate={0} />
+                </>
+              )}
+            </ClassSummaryItemWrapper>
+          )}
         </ClassSummaryWrapper>
       )}
     </>

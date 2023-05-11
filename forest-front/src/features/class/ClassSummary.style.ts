@@ -39,14 +39,22 @@ const ClassSummaryItemWrapperNoResult = styled.div`
   color: ${({ theme }) => theme.colors.Lime[700]};
 `;
 
-const ClassSummaryItemWrapper = styled.div<{ isFinished?: boolean; userRole: string }>`
+const ClassSummaryItemWrapper = styled.div<{
+  isFinished?: boolean;
+  userRole: string;
+  isStarted?: boolean;
+}>`
   ${flexBox("row", "center", "space-between")}
 
-  ${({ isFinished, userRole }) =>
+  &.before-study-start {
+    ${positionCenter()}
+  }
+
+  ${({ isFinished, userRole, isStarted }) =>
     userRole === "TEACHER" &&
     !isFinished &&
     css`
-      div:nth-child(n + 1) {
+      .class-summary-items {
         filter: blur(5px);
         -webkit-filter: blur(5px);
       }

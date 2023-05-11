@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const StyledMemoUploadInputBox = styled.div`
   display: flex;
@@ -53,16 +53,39 @@ export const StyledMemoListBox = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-export const StyledMemoListItemBox = styled.div`
+const bubble = keyframes`
+  0% {
+    transform: translateY(-10%);
+    opacity: 0.5;
+  }
+  60% {
+    transform: translateY(5%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+export const StyledMemoListItemBox = styled.div<{ randomTime: number; randomColor: number }>`
   padding: 16px;
 
-  background-color: ${({ theme }) => theme.colors.Lime[100]};
+  background-color: ${({ theme, randomColor }) =>
+    randomColor === 1
+      ? theme.colors.Lime[100]
+      : randomColor === 2
+      ? theme.colors.Lime[200]
+      : randomColor === 3 && theme.colors.Lime[300]};
   border-radius: 16px;
 
   height: fit-content;
 
   padding: 16px;
   margin: 10px;
+
+  animation: ${bubble} ${({ randomTime }) => randomTime}s ease;
+  animation-fill-mode: forwards;
 `;
 
 export const StyledMemoListItemTopBox = styled.div`
