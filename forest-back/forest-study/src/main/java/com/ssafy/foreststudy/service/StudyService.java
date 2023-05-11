@@ -397,9 +397,9 @@ public class StudyService {
                 .solvingTime(duration.getSeconds() / 60) // 소요 풀이 시간 분 단위로 보냄
                 .correctRate(cs.getCorrectRate())
                 .isGraded(cs.getIsGraded())
-                .volume(cs.getStudy().getWorkbook().getVolume())
-                .startTime(cs.getStudy().getStartTime())
-                .endTime(cs.getStudy().getEndTime())
+                .volume(study.getWorkbook().getVolume())
+                .startTime(study.getStartTime())
+                .endTime(study.getEndTime())
                 .isSubmitted(cs.getIsSubmitted())
                 .build();
 
