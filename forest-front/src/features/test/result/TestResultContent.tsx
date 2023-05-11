@@ -7,19 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
 import { useRouter } from "next/router";
 import useGetQuestionAnswer from "@/apis/study/useGetQuestionAnswerQuery";
-import { IStudyResult } from "@/types/Study";
 import { RootState } from "@/stores/store";
-
-interface Iprops {
-  studyResult: IStudyResult;
-}
 
 export default function TestResultContent() {
   const dispatch = useDispatch();
   const router = useRouter();
   const { studyId, isSubmitted, isGraded } = useSelector((state: RootState) => state.exam);
 
-  // const [questionResult, setQuestionResult] = useState<IQuestionResult[]>([]);
   const { data: questionResult } = useGetQuestionAnswer(studyId);
 
   const goToProblem = (idx: number) => {

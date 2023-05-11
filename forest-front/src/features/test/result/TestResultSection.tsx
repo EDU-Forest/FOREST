@@ -4,10 +4,8 @@ import TestResultTotal from "./TestResultTotal";
 import { TestResultOkBtn, TestResultSectionBox } from "./TextResult.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { useDispatch } from "react-redux";
 
 export default function TestResultSection() {
-  const dispatch = useDispatch();
   const router = useRouter();
   const { role } = useSelector((state: RootState) => state.user);
 

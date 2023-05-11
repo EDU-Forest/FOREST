@@ -2,20 +2,12 @@ import TestResultTotalContentDetail from "./TestResultTotalContentDetail";
 import TestResultTotalContentGraph from "./TestResultTotalContentGraph";
 import { TestResultNotOpenBox, TestResultTotalContentBox } from "./TextResult.style";
 import useGetStudyResult from "@/apis/study/useGetStudyResultQuery";
-import { useRouter } from "next/router";
-import { IStudyResult } from "@/types/Study";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
-interface Iprops {
-  studyResult: IStudyResult;
-}
-
 export default function TestResultTotalContent() {
-  // console.log("studyResult", studyResult);
   const { studyId } = useSelector((state: RootState) => state.exam);
   const { data: studyResult } = useGetStudyResult(studyId);
-  console.log("dd", studyResult);
 
   return (
     <>

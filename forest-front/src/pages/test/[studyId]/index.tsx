@@ -14,14 +14,14 @@ interface Iprops {
 }
 
 function Test({ studyId }: Iprops) {
-  const { isSubmitted, toggleModal, isEnded } = useSelector((state: RootState) => state.exam);
+  const { isSubmitted, toggleModal, isGraded } = useSelector((state: RootState) => state.exam);
   useGetStudyProblems(studyId);
 
   return (
     <StyledTestContainer>
       {toggleModal && <TestEndModal />}
       <TestHeader />
-      {(isEnded && !isSubmitted) || (!isEnded && isSubmitted) ? <TestEnd /> : <TestContent />}
+      {(isGraded && !isSubmitted) || (!isGraded && isSubmitted) ? <TestEnd /> : <TestContent />}
     </StyledTestContainer>
   );
 }
