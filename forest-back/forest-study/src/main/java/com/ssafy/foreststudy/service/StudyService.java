@@ -718,18 +718,18 @@ public class StudyService {
             for (StudentStudyProblemResult studentStudyProblemResult : ssr) {
                 // 키워드 포함 개수 분석 코드
                 int num = 0;
-                for (String keyWord : keyWords) {
-                    if (studentStudyProblemResult.getUserAnswer().contains(keyWord))
-                        num++;
-
-                }
+                int similarity = 0;
                 String userAnswer = studentStudyProblemResult.getUserAnswer();
                 String workbookAnswer =
                         studentStudyProblemResult.getProblemList().getProblem().getAnswer();
-
-                int similarity = 0;
                 if (userAnswer != null)
                     similarity = getJaccardSimilarity(userAnswer, workbookAnswer);
+                else {
+                    for (String keyWord : keyWords) {
+                        if (studentStudyProblemResult.getUserAnswer().contains(keyWord))
+                            num++;
+                    }
+                }
 
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
