@@ -71,7 +71,8 @@ function Editor() {
       // dispatch(resetSelectWorkbook());
     }
     console.log("??");
-    getWorkbookApi();
+    // 임시 주석(희제)
+    // getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
 
   useEffect(() => {
