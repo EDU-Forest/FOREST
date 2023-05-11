@@ -927,8 +927,10 @@ public class StudyService {
                 .message("학습 종료")
                 .build();
 
-        ResponseSuccessDto<PostResponseDto> res = responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SUCCESS_EXIT);
-        return res;
+        if(ungradedAnswerRate !=0)
+            return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_EXIST_DESCRIPT);
+        else
+            return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SUCCESS_EXIT);
     }
 
     /* 자카드 유사도 계산 로직 */

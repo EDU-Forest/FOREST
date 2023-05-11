@@ -36,6 +36,7 @@ public enum SuccessCode {
     STUDY_STUDENT_ENTER(HttpStatus.OK,"재입장 성공"),
     STUDY_SUCCESS_RESULT_USER(HttpStatus.OK,"개인 시험 결과 조회 성공"),
     STUDY_ONGOING(HttpStatus.OK,"시험이 진행 중입니다"),
+    STUDY_EXIST_DESCRIPT(HttpStatus.NO_CONTENT,"미채점된 서술형 목록이 있습니다."),
     STUDY_SUBMIT_ALREADY(HttpStatus.OK,"이미 제출하셨습니다"),
     STUDY_NOT_YET(HttpStatus.OK,"시작하지 않은 시험입니다"),
     STUDY_NOT_PARTICIPATE(HttpStatus.OK,"참여하지 않은 시험입니다"),
