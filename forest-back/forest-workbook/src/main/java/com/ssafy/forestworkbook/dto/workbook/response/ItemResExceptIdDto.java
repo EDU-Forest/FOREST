@@ -16,4 +16,8 @@ public class ItemResExceptIdDto {
                 this.content = content;
                 this.isImage = isImage;
         }
+
+        public void updateContent(String content) {
+                this.content = content;
+        }
 }

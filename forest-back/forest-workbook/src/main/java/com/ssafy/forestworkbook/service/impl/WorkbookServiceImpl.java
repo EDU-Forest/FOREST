@@ -892,10 +892,13 @@ public class WorkbookServiceImpl implements WorkbookService {
             boolean checkMultiple = false;
             boolean checkPoint = false;
             boolean checkItem = false;
+            boolean checkDelete = false;
 
             int ocrNum = 0;
             int ocrPoint = 0;
             int midCount = 0;
+            int startCount = 0;
+            int titleCount = 0;
 
             // 한 줄씩 확인
             for (int i = 0; i < txt.length; i++) {
@@ -904,7 +907,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 // title 확인
                 if (!checkTitle && !checkText & !checkNum) {
-                    System.out.println("타이틀 확인중");
+//                    log.info("타이틀 확인");
+                    titleCount++;
                     if (temp.length() >= 4 && !checkNum && temp.substring(0, 1).matches("^[0-9]+$")
                             && (temp.substring(1, 2).equals(".") || temp.substring(2, 3).equals("."))) {
                         checkNum = true;
@@ -924,6 +928,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         // no Title
                         if (!checkTitle && temp.substring(endIndex).trim().substring(0, 1).matches("^[a-zA-Z]*$")) {
                             checkTitle = true;
+                            log.info("1: title 확인 완료");
                             text.append(temp.substring(endIndex).trim()).append(" ");
                         }
 
@@ -935,6 +940,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                             if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
                                 checkMultiple = true;
                                 checkTitle = true;
+                                log.info("2: title 확인 완료");
                                 checkNum = true;
                             }
                         }
@@ -943,6 +949,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
                             checkMultiple = true;
                             checkTitle = true;
+                            log.info("3: title 확인 완료");
                             checkNum = true;
                         }
                     }
@@ -953,13 +960,25 @@ public class WorkbookServiceImpl implements WorkbookService {
                         if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
                             checkMultiple = true;
                             checkTitle = true;
+                            log.info("4: title 확인 완료");
                             checkNum = true;
                         }
                     }
                 }
 
+                else if (!checkTitle && !checkText & checkNum) {
+                    title.append(temp.trim()).append(" ");
+                    if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
+                        checkMultiple = true;
+                        checkTitle = true;
+                        log.info("5: title 확인 완료");
+                        checkNum = true;
+                    }
+                }
+
                 // 문제 확인
                 else if (checkTitle && !checkText && checkNum) {
+//                    log.info("문제 확인");
 
                     String subString = temp.substring(0, 1);
 
@@ -972,22 +991,21 @@ public class WorkbookServiceImpl implements WorkbookService {
                             midCount++;
 
                             if (title.toString().contains("밑줄")) {
-                                String[] findInt = temp.split("[^0-9]");
-                                for (int k = findInt.length + 1; k < temp.length(); k++) {
-                                    if (temp.substring(k, k + 1).isBlank()) {
-                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                .content(temp.substring(findInt.length + 1, k).trim())
-                                                .isImage(false)
-                                                .build();
-                                        tempItemResExceptIdDtoList.add(itemResExceptIdDto);
-                                        break;
-                                    }
+                                if (temp.substring(0, 1).matches("^[0-9]+$")) {
+                                    startCount++;
                                 }
-                            } else {
-                                int beginIndex = temp.substring(0, 1).matches("^[0-9]*$") ? 1 : 0;
 
+                                // 일단 째로 담기
                                 ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(beginIndex).trim())
+                                        .content(temp.trim())
+                                        .isImage(false)
+                                        .build();
+                                tempItemResExceptIdDtoList.add(itemResExceptIdDto);
+                                String[] findInt = temp.split("[^0-9]");
+
+                            } else {
+                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                        .content(temp)
                                         .isImage(false)
                                         .build();
                                 tempItemResExceptIdDtoList.add(itemResExceptIdDto);
@@ -1000,6 +1018,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                                 .isImage(false)
                                 .build();
                         checkText = true;
+                        checkDelete = true;
                         itemResExceptIdDtoList.add(itemResExceptIdDto);
                     }
 
@@ -1015,7 +1034,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         System.out.println(temp);
                     }
 
-                    text.append(temp).append(" ");
+                    if (!checkDelete) text.append(temp).append(" ");
 
                     // 점수 인식 안되는 경우 항목 확인
                     if (checkMultiple && txt.length - i <= 6) {
@@ -1063,18 +1082,37 @@ public class WorkbookServiceImpl implements WorkbookService {
             }
 
             if (midCount >= 2) {
-                for (ItemResExceptIdDto itemResExceptIdDto : itemResExceptIdDtoList) {
+                for (ItemResExceptIdDto itemResExceptIdDto : tempItemResExceptIdDtoList) {
                     int isIT = text.indexOf(itemResExceptIdDto.getContent());
                     if (isIT != -1) {
                         text.delete(isIT, isIT + itemResExceptIdDto.getContent().length());
                     }
-                    itemResExceptIdDtoList.add(itemResExceptIdDto);
+                    if (startCount >= 3) {
+                        if (itemResExceptIdDto.getContent().substring(0, 1).equals("*")) {
+                            text.append(itemResExceptIdDto.getContent());
+                        } else {
+                            itemResExceptIdDto.updateContent(itemResExceptIdDto.getContent().substring(1).trim());
+                            itemResExceptIdDtoList.add(itemResExceptIdDto);
+                        }
+                    } else {
+                        // 앞의 단어만 자르기
+                        String temp = itemResExceptIdDto.getContent();
+                        String[] findInt = temp.split("[^0-9]");
+
+                        for (int k = findInt.length + 1; k < temp.length(); k++) {
+                            if (temp.substring(k, k + 1).isBlank()) {
+                                itemResExceptIdDto.updateContent(temp.substring(findInt.length + 1, k).trim());
+                                break;
+                            }
+                        }
+                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                    }
                 }
             }
 
             // 문제 확인
             String titleConfirm = title.toString();
-            if (titleConfirm.matches(".*[가-힣].*") && titleConfirm.matches(".*[a-zA-Z].*")) {
+            if (titleCount >= 3 && titleConfirm.matches(".*[가-힣].*") && titleConfirm.matches(".*[a-zA-Z].*")) {
                 if (titleConfirm.contains("[")) {
                     titleConfirm = titleConfirm.substring(0, titleConfirm.indexOf("["));
                 }
