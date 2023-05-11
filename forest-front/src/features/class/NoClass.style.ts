@@ -20,11 +20,16 @@ const NoClassText = styled(StyledWorkbookStatus)`
 const MakeClassBtn = styled.p`
   color: ${({ theme }) => theme.colors.Gray[600]};
   font-size: 0.875rem;
+  cursor: pointer;
 
   svg {
     vertical-align: text-bottom;
     font-size: 1rem;
     margin-right: 0.25rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.Gray[800]};
   }
 `;
 
