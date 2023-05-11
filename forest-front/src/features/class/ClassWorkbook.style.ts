@@ -1,3 +1,4 @@
+import { positionCenter } from "@/styles/theme";
 import styled from "styled-components";
 
 const ClassWorkbookWrapper = styled.div`
@@ -8,4 +9,16 @@ const ClassWorkbookWrapper = styled.div`
   margin-bottom: 2.25rem;
 `;
 
-export { ClassWorkbookWrapper };
+const CheckIconWrapper = styled.div`
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  svg {
+    font-size: 32px;
+    color: ${({ theme }) => theme.colors.Lime[600]};
+  }
+`;
+
+export { ClassWorkbookWrapper, CheckIconWrapper };
