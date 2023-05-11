@@ -57,7 +57,7 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
               + 새 클래스 추가
             </ClassSelectDropdownAdd>
           )}
-          {isOpenAddClassModal && <AddClassModal />}
+          {/* {isOpenAddClassModal && <AddClassModal />} */}
         </>
       )}
     </ClassSelectDropdownContainer>

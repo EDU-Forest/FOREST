@@ -52,7 +52,7 @@ const PdfViewerXmark = styled.div`
 const PdfViewerPageController = styled.div`
   ${flexBox("row", "center", "center")}
   ${positionCenter("absolute")}
-  z-index: 40;
+  z-index: 30;
   top: 1.5rem;
   right: 3rem;
   color: ${({ theme }) => theme.colors.Lime[800]};
