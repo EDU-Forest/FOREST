@@ -46,10 +46,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getClassWorkbook(
             HttpServletRequest request,
             @PathVariable Long classId, @RequestParam String search) throws UnsupportedEncodingException{
-        JwtDecoder jwtDecoder = new JwtDecoder();
-        Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
+//        JwtDecoder jwtDecoder = new JwtDecoder();
+//        Long userId = jwtDecoder.verifyJWT(request);
+//        log.info("{}", userId);
+        Long userId = Long.valueOf(9);
         return workbookService.getClassWorkbook(userId, classId, search);
     }
 
