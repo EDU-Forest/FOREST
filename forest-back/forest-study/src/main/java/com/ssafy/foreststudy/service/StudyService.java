@@ -727,10 +727,14 @@ public class StudyService {
                 String workbookAnswer =
                         studentStudyProblemResult.getProblemList().getProblem().getAnswer();
 
+                int similarity = 0;
+                if (userAnswer != null)
+                    similarity = getJaccardSimilarity(userAnswer, workbookAnswer);
+
                 studentList.add(GetStudentAnswerListResponseDto.builder()
                         .studentNum(index)
                         .answer(userAnswer)
-                        .similarity(getJaccardSimilarity(userAnswer, workbookAnswer)) //유사도 체크 로직
+                        .similarity(similarity) //유사도 체크 로직
                         .sameNum(num)
                         .build());
 
