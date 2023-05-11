@@ -861,7 +861,7 @@ public class StudyService {
         List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
 
         LocalDateTime now = LocalDateTime.now();
-        if (study.getEndTime().isAfter(now))
+        if (study.getEndTime() == null || study.getEndTime().isAfter(now))
             study.updateEndTime(now);
 
         if (studentStudyResults.size() == 0 || classUser.size() == 0) {
