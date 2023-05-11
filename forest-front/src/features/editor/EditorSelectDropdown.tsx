@@ -88,7 +88,7 @@ export default function EditorSelectDropdown({
             </ClassSelectDropdownEach>
           </>
         ) : (
-          <ClassSelectNoClass>존재하는 문제집이 없습니다</ClassSelectNoClass>
+          <ClassSelectNoClass>존재하는 문제집이 없습니다.</ClassSelectNoClass>
         )}
 
         {/* <ClassSelectDropdownAdd onClick={() => dispatch(openAddWorkBookModal())}> */}

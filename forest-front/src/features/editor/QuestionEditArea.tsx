@@ -16,7 +16,7 @@ function QuestionEditArea({ selectQuestionType }: IProps) {
       {questions.length !== 0 ? (
         <EditorQuestionContent selectQuestionType={selectQuestionType} />
       ) : (
-        <span>문항이 없습니다</span>
+        <span>문항이 없습니다.</span>
       )}
     </QuestionEditAreaBox>
   );

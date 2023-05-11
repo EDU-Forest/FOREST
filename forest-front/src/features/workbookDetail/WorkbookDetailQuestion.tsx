@@ -64,7 +64,7 @@ function WorkbookDetailQuestion({
           {isOriginal && !isDeploy && <StyledTextBtn onClick={handleClickEdit}>수정</StyledTextBtn>}
         </StyledQuestionDetailTitleBox>
       ) : (
-        <span>문항이 없습니다</span>
+        <span>문항이 없습니다.</span>
       )}
 
       {/* 지문이 있다면 지문 렌더링 */}
