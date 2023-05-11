@@ -680,15 +680,17 @@ public class StudyService {
 
         ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
-        if (classStudyResult.getUngradedAnswerRate() == 0)
-            return responseUtil.successResponse("", SuccessCode.STUDY_END);
 
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookAndProblemType(study.getWorkbook());
 
+        /* 서술형이 없으면 서술형 목록 없음 */
         if (problemList.isEmpty())
             return responseUtil.successResponse("", SuccessCode.STUDY_NONE_RESULT_DESCRIPT_LIST);
 
+        /* 채점 할 항목이 없으면 스터디 종료 */
+        if (classStudyResult.getUngradedAnswerRate() == 0)
+            return responseUtil.successResponse("", SuccessCode.STUDY_END);
 
         List<GetDescriptionResponseDto> descript = new ArrayList<>();
 
