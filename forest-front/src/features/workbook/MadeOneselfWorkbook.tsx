@@ -7,9 +7,6 @@ interface IProps {
 }
 
 function MadeOneselfWorkbook({ list }: IProps) {
-  useEffect(() => {
-    console.log(list);
-  }, []);
   return (
     <div>
       <WorkbookList list={list} isWorkbookPage />
