@@ -44,7 +44,6 @@ function EditorEssay({ question }: IProps) {
 
     // 전체 배열에 반영
     const ansToSaveQuestions = [...copyArr].join(",");
-    console.log(ansToSaveQuestions);
 
     const copyQArr = [...questions];
     copyQArr.splice(curQuestion - 1, 1, {
