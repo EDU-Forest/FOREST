@@ -60,11 +60,6 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
 
   useEffect(() => {
     setIsCopySuccess(isSuccess);
-
-    // 1.5초 후 토스트 팝업 사라짐
-    setTimeout(() => {
-      setIsCopySuccess(false);
-    }, 1500);
   }, [isSuccess]);
 
   return (
@@ -99,13 +94,13 @@ function WorkbookDetailBtns({ setIsExportOpen, questionSummary }: IProps) {
         )}
       </StyledWorkbookDetailBtnsBox>
       {isCopySuccess && (
-        <Toast>
-          <MdOutlineFileCopy />
-          <div>
-            <p>사본 생성 완료</p>
-            <p>사본으로 이동했습니다</p>
-          </div>
-        </Toast>
+        <Toast
+          icon={<MdOutlineFileCopy />}
+          title="사본 생성 완료"
+          subtitle="사본으로 이동했습니다"
+          isOpen={isSuccess}
+          setIsOpen={setIsCopySuccess}
+        />
       )}
     </>
   );

@@ -79,24 +79,9 @@ function WorkbookDetail() {
     // questions가 초기화된 후에 curQuestion 지정
     // 새로운 questions가 아니라, 이전 questions로 연산되는 것을 방지하고자, 현재 문제집일 때만 수형
     if (curQuestion === 0 && Number(wId) === workbook.workbookId) {
-      questions.length !== 0 && setCurQuestion(questions[0].problemId) ;
+      questions.length !== 0 && setCurQuestion(questions[0].problemId);
     }
   }, [questions]);
-
-  useEffect(() => {
-    // 1.5초 후 토스트 팝업 사라짐
-    isReleaseSuccess &&
-      setTimeout(() => {
-        setIsReleaseSuccess(false);
-      }, 1500);
-  }, [isReleaseSuccess]);
-  useEffect(() => {
-    // 1.5초 후 토스트 팝업 사라짐
-    isSetSuccess &&
-      setTimeout(() => {
-        setIsSetSuccess(false);
-      }, 1500);
-  }, [isSetSuccess]);
 
   return (
     <div>
@@ -159,21 +144,21 @@ function WorkbookDetail() {
       </StyledWorkbookDetailBox>
       {isSavePdf && <WorkbookPdfSave setIsSavePdf={setIsSavePdf} />}
       {isReleaseSuccess && (
-        <Toast>
-          <AiOutlineShareAlt />
-          <div>
-            <p>배포 완료되었습니다</p>
-          </div>
-        </Toast>
+        <Toast
+          icon={<AiOutlineShareAlt />}
+          title="배포 완료되었습니다"
+          isOpen={isReleaseSuccess}
+          setIsOpen={setIsReleaseSuccess}
+        />
       )}
       {isSetSuccess && (
-        <Toast>
-          <AiOutlineEdit />
-          <div>
-            <p>출제 완료</p>
-            <p>선택하신 클래스에 출제되었습니다</p>
-          </div>
-        </Toast>
+        <Toast
+          icon={<AiOutlineEdit />}
+          subtitle="출제 완료"
+          title="선택하신 클래스에 출제되었습니다"
+          isOpen={isSetSuccess}
+          setIsOpen={setIsSetSuccess}
+        />
       )}
     </div>
   );
