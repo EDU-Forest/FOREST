@@ -199,6 +199,11 @@ export const EditorOXAnswerBox = styled.div<{ isAnswer: boolean }>`
   font-weight: 900;
   color: ${({ theme, isAnswer }) => (isAnswer ? theme.colors.Orange[600] : theme.colors.Gray[400])};
   cursor: pointer;
+
+  &:hover {
+    color: ${({ theme, isAnswer }) =>
+      isAnswer ? theme.colors.Orange[700] : theme.colors.Gray[500]};
+  }
 `;
 
 // 서술형
