@@ -204,6 +204,10 @@ export const EditorOXAnswerBox = styled.div<{ isAnswer: boolean }>`
     color: ${({ theme, isAnswer }) =>
       isAnswer ? theme.colors.Orange[700] : theme.colors.Gray[500]};
   }
+
+  @media ${({ theme }) => theme.tablet} {
+    font-size: 4.5rem;
+  }
 `;
 
 // 서술형

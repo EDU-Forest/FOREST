@@ -42,7 +42,6 @@ const editorModalSlice = createSlice({
     },
     openAddWorkBookModal(state) {
       state.isOpenAddWorkbookModal = true;
-      console.log(state.isOpenAddWorkbookModal);
     },
 
     closeAddWorkBookModal(state) {
