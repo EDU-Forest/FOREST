@@ -853,6 +853,10 @@ public class StudyService {
         List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
         List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
 
+        LocalDateTime now = LocalDateTime.now();
+        if (study.getEndTime().isAfter(now))
+            study.updateEndTime(now);
+
         if (studentStudyResults.size() == 0 || classUser.size() == 0) {
             classStudyResult.updateIsFinished();
             PostResponseDto postResponseDto = PostResponseDto.builder()
@@ -863,9 +867,6 @@ public class StudyService {
 
         List<ProblemList> problemList = problemListRepository.findAllByWorkbookOrderByProblemNumAsc(study.getWorkbook());
 
-        LocalDateTime now = LocalDateTime.now();
-        if (study.getEndTime().isAfter(now))
-            study.updateEndTime(now);
 
         /* 서술형 문항 개수 */
         int descriptNum = 0;
@@ -932,8 +933,11 @@ public class StudyService {
 
         if(ungradedAnswerRate !=0)
             return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_EXIST_DESCRIPT);
-        else
+        else{
+            /* 채점 목록이 없으면 */
+            
             return responseUtil.successResponse(postResponseDto, SuccessCode.STUDY_SUCCESS_EXIT);
+        }
     }
 
     /* 자카드 유사도 계산 로직 */
