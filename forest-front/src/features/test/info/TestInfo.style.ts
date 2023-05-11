@@ -18,6 +18,22 @@ const StyledTestInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+
+  .close-study {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: 2.5rem;
+    right: 0.5rem;
+    transform: translate(-50%, -50%);
+    color: ${({ theme }) => theme.colors.Gray[700]};
+    cursor: pointer;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.Gray[900]};
+    }
+  }
 `;
 
 const TestStartImg = styled.img`
