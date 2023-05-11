@@ -34,7 +34,6 @@ function LoginSuccess() {
   useEffect(() => {
     if (!router.isReady) return;
     const data = router?.query;
-    console.log("ssss", data);
 
     const accessToken = router.query?.accessToken;
     if (typeof accessToken === "string") {
