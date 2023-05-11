@@ -70,9 +70,10 @@ function Editor() {
       dispatch(initQuestions());
       // dispatch(resetSelectWorkbook());
     }
-    console.log("??");
-    // 임시 주석(희제)
-    // getWorkbookApi();
+  }, []);
+
+  useEffect(() => {
+    getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
 
   useEffect(() => {
