@@ -844,25 +844,13 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-//         파일이 없는 경우
-        if (!file.isEmpty()) {
+        // 파일이 없는 경우
+        if (file.isEmpty()) {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_UPLOADED_FILE);
         }
 
         String path = fileToUrl(file);
         String filePath = "gs://" + path;
-        // 제임스 씨 심경 변화
-//        String filePath = "gs://forest_ocr_bucket/3be855d6-446e-4355-9a3a-fb01f33e5806";
-         // 어법상 틀린 거 - 항목 안됨
-//        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
-        // 34번
-//        String filePath = "gs://forest_ocr_bucket/81420e6d-704a-424d-a803-a13404347e6a";
-        // 제목으로 적절한거
-//        String filePath = "gs://forest_ocr_bucket/75662be8-23e7-4d29-af0f-102af8376313";
-        // 주제 - 곧 죽어도 안됨
-//        String filePath = "gs://forest_ocr_bucket/d27c5102-6cf7-4448-8281-5669a762aadc";
-
-//        detectLocalizedObjectsGcs(filePath);
 
         List<AnnotateImageRequest> requests = new ArrayList<>();
 
@@ -917,7 +905,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 // title 확인
                 if (!checkTitle && !checkText & !checkNum) {
                     System.out.println("타이틀 확인중");
-                    if (!checkNum && temp.substring(0, 1).matches("^[0-9]+$")
+                    if (temp.length() >= 4 && !checkNum && temp.substring(0, 1).matches("^[0-9]+$")
                             && (temp.substring(1, 2).equals(".") || temp.substring(2, 3).equals("."))) {
                         checkNum = true;
 
@@ -929,16 +917,13 @@ public class WorkbookServiceImpl implements WorkbookService {
                             int start = temp.indexOf('[');
                             int end = temp.indexOf(']');
                             int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
-                            System.out.println("점수 : " + temp.substring(start+1, end+endPoint));
                             ocrPoint = Integer.parseInt(temp.substring(start+1, end+endPoint));
-                            System.out.println(temp);
                             checkPoint = true;
                         }
 
                         // no Title
                         if (!checkTitle && temp.substring(endIndex).trim().substring(0, 1).matches("^[a-zA-Z]*$")) {
                             checkTitle = true;
-                            System.out.println(temp.substring(endIndex).trim());
                             text.append(temp.substring(endIndex).trim()).append(" ");
                         }
 
@@ -979,26 +964,33 @@ public class WorkbookServiceImpl implements WorkbookService {
                     // 문장에 숫자 포함 여부
                     if (checkTitle && temp.matches(".*[0-9].*")) {
                         String intStr = temp.replaceAll("[^0-9]", "");
-                        String indexInt = temp.replaceAll("[^0-9]", "_");
-                        System.out.println(indexInt);
-                        System.out.println(temp.lastIndexOf("[^0-9]"));
-                        System.out.println("_-------------");
-                        System.out.println(temp.split("[^0-9]"));
-                        System.out.println(intStr);
-                        System.out.println(intStr.length() == 1);
+
+                        // 문장에 포함된 숫자가 하나인 경우
                         if (intStr.length() == 1) {
                             midCount++;
 
                             if (title.toString().contains("밑줄")) {
+                                String[] findInt = temp.split("[^0-9]");
+                                for (int k = findInt.length + 1; k < temp.length(); k++) {
+                                    if (temp.substring(k, k + 1).isBlank()) {
+                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                                .content(temp.substring(findInt.length + 1, k).trim())
+                                                .isImage(false)
+                                                .build();
+                                        tempItemResExceptIdDtoList.add(itemResExceptIdDto);
+                                        break;
+                                    }
+                                }
+                            } else {
+                                int beginIndex = temp.substring(0, 1).matches("^[0-9]*$") ? 1 : 0;
 
+                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                        .content(temp.substring(beginIndex).trim())
+                                        .isImage(false)
+                                        .build();
+                                tempItemResExceptIdDtoList.add(itemResExceptIdDto);
                             }
-                            ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                    .content(temp.substring(0).trim())
-                                    .isImage(false)
-                                    .build();
-                            tempItemResExceptIdDtoList.add(itemResExceptIdDto);
                         }
-                        System.out.println("중간에 숫자 잇듬");
                     }
 
                     // 배점 확인
@@ -1029,7 +1021,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 // 항목 확인
                 else if (checkTitle && checkText && checkNum) {
-                    System.out.println("항목일걸");
                     if (temp.substring(0, 1).equals("*")) {
                         text.append(temp).append(" ");
                     }
@@ -1052,13 +1043,33 @@ public class WorkbookServiceImpl implements WorkbookService {
             }
 
             if (midCount >= 2) {
-                System.out.println("후후후");
                 itemResExceptIdDtoList.addAll(tempItemResExceptIdDtoList);
+
+                for (ItemResExceptIdDto itemResExceptIdDto : itemResExceptIdDtoList) {
+                    int isIT = text.indexOf(itemResExceptIdDto.getContent());
+                    if (isIT != -1) {
+                        text.delete(isIT, isIT + itemResExceptIdDto.getContent().length());
+                    }
+                }
+            }
+
+            // 문제 확인
+            String titleConfirm = title.toString();
+            if (titleConfirm.matches(".*[가-힣].*") && titleConfirm.matches(".*[a-zA-Z].*")) {
+                if (titleConfirm.contains("[")) {
+                    titleConfirm = titleConfirm.substring(0, titleConfirm.indexOf("["));
+                }
+                String temp = titleConfirm.replaceAll("[^가-힣 ]", "");
+                if (temp.contains("  ")) {
+                    titleConfirm = temp.substring(temp.lastIndexOf("  "));
+                }
+            } else if (titleConfirm.contains("[")) {
+                titleConfirm = titleConfirm.substring(0, titleConfirm.indexOf("["));
             }
 
             ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
                     .type(checkMultiple ? EnumProblemTypeStatus.MULTIPLE : EnumProblemTypeStatus.DESCRIPT)
-                    .title(title.toString())
+                    .title(titleConfirm.trim())
                     .problemImgPath(null)
                     .imgIsEmpty(true)
                     .text(text.toString())
@@ -1080,6 +1091,11 @@ public class WorkbookServiceImpl implements WorkbookService {
     public void ocrPdf(Long userId, MultipartFile file) throws Exception {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+
+        // 파일이 없는 경우
+        if (file.isEmpty()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_UPLOADED_FILE);
+        }
 
         String uuid = UUID.randomUUID().toString();
         String path = fileToUrl(file);
