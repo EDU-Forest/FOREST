@@ -841,20 +841,20 @@ public class WorkbookServiceImpl implements WorkbookService {
     }
 
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        // 파일이 없는 경우
-//        if (!file.isEmpty()) {
-//            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_UPLOADED_FILE);
-//        }
+//         파일이 없는 경우
+        if (!file.isEmpty()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_NOT_UPLOADED_FILE);
+        }
 
-//        String path = fileToUrl(file);
-//        String filePath = "gs://" + path;
+        String path = fileToUrl(file);
+        String filePath = "gs://" + path;
         // 제임스 씨 심경 변화
 //        String filePath = "gs://forest_ocr_bucket/3be855d6-446e-4355-9a3a-fb01f33e5806";
          // 어법상 틀린 거 - 항목 안됨
-        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
+//        String filePath = "gs://forest_ocr_bucket/3b2cbe11-c386-44c1-8a78-f127d1692507";
         // 34번
 //        String filePath = "gs://forest_ocr_bucket/81420e6d-704a-424d-a803-a13404347e6a";
         // 제목으로 적절한거
@@ -1077,9 +1077,9 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
-    public void detectDocumentsGcs(MultipartFile file) throws Exception {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
+    public void ocrPdf(Long userId, MultipartFile file) throws Exception {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
         String uuid = UUID.randomUUID().toString();
         String path = fileToUrl(file);
