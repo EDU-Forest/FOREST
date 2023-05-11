@@ -14,7 +14,7 @@ function EditorQuestionList() {
           <EditorQuestionBar key={`question-${i}`} question={question} num={i + 1} />
         ))
       ) : (
-        <span>문항이 없습니다</span>
+        <span>문항이 없습니다.</span>
       )}
     </EditorQuestionListBox>
   );
