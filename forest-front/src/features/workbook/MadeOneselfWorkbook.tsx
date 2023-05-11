@@ -1,6 +1,5 @@
 import { WorkbookType } from "@/types/Workbook";
 import WorkbookList from "./WorkbookList";
-import { useEffect } from "react";
 
 interface IProps {
   list: WorkbookType[];

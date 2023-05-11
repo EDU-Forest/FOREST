@@ -23,6 +23,7 @@ import {
   WorkbookImgTypeBox,
 } from "./WorkbookDetail.style";
 import WorkbookImgEditModal from "./WorkbookImgEditModal";
+import { titleFormatter } from "@/utils";
 
 interface IProps {
   id: number;
@@ -164,7 +165,9 @@ function WorkbookDetailInfoOverview({ id, cover, likeCnt, usedCnt }: IProps) {
                 {selectedImg === 0 ? (
                   <img src={workbook?.workbookImgPath} />
                 ) : (
-                  <WorkbookImgTypeBox path={imgPath}>{workbook?.title}</WorkbookImgTypeBox>
+                  <WorkbookImgTypeBox path={imgPath}>
+                    {titleFormatter(workbook?.title)}
+                  </WorkbookImgTypeBox>
                 )}
                 {isEditing && <label onClick={handleClickImgEdit}>수정</label>}
               </WorkbookDetailWorkbookImgBox>

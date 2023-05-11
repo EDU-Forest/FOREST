@@ -12,6 +12,7 @@ import {
   WorkbookTitle,
 } from "./Workbook.style";
 import Workbook from "@/pages/workbook";
+import { titleFormatter } from "@/utils";
 
 interface Iprops {
   id: number;
@@ -52,14 +53,6 @@ export default function CommonWorkbook({
       setIsNewBookmarked(true);
       newBookmarkCount !== undefined && setNewBookmarkCount(newBookmarkCount + 1);
       postMutate(id);
-    }
-  };
-
-  const titleFormatter = (title: string) => {
-    if (title.length <= 6) {
-      return title;
-    } else {
-      return title.slice(0, 6) + "...";
     }
   };
 

@@ -8,7 +8,7 @@ export const Title = styled.p`
 `;
 
 export const TextMaxCnt = styled.p`
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 
   color: ${({ theme }) => theme.colors.Gray[500]};
   font-size: 14px;
