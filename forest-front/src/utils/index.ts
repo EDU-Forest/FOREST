@@ -31,3 +31,11 @@ export const textFormatter = (text: string) => {
     return text.slice(0, 8) + "...";
   }
 };
+
+export const titleFormatter = (title: string) => {
+  if (title.length <= 6) {
+    return title;
+  } else {
+    return title.slice(0, 6) + "...";
+  }
+};
