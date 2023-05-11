@@ -63,10 +63,11 @@ export default function CommonWorkbook({
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
       {(bookmarkCount || bookmarkCount === 0) && (
         <WorkbookContentWrapper>
-          <WorkbookContent bg>
+          {/* 스크랩 비활성화 */}
+          {/* <WorkbookContent bg>
             <span>{scrapCount} </span>
             명이 이용 중이에요
-          </WorkbookContent>
+          </WorkbookContent> */}
           <div>
             <WorkbookIcon onClick={pressHeart}>
               {isNewBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
