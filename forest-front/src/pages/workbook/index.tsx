@@ -32,8 +32,8 @@ function Workbook() {
         setFetching(true);
       }
     };
-    
-		setFetching(true);
+
+    setFetching(true);
     container?.addEventListener("scroll", handleScroll);
     return () => container?.removeEventListener("scroll", handleScroll);
   }, []);
