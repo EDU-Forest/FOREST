@@ -1,3 +1,4 @@
+import { flexBox } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
 export const StyledScheduleTop = styled.div`
@@ -66,7 +67,8 @@ export const StyledScheduleItemTop = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
+  align-items: center;
 
   > div:first-child {
     display: flex;
@@ -74,6 +76,18 @@ export const StyledScheduleItemTop = styled.div`
 
   span {
     font-weight: 600;
+  }
+`;
+
+export const ScheduleLabelsBox = styled.div`
+  ${flexBox("row", "center", "center")};
+
+  gap: 0.5rem;
+
+  /* study 유형 */
+  > div:nth-child(1) {
+    background-color: ${({ theme }) => theme.colors.Lime[50]};
+    color: ${({ theme }) => theme.colors.Lime[600]};
   }
 `;
 
@@ -102,4 +116,23 @@ export const StyledClassLabel = styled.div`
   color: ${({ theme }) => theme.colors.Orange[600]};
   font-size: 0.875rem;
   font-weight: 600;
+`;
+
+export const ScheduleProgressBar = styled.progress`
+  appearance: none;
+  inline-size: 10em;
+  block-size: 0.5rem;
+
+  ::-webkit-progress-bar {
+    background: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: inset 3px 3px 10px #ccc;
+  }
+
+  ::-webkit-progress-value {
+    border-radius: 10px;
+    background: ${({ theme }) => theme.colors.Lime[600]};
+    /* background: -webkit-linear-gradient(to right, #93f9b9, #1d976c);
+    background: linear-gradient(to right, #93f9b9, #1d976c); */
+  }
 `;

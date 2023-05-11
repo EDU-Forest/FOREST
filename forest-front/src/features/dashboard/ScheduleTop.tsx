@@ -59,7 +59,7 @@ function ScheduleTop() {
             진행 완료
           </StyledScheduleStatus>
         </div>
-        <p>3일 이내에 완료된 시험입니다</p>
+        <p>3일 이내에 완료된 일정입니다</p>
       </StyledStatusNotification>
     </StyledScheduleTop>
   );
