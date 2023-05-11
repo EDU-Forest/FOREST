@@ -70,19 +70,7 @@ function Editor() {
 
   useEffect(() => {
     setIsSaveSuccess(isSuccess);
-
-    // 1.5초 후 토스트 팝업 사라짐
-    setTimeout(() => {
-      setIsSaveSuccess(false);
-    }, 1500);
   }, [isSuccess]);
-
-  useEffect(() => {
-    // 1.5초 후 토스트 팝업 사라짐
-    setTimeout(() => {
-      setIsWorkbookSwitchFail(false);
-    }, 1500);
-  }, [isWorkbookSwitchFail]);
 
   const hideDropdownHandler = () => {
     setControlDropdown(false);
@@ -113,21 +101,21 @@ function Editor() {
         </EditorContainer>
       </EditorFullScreen>
       {isSaveSuccess && (
-        <Toast>
-          <MdSave />
-          <div>
-            <p>저장되었습니다</p>
-          </div>
-        </Toast>
+        <Toast
+          icon={<MdSave />}
+          title="저장되었습니다"
+          isOpen={isSaveSuccess}
+          setIsOpen={setIsSaveSuccess}
+        />
       )}
       {isWorkbookSwitchFail && (
-        <Toast>
-          <IoIosWarning />
-          <div>
-            <p>문제집 전환 불가</p>
-            <p>문항 수정을 완료해주세요</p>
-          </div>
-        </Toast>
+        <Toast
+          icon={<IoIosWarning />}
+          subtitle="문제집 전환 불가"
+          title="문항 수정을 완료해주세요"
+          isOpen={isWorkbookSwitchFail}
+          setIsOpen={setIsWorkbookSwitchFail}
+        />
       )}
     </>
   );
