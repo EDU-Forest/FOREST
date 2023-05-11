@@ -243,6 +243,7 @@ export const StyledWorkbookQuestionMoveBarListBox = styled.div`
 export const StyledWorkbookQuestionMoveBar = styled.div<{ isSelected: boolean }>`
   display: flex;
   align-items: center;
+  width: 90%;
 
   padding: 0.5rem 0.75rem;
 
