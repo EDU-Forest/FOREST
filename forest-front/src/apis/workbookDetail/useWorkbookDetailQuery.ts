@@ -26,6 +26,7 @@ const useWorkbookDetailQuery = (wId: number) => {
       dispatch(setQuestions(problemList));
     },
     onError: (error) => {
+      console.log("wId 테스트", wId, typeof wId, !!wId && wId !== -1);
       console.log("--useGetStudyInfoError --", error);
     },
   });
