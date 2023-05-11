@@ -722,9 +722,8 @@ public class StudyService {
                 String userAnswer = studentStudyProblemResult.getUserAnswer();
                 String workbookAnswer =
                         studentStudyProblemResult.getProblemList().getProblem().getAnswer();
-                if (userAnswer != null)
+                if (userAnswer != null){
                     similarity = getJaccardSimilarity(userAnswer, workbookAnswer);
-                else {
                     for (String keyWord : keyWords) {
                         if (studentStudyProblemResult.getUserAnswer().contains(keyWord))
                             num++;
