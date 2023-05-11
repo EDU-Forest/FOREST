@@ -19,7 +19,7 @@ const fetcher = (payload: IPayload) =>
         "Content-Type": "multipart/form-data",
       },
     })
-    .then(({ data }) => data);
+    .then(({ data }) => data.data);
 
 const useImgOCR = () => {
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
@@ -31,26 +31,20 @@ const useImgOCR = () => {
       const question: QuestionType = {
         problemId: 0,
         problemNum: nowIdx + 1,
-        type: data.data.type,
-        title: data.data.title,
-        text: data.data.text,
+        type: data.type,
+        title: data.title,
+        text: data.text,
         answer: "",
-        point: data.data.point,
-        problemImgPath: data.data.problemImgPath,
-        itemList: data.data.itemList,
-        imgIsEmpty: data.data.imgIsEmpty,
-        textIsEmpty: data.data.textIsEmpty,
+        point: data.point,
+        problemImgPath: data.problemImgPath,
+        itemList: data.itemList,
+        imgIsEmpty: data.imgIsEmpty,
+        textIsEmpty: data.textIsEmpty,
       };
       const newQuestions = [...questions, question];
-      console.log(newQuestions);
+
       dispatch(setQuestions(newQuestions));
       dispatch(closePartPdfModal());
-    },
-    onError: (err) => {
-      console.log("err", err);
-    },
-    onMutate(variables) {
-      console.log("var", variables);
     },
   });
 };
