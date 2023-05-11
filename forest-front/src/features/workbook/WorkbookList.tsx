@@ -6,7 +6,7 @@ import { StyledWorkbookListBox } from "./Workbook.style";
 
 interface IProps {
   list: WorkbookType[];
-  isWorkbookPage: boolean
+  isWorkbookPage: boolean;
 }
 
 function WorkbookList({ list, isWorkbookPage }: IProps) {
@@ -30,9 +30,10 @@ function WorkbookList({ list, isWorkbookPage }: IProps) {
             bookmarkCount={item?.bookmarkCount}
             isBookmarked={item.isBookmarked}
             scrapCount={item?.scrapCount}
-            methodType={item?.isBookmarked ? 'DELETE' : 'POST'}
+            methodType={item?.isBookmarked ? "DELETE" : "POST"}
             clickAction={handleClickWorkbook}
             isWorkbookPage={isWorkbookPage}
+            workbookImgPath={item?.workbookImgPath}
           />
         );
       })}
