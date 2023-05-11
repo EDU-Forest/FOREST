@@ -16,7 +16,7 @@ export default function TakeRateChart({
   takeRate,
 }: Iprops) {
   return (
-    <SummaryChartWrapper>
+    <SummaryChartWrapper className="class-summary-items">
       {!noTitle && <ClassSummarySubTitle>응시율</ClassSummarySubTitle>}
       <PieChart
         data={[

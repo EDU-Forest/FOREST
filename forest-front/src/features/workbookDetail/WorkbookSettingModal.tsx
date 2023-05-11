@@ -70,7 +70,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
     const end = new Date(`${endDay}T${endTime}`);
 
     const isAfterToday = (day: Date) => {
-      return today <= day;
+      return new Date(today).getTime() <= new Date(day).getTime() + 1000 * 60;
     };
 
     switch (type) {

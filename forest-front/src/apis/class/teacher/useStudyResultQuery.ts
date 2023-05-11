@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
-import { ITeacherExamResultAFTER, ITeacherExamResultBEFORE } from "@/types/TeacherExamResult";
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/${studyId}`).then(({ data }) => {
+    console.log(data);
     return data;
   });
 
