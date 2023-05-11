@@ -1,6 +1,7 @@
 import SmallBtn from "@/components/Button/SmallBtn";
 import { ModalBtnsBox } from "@/styles/modal";
 import {
+  NoClassBox,
   WorkbookClassBtn,
   WorkbookClassBtnsBox,
   WorkbookClassModalFooterBox,
@@ -9,6 +10,7 @@ import {
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import { IClassList } from "@/types/ClassList";
 import { useEffect, useState } from "react";
+import { FaRegSadTear } from "react-icons/fa";
 
 interface ClassType {
   classId: number;
@@ -33,7 +35,7 @@ function WorkbookSelectClassModal({
   };
 
   const { data: classes = [classInit] } = useClassListQuery();
-  const [isSelectValidConfirm, setIsSlecteValidConfirm] = useState(true)
+  const [isSelectValidConfirm, setIsSlecteValidConfirm] = useState(true);
 
   const handleClickCancel = () => {
     setIsOpen(false);
@@ -68,13 +70,15 @@ function WorkbookSelectClassModal({
 
   useEffect(() => {
     setIsSlecteValidConfirm(selectedClass.length >= 1 ? true : false);
-  }, [selectedClass])
+  }, [selectedClass]);
 
   return (
     <WorkbookSelectClassModalBox>
       <p>출제할 클래스를 선택해주세요.</p>
       {classes.length === 0 ? (
-        <p>클래스가 없습니다</p>
+        <NoClassBox>
+          <p>클래스가 없습니다.</p>
+        </NoClassBox>
       ) : (
         <WorkbookClassBtnsBox>
           {classes.map((classItem: IClassList, i: number) => (

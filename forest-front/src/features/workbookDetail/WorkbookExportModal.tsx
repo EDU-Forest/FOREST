@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineFilePdf, AiOutlineShareAlt } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import WorkbookExportRadioGroup from "./WorkbookExportRadioGroup";
-import { NotOriginalParagraph, WorkbookExportModalBox } from "./WorkbookModal.style";
+import { NotOriginalBox, WorkbookExportModalBox } from "./WorkbookModal.style";
+import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 // import useIsOriginalWorkbook from "@/apis/workbookDetail/useIsOriginalWorkbookQuery";
 // import { useRouter } from "next/router";
 
@@ -84,9 +85,10 @@ function WorkbookExportModal({
       <WorkbookExportModalBox>
         <p>내보내기 방식을 선택해주세요.</p>
         {!isOriginal && (
-          <NotOriginalParagraph>
-            직접 제작한 문제집 외에는 PDF 기능만 사용 가능합니다.
-          </NotOriginalParagraph>
+          <NotOriginalBox>
+            <HiOutlineExclamationTriangle />
+            <p>직접 제작한 문제집이 아니면 배포할 수 없습니다.</p>
+          </NotOriginalBox>
         )}
         <WorkbookExportRadioGroup
           isDeploy={isDeploy}
