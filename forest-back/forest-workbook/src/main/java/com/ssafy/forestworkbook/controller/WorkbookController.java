@@ -46,10 +46,10 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getClassWorkbook(
             HttpServletRequest request,
             @PathVariable Long classId, @RequestParam String search) throws UnsupportedEncodingException{
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
-        Long userId = Long.valueOf(9);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
+//        Long userId = Long.valueOf(9);
         return workbookService.getClassWorkbook(userId, classId, search);
     }
 
@@ -68,7 +68,7 @@ public class WorkbookController {
 
     @GetMapping("/img")
     @ApiOperation(value = "문제집 이미지 목록 조회", notes = "문제집 이미지 목록을 조회합니다.")
-    public ResponseSuccessDto<?> getWorkbookImg (HttpServletRequest request) throws UnsupportedEncodingException {
+    public ResponseSuccessDto<?> getWorkbookImg() throws UnsupportedEncodingException {
         return workbookService.getWorkbookImg();
     }
 
@@ -204,11 +204,11 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
         log.info("{}", file.isEmpty());
-        Long userId = Long.valueOf(9);
+//        Long userId = Long.valueOf(9);
         return workbookService.ocrImg(userId, file);
     }
 
@@ -218,12 +218,12 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
-//        JwtDecoder jwtDecoder = new JwtDecoder();
-//        Long userId = jwtDecoder.verifyJWT(request);
-//        log.info("{}", userId);
+        JwtDecoder jwtDecoder = new JwtDecoder();
+        Long userId = jwtDecoder.verifyJWT(request);
+        log.info("{}", userId);
         log.info("{}", file.isEmpty());
-        Long userId = Long.valueOf(9);
-        workbookService.detectDocumentsGcs(file);
+//        Long userId = Long.valueOf(9);
+        workbookService.ocrPdf(userId, file);
         return new ResponseSuccessDto<>(HttpStatus.OK);
     }
 
