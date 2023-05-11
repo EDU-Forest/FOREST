@@ -23,7 +23,7 @@ export default function TotalResult({
   averageSolvingTime,
 }: Iprops) {
   return (
-    <SummaryItemWrapper>
+    <SummaryItemWrapper className="class-summary-items">
       <ClassSummarySubTitle noMargin={noMargin}>전체 결과</ClassSummarySubTitle>
       <SummaryResultWrapper>
         <ResultInfoItem>
