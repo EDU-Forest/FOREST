@@ -180,6 +180,14 @@ const ClassSummaryText = styled.p<{ isGray?: boolean; isGreen?: boolean }>`
   }
 `;
 
+const WarningIcon = styled.span`
+  font-size: 1.125rem;
+  vertical-align: text-top;
+  margin: 0 0.5rem;
+  /* color: ${({ theme }) => theme.colors.Orange[600]}; */
+  color: red;
+`;
+
 const ClassSummaryValue = styled.div`
   text-align: left;
   width: 6rem;
@@ -253,4 +261,5 @@ export {
   ClassSummaryIcon,
   ClassLabelBox,
   ClassSummaryItemSubmitBox,
+  WarningIcon,
 };

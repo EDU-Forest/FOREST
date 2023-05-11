@@ -9,6 +9,7 @@ import {
   ClassSummaryTextWrapper,
   ClassSummaryTitle,
   ClassSummaryWrapper,
+  WarningIcon,
 } from "../ClassSummary.style";
 import WorkbookStatus from "@/components/Status/WorkbookStatus";
 import { AiOutlineRight } from "react-icons/ai";
@@ -22,10 +23,11 @@ import arrangeDate from "@/utils/arrangeDate";
 import Loading from "@/components/Loading/Loading";
 import CommonBtn from "@/components/Button/CommonBtn";
 import useExamFinish from "@/apis/class/analysis/useExamFinish";
+import { IoWarningOutline } from "react-icons/io5";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
-  const { nowStudyId } = useSelector((state: RootState) => state.class);
+  const { nowStudyId, haveDescript } = useSelector((state: RootState) => state.class);
   const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
   const { mutate } = useExamFinish();
 
@@ -63,6 +65,11 @@ export default function ClassSummaryTeacher() {
                 style={{ cursor: "pointer", margin: "0px" }}
                 onClick={() => goToDetail(result?.data.studyId)}
               >
+                {haveDescript && (
+                  <WarningIcon>
+                    <IoWarningOutline />
+                  </WarningIcon>
+                )}
                 자세히 보기
                 <AiOutlineRight className="icon" />
               </ClassSummaryText>
