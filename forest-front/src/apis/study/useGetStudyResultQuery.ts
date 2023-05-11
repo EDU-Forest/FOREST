@@ -21,11 +21,8 @@ const useGetStudyResult = (studyId: number) => {
     refetchOnWindowFocus: false,
     onSuccess: (result) => {
       dispatch(setResult(result));
-      console.log("useGetStudyResult", result);
     },
-    onSettled(data, error) {
-      console.log("에러니", error);
-    },
+    onSettled(data, error) {},
   });
 };
 
