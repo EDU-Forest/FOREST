@@ -96,8 +96,15 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
     const pdfSvgData = new XMLSerializer().serializeToString(pdfSvg);
     console.log("pdfSvgData ??? ", pdfSvgData);
 
-    const encodedData = window.btoa(unescape(encodeURIComponent(pdfSvgData)));
+    // const encodedData = window.btoa(unescape(encodeURIComponent(pdfSvgData)));
+    const encodedData = window.btoa(encodeURI(pdfSvgData));
+    const dd = window.atob(encodedData);
+    console.log("dd", dd);
+
+    console.log("encodedData", encodedData);
     const dataUrl = `data:image/svg+xml;base64,${encodedData}`;
+    console.log("dataUrl", dataUrl);
+
     setPageImage(dataUrl);
 
     // const data = new XMLSerializer().serializeToString(pdfSvg);
@@ -146,6 +153,7 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
           선택 완료
         </CommonBtn>
       </PdfViewerBtnWrapper>
+      {pageImage && <img src={pageImage} alt="" style={{ width: "200px", height: "200px" }} />}
       {/* {select && <ImgCropperTest imageData={imgSection} />} */}
       {select && <ImgCropper imageData={pageImage} />}
     </>
