@@ -1,7 +1,10 @@
 import useScheduleQuery from "@/apis/dashboard/useScheduleQuery";
 import Loading from "@/components/Loading/Loading";
 import ClassLabel from "@/features/dashboard/ScheduleLabel";
+import { RootState } from "@/stores/store";
 import arrangeDate from "@/utils/arrangeDate";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import { ClassSummaryItemWrapperNoResult } from "../class/ClassSummary.style";
 import {
   ScheduleLabelsBox,
@@ -11,13 +14,6 @@ import {
   StyledScheduleListBox,
   StyledScheduleStatusCircle,
 } from "./Schedule.style";
-import useScheduleQuery from "@/apis/dashboard/useScheduleQuery";
-import { ClassSummaryItemWrapperNoResult } from "../class/ClassSummary.style";
-import Loading from "@/components/Loading/Loading";
-import arrangeDate from "@/utils/arrangeDate";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import { useRouter } from "next/router";
 
 interface IStudy {
   [key: string]: string;
