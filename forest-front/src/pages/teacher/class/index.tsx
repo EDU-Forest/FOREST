@@ -13,6 +13,7 @@ import AddStudentModal from "@/features/class/teacher/AddStudentModal";
 import ClassStudentList from "@/features/class/teacher/ClassStudentList";
 import ClassSummaryTeacher from "@/features/class/teacher/ClassSummaryTeacher";
 import DeleteStudentModal from "@/features/class/teacher/DeleteStudentModal";
+import { setFirstConnect } from "@/stores/class/classInfo";
 import { closeAllModal, hideClassDropdown } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
@@ -33,6 +34,11 @@ function TeacherClass() {
   useEffect(() => {
     dispatch(closeAllModal());
   }, []);
+
+  window.addEventListener("beforeunload", (event) => {
+    event.preventDefault();
+    dispatch(setFirstConnect(true));
+  });
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());

@@ -25,14 +25,18 @@ import CommonBtn from "@/components/Button/CommonBtn";
 import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
 import { isStarted } from "@/utils/date";
+import { useDispatch } from "react-redux";
+import { setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { nowStudyId, haveDescript } = useSelector((state: RootState) => state.class);
   const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
   const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
+    dispatch(setStudyType(result?.data.studyType.toLowerCase()));
     router.push(`/teacher/class/study/${studyId}`);
   };
 

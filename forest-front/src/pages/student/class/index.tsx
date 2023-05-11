@@ -8,6 +8,7 @@ import {
 import ClassWorkbook from "@/features/class/ClassWorkbook";
 import NoClass from "@/features/class/NoClass";
 import ClassSummaryStudent from "@/features/class/student/ClassSummaryStudent";
+import { setFirstConnect } from "@/stores/class/classInfo";
 import { closeAllModal, hideClassDropdown } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
@@ -25,6 +26,11 @@ function StudentClass() {
   useEffect(() => {
     dispatch(closeAllModal());
   }, []);
+
+  window.addEventListener("beforeunload", (event) => {
+    event.preventDefault();
+    dispatch(setFirstConnect(true));
+  });
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());

@@ -20,13 +20,16 @@ import Loading from "@/components/Loading/Loading";
 import useStudentScoreQuery from "@/apis/class/student/useStudentScoreQuery";
 import arrangeDate from "@/utils/arrangeDate";
 import { useDispatch } from "react-redux";
+import { setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassSummaryStudent() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { nowStudyId } = useSelector((state: RootState) => state.class);
   const { data, isLoading } = useStudentScoreQuery(nowStudyId);
 
   const goToDetail = (studyId: number) => {
+    dispatch(setStudyType(data?.data.studyType.toLowerCase()));
     router.push(`/test/${studyId}/result`);
   };
 
