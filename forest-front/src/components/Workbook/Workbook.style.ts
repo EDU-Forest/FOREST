@@ -22,6 +22,8 @@ const WorkbookImgBox = styled.div`
   text-align: center;
 
   p {
+    font-size: 0.875rem;
+    font-weight: 700;
     position: absolute;
     top: 15%;
     left: 50%;

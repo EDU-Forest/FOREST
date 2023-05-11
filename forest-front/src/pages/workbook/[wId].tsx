@@ -38,7 +38,7 @@ function WorkbookDetail() {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
 
-  const { isSuccess } = useWorkbookDetailQuery(Number(wId));
+  const { isSuccess } = useWorkbookDetailQuery(typeof wId === "string" ? parseInt(wId) : -1);
 
   // 현재 문제
   // 문제집 내에 문제가 없는 경우에는 첫 문제를 세팅
