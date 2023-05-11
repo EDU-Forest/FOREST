@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { WorkbookSettingModalBox, WorkbookSettingTitleInput } from "./WorkbookModal.style";
 import WorkbookSettingModalInputs from "./WorkbookSettingModalInputs";
 import WorkbookSettingModalTypeSelect from "./WorkbookSettingModalTypeSelect";
+import { getCurDayToString, getCurTimeToString } from "@/utils/date";
 
 interface IProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -16,21 +17,19 @@ interface IProps {
 }
 
 function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess }: IProps) {
-  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-  const KR_TIME = new Date().getTime() + KR_TIME_DIFF;
   const [settingTitle, setSettingTitle] = useState(title);
   const [type, setType] = useState<string>("self");
-  const [startTime, setStartTime] = useState<string>(new Date(KR_TIME).toJSON().slice(11, 16));
-  const [startDay, setStartDay] = useState<string>(new Date().toJSON().slice(0, 10));
-  const [endTime, setEndTime] = useState<string>(new Date(KR_TIME).toJSON().slice(11, 16));
-  const [endDay, setEndDay] = useState<string>(new Date().toJSON().slice(0, 10));
+  const [startTime, setStartTime] = useState<string>(getCurTimeToString());
+  const [startDay, setStartDay] = useState<string>(getCurDayToString());
+  const [endTime, setEndTime] = useState<string>(getCurTimeToString());
+  const [endDay, setEndDay] = useState<string>(getCurDayToString());
   const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
   const [isTitleValidConfirm, setIsTitleValidConfirm] = useState(true);
   const titleMaxCnt = 30;
 
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
-  const { data, mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
+  const { mutate: setWorkbookApi, isSuccess } = useWorkbookDetailSetPost();
 
   const types = [
     { value: "self", text: "자습" },
