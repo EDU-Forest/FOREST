@@ -972,6 +972,16 @@ public class WorkbookServiceImpl implements WorkbookService {
                         checkMultiple = true;
                         checkTitle = true;
                         log.info("5: title 확인 완료");
+
+                        // 배점 확인
+                        if (temp.contains("[")) {
+                            int start = temp.indexOf('[');
+                            int end = temp.indexOf(']');
+                            int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
+                            ocrPoint = Integer.parseInt(temp.substring(start+1, end+endPoint));
+                            checkPoint = true;
+                        }
+
                         checkNum = true;
                     }
                 }
@@ -990,11 +1000,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                         if (intStr.length() == 1) {
                             midCount++;
 
-                            if (title.toString().contains("밑줄")) {
-                                if (temp.substring(0, 1).matches("^[0-9]+$")) {
-                                    startCount++;
-                                }
+                            if (temp.substring(0, 1).matches("^[0-9]+$")) {
+                                startCount++;
+                            }
 
+                            if (title.toString().contains("밑줄")) {
                                 // 일단 째로 담기
                                 ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
                                         .content(temp.trim())
