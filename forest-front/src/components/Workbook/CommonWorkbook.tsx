@@ -8,8 +8,10 @@ import {
   WorkbookContentWrapper,
   WorkbookIcon,
   WorkbookImg,
+  WorkbookImgBox,
   WorkbookTitle,
 } from "./Workbook.style";
+import Workbook from "@/pages/workbook";
 
 interface Iprops {
   id: number;
@@ -53,10 +55,21 @@ export default function CommonWorkbook({
     }
   };
 
+  const titleFormatter = (title: string) => {
+    if (title.length <= 6) {
+      return title;
+    } else {
+      return title.slice(0, 6) + "...";
+    }
+  };
+
   return (
     <WorkbookCard>
       {workbookImgPath ? (
-        <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
+        <WorkbookImgBox>
+          <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
+          <p>{titleFormatter(title)}</p>
+        </WorkbookImgBox>
       ) : (
         <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
       )}

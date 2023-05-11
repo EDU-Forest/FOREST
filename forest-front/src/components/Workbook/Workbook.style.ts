@@ -17,6 +17,22 @@ const WorkbookImg = styled.img`
   cursor: pointer;
 `;
 
+const WorkbookImgBox = styled.div`
+  position: relative;
+  text-align: center;
+
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+`;
+
 const WorkbookTitle = styled.p`
   font-weight: 600;
   margin-top: 1rem;
@@ -62,4 +78,5 @@ export {
   WorkbookContentWrapper,
   WorkbookIcon,
   WorkbookContent,
+  WorkbookImgBox,
 };
