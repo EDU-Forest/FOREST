@@ -9,8 +9,6 @@ import withAuth from "@/utils/auth/withAuth";
 
 function TestInfo() {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const studyId = router.query.studyId;
 
   useEffect(() => {
     dispatch(setinitProblem());

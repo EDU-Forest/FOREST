@@ -5,11 +5,9 @@ import { useDispatch } from "react-redux";
 import { setStudyProblems, setToggleModal } from "@/stores/exam/exam";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { useRouter } from "next/router";
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/problem/${studyId}`).then(({ data }) => {
-    console.log("ff", data);
     return data;
   });
 
@@ -17,12 +15,12 @@ const useGetStudyProblems = (studyId: number) => {
   const { isStarted } = useSelector((state: RootState) => state.exam);
   const dispatch = useDispatch();
   return useQuery([queryKeys.STUDY_PROBLEMS, isStarted], () => fetcher(studyId), {
-    // enabled: !!isStarted,
+    enabled: !!isStarted,
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("dsdsd", data.data);
       dispatch(setStudyProblems(data.data));
-      dispatch(setToggleModal(false));
+      console.log("시험 문제 불러오기", data.data);
+
       // router.push(`/test/${studyId}`);
     },
     onError: (error) => {

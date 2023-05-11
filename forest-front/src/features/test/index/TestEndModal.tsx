@@ -12,10 +12,6 @@ import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import { useDispatch } from "react-redux";
 import { setToggleModal } from "@/stores/exam/exam";
 
-interface Iprops {
-  // setToggleModal: (toggled: boolean) => void;
-}
-
 export default function TestEndModal() {
   const router = useRouter();
   const dispatch = useDispatch();

@@ -1,13 +1,16 @@
 import TestContent from "@/features/test/index/TestContent";
 import TestHeader from "@/features/test/index/TestHeader";
 import { StyledTestContainer } from "@/features/test/index/TextIndex.style";
-import { useRouter } from "next/router";
 import TestEndModal from "@/features/test/index/TestEndModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import TestEnd from "@/features/test/index/TestEnd";
 import withAuth from "@/utils/auth/withAuth";
 import useGetStudyProblems from "@/apis/study/useGetStudyProblemsQuery";
+import Loading from "@/components/Loading/Loading";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setToggleModal } from "@/stores/exam/exam";
 
 interface Iprops {
   studyId: number;
@@ -15,13 +18,24 @@ interface Iprops {
 
 function Test({ studyId }: Iprops) {
   const { isSubmitted, toggleModal, isGraded } = useSelector((state: RootState) => state.exam);
-  useGetStudyProblems(studyId);
+  const { isLoading } = useGetStudyProblems(studyId);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setToggleModal(false));
+  }, []);
 
   return (
     <StyledTestContainer>
-      {toggleModal && <TestEndModal />}
-      <TestHeader />
-      {(isGraded && !isSubmitted) || (!isGraded && isSubmitted) ? <TestEnd /> : <TestContent />}
+      {isLoading ? (
+        <Loading width={12} height={12} />
+      ) : (
+        <>
+          {toggleModal && <TestEndModal />}
+          <TestHeader />
+          {(isGraded && !isSubmitted) || (!isGraded && isSubmitted) ? <TestEnd /> : <TestContent />}
+        </>
+      )}
     </StyledTestContainer>
   );
 }

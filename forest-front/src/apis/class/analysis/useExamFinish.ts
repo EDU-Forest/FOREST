@@ -2,7 +2,7 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 
-const fetcher = (studyId: number) => studyAxios.patch(`/api/study/exit/${studyId}`);
+const fetcher = (studyId: number) => studyAxios.patch(`/api/study/exit/class/${studyId}`);
 
 const useExamFinish = () => {
   const queryClient = useQueryClient();
