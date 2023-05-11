@@ -1038,11 +1038,15 @@ public class WorkbookServiceImpl implements WorkbookService {
                         int start = temp.indexOf('[');
                         int end = temp.indexOf(']');
                         int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
-                        ocrPoint = Integer.parseInt(temp.substring(start+1, end-endPoint));
-                        checkPoint = true;
-                        checkText = true;
-                        temp = temp.substring(0, start).trim();
-                        System.out.println(temp);
+                        if (temp.matches(".*[가-힣].*")) {
+
+                        } else {
+                            ocrPoint = Integer.parseInt(temp.substring(start + 1, end - endPoint));
+                            checkPoint = true;
+                            checkText = true;
+                            temp = temp.substring(0, start).trim();
+                            System.out.println(temp);
+                        }
                     }
 
                     if (!checkDelete) text.append(temp).append(" ");
