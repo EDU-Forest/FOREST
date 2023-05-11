@@ -21,7 +21,6 @@ function EditorOX({ question, curQuestion }: IProps) {
 
   useEffect(() => {
     setAnswer(question.answer);
-    console.log(question.answer);
   }, [question]);
 
   useEffect(() => {

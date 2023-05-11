@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
+import useWorkbookDetailImgQuery from "@/apis/workbookDetail/useWorkbookDetailImgQuery";
+import SmallBtn from "@/components/Button/SmallBtn";
 import {
   WorkbookImgEditModalBox,
   WorkbookImgEditModalImgBox,
   WorkbookImgTypeBox,
 } from "./WorkbookDetail.style";
-import SmallBtn from "@/components/Button/SmallBtn";
-import useWorkbookDetailImgQuery from "@/apis/workbookDetail/useWorkbookDetailImgQuery";
 
 interface IProps {
   title: string;
@@ -23,8 +22,6 @@ function WorkbookImgEditModal({
   setImgPath,
 }: IProps) {
   const { data: { workbookImgList: imgs } = { workbookImgList: [] } } = useWorkbookDetailImgQuery();
-
-  console.log(imgs[0]?.workbookImgPath);
 
   const handleClick = (type: number) => {
     setSelectedImg(type);
