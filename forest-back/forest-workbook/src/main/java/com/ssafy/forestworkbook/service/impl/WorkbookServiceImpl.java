@@ -961,6 +961,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                 // 문제 확인
                 else if (checkTitle && !checkText && checkNum) {
 
+                    String subString = temp.substring(0, 1);
+
                     // 문장에 숫자 포함 여부
                     if (checkTitle && temp.matches(".*[0-9].*")) {
                         String intStr = temp.replaceAll("[^0-9]", "");
@@ -991,6 +993,14 @@ public class WorkbookServiceImpl implements WorkbookService {
                                 tempItemResExceptIdDtoList.add(itemResExceptIdDto);
                             }
                         }
+                    } else if (subString.equals("①") || subString.equals("②") || subString.equals("③")
+                                || subString.equals("④") || subString.equals("⑤")) {
+                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                .content(temp.substring(1).trim())
+                                .isImage(false)
+                                .build();
+                        checkText = true;
+                        itemResExceptIdDtoList.add(itemResExceptIdDto);
                     }
 
                     // 배점 확인
@@ -1021,6 +1031,9 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 // 항목 확인
                 else if (checkTitle && checkText && checkNum) {
+
+                    String subString = temp.substring(0, 1);
+
                     if (temp.substring(0, 1).equals("*")) {
                         text.append(temp).append(" ");
                     }
@@ -1038,18 +1051,24 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         itemResExceptIdDtoList.add(itemResExceptIdDto);
                         checkMultiple = true;
+                    } else if (subString.equals("②") || subString.equals("③")
+                            || subString.equals("④") || subString.equals("⑤")) {
+                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                .content(temp.substring(1).trim())
+                                .isImage(false)
+                                .build();
+                        itemResExceptIdDtoList.add(itemResExceptIdDto);
                     }
                 }
             }
 
             if (midCount >= 2) {
-                itemResExceptIdDtoList.addAll(tempItemResExceptIdDtoList);
-
                 for (ItemResExceptIdDto itemResExceptIdDto : itemResExceptIdDtoList) {
                     int isIT = text.indexOf(itemResExceptIdDto.getContent());
                     if (isIT != -1) {
                         text.delete(isIT, isIT + itemResExceptIdDto.getContent().length());
                     }
+                    itemResExceptIdDtoList.add(itemResExceptIdDto);
                 }
             }
 
