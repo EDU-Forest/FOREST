@@ -251,14 +251,15 @@ public class WorkbookServiceImpl implements WorkbookService {
     public ResponseSuccessDto<?> getWorkbookImg() {
         List<WorkbookImg> workbookImgList = workbookImgRepository.findAll();
 
-        List<ImgDto> ImgDtoList = workbookImgList.stream()
+        Map<String, List<ImgDto>> map = new HashMap<>();
+        map.put("workbookImgList", workbookImgList.stream()
                 .map(w -> ImgDto.builder()
                         .workbookImgId(w.getId())
                         .workbookImgPath(w.getPath())
                         .build())
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
 
-        return responseUtil.successResponse(new ImgListDto(ImgDtoList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -465,9 +466,10 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         boolean isOriginal = checkIsOriginal(workbook.getCreator().getId(), userId);
 
-        IsOriginalDto isOriginalDto = IsOriginalDto.builder().isOriginal(isOriginal).build();
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("isOriginal", isOriginal);
 
-        return responseUtil.successResponse(isOriginalDto, ForestStatus.WORKBOOK_SUCCESS_GET_EXPORT_INFO);
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_EXPORT_INFO);
     }
 
     @Override
@@ -796,11 +798,10 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         String path = fileToUrl(file);
 
-        ImagePathDto imagePathDto = ImagePathDto.builder()
-                .path("https://storage.googleapis.com/" + path)
-                .build();
+        Map<String, String> map = new HashMap<>();
+        map.put("path", "https://storage.googleapis.com/" + path);
 
-        return responseUtil.successResponse(imagePathDto, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
     public void detectLocalizedObjectsGcs(String gcsPath) throws IOException {
@@ -1422,8 +1423,10 @@ public class WorkbookServiceImpl implements WorkbookService {
             throw new CustomException(WorkbookErrorCode.WORKBOOK_PARAM_NO_VAILD);
         }
 
-        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
-        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+        Map<String, List<ExploreWorkbookDto>> map = new HashMap<>();
+        map.put("workbookList", exploreWorkbookDtoList);
+
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -1451,8 +1454,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .build();
             exploreWorkbookDtoList.add(exploreWorkbookDto);
         }
-        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
-        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+
+        Map<String, List<ExploreWorkbookDto>> map = new HashMap<>();
+        map.put("workbookList", exploreWorkbookDtoList);
+
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -1471,7 +1477,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                         .build())
                 .collect(Collectors.toList());
 
-        return responseUtil.successResponse(new WorkbookEditorListDto(workbookList), ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+        Map<String, List<WorkbookEditorDto>> map = new HashMap<>();
+        map.put("workbookList", workbookList);
+
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     @Override
@@ -1494,8 +1503,10 @@ public class WorkbookServiceImpl implements WorkbookService {
                         .build())
                 .collect(Collectors.toList());
 
-        ExploreWorkbookListkDto exploreWorkbookListkDto = new ExploreWorkbookListkDto(exploreWorkbookDtoList);
-        return responseUtil.successResponse(exploreWorkbookListkDto, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
+        Map<String, List<ExploreWorkbookDto>> map = new HashMap<>();
+        map.put("workbookList", exploreWorkbookDtoList);
+
+        return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
     }
 
     public String checkMethodType(Long userId, Long workbookId) {
