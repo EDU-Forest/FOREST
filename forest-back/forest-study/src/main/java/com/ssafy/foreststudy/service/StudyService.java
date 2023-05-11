@@ -85,7 +85,7 @@ public class StudyService {
         else {
             if (now.isBefore(startTime))
                 schedule = "BEFORE";
-            else if (now.isAfter(endTime))
+            else if (now.isAfter(endTime) || now.isEqual(endTime))
                 schedule = "AFTER";
             else
                 schedule = "ONGOING";
