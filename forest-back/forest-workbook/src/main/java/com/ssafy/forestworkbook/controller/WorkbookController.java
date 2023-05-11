@@ -223,8 +223,7 @@ public class WorkbookController {
 //        log.info("userId : {}", userId);
 //        log.info("file : {}", file.isEmpty());
         Long userId = Long.valueOf(9);
-        workbookService.ocrPdf(userId, file);
-        return new ResponseSuccessDto<>(HttpStatus.OK);
+        return new ResponseSuccessDto<>(workbookService.ocrPdf(userId, file));
     }
 
     @DeleteMapping ("/problem/{problemId}")

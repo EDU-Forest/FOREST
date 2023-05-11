@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @ToString
-@JsonRootName(value = "problem")
 public class ProblemOcrDto {
 
     private EnumProblemTypeStatus type;
