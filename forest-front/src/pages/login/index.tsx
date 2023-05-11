@@ -9,7 +9,6 @@ function AuthLogin() {
   const [isError, setIsError] = useState(false);
 
   const payload = {
-    icon: IoMdCloseCircleOutline,
     title: "이메일 또는 비밀번호가 일치하지 않습니다.",
     isOpen: isError,
     setIsOpen: setIsError,
@@ -17,7 +16,7 @@ function AuthLogin() {
 
   return (
     <>
-      {isError && <Toast {...payload} />}
+      {isError && <Toast {...payload} icon={<IoMdCloseCircleOutline />} />}
       <Login setIsError={setIsError} />
     </>
   );
