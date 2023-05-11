@@ -43,11 +43,6 @@ function Workbook() {
   }, []);
 
   useEffect(() => {
-    // 기존 리스트 + 무한 스크롤로 불러온 새 리스트
-    setList([...list, ...workbookList]);
-  }, [workbookList]);
-
-  useEffect(() => {
     // 탭 전환될 때마다 초기화
     setPage(0);
     setFetching(false);
@@ -59,6 +54,11 @@ function Workbook() {
     // 탭 전환되고, 초기화 완료되었을 때 refetch
     page === 0 && isFetching === false && hasNextPage === true && refetch();
   }, [selectedType, page, isFetching, hasNextPage]);
+
+  useEffect(() => {
+    // 기존 리스트 + 무한 스크롤로 불러온 새 리스트
+    setList([...list, ...workbookList]);
+  }, [workbookList]);
 
   useEffect(() => {
     // 새로운 데이터의 응답이 성공일 때마다 업데이트
