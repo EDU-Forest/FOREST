@@ -29,7 +29,7 @@ export default function StudyAnalysis() {
   const { nowStudyId } = useSelector((state: RootState) => state.class);
   const router = useRouter();
   const goToBack = () => {
-    router.back();
+    router.push("/teacher/class");
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
