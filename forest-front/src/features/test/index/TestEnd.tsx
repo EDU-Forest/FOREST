@@ -7,11 +7,12 @@ import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
+import { useEffect } from "react";
 
 export default function TestEnd() {
   const router = useRouter();
-  const { mutate: endStudy } = useEndStudy();
-  const { mutate: saveAnswer } = useSaveAnswer();
+  const { mutate: endStudy, isSuccess: endSuccess } = useEndStudy();
+  const { mutate: saveAnswer, isSuccess: saveSuccess } = useSaveAnswer();
   const { mutate: canvasMutate } = useCanvasPost();
   const studyId = router.query.studyId;
 
@@ -38,9 +39,19 @@ export default function TestEnd() {
     }
 
     saveAnswer(payload);
-    endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
-    router.push(`/test/${router.query.studyId}/result`);
   };
+
+  useEffect(() => {
+    if (saveSuccess) {
+      endStudy(typeof studyId === "string" ? parseInt(studyId) : -1);
+    }
+  }, [saveSuccess]);
+
+  useEffect(() => {
+    if (endSuccess) {
+      router.push(`/test/${router.query.studyId}/result`);
+    }
+  }, [endSuccess]);
 
   return (
     <TestEndBox>

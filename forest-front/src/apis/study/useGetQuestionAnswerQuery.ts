@@ -4,11 +4,6 @@ import * as queryKeys from "@/constants/queryKeys";
 import { IQuestionResult } from "@/types/Exam";
 import { IStudentStudyProblemResultList } from "@/types/Study";
 
-interface Iprops {
-  studyId: number;
-  setQuestionResult: (questionResult: IQuestionResult[]) => void;
-}
-
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/student/result/question/${studyId}`).then(({ data }) => {
     const studentStudyProblemResultList: IStudentStudyProblemResultList[] =
@@ -17,11 +12,11 @@ const fetcher = (studyId: number) =>
   });
 
 const useGetQuestionAnswer = (studyId: number) => {
-  return useQuery(queryKeys.STUDY_QUESTION_ANSWER, () => fetcher(studyId), {
+  return useQuery([queryKeys.STUDY_QUESTION_ANSWER, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
-    enabled: !!studyId,
+    enabled: !!studyId && studyId !== -1,
     onSuccess: (data) => {
-      console.log("각각의 문제", data);
+      console.log("useGetQuestionAnswer", data);
     },
   });
 };
