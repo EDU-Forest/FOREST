@@ -16,12 +16,14 @@ interface IProps {
 }
 
 function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess }: IProps) {
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+  const KR_TIME = new Date().getTime() + KR_TIME_DIFF;
   const [settingTitle, setSettingTitle] = useState(title);
   const [type, setType] = useState<string>("self");
-  const [startTime, setStartTime] = useState<string>();
-  const [startDay, setStartDay] = useState<string>();
-  const [endTime, setEndTime] = useState<string>();
-  const [endDay, setEndDay] = useState<string>();
+  const [startTime, setStartTime] = useState<string>(new Date(KR_TIME).toJSON().slice(11, 16));
+  const [startDay, setStartDay] = useState<string>(new Date().toJSON().slice(0, 10));
+  const [endTime, setEndTime] = useState<string>(new Date(KR_TIME).toJSON().slice(11, 16));
+  const [endDay, setEndDay] = useState<string>(new Date().toJSON().slice(0, 10));
   const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
   const [isTitleValidConfirm, setIsTitleValidConfirm] = useState(true);
   const titleMaxCnt = 30;
@@ -87,6 +89,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   };
 
   useEffect(() => {
+    console.log(startDay, startTime, endDay, endTime);
     dateValidTest();
   }, [startDay, startTime, endDay, endTime, type]);
 
