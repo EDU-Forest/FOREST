@@ -13,9 +13,7 @@ const fetcher = () =>
 const useRecentWorkbookListQuery = () => {
   return useQuery([queryKeys.RECENT_WORKBOOK_LIST], fetcher, {
     refetchOnWindowFocus: false,
-    onSuccess: (data) => {
-      console.log("최신!", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 
