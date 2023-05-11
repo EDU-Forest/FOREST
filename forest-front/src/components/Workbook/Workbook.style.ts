@@ -19,6 +19,7 @@ const WorkbookImg = styled.img`
 
 const WorkbookImgBox = styled.div`
   position: relative;
+  text-align: center;
 
   p {
     position: absolute;
