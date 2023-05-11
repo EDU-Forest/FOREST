@@ -16,7 +16,7 @@ import ImportingPartModal from "@/features/editor/ImportingPartModal";
 import ImportingWholeModal from "@/features/editor/ImportingWholeModal";
 import QuestionEditArea from "@/features/editor/QuestionEditArea";
 import useEditorSave from "@/hooks/editor/useEditorSave";
-import { initCurQuestion, initDeleteAnswers, initQuestions, setIsAnswerValidConfirm, setIsPointValidConfirm, setIsTitleValidConfirm } from "@/stores/editor/editorQuestions";
+import { initCurQuestion, initDeleteAnswers, initQuestions } from "@/stores/editor/editorQuestions";
 import { setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
 import withAuth from "@/utils/auth/withAuth";
@@ -67,12 +67,6 @@ function Editor() {
     }
     getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
-
-  useEffect(() => {
-    dispatch(setIsPointValidConfirm(false));
-    dispatch(setIsTitleValidConfirm(false));
-    dispatch(setIsAnswerValidConfirm(false));
-  }, [curQuestion]);
 
   useEffect(() => {
     setIsSaveSuccess(isSuccess);
