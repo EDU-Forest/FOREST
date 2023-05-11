@@ -2,46 +2,43 @@ import WorkbookTab from "@/components/Tab/WorkbookTab";
 import { ClassWorkbookWrapper } from "./ClassWorkbook.style";
 import { useState } from "react";
 import ClassWorkbookList from "./ClassWorkbookList";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
+import { useDispatch } from "react-redux";
+import { setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassWorkbook() {
-  const [type, setType] = useState<string>("self");
-  const [inputs, setInputs] = useState({
-    isSelf: true,
-    isHomework: false,
-    isExam: false,
-  });
+  const dispatch = useDispatch();
+  const { nowStudyType } = useSelector((state: RootState) => state.class);
 
-  const { isSelf, isHomework, isExam } = inputs;
-
-  const changeTab = (type: string) => {
-    setType(type);
-    switch (type) {
-      case "self":
-        setInputs({ isSelf: true, isHomework: false, isExam: false });
-        break;
-      case "homework":
-        setInputs({ isSelf: false, isHomework: true, isExam: false });
-        break;
-      case "exam":
-        setInputs({ isSelf: false, isHomework: false, isExam: true });
-        break;
-      default:
-        setInputs({ isSelf: true, isHomework: false, isExam: false });
-    }
+  const clickHandler = (type: string) => {
+    dispatch(setStudyType(type));
   };
 
   return (
     <ClassWorkbookWrapper>
-      <WorkbookTab children="시험" selected={isExam} space={32} onClick={changeTab} type={"exam"} />
+      <WorkbookTab
+        children="시험"
+        selected={nowStudyType === "exam" ? true : false}
+        space={32}
+        onClick={() => clickHandler("exam")}
+        type={"exam"}
+      />
       <WorkbookTab
         children="과제"
-        selected={isHomework}
+        selected={nowStudyType === "homework" ? true : false}
         space={32}
-        onClick={changeTab}
+        onClick={() => clickHandler("homework")}
         type={"homework"}
       />
-      <WorkbookTab children="자습" selected={isSelf} space={32} onClick={changeTab} type={"self"} />
-      <ClassWorkbookList type={type} />
+      <WorkbookTab
+        children="자습"
+        selected={nowStudyType === "self" ? true : false}
+        space={32}
+        onClick={() => clickHandler("self")}
+        type={"self"}
+      />
+      <ClassWorkbookList />
     </ClassWorkbookWrapper>
   );
 }

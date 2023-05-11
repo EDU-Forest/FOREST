@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import authAxios from "@/utils/customAxios/authAxios";
 import { useDispatch } from "react-redux";
-import { setClass } from "@/stores/class/classInfo";
+import { setClass, setFirstConnect } from "@/stores/class/classInfo";
 import { IClassList } from "@/types/ClassList";
 
 const fetcher = () =>
@@ -17,6 +17,7 @@ const useRecentClassIdQuery = () => {
   return useQuery([queryKeys.RECENT_CLASSID], fetcher, {
     onSuccess: (recentClass) => {
       dispatch(setClass(recentClass));
+      dispatch(setFirstConnect(true));
     },
   });
 };

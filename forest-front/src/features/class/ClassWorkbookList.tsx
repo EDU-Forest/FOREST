@@ -12,19 +12,15 @@ import useClassWorkbookListQuery from "@/apis/class/useClassWorkbookListQuery";
 import Loading from "@/components/Loading/Loading";
 import { IClassWorkbooks } from "@/types/ClassWorkbooks";
 
-interface Iprops {
-  type: string;
-}
-
-export default function ClassWorkbookList({ type }: Iprops) {
+export default function ClassWorkbookList() {
   const dispatch = useDispatch();
-  const classId = useSelector((state: RootState) => state.class.nowClassId);
+  const { nowClassId, nowStudyType } = useSelector((state: RootState) => state.class);
   const changeWorkbookSummary = (id: number) => {
     dispatch(setStudy(id));
     dispatch(closeAllModal());
   };
 
-  const { data: workbooks, isLoading } = useClassWorkbookListQuery(classId, type);
+  const { data: workbooks, isLoading } = useClassWorkbookListQuery(nowClassId, nowStudyType);
 
   return (
     <div style={{ marginTop: "2rem" }}>
