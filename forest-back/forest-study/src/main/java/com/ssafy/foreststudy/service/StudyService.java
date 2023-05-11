@@ -846,9 +846,15 @@ public class StudyService {
         Study study = studyRepository.findById(studyId)
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
 
+        /* 반 시험 결과 리포트 테이블 수정 (생성은 출제 시) */
+        ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
+                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
+
         List<StudentStudyResult> studentStudyResults = studentStudyResultRepository.findAllByStudy(study);
         List<ClassUser> classUser = classUserRepository.findAllByClasses(study.getClasses());
+
         if (studentStudyResults.size() == 0 || classUser.size() == 0) {
+            classStudyResult.updateIsFinished();
             PostResponseDto postResponseDto = PostResponseDto.builder()
                     .message("학습 종료 - 학습에 참여한 학생이 없습니다")
                     .build();
@@ -917,9 +923,6 @@ public class StudyService {
         }
         ungradedAnswerRate = ungradedAnswerRate * 100 / ssp.size();
 
-        /* 반 시험 결과 리포트 테이블 수정 (생성은 출제 시) */
-        ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
-                .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_CLASS_RESULT_NOT_FOUND));
 
         classStudyResult.createClassStudyResult(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
 

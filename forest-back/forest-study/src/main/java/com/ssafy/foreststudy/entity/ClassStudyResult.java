@@ -75,4 +75,8 @@ public class ClassStudyResult {
         this.correctAnswerRate = correctAnswerRate;
         this.ungradedAnswerRate = 0;
     }
+
+    public void updateIsFinished(){
+        this.isFinished = true;
+    }
 }
