@@ -70,6 +70,7 @@ function Editor() {
       dispatch(initQuestions());
       // dispatch(resetSelectWorkbook());
     }
+    console.log("??");
     getWorkbookApi();
   }, [curWorkbookId, workbook.workbookId]);
 
