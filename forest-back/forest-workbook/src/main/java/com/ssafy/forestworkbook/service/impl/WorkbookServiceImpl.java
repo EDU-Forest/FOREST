@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -995,7 +996,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                     String subString = temp.substring(0, 1);
 
                     // 문장에 숫자 포함 여부
-                    if (checkTitle && temp.matches(".*[0-9].*")) {
+                    if (subString.equals("①")) {
+                        item.append(temp.substring(1).trim());
+                        checkText = true;
+                        checkDelete = true;
+                    } else if (checkTitle && temp.matches(".*[0-9].*")) {
                         String intStr = temp.replaceAll("[^0-9]", "");
 
                         // 문장에 포함된 숫자가 하나인 경우
@@ -1067,8 +1072,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                     else if (subString.matches("^[0-9]*$")
                             || (itemResExceptIdDtoList.size() == 0 ? !checkItem : checkItem)) {
 
-                        System.out.println("Asdasdasdas");
-
                         checkItem = true;
                         int beginIndex = 0;
 
@@ -1091,7 +1094,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                             checkMultiple = true;
                         } else {
-                            System.out.println("asdasdasda");
                             item.append(temp);
                         }
                     } else if (subString.equals("①")) {
@@ -1315,6 +1317,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 StringBuilder title = new StringBuilder();
                 StringBuilder text = new StringBuilder();
+                StringBuilder item = new StringBuilder();
                 List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
                 List<ItemResExceptIdDto> tempItemResExceptIdDtoList = new ArrayList<>();
                 List<ProblemOcrDto> problemOcrDtoList = new ArrayList<>();
@@ -1327,6 +1330,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 boolean checkItem = false;
                 boolean checkDelete = false;
                 boolean problemStart = false;
+                boolean newProblem = false;
 
                 int ocrNum = 0;
                 int ocrPoint = 0;
@@ -1335,201 +1339,46 @@ public class WorkbookServiceImpl implements WorkbookService {
                 int titleCount = 0;
 
                 // 한 줄씩 확인
-                for(int i = 0; i < txt.length; i++) {
-                    String temp = txt[i];
-                    log.info(txt[i]);
+                for(int i = 0; i <= txt.length; i++) {
 
-                    // 문제 시작 확인
-                    if (temp.substring(0, 1).matches("^[0-9]+$") && !problemStart) {
-                        if (temp.length() >= 5 && temp.contains(".") && temp.indexOf('.') <= 4) {
+                    if (newProblem) {
 
-                            int subIndex = 0;
-                            for (int j = 1; j < temp.length(); j++) {
-                                subIndex = temp.charAt(j) == '.' ? j : 0;
-                                if (subIndex != 0) {
-                                    ocrNum = Integer.parseInt(temp.substring(0, subIndex));
-                                    System.out.println(ocrNum);
-                                    temp = temp.substring(subIndex + 1).trim();
-                                    System.out.println("num : 잘랐다 : " + temp);
-                                    break;
-                                }
-                            }
+                        ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
+                                .type(checkMultiple ? EnumProblemTypeStatus.MULTIPLE : EnumProblemTypeStatus.DESCRIPT)
+                                .title(title.toString())
+                                .problemImgPath(null)
+                                .imgIsEmpty(true)
+                                .text(text.toString())
+                                .textIsEmpty(text.toString() == null)
+                                .itemList(itemResExceptIdDtoList)
+                                .point(ocrPoint)
+                                .build();
 
-                            // 배점 확인
-                            if (temp.contains("[")) {
-                                int start = temp.indexOf('[');
-                                int end = temp.indexOf(']');
-                                int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
-                                ocrPoint = Integer.parseInt(temp.substring(start + 1, end + endPoint));
-                                checkPoint = true;
-                            }
+                        problemOcrDtoList.add(problemOcrDto);
 
-                            // 문제 유형 확인
-                            if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
-                                checkMultiple = true;
-                                checkTitle = true;
-                                checkNum = true;
-                                log.info("1: title 확인 완료");
-                            }
+                        title.setLength(0);
+                        text.setLength(0);
+                        item.setLength(0);
+                        checkNum = false;
+                        checkTitle = false;
+                        checkText = false;
+                        checkMultiple = false;
+                        checkPoint = false;
+                        checkItem = false;
+                        checkDelete = false;
+                        problemStart = false;
+                        newProblem = false;
 
-                            title.append(temp);
-                            problemStart = true;
-                        }
+                        ocrNum = 0;
+                        ocrPoint = 0;
+                        midCount = 0;
+                        startCount = 0;
+                        titleCount = 0;
+
+                    } else {
+
                     }
 
-                    else if (problemStart) {
-
-                        // 타이틀 확인
-                        if (!checkTitle && !checkText & !checkNum) {
-                            titleCount++;
-
-                            // 배점 확인
-                            if (temp.contains("[")) {
-                                int start = temp.indexOf('[');
-                                int end = temp.indexOf(']');
-                                int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
-                                ocrPoint = Integer.parseInt(temp.substring(start + 1, end + endPoint));
-                                checkPoint = true;
-                                temp = temp.substring(0, start);
-                                System.out.println(temp);
-                            }
-
-                            // 문제 유형 확인
-                            if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
-                                checkMultiple = true;
-                                checkTitle = true;
-                                log.info("2: title 확인 완료");
-                                checkNum = true;
-                            }
-
-                            title.append(temp);
-                            System.out.println(title.toString());
-                        }
-
-                        // text 확인
-                        else if (checkTitle && !checkText & checkNum) {
-                            text.append(temp);
-
-                            System.out.println("여기 옴");
-
-                            String subString = temp.substring(0, 1);
-
-                            // 문장에 숫자 포함 여부
-                            if (checkTitle && temp.matches(".*[0-9].*")) {
-                                String intStr = temp.replaceAll("[^0-9]", "");
-
-                                // 문장에 포함된 숫자가 하나인 경우
-                                if (intStr.length() == 1) {
-                                    midCount++;
-
-                                    if (temp.substring(0, 1).matches("^[0-9]+$")) {
-                                        startCount++;
-                                    }
-
-                                    if (title.toString().contains("밑줄")) {
-                                        // 일단 째로 담기
-                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                .content(temp.trim())
-                                                .isImage(false)
-                                                .build();
-                                        tempItemResExceptIdDtoList.add(itemResExceptIdDto);
-                                        String[] findInt = temp.split("[^0-9]");
-
-                                    } else {
-                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                .content(temp)
-                                                .isImage(false)
-                                                .build();
-                                        tempItemResExceptIdDtoList.add(itemResExceptIdDto);
-                                    }
-                                }
-                            } else if (subString.equals("①") || subString.equals("②") || subString.equals("③")
-                                    || subString.equals("④") || subString.equals("⑤")) {
-                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(1).trim())
-                                        .isImage(false)
-                                        .build();
-                                checkText = true;
-                                checkDelete = true;
-                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-                            } else if (subString.equals("①") || subString.equals("②") || subString.equals("③")
-                                    || subString.equals("④") || subString.equals("⑤")) {
-                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(1).trim())
-                                        .isImage(false)
-                                        .build();
-                                checkText = true;
-                                checkDelete = true;
-                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-                            }
-                        }
-
-                        // 항목 확인
-                        else if (checkTitle && checkText && checkNum) {
-
-                            String subString = temp.substring(0, 1);
-
-                            if (temp.substring(0, 1).equals("*")) {
-                                text.append(temp).append(" ");
-                            }
-
-                            else if (subString.equals("⑤") || subString.equals("5")) {
-                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(1).trim())
-                                        .isImage(false)
-                                        .build();
-                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-
-                                ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
-                                        .type(checkMultiple ? EnumProblemTypeStatus.MULTIPLE : EnumProblemTypeStatus.DESCRIPT)
-                                        .title(title.toString())
-                                        .problemImgPath(null)
-                                        .imgIsEmpty(true)
-                                        .text(text.toString())
-                                        .textIsEmpty(text.toString() == null)
-                                        .itemList(itemResExceptIdDtoList)
-                                        .point(ocrPoint)
-                                        .build();
-
-                                problemOcrDtoList.add(problemOcrDto);
-                                problemOcrDtoList.add(problemOcrDto);
-
-                                checkNum = false;
-                                checkTitle = false;
-                                checkText = false;
-                                checkMultiple = false;
-                                checkPoint = false;
-                                checkItem = false;
-                                checkDelete = false;
-                                problemStart = false;
-
-                                ocrNum = 0;
-                                ocrPoint = 0;
-                            }
-                            else if (temp.substring(0, 1).matches("^[0-9]*$")
-                                    || (itemResExceptIdDtoList.size() == 0 ? !checkItem : checkItem)) {
-
-                                checkItem = true;
-
-                                int beginIndex = temp.substring(0, 1).matches("^[0-9]*$") ? 2 : 0;
-
-                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(beginIndex).trim())
-                                        .isImage(false)
-                                        .build();
-
-                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-                                checkMultiple = true;
-                            } else if (subString.equals("②") || subString.equals("③")
-                                    || subString.equals("④") || subString.equals("⑤")) {
-                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                        .content(temp.substring(1).trim())
-                                        .isImage(false)
-                                        .build();
-                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-                            }
-                        }
-                    }
                 }
 
                 Map<String, List<ProblemOcrDto>> map = new HashMap<>();
