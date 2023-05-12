@@ -44,13 +44,13 @@ export default function ClassSummaryTeacher() {
   };
 
   useEffect(() => {
+    console.log("nowStudyId", nowStudyId, " // analysisId", analysisId);
     if (analysisId !== -1) {
       setStudyId(analysisId);
     } else {
       setStudyId(nowStudyId);
     }
   }, [nowStudyId]);
-  console.log("nowStudyId", nowStudyId, "analysisId", analysisId, "studyId", studyId);
 
   const endTestHandler = () => {
     mutate(nowStudyId);

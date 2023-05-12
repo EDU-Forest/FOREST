@@ -19,7 +19,6 @@ const useRecentStudyIdQuery = (classId: number) => {
     onSuccess: (recentStudyId) => {
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
-        dispatch(setAnalysisId(-1));
       } else {
         dispatch(setStudy(-1));
       }
