@@ -30,22 +30,21 @@ export default function ClassWorkbookList() {
         <Loading width={8} height={8} />
       ) : (
         <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-          {workbooks &&
-            workbooks?.map((item: IClassWorkbooks) => (
-              <SwiperSlide key={item.studyId}>
-                <CommonWorkbook
-                  id={item.studyId}
-                  title={item.title}
-                  clickAction={() => changeWorkbookSummary(item.studyId)}
-                  workbookImgPath={item.workbookImgPath}
-                />
-                {nowStudyId === item.studyId && (
-                  <CheckIconWrapper>
-                    <AiOutlineCheckCircle />
-                  </CheckIconWrapper>
-                )}
-              </SwiperSlide>
-            ))}
+          {workbooks?.map((item: IClassWorkbooks) => (
+            <SwiperSlide key={item.studyId}>
+              <CommonWorkbook
+                id={item.studyId}
+                title={item.title}
+                clickAction={() => changeWorkbookSummary(item.studyId)}
+                workbookImgPath={item.workbookImgPath}
+              />
+              {nowStudyId === item.studyId && (
+                <CheckIconWrapper>
+                  <AiOutlineCheckCircle />
+                </CheckIconWrapper>
+              )}
+            </SwiperSlide>
+          ))}
         </Swiper>
       )}
     </div>
