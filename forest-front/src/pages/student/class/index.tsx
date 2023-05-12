@@ -30,7 +30,6 @@ function StudentClass() {
   window.addEventListener("beforeunload", (event) => {
     event.preventDefault();
     dispatch(setFirstConnect(true));
-    event.returnValue = "";
   });
 
   const hideDropdownHandler = () => {

@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function TeacherClass() {
   const dispatch = useDispatch();
-  const { nowClassId } = useSelector((state: RootState) => state.class);
+  const { nowClassId, firstConnect } = useSelector((state: RootState) => state.class);
   const { data } = useRecentStudyIdQuery(nowClassId);
 
   // 모달 분리
@@ -40,6 +40,8 @@ function TeacherClass() {
     dispatch(setFirstConnect(true));
     event.returnValue = "";
   });
+
+  console.log(firstConnect);
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());
