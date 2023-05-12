@@ -16,7 +16,7 @@ const fetcher = (classId: number) =>
 const useRecentStudyIdQuery = (classId: number) => {
   const { nowClassId, firstConnect } = useSelector((state: RootState) => state.class);
   const dispatch = useDispatch();
-  return useQuery([queryKeys.RECENT_CLASSID, classId], () => fetcher(classId), {
+  return useQuery([queryKeys.RECENT_CLASSID, classId, firstConnect], () => fetcher(classId), {
     enabled: (!!classId && nowClassId !== classId) || firstConnect,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
