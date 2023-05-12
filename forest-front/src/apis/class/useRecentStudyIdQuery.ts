@@ -24,6 +24,7 @@ const useRecentStudyIdQuery = (classId: number) => {
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
         dispatch(setFirstConnect(false));
+        console.log("여기함?", firstConnect);
       } else {
         dispatch(setStudy(-1));
       }

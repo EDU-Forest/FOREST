@@ -16,7 +16,7 @@ interface ClassState {
 }
 
 const initialState: ClassState = {
-  firstConnect: false,
+  firstConnect: true,
   nowClassName: "",
   nowClassId: -1,
   nowStudyId: -1,
