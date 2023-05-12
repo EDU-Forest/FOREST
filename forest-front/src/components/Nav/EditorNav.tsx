@@ -111,19 +111,12 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickObjectType = (type: string) => {
-    setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
-
-    if (
-      questions.length === 0 ||
-      (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
-    ) {
-      if (type === "text") {
-        const copyArr = [...questions];
-        copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
-        dispatch(setQuestions([...copyArr]));
-      } else if (type === "image") {
-        toChangeQuestions("imgIsEmpty", false);
-      }
+    if (type === "text") {
+      const copyArr = [...questions];
+      copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
+      dispatch(setQuestions([...copyArr]));
+    } else if (type === "image") {
+      toChangeQuestions("imgIsEmpty", false);
     }
   };
 
