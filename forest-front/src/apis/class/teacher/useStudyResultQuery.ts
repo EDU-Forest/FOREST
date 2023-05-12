@@ -17,6 +17,7 @@ const useStudyResultQuery = (studyId: number) => {
     enabled: !!studyId && studyId !== -1,
     refetchOnWindowFocus: false,
     onSuccess(data) {
+      console.log("셤결과 조회 스터디 아이디: ", studyId);
       dispatch(setStudyType(data.data.studyType.toLowerCase()));
     },
   });

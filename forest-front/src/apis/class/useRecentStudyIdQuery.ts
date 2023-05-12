@@ -14,10 +14,10 @@ const fetcher = (classId: number) =>
 
 // 최근 진행한 시험 결과 조회 - OK
 const useRecentStudyIdQuery = (classId: number) => {
-  const { nowClassId } = useSelector((state: RootState) => state.class);
+  // const { nowClassId } = useSelector((state: RootState) => state.class);
   const dispatch = useDispatch();
   return useQuery([queryKeys.RECENT_CLASSID, classId], () => fetcher(classId), {
-    enabled: !!classId && nowClassId !== classId,
+    enabled: !!classId,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
       if (recentStudyId) {

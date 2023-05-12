@@ -15,11 +15,12 @@ interface ServerProps {
 function StudyAnalysisPage({ studyId }: IStudyId) {
   const dispatch = useDispatch();
   useEffect(() => {
+    console.log("분석페이지 마운트");
     return () => {
       console.log("분석페이지 언마운트");
       dispatch(setAnalysisId(studyId));
     };
-  }, []);
+  }, [studyId]);
 
   return (
     <AnalysisFullScreen>
