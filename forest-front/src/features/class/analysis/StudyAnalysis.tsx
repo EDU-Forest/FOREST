@@ -33,7 +33,7 @@ export default function StudyAnalysis() {
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 
-  const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
+  const { data: result, isLoading } = useStudyResultQuery(nowStudyId, true);
 
   const goToGrade = (student: StudentStudyResultList) => {
     // 상세 성적으로 이동

@@ -34,7 +34,7 @@ export default function ClassSummaryTeacher() {
   const dispatch = useDispatch();
   const [studyId, setStudyId] = useState<number>(-1);
   const { nowStudyId, haveDescript, analysisId } = useSelector((state: RootState) => state.class);
-  const { data: result, isLoading } = useStudyResultQuery(studyId);
+  const { data: result, isLoading } = useStudyResultQuery(studyId, false);
   const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
