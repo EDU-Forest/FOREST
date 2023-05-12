@@ -18,7 +18,6 @@ import com.ssafy.forestauth.util.CookieUtil;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -51,6 +50,16 @@ public class UserService {
         user.encodePassword(encoder.encode(signupRequestDto.getPw()));
         userRepository.save(user);
 
+        /* ssafy 클래스 자동 추가 로직 */
+        if (signupRequestDto.getRole().equals(EnumUserRoleStatus.STUDENT)) {
+            Long id = 1L;
+            ClassEntity classEntity = classRepository.findById(id)
+                    .orElseThrow(() -> new CustomException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+            ClassUser classUser = new ClassUser();
+            classUser.createClassUser(classEntity, user);
+            classUserRepository.save(classUser);
+        }
+
         SignupCommonResponseDto signupCommonResponseDto = SignupCommonResponseDto.builder()
                 .message(SuccessCode.AUTH_SIGN_UP_SUCCESS.getMessage())
                 .build();
@@ -63,6 +72,16 @@ public class UserService {
         User findUserById = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
         findUserById.updateUserInfo(signupSocialRequestDto);
+
+        /* ssafy 클래스 자동 추가 로직 */
+        if (signupSocialRequestDto.getRole().equals(EnumUserRoleStatus.STUDENT)) {
+            Long id = 1L;
+            ClassEntity classEntity = classRepository.findById(id)
+                    .orElseThrow(() -> new CustomException(ErrorCode.AUTH_CLASS_NOT_FOUND));
+            ClassUser classUser = new ClassUser();
+            classUser.createClassUser(classEntity, findUserById);
+            classUserRepository.save(classUser);
+        }
 
         SignupSocialResponseDto signupSocialResponseDto = SignupSocialResponseDto.builder()
                 .name(findUserById.getName())
@@ -118,7 +137,7 @@ public class UserService {
         User findUser = userRepository.findByEmailAndAuthProvider(email, EnumUserProviderStatus.LOCAL)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
 
-        if(!encoder.matches(pw, findUser.getPassword())) {
+        if (!encoder.matches(pw, findUser.getPassword())) {
             log.info("비밀번호 불일치");
             throw new CustomException(ErrorCode.AUTH_USER_NOT_FOUND);
         }
