@@ -25,7 +25,7 @@ to {
   }
 `;
 
-export const ToastBox = styled.div<{}>`
+export const ToastBox = styled.div<{ isOpen: boolean }>`
   min-width: 400px;
 
   position: fixed;
@@ -40,15 +40,8 @@ export const ToastBox = styled.div<{}>`
   background-color: rgb(0 0 0 / 75%);
   border-radius: 10px;
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
-  z-index: 40;
 
-  .openAnimation {
-    animation: ${fadeInUp} 0.5s;
-  }
-
-  .closeAnimation {
-    animation: ${fadeOutUp} 0.5s;
-  }
+  animation: ${(props) => (props.isOpen ? fadeInUp : fadeOutUp)} 1s;
 
   svg {
     width: 1.5rem;
