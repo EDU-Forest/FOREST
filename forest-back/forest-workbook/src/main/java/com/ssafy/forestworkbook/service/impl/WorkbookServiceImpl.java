@@ -884,6 +884,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
             StringBuilder title = new StringBuilder();
             StringBuilder text = new StringBuilder();
+            StringBuilder item = new StringBuilder();
             List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
             List<ItemResExceptIdDto> tempItemResExceptIdDtoList = new ArrayList<>();
 
@@ -1024,13 +1025,9 @@ public class WorkbookServiceImpl implements WorkbookService {
                         }
                     } else if (subString.equals("①") || subString.equals("②") || subString.equals("③")
                                 || subString.equals("④") || subString.equals("⑤")) {
-                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                .content(temp.substring(1).trim())
-                                .isImage(false)
-                                .build();
+                        item.append(temp.substring(1).trim());
                         checkText = true;
                         checkDelete = true;
-                        itemResExceptIdDtoList.add(itemResExceptIdDto);
                     }
 
                     // 배점 확인
@@ -1038,15 +1035,11 @@ public class WorkbookServiceImpl implements WorkbookService {
                         int start = temp.indexOf('[');
                         int end = temp.indexOf(']');
                         int endPoint = (temp.indexOf("점") == -1) ? 0 : -1;
-                        if (temp.matches(".*[가-힣].*")) {
-
-                        } else {
-                            ocrPoint = Integer.parseInt(temp.substring(start + 1, end - endPoint));
-                            checkPoint = true;
-                            checkText = true;
-                            temp = temp.substring(0, start).trim();
-                            System.out.println(temp);
-                        }
+                        ocrPoint = Integer.parseInt(temp.substring(start + 1, end + endPoint));
+                        checkPoint = true;
+//                        checkText = true;
+                        temp = temp.substring(0, start).trim();
+                        System.out.println(temp);
                     }
 
                     if (!checkDelete) text.append(temp).append(" ");
@@ -1068,30 +1061,56 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     String subString = temp.substring(0, 1);
 
-                    if (temp.substring(0, 1).equals("*")) {
+                    if (subString.equals("*")) {
                         text.append(temp).append(" ");
                     }
-                    else if (temp.substring(0, 1).matches("^[0-9]*$")
+                    else if (subString.matches("^[0-9]*$")
                             || (itemResExceptIdDtoList.size() == 0 ? !checkItem : checkItem)) {
 
+                        System.out.println("Asdasdasdas");
+
                         checkItem = true;
+                        int beginIndex = 0;
 
-                        int beginIndex = temp.substring(0, 1).matches("^[0-9]*$") ? 2 : 0;
+                        if (subString.matches("^[0-9]*$")) {
+                            beginIndex = 2;
+                        } else if (subString.equals("②") || subString.equals("③")
+                                || subString.equals("④") || subString.equals("⑤")) {
+                            beginIndex = 1;
 
-                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                    .content(temp.substring(beginIndex).trim())
+                            ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                    .content(item.toString())
                                     .isImage(false)
                                     .build();
 
-                        itemResExceptIdDtoList.add(itemResExceptIdDto);
-                        checkMultiple = true;
+                            itemResExceptIdDtoList.add(itemResExceptIdDto);
+
+                            item.setLength(0);
+
+                            item.append(temp.substring(beginIndex).trim());
+
+                            checkMultiple = true;
+                        } else {
+                            System.out.println("asdasdasda");
+                            item.append(temp);
+                        }
+                    } else if (subString.equals("①")) {
+                        item.append(temp.substring(1).trim());
                     } else if (subString.equals("②") || subString.equals("③")
                             || subString.equals("④") || subString.equals("⑤")) {
+
                         ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                .content(temp.substring(1).trim())
+                                .content(item.toString())
                                 .isImage(false)
                                 .build();
+
                         itemResExceptIdDtoList.add(itemResExceptIdDto);
+
+                        item.setLength(0);
+
+                        item.append(temp.substring(1).trim());
+                    } else if (temp.substring(0, 1).matches("^[가-힣a-zA-Z]*$")){
+                        item.append(temp);
                     }
                 }
             }
@@ -1123,6 +1142,15 @@ public class WorkbookServiceImpl implements WorkbookService {
                         itemResExceptIdDtoList.add(itemResExceptIdDto);
                     }
                 }
+            }
+
+            if (item.length() != 0 ) {
+                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                        .content(item.toString())
+                        .isImage(false)
+                        .build();
+
+                itemResExceptIdDtoList.add(itemResExceptIdDto);
             }
 
             // 문제 확인
