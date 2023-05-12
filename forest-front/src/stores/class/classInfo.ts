@@ -34,11 +34,9 @@ const classSlice = createSlice({
   reducers: {
     setAnalysisId(state, action) {
       state.analysisId = action.payload;
-      if (state.analysisId !== -1) {
-        state.useAnalysisId = true;
-      } else {
-        state.useAnalysisId = false;
-      }
+    },
+    setUseAnalysisId(state, action) {
+      state.useAnalysisId = action.payload;
     },
 
     setClass(state, action) {
@@ -66,6 +64,7 @@ const classSlice = createSlice({
 
 export const {
   setAnalysisId,
+  setUseAnalysisId,
   setClass,
   setStudy,
   setStudyType,
