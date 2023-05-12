@@ -26,7 +26,7 @@ export default function TestInfoBtn() {
   };
 
   const goToResultHandler = () => {
-    router.push(`/student/${studyId}/result`);
+    router.push(`/test/${studyId}/result`);
   };
 
   return (
