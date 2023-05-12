@@ -11,6 +11,7 @@ import { openDeleteStudentModal } from "@/stores/class/classModal";
 import { useEffect } from "react";
 import { setDeleteStudentNum } from "@/stores/class/classInfo";
 import { IStudent } from "@/types/Student";
+import { phoneFormatter } from "@/utils";
 
 interface Iprops {
   studentInfo: IStudent;
@@ -36,7 +37,7 @@ export default function StudentInfoCard({ studentInfo }: Iprops) {
       <div>
         <StudentInfoCardText>{studentInfo?.email}</StudentInfoCardText>
         <StudentInfoCardText>|</StudentInfoCardText>
-        <StudentInfoCardText>{studentInfo?.phone}</StudentInfoCardText>
+        <StudentInfoCardText>{phoneFormatter(studentInfo?.phone)}</StudentInfoCardText>
       </div>
     </StyledStudentInfoCard>
   );
