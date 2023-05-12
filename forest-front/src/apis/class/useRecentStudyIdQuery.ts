@@ -20,6 +20,7 @@ const useRecentStudyIdQuery = (classId: number) => {
     enabled: (!!classId && nowClassId !== classId) || firstConnect,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
+      console.log("쿼리");
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
         dispatch(setFirstConnect(false));
