@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
-import { setStudy } from "@/stores/class/classInfo";
+import { setAnalysisId, setStudy } from "@/stores/class/classInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
@@ -22,6 +22,7 @@ const useRecentStudyIdQuery = (classId: number) => {
     onSuccess: (recentStudyId) => {
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
+        dispatch(setAnalysisId(-1));
       } else {
         dispatch(setStudy(-1));
       }
