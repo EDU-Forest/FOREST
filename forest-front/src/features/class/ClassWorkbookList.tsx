@@ -11,20 +11,18 @@ import { RootState } from "@/stores/store";
 import useClassWorkbookListQuery from "@/apis/class/useClassWorkbookListQuery";
 import Loading from "@/components/Loading/Loading";
 import { IClassWorkbooks } from "@/types/ClassWorkbooks";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { CheckIconWrapper } from "./ClassWorkbook.style";
 
-interface Iprops {
-  type: string;
-}
-
-export default function ClassWorkbookList({ type }: Iprops) {
+export default function ClassWorkbookList() {
   const dispatch = useDispatch();
-  const classId = useSelector((state: RootState) => state.class.nowClassId);
+  const { nowClassId, nowStudyId, nowStudyType } = useSelector((state: RootState) => state.class);
   const changeWorkbookSummary = (id: number) => {
     dispatch(setStudy(id));
     dispatch(closeAllModal());
   };
 
-  const { data: workbooks, isLoading } = useClassWorkbookListQuery(classId, type);
+  const { data: workbooks, isLoading } = useClassWorkbookListQuery(nowClassId, nowStudyType);
 
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -41,6 +39,11 @@ export default function ClassWorkbookList({ type }: Iprops) {
                   clickAction={() => changeWorkbookSummary(item.studyId)}
                   workbookImgPath={item.workbookImgPath}
                 />
+                {nowStudyId === item.studyId && (
+                  <CheckIconWrapper>
+                    <AiOutlineCheckCircle />
+                  </CheckIconWrapper>
+                )}
               </SwiperSlide>
             ))}
         </Swiper>

@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
-import { setStudy } from "@/stores/class/classInfo";
+import { setFirstConnect, setStudy } from "@/stores/class/classInfo";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
@@ -14,15 +14,15 @@ const fetcher = (classId: number) =>
 
 // 최근 진행한 시험 결과 조회 - OK
 const useRecentStudyIdQuery = (classId: number) => {
-  const { nowClassId } = useSelector((state: RootState) => state.class);
+  const { nowClassId, firstConnect } = useSelector((state: RootState) => state.class);
   const dispatch = useDispatch();
   return useQuery([queryKeys.RECENT_CLASSID, classId], () => fetcher(classId), {
-    enabled: !!classId && nowClassId !== classId,
+    enabled: (!!classId && nowClassId !== classId) || firstConnect,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
-      console.log("이거 실행?", nowClassId, classId);
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
+        dispatch(setFirstConnect(false));
       } else {
         dispatch(setStudy(-1));
       }
