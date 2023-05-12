@@ -19,15 +19,10 @@ import { useRouter } from "next/router";
 import useLogin from "@/apis/auth/useLoginQuery";
 import Label from "@/components/Label/Label";
 import Toast from "@/components/Toast/Toast";
-import { IoMdCloseCircleOutline } from "react-icons/io";
 
-interface Iprops {
-  setIsError: (isError: boolean) => void;
-}
-
-export default function Login({ setIsError }: Iprops) {
+export default function Login() {
   const router = useRouter();
-  const { mutate } = useLogin(setIsError);
+  const { mutate } = useLogin();
   const [validation, setValidation] = useState({
     email: "",
     password: "",

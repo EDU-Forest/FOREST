@@ -1,9 +1,11 @@
+import { setToastAnimation, setToastState } from "@/stores/toast/toast";
 import { Login } from "@/types/Auth";
 import beforeAuthAxios from "@/utils/customAxios/beforeAuthAxios";
 import { setLocalStorage } from "@/utils/localStorage";
 import { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
 
 const fetcher = (payload: Login) =>
   beforeAuthAxios
@@ -15,8 +17,9 @@ const fetcher = (payload: Login) =>
       return data;
     });
 
-const useLogin = (setIsError: (isError: boolean) => void) => {
+const useLogin = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   return useMutation(fetcher, {
     onSuccess: (data) => {
@@ -26,7 +29,8 @@ const useLogin = (setIsError: (isError: boolean) => void) => {
     },
     onError: (error: AxiosError) => {
       if (error.code === "ERR_BAD_REQUEST") {
-        setIsError(true);
+        dispatch(setToastAnimation("toast-alert openAnimation"));
+        dispatch(setToastState(true));
       }
     },
   });
