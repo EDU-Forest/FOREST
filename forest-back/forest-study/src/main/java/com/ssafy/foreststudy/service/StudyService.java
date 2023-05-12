@@ -825,7 +825,7 @@ public class StudyService {
                 sumScore += ssr.getScore();
                 correctRate += ssr.getCorrectRate();
             }
-            double average = sumScore * 1.0 / participateNum;
+            double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
             double dis = 0;
             for (StudentStudyResult ssr : studentStudyResults)
                 dis += Math.pow(average - ssr.getScore(), 2);
@@ -914,7 +914,7 @@ public class StudyService {
             solvingTime += duration.getSeconds() / 60;
             correctRate += ssr.getCorrectRate();
         }
-        double average = sumScore * 1.0 / participateNum;
+        double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
         double dis = 0;
         for (StudentStudyResult ssr : studentStudyResults) {
             dis += Math.pow(average - ssr.getScore(), 2);
