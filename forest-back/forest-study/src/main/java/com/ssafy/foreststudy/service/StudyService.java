@@ -830,7 +830,7 @@ public class StudyService {
             for (StudentStudyResult ssr : studentStudyResults)
                 dis += Math.pow(average - ssr.getScore(), 2);
 
-            double standardDeviation = Math.sqrt(dis / participateNum);
+            double standardDeviation = Math.sqrt(dis / participateNum) * 100 / 100.0;
             int correctAnswerRate = correctRate / participateNum;
 
             ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
