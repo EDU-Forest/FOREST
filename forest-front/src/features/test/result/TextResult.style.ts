@@ -122,7 +122,6 @@ const TestResultContentBox = styled.div`
   width: 30rem;
   min-height: 6rem;
   position: relative;
-  padding-bottom: 2rem;
 `;
 
 const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
