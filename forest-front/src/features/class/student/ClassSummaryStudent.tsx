@@ -20,7 +20,8 @@ import Loading from "@/components/Loading/Loading";
 import useStudentScoreQuery from "@/apis/class/student/useStudentScoreQuery";
 import arrangeDate from "@/utils/arrangeDate";
 import { useDispatch } from "react-redux";
-import { setStudyType } from "@/stores/class/classInfo";
+import { setStudyType, setUseAnalysisId } from "@/stores/class/classInfo";
+import { useEffect, useState } from "react";
 
 export default function ClassSummaryStudent() {
   const router = useRouter();

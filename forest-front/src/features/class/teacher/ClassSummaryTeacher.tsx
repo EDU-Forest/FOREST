@@ -26,7 +26,7 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
 import { isStarted } from "@/utils/date";
 import { useDispatch } from "react-redux";
-import { setStudyType } from "@/stores/class/classInfo";
+import { setStudyType, setUseAnalysisId } from "@/stores/class/classInfo";
 import { useEffect, useState } from "react";
 
 export default function ClassSummaryTeacher() {
@@ -46,10 +46,12 @@ export default function ClassSummaryTeacher() {
   useEffect(() => {
     if (analysisId !== -1) {
       setStudyId(analysisId);
+      dispatch(setUseAnalysisId(true));
     } else {
       setStudyId(nowStudyId);
+      dispatch(setUseAnalysisId(false));
     }
-  }, []);
+  }, [nowStudyId]);
 
   const endTestHandler = () => {
     mutate(nowStudyId);

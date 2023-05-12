@@ -59,6 +59,7 @@
 	},
 	"devDependencies": {
 		"@babel/plugin-syntax-typescript": "^7.21.4",
+		"@types/gtag.js": "^0.0.12",
 		"@types/node": "^18.15.11",
 		"@types/react": "^18.0.37",
 		"@types/styled-components": "^5.1.26",

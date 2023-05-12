@@ -16,7 +16,9 @@ import { CheckIconWrapper } from "./ClassWorkbook.style";
 
 export default function ClassWorkbookList() {
   const dispatch = useDispatch();
-  const { nowClassId, nowStudyId, nowStudyType } = useSelector((state: RootState) => state.class);
+  const { nowClassId, nowStudyId, nowStudyType, useAnalysisId, analysisId } = useSelector(
+    (state: RootState) => state.class,
+  );
   const changeWorkbookSummary = (id: number) => {
     dispatch(setStudy(id));
     dispatch(closeAllModal());
@@ -38,11 +40,13 @@ export default function ClassWorkbookList() {
                 clickAction={() => changeWorkbookSummary(item.studyId)}
                 workbookImgPath={item.workbookImgPath}
               />
-              {nowStudyId === item.studyId && (
-                <CheckIconWrapper>
-                  <AiOutlineCheckCircle />
-                </CheckIconWrapper>
-              )}
+              {useAnalysisId
+                ? analysisId === item.studyId
+                : nowStudyId === item.studyId && (
+                    <CheckIconWrapper>
+                      <AiOutlineCheckCircle />
+                    </CheckIconWrapper>
+                  )}
             </SwiperSlide>
           ))}
         </Swiper>
