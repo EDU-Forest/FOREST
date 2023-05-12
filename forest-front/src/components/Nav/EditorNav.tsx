@@ -97,7 +97,8 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickQuestionType = (type: string) => {
-    setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
+    questions.length !== 0 &&
+      setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
 
     if (
       questions.length === 0 ||
@@ -121,7 +122,8 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickImport = (type: string) => {
-    setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
+    questions.length !== 0 &&
+      setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
 
     if (
       questions.length === 0 ||
@@ -181,8 +183,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
           </EditorNavDivInner>
         </EditorNavDiv>
       </StyledEditorNav>
-      {/* 빈 문제집일 경우 경고 토스트 띄우지 않음 */}
-      {questions.length !== 0 && isAddFail && (
+      {isAddFail && (
         <Toast
           icon={<IoIosWarning />}
           subtitle="추가 불가"
