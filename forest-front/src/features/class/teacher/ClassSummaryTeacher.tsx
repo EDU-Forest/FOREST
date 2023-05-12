@@ -26,21 +26,30 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
 import { isStarted } from "@/utils/date";
 import { useDispatch } from "react-redux";
-import { setAnalysisBack, setStudyType } from "@/stores/class/classInfo";
+import { setStudyType } from "@/stores/class/classInfo";
+import { useEffect, useState } from "react";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { nowStudyId, haveDescript } = useSelector((state: RootState) => state.class);
-  const { data: result, isLoading } = useStudyResultQuery(nowStudyId);
+  const [studyId, setStudyId] = useState<number>(-1);
+  const { nowStudyId, haveDescript, analysisId } = useSelector((state: RootState) => state.class);
+  const { data: result, isLoading } = useStudyResultQuery(studyId);
   const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
     dispatch(setStudyType(result?.data.studyType.toLowerCase()));
-    dispatch(setAnalysisBack(true));
 
     router.push(`/teacher/class/study/${studyId}`);
   };
+
+  useEffect(() => {
+    if (analysisId !== -1) {
+      setStudyId(analysisId);
+    } else {
+      setStudyId(nowStudyId);
+    }
+  }, []);
 
   const endTestHandler = () => {
     mutate(nowStudyId);

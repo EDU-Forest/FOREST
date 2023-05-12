@@ -1,7 +1,6 @@
 import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 import TeacherNav from "@/components/Nav/TeacherNav";
 import ClassSelect from "@/features/class/ClassSelect";
-import ClassSelectDropdown from "@/features/class/ClassSelectDropdown";
 import {
   ClassSummaryItemWrapperNoResult,
   ClassSummaryWrapper,
@@ -33,21 +32,6 @@ function TeacherClass() {
   useEffect(() => {
     dispatch(closeAllModal());
   }, []);
-
-  // window.addEventListener("beforeunload", (event) => {
-  //   console.log("지금 새로고침");
-  //   dispatch(setFirstConnect(true));
-  //   // event.preventDefault();
-  //   // event.returnValue = "";
-  // });
-
-  // useEffect(() => {
-  //   const entries = performance.getEntriesByType("navigation")[0];
-  //   const entriesNavigationTiming = entries as PerformanceNavigationTiming;
-  //   console.log(entriesNavigationTiming.type);
-  // }, []);
-
-  // console.log("렌더링", firstConnect);
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());
