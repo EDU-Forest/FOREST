@@ -49,7 +49,7 @@ export default function ClassSummaryTeacher() {
     } else {
       setStudyId(nowStudyId);
     }
-  }, [nowStudyId, analysisId]);
+  }, [nowStudyId]);
   console.log("nowStudyId", nowStudyId, "analysisId", analysisId, "studyId", studyId);
 
   const endTestHandler = () => {
