@@ -39,3 +39,11 @@ export const titleFormatter = (title: string) => {
     return title.slice(0, 6) + "...";
   }
 };
+
+export const phoneFormatter = (phone: string) => {
+  if (phone.length === 10) {
+    return `${phone.slice(0, 3)}-***-${phone.slice(6)}`;
+  } else {
+    return `${phone.slice(0, 3)}-****-${phone.slice(7)}`;
+  }
+};
