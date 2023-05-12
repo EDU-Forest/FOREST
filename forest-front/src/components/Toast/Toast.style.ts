@@ -36,6 +36,7 @@ export const ToastBox = styled.div<{ isOpen: boolean }>`
   left: 50%;
   top: 30px;
   transform: translate(-50%, 15px);
+  z-index: 40;
 
   background-color: rgb(0 0 0 / 75%);
   border-radius: 10px;
