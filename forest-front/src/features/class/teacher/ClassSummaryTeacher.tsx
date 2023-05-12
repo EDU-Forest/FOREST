@@ -26,7 +26,7 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
 import { isStarted } from "@/utils/date";
 import { useDispatch } from "react-redux";
-import { setStudyType } from "@/stores/class/classInfo";
+import { setAnalysisBack, setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
@@ -37,6 +37,8 @@ export default function ClassSummaryTeacher() {
 
   const goToDetail = (studyId: number) => {
     dispatch(setStudyType(result?.data.studyType.toLowerCase()));
+    dispatch(setAnalysisBack(true));
+
     router.push(`/teacher/class/study/${studyId}`);
   };
 

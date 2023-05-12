@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
-import { setStudyType } from "@/stores/class/classInfo";
+import { setAnalysisBack, setStudyType } from "@/stores/class/classInfo";
 
 const fetcher = (studyId: number) =>
   studyAxios.get(`/api/study/${studyId}`).then(({ data }) => {
@@ -18,6 +18,7 @@ const useStudyResultQuery = (studyId: number) => {
     refetchOnWindowFocus: false,
     onSuccess(data) {
       dispatch(setStudyType(data.data.studyType.toLowerCase()));
+      dispatch(setAnalysisBack(false));
     },
   });
 };

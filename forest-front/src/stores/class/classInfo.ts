@@ -5,7 +5,7 @@ interface ObjType {
 }
 
 interface ClassState {
-  firstConnect: boolean;
+  analysisBack: boolean;
   nowClassName: string;
   nowClassId: number;
   nowStudyId: number;
@@ -16,7 +16,7 @@ interface ClassState {
 }
 
 const initialState: ClassState = {
-  firstConnect: true,
+  analysisBack: true,
   nowClassName: "",
   nowClassId: -1,
   nowStudyId: -1,
@@ -30,8 +30,8 @@ const classSlice = createSlice({
   name: "classInfo",
   initialState,
   reducers: {
-    setFirstConnect(state, action) {
-      state.firstConnect = action.payload;
+    setAnalysisBack(state, action) {
+      state.analysisBack = action.payload;
     },
     setClass(state, action) {
       state.nowClassName = action.payload.className;
@@ -57,7 +57,7 @@ const classSlice = createSlice({
 });
 
 export const {
-  setFirstConnect,
+  setAnalysisBack,
   setClass,
   setStudy,
   setStudyType,

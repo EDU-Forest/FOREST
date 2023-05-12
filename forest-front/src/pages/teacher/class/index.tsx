@@ -13,7 +13,6 @@ import AddStudentModal from "@/features/class/teacher/AddStudentModal";
 import ClassStudentList from "@/features/class/teacher/ClassStudentList";
 import ClassSummaryTeacher from "@/features/class/teacher/ClassSummaryTeacher";
 import DeleteStudentModal from "@/features/class/teacher/DeleteStudentModal";
-import { setFirstConnect } from "@/stores/class/classInfo";
 import { closeAllModal, hideClassDropdown } from "@/stores/class/classModal";
 import { RootState } from "@/stores/store";
 import { Container, FullScreen } from "@/styles/container";
@@ -24,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function TeacherClass() {
   const dispatch = useDispatch();
-  const { nowClassId, firstConnect } = useSelector((state: RootState) => state.class);
+  const { nowClassId } = useSelector((state: RootState) => state.class);
   const { data } = useRecentStudyIdQuery(nowClassId);
 
   // 모달 분리
@@ -35,20 +34,20 @@ function TeacherClass() {
     dispatch(closeAllModal());
   }, []);
 
-  window.addEventListener("beforeunload", (event) => {
-    console.log("지금 새로고침");
-    dispatch(setFirstConnect(true));
-    // event.preventDefault();
-    // event.returnValue = "";
-  });
+  // window.addEventListener("beforeunload", (event) => {
+  //   console.log("지금 새로고침");
+  //   dispatch(setFirstConnect(true));
+  //   // event.preventDefault();
+  //   // event.returnValue = "";
+  // });
 
-  useEffect(() => {
-    const entries = performance.getEntriesByType("navigation")[0];
-    const entriesNavigationTiming = entries as PerformanceNavigationTiming;
-    console.log(entriesNavigationTiming.type);
-  }, []);
+  // useEffect(() => {
+  //   const entries = performance.getEntriesByType("navigation")[0];
+  //   const entriesNavigationTiming = entries as PerformanceNavigationTiming;
+  //   console.log(entriesNavigationTiming.type);
+  // }, []);
 
-  console.log("렌더링", firstConnect);
+  // console.log("렌더링", firstConnect);
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());
