@@ -30,7 +30,7 @@ export default function TestEnd() {
       type,
     };
 
-    if (paths.length > 0) {
+    if (paths?.length > 0) {
       const canvasPayload = {
         studentStudyProblemId: studentStudyProblemId,
         line: paths,
