@@ -38,7 +38,6 @@ function EditorShortAnswer() {
     <EditorShortAnswerBox>
       <input
         value={answer}
-        maxLength={100}
         placeholder="정답을 입력하세요"
         onChange={handleChange}
       />

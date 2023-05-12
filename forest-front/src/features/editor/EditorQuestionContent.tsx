@@ -80,7 +80,6 @@ function EditorQuestionContent({ selectQuestionType }: IProps) {
       <EditorQuestionContentBox>
         <EditorQuestionTitleInput
           value={title}
-          maxLength={30}
           placeholder="문제를 입력하세요"
           onChange={handleChangeTitle}
         />
