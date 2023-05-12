@@ -37,8 +37,8 @@ function TeacherClass() {
 
   window.addEventListener("beforeunload", (event) => {
     dispatch(setFirstConnect(true));
-    event.preventDefault();
-    event.returnValue = "";
+    // event.preventDefault();
+    // event.returnValue = "";
   });
 
   console.log(firstConnect);
