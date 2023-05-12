@@ -36,12 +36,19 @@ function TeacherClass() {
   }, []);
 
   window.addEventListener("beforeunload", (event) => {
+    console.log("지금 새로고침");
     dispatch(setFirstConnect(true));
     // event.preventDefault();
     // event.returnValue = "";
   });
 
-  console.log(firstConnect);
+  useEffect(() => {
+    const entries = performance.getEntriesByType("navigation")[0];
+    const entriesNavigationTiming = entries as PerformanceNavigationTiming;
+    console.log(entriesNavigationTiming.type);
+  }, []);
+
+  console.log("렌더링", firstConnect);
 
   const hideDropdownHandler = () => {
     dispatch(hideClassDropdown());
