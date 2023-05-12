@@ -44,7 +44,6 @@ export default function ClassSummaryTeacher() {
   };
 
   useEffect(() => {
-    console.log("nowStudyId", nowStudyId, " // analysisId", analysisId);
     if (analysisId !== -1) {
       setStudyId(analysisId);
     } else {

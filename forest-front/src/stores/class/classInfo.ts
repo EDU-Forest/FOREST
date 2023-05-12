@@ -6,6 +6,7 @@ interface ObjType {
 
 interface ClassState {
   analysisId: number;
+  useAnalysisId: boolean;
   nowClassName: string;
   nowClassId: number;
   nowStudyId: number;
@@ -17,6 +18,7 @@ interface ClassState {
 
 const initialState: ClassState = {
   analysisId: -1,
+  useAnalysisId: false,
   nowClassName: "",
   nowClassId: -1,
   nowStudyId: -1,
@@ -32,7 +34,13 @@ const classSlice = createSlice({
   reducers: {
     setAnalysisId(state, action) {
       state.analysisId = action.payload;
+      if (state.analysisId !== -1) {
+        state.useAnalysisId = true;
+      } else {
+        state.useAnalysisId = false;
+      }
     },
+
     setClass(state, action) {
       state.nowClassName = action.payload.className;
       state.nowClassId = action.payload.classId;
