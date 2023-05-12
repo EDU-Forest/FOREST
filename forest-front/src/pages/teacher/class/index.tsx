@@ -36,8 +36,9 @@ function TeacherClass() {
   }, []);
 
   window.addEventListener("beforeunload", (event) => {
-    // event.preventDefault();
     dispatch(setFirstConnect(true));
+    event.preventDefault();
+    event.returnValue = "";
   });
 
   console.log(firstConnect);
