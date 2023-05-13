@@ -51,6 +51,11 @@ spring:
         project-id: ${GCP_ID}
         bucket: ${GCP_BUCKET}
 
+jwt:
+  redirect-url: ${JWT_REDIRECT_URI}
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+
 notification:
   mattermost:
     enabled: true
