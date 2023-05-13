@@ -55,7 +55,7 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
 
     // Mattermost & jwt decode
-    implementation 'com.github.lmghee:forest-noti:60d98a7d18'
+    implementation 'com.github.lmghee:forest-noti:6faced335b'
 
     // json
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
