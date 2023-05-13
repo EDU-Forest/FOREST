@@ -60,6 +60,8 @@ notification:
   mattermost:
     enabled: true
     webhook-url: ${MM_WEBHOOK_URL}
+    author-icon: https://mattermost.com/wp-content/uploads/2022/02/icon.png
+    author-name: WORKBOOK ERROR
 
 cloud:
   aws:

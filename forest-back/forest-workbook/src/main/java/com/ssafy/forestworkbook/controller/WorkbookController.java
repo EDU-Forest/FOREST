@@ -43,10 +43,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getClassWorkbook(
             HttpServletRequest request,
             @PathVariable Long classId, @RequestParam String search) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.getClassWorkbook(userId, classId, search);
     }
 
@@ -55,11 +52,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getWorkbookAllInfo(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        userId = Long.valueOf(1);
         return workbookService.getWorkbookAllInfo(userId, workbookId);
     }
 
@@ -74,10 +68,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createWorkbook(
             HttpServletRequest request,
             @RequestBody WorkbookTitleDto workbookTitleDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
         return workbookService.createWorkbook(userId, workbookTitleDto);
     }
 
@@ -86,10 +77,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateWorkbook(
             HttpServletRequest request,
             @RequestBody WorkbookUpdateInfoDto workbookUpdateInfoDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
         return workbookService.updateWorkbook(userId, workbookUpdateInfoDto);
     }
 
@@ -98,11 +86,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> deleteWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        Long userId = Long.valueOf(9);
         return workbookService.deleteWorkbook(userId, workbookId);
     }
 
@@ -111,11 +96,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> changeWorkbookIsPublic(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        userId = Long.valueOf(1);
         return workbookService.changeWorkbookIsPublic(userId, workbookId);
     }
 
@@ -124,11 +106,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> checkExportRange(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        userId = Long.valueOf(1);
         return workbookService.checkExportRange(userId, workbookId);
     }
 
@@ -137,10 +116,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> executeWorkbook(
             HttpServletRequest request,
             @RequestBody ExecuteDto executeDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
         log.info("userID : {}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.executeWorkbook(userId, executeDto);
 
     }
@@ -150,11 +127,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> delpoyWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        userId = Long.valueOf(1);
         return workbookService.deployWorkbook(userId, workbookId);
     }
 
@@ -163,11 +137,8 @@ public class WorkbookController {
     public ResponseSuccessDto<?> copyWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
         log.info("workbookID : {}", workbookId);
-//        Long userId = Long.valueOf(10);
         return workbookService.copyWorkbook(userId, workbookId);
     }
 
@@ -176,10 +147,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @RequestBody ProblemUpdateInfoDto problemUpdateInfoDto) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userID : {}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.updateProblem(userId, problemUpdateInfoDto);
     }
 
@@ -188,10 +156,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createProblemImg(
             HttpServletRequest request,
             @RequestPart(value = "file") MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.createProblemImg(userId, file);
     }
 
@@ -201,11 +166,9 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userId : {}", userId);
+        log.info("workbookID : {}", workbookId);
         log.info("file : {}", file.isEmpty());
-//        Long userId = Long.valueOf(9);
         return workbookService.ocrImg(userId, file);
     }
 
@@ -215,11 +178,9 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("userId : {}", userId);
+        log.info("workbookID : {}", workbookId);
         log.info("file : {}", file.isEmpty());
-//        Long userId = Long.valueOf(9);
         return new ResponseSuccessDto<>(workbookService.ocrPdf(userId, file));
     }
 
@@ -228,10 +189,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateProblem(
             HttpServletRequest request,
             @PathVariable Long problemId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.deleteProblem(userId, problemId);
     }
 
@@ -240,10 +198,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> createNewBookmark(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
         return workbookService.createBookmark(userId, workbookId, true);
     }
 
@@ -252,10 +207,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> updateNewBookmark(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(10);
         return workbookService.createBookmark(userId, workbookId, false);
     }
 
@@ -264,10 +216,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> deleteNewBookmark(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(10);
         return workbookService.deleteBookmark(userId, workbookId);
     }
 
@@ -276,10 +225,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> scrapWorkbook(
             HttpServletRequest request,
             @PathVariable Long workbookId) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(1);
         return workbookService.scrapWorkbook(userId, workbookId);
     }
 
@@ -288,30 +234,21 @@ public class WorkbookController {
     public ResponseSuccessDto<?> getBestWorkbook(
             HttpServletRequest request,
             @RequestParam String search) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(9);
         return workbookService.getBestWorkbook(userId, search);
     }
 
     @GetMapping("/recent")
     @ApiOperation(value = "최신 문제집 목록 조회", notes = "최신 문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getRecentWorkbook(HttpServletRequest request) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(9);
         return workbookService.getRecentWorkbook(userId);
     }
 
     @GetMapping("/editor")
     @ApiOperation(value = "에디터 페이지 문제집 목록 조회", notes = "내가 만든 문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getEditorWorkbook(HttpServletRequest request) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        userId = Long.valueOf(3);
         return workbookService.getEditorWorkbook(userId);
     }
 
@@ -320,10 +257,7 @@ public class WorkbookController {
     public ResponseSuccessDto<?> searchEditorWorkbook(
             HttpServletRequest request,
             @RequestParam String search) throws UnsupportedEncodingException {
-        JwtDecoder jwtDecoder = new JwtDecoder();
         Long userId = jwtDecoder.verifyJWT(request);
-        log.info("{}", userId);
-//        Long userId = Long.valueOf(9);
         return workbookService.searchEditorWorkbook(userId, search);
     }
 }
