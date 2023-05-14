@@ -28,8 +28,8 @@ export const StyledDashboardSectionFlexBox = styled.div`
 
 export const StyledSectionBox = styled.div<{ padding?: number; tabletPadding?: number }>`
   width: 50%;
-  padding: ${({ padding }) => (padding ? padding : 24)}px;
-
+  padding: ${({ padding }) => (padding ? padding : 24)}px
+    ${({ padding }) => (padding ? padding : 16)}px;
   background: #ffffff;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
