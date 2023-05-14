@@ -47,7 +47,13 @@ export default function TestHeaderRightContentBox() {
           : page === "study"
           ? minutes <= 0 && seconds <= 0
             ? "시험 종료"
-            : `남은 시간 : ${minutes < 0 ? 0 : minutes} 분 ${seconds < 0 ? 0 : seconds} 초`
+            : `남은 시간 : ${
+                minutes < 0
+                  ? 0
+                  : minutes >= 60
+                  ? `${Math.floor(minutes / 60)} 시간 ${minutes % 60} 분`
+                  : `${minutes} 분`
+              } ${seconds < 0 ? 0 : seconds} 초`
           : "시험 종료"}
       </StyledTestHeaderText>
     </StyledTestHeaderContentBox>
