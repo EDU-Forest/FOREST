@@ -12,7 +12,6 @@ const useExamFinish = () => {
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      console.log("시험 종료됨~", data);
       if (data.data.status === "STUDY_EXIST_DESCRIPT") {
         dispatch(setHaveDescript(true));
       } else {
