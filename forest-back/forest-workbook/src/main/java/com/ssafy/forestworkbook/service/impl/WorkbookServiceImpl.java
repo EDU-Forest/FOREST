@@ -79,7 +79,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(w.getWorkbook().getTitle())
                     .workbookImgPath(w.getWorkbook().getWorkbookImg().getPath())
                     .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getWorkbook().getId()))
-                    .scrapCount(studyRepository.countByWorkbook(w.getWorkbook()))
+                    .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(w.getWorkbook().getId()))
                     .build());
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
             return responseUtil.successResponse(teacherWorkbookPageDtoList, ForestStatus.WORKBOOK_SUCCESS_GET_LIST);
@@ -97,7 +97,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(s.getWorkbook().getTitle())
                     .workbookImgPath(s.getWorkbook().getWorkbookImg().getPath())
                     .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(s.getWorkbook().getId()))
-                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(s.getWorkbook().getId()))
+                    .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(s.getWorkbook().getId()))
                     .build());
 
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto<>(workbookList);
@@ -116,7 +116,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(w.getTitle())
                     .workbookImgPath(w.getWorkbookImg().getPath())
                     .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
-                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(w.getId()))
+                    .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(w.getId()))
                     .build());
 
             TeacherWorkbookPageDto teacherWorkbookPageDtoList = new TeacherWorkbookPageDto(workbookList);
@@ -336,6 +336,11 @@ public class WorkbookServiceImpl implements WorkbookService {
         Workbook workbook = workbookRepository.findById(workbookId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.WORKBOOK_NOT_FOUND));
 
+        // 출제한 문제집은 삭제 불가
+        if (workbook.getIsExecuted()) {
+            throw new CustomException(WorkbookErrorCode.WORKBOOK_FAIL_DELETE_WORKBOOK);
+        }
+
         // 내 문제집이 아닌 경우 - 북마크 삭제
         if (!user.getId().equals(workbook.getCreator().getId()))  {
             UserWorkbook userWorkbook = userWorkbookRepository.findByUserIdAndWorkbookId(userId, workbookId)
@@ -354,8 +359,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                 userWorkbook.updateIsBookmarked(false);
             }
         }
-
-        // TODO 만약 출제한 문제집이면...?
 
         return responseUtil.successResponse(ForestStatus.WORKBOOK_SUCCESS_DELETE_WORKBOOK);
     }
@@ -1560,7 +1563,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(workbook.getTitle())
                     .workbookImgPath(workbook.getWorkbookImg().getPath())
                     .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(workbook.getId()))
-                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbook.getId()))
+                    .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(workbook.getId()))
                     .methodType((userWorkbook == null) ? "POST" : "FATCH")
                     .isScraped((userWorkbook == null) ? false : userWorkbook.getIsScraped())
                     .isBookmarked((userWorkbook == null) ? false : userWorkbook.getIsBookmarked())
@@ -1609,7 +1612,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         .title(w.getTitle())
                         .workbookImgPath(w.getWorkbookImg().getPath())
                         .bookmarkCount(userWorkbookRepository.countByWorkbookIdAndIsBookmarkedIsTrue(w.getId()))
-                        .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(w.getId()))
+                        .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(w.getId()))
                         .methodType(checkMethodType(userId, w.getId()))
                         .isScraped(checkIsScraped(userId, w.getId()))
                         .isBookmarked(checkIsBookmarked(userId, w.getId()))
@@ -1684,7 +1687,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .title(workbookDto.getTitle())
                     .workbookImgPath(workbookDto.getWorkbookImgPath())
                     .bookmarkCount(workbookDto.getCount())
-                    .scrapCount(userWorkbookRepository.countByWorkbookIdAndIsScrapedIsTrue(workbookDto.getWorkbookId()))
+                    .scrapCount(studyRepository.countByWorkbookGroupByWorkbook(workbookDto.getWorkbookId()))
                     .methodType((userWorkbook == null) ? "POST" : "FATCH")
                     .isScraped((userWorkbook == null) ? false : userWorkbook.getIsScraped())
                     .isBookmarked((userWorkbook == null) ? false : userWorkbook.getIsBookmarked())
