@@ -46,6 +46,13 @@ public class UserService {
 
     // 일반 회원가입
     public ResponseSuccessDto<SignupCommonResponseDto> signupCommon(SignupRequestDto signupRequestDto) {
+        String email = signupRequestDto.getEmail();
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if(byEmail.isPresent()) {
+            throw new CustomException(ErrorCode.AUTH_EMAIL_DUPLICATED);
+        }
+
+
         User user = new User();
         user.createUser(signupRequestDto);
         user.encodePassword(encoder.encode(signupRequestDto.getPw()));
@@ -145,16 +152,8 @@ public class UserService {
 
         findUser.updateRefreshToken(jwtProvider.createRefreshToken());
 
-//        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
-//        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
-
-        ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", findUser.getRefreshToken())
-                .httpOnly(true)
-                .maxAge(jwtProvider.refreshTokenValidateTime)
-                .path("/")
-                .build();
-        
-        response.addHeader("Set-Cookie", refreshCookie.toString());
+        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
+        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())
