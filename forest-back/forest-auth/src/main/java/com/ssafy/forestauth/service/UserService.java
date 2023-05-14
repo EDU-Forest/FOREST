@@ -46,6 +46,13 @@ public class UserService {
 
     // 일반 회원가입
     public ResponseSuccessDto<SignupCommonResponseDto> signupCommon(SignupRequestDto signupRequestDto) {
+        String email = signupRequestDto.getEmail();
+        Optional<User> byEmail = userRepository.findByEmail(email);
+        if(byEmail.isPresent()) {
+            throw new CustomException(ErrorCode.AUTH_EMAIL_DUPLICATED);
+        }
+
+
         User user = new User();
         user.createUser(signupRequestDto);
         user.encodePassword(encoder.encode(signupRequestDto.getPw()));
@@ -155,6 +162,7 @@ public class UserService {
                 .build();
         
         response.addHeader("Set-Cookie", refreshCookie.toString());
+
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())

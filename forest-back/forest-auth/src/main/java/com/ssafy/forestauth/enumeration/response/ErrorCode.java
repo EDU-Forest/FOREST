@@ -24,6 +24,7 @@ public enum ErrorCode implements Codable {
      * 회원가입 여부 확인(소셜 로그인)
      */
     AUTH_EMAIL_NOT_VALID(HttpStatus.BAD_REQUEST, "이메일 형식이 잘못되었습니다.", true),
+    AUTH_EMAIL_DUPLICATED(HttpStatus.BAD_REQUEST, "중복된 이메일입니다.", true),
 
     /**
      * 회원가입(일반)
