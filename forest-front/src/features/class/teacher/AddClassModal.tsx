@@ -23,15 +23,22 @@ export default function AddClassModal() {
   const { mutate } = useClassAdd();
 
   useCheckClassNameQuery({ className, setErrorMsg, setIsAvailable });
-  const confirm = () => {
-    mutate(className);
-  };
 
   useEffect(() => {
     if (className.length < 1) {
       setIsAvailable(false);
     }
   }, [className]);
+
+  const onKeyUpHandler = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      confirm();
+    }
+  };
+
+  const confirm = () => {
+    mutate(className);
+  };
 
   return (
     <ClassAddModalContainer>
@@ -42,6 +49,7 @@ export default function AddClassModal() {
           value={className}
           onChange={(e) => setClassName(e.target.value)}
           maxLength={14}
+          onKeyUp={onKeyUpHandler}
         />
         <ClassInputCheck isSuccess={isAvailable} />
         <ClassInputMsg>{errorMsg}</ClassInputMsg>
