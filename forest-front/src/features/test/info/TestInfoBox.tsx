@@ -8,7 +8,7 @@ import {
 } from "./TestInfo.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
-import { dateToMinute } from "@/utils";
+import { dateToMinute, dateToTime } from "@/utils";
 
 export default function TestInfoBox() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function TestInfoBox() {
   const testInfoData = [
     userName,
     `${volume} 문항`,
-    startTime && endTime ? `${dateToMinute(startTime, endTime)} 분` : "제한시간 없음",
+    startTime && endTime ? `${dateToTime(startTime, endTime)} 분` : "제한시간 없음",
   ];
 
   return (
