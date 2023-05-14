@@ -17,7 +17,7 @@ export default function TestAnswerTable() {
   };
 
   return (
-    <StyledTestAnswerTable>
+    <StyledTestAnswerTable isEnded={isSubmitted}>
       <thead>
         <tr>
           <th colSpan={4}>정답 입력</th>

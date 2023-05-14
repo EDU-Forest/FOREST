@@ -165,7 +165,7 @@ const StyledUsername = styled(Title)`
   margin-bottom: 12px;
 `;
 
-const StyledTestAnswerTable = styled.table`
+const StyledTestAnswerTable = styled.table<{ isEnded: boolean }>`
   /* border: 1px solid ${({ theme }) => theme.colors.Lime[800]}; */
   border-radius: 0.5rem;
   border-style: hidden;
