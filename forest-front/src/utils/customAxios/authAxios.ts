@@ -30,12 +30,11 @@ authAxios.interceptors.response.use(
   },
   async (error) => {
     const prevRequest = error?.config;
-    console.log("에러 확인 1", prevRequest, error?.response);
+    console.log("에러 확인 1", prevRequest, error?.response.data.slice(0, 11) === "JWT expired");
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
-        console.log("issue 에러 확인용", response);
         const { token } = response.data.data;
 
         return token;

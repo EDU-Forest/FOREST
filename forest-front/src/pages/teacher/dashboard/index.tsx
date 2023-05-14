@@ -11,11 +11,6 @@ import withAuth from "@/utils/auth/withAuth";
 import { useEffect } from "react";
 
 function TeacherDashBoard() {
-  // GA 테스트
-  useEffect(() => {
-    console.log(process.env.NEXT_PUBLIC_GA_ID, process.env.NEXT_PUBLIC_SERVER_URL);
-  }, []);
-
   return (
     <FullScreen>
       <TeacherNav nowLocation={"dashboard"} />
