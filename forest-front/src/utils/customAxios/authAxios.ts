@@ -1,5 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getLocalStorage, setLocalStorage } from "../localStorage";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { setLogout } from "@/stores/user/user";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -29,8 +32,17 @@ authAxios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const router = useRouter();
     const prevRequest = error?.config;
-    console.log("에러 확인 1", prevRequest, error?.response.data.slice(0, 11) === "JWT expired");
+    const errorResponse = error?.response?.data;
+    const dispatch = useDispatch();
+
+    if (errorResponse && errorResponse.slice(0, 11) === "JWT expired") {
+      console.log("refresh token 만료 테스트");
+      dispatch(setLogout());
+      router.push("/");
+    }
+    console.log("에러 확인 1", prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
