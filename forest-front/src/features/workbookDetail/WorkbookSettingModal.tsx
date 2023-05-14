@@ -21,7 +21,7 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   const [type, setType] = useState<string>("exam");
   const [startTime, setStartTime] = useState<string>(getCurTimeToString());
   const [startDay, setStartDay] = useState<string>(getCurDayToString());
-  const [endTime, setEndTime] = useState<string>(getCurTimeToString());
+  const [endTime, setEndTime] = useState<string>(getCurTimeToString(1));
   const [endDay, setEndDay] = useState<string>(getCurDayToString());
   const [isDateValidConfirm, setIsDateValidConfirm] = useState(true);
   const [isTitleValidConfirm, setIsTitleValidConfirm] = useState(true);
