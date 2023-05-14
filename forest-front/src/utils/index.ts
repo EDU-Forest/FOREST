@@ -6,6 +6,17 @@ export function checkEmail(email: string) {
   return email_format.test(email);
 }
 
+// 제한시간 계산
+export const dateToTime = (start: Date, end: Date) => {
+  const minutes = dateToMinute(start, end);
+
+  if (minutes < 60) {
+    return minutes;
+  } else {
+    return `${Math.floor(minutes / 60)} 시간 ${minutes % 60} 분`;
+  }
+};
+
 // 날짜 분으로 환산
 export const dateToMinute = (start: Date, end: Date) => {
   return Math.floor((new Date(end).getTime() - new Date(start).getTime()) / (1000 * 60));
