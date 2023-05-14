@@ -19,13 +19,10 @@ const useGetStudyProblems = (studyId: number) => {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       dispatch(setStudyProblems(data.data));
-      console.log("시험 문제 불러오기", data.data);
 
       // router.push(`/test/${studyId}`);
     },
-    onError: (error) => {
-      console.log("err", error);
-    },
+    onError: (error) => {},
   });
 };
 

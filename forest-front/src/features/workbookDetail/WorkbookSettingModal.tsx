@@ -88,7 +88,6 @@ function WorkbookSettingModal({ setIsOpen, selectedClass, title, setIsSetSuccess
   };
 
   useEffect(() => {
-    console.log(startDay, startTime, endDay, endTime);
     dateValidTest();
   }, [startDay, startTime, endDay, endTime, type]);
 

@@ -41,7 +41,6 @@ const usePdfOCR = () => {
   return useMutation(fetcher, {
     onSuccess: (data) => {
       const problemList: ProblemList[] = data.data.problemList;
-      console.log("PDF OCR", data);
       const nowIdx = questions.length;
       let newQuestions = questions;
 

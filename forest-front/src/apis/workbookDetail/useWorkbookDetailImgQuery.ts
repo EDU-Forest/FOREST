@@ -14,12 +14,9 @@ const useWorkbookDetailImgQuery = () => {
   return useQuery([queryKeys.GET_WORKBOOK_IMGS], fetcher, {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("이미지 get 완료", data);
       return data;
     },
-    onError: (error) => {
-      console.log("--useGetStudyInfoError --", error);
-    },
+    onError: (error) => {},
   });
 };
 

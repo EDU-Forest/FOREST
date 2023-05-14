@@ -5,7 +5,6 @@ import { useMutation } from "react-query";
 
 const fetcher = (workbookId: number) =>
   workbookAxios.patch(`/api/workbook/public/${workbookId}`).then(({ data }) => {
-    console.log(data);
     return data;
   });
 

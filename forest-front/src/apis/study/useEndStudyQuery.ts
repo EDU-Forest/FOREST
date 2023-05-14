@@ -6,9 +6,7 @@ const fetcher = (studyId: number) =>
 
 const useEndStudy = () => {
   return useMutation(fetcher, {
-    onSuccess: () => {
-      console.log("학생이 시험종료함~");
-    },
+    onSuccess: () => {},
     onError: () => {},
   });
 };

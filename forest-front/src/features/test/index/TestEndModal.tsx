@@ -51,7 +51,6 @@ export default function TestEndModal() {
         studentStudyProblemId: studentStudyProblemId,
         line: paths,
       };
-      console.log("canvasPayload", canvasPayload);
       canvasMutate(canvasPayload);
     }
 
