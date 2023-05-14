@@ -48,6 +48,11 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+jwt:
+  redirect-url: ${JWT_REDIRECT_URI}
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+
 notification:
   mattermost:
     enabled: true
