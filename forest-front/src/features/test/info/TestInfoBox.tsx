@@ -24,7 +24,7 @@ export default function TestInfoBox() {
   const testInfoData = [
     userName,
     `${volume} 문항`,
-    startTime && endTime ? `${dateToTime(startTime, endTime)} 분` : "제한시간 없음",
+    startTime && endTime ? `${dateToTime(startTime, endTime)}` : "제한시간 없음",
   ];
 
   return (
