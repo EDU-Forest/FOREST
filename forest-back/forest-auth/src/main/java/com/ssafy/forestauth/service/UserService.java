@@ -119,7 +119,7 @@ public class UserService {
 
     // 이메일 중보 검사
     public ResponseSuccessDto<CheckEmailResponseDto> checkEmail(String email) {
-        Optional<User> findUser = userRepository.findByEmailAndAuthProvider(email, EnumUserProviderStatus.LOCAL);
+        Optional<User> findUser = userRepository.findByEmail(email);
         SuccessCode successCode = findUser.isEmpty() ? SuccessCode.AUTH_EMAIL_NOT_DUPLICATED : SuccessCode.AUTH_EMAIL_DUPLICATED;
 
         CheckEmailResponseDto checkEmailResponseDto = CheckEmailResponseDto.builder()
@@ -134,7 +134,7 @@ public class UserService {
         String email = loginRequestDto.getEmail();
         String pw = loginRequestDto.getPw();
 
-        User findUser = userRepository.findByEmailAndAuthProvider(email, EnumUserProviderStatus.LOCAL)
+        User findUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
 
         if (!encoder.matches(pw, findUser.getPassword())) {
