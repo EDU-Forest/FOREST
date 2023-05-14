@@ -21,9 +21,7 @@ const fetcher = async (data: DataType) =>
 
 const useWorkbookDetailSaveQuery = () => {
   return useMutation(fetcher, {
-    onSuccess: (data) => {
-      console.log("저장 성공 post", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 

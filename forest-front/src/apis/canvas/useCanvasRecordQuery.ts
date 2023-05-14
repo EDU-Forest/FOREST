@@ -21,7 +21,6 @@ const useCanvasRecordQuery = (studentStudyProblemId: number, isOpenCanvas: boole
       enabled: !!studentStudyProblemId && !!isOpenCanvas,
       cacheTime: 0,
       onSuccess: (record) => {
-        console.log("성공!", record);
         dispatch(setPaths(record.line));
       },
     },

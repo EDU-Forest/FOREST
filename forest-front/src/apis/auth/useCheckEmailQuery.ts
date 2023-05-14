@@ -24,9 +24,7 @@ const useCheckEmail = ({ email, validation, setValidation }: Iprops) => {
         emailDuplicate: data.status === "AUTH_EMAIL_NOT_DUPLICATED" ? "pass" : "fail",
       });
     },
-    onError: (error) => {
-      console.log("checkEmailError", error);
-    },
+    onError: (error) => {},
   });
 };
 

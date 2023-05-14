@@ -23,9 +23,7 @@ const useGetStudyInfo = ({ studyId }: Iprops) => {
     onSuccess: (data) => {
       dispatch(setStudyInfo(data.data));
     },
-    onError: (error) => {
-      console.log("--useGetStudyInfoError --", error);
-    },
+    onError: (error) => {},
   });
 };
 

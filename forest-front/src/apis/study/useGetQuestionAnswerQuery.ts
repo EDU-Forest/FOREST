@@ -15,9 +15,7 @@ const useGetQuestionAnswer = (studyId: number) => {
   return useQuery([queryKeys.STUDY_QUESTION_ANSWER, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId && studyId !== -1,
-    onSuccess: (data) => {
-      console.log("useGetQuestionAnswer", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 

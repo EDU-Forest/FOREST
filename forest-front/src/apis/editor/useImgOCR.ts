@@ -26,7 +26,6 @@ const useImgOCR = () => {
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      console.log("이미지 OCR", data);
       const nowIdx = questions.length;
       const question: QuestionType = {
         problemId: 0,

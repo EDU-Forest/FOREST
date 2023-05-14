@@ -14,9 +14,7 @@ const useStudentQuestionResultQuery = (studentStudyResultId: number) => {
     {
       refetchOnWindowFocus: false,
       enabled: !!studentStudyResultId,
-      onSuccess: (data) => {
-        console.log("선생님이 학생 문항별 조회", data);
-      },
+      onSuccess: (data) => {},
     },
   );
 };

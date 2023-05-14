@@ -13,7 +13,6 @@ const useWorkbookDetailSetPost = () => {
 
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], fetcher, {
     onSuccess: (data) => {
-      console.log("출제 성공 post", data);
       return data;
     },
   });

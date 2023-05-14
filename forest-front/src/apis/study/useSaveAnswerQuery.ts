@@ -9,9 +9,7 @@ const fetcher = (payload: IStudySaveAnswer) =>
 
 const useSaveAnswer = () => {
   return useMutation(fetcher, {
-    onSuccess: () => {
-      console.log("결과 저장");
-    },
+    onSuccess: () => {},
     onError: () => {},
   });
 };
