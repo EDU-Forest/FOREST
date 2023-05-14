@@ -48,7 +48,7 @@ export const StyledStatusNotification = styled.div`
 `;
 
 export const StyledScheduleItem = styled.div<{ isLast?: boolean; clickable?: boolean }>`
-  margin: 1rem 0.5rem;
+  padding: 1rem 0.5rem;
   cursor: ${({ clickable }) => clickable && "pointer"};
   ${({ isLast }) =>
     !isLast &&
@@ -59,6 +59,10 @@ export const StyledScheduleItem = styled.div<{ isLast?: boolean; clickable?: boo
   // 기간
     > span {
     color: ${({ theme }) => theme.colors.Gray[500]};
+  }
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.Gray[50]};
   }
 `;
 
