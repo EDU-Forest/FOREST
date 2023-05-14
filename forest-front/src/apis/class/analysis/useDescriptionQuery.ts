@@ -23,9 +23,7 @@ const useDescriptionQuery = (studyId: number) => {
   return useQuery([queryKeys.DESCRIPTION, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId,
-    onSuccess: (data) => {
-      console.log("서술형", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 

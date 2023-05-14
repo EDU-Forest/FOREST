@@ -24,7 +24,10 @@ authAxios.interceptors.request.use(
 
     return config;
   },
-  (error) => error,
+  (error) => {
+    console.log(error);
+    return error;
+  },
 );
 
 authAxios.interceptors.response.use(
@@ -34,15 +37,6 @@ authAxios.interceptors.response.use(
   async (error) => {
     // const router = useRouter();
     const prevRequest = error?.config;
-    const errorResponse = error?.response?.data;
-    const dispatch = useDispatch();
-    console.log(errorResponse.slice(0, 11) === "JWT expired");
-    if (errorResponse && errorResponse.slice(0, 11) === "JWT expired") {
-      console.log("refresh token 만료 테스트");
-      dispatch(setLogout());
-      // router.push("/");
-    }
-    console.log("에러 확인 1", prevRequest);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
