@@ -165,7 +165,7 @@ const StyledUsername = styled(Title)`
   margin-bottom: 12px;
 `;
 
-const StyledTestAnswerTable = styled.table<{ isEnded: boolean }>`
+const StyledTestAnswerTable = styled.table`
   /* border: 1px solid ${({ theme }) => theme.colors.Lime[800]}; */
   border-radius: 0.5rem;
   border-style: hidden;
@@ -211,11 +211,14 @@ const StyledTestAnswerTable = styled.table<{ isEnded: boolean }>`
     & td:nth-child(2) {
       background-color: white;
     }
+  }
+`;
 
-    &:hover {
-      td:first-child {
-        background-color: ${({ theme }) => theme.colors.Lime[300]};
-      }
+const ProblemTr = styled.tr<{ isEnded: boolean; isCorrect: boolean }>`
+  &:hover {
+    td:first_child {
+      background-color: ${({ isEnded, isCorrect, theme }) =>
+        (isEnded && isCorrect) || !isEnded ? theme.colors.Lime[300] : theme.colors.Orange[300]};
     }
   }
 `;
@@ -475,4 +478,5 @@ export {
   TestProblemContentBox,
   TestCanvas,
   TestProblemImgBox,
+  ProblemTr,
 };
