@@ -18,6 +18,7 @@ import com.ssafy.forestauth.util.CookieUtil;
 import com.ssafy.forestauth.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -144,8 +145,16 @@ public class UserService {
 
         findUser.updateRefreshToken(jwtProvider.createRefreshToken());
 
-        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
-        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
+//        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
+//        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
+
+        ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", findUser.getRefreshToken())
+                .httpOnly(true)
+                .maxAge(jwtProvider.refreshTokenValidateTime)
+                .path("/")
+                .build();
+        
+        response.addHeader("Set-Cookie", refreshCookie.toString());
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())

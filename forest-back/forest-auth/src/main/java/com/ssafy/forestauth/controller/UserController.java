@@ -65,19 +65,6 @@ public class UserController {
             HttpServletResponse response,
             @RequestBody @Valid LoginRequestDto loginRequestDto
     ) {
-        // create a cookie
-        Cookie cookie = new Cookie("platform","mobile");
-
-        // expires in 7 days
-        cookie.setMaxAge(7 * 24 * 60 * 60);
-
-        // optional properties
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-
-        // add cookie to response
-        response.addCookie(cookie);
         return ResponseEntity.ok(userService.loginCommon(request, response, loginRequestDto));
     }
 
