@@ -152,17 +152,8 @@ public class UserService {
 
         findUser.updateRefreshToken(jwtProvider.createRefreshToken());
 
-//        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
-//        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
-
-        ResponseCookie refreshCookie = ResponseCookie.from("forest_refresh_token", findUser.getRefreshToken())
-                .httpOnly(true)
-                .maxAge(jwtProvider.refreshTokenValidateTime)
-                .path("/")
-                .build();
-        
-        response.addHeader("Set-Cookie", refreshCookie.toString());
-
+        CookieUtil.deleteCookie(request, response, REFRESH_TOKEN);
+        CookieUtil.addCookie(response, REFRESH_TOKEN, findUser.getRefreshToken(), jwtProvider.refreshTokenValidateTime.intValue());
 
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .name(findUser.getName())
