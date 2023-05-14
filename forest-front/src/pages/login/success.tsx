@@ -29,7 +29,7 @@ function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  useRecentClassIdQuery();
+  const { refetch } = useRecentClassIdQuery();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -46,6 +46,7 @@ function LoginSuccess() {
     if (typeof username === "string" && typeof role === "string") {
       dispatch(setUsername(username));
       dispatch(setRole(role));
+      refetch();
       router.push(`/${role.toLowerCase()}/dashboard`);
     } else {
       router.push(
