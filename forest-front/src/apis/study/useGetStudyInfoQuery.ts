@@ -21,7 +21,6 @@ const useGetStudyInfo = ({ studyId }: Iprops) => {
   return useQuery(queryKeys.STUDY_INFO, () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
-      console.log("ss", data);
       dispatch(setStudyInfo(data.data));
     },
     onError: (error) => {

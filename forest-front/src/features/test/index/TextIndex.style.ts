@@ -216,6 +216,7 @@ const StyledTestAnswerTable = styled.table`
 
 const ProblemTr = styled.tr<{ isEnded: boolean; isCorrect: boolean }>`
   &:hover {
+    background-color: pink;
     td:first_child {
       background-color: ${({ isEnded, isCorrect, theme }) =>
         (isEnded && isCorrect) || !isEnded ? theme.colors.Lime[300] : theme.colors.Orange[300]};
