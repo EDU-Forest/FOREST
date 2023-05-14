@@ -10,9 +10,8 @@ import java.util.List;
 
 public interface WorkbookRepository extends JpaRepository<Workbook, Long>, WorkbookCustomRepository {
 
-    Page<Workbook> findAllByCreatorIdAndIsExecuted(Long UserId, boolean isExecuted, Pageable pageable);
-    Page<Workbook> findAllByCreatorId(Long UserId, Pageable pageable);
-    List<Workbook> findAllByCreatorId(Long UserId);
+    Page<Workbook> findAllByCreatorIdOrderByUpdatedDateDesc(Long UserId, Pageable pageable);
+    List<Workbook> findAllByCreatorIdOrderByUpdatedDateDesc(Long UserId);
     List<Workbook> findTop20ByIsPublicIsTrueOrderByCreatedDateDesc();
     List<Workbook> findAllByIsPublicIsTrueAndTitleContainingOrderByCreatedDateDesc(String search);
 

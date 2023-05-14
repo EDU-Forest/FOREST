@@ -106,7 +106,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // 내가 만든 문제집
         else if (search.equals("own")) {
-            Page<Workbook> workbooks = workbookRepository.findAllByCreatorId(userId, pageable);
+            Page<Workbook> workbooks = workbookRepository.findAllByCreatorIdOrderByUpdatedDateDesc(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = workbooks.map(w -> TeacherWorkbookDto.builder()
                     .workbookId(w.getId())
                     .isOriginal(checkIsOriginal(w.getCreator().getId(), userId))
@@ -147,19 +147,19 @@ public class WorkbookServiceImpl implements WorkbookService {
 
         // EXAM
         if (search.equals("exam")) {
-            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.EXAM);
+            List<Study> studyList = studyRepository.findAllByClassesIdAndTypeOrderByEndTimeDesc(classId, EnumStudyTypeStatus.EXAM);
             studyToDto(studyList, classWorkbookDtoList);
         }
 
         // HOMEWORK
         else if (search.equals("homework")) {
-            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.HOMEWORK);
+            List<Study> studyList = studyRepository.findAllByClassesIdAndTypeOrderByEndTimeDesc(classId, EnumStudyTypeStatus.HOMEWORK);
             studyToDto(studyList, classWorkbookDtoList);
         }
 
         // SELF
         else if (search.equals("self")) {
-            List<Study> studyList = studyRepository.findAllByClassesIdAndType(classId, EnumStudyTypeStatus.SELF);
+            List<Study> studyList = studyRepository.findAllByClassesIdAndTypeOrderByEndTimeDesc(classId, EnumStudyTypeStatus.SELF);
             studyToDto(studyList, classWorkbookDtoList);
         }
 
@@ -1582,7 +1582,7 @@ public class WorkbookServiceImpl implements WorkbookService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
 
-        List<Workbook> workbookTitleList = workbookRepository.findAllByCreatorId(userId);
+        List<Workbook> workbookTitleList = workbookRepository.findAllByCreatorIdOrderByUpdatedDateDesc(userId);
         List<WorkbookEditorDto> workbookList = workbookTitleList.stream()
                 .map(w -> WorkbookEditorDto.builder()
                         .workbookId(w.getId())
