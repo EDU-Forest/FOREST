@@ -57,10 +57,10 @@ public class WorkbookServiceImpl implements WorkbookService {
     private String bucketName;
     private final Storage storage;
 
-    // TODO 스크랩은 사본이 아님
-    // TODO 출제여부는 Study에서 찾아서 쓰기
-    // TODO 사본 만들기는 내거만
-    // TODO 스크랩 수 -> 출제 한 횟수
+    // 스크랩은 사본이 아님
+    // 출제여부는 Study에서 찾아서 쓰기
+    // 사본 만들기는 내거만
+    // 스크랩 수 -> 출제 한 횟수
 
     @Override
     public ResponseSuccessDto getTeacherWorkbookList(Long userId, String search, Pageable pageable) {
@@ -844,6 +844,8 @@ public class WorkbookServiceImpl implements WorkbookService {
         }
     }
 
+
+    // TODO 정규식 final 선언 해서 쓰기
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(WorkbookErrorCode.AUTH_USER_NOT_FOUND));
@@ -1340,53 +1342,132 @@ public class WorkbookServiceImpl implements WorkbookService {
                 int startCount = 0;
                 int titleCount = 0;
 
-                // 한 줄씩 확인
-                for(int i = 0; i <= txt.length; i++) {
+                System.out.println(fullText);
+                System.out.println("!@#$%^&!@#!@#!@!@!$!@!!$!$!$$!$!@$");
 
-                    if (newProblem) {
+                // 문항 별로 자르기
+                String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
+                System.out.println(splitFull.length);
 
-                        ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
-                                .type(checkMultiple ? EnumProblemTypeStatus.MULTIPLE : EnumProblemTypeStatus.DESCRIPT)
-                                .title(title.toString())
-                                .problemImgPath(null)
-                                .imgIsEmpty(true)
-                                .text(text.toString())
-                                .textIsEmpty(text.toString() == null)
-                                .itemList(itemResExceptIdDtoList)
-                                .point(ocrPoint)
-                                .build();
+                // 문항 별 반복
+                for (String temp : splitFull) {
+                    System.out.println("temp ========= " + temp);
 
-                        problemOcrDtoList.add(problemOcrDto);
+                    // 묶인 문항 처리
+                    if (temp.replace("\n", " ").matches("^.*[0-9]{1,2}[~][0-9]{1,2}.*")) {
+                        String[] textStart = temp.split("[0-9]{1,2}[~][0-9]{1,2}");
 
-                        title.setLength(0);
-                        text.setLength(0);
-                        item.setLength(0);
-                        checkNum = false;
-                        checkTitle = false;
-                        checkText = false;
-                        checkMultiple = false;
-                        checkPoint = false;
-                        checkItem = false;
-                        checkDelete = false;
-                        problemStart = false;
-                        newProblem = false;
-
-                        ocrNum = 0;
-                        ocrPoint = 0;
-                        midCount = 0;
-                        startCount = 0;
-                        titleCount = 0;
-
-                    } else {
-
+                        for (String textContent : textStart) {
+                            if (textContent.substring(0, 1).equals("]")) {
+                                int splitInt = textContent.indexOf("\n");
+                                title.append(textContent.substring(1, splitInt).trim());
+                                text.append(textContent.substring(splitInt).replaceAll("\n", " "));
+                            }
+                        }
                     }
 
+                    // 개별 문항 처리
+                    else if (temp.substring(0, 1).equals(" ")) {
+                        String problemEnd = temp.contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
+
+                        // title 자르기
+                        String[] problemSplit = temp.split(problemEnd);
+
+                        for (String problemContent : problemSplit) {
+
+                            // title 저장 전
+                            if (title.length() == 0) {
+
+                                // 배점 포함
+                                if (problemContent.replace("\n", " ").contains("점]")) {
+                                    ocrPoint = Integer.parseInt(problemContent.substring(problemContent.lastIndexOf("["), problemContent.lastIndexOf("점")));
+                                    System.out.println("점수 =============== " + ocrPoint);
+                                    problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
+                                }
+
+                                title.append(problemContent.replaceAll("\n", " ")).append(problemEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
+                                System.out.println("문제 ======= " + title.toString());
+                            }
+
+                            // title 저장 후
+                            else if (title.length() != 0) {
+
+                                // 저작권 문구
+                                if (problemContent.contains("이 문제지에 관한 저작권은")) {
+                                    problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
+                                    System.out.println("저작권 ===============");
+                                    System.out.println(problemContent);
+                                }
+
+                                // text 자르기
+                                String[] textSplit = problemContent.split("[①-⑤]");
+
+                                for (String textContent : textSplit) {
+
+                                    textContent = textContent.replaceAll("\n", " ");
+
+                                    System.out.println("textContent ==============");
+                                    System.out.println(textContent);
+
+                                    if (textContent.substring(0, 1).equals(" ")) {
+
+                                        System.out.println("item =============");
+                                        System.out.println(textContent);
+
+                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                                .content(textContent.replaceAll("\n", " "))
+                                                .isImage(false)
+                                                .build();
+
+                                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                                    } else {
+                                        System.out.println("확인중");
+                                        System.out.println(textContent.replace("\n", " ").matches("^[?].*"));
+                                        System.out.println(textContent.replace("\n", " ").matches("^.*[0-9][점].*"));
+                                        if (textContent.replace("\n", " ").matches("^[?].*")) {
+                                            System.out.println(textContent.indexOf("?"));
+                                            System.out.println(textContent.substring(textContent.indexOf("?")));
+                                            textContent = textContent.substring(textContent.indexOf("?") + 1);
+                                        }
+                                        if (textContent.replace("\n", " ").matches("^.*[0-9][점].*")) {
+                                            textContent = textContent.substring(textContent.indexOf("점]") + 1);
+                                        }
+                                        text.append(textContent);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    System.out.println("item 왜 비엇음 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+                    System.out.println(itemResExceptIdDtoList.size());
+
+                    ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
+                            .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
+                            .title(title.toString())
+                            .problemImgPath(null)
+                            .imgIsEmpty(true)
+                            .text(text.toString())
+                            .textIsEmpty(text.toString() == null || text.equals(""))
+                            .itemList(itemResExceptIdDtoList)
+                            .point(ocrPoint)
+                            .build();
+
+                    problemOcrDtoList.add(problemOcrDto);
+
+                    System.out.println(problemOcrDto.toString());
+
+                    title.setLength(0);
+                    text.setLength(0);
+                    item.setLength(0);
+
+                    itemResExceptIdDtoList.clear();
                 }
 
                 Map<String, List<ProblemOcrDto>> map = new HashMap<>();
                 map.put("problemList", problemOcrDtoList);
 
-                return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
+                return responseUtil.successResponse(new ProblemOcrDtoList(problemOcrDtoList), ForestStatus.WORKBOOK_SUCCESS_UPLOAD_OCR);
 
             } else {
 //                System.out.println("No MATCH");
