@@ -30,6 +30,7 @@ authAxios.interceptors.response.use(
   },
   async (error) => {
     const prevRequest = error?.config;
+    console.log("에러 확인 1", prevRequest, error?.response);
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
