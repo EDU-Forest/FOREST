@@ -256,7 +256,6 @@ export const EditorQuestionTextInput = styled.textarea`
   width: 100%;
 
   padding: 24px !important;
-  margin: 24px 0 !important;
 
   border: 0.0625rem solid ${({ theme }) => theme.colors.Lime[600]} !important;
   border-radius: 0.25rem !important;
@@ -266,6 +265,29 @@ export const EditorQuestionTextInput = styled.textarea`
 
   ::placeholder {
     color: black !important;
+  }
+`;
+
+export const EditorQuestionTextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  margin: 24px 0 !important;
+
+  // 마이너스 아이콘
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    margin-bottom: 0.25rem;
+    align-self: end;
+
+    cursor: pointer;
+    fill: ${({ theme }) => theme.colors.Orange[600]};
+
+    &:hover {
+      fill: ${({ theme }) => theme.colors.Orange[900]};
+    }
   }
 `;
 
