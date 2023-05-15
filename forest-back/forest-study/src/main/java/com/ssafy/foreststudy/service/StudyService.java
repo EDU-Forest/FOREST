@@ -931,7 +931,7 @@ public class StudyService {
             dis += Math.pow(average - ssr.getScore(), 2);
         }
 
-        double standardDeviation = Math.sqrt(dis / participateNum);
+        double standardDeviation = Math.sqrt(dis / participateNum) * 100 / 100.0;
         long averageSolvingTime = solvingTime / participateNum;
         int correctAnswerRate = correctRate / participateNum;
         int ungradedAnswerRate = 0;
