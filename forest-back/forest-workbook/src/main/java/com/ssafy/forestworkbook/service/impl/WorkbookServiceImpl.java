@@ -1312,8 +1312,6 @@ public class WorkbookServiceImpl implements WorkbookService {
 //                System.out.format("%nText: %s%n", annotateImageResponse.getFullTextAnnotation().getText());
                 String fullText = annotateImageResponse.getFullTextAnnotation().getText();
 
-                String[] txt = fullText.split("\n");
-
                 // pdf OCR 내용 읽기 실패
                 if (fullText == null || fullText.equals("")) {
                     throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
@@ -1377,8 +1375,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                             // title 저장 전
                             if (title.length() == 0) {
 
-                                System.out.println("title =============");
-                                System.out.println(problemContent);
+//                                System.out.println("title =============");
+//                                System.out.println(problemContent);
 
                                 // 배점 포함
                                 if (problemContent.replace("\n", " ").contains("점]")) {
@@ -1397,19 +1395,19 @@ public class WorkbookServiceImpl implements WorkbookService {
                                     problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
                                 }
 
-                                System.out.println("problemContent ============= ");
-                                System.out.println(problemContent);
-
-                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
-                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
+//                                System.out.println("problemContent ============= ");
+//                                System.out.println(problemContent);
+//
+//                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
+//                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
 
                                 String splitStr = "";
                                 if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
                                     splitStr = "[①-⑤][ ]";
-                                    System.out.println("동그라미 숫자");
+//                                    System.out.println("동그라미 숫자");
                                 } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
                                     splitStr = "[0-9]{1}[ ]";
-                                    System.out.println("숫자");
+//                                    System.out.println("숫자");
                                 }
 
                                 // text 자르기
@@ -1419,8 +1417,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                                     textContent = textContent.replaceAll("\n", " ");
 
-                                    System.out.println("textContent ==============");
-                                    System.out.println(textContent);
+//                                    System.out.println("textContent ==============");
+//                                    System.out.println(textContent);
 
                                     if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
                                         text.append(textContent.substring(textContent.indexOf("]")+1).trim());
@@ -1428,12 +1426,12 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                                     else if (textContent.substring(0, 1).equals(" ")) {
 
-                                        System.out.println("item =============");
-                                        System.out.println(textContent);
+//                                        System.out.println("item =============");
+//                                        System.out.println(textContent);
 
                                         text.append(textContent.trim());
                                     } else {
-                                        System.out.println("else");
+//                                        System.out.println("else");
                                         if (textContent.replace("\n", " ").matches("^[?].*")) {
                                             textContent = textContent.substring(textContent.indexOf("?") + 1);
                                         }
