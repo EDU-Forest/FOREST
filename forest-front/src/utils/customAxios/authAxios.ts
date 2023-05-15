@@ -44,8 +44,9 @@ authAxios.interceptors.response.use(
       prevRequest.headers.Authorization = `Bearer ${accessToken}`;
       return authAxios(prevRequest);
     } else if (
-      error?.response?.status === 500 &&
-      error?.response?.data.slice(0, 11) === "JWT expired"
+      (error?.response?.status === 500 && error?.response?.data.slice(0, 11) === "JWT expired") ||
+      (error?.response?.status === 401 &&
+        error?.response?.data?.error?.message === "Refresh Token이 유효하지 않습니다.")
     ) {
       removeItemLocalStorage("forest_access_token");
       if (typeof window !== "undefined") {
