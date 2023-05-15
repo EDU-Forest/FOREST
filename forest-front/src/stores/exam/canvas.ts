@@ -30,10 +30,13 @@ const canvasSlice = createSlice({
     setStudentStudyProblemId(state, action) {
       state.studentStudyProblemId = action.payload;
     },
+    setInitCanvas(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setPaths, controlCanvas, closeCanvas, setStudentStudyProblemId } =
+export const { setPaths, controlCanvas, closeCanvas, setStudentStudyProblemId, setInitCanvas } =
   canvasSlice.actions;
 
 export default canvasSlice.reducer;

@@ -98,6 +98,7 @@ export default function AddStudentModal() {
           value={inputValue}
           onClick={clickSearchInput}
           onChange={changeSearchValue}
+          autoFocus
         />
         <ClassStudentDeleteIcon onClick={removeInputValue}>
           <AiOutlineClose />

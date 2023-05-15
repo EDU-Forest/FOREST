@@ -323,8 +323,8 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   ${scrollBar(0.75)};
 
   img {
-    width: 120px;
-    height: auto;
+    max-width: 25rem;
+    height: 25rem;
 
     margin-top: 1.5rem;
     align-self: center;

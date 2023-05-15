@@ -38,6 +38,7 @@ export default function AddWorkbookModal() {
           onChange={(e) => setWorkbookTitle(e.target.value)}
           maxLength={30}
           onKeyUp={onKeyUpHandler}
+          autoFocus
         />
       </ClassInputWrapper>
       <ClassInputBtnWrapper>
