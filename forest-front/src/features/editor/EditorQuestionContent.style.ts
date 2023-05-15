@@ -311,6 +311,25 @@ export const EditorQuestionImgBox = styled.div`
   }
 `;
 
+export const EditorQuestionImgMinusBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.25rem;
+
+  // 마이너스 아이콘
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    cursor: pointer;
+    fill: ${({ theme }) => theme.colors.Orange[600]};
+
+    &:hover {
+      fill: ${({ theme }) => theme.colors.Orange[900]};
+    }
+  }
+`;
+
 export const EditorQuestionImgAddedBox = styled.div`
   position: relative;
 
@@ -331,6 +350,7 @@ export const EditorQuestionImgAddedBox = styled.div`
 
 export const EditorQuestionInputBox = styled(EditorQuestionItemAddButton)`
   justify-content: center;
+  margin-top: 0;
 
   label {
     padding: 0.5rem 1rem;
