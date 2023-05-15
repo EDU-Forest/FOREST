@@ -58,7 +58,11 @@ export default function StudyAnalysis() {
         <p style={{ marginLeft: "2rem" }}>{result?.data.title}</p>
       </AnalysisTitle>
       <AnalysisContent>
-        <AnalysisToggle isSummary={isSummary} setToggle={setIsSummary} />
+        <AnalysisToggle
+          isSummary={isSummary}
+          setToggle={setIsSummary}
+          isDescript={result?.data.isDescript}
+        />
 
         {isSummary ? (
           <>

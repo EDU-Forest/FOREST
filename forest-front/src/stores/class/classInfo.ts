@@ -13,7 +13,6 @@ interface ClassState {
   nowStudyType: string;
   deleteStudentNum: number;
   studentPointList: ObjType;
-  haveDescript: boolean;
 }
 
 const initialState: ClassState = {
@@ -25,7 +24,6 @@ const initialState: ClassState = {
   nowStudyType: "exam",
   deleteStudentNum: -1,
   studentPointList: {},
-  haveDescript: false,
 };
 
 const classSlice = createSlice({
@@ -56,9 +54,6 @@ const classSlice = createSlice({
     setStudentPointList(state, action) {
       state.studentPointList = action.payload;
     },
-    setHaveDescript(state, action) {
-      state.haveDescript = action.payload;
-    },
   },
 });
 
@@ -70,7 +65,6 @@ export const {
   setStudyType,
   setDeleteStudentNum,
   setStudentPointList,
-  setHaveDescript,
 } = classSlice.actions;
 
 export default classSlice.reducer;
