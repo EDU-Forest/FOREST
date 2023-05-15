@@ -1366,7 +1366,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     // 개별 문항 처리
                     else if (temp.substring(0, 1).equals(" ")) {
-                        String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
+                        String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
+                        String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
 
                         // title 자르기
                         String[] problemSplit = temp.split(problemEnd);
@@ -1385,7 +1386,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                                     problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
                                 }
 
-                                title.append(problemContent.replaceAll("\n", " ")).append(problemEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
+                                title.append(problemContent.replaceAll("\n", " ")).append(addEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
                             }
 
                             // title 저장 후
@@ -1399,15 +1400,16 @@ public class WorkbookServiceImpl implements WorkbookService {
                                 System.out.println("problemContent ============= ");
                                 System.out.println(problemContent);
 
-
                                 System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
-                                System.out.println(problemContent.replaceAll("\n", " ").matches("^[0-9]{1}[ ].*"));
+                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
 
                                 String splitStr = "";
                                 if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
-                                    splitStr = "[①-⑤]";
+                                    splitStr = "[①-⑤][ ]";
+                                    System.out.println("동그라미 숫자");
                                 } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
                                     splitStr = "[0-9]{1}[ ]";
+                                    System.out.println("숫자");
                                 }
 
                                 // text 자르기
@@ -1420,18 +1422,18 @@ public class WorkbookServiceImpl implements WorkbookService {
                                     System.out.println("textContent ==============");
                                     System.out.println(textContent);
 
-                                    if (textContent.substring(0, 1).equals(" ")) {
+                                    if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
+                                        text.append(textContent.substring(textContent.indexOf("]")+1).trim());
+                                    }
+
+                                    else if (textContent.substring(0, 1).equals(" ")) {
 
                                         System.out.println("item =============");
                                         System.out.println(textContent);
 
-                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                .content(textContent.replaceAll("\n", " ").trim())
-                                                .isImage(false)
-                                                .build();
-
-                                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                                        text.append(textContent.trim());
                                     } else {
+                                        System.out.println("else");
                                         if (textContent.replace("\n", " ").matches("^[?].*")) {
                                             textContent = textContent.substring(textContent.indexOf("?") + 1);
                                         }
@@ -1441,7 +1443,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                                             textContent = textContent.substring(textContent.indexOf("점]") + 2);
                                         }
 
-                                        if (splitStr.equals("[0-9]{1}[ ]")) {
+                                        if (splitStr.equals("[0-9]{1}[ ]") || splitStr.equals("[①-⑤][ ]")) {
 
                                             if (textContent.substring(0, 1).equals("*")) {
                                                 text.append(textContent);
@@ -1451,6 +1453,8 @@ public class WorkbookServiceImpl implements WorkbookService {
                                                         .content(textContent.replaceAll("\n", " ").trim())
                                                         .isImage(false)
                                                         .build();
+
+                                                itemResExceptIdDtoList.add(itemResExceptIdDto);
                                             }
                                         }
                                         else {
@@ -1462,7 +1466,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         }
                     }
 
-                    if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() != 0) {
+                    if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() == 0) {
                         continue;
                     } else {
                         ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
