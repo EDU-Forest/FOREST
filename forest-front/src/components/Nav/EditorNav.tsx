@@ -37,6 +37,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const { isTitleValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const [isAddFail, setIsAddFail] = useState(false);
+  const [isObjAddFail, setIsObjAddFail] = useState(false);
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
@@ -112,12 +113,16 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickObjectType = (type: string) => {
-    if (type === "text") {
-      const copyArr = [...questions];
-      copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
-      dispatch(setQuestions([...copyArr]));
-    } else if (type === "image") {
-      toChangeQuestions("imgIsEmpty", false);
+    if (questions.length !== 0) {
+      if (type === "text") {
+        const copyArr = [...questions];
+        copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
+        dispatch(setQuestions([...copyArr]));
+      } else if (type === "image") {
+        toChangeQuestions("imgIsEmpty", false);
+      }
+    } else {
+      setIsObjAddFail(true);
     }
   };
 
@@ -166,11 +171,11 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
             서술형
           </EditorNavDivInner>
         </EditorNavDiv>
-        {/* <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
+        <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
         <EditorNavDiv className="upload-problem">
           <p onClick={() => handleClickImport("whole")}>전체 영역</p>
           <p onClick={() => handleClickImport("part")}>일부 영역</p>
-        </EditorNavDiv> */}
+        </EditorNavDiv>
         <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
         <EditorNavDiv>
           <EditorNavDivInner onClick={() => handleClickObjectType("image")}>
@@ -190,6 +195,15 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
           title="문항 수정을 완료해주세요"
           isOpen={isAddFail}
           setIsOpen={setIsAddFail}
+        />
+      )}
+      {isObjAddFail && (
+        <Toast
+          icon={<IoIosWarning />}
+          subtitle="추가 불가"
+          title="문항을 추가해주세요"
+          isOpen={isObjAddFail}
+          setIsOpen={setIsObjAddFail}
         />
       )}
     </>
