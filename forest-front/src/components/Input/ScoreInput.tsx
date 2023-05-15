@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { CommonInput } from "./Input.style";
 
 interface Iprops {
@@ -22,8 +21,6 @@ export default function ScoreInput({
     <CommonInput
       id={id}
       name={name}
-      type="number"
-      min={0}
       max={maxInput}
       placeholder={placeholder}
       value={inputScore}

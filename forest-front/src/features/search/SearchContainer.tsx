@@ -21,10 +21,11 @@ export default function SearchContainer() {
     <SearchContainerWrapper>
       <SearchContainerInput>
         <SearchInput inputText={inputSearch} onChange={changeSearchText} />
-        <HashTag value="수능대비" onClick={(value: string) => searchKeyword(value)} />
+        <HashTag value="수능" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="영어" onClick={(value: string) => searchKeyword(value)} />
         <HashTag value="싸피" onClick={(value: string) => searchKeyword(value)} />
-        <HashTag value="바이블" onClick={(value: string) => searchKeyword(value)} />
+        <HashTag value="센스" onClick={(value: string) => searchKeyword(value)} />
+        <HashTag value="CS" onClick={(value: string) => searchKeyword(value)} />
       </SearchContainerInput>
       {inputSearch ? <SearchList keyword={inputSearch} /> : <SearchDefaultList />}
     </SearchContainerWrapper>
