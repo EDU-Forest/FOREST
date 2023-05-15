@@ -61,7 +61,7 @@ export default function UserForm({ type }: Iprops) {
     birth: "1980-01-01",
   });
 
-  const { refetch } = useCheckEmail({ email: userData.email, validation, setValidation });
+  const { refetch } = useCheckEmail({ type, email: userData.email, validation, setValidation });
 
   useEffect(() => {
     if (type === "moreinfo") {
@@ -115,7 +115,9 @@ export default function UserForm({ type }: Iprops) {
   };
 
   const emailValidator = () => {
-    refetch();
+    if (type === "signup") {
+      refetch();
+    }
   };
 
   const usernameValidator = () => {
