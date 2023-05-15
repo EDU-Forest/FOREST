@@ -34,8 +34,11 @@ export default function CanvasEraser({ canvasProps, setCanvasProps }: Iprops) {
     <CanvasSelectorWrapper style={{ width: "20rem" }}>
       <CanvasSelectorArrow style={{ left: "9rem" }} />
       {eraserWidth.map((item, idx) => (
-        <CanvasColorSelectorSelected selected={item === canvasProps.eraserWidth ? true : false}>
-          <BsFillEraserFill key={idx} onClick={() => changeEraser(item)} size={widthToCss(item)} />
+        <CanvasColorSelectorSelected
+          key={idx}
+          selected={item === canvasProps.eraserWidth ? true : false}
+        >
+          <BsFillEraserFill onClick={() => changeEraser(item)} size={widthToCss(item)} />
         </CanvasColorSelectorSelected>
       ))}
     </CanvasSelectorWrapper>
