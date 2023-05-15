@@ -26,4 +26,5 @@ public class GetStudyRecentResponseDto {
     private int participantStudent;
     private int takeRate;
     private Boolean isFinished;
+    private Boolean isDescript;
 }
