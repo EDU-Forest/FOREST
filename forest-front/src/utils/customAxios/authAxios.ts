@@ -26,10 +26,11 @@ authAxios.interceptors.request.use(
 
 authAxios.interceptors.response.use(
   (response) => {
+    console.log("잠수함 1..", response);
     return response;
   },
   async (error) => {
-    // const router = useRouter();
+    console.log("잠수함 2..", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
