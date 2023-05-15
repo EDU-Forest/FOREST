@@ -30,7 +30,6 @@ authAxios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
@@ -52,6 +51,7 @@ authAxios.interceptors.response.use(
       if (typeof window !== "undefined") {
         window.location.href = "/";
       }
+      return;
     }
     return Promise.reject(error);
   },
