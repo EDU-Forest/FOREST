@@ -166,11 +166,11 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
             서술형
           </EditorNavDivInner>
         </EditorNavDiv>
-        {/* <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
+        <EditorNavDivTitle isObject={false}>문제 가져오기</EditorNavDivTitle>
         <EditorNavDiv className="upload-problem">
           <p onClick={() => handleClickImport("whole")}>전체 영역</p>
           <p onClick={() => handleClickImport("part")}>일부 영역</p>
-        </EditorNavDiv> */}
+        </EditorNavDiv>
         <EditorNavDivTitle isObject>오브젝트</EditorNavDivTitle>
         <EditorNavDiv>
           <EditorNavDivInner onClick={() => handleClickObjectType("image")}>
