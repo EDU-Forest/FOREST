@@ -102,7 +102,7 @@ public class UserService {
 
     // 이름으로 학생 조회
     public ResponseSuccessDto<List<SearchStudentResponseDto>> searchStudent(Long classId, String userName) {
-        List<User> userList = userRepository.findByNameStartsWithAndRole(userName, EnumUserRoleStatus.STUDENT);
+        List<User> userList = userRepository.findByNameContainingAndRole(userName, EnumUserRoleStatus.STUDENT);
 
         List<SearchStudentResponseDto> dtoList = new ArrayList<>();
         for (User user : userList) {
