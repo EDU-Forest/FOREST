@@ -1,3 +1,4 @@
+import { StyledNav } from "@/components/Nav/Nav.style";
 import { Container } from "@/styles/container";
 import styled from "styled-components";
 

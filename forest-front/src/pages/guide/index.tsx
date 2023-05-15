@@ -1,5 +1,12 @@
+import { Container, FullScreen } from "@/styles/container";
 import { GuideWrapper } from "../../features/guide/Guide.style";
+import GuideNav from "@/features/guide/GuideNav";
 
 export default function UserGuide() {
-  return <GuideWrapper padding={3}></GuideWrapper>;
+  return (
+    <FullScreen>
+      <GuideNav />
+      <Container padding={3}></Container>
+    </FullScreen>
+  );
 }
