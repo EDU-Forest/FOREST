@@ -73,6 +73,7 @@ export default function UserForm({ type }: Iprops) {
     }
 
     const email = router.query?.email;
+    console.log("router", router);
     if (typeof email === "string") {
       setUserData({
         ...userData,
