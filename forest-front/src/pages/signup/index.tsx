@@ -8,29 +8,12 @@ interface Iprops {
   onClose: () => void;
 }
 
-interface IServerSideProps {
-  query: {
-    email: string;
-  };
-}
-
-function Signup({ email, onClose }: Iprops) {
-  useEffect(() => {
-    console.log(email);
-  }, []);
+function Signup({ onClose }: Iprops) {
   return (
     <SignupContainer>
-      <UserForm type={"signup"} onClose={onClose} email={email} />
+      <UserForm type={"signup"} onClose={onClose} />
     </SignupContainer>
   );
 }
 
 export default avoidDuplicateLoginAuth(Signup);
-
-export const getServerSideProps = async ({ query: { email } }: IServerSideProps) => {
-  return {
-    props: {
-      email,
-    },
-  };
-};
