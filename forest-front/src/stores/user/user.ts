@@ -21,7 +21,7 @@ const userSlice = createSlice({
       state.username = action.payload;
     },
     setLogout(state) {
-      state = initialState;
+      Object.assign(state, initialState);
     },
   },
 });
