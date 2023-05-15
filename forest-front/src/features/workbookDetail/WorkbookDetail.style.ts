@@ -322,9 +322,10 @@ export const StyledWorkbookDetailQuestionBox = styled.div`
   overflow: auto;
   ${scrollBar(0.75)};
 
-  img {
-    width: 120px;
-    height: auto;
+  > img {
+    width: auto;
+    max-width: 25rem;
+    height: 25rem;
 
     margin-top: 1.5rem;
     align-self: center;
@@ -390,6 +391,15 @@ export const StyledQuestionDetailChoiceBox = styled.div`
   align-items: center;
 
   gap: 1rem;
+
+  > img {
+    width: auto;
+    max-width: 20rem;
+    height: 20rem;
+
+    margin-top: 1.5rem;
+    align-self: center;
+  }
 `;
 
 export const StyledQuestionChoiceNumBox = styled.div`
