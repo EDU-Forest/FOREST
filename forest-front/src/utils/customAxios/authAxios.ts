@@ -48,10 +48,9 @@ authAxios.interceptors.response.use(
         error?.response?.data?.error?.message === "Refresh Token이 유효하지 않습니다.")
     ) {
       removeItemLocalStorage("forest_access_token");
-      if (typeof window !== "undefined") {
-        window.location.href = "/";
-      }
-      return;
+      // if (typeof window !== "undefined") {
+      //   window.location.href = "/";
+      // }
     }
     return Promise.reject(error);
   },
