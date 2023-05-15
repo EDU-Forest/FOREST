@@ -77,6 +77,10 @@ const SearchListItem = styled.div`
   }
 `;
 
+const SearchDefaultNoResult = styled.div`
+  height: 100%;
+`;
+
 export {
   SearchTitle,
   SearchDefaultWrapper,
@@ -85,4 +89,5 @@ export {
   SearchDefalutListWrapper,
   SearchListWrapper,
   SearchListItem,
+  SearchDefaultNoResult,
 };

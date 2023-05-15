@@ -5,6 +5,7 @@ import {
   SearchDefalutListWrapper,
   PopularOption,
   PopularOptionItem,
+  SearchDefaultNoResult,
 } from "./SearchList.style";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -55,22 +56,28 @@ export default function SearchDefaultList() {
         {popularLoading ? (
           <Loading width={8} height={8} />
         ) : (
-          <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-            {popularList?.map((item) => (
-              <SwiperSlide key={item.workbookId}>
-                <CommonWorkbook
-                  id={item.workbookId}
-                  title={item.title}
-                  bookmarkCount={item.bookmarkCount}
-                  scrapCount={item.scrapCount}
-                  isBookmarked={item.isBookmarked}
-                  workbookImgPath={item.workbookImgPath}
-                  methodType={item.methodType}
-                  clickAction={() => goToDetail(item.workbookId)}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <>
+            {popularList && popularList?.length > 0 ? (
+              <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
+                {popularList?.map((item) => (
+                  <SwiperSlide key={item.workbookId}>
+                    <CommonWorkbook
+                      id={item.workbookId}
+                      title={item.title}
+                      bookmarkCount={item.bookmarkCount}
+                      scrapCount={item.scrapCount}
+                      isBookmarked={item.isBookmarked}
+                      workbookImgPath={item.workbookImgPath}
+                      methodType={item.methodType}
+                      clickAction={() => goToDetail(item.workbookId)}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <SearchDefaultNoResult>집계된 순위가 없습니다.</SearchDefaultNoResult>
+            )}
+          </>
         )}
       </SearchDefalutListWrapper>
       <SearchTitle>최신 등록 문제집 ⭐</SearchTitle>
