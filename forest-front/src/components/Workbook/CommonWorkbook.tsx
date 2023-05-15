@@ -11,7 +11,6 @@ import {
   WorkbookImgBox,
   WorkbookTitle,
 } from "./Workbook.style";
-import Workbook from "@/pages/workbook";
 import { titleFormatter } from "@/utils";
 
 interface Iprops {
@@ -40,18 +39,12 @@ export default function CommonWorkbook({
   const postMutate = useBookmarkPost(isWorkbookPage).mutate;
   const deleteMutate = useBookmarkDelete(isWorkbookPage).mutate;
 
-  const [isNewBookmarked, setIsNewBookmarked] = useState(isBookmarked);
-  const [newBookmarkCount, setNewBookmarkCount] = useState(bookmarkCount);
-
   const pressHeart = () => {
-    if (isNewBookmarked) {
+    if (isBookmarked) {
       deleteMutate(id);
-      setIsNewBookmarked(false);
-      newBookmarkCount && setNewBookmarkCount(newBookmarkCount - 1);
+
       return;
     } else {
-      setIsNewBookmarked(true);
-      newBookmarkCount !== undefined && setNewBookmarkCount(newBookmarkCount + 1);
       postMutate(id);
     }
   };
@@ -76,9 +69,9 @@ export default function CommonWorkbook({
           </WorkbookContent> */}
           <div>
             <WorkbookIcon onClick={pressHeart}>
-              {isNewBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
+              {isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}
             </WorkbookIcon>
-            <WorkbookContent>{newBookmarkCount}</WorkbookContent>
+            <WorkbookContent>{bookmarkCount}</WorkbookContent>
           </div>
         </WorkbookContentWrapper>
       )}
