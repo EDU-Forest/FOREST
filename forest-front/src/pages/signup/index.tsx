@@ -1,6 +1,7 @@
 import UserForm from "@/features/home/UserForm";
 import { SignupContainer, SignupLayout } from "@/features/signup/Signup.style";
 import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
+import { useEffect } from "react";
 
 interface Iprops {
   email: string;
@@ -14,6 +15,9 @@ interface IServerSideProps {
 }
 
 function Signup({ email, onClose }: Iprops) {
+  useEffect(() => {
+    console.log(email);
+  }, []);
   return (
     <SignupContainer>
       <UserForm type={"signup"} onClose={onClose} email={email} />
