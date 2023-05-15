@@ -16,7 +16,7 @@ const useStudyResultQuery = (studyId: number, isAnalysis: boolean) => {
     enabled: !!studyId && studyId !== -1,
     refetchOnWindowFocus: false,
     onSuccess(data) {
-      dispatch(setStudyType(data.data.studyType.toLowerCase()));
+      dispatch(setStudyType(data?.data.studyType.toLowerCase()));
 
       if (isAnalysis) {
         dispatch(setAnalysisId(studyId));
