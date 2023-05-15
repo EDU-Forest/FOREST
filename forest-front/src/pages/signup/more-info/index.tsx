@@ -4,7 +4,17 @@ import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-function MoreInfo() {
+interface IServerSideProps {
+  query: {
+    email: string;
+  };
+}
+
+interface Iprops {
+  email: string;
+}
+
+function MoreInfo({ email }: Iprops) {
   const router = useRouter();
   // const [email, setEmail] = useState("");
 
@@ -19,7 +29,15 @@ function MoreInfo() {
     router.push("/");
   };
 
-  return <UserForm type={"moreinfo"} onClose={movePageHandler} />;
+  return <UserForm type={"moreinfo"} email={email} onClose={movePageHandler} />;
 }
 
 export default avoidDuplicateLoginAuth(MoreInfo);
+
+export const getServerSideProps = async ({ query: { email } }: IServerSideProps) => {
+  return {
+    props: {
+      email,
+    },
+  };
+};
