@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getLocalStorage, setLocalStorage } from "../localStorage";
+import { removeItemLocalStorage } from "../localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -26,11 +27,10 @@ authAxios.interceptors.request.use(
 
 authAxios.interceptors.response.use(
   (response) => {
-    console.log("잠수함 1..", response);
     return response;
   },
   async (error) => {
-    console.log("잠수함 2..", error);
+    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
@@ -43,6 +43,14 @@ authAxios.interceptors.response.use(
       setLocalStorage("forest_access_token", accessToken);
       prevRequest.headers.Authorization = `Bearer ${accessToken}`;
       return authAxios(prevRequest);
+    } else if (
+      error?.response?.status === 500 &&
+      error?.response?.data.slice(0, 11) === "JWT expired"
+    ) {
+      removeItemLocalStorage("forest_access_token");
+      if (typeof window !== "undefined") {
+        window.location.href = "/";
+      }
     }
     return Promise.reject(error);
   },
