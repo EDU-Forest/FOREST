@@ -22,15 +22,21 @@ interface Iprops {
   studentList?: IStudentList[];
   keywordNum?: number;
   maxScore: number;
+  nowIdx: number;
 }
 
-export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScore }: Iprops) {
+export default function DescriptiveFormAnswer({
+  studentList,
+  keywordNum,
+  maxScore,
+  nowIdx,
+}: Iprops) {
   const [scoreList, setScoreList] = useState<ObjType>({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     studentList?.map((item, idx) => (scoreList[`score_${idx}`] = 0));
-  }, []);
+  }, [nowIdx]);
 
   const changeScore = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const { value } = e.target;
