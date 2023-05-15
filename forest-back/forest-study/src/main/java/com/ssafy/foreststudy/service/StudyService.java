@@ -833,12 +833,12 @@ public class StudyService {
                 sumScore += ssr.getScore();
                 correctRate += ssr.getCorrectRate();
             }
-            double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
+            double average = Math.round((sumScore * 1.0 / participateNum) * 100) / 100.0;
             double dis = 0;
             for (StudentStudyResult ssr : studentStudyResults)
                 dis += Math.pow(average - ssr.getScore(), 2);
 
-            double standardDeviation = Math.sqrt(dis / participateNum) * 100 / 100.0;
+            double standardDeviation = Math.round(Math.sqrt(dis / participateNum) * 100) / 100.0;
             int correctAnswerRate = correctRate / participateNum;
 
             ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
@@ -925,13 +925,13 @@ public class StudyService {
             solvingTime += duration.getSeconds() / 60;
             correctRate += ssr.getCorrectRate();
         }
-        double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
+        double average = Math.round((sumScore * 1.0 / participateNum) * 100) / 100.0;
         double dis = 0;
         for (StudentStudyResult ssr : studentStudyResults) {
             dis += Math.pow(average - ssr.getScore(), 2);
         }
 
-        double standardDeviation = Math.sqrt(dis / participateNum) * 100 / 100.0;
+        double standardDeviation = Math.round(Math.sqrt(dis / participateNum) * 100) / 100.0;
         long averageSolvingTime = solvingTime / participateNum;
         int correctAnswerRate = correctRate / participateNum;
         int ungradedAnswerRate = 0;
