@@ -178,8 +178,7 @@ public class WorkbookController {
             HttpServletRequest request,
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
-//        Long userId = jwtDecoder.verifyJWT(request);
-        Long userId = 9L;
+        Long userId = jwtDecoder.verifyJWT(request);
         log.info("workbookID : {}", workbookId);
         log.info("file : {}", file.isEmpty());
         return new ResponseSuccessDto<>(workbookService.ocrPdf(userId, file));
