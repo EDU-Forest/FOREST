@@ -152,7 +152,7 @@ public class StudyService {
 
         List<Study> studyList = new ArrayList<>();
 
-        if(user.getRole() == null )
+        if (user.getRole() == null)
             throw new CustomException(StudyErrorCode.AUTH_ROLE_NOT_FOUND);
 
         /* 유저가 선생님이면 */
@@ -918,6 +918,9 @@ public class StudyService {
         int correctRate = 0;
         for (StudentStudyResult ssr : studentStudyResults) {
             sumScore += ssr.getScore();
+            if (ssr.getExitTime() == null)
+                ssr.updateExitTime(study.getEndTime());
+
             Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
             solvingTime += duration.getSeconds() / 60;
             correctRate += ssr.getCorrectRate();

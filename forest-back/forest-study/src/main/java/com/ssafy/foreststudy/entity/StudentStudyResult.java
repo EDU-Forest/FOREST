@@ -60,6 +60,10 @@ public class StudentStudyResult {
         this.enterTime = LocalDateTime.now();
     }
 
+    public void updateExitTime(LocalDateTime exitTime) {
+        this.exitTime = exitTime;
+    }
+
     public void updateStudentStudyResult(int correctNum, int score, int correctRate, Boolean isGraded) {
         this.exitTime = LocalDateTime.now();
         this.correctNum = correctNum;
