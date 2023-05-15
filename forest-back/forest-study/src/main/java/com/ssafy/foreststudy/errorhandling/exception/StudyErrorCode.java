@@ -7,6 +7,7 @@ public enum StudyErrorCode implements Codable {
 
     STUDY_CLASS_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 클래스 ID",true),
     AUTH_USER_NOT_FOUND(HttpStatus.UNAUTHORIZED, "해당 유저가 존재하지 않습니다.",true),
+    AUTH_ROLE_NOT_FOUND(HttpStatus.UNAUTHORIZED, "역할을 받지 않은 유저입니다.",true),
     STUDY_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 스터디 ID",true),
     STUDY_STUDENT_RESULT_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 개인 시험 결과 ID",true),
     STUDY_STUDENT_RESULT_PROBLEM_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 개인 시험 문제 ID",true),

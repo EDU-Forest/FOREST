@@ -152,6 +152,9 @@ public class StudyService {
 
         List<Study> studyList = new ArrayList<>();
 
+        if(user.getRole() == null )
+            throw new CustomException(StudyErrorCode.AUTH_ROLE_NOT_FOUND);
+
         /* 유저가 선생님이면 */
         if (user.getRole().equals(EnumUserRoleStatus.TEACHER)) {
             List<ClassEntity> classes = classRepository.findAllByOwner(user);
