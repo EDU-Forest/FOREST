@@ -375,6 +375,7 @@ export const StyledQuestionDetailTextBox = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.Lime[600]};
   border-radius: 4px;
   line-height: 28px;
+  white-space: pre-line;
 `;
 export const StyledQuestionDetailChoiceListBox = styled.div`
   display: flex;
