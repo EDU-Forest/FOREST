@@ -52,10 +52,18 @@ const workbookDetailSlice = createSlice({
     resetIsMoveToEditor(state) {
       state.isMoveToEditor = initialState.isMoveToEditor;
     },
+    setInitWorkbookDetail(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setWorkbook, setIsPublic, setIsMoveToEditor, resetIsMoveToEditor } =
-  workbookDetailSlice.actions;
+export const {
+  setWorkbook,
+  setIsPublic,
+  setIsMoveToEditor,
+  resetIsMoveToEditor,
+  setInitWorkbookDetail,
+} = workbookDetailSlice.actions;
 
 export default workbookDetailSlice.reducer;

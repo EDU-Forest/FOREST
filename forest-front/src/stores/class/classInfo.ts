@@ -59,6 +59,9 @@ const classSlice = createSlice({
     setHaveDescript(state, action) {
       state.haveDescript = action.payload;
     },
+    setInitClassInfo(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -71,6 +74,7 @@ export const {
   setDeleteStudentNum,
   setStudentPointList,
   setHaveDescript,
+  setInitClassInfo,
 } = classSlice.actions;
 
 export default classSlice.reducer;

@@ -54,7 +54,7 @@ export default function CommonWorkbook({
       {workbookImgPath ? (
         <WorkbookImgBox>
           <WorkbookImg src={workbookImgPath} onClick={() => clickAction && clickAction(id)} />
-          <p>{titleFormatter(title)}</p>
+          <p>{title}</p>
         </WorkbookImgBox>
       ) : (
         <WorkbookImg src={"/images/workbook.png"} onClick={() => clickAction && clickAction(id)} />
@@ -62,11 +62,10 @@ export default function CommonWorkbook({
       <WorkbookTitle onClick={() => clickAction && clickAction(id)}>{title}</WorkbookTitle>
       {(bookmarkCount || bookmarkCount === 0) && (
         <WorkbookContentWrapper>
-          {/* 스크랩 비활성화 */}
-          {/* <WorkbookContent bg>
+          <WorkbookContent bg>
             <span>{scrapCount} </span>
             명이 이용 중이에요
-          </WorkbookContent> */}
+          </WorkbookContent>
           <div>
             <WorkbookIcon onClick={pressHeart}>
               {isBookmarked ? <BsSuitHeartFill /> : <BsSuitHeart />}

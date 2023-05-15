@@ -134,8 +134,8 @@ const StyledTestProblemAnswerNumber = styled.div`
   margin-bottom: 22px;
 
   img {
-    width: 20rem;
-    height: 20rem;
+    max-width: 25rem;
+    height: 25rem;
   }
 `;
 
@@ -297,12 +297,18 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+  cursor: pointer;
 
   .correct-icon {
     width: 9.25rem;
     height: 9.25rem;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "O" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+
+    &:hover {
+      color: ${({ selectedMenu, theme }) =>
+        selectedMenu === "O" ? theme.colors.Orange[700] : theme.colors.Gray[700]};
+    }
   }
 
   .wrong-icon {
@@ -310,6 +316,11 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
     height: 11.5rem;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "X" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+
+    &:hover {
+      color: ${({ selectedMenu, theme }) =>
+        selectedMenu === "X" ? theme.colors.Orange[700] : theme.colors.Gray[700]};
+    }
   }
 `;
 
@@ -438,7 +449,7 @@ const TestProblemImgBox = styled.div`
   text-align: center;
 
   img {
-    width: 25rem;
+    max-width: 25rem;
     height: 25rem;
   }
 `;

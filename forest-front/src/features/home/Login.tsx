@@ -116,6 +116,7 @@ export default function Login({ setIsError }: Iprops) {
             onChange={onChange}
             onBlur={emailValidator}
             autoComplete="email"
+            autoFocus
           />
           {/* {emailErrorMsg && <LoginErrorMsg>{emailErrorMsg}</LoginErrorMsg>} */}
           <LoginLabelBox>

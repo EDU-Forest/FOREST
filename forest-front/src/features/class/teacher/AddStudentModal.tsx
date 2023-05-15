@@ -78,7 +78,11 @@ export default function AddStudentModal() {
     <ClassStudentAddModalContainer>
       <Title>클래스에 추가할 학생을 선택해주세요.</Title>
       <div style={{ position: "relative" }}>
-        <ClassStudentAddInput value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+        <ClassStudentAddInput
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          autoFocus
+        />
         <ClassStudentDeleteIcon onClick={removeInputValue}>
           <AiOutlineClose />
         </ClassStudentDeleteIcon>

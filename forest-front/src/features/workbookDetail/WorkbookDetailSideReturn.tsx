@@ -6,7 +6,7 @@ function WorkbookDetailSideReturn() {
   const router = useRouter();
 
   const pageReturn = () => {
-    router.push("/workbook");
+    router.back();
   };
 
   return (

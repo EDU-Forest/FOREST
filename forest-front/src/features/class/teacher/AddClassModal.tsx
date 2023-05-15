@@ -50,6 +50,7 @@ export default function AddClassModal() {
           onChange={(e) => setClassName(e.target.value)}
           maxLength={14}
           onKeyUp={onKeyUpHandler}
+          autoFocus
         />
         <ClassInputCheck isSuccess={isAvailable} />
         <ClassInputMsg>{errorMsg}</ClassInputMsg>
