@@ -30,6 +30,7 @@ export default function AddStudentModal() {
   const classId = useSelector((state: RootState) => state.class.nowClassId);
   const [inputValue, setInputValue] = useState<string>("");
   const [isAvailable, setIsAvailable] = useState<boolean>(false);
+  const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const [studentList, setStudentList] = useState<IStudent[]>([]);
   const { mutate } = useClassStudentAdd();
 
@@ -74,21 +75,37 @@ export default function AddStudentModal() {
     mutate(payload);
   };
 
+  const closeDropdown = () => {
+    console.log("하하");
+    setIsDropdown(false);
+  };
+
+  const clickSearchInput = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    setIsDropdown(true);
+  };
+
+  const changeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    setIsDropdown(true);
+  };
+
   return (
-    <ClassStudentAddModalContainer>
+    <ClassStudentAddModalContainer onClick={closeDropdown}>
       <Title>클래스에 추가할 학생을 선택해주세요.</Title>
       <div style={{ position: "relative" }}>
         <ClassStudentAddInput
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onClick={clickSearchInput}
+          onChange={changeSearchValue}
           autoFocus
         />
         <ClassStudentDeleteIcon onClick={removeInputValue}>
           <AiOutlineClose />
         </ClassStudentDeleteIcon>
       </div>
-      {searchList && searchList?.length > 0 && (
-        <ClassStudentAddDropdown>
+      {searchList && searchList?.length > 0 && isDropdown && (
+        <ClassStudentAddDropdown onClick={(e) => e.stopPropagation()}>
           <ClassStudentAddDropdownEach>
             {searchList?.map((item) => (
               <div key={item.userId}>

@@ -5,7 +5,6 @@ import {
   SearchDefalutListWrapper,
   PopularOption,
   PopularOptionItem,
-  SearchDefaultNoResult,
 } from "./SearchList.style";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
@@ -36,7 +35,7 @@ export default function SearchDefaultList() {
     <SearchDefaultWrapper>
       <SearchTitle>
         최고 인기 문제집 ⭐
-        <PopularOption>
+        {/* <PopularOption>
           <PopularOptionItem
             selected={sortType === "bookmark" ? true : false}
             onClick={() => changeSort("bookmark")}
@@ -49,7 +48,7 @@ export default function SearchDefaultList() {
           >
             사용 순
           </PopularOptionItem>
-        </PopularOption>
+        </PopularOption> */}
       </SearchTitle>
 
       <SearchDefalutListWrapper>
@@ -57,26 +56,22 @@ export default function SearchDefaultList() {
           <Loading width={8} height={8} />
         ) : (
           <>
-            {popularList && popularList?.length > 0 ? (
-              <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-                {popularList?.map((item) => (
-                  <SwiperSlide key={item.workbookId}>
-                    <CommonWorkbook
-                      id={item.workbookId}
-                      title={item.title}
-                      bookmarkCount={item.bookmarkCount}
-                      scrapCount={item.scrapCount}
-                      isBookmarked={item.isBookmarked}
-                      workbookImgPath={item.workbookImgPath}
-                      methodType={item.methodType}
-                      clickAction={() => goToDetail(item.workbookId)}
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            ) : (
-              <SearchDefaultNoResult>집계된 순위가 없습니다.</SearchDefaultNoResult>
-            )}
+            <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
+              {popularList?.map((item) => (
+                <SwiperSlide key={item.workbookId}>
+                  <CommonWorkbook
+                    id={item.workbookId}
+                    title={item.title}
+                    bookmarkCount={item.bookmarkCount}
+                    scrapCount={item.scrapCount}
+                    isBookmarked={item.isBookmarked}
+                    workbookImgPath={item.workbookImgPath}
+                    methodType={item.methodType}
+                    clickAction={() => goToDetail(item.workbookId)}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </>
         )}
       </SearchDefalutListWrapper>

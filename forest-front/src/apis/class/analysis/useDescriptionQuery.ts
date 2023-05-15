@@ -3,9 +3,9 @@ import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { Descript } from "@/types/Descript";
 
-interface Description {
-  count: number;
-  descript: Descript[];
+interface Iprops {
+  studyId: number;
+  setCount: (count: number) => void;
 }
 
 const fetcher = (studyId: number) =>
@@ -14,16 +14,19 @@ const fetcher = (studyId: number) =>
       timeout: 100000,
     })
     .then(({ data }) => {
-      // const descript = data.data as Description;
-      // return descript;
-      return data;
+      const count: number = data?.data.count;
+      const descript: Descript[] = data?.data.descript;
+      const status: string = data.status;
+      return { count, descript, status };
     });
 
-const useDescriptionQuery = (studyId: number) => {
+const useDescriptionQuery = ({ studyId, setCount }: Iprops) => {
   return useQuery([queryKeys.DESCRIPTION, studyId], () => fetcher(studyId), {
     refetchOnWindowFocus: false,
     enabled: !!studyId,
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      setCount(data.count);
+    },
   });
 };
 
