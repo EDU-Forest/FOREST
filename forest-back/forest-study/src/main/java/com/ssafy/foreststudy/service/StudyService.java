@@ -50,6 +50,10 @@ public class StudyService {
 
     /* duplicate Extract */
     private GetStudyRecentResponseDto getStudyInfoResponse(ClassStudyResult cs, String schedule) {
+        Boolean isDescript = false;
+        if (cs.getUngradedAnswerRate() > 0)
+            isDescript = true;
+
         GetStudyRecentResponseDto getStudyRecentResponseDto = GetStudyRecentResponseDto.builder()
                 .studyId(cs.getStudy().getId())
                 .title(cs.getStudy().getName())
@@ -69,6 +73,7 @@ public class StudyService {
                 .participantStudent(cs.getParticipantStudent())
                 .takeRate(cs.getTakeRate())
                 .isFinished(cs.getIsFinished())
+                .isDescript(isDescript)
                 .build();
 
         return getStudyRecentResponseDto;
@@ -722,7 +727,7 @@ public class StudyService {
                 String userAnswer = studentStudyProblemResult.getUserAnswer();
                 String workbookAnswer =
                         studentStudyProblemResult.getProblemList().getProblem().getAnswer();
-                if (userAnswer != null){
+                if (userAnswer != null) {
                     similarity = getJaccardSimilarity(userAnswer, workbookAnswer);
                     for (String keyWord : keyWords) {
                         if (studentStudyProblemResult.getUserAnswer().contains(keyWord))
