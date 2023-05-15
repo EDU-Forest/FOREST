@@ -30,10 +30,11 @@ import Label from "@/components/Label/Label";
 
 interface Iprops {
   onClose: () => void;
+  email?: string;
   type: "signup" | "moreinfo";
 }
 
-export default function UserForm({ type }: Iprops) {
+export default function UserForm({ email, type }: Iprops) {
   const kakaoLoginMoreInfo = useKakaoLoginMoreInfo();
   const signup = useSignup();
   const router = useRouter();
@@ -72,9 +73,7 @@ export default function UserForm({ type }: Iprops) {
       });
     }
 
-    const email = router.query?.email;
-    console.log("router", router);
-    if (typeof email === "string") {
+    if (email) {
       setUserData({
         ...userData,
         email: email,
