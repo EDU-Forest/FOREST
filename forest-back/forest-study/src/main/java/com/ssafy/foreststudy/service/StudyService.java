@@ -770,6 +770,9 @@ public class StudyService {
     /* (선생님) 서술형 문제 채점 */
     public ResponseSuccessDto<PatchResponseDto> patchDescription(PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
 
+        if(patchDescriptionListRequestDto == null)
+            throw new CustomException(StudyErrorCode.STUDY_DESCRIPT_NULL);
+
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
