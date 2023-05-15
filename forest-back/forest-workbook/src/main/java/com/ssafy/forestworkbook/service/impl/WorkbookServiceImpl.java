@@ -1315,7 +1315,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 String[] txt = fullText.split("\n");
 
                 // pdf OCR 내용 읽기 실패
-                if (txt == null) {
+                if (fullText == null || fullText.equals("")) {
                     throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
                 }
 
@@ -1440,15 +1440,31 @@ public class WorkbookServiceImpl implements WorkbookService {
                                             ocrPoint = Integer.parseInt(textContent.replace("\n", " ").substring(endIndex -1, endIndex));
                                             textContent = textContent.substring(textContent.indexOf("점]") + 2);
                                         }
-                                        text.append(textContent);
+
+                                        if (splitStr.equals("[0-9]{1}[ ]")) {
+
+                                            if (textContent.substring(0, 1).equals("*")) {
+                                                text.append(textContent);
+                                            }
+                                            else {
+                                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                                        .content(textContent.replaceAll("\n", " ").trim())
+                                                        .isImage(false)
+                                                        .build();
+                                            }
+                                        }
+                                        else {
+                                            text.append(textContent);
+                                        }
                                     }
                                 }
-
                             }
                         }
                     }
 
-                    if (!title.toString().equals("") && !text.toString().equals("") && itemResExceptIdDtoList.size() != 0) {
+                    if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() != 0) {
+                        continue;
+                    } else {
                         ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
                                 .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
                                 .title(title.toString())
@@ -1462,6 +1478,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         problemOcrDtoList.add(problemOcrDto);
                     }
+
 
                     title.setLength(0);
                     text.setLength(0);
