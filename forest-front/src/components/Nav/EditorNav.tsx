@@ -115,9 +115,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const handleClickObjectType = (type: string) => {
     if (questions.length !== 0) {
       if (type === "text") {
-        const copyArr = [...questions];
-        copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
-        dispatch(setQuestions([...copyArr]));
+        toChangeQuestions("textIsEmpty", false);
       } else if (type === "image") {
         toChangeQuestions("imgIsEmpty", false);
       }
