@@ -20,7 +20,7 @@ export default function StudyAnalysis() {
       setNotCompleted(true);
       return;
     }
-    router.push("/teacher/class");
+    router.push("/teacher/class", undefined, { shallow: true });
   };
   const [isSummary, setIsSummary] = useState<boolean>(true);
 

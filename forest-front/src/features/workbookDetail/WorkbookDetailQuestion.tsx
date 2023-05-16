@@ -46,7 +46,7 @@ function WorkbookDetailQuestion({
 
   const handleClickEdit = () => {
     dispatch(setIsMoveToEditor(true));
-    router.push("/editor");
+    router.push("/editor", undefined, { shallow: true });
   };
 
   useEffect(() => {

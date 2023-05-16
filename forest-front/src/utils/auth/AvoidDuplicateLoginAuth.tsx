@@ -12,7 +12,7 @@ const avoidDuplicateLoginAuth = <P extends object>(WrappedComponent: React.Compo
     useEffect(() => {
       const accessToken = getLocalStorage("forest_access_token");
       if (role && username && accessToken) {
-        router.push(`/${role.toLowerCase()}/dashboard`);
+        router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
       }
     }, []);
 

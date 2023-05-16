@@ -13,10 +13,14 @@ function WorkbookList({ list, isWorkbookPage }: IProps) {
   const router = useRouter();
 
   const handleClickWorkbook = (id: number) => {
-    router.push({
-      pathname: `/workbook/[wId]`,
-      query: { wId: id },
-    });
+    router.push(
+      {
+        pathname: `/workbook/[wId]`,
+        query: { wId: id },
+      },
+      undefined,
+      { shallow: true },
+    );
   };
 
   return (

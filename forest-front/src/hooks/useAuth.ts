@@ -22,7 +22,7 @@ function useAuth() {
     dispatch(setInitExam());
     dispatch(setInitWorkbookDetail());
     removeItemLocalStorage("forest_access_token");
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   };
 
   return { logout };

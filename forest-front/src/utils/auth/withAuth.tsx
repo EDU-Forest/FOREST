@@ -12,7 +12,7 @@ const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) =>
     useEffect(() => {
       const accessToken = getLocalStorage("forest_access_token");
       if (!role || !username || !accessToken) {
-        router.push("/");
+        router.push("/", undefined, { shallow: true });
       }
     }, []);
 
