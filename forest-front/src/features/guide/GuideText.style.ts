@@ -13,11 +13,10 @@ const GuideTitle = styled.p`
 
 const GuideSectionTitle = styled.p`
   display: inline-block;
-  font-weight: 500;
+  font-weight: 800;
   font-size: 22px;
   line-height: 28px;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.Gray[400]};
-  padding: 0 32px 6px 32px;
+  color: ${({ theme }) => theme.colors.Lime[800]};
 `;
 
 const GuideNormalText = styled.p`
