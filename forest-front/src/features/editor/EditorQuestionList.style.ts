@@ -34,10 +34,6 @@ export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`
   color: ${({ isCur }) => isCur && "white"};
   border-radius: 20px;
 
-  /* white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis; */
-
   // 문제 번호
   > span:first-child {
     font-weight: bold;
@@ -46,7 +42,22 @@ export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`
   // 문제명
   > span:nth-child(2) {
     white-space: nowrap;
+    max-width: 8rem;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media ${({ theme }) => theme.tablet} {
+      max-width: 48px;
+    }
+  }
+
+  // delete icon
+  > svg {
+    width: 16px;
+    height: 16px;
+
+    display: flex;
+    margin-left: auto;
+    fill: ${({ isCur, theme }) => (isCur ? "white" : theme.colors.Gray[600])};
   }
 `;
