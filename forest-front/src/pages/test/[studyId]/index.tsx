@@ -17,7 +17,7 @@ interface Iprops {
 }
 
 function Test({ studyId }: Iprops) {
-  const { isSubmitted, toggleModal, isGraded, isTimeOut, endTime } = useSelector(
+  const { isSubmitted, toggleModal, isGraded, endTime, isEnded } = useSelector(
     (state: RootState) => state.exam,
   );
   const { isLoading } = useGetStudyProblems(studyId);
@@ -35,7 +35,8 @@ function Test({ studyId }: Iprops) {
         <>
           {toggleModal && <TestEndModal />}
           <TestHeader />
-          {endTime && isTimeOut && !isSubmitted ? <TestEnd /> : <TestContent />}
+          {/* isGraded가 필요할 수도..? */}
+          {endTime && isEnded && !isSubmitted ? <TestEnd /> : <TestContent />}
         </>
       )}
     </StyledTestContainer>
