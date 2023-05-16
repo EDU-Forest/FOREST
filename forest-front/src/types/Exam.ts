@@ -1,4 +1,5 @@
 export interface examState {
+  isTimeOut: boolean;
   studyId: number;
   isSubmitted: boolean;
   isGraded: boolean;

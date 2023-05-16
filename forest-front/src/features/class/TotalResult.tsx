@@ -57,10 +57,19 @@ export default function TotalResult({
             </ClassSummaryIcon>
             <ClassSummaryText>풀이 시간</ClassSummaryText>
           </div>
-          <div>
-            <ClassSummaryText>{averageSolvingTime}</ClassSummaryText>
-            <ClassSummaryText isGray>분</ClassSummaryText>
-          </div>
+          {averageSolvingTime >= 60 ? (
+            <div>
+              <ClassSummaryText>{Math.floor(averageSolvingTime / 60)}</ClassSummaryText>
+              <ClassSummaryText isGray>시간</ClassSummaryText>
+              <ClassSummaryText>{averageSolvingTime % 60}</ClassSummaryText>
+              <ClassSummaryText isGray>분</ClassSummaryText>
+            </div>
+          ) : (
+            <div>
+              <ClassSummaryText>{averageSolvingTime}</ClassSummaryText>
+              <ClassSummaryText isGray>분</ClassSummaryText>
+            </div>
+          )}
         </ResultInfoItem>
       </SummaryResultWrapper>
     </SummaryItemWrapper>
