@@ -3,7 +3,6 @@ import authAxios from "@/utils/customAxios/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import useRecentClassIdQuery from "../class/useRecentClassIdQuery";
 import { KakaoLoginMoreInfo } from "@/types/KakaoLoginMoreInfo";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
