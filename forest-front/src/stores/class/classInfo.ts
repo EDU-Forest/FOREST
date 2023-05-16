@@ -80,7 +80,6 @@ export const {
   setStudyType,
   setDeleteStudentNum,
   setStudentPointList,
-  setHaveDescript,
   setInitClassInfo,
   setSelectedStudy,
 } = classSlice.actions;
