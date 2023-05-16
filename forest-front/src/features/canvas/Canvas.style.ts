@@ -125,7 +125,7 @@ const CanvasBarWrapper = styled.div<{
   ${({ isOpenCanvas }) =>
     isOpenCanvas &&
     css`
-      outline: 2px solid ${({ theme }) => theme.colors.Orange[200]};
+      outline: 3px solid ${({ theme }) => theme.colors.Lime[300]};
       .img-div {
         &:hover {
           .info {
@@ -265,7 +265,7 @@ const CanvasWidthSelector = styled.div<{ width?: number }>`
 
 const CanvasDrawSection = styled.div`
   animation: ${canvasBlur} 1s 1;
-  height: calc(100% - 5rem);
+  height: calc(100% - 6rem);
   position: absolute;
 `;
 

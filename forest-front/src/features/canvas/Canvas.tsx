@@ -28,7 +28,7 @@ export default function Canvas() {
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
     width: "calc(78vw - 4rem)",
-    height: "calc(100vh - 13.5rem)",
+    height: "calc(100vh - 15rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
