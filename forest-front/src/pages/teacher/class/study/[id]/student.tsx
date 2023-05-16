@@ -108,7 +108,11 @@ export default function StudyAnalysisEachStudentPage({
               <TestResultContentBox>
                 {problem?.studentStudyProblemResultList.map(
                   (item: IStudentStudyProblemResultList) => (
-                    <TestResultQuestionBtn key={item.problemNum} isCorrect={item.isCorrected}>
+                    <TestResultQuestionBtn
+                      userRole="teacher"
+                      key={item.problemNum}
+                      isCorrect={item.isCorrected}
+                    >
                       {item.problemNum}
                     </TestResultQuestionBtn>
                   ),
