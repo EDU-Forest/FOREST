@@ -32,6 +32,8 @@ pipeline {
         stage('env setting') {
             steps{
                 sh 'cp /var/jenkins_home/env/workbook/application-prod.yml /var/jenkins_home/workspace/prod-back-workbook/forest-back/forest-workbook/src/main/resources'
+                sh 'cp /var/jenkins_home/env/workbook/forest-384908-251e8b2406b6.json /var/jenkins_home/workspace/prod-back-workbook/forest-back/forest-workbook/src/main/resources'
+                sh 'cp /var/jenkins_home/env/workbook/forest-384908-251e8b2406b6.json /var/jenkins_home/workspace/prod-back-workbook/forest-back/forest-workbook'
             }            
         }
         
