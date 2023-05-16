@@ -82,7 +82,7 @@ export default function UserForm({ email, type }: Iprops) {
   }, []);
 
   const movePage = () => {
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   };
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {

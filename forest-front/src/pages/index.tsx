@@ -17,11 +17,11 @@ function Home() {
 
   const handleModal = (text: string) => {
     // setModalState(text);
-    router.push(`/${text}`);
+    router.push(`/${text}`, undefined, { shallow: true });
   };
 
   const goToDash = () => {
-    router.push("/teacher/dashboard");
+    router.push("/teacher/dashboard", undefined, { shallow: true });
   };
 
   return (

@@ -22,7 +22,7 @@ const useSignup = () => {
 
   return useMutation(fetcher, {
     onSuccess: () => {
-      router.push("/login");
+      router.push("/login", undefined, { shallow: true });
     },
     onError: (data) => {},
   });

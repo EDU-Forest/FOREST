@@ -18,7 +18,7 @@ export default function TestHeaderLeftContentBox() {
   };
 
   const goToDashBoard = () => {
-    router.push(`/${role.toLowerCase()}/dashboard`);
+    router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
   };
 
   return (

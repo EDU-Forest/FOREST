@@ -43,7 +43,7 @@ export default function Login({ setIsError }: Iprops) {
   const { email, password } = userData;
 
   const movePage = () => {
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   };
 
   const loginHandler = (e: React.FormEvent<HTMLFormElement>) => {

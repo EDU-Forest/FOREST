@@ -41,7 +41,7 @@ export default function ClassSummaryTeacher() {
     dispatch(setStudyType(result?.data.studyType.toLowerCase()));
     dispatch(setSelectedStudy({ title: result?.data.title, isDescript: result?.data.isDescript }));
 
-    router.push(`/teacher/class/study/${studyId}`);
+    router.push(`/teacher/class/study/${studyId}`, undefined, { shallow: true });
   };
 
   useEffect(() => {
