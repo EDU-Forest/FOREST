@@ -22,9 +22,12 @@ const WorkbookImgBox = styled.div`
   text-align: center;
 
   p {
-    font-size: 0.875rem;
+    font-size: calc(0.5rem + 0.55vw);
+    font-family: "KBO-Dia-Gothic_bold";
     font-weight: 700;
     position: absolute;
+    text-align: center;
+    width: 80%;
     top: 15%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -32,6 +35,14 @@ const WorkbookImgBox = styled.div`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
+    border-radius: 4px;
+    padding: 0.25rem;
+
+    /* @media (max-width: 960px) {
+      font-size: 0.75rem;
+    } */
   }
 `;
 

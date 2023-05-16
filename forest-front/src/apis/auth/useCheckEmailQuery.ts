@@ -5,6 +5,7 @@ import { checkEmail } from "@/utils";
 import { AuthValidation } from "@/types/AuthValidation";
 
 interface Iprops {
+  type: string;
   email: string;
   validation: AuthValidation;
   setValidation: (validation: AuthValidation) => void;
@@ -13,9 +14,9 @@ interface Iprops {
 const fetcher = (email: string) =>
   beforeAuthAxios.get("/api/user/check", { params: { email: email } }).then(({ data }) => data);
 
-const useCheckEmail = ({ email, validation, setValidation }: Iprops) => {
+const useCheckEmail = ({ type, email, validation, setValidation }: Iprops) => {
   return useQuery([queryKeys.CHECK_EMAIL, validation.email], () => fetcher(email), {
-    enabled: !!validation.email,
+    enabled: !!validation.email && type === "signup",
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       setValidation({
@@ -24,9 +25,7 @@ const useCheckEmail = ({ email, validation, setValidation }: Iprops) => {
         emailDuplicate: data.status === "AUTH_EMAIL_NOT_DUPLICATED" ? "pass" : "fail",
       });
     },
-    onError: (error) => {
-      console.log("checkEmailError", error);
-    },
+    onError: (error) => {},
   });
 };
 

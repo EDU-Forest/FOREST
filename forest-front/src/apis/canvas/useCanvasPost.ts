@@ -20,7 +20,6 @@ const useCanvasPost = () => {
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
-      console.log("그림을 보내자!", data);
       dispatch(setPaths([]));
     },
   });

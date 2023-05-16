@@ -6,6 +6,10 @@ const prod = process.env.NODE_ENV === "production";
 
 const config = {
   reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_SERVER_URL: process.env.NEXT_PUBLIC_SERVER_URL,
+    NEXT_PUBLIC_GA_ID: process.env.NEXT_PUBLIC_GA_ID,
+  },
   images: {
     disableStaticImages: false,
   },

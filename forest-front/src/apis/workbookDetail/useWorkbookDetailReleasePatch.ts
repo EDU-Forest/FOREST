@@ -13,7 +13,6 @@ const useWorkbookDetailReleasePatch = () => {
 
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], fetcher, {
     onSuccess: (data) => {
-      // console.log("배포 성공 post", data);
       // router.push(`/workbook/${data.data.role.workbookInfo.workbookId}`);
       return data;
     },

@@ -6,10 +6,8 @@ import {
   DescriptiveFormUpperScore,
 } from "./DescriptiveForm.style";
 import { AnalysisSubTitle } from "./StudyAnalysis.style";
-import { ClassSummaryText, ClassSummaryTextWrapper } from "../ClassSummary.style";
-import { AiOutlineRight } from "react-icons/ai";
+import { ClassSummaryTextWrapper } from "../ClassSummary.style";
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
-import { useDispatch } from "react-redux";
 
 interface Keyword {
   keyword: string;
@@ -21,22 +19,11 @@ interface Iprops {
 }
 
 export default function DescriptiveFormItem({ title, keywordList, point }: Iprops) {
-  const goToProblem = () => {
-    // 문제 보기
-  };
   return (
     <DescriptiveFormUpper>
       <DescriptiveFormUpperBox className="item1">
         <ClassSummaryTextWrapper>
           <AnalysisSubTitle noMargin>문제 제목</AnalysisSubTitle>
-          <ClassSummaryText
-            isGray
-            style={{ cursor: "pointer", margin: "0px" }}
-            onClick={goToProblem}
-          >
-            문제 보기
-            <AiOutlineRight className="icon" />
-          </ClassSummaryText>
         </ClassSummaryTextWrapper>
         <DescriptiveFormUpperTitle>{title}</DescriptiveFormUpperTitle>
       </DescriptiveFormUpperBox>

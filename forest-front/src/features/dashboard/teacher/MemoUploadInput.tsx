@@ -21,15 +21,17 @@ function MemoUploadInput() {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     // 엔터 키 눌리면 메모 등록
-    if (e.key === "Enter") {
+    if (memo.trim() && e.key === "Enter") {
       mutate(memo);
       setMemo("");
     }
   };
 
   const handleClick = () => {
-    mutate(memo);
-    setMemo("");
+    if (memo.trim()) {
+      mutate(memo);
+      setMemo("");
+    }
   };
 
   return (

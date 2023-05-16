@@ -21,9 +21,7 @@ const fetcher = async (pId: number) =>
 
 const useWorkbookDetailQuestionDelete = () => {
   return useMutation(fetcher, {
-    onSuccess: (data) => {
-      console.log("문제 삭제 성공 post", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 

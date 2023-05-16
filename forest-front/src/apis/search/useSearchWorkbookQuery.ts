@@ -12,9 +12,7 @@ const useSearchWorkbookQuery = (keyword: string) => {
   return useQuery([queryKeys.SEARCH_LIST, keyword], () => fetcher(keyword), {
     refetchOnWindowFocus: false,
     enabled: !!keyword,
-    onSuccess: (data) => {
-      console.log("검색 성공", data);
-    },
+    onSuccess: (data) => {},
   });
 };
 

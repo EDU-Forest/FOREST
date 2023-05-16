@@ -24,10 +24,7 @@ const useSignup = () => {
     onSuccess: () => {
       router.push("/login");
     },
-    onError: (data) => {
-      console.log("Err", data);
-      // 아직 미구현
-    },
+    onError: (data) => {},
   });
 };
 

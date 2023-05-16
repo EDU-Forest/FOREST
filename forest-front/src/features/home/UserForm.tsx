@@ -30,10 +30,11 @@ import Label from "@/components/Label/Label";
 
 interface Iprops {
   onClose: () => void;
+  email?: string;
   type: "signup" | "moreinfo";
 }
 
-export default function UserForm({ type }: Iprops) {
+export default function UserForm({ email, type }: Iprops) {
   const kakaoLoginMoreInfo = useKakaoLoginMoreInfo();
   const signup = useSignup();
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function UserForm({ type }: Iprops) {
     birth: "1980-01-01",
   });
 
-  const { refetch } = useCheckEmail({ email: userData.email, validation, setValidation });
+  const { refetch } = useCheckEmail({ type, email: userData.email, validation, setValidation });
 
   useEffect(() => {
     if (type === "moreinfo") {
@@ -72,8 +73,7 @@ export default function UserForm({ type }: Iprops) {
       });
     }
 
-    const email = router.query?.email;
-    if (typeof email === "string") {
+    if (email) {
       setUserData({
         ...userData,
         email: email,
@@ -115,7 +115,9 @@ export default function UserForm({ type }: Iprops) {
   };
 
   const emailValidator = () => {
-    refetch();
+    if (type === "signup") {
+      refetch();
+    }
   };
 
   const usernameValidator = () => {
@@ -182,6 +184,7 @@ export default function UserForm({ type }: Iprops) {
               onChange={onChange}
               disabled={type === "moreinfo"}
               onBlur={emailValidator}
+              autoFocus={type === "signup"}
             />
             <SignupLabelBox>
               <Label status={validation.email}>이메일 형식</Label>
@@ -199,6 +202,7 @@ export default function UserForm({ type }: Iprops) {
               onChange={onChange}
               onBlur={usernameValidator}
               autoComplete="username"
+              autoFocus={type === "moreinfo"}
             />
             <SignupLabelBox>
               <Label status={validation.username}>2자 이상 8자 이하</Label>

@@ -10,13 +10,16 @@ export function isEnded(endTime: Date) {
   return new Date(endTime).getTime() <= new Date().getTime();
 }
 
-export function getCurTimeToString() {
+export function getCurTimeToString(afterXHour = 0) {
   const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-  const KR_TIME = new Date().getTime() + KR_TIME_DIFF;
+  const HOUR = 60 * 60 * 1000;
+  const KR_TIME = new Date().getTime() + KR_TIME_DIFF + afterXHour * HOUR;
 
   return new Date(KR_TIME).toJSON().slice(11, 16);
 }
 
 export function getCurDayToString() {
-  return new Date().toJSON().slice(0, 10);
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
+  return new Date(new Date().getTime() + KR_TIME_DIFF).toJSON().slice(0, 10);
 }

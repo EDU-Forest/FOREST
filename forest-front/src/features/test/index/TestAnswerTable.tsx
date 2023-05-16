@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { ProblemNumTd, StyledTestAnswerTable } from "./TextIndex.style";
+import { ProblemNumTd, ProblemTr, StyledTestAnswerTable } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setCurProblemNum } from "@/stores/exam/exam";
@@ -25,7 +25,12 @@ export default function TestAnswerTable() {
       </thead>
       <tbody>
         {problem.map((data, idx) => (
-          <tr key={`user-answer-${idx}`} onClick={() => changeCurProblemNum(idx + 1)}>
+          <ProblemTr
+            isEnded={isSubmitted}
+            isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
+            key={`user-answer-${idx}`}
+            onClick={() => changeCurProblemNum(idx + 1)}
+          >
             <ProblemNumTd
               isEnded={isSubmitted}
               isCorrect={problem[idx].userAnswer === problem[idx].problemAnswer}
@@ -33,7 +38,7 @@ export default function TestAnswerTable() {
               {idx + 1}
             </ProblemNumTd>
             <td colSpan={3}>{data.userAnswer ? data.userAnswer : ""}</td>
-          </tr>
+          </ProblemTr>
         ))}
       </tbody>
     </StyledTestAnswerTable>

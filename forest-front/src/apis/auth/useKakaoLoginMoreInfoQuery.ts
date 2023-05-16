@@ -27,10 +27,7 @@ const useKakaoLoginMoreInfo = () => {
       dispatch(setRole(data.data.role));
       router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
-    onError: (data) => {
-      console.log("Err", data);
-      // 아직 미구현
-    },
+    onError: (data) => {},
   });
 };
 

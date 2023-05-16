@@ -6,24 +6,28 @@ interface ObjType {
 
 interface ClassState {
   analysisId: number;
+  useAnalysisId: boolean;
   nowClassName: string;
   nowClassId: number;
   nowStudyId: number;
   nowStudyType: string;
   deleteStudentNum: number;
   studentPointList: ObjType;
-  haveDescript: boolean;
+  studyTitle: string;
+  isDescript: boolean;
 }
 
 const initialState: ClassState = {
   analysisId: -1,
+  useAnalysisId: false,
   nowClassName: "",
   nowClassId: -1,
   nowStudyId: -1,
   nowStudyType: "exam",
   deleteStudentNum: -1,
   studentPointList: {},
-  haveDescript: false,
+  studyTitle: "",
+  isDescript: false,
 };
 
 const classSlice = createSlice({
@@ -33,6 +37,10 @@ const classSlice = createSlice({
     setAnalysisId(state, action) {
       state.analysisId = action.payload;
     },
+    setUseAnalysisId(state, action) {
+      state.useAnalysisId = action.payload;
+    },
+
     setClass(state, action) {
       state.nowClassName = action.payload.className;
       state.nowClassId = action.payload.classId;
@@ -50,20 +58,30 @@ const classSlice = createSlice({
     setStudentPointList(state, action) {
       state.studentPointList = action.payload;
     },
-    setHaveDescript(state, action) {
-      state.haveDescript = action.payload;
+    setSelectedStudy(state, action) {
+      state.isDescript = action.payload.isDescript;
+      if (!action.payload.title) {
+        state.studyTitle = state.studyTitle;
+      } else {
+        state.studyTitle = action.payload.title;
+      }
+    },
+    setInitClassInfo(state) {
+      Object.assign(state, initialState);
     },
   },
 });
 
 export const {
   setAnalysisId,
+  setUseAnalysisId,
   setClass,
   setStudy,
   setStudyType,
   setDeleteStudentNum,
   setStudentPointList,
-  setHaveDescript,
+  setInitClassInfo,
+  setSelectedStudy,
 } = classSlice.actions;
 
 export default classSlice.reducer;

@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getLocalStorage, setLocalStorage } from "../localStorage";
+import { removeItemLocalStorage } from "../localStorage";
 
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
@@ -29,19 +30,29 @@ authAxios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const newAccessToken = async () => {
         const response = await authAxios.get("/api/auth/reissue");
         const { token } = response.data.data;
-
         return token;
       };
       const accessToken = await newAccessToken();
       setLocalStorage("forest_access_token", accessToken);
       prevRequest.headers.Authorization = `Bearer ${accessToken}`;
       return authAxios(prevRequest);
+    } else if (
+      (error?.response?.status === 500 && error?.response?.data.slice(0, 11) === "JWT expired") ||
+      (error?.response?.status === 401 &&
+        error?.response?.data?.error?.message === "Refresh Token이 유효하지 않습니다.")
+    ) {
+      console.log("여기 들어옴!");
+      removeItemLocalStorage("forest_access_token");
+      // if (typeof window !== "undefined") {
+      //   window.location.href = "/";
+      // }
     }
     return Promise.reject(error);
   },

@@ -26,19 +26,20 @@ import useExamFinish from "@/apis/class/analysis/useExamFinish";
 import { IoWarningOutline } from "react-icons/io5";
 import { isStarted } from "@/utils/date";
 import { useDispatch } from "react-redux";
-import { setStudyType } from "@/stores/class/classInfo";
+import { setSelectedStudy, setStudyType, setUseAnalysisId } from "@/stores/class/classInfo";
 import { useEffect, useState } from "react";
 
 export default function ClassSummaryTeacher() {
   const router = useRouter();
   const dispatch = useDispatch();
   const [studyId, setStudyId] = useState<number>(-1);
-  const { nowStudyId, haveDescript, analysisId } = useSelector((state: RootState) => state.class);
+  const { nowStudyId, analysisId } = useSelector((state: RootState) => state.class);
   const { data: result, isLoading } = useStudyResultQuery(studyId, false);
   const { mutate } = useExamFinish();
 
   const goToDetail = (studyId: number) => {
     dispatch(setStudyType(result?.data.studyType.toLowerCase()));
+    dispatch(setSelectedStudy({ title: result?.data.title, isDescript: result?.data.isDescript }));
 
     router.push(`/teacher/class/study/${studyId}`);
   };
@@ -46,10 +47,12 @@ export default function ClassSummaryTeacher() {
   useEffect(() => {
     if (analysisId !== -1) {
       setStudyId(analysisId);
+      dispatch(setUseAnalysisId(true));
     } else {
       setStudyId(nowStudyId);
+      dispatch(setUseAnalysisId(false));
     }
-  }, []);
+  }, [nowStudyId]);
 
   const endTestHandler = () => {
     mutate(nowStudyId);
@@ -81,7 +84,7 @@ export default function ClassSummaryTeacher() {
                 style={{ cursor: "pointer", margin: "0px" }}
                 onClick={() => goToDetail(result?.data.studyId)}
               >
-                {haveDescript && (
+                {result?.data.isDescript && (
                   <WarningIcon>
                     <IoWarningOutline />
                   </WarningIcon>
