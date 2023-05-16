@@ -175,12 +175,36 @@ const EditorNavDivInner = styled.div`
   }
 `;
 
-const LogoutParagraph = styled.p`
+const NavBottom = styled.div`
+  ${flexBox("column", "center", "center")}
+  gap: 0.75rem;
   position: absolute;
-  top: 95%;
-  left: 20%;
+  top: 92%;
+  left: 50%;
   transform: translate(-50%, -50%);
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.Gray[500]};
 
+  svg {
+    font-size: 1.25rem;
+    &:hover {
+      color: ${({ theme }) => theme.colors.Orange[700]};
+    }
+  }
+
+  @media ${({ theme }) => theme.desktop} {
+    left: 50%;
+    width: 80%;
+    top: 95%;
+    ${flexBox("row-reverse", "center", "space-between")}
+
+    svg {
+      font-size: 1.5rem;
+    }
+  }
+`;
+
+const LogoutParagraph = styled.p`
   color: ${({ theme }) => theme.colors.Gray[500]};
   font-size: 0.875rem;
 
@@ -192,10 +216,7 @@ const LogoutParagraph = styled.p`
     color: ${({ theme }) => theme.colors.Gray[600]};
   }
 
-  @media (max-width: 1440px) {
-    text-align: center;
-    width: 80%;
-    left: 50%;
+  @media ${({ theme }) => theme.tablet} {
     font-size: 0.75rem;
   }
 `;
@@ -210,5 +231,6 @@ export {
   EditorNavDivTitle,
   EditorNavDiv,
   EditorNavDivInner,
+  NavBottom,
   LogoutParagraph,
 };
