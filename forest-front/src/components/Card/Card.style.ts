@@ -57,6 +57,10 @@ const StudentInfoCardInner = styled.div`
   .close-icon {
     font-size: 1.1875rem;
     cursor: pointer;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.Lime[700]};
+    }
   }
 `;
 
