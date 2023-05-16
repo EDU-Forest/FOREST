@@ -1280,192 +1280,201 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                 for (Blob blob : pageList.iterateAll()) {
                     String jsonContents = new String(blob.getContent());
-                    System.out.println(blob.getName());
 
                     AnnotateFileResponse.Builder builder = AnnotateFileResponse.newBuilder();
                     JsonFormat.parser().merge(jsonContents, builder);
 
                     AnnotateFileResponse annotateFileResponse = builder.build();
 
-                    AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(0);
-                    System.out.println(annotateFileResponse.getResponsesList().size());
-                    System.out.println("---------------------");
+                    for (int size = 0; size < annotateFileResponse.getResponsesList().size(); size++) {
+                        AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(size);
+                        System.out.println("현재 size: " + size);
 
-                    String fullText = annotateImageResponse.getFullTextAnnotation().getText();
+                        String fullText = annotateImageResponse.getFullTextAnnotation().getText();
 
-                    StringBuilder title = new StringBuilder();
-                    StringBuilder text = new StringBuilder();
-                    StringBuilder item = new StringBuilder();
+                        StringBuilder title = new StringBuilder();
+                        StringBuilder text = new StringBuilder();
+                        StringBuilder item = new StringBuilder();
 
-                    boolean multiText = false;
-                    int ocrPoint = 0;
+                        boolean multiText = false;
+                        int ocrPoint = 0;
 
-                    System.out.println(fullText);
+//                        System.out.println(fullText);
 
-                    // 문항 별로 자르기
-                    String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
+                        // 문항 별로 자르기
+                        String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
 
-                    // 문항 별 반복
-                    for (String temp : splitFull) {
-    //                    System.out.println(temp);
-    //                    System.out.println("================");
+                        // 문항 별 반복
+                        for (String temp : splitFull) {
+        //                    System.out.println(temp);
+        //                    System.out.println("================");
 
-                        List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
+                            List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
-                        String regTilde = "^.*[0-9]{1,2}[~][0-9]{1,2}.*";
-                        String regNoTilde = "^.*([)[0-9]{1,2}(]).*";
+                            String regTilde = "^.*[0-9]{1,2}[~][0-9]{1,2}.*";
+                            String regNoTilde = "^.*([)[0-9]{1,2}(]).*";
 
-                        // 묶인 문항 처리
-                        if (!multiText && (temp.replace("\n", " ").matches(regTilde) ||
-                                temp.replace("\n", " ").matches(regNoTilde))) {
+                            // 묶인 문항 처리
+                            if (!multiText && (temp.replace("\n", " ").matches(regTilde) ||
+                                    temp.replace("\n", " ").matches(regNoTilde))) {
 
-                            boolean isText = temp.replace("\n", " ").matches(regTilde) ? false : true;
+                                boolean isText = temp.replace("\n", " ").matches(regTilde) ? false : true;
 
-                            String[] textStart = temp.replace("\n", " ").matches(regTilde)
-                                    ? temp.split("[0-9]{1,2}[~][0-9]{1,2}") : temp.split("[0-9]{1,2}[]]");
+                                String[] textStart = temp.replace("\n", " ").matches(regTilde)
+                                        ? temp.split("[0-9]{1,2}[~][0-9]{1,2}") : temp.split("[0-9]{1,2}[]]");
 
-                            multiText = true;
+                                multiText = true;
+//                                System.out.println(temp.replace("\n", " ").matches(regTilde));
+//                                System.out.println(temp.replace("\n", " ").matches(regNoTilde));
 
-                            for (String textContent : textStart) {
-                                if (textContent.length() >= 1 && textContent.substring(0, 1).equals("]")) {
-                                    int splitInt = textContent.indexOf("\n");
-                                    title.append(textContent.substring(1, splitInt).trim());
-                                    text.append(textContent.substring(splitInt).replaceAll("\n", " "));
-                                } else {
-                                    if (isText && textContent.length() >= 6 && textContent.matches("")
-                                            && textContent.substring(0, 5).contains("]")) {
-                                        textContent = textContent.substring(textContent.indexOf("]"));
+                                for (String textContent : textStart) {
+                                    if (textContent.length() >= 1 && textContent.substring(0, 1).equals("]")) {
+                                        int splitInt = textContent.indexOf("\n");
+                                        title.append(textContent.substring(1, splitInt).trim());
+                                        text.append(textContent.substring(splitInt).replaceAll("\n", " "));
+                                    } else {
+//                                        System.out.println(textContent);
+                                        if (isText && textContent.length() >= 6 && textContent.matches("")
+                                                && textContent.substring(0, 5).contains("]")) {
+                                            textContent = textContent.substring(textContent.indexOf("]"));
+                                        }
+                                        if (textContent.contains("대학수학능력시험 문제지\n")) {
+                                            int preface = textContent.indexOf("대학수학능력시험 문제지\n");
+                                            if (textContent.substring(preface + 14, preface + 20).contains("영역")) {
+                                                preface += 6;
+                                            }
+                                            textContent = textContent.substring(preface + 14);
+                                        }
+                                        // TODO 항목 들어오는 거 처리
+                                        text.append(textContent.replaceAll("\n", " ").trim());
                                     }
-                                    text.append(textContent.replaceAll("\n", " ").trim());
                                 }
                             }
-                        }
 
-                        // 개별 문항 처리
-                        else if (temp.substring(0, 1).equals(" ")) {
-                            String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
-                            String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
+                            // 개별 문항 처리
+                            else if (temp.substring(0, 1).equals(" ")) {
+                                String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
+                                String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
 
-                            // title 자르기
-                            String[] problemSplit = temp.split(problemEnd);
+                                // title 자르기
+                                String[] problemSplit = temp.split(problemEnd);
 
-                            for (String problemContent : problemSplit) {
+                                for (String problemContent : problemSplit) {
 
-                                // title 저장 전
-                                if (title.length() == 0) {
+                                    // title 저장 전
+                                    if (title.length() == 0) {
 
-    //                                System.out.println("title =============");
-    //                                System.out.println(problemContent);
+        //                                System.out.println("title =============");
+        //                                System.out.println(problemContent);
 
-                                    // 배점 포함
-                                    if (problemContent.replace("\n", " ").contains("점]")) {
-                                        ocrPoint = Integer.parseInt(problemContent.substring(problemContent.lastIndexOf("["), problemContent.lastIndexOf("점")));
-                                        problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
-                                    }
-
-                                    title.append(problemContent.replaceAll("\n", " ")).append(addEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
-                                }
-
-                                // title 저장 후
-                                else if (title.length() != 0 ) {
-
-                                    // 저작권 문구
-                                    if (problemContent.contains("이 문제지에 관한 저작권은")) {
-                                        problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
-                                    }
-
-    //                                System.out.println("problemContent ============= ");
-    //                                System.out.println(problemContent);
-    //
-    //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
-    //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
-
-                                    String splitStr = "";
-                                    if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
-                                        splitStr = "[①-⑤][ ]";
-    //                                    System.out.println("동그라미 숫자");
-                                    } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
-                                        splitStr = "[0-9]{1}[ ]";
-    //                                    System.out.println("숫자");
-                                    }
-
-                                    // text 자르기
-                                    String[] textSplit = problemContent.split(splitStr);
-
-                                    for (String textContent : textSplit) {
-
-                                        textContent = textContent.replaceAll("\n", " ");
-
-    //                                    System.out.println("textContent ==============");
-    //                                    System.out.println(textContent);
-
-                                        if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
-                                            text.append(textContent.substring(textContent.indexOf("]")+1).trim());
+                                        // 배점 포함
+                                        if (problemContent.replace("\n", " ").contains("점]")) {
+                                            ocrPoint = Integer.parseInt(problemContent.substring(problemContent.lastIndexOf("["), problemContent.lastIndexOf("점")));
+                                            problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
                                         }
 
-                                        else if (textContent.substring(0, 1).equals(" ")) {
+                                        title.append(problemContent.replaceAll("\n", " ")).append(addEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
+                                    }
 
-    //                                        System.out.println("item =============");
-    //                                        System.out.println(textContent);
+                                    // title 저장 후
+                                    else if (title.length() != 0 ) {
 
-                                            text.append(textContent.trim());
-                                        } else {
-    //                                        System.out.println("else");
-                                            if (textContent.replace("\n", " ").matches("^[?].*")) {
-                                                textContent = textContent.substring(textContent.indexOf("?") + 1);
+                                        // 저작권 문구
+                                        if (problemContent.contains("이 문제지에 관한 저작권은")) {
+                                            problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
+                                        }
+
+        //                                System.out.println("problemContent ============= ");
+        //                                System.out.println(problemContent);
+        //
+        //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
+        //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
+
+                                        String splitStr = "";
+                                            if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
+                                                splitStr = "[①-⑤][ ]";
+            //                                    System.out.println("동그라미 숫자");
+                                            } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
+                                                splitStr = "[0-9]{1}[ ]";
+            //                                    System.out.println("숫자");
                                             }
-                                            if (textContent.replace("\n", " ").matches("^.*[0-9][점].*")) {
-                                                int endIndex = textContent.replace("\n", " ").lastIndexOf("점");
-                                                ocrPoint = Integer.parseInt(textContent.replace("\n", " ").substring(endIndex -1, endIndex));
-                                                textContent = textContent.substring(textContent.indexOf("점]") + 2);
+
+                                        // text 자르기
+                                        String[] textSplit = problemContent.split(splitStr);
+
+                                        for (String textContent : textSplit) {
+
+                                            textContent = textContent.replaceAll("\n", " ");
+
+        //                                    System.out.println("textContent ==============");
+        //                                    System.out.println(textContent);
+
+                                            if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
+                                                text.append(textContent.substring(textContent.indexOf("]")+1).trim());
                                             }
 
-                                            if (splitStr.equals("[0-9]{1}[ ]") || splitStr.equals("[①-⑤][ ]")) {
+                                            else if (textContent.substring(0, 1).equals(" ")) {
 
-                                                if (textContent.substring(0, 1).equals("*")) {
-                                                    text.append(textContent);
+        //                                        System.out.println("item =============");
+        //                                        System.out.println(textContent);
+
+                                                text.append(textContent.trim());
+                                            } else {
+        //                                        System.out.println("else");
+                                                if (textContent.replace("\n", " ").matches("^[?].*")) {
+                                                    textContent = textContent.substring(textContent.indexOf("?") + 1);
+                                                }
+                                                if (textContent.replace("\n", " ").matches("^.*[0-9][점].*")) {
+                                                    int endIndex = textContent.replace("\n", " ").lastIndexOf("점");
+                                                    ocrPoint = Integer.parseInt(textContent.replace("\n", " ").substring(endIndex -1, endIndex));
+                                                    textContent = textContent.substring(textContent.indexOf("점]") + 2);
+                                                }
+
+                                                if (splitStr.equals("[0-9]{1}[ ]") || splitStr.equals("[①-⑤][ ]")) {
+
+                                                    if (textContent.substring(0, 1).equals("*")) {
+                                                        text.append(textContent);
+                                                    }
+                                                    else {
+                                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                                                .content(textContent.replaceAll("\n", " ").trim())
+                                                                .isImage(false)
+                                                                .build();
+
+                                                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                                                    }
                                                 }
                                                 else {
-                                                    ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                            .content(textContent.replaceAll("\n", " ").trim())
-                                                            .isImage(false)
-                                                            .build();
-
-                                                    itemResExceptIdDtoList.add(itemResExceptIdDto);
+                                                    text.append(textContent);
                                                 }
-                                            }
-                                            else {
-                                                text.append(textContent);
                                             }
                                         }
                                     }
                                 }
                             }
+
+                            if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() == 0) {
+                                continue;
+                            } else {
+                                ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
+                                        .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
+                                        .title(title.toString())
+                                        .problemImgPath(null)
+                                        .imgIsEmpty(true)
+                                        .text(text.toString())
+                                        .textIsEmpty(text.toString() == null || text.equals(""))
+                                        .itemList(itemResExceptIdDtoList)
+                                        .point(ocrPoint)
+                                        .build();
+
+                                problemOcrDtoList.add(problemOcrDto);
+                            }
+                            title.setLength(0);
+                            text.setLength(0);
+                            item.setLength(0);
+
+                            ocrPoint = 0;
                         }
-
-                        if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() == 0) {
-                            continue;
-                        } else {
-                            ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
-                                    .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
-                                    .title(title.toString())
-                                    .problemImgPath(null)
-                                    .imgIsEmpty(true)
-                                    .text(text.toString())
-                                    .textIsEmpty(text.toString() == null || text.equals(""))
-                                    .itemList(itemResExceptIdDtoList)
-                                    .point(ocrPoint)
-                                    .build();
-
-                            problemOcrDtoList.add(problemOcrDto);
-                        }
-
-
-                        title.setLength(0);
-                        text.setLength(0);
-                        item.setLength(0);
-
-                        ocrPoint = 0;
                     }
                 }
                 Map<String, List<ProblemOcrDto>> map = new HashMap<>();
