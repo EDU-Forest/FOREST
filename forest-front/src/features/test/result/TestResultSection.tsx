@@ -10,7 +10,7 @@ export default function TestResultSection() {
   const { role } = useSelector((state: RootState) => state.user);
 
   const clickHandler = () => {
-    router.push(`/${role.toLowerCase()}/class`);
+    router.push(`/${role.toLowerCase()}/class`, undefined, { shallow: true });
   };
 
   return (

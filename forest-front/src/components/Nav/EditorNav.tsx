@@ -42,7 +42,7 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const [isAddFailWithoutWorkbook, setIsAddFailWithoutWorkbook] = useState(false);
 
   const goToDashboard = () => {
-    router.push("/teacher/dashboard");
+    router.push("/teacher/dashboard", undefined, { shallow: true });
   };
 
   const questionInit = {

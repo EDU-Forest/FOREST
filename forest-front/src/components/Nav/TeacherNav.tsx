@@ -23,7 +23,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   // 페이지 이동
   const movePage = (path: string) => {
-    router.push(`/${path}`);
+    router.push(`/${path}`, undefined, { shallow: true });
   };
 
   // 현재 위치 네비바 css 스타일 true
@@ -42,7 +42,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   // 홈으로 이동
   const goToDashBoard = () => {
-    router.push(`/teacher/dashboard`);
+    router.push(`/teacher/dashboard`, undefined, { shallow: true });
   };
 
   return (

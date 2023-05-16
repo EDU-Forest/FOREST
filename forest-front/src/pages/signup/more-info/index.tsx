@@ -26,7 +26,7 @@ function MoreInfo({ email }: Iprops) {
   // }, []);
 
   const movePageHandler = () => {
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   };
 
   return <UserForm type={"moreinfo"} email={email} onClose={movePageHandler} />;
