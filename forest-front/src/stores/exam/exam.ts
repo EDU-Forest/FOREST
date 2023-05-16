@@ -2,7 +2,6 @@ import { examState } from "@/types/Exam";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: examState = {
-  isTimeOut: false,
   studyId: -1,
   isSubmitted: false,
   isGraded: false,
@@ -111,9 +110,6 @@ const examSlice = createSlice({
     },
     setInitExam(state) {
       Object.assign(state, initialState);
-    },
-    setIsTimeOut(state, action) {
-      state.isTimeOut = action.payload;
     },
   },
 });
