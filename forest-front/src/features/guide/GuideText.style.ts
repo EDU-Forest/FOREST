@@ -49,4 +49,18 @@ const GuideGrayText = styled.p`
   }
 `;
 
-export { GuideTitle, GuideSectionTitle, GuideNormalText, GuideGreenText, GuideGrayText };
+const GuideEditorSubTitle = styled(GuideTitle)`
+  font-size: 18px;
+  @media ${({ theme }) => theme.tablet} {
+    font-size: 16px;
+  }
+`;
+
+export {
+  GuideTitle,
+  GuideSectionTitle,
+  GuideNormalText,
+  GuideGreenText,
+  GuideGrayText,
+  GuideEditorSubTitle,
+};

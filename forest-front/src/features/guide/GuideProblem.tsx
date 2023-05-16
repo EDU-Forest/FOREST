@@ -32,7 +32,7 @@ export default function GuideProblem() {
             다른 선생님이 만든 문제집을 복사하여 사용할 수 있습니다.
           </GuideNormalText>
         </div>
-        <GuideHorizonContentWrapper>
+        <GuideHorizonContentWrapper wrapReverse>
           <div className="problem-text-div">
             <div>
               <GuideTitle>내보내기</GuideTitle>

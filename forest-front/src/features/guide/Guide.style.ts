@@ -1,6 +1,6 @@
 import { Container } from "@/styles/container";
 import { flexBox } from "@/styles/theme";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const GuideContentWrapper = styled(Container)`
   padding: 32px;
@@ -64,7 +64,7 @@ const GuideSubContentWrapper = styled.div`
   margin-top: 32px;
 `;
 
-const GuideHorizonContentWrapper = styled.div`
+const GuideHorizonContentWrapper = styled.div<{ wrapReverse?: boolean }>`
   ${flexBox("row", "top", "space-around")}
   width: 100%;
   margin-bottom: 48px;
@@ -90,8 +90,28 @@ const GuideHorizonContentWrapper = styled.div`
     }
   }
 
+  .editor-text-div {
+    width: calc(60% - 48px);
+    ${flexBox("column", "top", "center")}
+    gap: 48px;
+    margin-right: ${({ wrapReverse }) => wrapReverse && "48px"};
+    margin-left: ${({ wrapReverse }) => !wrapReverse && "48px"};
+  }
+
+  .editor_make {
+    width: 40%;
+  }
+
   @media ${({ theme }) => theme.tablet} {
-    ${flexBox("column-reverse", "top", "space-around")}
+    ${({ wrapReverse }) =>
+      wrapReverse
+        ? css`
+            ${flexBox("column-reverse", "top", "space-around")}
+          `
+        : css`
+            ${flexBox("column", "top", "space-around")}
+          `}
+
     flex-wrap: wrap;
 
     .problem-text-div {
@@ -115,6 +135,36 @@ const GuideHorizonContentWrapper = styled.div`
         width: 50%;
       }
     }
+
+    .editor-text-div {
+      width: 80%;
+      margin: auto;
+    }
+    .editor_make {
+      width: 80%;
+      margin: auto;
+      margin-bottom: 32px;
+    }
+  }
+`;
+
+const GuideHorizonNoWrap = styled.div`
+  ${flexBox("row", "top", "space-around")}
+  width: 100%;
+  margin-bottom: 48px;
+  margin-top: 80px;
+
+  .editor-new {
+    width: 20%;
+    margin-right: 48px;
+  }
+
+  .editor-object {
+    width: calc(60% - 48px);
+    ${flexBox("column", "top", "center")}
+    text-align: right;
+    margin-right: 48px;
+    height: 100%;
   }
 `;
 
@@ -125,4 +175,5 @@ export {
   GuideSectionContentWrapper,
   GuideSubContentWrapper,
   GuideHorizonContentWrapper,
+  GuideHorizonNoWrap,
 };
