@@ -89,9 +89,9 @@ const StyledTestProblemBox = styled.div`
 `;
 
 const TestCanvas = styled.div`
-  position: fixed;
+  /* position: fixed;
   top: 5rem;
-  left: 2.25rem;
+  left: 2rem; */
   z-index: 30;
 `;
 
@@ -429,7 +429,7 @@ const TestProblemAnswerBox = styled.div`
 `;
 
 const TestProblemSection = styled.section`
-  height: calc(100% - 4rem);
+  height: calc(100% - 7rem);
   padding: 1.5rem 0rem 1.5rem 1.5rem;
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);

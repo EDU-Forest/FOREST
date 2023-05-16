@@ -31,12 +31,15 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   const dispatch = useDispatch();
 
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curWorkbookId } = useSelector((state: RootState) => state.editorWorkbook);
   const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
   const { toChangeQuestions } = useEditor();
   const { isPointValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const { isTitleValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const { isAnswerValidConfirm } = useSelector((state: RootState) => state.editorQuestions);
   const [isAddFail, setIsAddFail] = useState(false);
+  const [isObjAddFail, setIsObjAddFail] = useState(false);
+  const [isAddFailWithoutWorkbook, setIsAddFailWithoutWorkbook] = useState(false);
 
   const goToDashboard = () => {
     router.push("/teacher/dashboard");
@@ -97,42 +100,59 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
   };
 
   const handleClickQuestionType = (type: string) => {
-    questions.length !== 0 &&
-      setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
+    // 아무 문제집이 없을 경우
+    if (!curWorkbookId) {
+      setIsAddFailWithoutWorkbook(true);
+    } else {
+      questions.length !== 0 &&
+        setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
 
-    if (
-      questions.length === 0 ||
-      (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
-    ) {
-      type === "MULTIPLE"
-        ? dispatch(setQuestions([...questions, { ...questionInit.withItems }]))
-        : dispatch(setQuestions([...questions, { ...questionInit.withoutItems, type: type }]));
-      dispatch(setCurQuestion(questions.length + 1));
+      if (
+        questions.length === 0 ||
+        (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
+      ) {
+        type === "MULTIPLE"
+          ? dispatch(setQuestions([...questions, { ...questionInit.withItems }]))
+          : dispatch(setQuestions([...questions, { ...questionInit.withoutItems, type: type }]));
+        dispatch(setCurQuestion(questions.length + 1));
+      }
     }
   };
 
   const handleClickObjectType = (type: string) => {
-    if (type === "text") {
-      const copyArr = [...questions];
-      copyArr.splice(curQuestion - 1, 1, { ...questions[curQuestion - 1], textIsEmpty: false });
-      dispatch(setQuestions([...copyArr]));
-    } else if (type === "image") {
-      toChangeQuestions("imgIsEmpty", false);
+    // 아무 문제집이 없을 경우
+    if (!curWorkbookId) {
+      setIsAddFailWithoutWorkbook(true);
+    } else {
+      if (questions.length !== 0) {
+        if (type === "text") {
+          toChangeQuestions("textIsEmpty", false);
+        } else if (type === "image") {
+          toChangeQuestions("imgIsEmpty", false);
+        }
+      } else {
+        setIsObjAddFail(true);
+      }
     }
   };
 
   const handleClickImport = (type: string) => {
-    questions.length !== 0 &&
-      setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
+    // 아무 문제집이 없을 경우
+    if (!curWorkbookId) {
+      setIsAddFailWithoutWorkbook(true);
+    } else {
+      questions.length !== 0 &&
+        setIsAddFail(!isPointValidConfirm || !isTitleValidConfirm || !isAnswerValidConfirm);
 
-    if (
-      questions.length === 0 ||
-      (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
-    ) {
-      if (type === "whole") {
-        dispatch(openWholePdfModal());
-      } else if (type === "part") {
-        dispatch(openPartPdfModal());
+      if (
+        questions.length === 0 ||
+        (isPointValidConfirm && isTitleValidConfirm && isAnswerValidConfirm)
+      ) {
+        if (type === "whole") {
+          dispatch(openWholePdfModal());
+        } else if (type === "part") {
+          dispatch(openPartPdfModal());
+        }
       }
     }
   };
@@ -190,6 +210,24 @@ export default function EditorNav({ setSelectQuestionType }: IProps) {
           title="문항 수정을 완료해주세요"
           isOpen={isAddFail}
           setIsOpen={setIsAddFail}
+        />
+      )}
+      {isObjAddFail && (
+        <Toast
+          icon={<IoIosWarning />}
+          subtitle="추가 불가"
+          title="문항을 추가해주세요"
+          isOpen={isObjAddFail}
+          setIsOpen={setIsObjAddFail}
+        />
+      )}
+      {isAddFailWithoutWorkbook && (
+        <Toast
+          icon={<IoIosWarning />}
+          subtitle="추가 불가"
+          title="문제집을 선택해주세요"
+          isOpen={isAddFailWithoutWorkbook}
+          setIsOpen={setIsAddFailWithoutWorkbook}
         />
       )}
     </>

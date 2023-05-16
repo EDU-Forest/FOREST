@@ -7,8 +7,10 @@ import CanvasPen from "./CanvasPen";
 import CanvasHighlighter from "./CanvasHighlighter";
 import { ReactSketchCanvasProps } from "react-sketch-canvas";
 import CanvasEraser from "./CanvasEraser";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { openCanvas } from "@/stores/exam/canvas";
 
 interface Iprops {
   canvasProps: Partial<ReactSketchCanvasProps>;
@@ -35,6 +37,7 @@ export default function CanvasBar({
   nowTab,
   setNowTab,
 }: Iprops) {
+  const dispatch = useDispatch();
   const { isOpenCanvas } = useSelector((state: RootState) => state.canvas);
 
   const [isOpenController, setIsOpenController] = useState<boolean>(false);
@@ -54,6 +57,7 @@ export default function CanvasBar({
     setIsHighlighter(false);
     setIsEraser(false);
     setIsOpenController(!isPen);
+    dispatch(openCanvas());
 
     setNowTab("pen");
   };
@@ -63,6 +67,7 @@ export default function CanvasBar({
     setIsHighlighter(!isHighlighter);
     setIsEraser(false);
     setIsOpenController(!isHighlighter);
+    dispatch(openCanvas());
 
     setNowTab("highlighter");
   };
@@ -73,6 +78,7 @@ export default function CanvasBar({
     setIsHighlighter(false);
     setIsEraser(!isEraser);
     setIsOpenController(!isEraser);
+    dispatch(openCanvas());
 
     setNowTab("eraser");
   };
@@ -123,48 +129,52 @@ export default function CanvasBar({
   }, [isPen, isHighlighter, penColor, penWidth, highlighterColor, highlighterWidth]);
 
   return (
-    <CanvasBarWrapper
-      isOpenCanvas={isOpenCanvas}
-      isOpenController={isOpenController}
-      nowTab={nowTab}
-    >
-      <div className="img-div">
-        <div className="info">
-          연습장을 사용해보세요
-          <p>(시험 종료 후에도 확인할 수 있습니다)</p>
+    <>
+      <CanvasBarWrapper
+        isOpenCanvas={isOpenCanvas}
+        isOpenController={isOpenController}
+        nowTab={nowTab}
+      >
+        <div className="img-div">
+          <div className="info">
+            연습장을 사용해보세요
+            <p>(시험 종료 후에도 확인할 수 있습니다)</p>
+          </div>
+          <div onClick={ControlCanvas}>
+            {isOpenCanvas ? <VscEye className="eye-icon" /> : <VscEyeClosed className="eye-icon" />}
+          </div>
+
+          {/* <img src="/images/kitty.png" className="logo" onClick={ControlCanvas} /> */}
         </div>
+        <CanvasBarItems isOpenCanvas={isOpenCanvas}>
+          <BsPencilFill onClick={openPenController} className="pen" />
+          <FaHighlighter onClick={openHighliterController} className="highlighter" />
+          <BsFillEraserFill onClick={openEraserController} className="eraser" />
+          <BiUndo onClick={clickUndo} />
+          <BiRedo onClick={clickRedo} />
+          <BsTrash onClick={clickClear} />
+        </CanvasBarItems>
 
-        <img src="/images/pallete.png" className="logo" onClick={ControlCanvas} />
-      </div>
+        {isPen && (
+          <CanvasPen
+            color={penColor}
+            width={penWidth}
+            setColor={setPenColor}
+            setWidth={setPenWidth}
+          />
+        )}
 
-      <CanvasBarItems isOpenCanvas={isOpenCanvas}>
-        <BsPencilFill onClick={openPenController} className="pen" />
-        <FaHighlighter onClick={openHighliterController} className="highlighter" />
-        <BsFillEraserFill onClick={openEraserController} className="eraser" />
-        <BiUndo onClick={clickUndo} />
-        <BiRedo onClick={clickRedo} />
-        <BsTrash onClick={clickClear} />
-      </CanvasBarItems>
+        {isHighlighter && (
+          <CanvasHighlighter
+            color={highlighterColor}
+            width={highlighterWidth}
+            setColor={setHighlighterColor}
+            setWidth={setHighlighterWidth}
+          />
+        )}
 
-      {isPen && (
-        <CanvasPen
-          color={penColor}
-          width={penWidth}
-          setColor={setPenColor}
-          setWidth={setPenWidth}
-        />
-      )}
-
-      {isHighlighter && (
-        <CanvasHighlighter
-          color={highlighterColor}
-          width={highlighterWidth}
-          setColor={setHighlighterColor}
-          setWidth={setHighlighterWidth}
-        />
-      )}
-
-      {isEraser && <CanvasEraser canvasProps={canvasProps} setCanvasProps={setCanvasProps} />}
-    </CanvasBarWrapper>
+        {isEraser && <CanvasEraser canvasProps={canvasProps} setCanvasProps={setCanvasProps} />}
+      </CanvasBarWrapper>
+    </>
   );
 }

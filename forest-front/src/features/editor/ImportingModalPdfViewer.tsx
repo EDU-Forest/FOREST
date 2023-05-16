@@ -24,6 +24,7 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pageImage, setPageImage] = useState<string>("");
   const [select, setSelect] = useState<boolean>(false);
+  const [canvasWidth, setCanvasWidth] = useState<number>(0);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -71,6 +72,12 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
     dispatch(setFinish(true));
   };
 
+  useEffect(() => {
+    if (typeof window !== undefined && window.innerWidth < 920) {
+      setCanvasWidth(560);
+    }
+  }, []);
+
   return (
     <>
       <PdfViewerPageController>
@@ -93,7 +100,7 @@ export default function ImportingModalPdfViewer({ targetFile }: Iprops) {
           onLoadSuccess={onDocumentLoadSuccess}
           options={{ workerSrc: "/pdf.worker.js" }}
         >
-          <Page pageNumber={pageNumber} renderMode={"svg"} width={800} height={1200} />
+          <Page pageNumber={pageNumber} renderMode={"svg"} />
         </Document>
       </PdfViewerWrapper>
       <PdfViewerBtnWrapper>
