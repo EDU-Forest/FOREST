@@ -4,7 +4,7 @@ import {
   GuideNavItemContainer,
   GuideNavSubItem,
   GuideNavWrapper,
-} from "./Guide.style";
+} from "./GuideNav.style";
 
 interface Iprops {
   guideTab: string;
