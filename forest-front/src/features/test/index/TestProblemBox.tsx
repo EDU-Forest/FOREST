@@ -7,6 +7,7 @@ import {
   StyledTestProblemBox,
   StyledTestProblemEssayAnswer,
   StyledTestProblemShortAnswer,
+  TestCanvas,
   TestProblemAnswerBox,
   TestProblemBtn,
   TestProblemBtnBox,
@@ -21,6 +22,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import TestProblemImg from "./TestProblemImg";
 import { closeCanvas, setStudentStudyProblemId } from "@/stores/exam/canvas";
+import Canvas from "@/features/canvas/Canvas";
 
 export default function TestProblemBox() {
   const router = useRouter();
@@ -62,6 +64,9 @@ export default function TestProblemBox() {
 
   return (
     <StyledTestProblemBox>
+      <TestCanvas>
+        <Canvas />
+      </TestCanvas>
       <TestProblemSection>
         <TestProblemContentBox>
           <TestProblemTitle />

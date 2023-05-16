@@ -37,7 +37,7 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
 
   return (
     <CanvasSelectorWrapper style={{ width: "27.5rem" }}>
-      <CanvasSelectorArrow style={{ left: "9rem" }} />
+      <CanvasSelectorArrow style={{ left: "9.5rem" }} />
       <CanvasSelectorSection width={8}>
         <CanvasColorSelectorSelected
           selected={10 === width ? true : false}
