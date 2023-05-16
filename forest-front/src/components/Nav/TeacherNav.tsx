@@ -11,6 +11,7 @@ import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph } from "./Nav.style
 import { useDispatch } from "react-redux";
 import { setLogout } from "@/stores/user/user";
 import { removeItemLocalStorage } from "@/utils/localStorage";
+import useAuth from "@/hooks/useAuth";
 
 interface Iprops {
   nowLocation: string;
@@ -18,7 +19,7 @@ interface Iprops {
 
 export default function TeacherNav({ nowLocation }: Iprops) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { logout } = useAuth();
 
   // 페이지 이동
   const movePage = (path: string) => {
@@ -36,9 +37,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   // 로그아웃
   const logoutHandler = () => {
-    dispatch(setLogout());
-    removeItemLocalStorage("forest_access_token");
-    router.push("/");
+    logout();
   };
 
   // 홈으로 이동
