@@ -32,7 +32,7 @@ export default function CanvasEraser({ canvasProps, setCanvasProps }: Iprops) {
 
   return (
     <CanvasSelectorWrapper style={{ width: "20rem" }}>
-      <CanvasSelectorArrow style={{ left: "9rem" }} />
+      <CanvasSelectorArrow style={{ left: "9.5rem" }} />
       {eraserWidth.map((item, idx) => (
         <CanvasColorSelectorSelected
           key={idx}

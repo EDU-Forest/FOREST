@@ -24,6 +24,9 @@ const canvasSlice = createSlice({
     controlCanvas(state) {
       state.isOpenCanvas = !state.isOpenCanvas;
     },
+    openCanvas(state) {
+      state.isOpenCanvas = true;
+    },
     closeCanvas(state) {
       state.isOpenCanvas = false;
     },
@@ -33,7 +36,7 @@ const canvasSlice = createSlice({
   },
 });
 
-export const { setPaths, controlCanvas, closeCanvas, setStudentStudyProblemId } =
+export const { setPaths, controlCanvas, openCanvas, closeCanvas, setStudentStudyProblemId } =
   canvasSlice.actions;
 
 export default canvasSlice.reducer;

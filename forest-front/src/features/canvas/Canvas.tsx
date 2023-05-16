@@ -27,7 +27,7 @@ export default function Canvas() {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "72vw",
+    width: "calc(78vw - 4rem)",
     height: "calc(100vh - 13.5rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
@@ -121,7 +121,7 @@ export default function Canvas() {
         setNowTab={setNowTab}
       />
       {isOpenCanvas && (
-        <CanvasDrawSection nowTab={nowTab}>
+        <CanvasDrawSection>
           <ReactSketchCanvas ref={canvasRef} onChange={onChange} {...canvasProps} />
         </CanvasDrawSection>
       )}
