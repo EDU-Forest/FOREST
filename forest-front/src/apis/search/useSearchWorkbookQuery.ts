@@ -4,7 +4,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 
 const fetcher = (keyword: string) =>
   workbookAxios
-    .get("/api/workbook/explore", { params: { search: keyword } })
+    .get("/workbook/explore", { params: { search: keyword } })
     .then(({ data }) => data.data);
 
 // 탐색페이지 검색 API - OK

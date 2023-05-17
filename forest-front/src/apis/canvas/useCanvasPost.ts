@@ -10,7 +10,7 @@ interface Payload {
 
 const fetcher = (payload: Payload) =>
   studyAxios
-    .post("/api/canvas", {
+    .post("/study/canvas", {
       studentStudyProblemId: payload.studentStudyProblemId,
       line: payload.line,
     })

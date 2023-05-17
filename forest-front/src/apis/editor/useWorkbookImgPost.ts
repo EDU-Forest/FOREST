@@ -6,7 +6,7 @@ const config = {
 };
 
 const fetcher = async (data: FormData) =>
-  await workbookAxios.post(`/api/workbook/problem/img`, data, config).then(({ data }) => {
+  await workbookAxios.post(`/workbook/problem/img`, data, config).then(({ data }) => {
     return data;
   });
 

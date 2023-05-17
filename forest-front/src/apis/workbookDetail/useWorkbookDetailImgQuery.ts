@@ -6,7 +6,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 
 const fetcher = async () =>
-  await workbookAxios.get(`/api/workbook/img`).then(({ data }) => {
+  await workbookAxios.get(`/workbook/img`).then(({ data }) => {
     return data.data;
   });
 

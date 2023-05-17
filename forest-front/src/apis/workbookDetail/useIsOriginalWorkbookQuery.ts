@@ -5,7 +5,7 @@
 // import * as queryKeys from "@/constants/queryKeys";
 
 // const fetcher = (wId: number) =>
-//   workbookAxios.get(`/api/workbook/export/${wId}`).then(({ data }) => {
+//   workbookAxios.get(`/workbook/export/${wId}`).then(({ data }) => {
 //     console.log(data);
 //     return data;
 //   });

@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 
 const fetcher = (studyId: number) =>
-  studyAxios.post("/api/study/start", { studyId }).then(({ data }) => {
+  studyAxios.post("/study/start", { studyId }).then(({ data }) => {
     return data;
   });
 

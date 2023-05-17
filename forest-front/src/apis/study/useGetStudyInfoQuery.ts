@@ -10,7 +10,7 @@ interface Iprops {
 
 const fetcher = (studyId: number) =>
   studyAxios
-    .get(`/api/study/info/${studyId}`)
+    .get(`/study/info/${studyId}`)
     .then(({ data }) => {
       return data;
     })

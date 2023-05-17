@@ -5,7 +5,7 @@ import { ISearchWorkbook } from "@/types/Workbook";
 
 const fetcher = (type: string) =>
   workbookAxios
-    .get("/api/workbook/best", {
+    .get("/workbook/best", {
       params: {
         search: type,
       },

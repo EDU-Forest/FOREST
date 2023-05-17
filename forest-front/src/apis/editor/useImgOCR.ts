@@ -14,7 +14,7 @@ interface IPayload {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/api/workbook/ocr/img/${payload.curWorkbookId}`, payload.file, {
+    .post(`/workbook/ocr/img/${payload.curWorkbookId}`, payload.file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

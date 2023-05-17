@@ -3,7 +3,7 @@ import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 
 const fetcher = (studentStudyResultId: number) =>
-  studyAxios.get(`/api/study/detail/result/${studentStudyResultId}`).then(({ data }) => data.data);
+  studyAxios.get(`/study/detail/result/${studentStudyResultId}`).then(({ data }) => data.data);
 
 const useStudentDetailResultQuery = (studentStudyResultId: number) => {
   return useQuery(

@@ -15,7 +15,7 @@ interface Iprops {
 }
 
 const fetcher = () =>
-  workbookAxios.get("/api/workbook/editor").then(({ data }) => {
+  workbookAxios.get("/workbook/editor").then(({ data }) => {
     return data;
   });
 
