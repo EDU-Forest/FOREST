@@ -11,14 +11,14 @@ pipeline {
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
         
-        REPOSITORY_CREDENTIAL_ID = '${REPOSITORY_CREDENTIAL_ID}'
-        REPOSITORY_URL = '${REPOSITORY_URL}'
-        TARGET_BRANCH = '${TARGET_BRANCH}-front'                
+        // REPOSITORY_CREDENTIAL_ID = '${REPOSITORY_CREDENTIAL_ID}'
+        // REPOSITORY_URL = '${REPOSITORY_URL}'
+        // TARGET_BRANCH = '${TARGET_BRANCH}-front'                
         
-        AWS_CREDENTIAL_NAME = '${AWS_CREDENTIAL_NAME}'
-        ECR_PATH = '${ECR_PATH}'
-        IMAGE_NAME = '${IMAGE_NAME}'
-        REGION = 'ap-northeast-2'
+        // AWS_CREDENTIAL_NAME = '${AWS_CREDENTIAL_NAME}'
+        // ECR_PATH = '${ECR_PATH}'
+        // IMAGE_NAME = '${IMAGE_NAME}'
+        // REGION = 'ap-northeast-2'
 
         BUILD_NUM = '$BUILD_NUMBER'
         // PREVIOUS_TAG = ${previousBuildNumber}
