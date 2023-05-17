@@ -69,6 +69,9 @@ pipeline {
                     // cleanup current user docker credentials
                     sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
                     
+                    sh 'echo ${ECR_PATH}'
+                    sh 'echo ${REGION}'
+                    sh 'echo ${AWS_CREDENTIAL_NAME}'
                    
                     docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
                       docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
