@@ -2,4 +2,4 @@
 
 ## 💽 [**ERD 바로 가기**](https://www.erdcloud.com/d/8pfofNqBATrztKPKn)
 
-![Forest ERD.png](Forest_docs_assets/53c6e17e59252a387d7f8f4b2fc28e64d0b00b59.png)
+![Forest ERD_공개용.png](Forest_docs_assets/f9420ade9a7e8438f018241aa5b1f4ba3a7225c0.png)

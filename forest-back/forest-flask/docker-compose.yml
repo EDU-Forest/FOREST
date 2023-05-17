@@ -1,0 +1,8 @@
+version: "3"
+services:
+  application:    
+    image: ${FOREST_FLASK_IMAGE}
+    container_name: ${FOREST_FLASK_CONTAINER}    
+    ports:
+      - 5000:5000
+    restart: always

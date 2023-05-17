@@ -1,0 +1,48 @@
+server:
+  port: 9001
+
+spring:
+  config:
+    activate:
+      on-profile:
+
+  http:
+    multipart:
+      max-file-size:
+      max-request-size:
+
+  jpa:
+    hibernate:
+      ddl-auto:
+      naming:
+        physical-strategy:
+    properties:
+      hibernate:
+        show_sql:
+        format_sql:
+    open-in-view: false
+
+  datasource:
+    driver-class-name:
+    url:
+    username:
+    password:
+
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location:
+        project-id:
+        bucket:
+
+jwt:
+  redirect-url:
+  token:
+    secretKey:
+
+notification:
+  mattermost:
+    enabled:
+    webhook-url:
+    channel :

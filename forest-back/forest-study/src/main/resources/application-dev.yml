@@ -1,0 +1,69 @@
+server:
+  port: 9012
+  servlet:
+    context-path: /study
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  ssl:
+    enabled: true
+    key-store: ${KEY_STORE}
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-store-type: ${KEY_STORE_TYPE}
+  http2:
+    enabled: true
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  data:
+    mongodb:
+      host: 13.124.81.117
+      port: 27017
+      authentication-database: admin
+      username: root
+      password: B105FOREST
+      database: admin
+      # uri: mongodb: //546.465.445:27017/qwerqwer
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: false
+    open-in-view: false
+
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+jwt:
+  redirect-url: ${JWT_REDIRECT_URI}
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+
+notification:
+  mattermost:
+    enabled: true
+    webhook-url: ${MM_WEBHOOK_URL}
+    channel :
+
+logging:
+  level:
+    root: info
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: false
+      multiline: false
