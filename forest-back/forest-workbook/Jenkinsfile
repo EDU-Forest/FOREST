@@ -48,9 +48,7 @@ pipeline {
         		 docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest
 
         		 '''
-                }
-
-                
+                }                
             }
             post {
                 success {
@@ -71,6 +69,8 @@ pipeline {
                     docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
                       docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
                       docker.image("${IMAGE_NAME}:latest").push()
+
+                      sleep 10
                     }
 
                 }
@@ -78,9 +78,13 @@ pipeline {
             post {
                 success {
                     echo 'success upload image'
+                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME}:latest'
                 }
                 failure {
                     error 'fail upload image' // exit pipeline
+                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME}:latest'
                 }
             }
         }
