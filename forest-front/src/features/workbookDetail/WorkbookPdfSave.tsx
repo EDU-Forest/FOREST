@@ -22,8 +22,8 @@ function WorkbookPdfSave({ setIsSavePdf }: IProps) {
   const { workbook } = useSelector((state: RootState) => state.workbookDetail);
 
   const patchEncodedPath = (url: string) => {
-    return new Promise(async (resolve) => {
-      await fetch(url)
+    return new Promise((resolve) => {
+      fetch(url)
         .then((response) => response.blob())
         .then(
           (blob) =>

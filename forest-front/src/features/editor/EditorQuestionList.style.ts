@@ -54,6 +54,7 @@ export const EditorQuestionBarBox = styled.div<{ isCur: boolean }>`
   // delete icon
   > svg {
     width: 16px;
+    min-width: 16px;
     height: 16px;
 
     display: flex;

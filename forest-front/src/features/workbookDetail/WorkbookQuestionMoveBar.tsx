@@ -1,11 +1,10 @@
+import useWorkbookDetailQuestionDelete from "@/apis/workbookDetail/useWorkbookDetailQuestionDelete";
+import { RootState } from "@/stores/store";
 import { QuestionSummType } from "@/types/Workbook";
 import { AiOutlineHolder } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
-import { StyledWorkbookQuestionMoveBar } from "./WorkbookDetail.style";
 import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
-import useWorkbookDetailQuestionDelete from "@/apis/workbookDetail/useWorkbookDetailQuestionDelete";
-import { useEffect } from "react";
+import { StyledWorkbookQuestionMoveBar } from "./WorkbookDetail.style";
 
 interface IProps {
   num: number;
@@ -45,7 +44,7 @@ function WorkbookQuestionMoveBar({
 
     // 삭제한 요소 다음 요소를 현재 문제로
     if (deletedIdx + 1 >= questionSumm.length) {
-      setCurQuestion(questionSumm[questionSumm.length - 1].id);
+      setCurQuestion(questionSumm[questionSumm.length - 2].id);
     } else {
       setCurQuestion(questionSumm[deletedIdx + 1].id);
     }

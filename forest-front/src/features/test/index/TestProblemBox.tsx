@@ -16,7 +16,7 @@ import {
 } from "./TextIndex.style";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
-import { setChooseAnswer, setCurProblemNum } from "@/stores/exam/exam";
+import { setChooseAnswer, setCurProblemNum, setToggleModal } from "@/stores/exam/exam";
 import useSaveAnswer from "@/apis/study/useSaveAnswerQuery";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -62,6 +62,10 @@ export default function TestProblemBox() {
     dispatch(closeCanvas());
   };
 
+  const openEndTestModalHandler = () => {
+    dispatch(setToggleModal(true));
+  };
+
   return (
     <StyledTestProblemBox>
       <TestCanvas>
@@ -102,13 +106,19 @@ export default function TestProblemBox() {
         <TestProblemBtn onClick={goToPrevProblem} disabled={curProblemNum === 1 ? true : false}>
           이전
         </TestProblemBtn>
-        <TestProblemBtn
-          onClick={goToNextProblem}
-          colored={true}
-          disabled={curProblemNum === problem.length ? true : false}
-        >
-          다음
-        </TestProblemBtn>
+        {curProblemNum === problem.length ? (
+          <TestProblemBtn onClick={openEndTestModalHandler} colored={true}>
+            종료
+          </TestProblemBtn>
+        ) : (
+          <TestProblemBtn
+            onClick={goToNextProblem}
+            colored={true}
+            disabled={curProblemNum === problem.length ? true : false}
+          >
+            다음
+          </TestProblemBtn>
+        )}
       </TestProblemBtnBox>
     </StyledTestProblemBox>
   );

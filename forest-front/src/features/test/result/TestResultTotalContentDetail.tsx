@@ -4,6 +4,7 @@ import { TestResultTotalContentDetailBox } from "./TextResult.style";
 
 interface Iprops {
   studyResult: IStudyResult;
+  userRole?: string;
 }
 
 // any 수정

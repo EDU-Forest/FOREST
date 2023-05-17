@@ -60,15 +60,13 @@ const classSlice = createSlice({
     },
     setSelectedStudy(state, action) {
       state.isDescript = action.payload.isDescript;
-      if (!action.payload.title) {
-        state.studyTitle = state.studyTitle;
-      } else {
+      if (action.payload.title) {
         state.studyTitle = action.payload.title;
       }
     },
-    setInitClassInfo(state) {
-      Object.assign(state, initialState);
-    },
+    // setInitClassInfo(state) {
+    //   Object.assign(state, initialState);
+    // },
   },
 });
 
@@ -80,7 +78,7 @@ export const {
   setStudyType,
   setDeleteStudentNum,
   setStudentPointList,
-  setInitClassInfo,
+  // setInitClassInfo,
   setSelectedStudy,
 } = classSlice.actions;
 
