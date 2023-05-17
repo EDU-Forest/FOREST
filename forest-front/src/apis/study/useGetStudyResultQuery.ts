@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setResult } from "@/stores/exam/exam";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/student/result/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/student/result/${studyId}`).then(({ data }) => {
     const result: IStudyResult = data.data;
     return result;
   });

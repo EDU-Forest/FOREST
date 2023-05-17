@@ -5,7 +5,7 @@ import { IQuestionResult } from "@/types/Exam";
 import { IStudentStudyProblemResultList } from "@/types/Study";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/student/result/question/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/student/result/question/${studyId}`).then(({ data }) => {
     const studentStudyProblemResultList: IStudentStudyProblemResultList[] =
       data.data.studentStudyProblemResultList;
     return studentStudyProblemResultList;

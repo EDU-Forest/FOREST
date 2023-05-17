@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setAnalysisId, setStudy } from "@/stores/class/classInfo";
 
 const fetcher = (classId: number) =>
-  studyAxios.get(`/api/study/recent/${classId}`).then(({ data }) => {
+  studyAxios.get(`/study/recent/${classId}`).then(({ data }) => {
     const recentStudyId: number = data.data.studyId;
     return recentStudyId;
   });

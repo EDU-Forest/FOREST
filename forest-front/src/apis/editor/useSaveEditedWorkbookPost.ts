@@ -24,7 +24,7 @@ interface IData {
 }
 
 const fetcher = async (data: IData) =>
-  await workbookAxios.post(`/api/workbook/problem`, data).then(({ data }) => {
+  await workbookAxios.post(`/workbook/problem`, data).then(({ data }) => {
     return data;
   });
 

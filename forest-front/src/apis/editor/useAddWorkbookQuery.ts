@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const fetcher = (title: string) =>
-  workbookAxios.post("/api/workbook", { title }).then(({ data }) => data);
+  workbookAxios.post("/workbook", { title }).then(({ data }) => data);
 
 const useAddWorkBook = () => {
   const dispatch = useDispatch();

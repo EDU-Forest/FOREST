@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/problem/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/problem/${studyId}`).then(({ data }) => {
     return data;
   });
 

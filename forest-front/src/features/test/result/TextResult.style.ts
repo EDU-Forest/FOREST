@@ -124,12 +124,13 @@ const TestResultContentBox = styled.div`
   position: relative;
 `;
 
-const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
+const TestResultQuestionBtn = styled.button<{ isCorrect: boolean; userRole?: string }>`
   border: none;
   margin: 1rem;
   width: 4rem;
   height: 4rem;
   color: white;
+  cursor: ${({ userRole }) => (userRole === "teacher" ? "default" : "cursor")};
   background-color: ${({ isCorrect, theme }) =>
     isCorrect ? theme.colors.Lime[700] : theme.colors.Orange[700]};
   font-size: 1.375rem;
@@ -137,8 +138,12 @@ const TestResultQuestionBtn = styled.button<{ isCorrect: boolean }>`
   border-radius: 0.5rem;
 
   &:hover {
-    background-color: ${({ isCorrect, theme }) =>
-      isCorrect ? theme.colors.Lime[900] : theme.colors.Orange[900]};
+    background-color: ${({ userRole, isCorrect, theme }) =>
+      userRole !== "teacher"
+        ? isCorrect
+          ? theme.colors.Lime[900]
+          : theme.colors.Orange[900]
+        : ""};
   }
 `;
 

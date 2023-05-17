@@ -4,7 +4,7 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 import { AnswerRate } from "@/types/AnswerRate";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/class/result/all/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/class/result/all/${studyId}`).then(({ data }) => {
     const rate: AnswerRate = data.data;
     return rate;
   });

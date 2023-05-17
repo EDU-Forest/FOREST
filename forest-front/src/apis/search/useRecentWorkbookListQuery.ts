@@ -4,7 +4,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { ISearchWorkbook } from "@/types/Workbook";
 
 const fetcher = () =>
-  workbookAxios.get("/api/workbook/recent").then(({ data }) => {
+  workbookAxios.get("/workbook/recent").then(({ data }) => {
     const recentList = data.data.workbookList as ISearchWorkbook[];
     return recentList;
   });
