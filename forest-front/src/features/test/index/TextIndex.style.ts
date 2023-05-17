@@ -25,7 +25,7 @@ const StyledAnswerBox = styled.div`
   padding-left: 1.5rem;
   /* width: calc(100vw - 67.25rem); */
   width: 30%;
-  min-width: 12rem;
+  min-width: 10rem;
   max-width: 21.5rem;
 `;
 
@@ -163,10 +163,6 @@ const StyledTestNumberText = styled.div`
 
 const StyledUsername = styled(Title)`
   margin-bottom: 12px;
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
 `;
 
 const StyledTestAnswerTable = styled.table`
@@ -301,11 +297,11 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+  cursor: pointer;
 
   .correct-icon {
     width: 9.25rem;
     height: 9.25rem;
-    cursor: pointer;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "O" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
 
@@ -318,7 +314,6 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   .wrong-icon {
     width: 11.5rem;
     height: 11.5rem;
-    cursor: pointer;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "X" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
 
