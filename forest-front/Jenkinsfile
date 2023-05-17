@@ -9,16 +9,20 @@ pipeline {
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
         
-        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
-        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
-        TARGET_BRANCH = 'production-front'
+        REPOSITORY_CREDENTIAL_ID = '${REPOSITORY_CREDENTIAL_ID}'
+        REPOSITORY_URL = '${REPOSITORY_URL}'
+        TARGET_BRANCH = '${TARGET_BRANCH}-front'                
         
-        CONTAINER_NAME = 'prod-front-container'
-        
-        AWS_CREDENTIAL_NAME = 'choi1087'
-        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
-        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
+        AWS_CREDENTIAL_NAME = '${AWS_CREDENTIAL_NAME}'
+        ECR_PATH = '${ECR_PATH}'
+        IMAGE_NAME = '${IMAGE_NAME}'
         REGION = 'ap-northeast-2'
+
+        BUILD_NUM = '$BUILD_NUMBER'
+        PREVIOUS_TAG = BUILD_num.toInteger() - 1
+
+        TARGET_FILE = 'front/eks-deploy-react.yml'
+
     }
     stages{
 
@@ -84,6 +88,21 @@ pipeline {
                     sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
                     sh 'docker rmi ${IMAGE_NAME}:latest'
                 }
+            }
+        }
+
+        stage('Manifest Update') {
+            steps {
+                git credentialsId: '${GITHUB_CREDENTIAL_ID}',
+                    url: '${GITHUB_URL}',
+                    branch: 'main'
+                
+
+                echo '${PREVIOUS_TAG}'
+                sh "sed "$(grep -n 'image:' ${TARGET_FILE} | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
+                sh "git add ${TARGET_FILE}"
+                sh "git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'"
+                sh "git push origin main"
             }
         }
     }
