@@ -29,8 +29,6 @@ function LoginSuccess({ name, role, email, accessToken }: Iprops) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { refetch } = useRecentClassIdQuery();
-
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -42,17 +40,11 @@ function LoginSuccess({ name, role, email, accessToken }: Iprops) {
     // const username = router.query?.name;
     // const role = router.query?.role;
     // const email = router.query?.email;
-    console.log("data", name, role, email, accessToken);
 
-    async function login(name: string, role: string) {
-      await refetch();
+    if (typeof name === "string" && typeof role === "string") {
       dispatch(setUsername(name));
       dispatch(setRole(role));
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
-    }
-
-    if (typeof name === "string" && typeof role === "string") {
-      login(name, role);
     } else {
       router.push(
         {
