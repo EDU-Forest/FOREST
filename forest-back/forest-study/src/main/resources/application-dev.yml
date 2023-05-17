@@ -1,7 +1,7 @@
 server:
   port: 9012
   servlet:
-    context-path: /api/study
+    context-path: /study
     encoding:
       charset: UTF-8
       enabled: true
