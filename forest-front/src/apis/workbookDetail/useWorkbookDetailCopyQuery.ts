@@ -13,7 +13,7 @@ const useWorkbookCopyPostQuery = (wId: number) => {
 
   return useMutation([queryKeys.COPY_WORKBOOK_DETAIL], () => fetcher(wId), {
     onSuccess: (data) => {
-      router.push(`/workbook/${data.workbookInfo.workbookId}`, undefined, { shallow: true });
+      router.push(`/workbook/${data.workbookInfo.workbookId}`);
     },
   });
 };

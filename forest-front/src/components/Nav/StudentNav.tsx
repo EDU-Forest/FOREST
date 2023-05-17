@@ -15,7 +15,7 @@ export default function StudentNav({ nowLocation }: Iprops) {
 
   // 페이지 이동
   const movePage = (path: string) => {
-    router.push(`/${path}`, undefined, { shallow: true });
+    router.push(`/${path}`);
   };
 
   // 현재 위치 네비바 css 스타일 true

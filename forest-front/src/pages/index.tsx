@@ -18,7 +18,7 @@ function Home() {
 
   const handleModal = (text: string) => {
     // setModalState(text);
-    router.push(`/${text}`, undefined, { shallow: true });
+    router.push(`/${text}`);
   };
 
   const goToDash = () => {

@@ -50,7 +50,7 @@ export default function StudyAnalysisEachStudentPage({
     useStudentQuestionResultQuery(studentStudyResultId);
 
   const clickHandler = () => {
-    router.push(`/teacher/class/study/${studyId}`, undefined, { shallow: true });
+    router.push(`/teacher/class/study/${studyId}`);
   };
 
   return (

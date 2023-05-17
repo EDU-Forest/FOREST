@@ -36,7 +36,7 @@ function ScheduleList() {
     if (!isClickable(scheduleType)) {
       return;
     }
-    router.push(`/test/${studyId}/info`, undefined, { shallow: true });
+    router.push(`/test/${studyId}/info`);
   };
 
   const STUDY: IStudy = {
