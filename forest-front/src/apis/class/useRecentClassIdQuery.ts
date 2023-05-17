@@ -19,6 +19,7 @@ const useRecentClassIdQuery = () => {
   return useQuery([queryKeys.RECENT_CLASSID], fetcher, {
     enabled: nowClassId === -1,
     onSuccess: (recentClass) => {
+      console.log(recentClass);
       dispatch(setClass(recentClass));
     },
   });
