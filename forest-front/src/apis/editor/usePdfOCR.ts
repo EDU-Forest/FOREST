@@ -24,7 +24,7 @@ interface ProblemList {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/api/workbook/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
+    .post(`/workbook/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
       timeout: 100000,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -44,7 +44,7 @@ const usePdfOCR = () => {
       const nowIdx = questions.length;
       let newQuestions = questions;
 
-      problemList.map((item, idx) => {
+      problemList.forEach((item, idx) => {
         const question: QuestionType = {
           problemId: 0,
           problemNum: nowIdx + idx + 1,

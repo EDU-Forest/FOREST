@@ -1,6 +1,5 @@
 import { Title } from "@/styles/text";
-import { flexBox, positionCenter, theme } from "@/styles/theme";
-import { COLORS } from "html2canvas/dist/types/css/types/color";
+import { flexBox, positionCenter } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
 const ClassSummaryTitle = styled(Title)`

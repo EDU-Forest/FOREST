@@ -1,6 +1,5 @@
 import useBookmarkDelete from "@/apis/search/useBookmarkDelete";
 import useBookmarkPost from "@/apis/search/useBookmarkPost";
-import { useState } from "react";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import {
   WorkbookCard,
@@ -11,7 +10,6 @@ import {
   WorkbookImgBox,
   WorkbookTitle,
 } from "./Workbook.style";
-import { titleFormatter } from "@/utils";
 
 interface Iprops {
   id: number;

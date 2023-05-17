@@ -15,12 +15,11 @@ import {
 } from "./AddStudentModal.style";
 import SmallBtn from "@/components/Button/SmallBtn";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeAddStudentModal } from "@/stores/class/classModal";
 import useSearchClassStudentQuery from "@/apis/class/teacher/useSearchClassStudentQuery";
 import { FiXCircle } from "react-icons/fi";
 import { AiOutlineCheckCircle, AiOutlineClose } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useClassStudentAdd from "@/apis/class/teacher/useClassStudentAdd";
 import { IStudent } from "@/types/Student";

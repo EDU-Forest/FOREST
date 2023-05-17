@@ -4,13 +4,13 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useDispatch } from "react-redux";
 import { closeAddStudentModal } from "@/stores/class/classModal";
 
-interface userId {
+interface UserId {
   userId: number;
 }
 
 interface Payload {
   classId: number;
-  studentList: userId[];
+  studentList: UserId[];
 }
 
 const fetcher = (payload: Payload) =>

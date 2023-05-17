@@ -16,7 +16,7 @@ interface Payload {
 
 const fetcher = (payload: Payload) =>
   studyAxios
-    .patch("/api/study/descript", {
+    .patch("/study/descript", {
       problemListId: payload.problemListId,
       studyId: payload.studyId,
       point: payload.point,

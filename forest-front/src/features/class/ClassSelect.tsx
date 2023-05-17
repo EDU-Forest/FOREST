@@ -1,8 +1,7 @@
 import { AiFillCaretDown } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
 import { ClassSelectWrapper, ClassSelectedTitle } from "./ClassSelect.style";
-import { useDispatch } from "react-redux";
 import ClassSelectDropdown from "./ClassSelectDropdown";
 import { controlClassDropdown } from "@/stores/class/classModal";
 

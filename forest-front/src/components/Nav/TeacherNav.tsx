@@ -1,4 +1,3 @@
-// import logo from "@/assets/Forest_Logo.png";
 import {
   AiOutlineHome,
   AiOutlineTeam,
