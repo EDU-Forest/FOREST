@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @Api("Workbook Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping
 public class WorkbookController {
 
     private final WorkbookService workbookService;
@@ -179,7 +179,6 @@ public class WorkbookController {
             @PathVariable Long workbookId,
             @RequestPart(value = "file", required = false) MultipartFile file) throws UnsupportedEncodingException, IOException, Exception {
         Long userId = jwtDecoder.verifyJWT(request);
-//        Long userId = 9L;
         log.info("workbookID : {}", workbookId);
         log.info("file : {}", file.isEmpty());
         return new ResponseSuccessDto<>(workbookService.ocrPdf(userId, file));
