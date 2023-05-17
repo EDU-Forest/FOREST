@@ -21,8 +21,6 @@ pipeline {
         ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
         IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
         REGION = 'ap-northeast-2'
-
-
         
         TARGET_FILE = 'eks-deploy-react.yml'        
 
