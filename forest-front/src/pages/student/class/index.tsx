@@ -1,3 +1,4 @@
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 import StudentNav from "@/components/Nav/StudentNav";
 import ClassSelect from "@/features/class/ClassSelect";

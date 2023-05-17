@@ -8,17 +8,26 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
-import { ParsedUrlQuery } from "querystring";
 
-interface IServerSideprops {
-  query: ParsedUrlQuery;
-}
+// interface IServerSideprops {
+//   query: {
+//     name?: string;
+//     role?: string;
+//     email?: string;
+//     accessToken?: string;
+//   };
+// }
+
+// interface Iprops {
+//   name?: string;
+//   role?: string;
+//   email?: string;
+//   accessToken?: string;
+// }
 
 function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const { refetch } = useRecentClassIdQuery();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -28,13 +37,13 @@ function LoginSuccess() {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
 
-    const username = router.query?.name;
+    const name = router.query?.name;
     const role = router.query?.role;
     const email = router.query?.email;
-    if (typeof username === "string" && typeof role === "string") {
-      dispatch(setUsername(username));
+
+    if (typeof name === "string" && typeof role === "string") {
+      dispatch(setUsername(name));
       dispatch(setRole(role));
-      refetch();
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     } else {
       router.push(
@@ -68,9 +77,13 @@ function LoginSuccess() {
 
 export default LoginSuccess;
 
-export const getServerSideProps = async ({ query }: IServerSideprops) => {
-  // const {name, role, email, accessToken} = query
+export const getServerSideProps = async () => {
   return {
-    props: {},
+    props: {
+      // name,
+      // role,
+      // email,
+      // accessToken,
+    },
   };
 };
