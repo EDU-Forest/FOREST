@@ -12,6 +12,7 @@ import { setLogout } from "@/stores/user/user";
 import { removeItemLocalStorage } from "@/utils/localStorage";
 import useAuth from "@/hooks/useAuth";
 import { BsQuestionCircle } from "react-icons/bs";
+import GuideIcon from "@/features/guide/GuideIcon";
 
 interface Iprops {
   nowLocation: string;
@@ -45,10 +46,6 @@ export default function TeacherNav({ nowLocation }: Iprops) {
     router.push(`/teacher/dashboard`, undefined, { shallow: true });
   };
 
-  const goToGuide = () => {
-    router.push("/guide", undefined, { shallow: true });
-  };
-
   return (
     <StyledNav>
       <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goToDashBoard} />
@@ -78,7 +75,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
         </NavInner>
       </TeacherNavDiv>
       <NavBottom>
-        <BsQuestionCircle onClick={goToGuide} />
+        <GuideIcon />
         <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
       </NavBottom>
     </StyledNav>

@@ -35,21 +35,21 @@ export default function GuideRole() {
                 <MdOutlineCheckCircleOutline />
               </GuideCheckIcon>
               <GuideNormalText>
-                PDF 또는 이미지로 문제를 불러와 온라인 문서화시킬 수 있습니다.
+                PDF 또는 이미지로 문제를 불러와 온라인 문서화할 수 있습니다.
               </GuideNormalText>
             </div>
             <div className="role-text-sub">
               <GuideCheckIcon>
                 <MdOutlineCheckCircleOutline />
               </GuideCheckIcon>
-              <GuideNormalText>배포된 문제집을 활용하여 시험을 만들 수 있습니다.</GuideNormalText>
+              <GuideNormalText>배포된 문제집을 활용하여 시험을 출제할 수 있습니다.</GuideNormalText>
             </div>
             <div className="role-text-sub">
               <GuideCheckIcon>
                 <MdOutlineCheckCircleOutline />
               </GuideCheckIcon>
               <GuideNormalText>
-                시험 자동 채점 및 클래스 성적 분석을 확인할 수 있습니다.
+                시험 자동 채점 및 클래스 성적 분석 기능을 활용할 수 있습니다.
               </GuideNormalText>
             </div>
           </div>
@@ -62,7 +62,9 @@ export default function GuideRole() {
               <GuideCheckIcon>
                 <MdOutlineCheckCircleOutline />
               </GuideCheckIcon>
-              <GuideNormalText>문제집 상태별 스케줄을 한눈에 확인할 수 있습니다.</GuideNormalText>
+              <GuideNormalText>
+                문제집 상태별 최신 스케줄을 한눈에 확인할 수 있습니다.
+              </GuideNormalText>
             </div>
             <div className="role-text-sub">
               <GuideCheckIcon>
@@ -75,7 +77,7 @@ export default function GuideRole() {
                 <MdOutlineCheckCircleOutline />
               </GuideCheckIcon>
               <GuideNormalText>
-                저장 가능한 팔레트 기능을 이용하여 편리하게 문제를 풀 수 있습니다.
+                저장 가능한 캔버스 기능을 이용하여 편리하게 문제를 풀 수 있습니다.
               </GuideNormalText>
             </div>
           </div>

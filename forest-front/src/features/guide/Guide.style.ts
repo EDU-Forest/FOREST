@@ -2,6 +2,39 @@ import { Container } from "@/styles/container";
 import { flexBox } from "@/styles/theme";
 import styled, { css } from "styled-components";
 
+const GuideIconWrapper = styled.div`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.Gray[500]};
+  svg {
+    font-size: 1.25rem;
+  }
+  &:hover {
+    .hover-text {
+      display: block;
+    }
+    svg {
+      color: ${({ theme }) => theme.colors.Orange[700]};
+    }
+  }
+
+  .hover-text {
+    display: none;
+    clip-path: polygon(0 11%, 100% 10%, 100% 75%, 61% 75%, 50% 100%, 39% 76%, 0% 75%);
+    position: absolute;
+    right: -30px;
+    top: -40px;
+    width: 80px;
+    height: 40px;
+    font-size: 13px;
+    font-weight: 600;
+    color: black;
+    line-height: 24px;
+    background-color: ${({ theme }) => theme.colors.Lime[300]};
+    text-align: center;
+    padding-top: 6px;
+  }
+`;
+
 const GuideContentWrapper = styled(Container)`
   padding: 32px;
 
@@ -234,6 +267,7 @@ const GuideCheckIcon = styled.div`
 `;
 
 export {
+  GuideIconWrapper,
   GuideContentWrapper,
   GuideContentBox,
   LogoImg,
