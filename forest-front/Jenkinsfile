@@ -111,10 +111,8 @@ pipeline {
                     sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-react.yml
 
                     cat eks-deploy-react.yml | grep image
-
-                    // sh "sed -i 's/forest-front:${currentBuild.previousBuild?.number}/forest-front:${currentBuild.number}/g' eks-deploy-react.yml"
+                    
                     git status
-                    // sh "sed "$(grep -n 'image:' eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
                     git add eks-deploy-react.yml
                     git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'
                     git push origin main
