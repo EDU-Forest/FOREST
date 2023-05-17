@@ -44,9 +44,9 @@ function LoginSuccess({ name, role, email, accessToken }: Iprops) {
     // const email = router.query?.email;
     console.log("data", name, role, email, accessToken);
     if (typeof name === "string" && typeof role === "string") {
+      refetch();
       dispatch(setUsername(name));
       dispatch(setRole(role));
-      refetch();
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     } else {
       router.push(
