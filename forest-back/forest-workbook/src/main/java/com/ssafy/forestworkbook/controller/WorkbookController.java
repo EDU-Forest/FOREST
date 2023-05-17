@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @Api("Workbook Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
 public class WorkbookController {
 
     private final WorkbookService workbookService;
