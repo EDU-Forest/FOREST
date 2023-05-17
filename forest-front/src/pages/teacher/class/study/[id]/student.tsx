@@ -91,9 +91,10 @@ export default function StudyAnalysisEachStudentPage({
               <Loading width={10} height={10} />
             ) : (
               <TestResultTotalContentBox>
-                <TestResultTotalContentDetail studyResult={detail} />
+                <TestResultTotalContentDetail userRole="teacher" studyResult={detail} />
                 <img src={"/images/Test_Result_Total_Content_Arrow.png"} className="icon" />
                 <TestResultTotalContentGraph
+                  userRole="teacher"
                   volume={detail?.volume}
                   correctNum={detail?.correctNum}
                 />
