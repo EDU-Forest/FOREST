@@ -39,11 +39,9 @@ function Editor() {
   const [selectQuestionType, setSelectQuestionType] = useState("");
   const { isOpenAddWorkbookModal } = useSelector((state: RootState) => state.editorModal);
   const { isMoveToEditor } = useSelector((state: RootState) => state.workbookDetail);
-  const {} = useSelector((state: RootState) => state.editorWorkbook);
   const { editorSave, isLoading, isSuccess } = useEditorSave();
   const [isSaveSuccess, setIsSaveSuccess] = useState(false);
   const [isWorkbookSwitchFail, setIsWorkbookSwitchFail] = useState(false);
-  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   const [controlDropdown, setControlDropdown] = useState<boolean>(false);
 
