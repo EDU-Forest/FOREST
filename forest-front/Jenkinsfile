@@ -13,12 +13,12 @@ pipeline {
         
         // REPOSITORY_CREDENTIAL_ID = '${REPOSITORY_CREDENTIAL_ID}'
         // REPOSITORY_URL = '${REPOSITORY_URL}'
-        // TARGET_BRANCH = '${TARGET_BRANCH}-front'                
+        TARGET_BRANCH = 'production-front'                
         
         // AWS_CREDENTIAL_NAME = '${AWS_CREDENTIAL_NAME}'
         // ECR_PATH = '${ECR_PATH}'
         // IMAGE_NAME = '${IMAGE_NAME}'
-        // REGION = 'ap-northeast-2'
+        REGION = 'ap-northeast-2'
 
         BUILD_NUM = '$BUILD_NUMBER'
         // PREVIOUS_TAG = ${previousBuildNumber}
@@ -103,7 +103,7 @@ pipeline {
                 dir('front') {
                     sh 'ls -al'
                     echo '${previousBuildNumber}'
-                    sh "sed -i 's/forest-front:${}/forest-front:${}/g' eks-deploy-react.yml"
+                    sh "sed -i 's/forest-front:${currentBuild.previousBuild?.number}/forest-front:${currentBuild.number}/g' eks-deploy-react.yml"
                     // sh "sed "$(grep -n 'image:' eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
                     sh "git add ${TARGET_FILE}"
                     sh "git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'"
