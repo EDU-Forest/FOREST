@@ -84,6 +84,21 @@ function WorkbookDetail() {
     }
   }, [questions]);
 
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = "";
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  });
+
   return (
     <div>
       <StyledWorkbookDetailBox>
