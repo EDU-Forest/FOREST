@@ -7,28 +7,15 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
-import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
+import { ParsedUrlQuery } from "querystring";
 
-// interface IServerSideprops {
-//   query: {
-//     name?: string;
-//     role?: string;
-//     email?: string;
-//     accessToken?: string;
-//   };
-// }
-
-// interface Iprops {
-//   name?: string;
-//   role?: string;
-//   email?: string;
-//   accessToken?: string;
-// }
+interface IServerSideprops {
+  query: ParsedUrlQuery;
+}
 
 function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { refetch } = useRecentClassIdQuery();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -38,18 +25,13 @@ function LoginSuccess() {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
 
-    const name = router.query?.name;
+    const username = router.query?.name;
     const role = router.query?.role;
     const email = router.query?.email;
-
-    if (typeof name === "string" && typeof role === "string") {
-      refetch();
-      dispatch(setUsername(name));
+    if (typeof username === "string" && typeof role === "string") {
+      dispatch(setUsername(username));
       dispatch(setRole(role));
-      setTimeout(
-        () => router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true }),
-        1000,
-      );
+      router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     } else {
       router.push(
         {
@@ -82,13 +64,9 @@ function LoginSuccess() {
 
 export default LoginSuccess;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ query }: IServerSideprops) => {
+  // const {name, role, email, accessToken} = query
   return {
-    props: {
-      // name,
-      // role,
-      // email,
-      // accessToken,
-    },
+    props: {},
   };
 };

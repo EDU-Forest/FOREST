@@ -1,5 +1,5 @@
 import { Title } from "@/styles/text";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { StyledTestCommonBtn } from "../common/TextCommon.style";
 import { scrollBar } from "@/styles/theme";
 
@@ -18,7 +18,7 @@ const TestResultTotalTitleBox = styled(Title)`
   margin-bottom: 22px;
 `;
 
-const TestResultTotalContentBox = styled.div<{ isGraded?: boolean }>`
+const TestResultTotalContentBox = styled.div`
   width: 672px;
   height: 264px;
   padding: 28px;
@@ -32,15 +32,6 @@ const TestResultTotalContentBox = styled.div<{ isGraded?: boolean }>`
   .icon {
     width: 60px;
     height: 1.75rem;
-  }
-
-  .blur-result {
-    ${({ isGraded }) =>
-      !isGraded &&
-      css`
-        filter: blur(5px);
-        -webkit-filter: blur(5px);
-      `}
   }
 `;
 
@@ -200,22 +191,6 @@ const TestResultNotOpenBox = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 10;
-  border-radius: 1rem;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(241, 243, 245, 0.5);
-
-  p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: ${({ theme }) => theme.colors.Gray[50]};
-    padding: 0.5rem 1rem;
-    border: 0.5px solid ${({ theme }) => theme.colors.Gray[500]};
-    border-radius: 0.5rem;
-  }
 `;
 
 const TestResultSectionBox = styled.div`
