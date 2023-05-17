@@ -1,10 +1,27 @@
 pipeline {
     agent any
+    options {
+        timeout(time: 1, unit: 'HOURS') // set timeout 1 hour
+    }
     environment {
         DOCKER = 'sudo docker'
+
+        TIME_ZONE = 'Asia/Seoul'
+        PROFILE = 'local'
+        
+        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
+        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
+        TARGET_BRANCH = 'production-front'
+        
+        CONTAINER_NAME = 'prod-front-container'
+        
+        AWS_CREDENTIAL_NAME = 'choi1087'
+        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
+        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
+        REGION = 'ap-northeast-2'
     }
-   
-    stages {
+    stages{
+
         stage('Clone Repository') {
             steps {
                 checkout scm
@@ -14,61 +31,59 @@ pipeline {
 
         stage('env setting') {
             steps{
-                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
-                sh 'cp /var/jenkins_home/env/ca.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
-                sh 'cp /var/jenkins_home/env/ca.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
-                sh 'cp /var/jenkins_home/env/cert.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
-                sh 'cp /var/jenkins_home/env/cert.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/prod-front/forest-front'                
             }            
         }
         
-        stage('Build image') {
-            steps {         
-                sh 'ls -al'       
-                sh 'npm -v'
-                sh 'node -v'
-                dir('forest-front'){
-                    sh 'ls -al'
-                    sh 'docker build -t ${FOREST_FRONT_IMAGE} .'    
-                }                                                
-                echo 'Build image...'
-            }
-        }
-
-        stage('Remove Previous image') {        
+        stage('dockerizing project by dockerfile') {
             steps {
-                script {
-                    try {
-                        sh 'docker stop ${FOREST_FRONT_CONTAINER}'
-                        sh 'docker rm ${FOREST_FRONT_CONTAINER}'                        
-                    } catch (e) {
-                        echo 'fail to stop and remove container'
-                    }    
+                dir('forest-front') {
+                    sh '''
+                ls -al
+                npm -v
+                node -v
+                 docker build -t $IMAGE_NAME:$BUILD_NUMBER .
+                 docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest
+
+                 '''
                 }                
             }
-            
+            post {
+                success {
+                    echo 'success dockerizing project'
+                }
+                failure {
+                    error 'fail dockerizing project' // exit pipeline
+                }
+            }
         }
-        stage('Run New image') {
+        stage('upload aws ECR') {
             steps {
-                dir('forest-front'){
-                    sh 'ls -al'
-                    sh 'docker run --name ${FOREST_FRONT_CONTAINER} -d -p 3000:3000 ${FOREST_FRONT_IMAGE}'
-                    echo 'Run New image'
-                }                
-            }
-        }        
-    }
+                script{
+                    // cleanup current user docker credentials
+                    sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
+                    
+                   
+                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
+                      docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
+                      docker.image("${IMAGE_NAME}:latest").push()
 
-    post {
-        success{
-            script{
-                mattermostSend color: 'good', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Success'
+                      sleep 10
+                    }
+
+                }
             }
-        }
-        failure
-        {
-            script{
-                mattermostSend color: 'danger', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Failed'
+            post {
+                success {
+                    echo 'success upload image'
+                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                }
+                failure {
+                    error 'fail upload image' // exit pipeline
+                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                }
             }
         }
     }
