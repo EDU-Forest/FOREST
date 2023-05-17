@@ -178,6 +178,24 @@ const GuideHorizonNoWrap = styled.div`
   margin-bottom: 48px;
   margin-top: 80px;
 
+  .role-img {
+    width: 30%;
+    aspect-ratio: 0.85 / 1;
+    min-width: 160px;
+    max-width: 240px;
+    object-fit: contain;
+  }
+
+  .role-text-div {
+    width: 50%;
+  }
+
+  .role-text-sub {
+    ${flexBox("row", "center", "start")}
+    gap: 8px;
+    margin: 24px 0;
+  }
+
   .editor-new {
     width: 20%;
     margin-right: 48px;
@@ -190,6 +208,29 @@ const GuideHorizonNoWrap = styled.div`
     margin-right: 48px;
     height: 100%;
   }
+
+  @media ${({ theme }) => theme.tablet} {
+    .role-text-sub {
+      margin: 12px 0;
+    }
+  }
+`;
+
+const GuideCheckIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+
+  svg {
+    font-size: 24px;
+    color: ${({ theme }) => theme.colors.Lime[800]};
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    svg {
+      font-size: 20px;
+    }
+  }
 `;
 
 export {
@@ -201,4 +242,5 @@ export {
   GuideSubContentWrapper,
   GuideHorizonContentWrapper,
   GuideHorizonNoWrap,
+  GuideCheckIcon,
 };
