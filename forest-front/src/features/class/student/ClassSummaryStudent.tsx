@@ -29,11 +29,11 @@ export default function ClassSummaryStudent() {
 
   const goToDetail = (studyId: number) => {
     dispatch(setStudyType(data?.data.studyType.toLowerCase()));
-    router.push(`/test/${studyId}/result`, undefined, { shallow: true });
+    router.push(`/test/${studyId}/result`);
   };
 
   const goToTest = (studyId: number) => {
-    router.push(`/test/${studyId}/info`, undefined, { shallow: true });
+    router.push(`/test/${studyId}/info`);
   };
 
   return (

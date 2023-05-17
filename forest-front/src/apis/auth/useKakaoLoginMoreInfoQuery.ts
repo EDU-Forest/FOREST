@@ -24,9 +24,7 @@ const useKakaoLoginMoreInfo = () => {
     onSuccess: (data) => {
       dispatch(setUsername(data.data.name));
       dispatch(setRole(data.data.role));
-      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`, undefined, {
-        shallow: true,
-      });
+      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
     },
     onError: (data) => {},
   });
