@@ -107,10 +107,7 @@ pipeline {
                     sh "sed -i 's/forest-front:${currentBuild.previousBuild?.number}/forest-front:${currentBuild.number}/g' eks-deploy-react.yml"
                     // sh "sed "$(grep -n 'image:' eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
                     sh "git add ${TARGET_FILE}"
-                    sh "git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'"
-
-                    sh "git config --global user.email adcdm87@gmail.com"
-                    sh "git config --global user.name choi1087"
+                    sh "git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'"                    
                     sh "git push origin main"
                 }
             }
