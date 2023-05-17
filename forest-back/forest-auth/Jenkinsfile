@@ -80,7 +80,7 @@ pipeline {
                     sh 'docker rmi ${IMAGE_NAME}:latest'
                 }
                 failure {
-                    error 'fail upload image' // exit pipeline
+                    error 'fail upload image'
                     sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
                     sh 'docker rmi ${IMAGE_NAME}:latest'
                 }
