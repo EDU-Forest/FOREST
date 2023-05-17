@@ -1238,7 +1238,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 Blob firstOutputFile = null;
 
                 // List objects with the given prefix.
-                System.out.println("Output files:");
+//                System.out.println("Output files:");
                 for (Blob blob : pageList.iterateAll()) {
 //                    System.out.println(blob.getName());
 
@@ -1288,7 +1288,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                     for (int size = 0; size < annotateFileResponse.getResponsesList().size(); size++) {
                         AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(size);
-                        System.out.println("현재 size: " + size);
+//                        System.out.println("현재 size: " + size);
 
                         String fullText = annotateImageResponse.getFullTextAnnotation().getText();
 
@@ -1306,13 +1306,13 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         // 문항 별 반복
                         for (String temp : splitFull) {
-                            System.out.println(temp);
-                            System.out.println("================");
+//                            System.out.println(temp);
+//                            System.out.println("================");
 
                             List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
                             String regTilde = "^.*[0-9]{1,2}[~][0-9]{1,2}.*";
-                            String regNoTilde = "^.*([)[0-9]{1,2}(]).*";
+                            String regNoTilde = "^.*\\[([0-9]{1,2})\\].*";
 
                             // 묶인 문항 처리
                             if (!multiText && (temp.replace("\n", " ").matches(regTilde) ||
@@ -1351,7 +1351,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                             }
 
                             // 개별 문항 처리
-                            else if (temp.substring(0, 1).equals(" ")) {
+                            else if (temp.length() >= 1 && temp.substring(0, 1).equals(" ")) {
                                 String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
                                 String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
 
