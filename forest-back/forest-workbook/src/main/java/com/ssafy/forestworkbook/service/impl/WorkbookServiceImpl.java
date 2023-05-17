@@ -1240,7 +1240,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                 // List objects with the given prefix.
                 System.out.println("Output files:");
                 for (Blob blob : pageList.iterateAll()) {
-                    System.out.println(blob.getName());
+//                    System.out.println(blob.getName());
 
                     // Process the first System.output file from GCS.
                     // Since we specified batch size = 2, the first response contains
@@ -1306,8 +1306,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         // 문항 별 반복
                         for (String temp : splitFull) {
-        //                    System.out.println(temp);
-        //                    System.out.println("================");
+                            System.out.println(temp);
+                            System.out.println("================");
 
                             List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
@@ -1345,7 +1345,6 @@ public class WorkbookServiceImpl implements WorkbookService {
                                             }
                                             textContent = textContent.substring(preface + 14);
                                         }
-                                        // TODO 항목 들어오는 거 처리
                                         text.append(textContent.replaceAll("\n", " ").trim());
                                     }
                                 }
