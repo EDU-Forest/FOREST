@@ -101,7 +101,6 @@ pipeline {
                     url: 'https://github.com/choi1087/forest_yaml.git',
                     branch: 'main'
                 
-
                 dir('front') {
                     sh 'ls -al'
                     echo '${previousBuildNumber}'
