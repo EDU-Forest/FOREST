@@ -50,7 +50,7 @@ export default function StudyAnalysisEachStudentPage({
     useStudentQuestionResultQuery(studentStudyResultId);
 
   const clickHandler = () => {
-    router.push(`/teacher/class/study/${studyId}`, undefined, { shallow: true });
+    router.push(`/teacher/class/study/${studyId}`);
   };
 
   return (
@@ -91,9 +91,10 @@ export default function StudyAnalysisEachStudentPage({
               <Loading width={10} height={10} />
             ) : (
               <TestResultTotalContentBox>
-                <TestResultTotalContentDetail studyResult={detail} />
+                <TestResultTotalContentDetail userRole="teacher" studyResult={detail} />
                 <img src={"/images/Test_Result_Total_Content_Arrow.png"} className="icon" />
                 <TestResultTotalContentGraph
+                  userRole="teacher"
                   volume={detail?.volume}
                   correctNum={detail?.correctNum}
                 />

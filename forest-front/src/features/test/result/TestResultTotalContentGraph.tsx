@@ -6,12 +6,13 @@ import { RootState } from "@/stores/store";
 interface Iprops {
   volume: number;
   correctNum: number;
+  userRole?: string;
 }
 
-export default function TestResultTotalContentGraph({ volume, correctNum }: Iprops) {
+export default function TestResultTotalContentGraph({ volume, correctNum, userRole }: Iprops) {
   const { isGraded } = useSelector((state: RootState) => state.exam);
   return (
-    <TestResultTotalContentGraphBox className="blur-result">
+    <TestResultTotalContentGraphBox className={userRole === "teacher" ? "" : "blur-result"}>
       <CorrectRateDonut
         answerRate={{
           correctAnswerRate: isGraded ? Math.floor((correctNum / volume) * 100) : 0,

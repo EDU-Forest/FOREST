@@ -22,9 +22,7 @@ const useLogin = (setIsError: (isError: boolean) => void) => {
     onSuccess: (data) => {
       const { name, role, accessToken } = data.data;
       setLocalStorage("forest_access_token", accessToken);
-      router.push({ pathname: `/login/success`, query: { name, role, accessToken } }, undefined, {
-        shallow: true,
-      });
+      router.push({ pathname: `/login/success`, query: { name, role, accessToken } });
     },
     onError: (error: AxiosError) => {
       if (error.code === "ERR_BAD_REQUEST") {

@@ -18,7 +18,7 @@ export default function TestResultContent() {
 
   const goToProblem = (idx: number) => {
     dispatch(setCurProblemNum({ curProblemNum: idx }));
-    router.push(`/test/${router.query.studyId}`, undefined, { shallow: true });
+    router.push(`/test/${router.query.studyId}`);
   };
 
   return (

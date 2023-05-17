@@ -46,7 +46,10 @@ function LoginSuccess() {
       refetch();
       dispatch(setUsername(name));
       dispatch(setRole(role));
-      router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
+      setTimeout(
+        () => router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true }),
+        1000,
+      );
     } else {
       router.push(
         {

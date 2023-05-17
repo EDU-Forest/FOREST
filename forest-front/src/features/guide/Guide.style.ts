@@ -33,6 +33,12 @@ const GuideIconWrapper = styled.div`
     text-align: center;
     padding-top: 6px;
   }
+
+  @media ${({ theme }) => theme.tablet} {
+    .hover-text {
+      right: -20px;
+    }
+  }
 `;
 
 const GuideContentWrapper = styled(Container)`
