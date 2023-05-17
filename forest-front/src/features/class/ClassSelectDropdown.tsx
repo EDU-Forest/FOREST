@@ -1,5 +1,4 @@
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import {
   ClassSelectDropdownContainer,
@@ -10,8 +9,7 @@ import {
   ClassSelectNoClass,
 } from "./ClassSelect.style";
 import { setClass } from "@/stores/class/classInfo";
-import AddClassModal from "./teacher/AddClassModal";
-import { hideClassDropdown, openAddClassModal } from "@/stores/class/classModal";
+import { openAddClassModal } from "@/stores/class/classModal";
 import useClassListQuery from "@/apis/class/useClassListQuery";
 import Loading from "@/components/Loading/Loading";
 import { textFormatter } from "@/utils";
@@ -23,7 +21,6 @@ interface Iprops {
 
 export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
   const dispatch = useDispatch();
-  const { isOpenAddClassModal } = useSelector((state: RootState) => state.classModal);
   const { data: classList, isLoading } = useClassListQuery();
 
   const addClassModalHandler = (e: React.MouseEvent<HTMLElement>) => {
@@ -59,7 +56,6 @@ export default function ClassSelectDropdown({ nowClassId, isStudent }: Iprops) {
               + 새 클래스 추가
             </ClassSelectDropdownAdd>
           )}
-          {/* {isOpenAddClassModal && <AddClassModal />} */}
         </>
       )}
     </ClassSelectDropdownContainer>

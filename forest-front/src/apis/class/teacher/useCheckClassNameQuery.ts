@@ -26,7 +26,6 @@ const useCheckClassNameQuery = ({ className, setErrorMsg, setIsAvailable }: Ipro
       if (data.status === "AUTH_CLASS_NAME_NOT_DUPLICATED") {
         setErrorMsg("");
         setIsAvailable(true);
-        return;
       } else if (data.status === "AUTH_CLASS_NAME_DUPLICATED") {
         setErrorMsg("중복된 클래스 이름입니다.");
         setIsAvailable(false);

@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useDispatch } from "react-redux";
-import { setAnalysisId, setStudy } from "@/stores/class/classInfo";
+import { setStudy } from "@/stores/class/classInfo";
 
 const fetcher = (classId: number) =>
   studyAxios.get(`/study/recent/${classId}`).then(({ data }) => {
