@@ -43,11 +43,16 @@ function LoginSuccess({ name, role, email, accessToken }: Iprops) {
     // const role = router.query?.role;
     // const email = router.query?.email;
     console.log("data", name, role, email, accessToken);
-    if (typeof name === "string" && typeof role === "string") {
-      refetch();
+
+    async function login(name: string, role: string) {
+      await refetch();
       dispatch(setUsername(name));
       dispatch(setRole(role));
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
+    }
+
+    if (typeof name === "string" && typeof role === "string") {
+      login(name, role);
     } else {
       router.push(
         {
