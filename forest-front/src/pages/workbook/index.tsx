@@ -53,7 +53,7 @@ function Workbook() {
 
   useEffect(() => {
     // 기존 리스트 + 무한 스크롤로 불러온 새 리스트
-    data && setList([...list, ...data?.workbookList]);
+    data && setList([...list, ...(data?.workbookList || [])]);
   }, [data?.workbookList]);
 
   useEffect(() => {
