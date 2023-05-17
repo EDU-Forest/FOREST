@@ -21,7 +21,7 @@ export default function TestAnswerBox() {
   const goToResultHandler = () => {
     dispatch(closeCanvas());
 
-    router.push(`/test/${router.query.studyId}/result`);
+    router.push(`/test/${router.query.studyId}/result`, undefined, { shallow: true });
   };
 
   return (

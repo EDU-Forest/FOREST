@@ -50,7 +50,7 @@ export default function StudyAnalysisEachStudentPage({
     useStudentQuestionResultQuery(studentStudyResultId);
 
   const clickHandler = () => {
-    router.push(`/teacher/class/study/${studyId}`);
+    router.push(`/teacher/class/study/${studyId}`, undefined, { shallow: true });
   };
 
   return (
@@ -108,7 +108,11 @@ export default function StudyAnalysisEachStudentPage({
               <TestResultContentBox>
                 {problem?.studentStudyProblemResultList.map(
                   (item: IStudentStudyProblemResultList) => (
-                    <TestResultQuestionBtn key={item.problemNum} isCorrect={item.isCorrected}>
+                    <TestResultQuestionBtn
+                      userRole="teacher"
+                      key={item.problemNum}
+                      isCorrect={item.isCorrected}
+                    >
                       {item.problemNum}
                     </TestResultQuestionBtn>
                   ),

@@ -3,7 +3,6 @@ import {
   CanvasColorSelectorSelected,
   CanvasSelectorArrow,
   CanvasSelectorWrapper,
-  CanvasWidthSelector,
 } from "./Canvas.style";
 import { BsFillEraserFill } from "react-icons/bs";
 
@@ -32,10 +31,13 @@ export default function CanvasEraser({ canvasProps, setCanvasProps }: Iprops) {
 
   return (
     <CanvasSelectorWrapper style={{ width: "20rem" }}>
-      <CanvasSelectorArrow style={{ left: "9rem" }} />
+      <CanvasSelectorArrow style={{ left: "9.5rem" }} />
       {eraserWidth.map((item, idx) => (
-        <CanvasColorSelectorSelected selected={item === canvasProps.eraserWidth ? true : false}>
-          <BsFillEraserFill key={idx} onClick={() => changeEraser(item)} size={widthToCss(item)} />
+        <CanvasColorSelectorSelected
+          key={`canvas-selector-${idx}`}
+          selected={item === canvasProps.eraserWidth ? true : false}
+        >
+          <BsFillEraserFill onClick={() => changeEraser(item)} size={widthToCss(item)} />
         </CanvasColorSelectorSelected>
       ))}
     </CanvasSelectorWrapper>

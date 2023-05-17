@@ -7,9 +7,8 @@ import {
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
 import { CanvasDrawSection } from "./Canvas.style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { controlCanvas, setPaths } from "@/stores/exam/canvas";
-import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";
@@ -27,8 +26,8 @@ export default function Canvas() {
 
   const [canvasProps, setCanvasProps] = useState<Partial<ReactSketchCanvasProps>>({
     className: "workbook-canvas",
-    width: "72vw",
-    height: "calc(100vh - 13.5rem)",
+    width: "calc(78vw - 4rem)",
+    height: "calc(100vh - 15rem)",
     backgroundImage: "",
     preserveBackgroundImageAspectRatio: "none",
     strokeWidth: 4,
@@ -121,7 +120,7 @@ export default function Canvas() {
         setNowTab={setNowTab}
       />
       {isOpenCanvas && (
-        <CanvasDrawSection nowTab={nowTab}>
+        <CanvasDrawSection>
           <ReactSketchCanvas ref={canvasRef} onChange={onChange} {...canvasProps} />
         </CanvasDrawSection>
       )}

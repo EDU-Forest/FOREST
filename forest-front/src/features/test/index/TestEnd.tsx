@@ -49,7 +49,7 @@ export default function TestEnd() {
 
   useEffect(() => {
     if (endSuccess) {
-      router.push(`/test/${router.query.studyId}/result`);
+      router.push(`/test/${router.query.studyId}/result`, undefined, { shallow: true });
     }
   }, [endSuccess]);
 

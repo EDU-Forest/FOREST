@@ -13,6 +13,25 @@ const config = {
   images: {
     disableStaticImages: false,
   },
+  async redirects() {
+    return [
+      {
+        source: "/teacher/class/study/:path*",
+        destination: "/teacher/class",
+        permanent: false,
+      },
+      {
+        source: "/test/:path*",
+        destination: "/student/dashboard",
+        permanent: false,
+      },
+      {
+        source: "/workbook/:path",
+        destination: "/workbook",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 const nextConfig = withPWA({

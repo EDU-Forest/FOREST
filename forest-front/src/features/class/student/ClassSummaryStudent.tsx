@@ -14,14 +14,12 @@ import { AiOutlineRight } from "react-icons/ai";
 import ClassScoreChart from "./ClassScoreChart";
 import ClassMyResult from "./ClassMyResult";
 import TotalResult from "../TotalResult";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
 import Loading from "@/components/Loading/Loading";
 import useStudentScoreQuery from "@/apis/class/student/useStudentScoreQuery";
 import arrangeDate from "@/utils/arrangeDate";
-import { useDispatch } from "react-redux";
-import { setStudyType, setUseAnalysisId } from "@/stores/class/classInfo";
-import { useEffect, useState } from "react";
+import { setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassSummaryStudent() {
   const router = useRouter();
@@ -31,11 +29,11 @@ export default function ClassSummaryStudent() {
 
   const goToDetail = (studyId: number) => {
     dispatch(setStudyType(data?.data.studyType.toLowerCase()));
-    router.push(`/test/${studyId}/result`);
+    router.push(`/test/${studyId}/result`, undefined, { shallow: true });
   };
 
   const goToTest = (studyId: number) => {
-    router.push(`/test/${studyId}/info`);
+    router.push(`/test/${studyId}/info`, undefined, { shallow: true });
   };
 
   return (

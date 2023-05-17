@@ -37,6 +37,14 @@ const PdfViewerWrapper = styled.div`
     width: 100% !important;
     height: 100% !important;
   }
+  .react-pdf__Page__svg {
+    width: 100% !important;
+    height: 100% !important;
+    svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
 `;
 const PdfViewerXmark = styled.div`
   position: absolute;

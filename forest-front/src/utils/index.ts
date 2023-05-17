@@ -44,7 +44,7 @@ export const textFormatter = (text: string) => {
 };
 
 export const titleFormatter = (title: string) => {
-  if (title.length <= 6) {
+  if (title.length <= 9) {
     return title;
   } else {
     return title.slice(0, 6) + "...";

@@ -90,6 +90,9 @@ const questionSlice = createSlice({
     setIsPointValidConfirm(state, action) {
       state.isPointValidConfirm = action.payload;
     },
+    setInitEditorQuestions(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -103,6 +106,7 @@ export const {
   setIsTitleValidConfirm,
   setIsAnswerValidConfirm,
   setIsPointValidConfirm,
+  setInitEditorQuestions,
 } = questionSlice.actions;
 
 export default questionSlice.reducer;

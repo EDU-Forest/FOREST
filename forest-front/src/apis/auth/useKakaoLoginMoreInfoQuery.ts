@@ -3,7 +3,6 @@ import authAxios from "@/utils/customAxios/authAxios";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import useRecentClassIdQuery from "../class/useRecentClassIdQuery";
 import { KakaoLoginMoreInfo } from "@/types/KakaoLoginMoreInfo";
 
 const fetcher = (payload: KakaoLoginMoreInfo) =>
@@ -25,7 +24,9 @@ const useKakaoLoginMoreInfo = () => {
     onSuccess: (data) => {
       dispatch(setUsername(data.data.name));
       dispatch(setRole(data.data.role));
-      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`);
+      router.push(`/${data.data.role === "TEACHER" ? "teacher" : "student"}/dashboard`, undefined, {
+        shallow: true,
+      });
     },
     onError: (data) => {},
   });

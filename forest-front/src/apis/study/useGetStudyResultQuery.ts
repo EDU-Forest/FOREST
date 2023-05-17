@@ -1,14 +1,13 @@
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
 import { IStudyResult } from "@/types/Study";
-import { useDispatch } from "react-redux";
 import { setResult } from "@/stores/exam/exam";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/student/result/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/student/result/${studyId}`).then(({ data }) => {
     const result: IStudyResult = data.data;
     return result;
   });

@@ -16,7 +16,7 @@ interface Payload {
 
 const fetcher = (payload: Payload) =>
   studyAxios
-    .patch("/api/study/descript", {
+    .patch("/study/descript", {
       problemListId: payload.problemListId,
       studyId: payload.studyId,
       point: payload.point,
@@ -27,7 +27,9 @@ const fetcher = (payload: Payload) =>
 
 const useDescriptionScoring = () => {
   return useMutation(fetcher, {
-    onSuccess: (data) => {},
+    onSuccess: (data) => {
+      console.log("채점", data);
+    },
     onMutate(variables) {},
   });
 };

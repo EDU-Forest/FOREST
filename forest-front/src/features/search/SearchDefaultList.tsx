@@ -28,14 +28,14 @@ export default function SearchDefaultList() {
   const { data: recentList, isLoading: recentLoading } = useRecentWorkbookListQuery();
 
   const goToDetail = (id: number) => {
-    router.push(`/workbook/${id}`);
+    router.push(`/workbook/${id}`, undefined, { shallow: true });
   };
 
   return (
     <SearchDefaultWrapper>
       <SearchTitle>
         최고 인기 문제집 ⭐
-        <PopularOption>
+        {/* <PopularOption>
           <PopularOptionItem
             selected={sortType === "bookmark" ? true : false}
             onClick={() => changeSort("bookmark")}
@@ -48,29 +48,31 @@ export default function SearchDefaultList() {
           >
             사용 순
           </PopularOptionItem>
-        </PopularOption>
+        </PopularOption> */}
       </SearchTitle>
 
       <SearchDefalutListWrapper>
         {popularLoading ? (
           <Loading width={8} height={8} />
         ) : (
-          <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
-            {popularList?.map((item) => (
-              <SwiperSlide key={item.workbookId}>
-                <CommonWorkbook
-                  id={item.workbookId}
-                  title={item.title}
-                  bookmarkCount={item.bookmarkCount}
-                  scrapCount={item.scrapCount}
-                  isBookmarked={item.isBookmarked}
-                  workbookImgPath={item.workbookImgPath}
-                  methodType={item.methodType}
-                  clickAction={() => goToDetail(item.workbookId)}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          <>
+            <Swiper breakpoints={breakpoints} navigation={true} modules={[Navigation]}>
+              {popularList?.map((item) => (
+                <SwiperSlide key={item.workbookId}>
+                  <CommonWorkbook
+                    id={item.workbookId}
+                    title={item.title}
+                    bookmarkCount={item.bookmarkCount}
+                    scrapCount={item.scrapCount}
+                    isBookmarked={item.isBookmarked}
+                    workbookImgPath={item.workbookImgPath}
+                    methodType={item.methodType}
+                    clickAction={() => goToDetail(item.workbookId)}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </>
         )}
       </SearchDefalutListWrapper>
       <SearchTitle>최신 등록 문제집 ⭐</SearchTitle>

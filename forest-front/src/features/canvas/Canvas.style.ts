@@ -66,27 +66,27 @@ const CanvasBarWrapper = styled.div<{
   isOpenController?: boolean;
   nowTab?: string;
 }>`
-  ${flexBox("row", "center", "space-around")}
+  ${flexBox("row", "center", "space-around")};
   position: relative;
-  width: 50px;
-  padding: 0 16px;
+  width: 440px;
+  padding: 0;
   height: 50px;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background-color: white;
+  margin-bottom: 8px;
 
-  animation: ${closeSlide} 0.4s 1;
+  /* animation: ${closeSlide} 0.4s 1; */
 
   .img-div {
-    position: absolute;
-    left: 10px;
-    animation: ${moveToLeft} 0.5s 1;
-    /* background-color: ${({ theme }) => theme.colors.Lime[100]};
-    padding: 0 4px;
-    border-radius: 16px; */
+    border-right: 2px solid ${({ theme }) => theme.colors.Gray[300]};
+    padding: 0 16px;
+    height: 32px;
 
-    .logo {
-      width: 30px;
+    .eye-icon {
+      font-size: 32px;
+      color: ${({ isOpenCanvas, theme }) => (isOpenCanvas ? theme.colors.Lime[700] : "black")};
+      padding: 0;
     }
 
     &:hover {
@@ -100,8 +100,8 @@ const CanvasBarWrapper = styled.div<{
     display: none;
     clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 23% 75%, 18% 100%, 12% 76%, 0% 75%);
     position: absolute;
-    top: -54px;
-    left: -32px;
+    top: -44px;
+    left: 0px;
     width: 200px;
     height: 52px;
     font-size: 13px;
@@ -116,28 +116,22 @@ const CanvasBarWrapper = styled.div<{
   }
 
   svg {
-    font-size: 24px;
+    font-size: 44px;
+    color: ${({ theme }) => theme.colors.Gray[600]};
+    padding: 10px;
+    border-radius: 8px;
   }
 
   ${({ isOpenCanvas }) =>
     isOpenCanvas &&
     css`
-      animation: ${openSlide} 0.5s 1;
-      width: 440px;
-
+      outline: 3px solid ${({ theme }) => theme.colors.Lime[300]};
       .img-div {
-        animation: ${moveToRight} 0.5s 1;
-        left: 16px;
-
         &:hover {
           .info {
             display: none;
           }
         }
-      }
-
-      svg {
-        animation: ${show} 0.5s 1;
       }
     `}
 
@@ -148,36 +142,34 @@ const CanvasBarWrapper = styled.div<{
       color: ${({ theme }) => theme.colors.Gray[600]};
     `}
 
-  ${({ nowTab }) =>
+  ${({ nowTab, isOpenCanvas }) =>
     nowTab === "pen"
       ? css`
           .pen {
-            color: black;
+            color: ${({ theme }) => (isOpenCanvas ? "black" : theme.colors.Gray[600])};
+            background-color: ${({ theme }) => isOpenCanvas && theme.colors.Gray[100]};
           }
         `
       : nowTab === "highlighter"
       ? css`
           .highlighter {
-            color: black;
+            color: ${({ theme }) => (isOpenCanvas ? "black" : theme.colors.Gray[600])};
+            background-color: ${({ theme }) => isOpenCanvas && theme.colors.Gray[100]};
           }
         `
       : nowTab === "eraser" &&
         css`
           .eraser {
-            color: black;
+            color: ${({ theme }) => (isOpenCanvas ? "black" : theme.colors.Gray[600])};
+            background-color: ${({ theme }) => isOpenCanvas && theme.colors.Gray[100]};
           }
         `}
 `;
 
 const CanvasBarItems = styled.div<{ isOpenCanvas?: boolean }>`
   ${flexBox("row", "center", "space-around")}
-  margin-left: 40px;
+  margin-right: 16px;
   width: 340px;
-  ${({ isOpenCanvas }) =>
-    !isOpenCanvas &&
-    css`
-      width: 0px;
-    `}
 `;
 
 const CanvasSelectorWrapper = styled.div`
@@ -201,7 +193,7 @@ const CanvasSelectorArrow = styled.div`
   background-color: white;
   position: absolute;
   top: -8px;
-  left: 56px;
+  left: 70px;
   transform: rotate(45deg);
 `;
 
@@ -225,6 +217,11 @@ const CanvasColorSelectorSelected = styled.div<{ selected?: boolean }>`
   width: 40px;
   height: 40px;
   z-index: 20;
+
+  svg {
+    padding: 0;
+    color: ${({ theme }) => theme.colors.Gray[700]};
+  }
 
   ${({ selected }) =>
     selected &&
@@ -266,23 +263,10 @@ const CanvasWidthSelector = styled.div<{ width?: number }>`
         `}
 `;
 
-const CanvasDrawSection = styled.div<{ nowTab?: string }>`
+const CanvasDrawSection = styled.div`
   animation: ${canvasBlur} 1s 1;
-  height: calc(100% - 4rem);
+  height: calc(100% - 6rem);
   position: absolute;
-  ${({ nowTab }) =>
-    nowTab === "pen"
-      ? css`
-          cursor: url(images/pen.png) -40 48, auto;
-        `
-      : nowTab === "highlighter"
-      ? css`
-          cursor: url(images/highlighter.png) -40 48, auto;
-        `
-      : nowTab === "eraser" &&
-        css`
-          cursor: url(images/eraser.png) -20 20, auto;
-        `}
 `;
 
 export {

@@ -15,7 +15,7 @@ function DashboardClassList() {
 
   const handleClick = (item: IClassList) => {
     dispatch(setClass(item));
-    router.push("/student/class");
+    router.push("/student/class", undefined, { shallow: true });
   };
 
   return (

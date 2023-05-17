@@ -22,7 +22,7 @@ function EditorEssay({ question }: IProps) {
   const [isAnswerMaxValidConfirm, setIsAnswerMaxValidConfirm] = useState(true);
 
   useEffect(() => {
-    question.answer && setAnswers(question.answer.split(","));
+    question.answer ? setAnswers(question.answer.split(",")) : setAnswers([]);
   }, [question]);
 
   useEffect(() => {

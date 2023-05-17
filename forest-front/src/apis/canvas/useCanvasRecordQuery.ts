@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { setPaths } from "@/stores/exam/canvas";
 
 const fetcher = (studentStudyProblemId: number) =>
-  studyAxios.get(`/api/canvas/${studentStudyProblemId}`).then(({ data }) => {
+  studyAxios.get(`/study/canvas/${studentStudyProblemId}`).then(({ data }) => {
     const record: ICanvasRecord = data.data;
     return record;
   });

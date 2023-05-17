@@ -1,4 +1,3 @@
-// import logo from "@/assets/Forest_Logo.png";
 import {
   AiOutlineHome,
   AiOutlineTeam,
@@ -7,10 +6,12 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph } from "./Nav.style";
+import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph, NavBottom } from "./Nav.style";
 import { useDispatch } from "react-redux";
 import { setLogout } from "@/stores/user/user";
 import { removeItemLocalStorage } from "@/utils/localStorage";
+import useAuth from "@/hooks/useAuth";
+import { BsQuestionCircle } from "react-icons/bs";
 
 interface Iprops {
   nowLocation: string;
@@ -18,11 +19,11 @@ interface Iprops {
 
 export default function TeacherNav({ nowLocation }: Iprops) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { logout } = useAuth();
 
   // 페이지 이동
   const movePage = (path: string) => {
-    router.push(`/${path}`);
+    router.push(`/${path}`, undefined, { shallow: true });
   };
 
   // 현재 위치 네비바 css 스타일 true
@@ -36,14 +37,16 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   // 로그아웃
   const logoutHandler = () => {
-    dispatch(setLogout());
-    removeItemLocalStorage("forest_access_token");
-    router.push("/");
+    logout();
   };
 
   // 홈으로 이동
   const goToDashBoard = () => {
-    router.push(`/teacher/dashboard`);
+    router.push(`/teacher/dashboard`, undefined, { shallow: true });
+  };
+
+  const goToGuide = () => {
+    router.push("/guide", undefined, { shallow: true });
   };
 
   return (
@@ -74,7 +77,10 @@ export default function TeacherNav({ nowLocation }: Iprops) {
           탐색
         </NavInner>
       </TeacherNavDiv>
-      <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
+      <NavBottom>
+        <BsQuestionCircle onClick={goToGuide} />
+        <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
+      </NavBottom>
     </StyledNav>
   );
 }

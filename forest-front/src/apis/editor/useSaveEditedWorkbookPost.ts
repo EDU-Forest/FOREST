@@ -1,6 +1,6 @@
 import * as queryKeys from "@/constants/queryKeys";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
-import { QueryClient, useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 interface IData {
   workbookId: string;
@@ -24,7 +24,7 @@ interface IData {
 }
 
 const fetcher = async (data: IData) =>
-  await workbookAxios.post(`/api/workbook/problem`, data).then(({ data }) => {
+  await workbookAxios.post(`/workbook/problem`, data).then(({ data }) => {
     return data;
   });
 

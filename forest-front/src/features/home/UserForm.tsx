@@ -82,7 +82,7 @@ export default function UserForm({ email, type }: Iprops) {
   }, []);
 
   const movePage = () => {
-    router.push("/");
+    router.push("/", undefined, { shallow: true });
   };
 
   const signupHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -184,6 +184,7 @@ export default function UserForm({ email, type }: Iprops) {
               onChange={onChange}
               disabled={type === "moreinfo"}
               onBlur={emailValidator}
+              autoFocus={type === "signup"}
             />
             <SignupLabelBox>
               <Label status={validation.email}>이메일 형식</Label>
@@ -201,6 +202,7 @@ export default function UserForm({ email, type }: Iprops) {
               onChange={onChange}
               onBlur={usernameValidator}
               autoComplete="username"
+              autoFocus={type === "moreinfo"}
             />
             <SignupLabelBox>
               <Label status={validation.username}>2자 이상 8자 이하</Label>

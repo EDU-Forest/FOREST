@@ -24,16 +24,28 @@ const canvasSlice = createSlice({
     controlCanvas(state) {
       state.isOpenCanvas = !state.isOpenCanvas;
     },
+    openCanvas(state) {
+      state.isOpenCanvas = true;
+    },
     closeCanvas(state) {
       state.isOpenCanvas = false;
     },
     setStudentStudyProblemId(state, action) {
       state.studentStudyProblemId = action.payload;
     },
+    setInitCanvas(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
-export const { setPaths, controlCanvas, closeCanvas, setStudentStudyProblemId } =
-  canvasSlice.actions;
+export const {
+  setPaths,
+  controlCanvas,
+  openCanvas,
+  closeCanvas,
+  setStudentStudyProblemId,
+  setInitCanvas,
+} = canvasSlice.actions;
 
 export default canvasSlice.reducer;

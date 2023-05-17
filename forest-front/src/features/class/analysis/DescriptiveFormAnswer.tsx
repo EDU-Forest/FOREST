@@ -7,8 +7,6 @@ import {
   ResultTableList,
 } from "./EachResult.style";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setStudentPointList } from "@/stores/class/classInfo";
 import { IStudentList } from "@/types/Descript";
@@ -21,15 +19,21 @@ interface Iprops {
   studentList?: IStudentList[];
   keywordNum?: number;
   maxScore: number;
+  nowIdx: number;
 }
 
-export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScore }: Iprops) {
+export default function DescriptiveFormAnswer({
+  studentList,
+  keywordNum,
+  maxScore,
+  nowIdx,
+}: Iprops) {
   const [scoreList, setScoreList] = useState<ObjType>({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     studentList?.map((item, idx) => (scoreList[`score_${idx}`] = 0));
-  }, []);
+  }, [nowIdx]);
 
   const changeScore = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
     const { value } = e.target;
@@ -41,12 +45,12 @@ export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScor
 
     setScoreList({
       ...scoreList,
-      [`score_${idx}`]: numberScore,
+      [`score_${idx}`]: isNaN(numberScore) ? 0 : numberScore,
     });
     dispatch(
       setStudentPointList({
         ...scoreList,
-        [`score_${idx}`]: numberScore,
+        [`score_${idx}`]: isNaN(numberScore) ? 0 : numberScore,
       }),
     );
   };
@@ -65,7 +69,7 @@ export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScor
         </ResultTableList>
         <ResultTableContent>
           {studentList?.map((item, idx) => (
-            <ResultTableList key={idx}>
+            <ResultTableList key={`table-list-${idx}`}>
               <ResultTableItemSmall isIdx>{idx + 1}</ResultTableItemSmall>
               <TableItemAnswer>{item.answer}</TableItemAnswer>
               <ResultTableItemSmall isOrange>
@@ -79,7 +83,7 @@ export default function DescriptiveFormAnswer({ studentList, keywordNum, maxScor
                   id={`score_${idx}`}
                   name={`score_${idx}`}
                   maxInput={maxScore}
-                  inputScore={scoreList[`score_${idx}`] || 0}
+                  inputScore={scoreList[`score_${idx}`] | 0}
                   onChange={(e) => changeScore(e, idx)}
                 />
               </ResultTableItemSmall>

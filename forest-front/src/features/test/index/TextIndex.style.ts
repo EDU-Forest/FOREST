@@ -89,9 +89,9 @@ const StyledTestProblemBox = styled.div`
 `;
 
 const TestCanvas = styled.div`
-  position: fixed;
+  /* position: fixed;
   top: 5rem;
-  left: 2.25rem;
+  left: 2rem; */
   z-index: 30;
 `;
 
@@ -134,8 +134,8 @@ const StyledTestProblemAnswerNumber = styled.div`
   margin-bottom: 22px;
 
   img {
-    width: 20rem;
-    height: 20rem;
+    max-width: 25rem;
+    height: 25rem;
   }
 `;
 
@@ -297,12 +297,18 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+  cursor: pointer;
 
   .correct-icon {
     width: 9.25rem;
     height: 9.25rem;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "O" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+
+    &:hover {
+      color: ${({ selectedMenu, theme }) =>
+        selectedMenu === "O" ? theme.colors.Orange[700] : theme.colors.Gray[700]};
+    }
   }
 
   .wrong-icon {
@@ -310,6 +316,11 @@ const StyledTestProblemOXAnswer = styled.div<{ selectedMenu: string }>`
     height: 11.5rem;
     color: ${({ selectedMenu, theme }) =>
       selectedMenu === "X" ? theme.colors.Orange[600] : theme.colors.Gray[600]};
+
+    &:hover {
+      color: ${({ selectedMenu, theme }) =>
+        selectedMenu === "X" ? theme.colors.Orange[700] : theme.colors.Gray[700]};
+    }
   }
 `;
 
@@ -418,7 +429,7 @@ const TestProblemAnswerBox = styled.div`
 `;
 
 const TestProblemSection = styled.section`
-  height: calc(100% - 4rem);
+  height: calc(100% - 7rem);
   padding: 1.5rem 0rem 1.5rem 1.5rem;
   background-color: white;
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
@@ -438,7 +449,7 @@ const TestProblemImgBox = styled.div`
   text-align: center;
 
   img {
-    width: 25rem;
+    max-width: 25rem;
     height: 25rem;
   }
 `;

@@ -1,20 +1,17 @@
-import { useState } from "react";
 import { ToggleCircle, ToggleContainer, ToggleText, ToggleWrapper } from "./AnalysisToggle.style";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 import { WarningIcon } from "../ClassSummary.style";
 import { IoWarningOutline } from "react-icons/io5";
 
 interface Iprops {
   isSummary: boolean;
   setToggle: (check: boolean) => void;
+  isDescript: boolean;
 }
 
-export default function AnalysisToggle({ isSummary, setToggle }: Iprops) {
+export default function AnalysisToggle({ isSummary, setToggle, isDescript }: Iprops) {
   const changeTab = (check: boolean) => {
     setToggle(check);
   };
-  const { haveDescript } = useSelector((state: RootState) => state.class);
 
   return (
     <ToggleWrapper>
@@ -24,7 +21,7 @@ export default function AnalysisToggle({ isSummary, setToggle }: Iprops) {
         </ToggleText>
         <ToggleText onClick={() => changeTab(false)} selected={!isSummary}>
           서술형 채점
-          {haveDescript && (
+          {isDescript && (
             <WarningIcon>
               <IoWarningOutline />
             </WarningIcon>

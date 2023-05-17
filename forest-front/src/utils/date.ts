@@ -19,5 +19,7 @@ export function getCurTimeToString(afterXHour = 0) {
 }
 
 export function getCurDayToString() {
-  return new Date().toJSON().slice(0, 10);
+  const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+
+  return new Date(new Date().getTime() + KR_TIME_DIFF).toJSON().slice(0, 10);
 }

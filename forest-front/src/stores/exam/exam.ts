@@ -108,6 +108,9 @@ const examSlice = createSlice({
       state.isSubmitted = action.payload.isSubmitted;
       state.isGraded = action.payload.isGraded;
     },
+    setInitExam(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -123,6 +126,7 @@ export const {
   setPage,
   setTestStudyId,
   setResult,
+  setInitExam,
 } = examSlice.actions;
 
 export default examSlice.reducer;
