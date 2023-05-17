@@ -22,6 +22,9 @@ const useRecentClassIdQuery = () => {
       console.log("recentClass", recentClass);
       dispatch(setClass(recentClass));
     },
+    onSettled: (data, variables) => {
+      console.log(variables);
+    },
   });
 };
 
