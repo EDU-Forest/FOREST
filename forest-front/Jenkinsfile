@@ -11,18 +11,19 @@ pipeline {
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
         
-        // REPOSITORY_CREDENTIAL_ID = '${REPOSITORY_CREDENTIAL_ID}'
-        // REPOSITORY_URL = '${REPOSITORY_URL}'
-        TARGET_BRANCH = 'production-front'                
+        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
+        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
+        TARGET_BRANCH = 'production-front'
         
-        // AWS_CREDENTIAL_NAME = '${AWS_CREDENTIAL_NAME}'
-        // ECR_PATH = '${ECR_PATH}'
-        // IMAGE_NAME = '${IMAGE_NAME}'
+        CONTAINER_NAME = 'prod-front-container'
+        
+        AWS_CREDENTIAL_NAME = 'choi1087'
+        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
+        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
         REGION = 'ap-northeast-2'
 
-        BUILD_NUM = '$BUILD_NUMBER'
-        // PREVIOUS_TAG = ${previousBuildNumber}
 
+        
         TARGET_FILE = 'eks-deploy-react.yml'        
 
     }
