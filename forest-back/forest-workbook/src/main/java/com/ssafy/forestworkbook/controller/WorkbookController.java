@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping
+@RequestMapping("")
 public class WorkbookController {
 
     private final WorkbookService workbookService;
