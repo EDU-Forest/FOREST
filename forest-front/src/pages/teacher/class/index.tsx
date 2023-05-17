@@ -1,3 +1,4 @@
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import useRecentStudyIdQuery from "@/apis/class/useRecentStudyIdQuery";
 import TeacherNav from "@/components/Nav/TeacherNav";
 import ClassSelect from "@/features/class/ClassSelect";
@@ -24,6 +25,7 @@ function TeacherClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
   const { data } = useRecentStudyIdQuery(nowClassId);
+  useRecentClassIdQuery();
 
   // 모달 분리
   const { isOpenAddClassModal, isOpenAddStudentModal, isOpenDeleteStudentModal } = useSelector(
