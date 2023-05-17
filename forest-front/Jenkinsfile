@@ -108,7 +108,7 @@ pipeline {
 
                     sh 'cat eks-deploy-react.yml | grep image'
 
-                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-react.yml
+                    sh 'sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-react.yml'
 
                     sh 'cat eks-deploy-react.yml | grep image'
 
