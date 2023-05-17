@@ -24,7 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@RequestMapping("/study")
+@RequestMapping("")
 public class StudyController {
 
     private final StudyService studyService;
