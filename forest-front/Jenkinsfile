@@ -102,7 +102,7 @@ pipeline {
 
                 dir('front') {
                     sh 'ls -al'
-                    echo '${PREVIOUS_TAG}'
+                    echo '${previousBuildNumber}'
                     sh "sed -i 's/forest-front:${}/forest-front:${}/g' eks-deploy-react.yml"
                     // sh "sed "$(grep -n 'image:' eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
                     sh "git add ${TARGET_FILE}"
