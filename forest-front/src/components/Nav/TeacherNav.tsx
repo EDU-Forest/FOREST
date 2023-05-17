@@ -7,11 +7,12 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph } from "./Nav.style";
+import { StyledNav, TeacherNavDiv, NavInner, LogoutParagraph, NavBottom } from "./Nav.style";
 import { useDispatch } from "react-redux";
 import { setLogout } from "@/stores/user/user";
 import { removeItemLocalStorage } from "@/utils/localStorage";
 import useAuth from "@/hooks/useAuth";
+import { BsQuestionCircle } from "react-icons/bs";
 
 interface Iprops {
   nowLocation: string;
@@ -45,6 +46,10 @@ export default function TeacherNav({ nowLocation }: Iprops) {
     router.push(`/teacher/dashboard`, undefined, { shallow: true });
   };
 
+  const goToGuide = () => {
+    router.push("/guide", undefined, { shallow: true });
+  };
+
   return (
     <StyledNav>
       <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goToDashBoard} />
@@ -73,7 +78,10 @@ export default function TeacherNav({ nowLocation }: Iprops) {
           탐색
         </NavInner>
       </TeacherNavDiv>
-      <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
+      <NavBottom>
+        <BsQuestionCircle onClick={goToGuide} />
+        <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
+      </NavBottom>
     </StyledNav>
   );
 }
