@@ -1,7 +1,17 @@
-export default function Search() {
+import TeacherNav from "@/components/Nav/TeacherNav";
+import SearchContainer from "@/features/search/SearchContainer";
+import { Container, FullScreen } from "@/styles/container";
+import withAuth from "@/utils/auth/withAuth";
+
+function Search() {
   return (
-    <>
-      <h1>탐색</h1>
-    </>
+    <FullScreen>
+      <TeacherNav nowLocation={"search"} />
+      <Container>
+        <SearchContainer />
+      </Container>
+    </FullScreen>
   );
 }
+
+export default withAuth(Search);

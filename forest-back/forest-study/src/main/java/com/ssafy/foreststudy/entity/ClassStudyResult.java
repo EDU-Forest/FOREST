@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -50,6 +49,34 @@ public class ClassStudyResult {
     @Column(name = "participant_student", columnDefinition = "int")
     private int participantStudent;
 
+    @Column(name = "is_finished", columnDefinition = "tinyint(1) default 0", nullable = false)
+    private Boolean isFinished = false;
+
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void createClassStudyResult(Study study, int takeRate, double average, double standardDeviation, Long averageSolvingTime, int correctAnswerRate, int ungradedAnswerRate, int totalStudent, int participantStudent) {
+        this.study = study;
+        this.takeRate = takeRate;
+        this.average = average;
+        this.standardDeviation = standardDeviation;
+        this.averageSolvingTime = averageSolvingTime;
+        this.correctAnswerRate = correctAnswerRate;
+        this.ungradedAnswerRate = ungradedAnswerRate;
+        this.totalStudent = totalStudent;
+        this.participantStudent = participantStudent;
+        this.isFinished = true;
+    }
+
+    public void updateClassStudyResult(Study study,  double average, double standardDeviation, int correctAnswerRate) {
+        this.study = study;
+        this.average = average;
+        this.standardDeviation = standardDeviation;
+        this.correctAnswerRate = correctAnswerRate;
+        this.ungradedAnswerRate = 0;
+    }
+
+    public void updateIsFinished(){
+        this.isFinished = true;
+    }
 }

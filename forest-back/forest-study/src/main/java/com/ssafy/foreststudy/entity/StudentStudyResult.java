@@ -48,6 +48,28 @@ public class StudentStudyResult {
     @Column(name = "is_graded", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isGraded = false;
 
+    @Column(name = "is_submitted", columnDefinition = "tinyint(1) default 0", nullable = false)
+    private Boolean isSubmitted = false;
+
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;
+
+    public void createStudentStudyResult(Study study, User user) {
+        this.study = study;
+        this.user = user;
+        this.enterTime = LocalDateTime.now();
+    }
+
+    public void updateExitTime(LocalDateTime exitTime) {
+        this.exitTime = exitTime;
+    }
+
+    public void updateStudentStudyResult(int correctNum, int score, int correctRate, Boolean isGraded) {
+        this.exitTime = LocalDateTime.now();
+        this.correctNum = correctNum;
+        this.score = score;
+        this.correctRate = correctRate;
+        this.isGraded = isGraded;
+        this.isSubmitted = true;
+    }
 }

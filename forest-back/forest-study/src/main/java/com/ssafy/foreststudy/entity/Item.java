@@ -2,7 +2,6 @@ package com.ssafy.foreststudy.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Where;
@@ -32,8 +31,8 @@ public class Item {
     @Column(name = "content", columnDefinition = "varchar(200)")
     private String content;
 
-    @Column(name = "path", columnDefinition = "varchar(255)")
-    private String path;
+    @Column(name = "is_image", columnDefinition = "tinyint(1) default 0", nullable = false)
+    private Boolean isImage = false;
 
     @Column(name = "is_deleted", columnDefinition = "tinyint(1) default 0", nullable = false)
     private Boolean isDeleted = false;

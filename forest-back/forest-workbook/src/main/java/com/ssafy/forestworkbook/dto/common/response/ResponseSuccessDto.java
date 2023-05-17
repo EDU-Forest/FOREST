@@ -1,13 +1,12 @@
 package com.ssafy.forestworkbook.dto.common.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.ZonedDateTime;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseSuccessDto<T> extends ResponseCommonDto {

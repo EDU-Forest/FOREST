@@ -1,0 +1,76 @@
+server:
+  port: 9011
+  ssl:
+    enabled: true
+    key-store: ${KEY_STORE}
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-store-type: ${KEY_STORE_TYPE}
+  http2:
+    enabled: true
+
+  tomcat:
+    max-http-form-post-size: 100MB
+    threads:
+      max: 200
+    connection-timeout: 180000
+  netty:
+    connection-timeout: 180000
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: ${GCP_LOCATION}
+        project-id: ${GCP_ID}
+        bucket: ${GCP_BUCKET}
+
+jwt:
+  redirect-url: ${JWT_REDIRECT_URI}
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+
+notification:
+  mattermost:
+    enabled: true
+    webhook-url: ${MM_WEBHOOK_URL}
+    author-icon: https://mattermost.com/wp-content/uploads/2022/02/icon.png
+    author-name: WORKBOOK ERROR
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${S3_ACCESS_KEY}
+      secretKey: ${S3_SECRET_KEY}
+    s3:
+      bucket: ${S3_BUCKET}
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2

@@ -4,9 +4,15 @@ import com.ssafy.forestworkbook.entity.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
+import java.util.List;
 
-    Page<Workbook> findAllByCreatorIdAndIsExecuted(Long UserId, boolean isExecuted, Pageable pageable);
-    Page<Workbook> findAllByCreatorId(Long UserId, Pageable pageable);
+public interface WorkbookRepository extends JpaRepository<Workbook, Long>, WorkbookCustomRepository {
+
+    Page<Workbook> findAllByCreatorIdOrderByUpdatedDateDesc(Long UserId, Pageable pageable);
+    List<Workbook> findAllByCreatorIdOrderByUpdatedDateDesc(Long UserId);
+    List<Workbook> findTop20ByIsPublicIsTrueOrderByCreatedDateDesc();
+    List<Workbook> findAllByIsPublicIsTrueAndTitleContainingOrderByCreatedDateDesc(String search);
+
 }

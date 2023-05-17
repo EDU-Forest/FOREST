@@ -3,18 +3,26 @@ import { normalize } from "styled-normalize";
 
 export const GlobalStyle = createGlobalStyle`
   ${normalize}
-  html {
+  * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
+  }
+
+  html {
     font-family: Pretendard;
-    box-sizing: border-box;
-    font-size: 16px;
-    min-width: 320px;
+    font-size: 1rem;
+    min-width: 20rem;
+  }
+
+  body {
+    background-color: ${({ theme }) => theme.colors.Gray[50]}
   }
   
   a { cursor: pointer; text-decoration: none; }
   button { cursor: pointer }
-
+  p { margin: 0 }
 
   @font-face {
     font-family: "Pretendard";
