@@ -8,12 +8,13 @@ export const StyledMemoUploadInputBox = styled.div`
 
   background-color: ${({ theme }) => theme.colors.Gray[100]};
   border-radius: 0.625rem;
+  align-items: center;
 
   &:focus-within {
     border: 1px solid ${({ theme }) => theme.colors.Gray[500]};
   }
 
-  input {
+  textarea {
     width: 100%;
 
     margin-left: 4px;
@@ -21,6 +22,7 @@ export const StyledMemoUploadInputBox = styled.div`
     border: none;
     background-color: transparent;
     outline: none;
+    resize: none;
   }
 `;
 
@@ -86,6 +88,7 @@ export const StyledMemoListItemBox = styled.div<{ randomTime: number; randomColo
 
   animation: ${bubble} ${({ randomTime }) => randomTime}s ease;
   animation-fill-mode: forwards;
+  white-space: pre-wrap;
 `;
 
 export const StyledMemoListItemTopBox = styled.div`
