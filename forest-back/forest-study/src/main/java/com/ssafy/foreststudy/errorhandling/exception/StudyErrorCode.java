@@ -16,7 +16,8 @@ public enum StudyErrorCode implements Codable {
     STUDY_FAILURE_DESCRIPT(HttpStatus.CONFLICT,"항목 개수가 맞지 않습니다.",true),
     AUTH_USER_NOT_IN_CLASS(HttpStatus.FORBIDDEN,"해당 유저는 클래스 회원이 아닙니다.",true),
     STUDY_CLASS_ANSWER_NOT_FOUND(HttpStatus.NOT_FOUND,"존재하지 않는 반 문항별 정답률 ID",true),
-    STUDY_NONE_STUDENT(HttpStatus.NOT_FOUND,"학습에 참여한 학생이 없습니다.",true);
+    STUDY_NONE_STUDENT(HttpStatus.NOT_FOUND,"학습에 참여한 학생이 없습니다.",true),
+    STUDY_DESCRIPT_NULL(HttpStatus.NOT_FOUND,"존재하지 않는 값입니다",true);
 
 
     private final String message;

@@ -1179,7 +1179,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                     .problemImgPath(null)
                     .imgIsEmpty(true)
                     .text(text.toString())
-                    .textIsEmpty(text.toString() == null)
+                    .textIsEmpty(text.toString() == null || text.toString().equals(""))
                     .itemList(itemResExceptIdDtoList)
                     .point(ocrPoint)
                     .build();

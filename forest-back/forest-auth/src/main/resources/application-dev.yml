@@ -56,8 +56,8 @@ spring:
             user-name-attribute: id
 
 jwt:
-  redirect-url: ${JWT_REDIRECT_URI}
-#  redirect-url: https://localhost:3000/login/success
+#  redirect-url: ${JWT_REDIRECT_URI}
+  redirect-url: https://localhost:3000/login/success
   token:
     secretKey: ${JWT_SECRET_KEY}
 
