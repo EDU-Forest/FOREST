@@ -37,6 +37,7 @@ public class StudyController {
         return ResponseEntity.ok(studyService.getScheduleList(userId));
     }
 
+
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/recent/{classId}")
     public ResponseEntity<ResponseSuccessDto<GetStudyIdResponseDto>> getStudyRecent(HttpServletRequest request, @PathVariable("classId") Long classId) throws UnsupportedEncodingException {
