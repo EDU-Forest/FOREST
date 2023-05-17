@@ -8,13 +8,24 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
-import { ParsedUrlQuery } from "querystring";
 
 interface IServerSideprops {
-  query: ParsedUrlQuery;
+  query: {
+    name: string;
+    role: string;
+    email: string;
+    accessToken: string;
+  };
 }
 
-function LoginSuccess() {
+interface Iprops {
+  name: string;
+  role: string;
+  email: string;
+  accessToken: string;
+}
+
+function LoginSuccess({ name, role, email, accessToken }: Iprops) {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -23,16 +34,16 @@ function LoginSuccess() {
   useEffect(() => {
     if (!router.isReady) return;
 
-    const accessToken = router.query?.accessToken;
+    // const accessToken = router.query?.accessToken;
     if (typeof accessToken === "string") {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
 
-    const username = router.query?.name;
-    const role = router.query?.role;
-    const email = router.query?.email;
-    if (typeof username === "string" && typeof role === "string") {
-      dispatch(setUsername(username));
+    // const username = router.query?.name;
+    // const role = router.query?.role;
+    // const email = router.query?.email;
+    if (typeof name === "string" && typeof role === "string") {
+      dispatch(setUsername(name));
       dispatch(setRole(role));
       refetch();
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
@@ -68,9 +79,15 @@ function LoginSuccess() {
 
 export default LoginSuccess;
 
-export const getServerSideProps = async ({ query }: IServerSideprops) => {
-  // const {name, role, email, accessToken} = query
+export const getServerSideProps = async ({
+  query: { name, role, email, accessToken },
+}: IServerSideprops) => {
   return {
-    props: {},
+    props: {
+      name,
+      role,
+      email,
+      accessToken,
+    },
   };
 };
