@@ -106,7 +106,7 @@ pipeline {
                     echo '${previousBuildNumber}'
 
                     sh 'git ls-remote https://github.com/choi1087/forest_yaml.git'
-                    sh 'git remote set-url origin git@github.com:choi1087/forest_yaml.git'
+                    sh 'git remote set-url origin https://github.com/choi1087/forest_yaml.git'
 
                     sh "sed -i 's/forest-front:${currentBuild.previousBuild?.number}/forest-front:${currentBuild.number}/g' eks-deploy-react.yml"
                     // sh "sed "$(grep -n 'image:' eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
