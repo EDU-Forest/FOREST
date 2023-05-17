@@ -1,7 +1,6 @@
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useQuery } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
-import { IQuestionResult } from "@/types/Exam";
 import { IStudentStudyProblemResultList } from "@/types/Study";
 
 const fetcher = (studyId: number) =>

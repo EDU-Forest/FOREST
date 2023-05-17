@@ -1,10 +1,8 @@
 import WorkbookTab from "@/components/Tab/WorkbookTab";
 import { ClassWorkbookWrapper } from "./ClassWorkbook.style";
-import { useState } from "react";
 import ClassWorkbookList from "./ClassWorkbookList";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
-import { useDispatch } from "react-redux";
 import { setStudyType } from "@/stores/class/classInfo";
 
 export default function ClassWorkbook() {

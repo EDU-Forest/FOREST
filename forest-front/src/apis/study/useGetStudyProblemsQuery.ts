@@ -1,9 +1,8 @@
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
 import studyAxios from "@/utils/customAxios/studyAxios";
-import { useDispatch } from "react-redux";
-import { setStudyProblems, setToggleModal } from "@/stores/exam/exam";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setStudyProblems } from "@/stores/exam/exam";
 import { RootState } from "@/stores/store";
 
 const fetcher = (studyId: number) =>
@@ -19,8 +18,6 @@ const useGetStudyProblems = (studyId: number) => {
     refetchOnWindowFocus: false,
     onSuccess: (data) => {
       dispatch(setStudyProblems(data.data));
-
-      // router.push(`/test/${studyId}`);
     },
     onError: (error) => {},
   });

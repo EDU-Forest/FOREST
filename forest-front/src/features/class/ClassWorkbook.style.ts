@@ -1,4 +1,3 @@
-import { positionCenter } from "@/styles/theme";
 import styled from "styled-components";
 
 const ClassWorkbookWrapper = styled.div`

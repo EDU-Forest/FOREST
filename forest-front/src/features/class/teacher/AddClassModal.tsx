@@ -7,9 +7,8 @@ import {
   ClassInputMsg,
   ClassInputBtnWrapper,
 } from "./AddClassModal.style";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import SmallBtn from "@/components/Button/SmallBtn";
-import React from "react";
 import { useDispatch } from "react-redux";
 import { closeAddClassModal } from "@/stores/class/classModal";
 import useCheckClassNameQuery from "@/apis/class/teacher/useCheckClassNameQuery";

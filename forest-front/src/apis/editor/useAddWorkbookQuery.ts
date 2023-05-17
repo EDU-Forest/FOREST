@@ -1,16 +1,15 @@
-import { addWorkbook, setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
+import { addWorkbook, setSelectWorkbook } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const fetcher = (title: string) =>
-  workbookAxios.post("/workbook", { title }).then(({ data }) => data);
+  // 예외적으로 "/" 포함
+  workbookAxios.post("/workbook/", { title }).then(({ data }) => data);
 
 const useAddWorkBook = () => {
   const dispatch = useDispatch();
-  const { workbooksBySelf } = useSelector((state: RootState) => state.editorWorkbook);
   return useMutation(fetcher, {
     onSuccess: (data) => {
       const { workbookId, title } = data.data;

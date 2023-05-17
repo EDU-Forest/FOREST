@@ -1,4 +1,3 @@
-import { AiOutlineBars } from "react-icons/ai";
 import { MdEqualizer } from "react-icons/md";
 import {
   EachResultWrapper,
@@ -50,7 +49,7 @@ export default function EachResult({ goToGrade }: Iprops) {
           </ResultTableList>
           <ResultTableContent>
             {studentStudyResultList?.map((item, idx) => (
-              <ResultTableList key={idx}>
+              <ResultTableList key={`study-result-list-${idx}`}>
                 <ResultTableItemBig>
                   <ResultTableName>
                     {item.name}

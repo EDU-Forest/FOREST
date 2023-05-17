@@ -44,7 +44,7 @@ const usePdfOCR = () => {
       const nowIdx = questions.length;
       let newQuestions = questions;
 
-      problemList.map((item, idx) => {
+      problemList.forEach((item, idx) => {
         const question: QuestionType = {
           problemId: 0,
           problemNum: nowIdx + idx + 1,

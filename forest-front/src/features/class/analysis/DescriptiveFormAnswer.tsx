@@ -7,12 +7,9 @@ import {
   ResultTableList,
 } from "./EachResult.style";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";
 import { setStudentPointList } from "@/stores/class/classInfo";
 import { IStudentList } from "@/types/Descript";
-import { CommonInput } from "@/components/Input/Input.style";
 
 interface ObjType {
   [index: string]: number;
@@ -72,7 +69,7 @@ export default function DescriptiveFormAnswer({
         </ResultTableList>
         <ResultTableContent>
           {studentList?.map((item, idx) => (
-            <ResultTableList key={idx}>
+            <ResultTableList key={`table-list-${idx}`}>
               <ResultTableItemSmall isIdx>{idx + 1}</ResultTableItemSmall>
               <TableItemAnswer>{item.answer}</TableItemAnswer>
               <ResultTableItemSmall isOrange>

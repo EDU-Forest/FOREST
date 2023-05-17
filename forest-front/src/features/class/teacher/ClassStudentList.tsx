@@ -7,8 +7,6 @@ import {
   StudentAddText,
 } from "./ClassStudentList.style";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-import { useState } from "react";
-import AddStudentModal from "./AddStudentModal";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import { useDispatch } from "react-redux";

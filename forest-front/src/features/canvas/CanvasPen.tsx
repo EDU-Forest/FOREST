@@ -27,14 +27,6 @@ export default function CanvasPen({ color, width, setColor, setWidth }: Iprops) 
     { color: "yellow", colorCode: "#1BAB19" },
   ];
 
-  const penWidth = [3, 6, 9];
-  const widthToCss = (width: number) => {
-    if (width === 3) return 1;
-    else if (width === 6) return 2;
-    else if (width === 9) return 3;
-    else return 1;
-  };
-
   return (
     <CanvasSelectorWrapper>
       <CanvasSelectorArrow />
@@ -60,7 +52,10 @@ export default function CanvasPen({ color, width, setColor, setWidth }: Iprops) 
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {penColors.map((item, idx) => (
-          <CanvasColorSelectorSelected key={idx} selected={item.colorCode === color ? true : false}>
+          <CanvasColorSelectorSelected
+            key={`canvas-color-selected-2-${idx}`}
+            selected={item.colorCode === color ? true : false}
+          >
             <CanvasColorSelector color={item.colorCode} onClick={() => setColor(item.colorCode)} />
           </CanvasColorSelectorSelected>
         ))}

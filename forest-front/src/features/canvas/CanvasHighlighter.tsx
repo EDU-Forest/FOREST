@@ -33,8 +33,6 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
     { color: "purpleH", colorCode: "rgba(214, 97, 255, 0.2)", viewCode: "rgba(214, 97, 255, 0.7)" },
   ];
 
-  const highlighterWidth = [10, 15, 20];
-
   return (
     <CanvasSelectorWrapper style={{ width: "27.5rem" }}>
       <CanvasSelectorArrow style={{ left: "9.5rem" }} />
@@ -60,7 +58,10 @@ export default function CanvasHighlighter({ color, width, setColor, setWidth }: 
       </CanvasSelectorSection>
       <CanvasSelectorSection width={15}>
         {highlighterColors.map((item, idx) => (
-          <CanvasColorSelectorSelected key={idx} selected={item.colorCode === color ? true : false}>
+          <CanvasColorSelectorSelected
+            key={`canvas-color-selected-${idx}`}
+            selected={item.colorCode === color ? true : false}
+          >
             <CanvasColorSelector color={item.viewCode} onClick={() => setColor(item.colorCode)} />
           </CanvasColorSelectorSelected>
         ))}

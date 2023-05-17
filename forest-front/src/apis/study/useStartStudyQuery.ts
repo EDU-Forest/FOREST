@@ -1,5 +1,5 @@
 import { closeCanvas } from "@/stores/exam/canvas";
-import { setPage, setStudyStart, setToggleModal } from "@/stores/exam/exam";
+import { setPage, setStudyStart } from "@/stores/exam/exam";
 import studyAxios from "@/utils/customAxios/studyAxios";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";

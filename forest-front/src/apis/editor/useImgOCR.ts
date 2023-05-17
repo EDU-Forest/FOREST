@@ -4,8 +4,7 @@ import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 interface IPayload {
   curWorkbookId: number;

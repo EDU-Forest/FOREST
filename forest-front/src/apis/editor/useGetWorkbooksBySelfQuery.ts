@@ -1,11 +1,10 @@
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import * as queryKeys from "@/constants/queryKeys";
 import { useQuery } from "react-query";
-import { useDispatch } from "react-redux";
-import { addWorkbook, setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSelectWorkbook, setWorkbookBySelf } from "@/stores/editor/editorWorkbook";
 import { RootState } from "@/stores/store";
-import { resetIsMoveToEditor, setIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
+import { resetIsMoveToEditor } from "@/stores/workbookDetail/workbookDetail";
 
 interface Iprops {
   workbookId: number;
