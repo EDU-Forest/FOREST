@@ -807,44 +807,6 @@ public class WorkbookServiceImpl implements WorkbookService {
         return responseUtil.successResponse(map, ForestStatus.WORKBOOK_SUCCESS_UPLOAD_IMG);
     }
 
-    public void detectLocalizedObjectsGcs(String gcsPath) throws IOException {
-        gcsPath = "gs://forest_ocr_bucket/b4303e46-0b99-4a4f-84dc-41656ead71f0";
-        List<AnnotateImageRequest> requests = new ArrayList<>();
-
-        ImageSource imgSource = ImageSource.newBuilder().setGcsImageUri(gcsPath).build();
-        Image img = Image.newBuilder().setSource(imgSource).build();
-
-        AnnotateImageRequest request =
-                AnnotateImageRequest.newBuilder()
-                        .addFeatures(Feature.newBuilder().setType(Feature.Type.OBJECT_LOCALIZATION))
-                        .setImage(img)
-                        .build();
-        requests.add(request);
-
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. After completing all of your requests, call
-        // the "close" method on the client to safely clean up any remaining background resources.
-        try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-            // Perform the request
-            BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
-            List<AnnotateImageResponse> responses = response.getResponsesList();
-            client.close();
-            // Display the results
-            for (AnnotateImageResponse res : responses) {
-                for (LocalizedObjectAnnotation entity : res.getLocalizedObjectAnnotationsList()) {
-                    System.out.format("Object name: %s%n", entity.getName());
-                    System.out.format("Confidence: %s%n", entity.getScore());
-                    System.out.format("Normalized Vertices:%n");
-                    entity
-                            .getBoundingPoly()
-                            .getNormalizedVerticesList()
-                            .forEach(vertex -> System.out.format("- (%s, %s)%n", vertex.getX(), vertex.getY()));
-                }
-            }
-        }
-    }
-
-
     // TODO 정규식 final 선언 해서 쓰기
     public ResponseSuccessDto<?> ocrImg(Long userId, MultipartFile file) throws IOException {
         User user = userRepository.findById(userId)
@@ -1209,7 +1171,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 //        String gcsSourcePath = "gs://cloud-samples-data/vision/pdf_tiff/census2010.pdf";
 //        String gcsDestinationPath = "gs://{bucket_name}/" + alpha
         String gcsSourcePath = "gs://" + path;
-        String gcsDestinationPath = "gs://"+ bucketName + "/" +uuid;
+        String gcsDestinationPath = "gs://"+ bucketName + "/" +uuid + "-";
 
         // Edit Run Configuration -> Environment variables -> GOOGLE_APPLICATION_CREDENTIALS={key.json}위치 설정 필수
         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
@@ -1255,7 +1217,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             // Wait for the request to finish. (The result is not used, since the API saves the result to
             // the specified location on GCS.)
             List<AsyncAnnotateFileResponse> result =
-                    response.get(180, TimeUnit.SECONDS).getResponsesList();
+                    response.get(1800, TimeUnit.SECONDS).getResponsesList();
 
             // Once the request has completed and the System.output has been
             // written to GCS, we can list all the System.output files.
@@ -1276,16 +1238,15 @@ public class WorkbookServiceImpl implements WorkbookService {
                 Blob firstOutputFile = null;
 
                 // List objects with the given prefix.
-                System.out.println("Output files:");
+//                System.out.println("Output files:");
                 for (Blob blob : pageList.iterateAll()) {
-                    System.out.println(blob.getName());
+//                    System.out.println(blob.getName());
 
                     // Process the first System.output file from GCS.
                     // Since we specified batch size = 2, the first response contains
                     // the first two pages of the input file.
                     if (firstOutputFile == null) {
                         firstOutputFile = blob;
-
                     }
                 }
 
@@ -1293,202 +1254,228 @@ public class WorkbookServiceImpl implements WorkbookService {
                 // object. If the Blob is small read all its content in one request
                 // (Note: the file is a .json file)
                 // Storage guide: https://cloud.google.com/storage/docs/downloading-objects
-                String jsonContents = new String(firstOutputFile.getContent());
+                String testJsonContents = new String(firstOutputFile.getContent());
 
-                AnnotateFileResponse.Builder builder = AnnotateFileResponse.newBuilder();
-                JsonFormat.parser().merge(jsonContents, builder);
-
+                AnnotateFileResponse.Builder testBuilder = AnnotateFileResponse.newBuilder();
+                JsonFormat.parser().merge(testJsonContents, testBuilder);
 
                 // Build the AnnotateFileResponse object
-                AnnotateFileResponse annotateFileResponse = builder.build();
+                AnnotateFileResponse testAnnotateFileResponse = testBuilder.build();
 
                 // Parse through the object to get the actual response for the first page of the input file.
-                AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(0);
+                AnnotateImageResponse testAnnotateImageResponse = testAnnotateFileResponse.getResponses(0);
 
                 // Here we print the full text from the first page.
                 // The response contains more information:
                 // annotation/pages/blocks/paragraphs/words/symbols
                 // including confidence score and bounding boxes
-//                System.out.format("%nText: %s%n", annotateImageResponse.getFullTextAnnotation().getText());
-                String fullText = annotateImageResponse.getFullTextAnnotation().getText();
+                String testFullText = testAnnotateImageResponse.getFullTextAnnotation().getText();
 
                 // pdf OCR 내용 읽기 실패
-                if (fullText == null || fullText.equals("")) {
+                if (testFullText == null || testFullText.equals("")) {
                     throw new CustomException(WorkbookErrorCode.WORKBOOK_OCR_FAIL);
                 }
 
-                StringBuilder title = new StringBuilder();
-                StringBuilder text = new StringBuilder();
-                StringBuilder item = new StringBuilder();
-                List<ItemResExceptIdDto> tempItemResExceptIdDtoList = new ArrayList<>();
                 List<ProblemOcrDto> problemOcrDtoList = new ArrayList<>();
 
-                boolean checkNum = false;
-                boolean checkTitle = false;
-                boolean checkText = false;
-                boolean checkMultiple = false;
-                boolean checkPoint = false;
-                boolean checkItem = false;
-                boolean checkDelete = false;
-                boolean problemStart = false;
-                boolean newProblem = false;
+                for (Blob blob : pageList.iterateAll()) {
+                    String jsonContents = new String(blob.getContent());
 
-                int ocrNum = 0;
-                int ocrPoint = 0;
-                int midCount = 0;
-                int startCount = 0;
-                int titleCount = 0;
+                    AnnotateFileResponse.Builder builder = AnnotateFileResponse.newBuilder();
+                    JsonFormat.parser().merge(jsonContents, builder);
 
-                System.out.println(fullText);
+                    AnnotateFileResponse annotateFileResponse = builder.build();
 
-                // 문항 별로 자르기
-                String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
+                    for (int size = 0; size < annotateFileResponse.getResponsesList().size(); size++) {
+                        AnnotateImageResponse annotateImageResponse = annotateFileResponse.getResponses(size);
+//                        System.out.println("현재 size: " + size);
 
-                // 문항 별 반복
-                for (String temp : splitFull) {
+                        String fullText = annotateImageResponse.getFullTextAnnotation().getText();
 
-                    List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
+                        StringBuilder title = new StringBuilder();
+                        StringBuilder text = new StringBuilder();
+                        StringBuilder item = new StringBuilder();
 
-                    // 묶인 문항 처리
-                    if (temp.replace("\n", " ").matches("^.*[0-9]{1,2}[~][0-9]{1,2}.*")) {
-                        String[] textStart = temp.split("[0-9]{1,2}[~][0-9]{1,2}");
+                        boolean multiText = false;
+                        int ocrPoint = 0;
 
-                        for (String textContent : textStart) {
-                            if (textContent.substring(0, 1).equals("]")) {
-                                int splitInt = textContent.indexOf("\n");
-                                title.append(textContent.substring(1, splitInt).trim());
-                                text.append(textContent.substring(splitInt).replaceAll("\n", " "));
-                            }
-                        }
-                    }
+//                        System.out.println(fullText);
 
-                    // 개별 문항 처리
-                    else if (temp.substring(0, 1).equals(" ")) {
-                        String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
-                        String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
+                        // 문항 별로 자르기
+                        String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
 
-                        // title 자르기
-                        String[] problemSplit = temp.split(problemEnd);
+                        // 문항 별 반복
+                        for (String temp : splitFull) {
+//                            System.out.println(temp);
+//                            System.out.println("================");
 
-                        for (String problemContent : problemSplit) {
+                            List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
-                            // title 저장 전
-                            if (title.length() == 0) {
+                            String regTilde = "^.*[0-9]{1,2}[~][0-9]{1,2}.*";
+                            String regNoTilde = "^.*\\[([0-9]{1,2})\\].*";
 
-//                                System.out.println("title =============");
-//                                System.out.println(problemContent);
+                            // 묶인 문항 처리
+                            if (!multiText && (temp.replace("\n", " ").matches(regTilde) ||
+                                    temp.replace("\n", " ").matches(regNoTilde))) {
 
-                                // 배점 포함
-                                if (problemContent.replace("\n", " ").contains("점]")) {
-                                    ocrPoint = Integer.parseInt(problemContent.substring(problemContent.lastIndexOf("["), problemContent.lastIndexOf("점")));
-                                    problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
-                                }
+                                boolean isText = temp.replace("\n", " ").matches(regTilde) ? false : true;
 
-                                title.append(problemContent.replaceAll("\n", " ")).append(addEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
-                            }
+                                String[] textStart = temp.replace("\n", " ").matches(regTilde)
+                                        ? temp.split("[0-9]{1,2}[~][0-9]{1,2}") : temp.split("[0-9]{1,2}[]]");
 
-                            // title 저장 후
-                            else if (title.length() != 0 ) {
+                                multiText = true;
+//                                System.out.println(temp.replace("\n", " ").matches(regTilde));
+//                                System.out.println(temp.replace("\n", " ").matches(regNoTilde));
 
-                                // 저작권 문구
-                                if (problemContent.contains("이 문제지에 관한 저작권은")) {
-                                    problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
-                                }
-
-//                                System.out.println("problemContent ============= ");
-//                                System.out.println(problemContent);
-//
-//                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
-//                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
-
-                                String splitStr = "";
-                                if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
-                                    splitStr = "[①-⑤][ ]";
-//                                    System.out.println("동그라미 숫자");
-                                } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
-                                    splitStr = "[0-9]{1}[ ]";
-//                                    System.out.println("숫자");
-                                }
-
-                                // text 자르기
-                                String[] textSplit = problemContent.split(splitStr);
-
-                                for (String textContent : textSplit) {
-
-                                    textContent = textContent.replaceAll("\n", " ");
-
-//                                    System.out.println("textContent ==============");
-//                                    System.out.println(textContent);
-
-                                    if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
-                                        text.append(textContent.substring(textContent.indexOf("]")+1).trim());
-                                    }
-
-                                    else if (textContent.substring(0, 1).equals(" ")) {
-
-//                                        System.out.println("item =============");
-//                                        System.out.println(textContent);
-
-                                        text.append(textContent.trim());
+                                for (String textContent : textStart) {
+                                    if (textContent.length() >= 1 && textContent.substring(0, 1).equals("]")) {
+                                        int splitInt = textContent.indexOf("\n");
+                                        title.append(textContent.substring(1, splitInt).trim());
+                                        text.append(textContent.substring(splitInt).replaceAll("\n", " "));
                                     } else {
-//                                        System.out.println("else");
-                                        if (textContent.replace("\n", " ").matches("^[?].*")) {
-                                            textContent = textContent.substring(textContent.indexOf("?") + 1);
+//                                        System.out.println(textContent);
+                                        if (isText && textContent.length() >= 6 && textContent.matches("")
+                                                && textContent.substring(0, 5).contains("]")) {
+                                            textContent = textContent.substring(textContent.indexOf("]"));
                                         }
-                                        if (textContent.replace("\n", " ").matches("^.*[0-9][점].*")) {
-                                            int endIndex = textContent.replace("\n", " ").lastIndexOf("점");
-                                            ocrPoint = Integer.parseInt(textContent.replace("\n", " ").substring(endIndex -1, endIndex));
-                                            textContent = textContent.substring(textContent.indexOf("점]") + 2);
-                                        }
-
-                                        if (splitStr.equals("[0-9]{1}[ ]") || splitStr.equals("[①-⑤][ ]")) {
-
-                                            if (textContent.substring(0, 1).equals("*")) {
-                                                text.append(textContent);
+                                        if (textContent.contains("대학수학능력시험 문제지\n")) {
+                                            int preface = textContent.indexOf("대학수학능력시험 문제지\n");
+                                            if (textContent.substring(preface + 14, preface + 20).contains("영역")) {
+                                                preface += 6;
                                             }
-                                            else {
-                                                ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
-                                                        .content(textContent.replaceAll("\n", " ").trim())
-                                                        .isImage(false)
-                                                        .build();
-
-                                                itemResExceptIdDtoList.add(itemResExceptIdDto);
-                                            }
+                                            textContent = textContent.substring(preface + 14);
                                         }
-                                        else {
-                                            text.append(textContent);
+                                        text.append(textContent.replaceAll("\n", " ").trim());
+                                    }
+                                }
+                            }
+
+                            // 개별 문항 처리
+                            else if (temp.length() >= 1 && temp.substring(0, 1).equals(" ")) {
+                                String problemEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은[?]" : "";
+                                String addEnd = temp.replace("\n", " ").contains("고르시오") ? "고르시오" : temp.contains("것은?") ? "것은?" : "";
+
+                                // title 자르기
+                                String[] problemSplit = temp.split(problemEnd);
+
+                                for (String problemContent : problemSplit) {
+
+                                    // title 저장 전
+                                    if (title.length() == 0) {
+
+        //                                System.out.println("title =============");
+        //                                System.out.println(problemContent);
+
+                                        // 배점 포함
+                                        if (problemContent.replace("\n", " ").contains("점]")) {
+                                            ocrPoint = Integer.parseInt(problemContent.substring(problemContent.lastIndexOf("["), problemContent.lastIndexOf("점")));
+                                            problemContent = problemContent.substring(0, problemContent.lastIndexOf("["));
+                                        }
+
+                                        title.append(problemContent.replaceAll("\n", " ")).append(addEnd).append(problemEnd.equals("고르시오") ? "." : "".trim());
+                                    }
+
+                                    // title 저장 후
+                                    else if (title.length() != 0 ) {
+
+                                        // 저작권 문구
+                                        if (problemContent.contains("이 문제지에 관한 저작권은")) {
+                                            problemContent = problemContent.substring(0, problemContent.indexOf("이 문제지에 관한 저작권은"));
+                                        }
+
+        //                                System.out.println("problemContent ============= ");
+        //                                System.out.println(problemContent);
+        //
+        //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*"));
+        //                                System.out.println(problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*"));
+
+                                        String splitStr = "";
+                                            if (problemContent.replaceAll("\n", " ").matches("^.*[①-⑤].*")) {
+                                                splitStr = "[①-⑤][ ]";
+            //                                    System.out.println("동그라미 숫자");
+                                            } else if (problemContent.replaceAll("\n", " ").matches("^.*[ ][0-9]{1}[ ].*")) {
+                                                splitStr = "[0-9]{1}[ ]";
+            //                                    System.out.println("숫자");
+                                            }
+
+                                        // text 자르기
+                                        String[] textSplit = problemContent.split(splitStr);
+
+                                        for (String textContent : textSplit) {
+
+                                            textContent = textContent.replaceAll("\n", " ");
+
+        //                                    System.out.println("textContent ==============");
+        //                                    System.out.println(textContent);
+
+                                            if (textContent.length() >= 2 && textContent.substring(0, 2).equals(" [")) {
+                                                text.append(textContent.substring(textContent.indexOf("]")+1).trim());
+                                            }
+
+                                            else if (textContent.substring(0, 1).equals(" ")) {
+
+        //                                        System.out.println("item =============");
+        //                                        System.out.println(textContent);
+
+                                                text.append(textContent.trim());
+                                            } else {
+        //                                        System.out.println("else");
+                                                if (textContent.replace("\n", " ").matches("^[?].*")) {
+                                                    textContent = textContent.substring(textContent.indexOf("?") + 1);
+                                                }
+                                                if (textContent.replace("\n", " ").matches("^.*[0-9][점].*")) {
+                                                    int endIndex = textContent.replace("\n", " ").lastIndexOf("점");
+                                                    ocrPoint = Integer.parseInt(textContent.replace("\n", " ").substring(endIndex -1, endIndex));
+                                                    textContent = textContent.substring(textContent.indexOf("점]") + 2);
+                                                }
+
+                                                if (splitStr.equals("[0-9]{1}[ ]") || splitStr.equals("[①-⑤][ ]")) {
+
+                                                    if (textContent.substring(0, 1).equals("*")) {
+                                                        text.append(textContent);
+                                                    }
+                                                    else {
+                                                        ItemResExceptIdDto itemResExceptIdDto = ItemResExceptIdDto.builder()
+                                                                .content(textContent.replaceAll("\n", " ").trim())
+                                                                .isImage(false)
+                                                                .build();
+
+                                                        itemResExceptIdDtoList.add(itemResExceptIdDto);
+                                                    }
+                                                }
+                                                else {
+                                                    text.append(textContent);
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
+
+                            if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() == 0) {
+                                continue;
+                            } else {
+                                ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
+                                        .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
+                                        .title(title.toString())
+                                        .problemImgPath(null)
+                                        .imgIsEmpty(true)
+                                        .text(text.toString())
+                                        .textIsEmpty(text.toString() == null || text.equals(""))
+                                        .itemList(itemResExceptIdDtoList)
+                                        .point(ocrPoint)
+                                        .build();
+
+                                problemOcrDtoList.add(problemOcrDto);
+                            }
+                            title.setLength(0);
+                            text.setLength(0);
+                            item.setLength(0);
+
+                            ocrPoint = 0;
                         }
                     }
-
-                    if (title.toString().equals("") && text.toString().equals("") && itemResExceptIdDtoList.size() == 0) {
-                        continue;
-                    } else {
-                        ProblemOcrDto problemOcrDto = ProblemOcrDto.builder()
-                                .type(itemResExceptIdDtoList.size() == 0 ? EnumProblemTypeStatus.DESCRIPT : EnumProblemTypeStatus.MULTIPLE)
-                                .title(title.toString())
-                                .problemImgPath(null)
-                                .imgIsEmpty(true)
-                                .text(text.toString())
-                                .textIsEmpty(text.toString() == null || text.equals(""))
-                                .itemList(itemResExceptIdDtoList)
-                                .point(ocrPoint)
-                                .build();
-
-                        problemOcrDtoList.add(problemOcrDto);
-                    }
-
-
-                    title.setLength(0);
-                    text.setLength(0);
-                    item.setLength(0);
-
-                    ocrPoint = 0;
                 }
-
                 Map<String, List<ProblemOcrDto>> map = new HashMap<>();
                 map.put("problemList", problemOcrDtoList);
 
