@@ -4,7 +4,7 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 import { StudentStudyResultList } from "@/types/StudentStudyResultList";
 
 const fetcher = (studyId: number) =>
-  studyAxios.get(`/api/study/class/result/student/${studyId}`).then(({ data }) => {
+  studyAxios.get(`/study/class/result/student/${studyId}`).then(({ data }) => {
     const studentStudyResultList = data.data.studentStudyResultList as StudentStudyResultList[];
     return studentStudyResultList;
   });

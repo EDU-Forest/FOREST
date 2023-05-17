@@ -1,8 +1,7 @@
 import { StyledWorkbookStatus } from "@/components/Status/Status.style";
-import { AnalysisSubTitle } from "./StudyAnalysis.style";
 import { PieChart } from "react-minimal-pie-chart";
-import { StudentScoreChartLabel, SummaryChartWrapper } from "../ClassSummary.style";
-import { AnalysisText, LabelCircle } from "./StudyAnalysis.style";
+import { SummaryChartWrapper } from "../ClassSummary.style";
+import { AnalysisText, LabelCircle, AnalysisSubTitle } from "./StudyAnalysis.style";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useAllAnswerRateQuery from "@/apis/class/analysis/useAllAnswerRateQuery";

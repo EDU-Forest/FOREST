@@ -1,4 +1,3 @@
-// import logo from "@/assets/Forest_Logo.png";
 import { AiOutlineHome, AiOutlineTeam } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { StyledNav, StudentNavDiv, NavInner, LogoutParagraph, NavBottom } from "./Nav.style";

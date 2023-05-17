@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { CorrectRateWrapper } from "./QuestionCorrectRate.style";
-import { flexBox, scrollBar } from "@/styles/theme";
+import { flexBox } from "@/styles/theme";
 
 const EachResultWrapper = styled(CorrectRateWrapper)<{ height?: number }>`
   margin-top: 1.5rem;

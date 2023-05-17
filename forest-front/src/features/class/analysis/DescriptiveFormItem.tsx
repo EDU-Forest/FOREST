@@ -31,7 +31,7 @@ export default function DescriptiveFormItem({ title, keywordList, point }: Iprop
         <AnalysisSubTitle>핵심 키워드</AnalysisSubTitle>
         <DescriptiveFormUpperItem>
           {keywordList?.map((item, idx) => (
-            <StyledWorkbookStatus key={idx} status="BEFORE">
+            <StyledWorkbookStatus key={`workbook-status-${idx}`} status="BEFORE">
               {item.keyword}
             </StyledWorkbookStatus>
           ))}

@@ -1,9 +1,8 @@
 import Lottie from "react-lottie-player";
 import { NoClassText, NoClassWrapper, MakeClassBtn } from "./NoClass.style";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/stores/store";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { useDispatch } from "react-redux";
 import { openAddClassModal } from "@/stores/class/classModal";
 import AddClassModal from "./teacher/AddClassModal";
 

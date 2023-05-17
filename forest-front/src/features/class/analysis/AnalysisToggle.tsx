@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { ToggleCircle, ToggleContainer, ToggleText, ToggleWrapper } from "./AnalysisToggle.style";
-import { useSelector } from "react-redux";
-import { RootState } from "@/stores/store";
 import { WarningIcon } from "../ClassSummary.style";
 import { IoWarningOutline } from "react-icons/io5";
 

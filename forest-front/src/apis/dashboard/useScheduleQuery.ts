@@ -4,7 +4,7 @@ import studyAxios from "@/utils/customAxios/studyAxios";
 import { ScheduleList } from "@/types/ScheduleList";
 
 const fetcher = () =>
-  studyAxios.get(`/api/study/calendar`).then(({ data }) => {
+  studyAxios.get(`/study/calendar`).then(({ data }) => {
     const studyList: ScheduleList[] = data.data.studyList;
     return studyList;
   });

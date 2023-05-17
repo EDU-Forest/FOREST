@@ -4,7 +4,7 @@ import * as queryKeys from "@/constants/queryKeys";
 import { useRouter } from "next/router";
 
 const fetcher = async (wId: number) =>
-  await workbookAxios.post(`/api/workbook/${wId}`).then(({ data }) => {
+  await workbookAxios.post(`/workbook/${wId}`).then(({ data }) => {
     return data.data;
   });
 
