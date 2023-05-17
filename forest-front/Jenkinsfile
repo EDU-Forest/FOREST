@@ -105,7 +105,7 @@ pipeline {
                     sh 'ls -al'
                     echo '${previousBuildNumber}'
 
-                    sh 'git ls-remote git@github.com:choi1087/forest_yaml.git HEAD -y'
+                    // sh 'git ls-remote git@github.com:choi1087/forest_yaml.git HEAD -y'
                     // sh 'git remote set-url origin git@github.com:choi1087/forest_yaml.git'
 
                     sh "sed -i 's/forest-front:${currentBuild.previousBuild?.number}/forest-front:${currentBuild.number}/g' eks-deploy-react.yml"
