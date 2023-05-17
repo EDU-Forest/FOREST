@@ -1,10 +1,10 @@
 import { closePartPdfModal } from "@/stores/editor/editorModal";
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface IPayload {
   curWorkbookId: number;
@@ -22,6 +22,7 @@ const fetcher = (payload: IPayload) =>
 
 const useImgOCR = () => {
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
@@ -42,6 +43,7 @@ const useImgOCR = () => {
       const newQuestions = [...questions, question];
 
       dispatch(setQuestions(newQuestions));
+      dispatch(setCurQuestion(curQuestion + 1));
       dispatch(closePartPdfModal());
     },
   });
