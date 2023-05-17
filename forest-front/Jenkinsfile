@@ -19,9 +19,9 @@ pipeline {
         REGION = 'ap-northeast-2'
 
         BUILD_NUM = '$BUILD_NUMBER'
-        PREVIOUS_TAG = BUILD_num.toInteger() - 1
+        PREVIOUS_TAG = currentBuild.previousBuild?.number
 
-        TARGET_FILE = 'eks-deploy-react.yml'
+        TARGET_FILE = 'eks-deploy-react.yml'        
 
     }
     stages{
