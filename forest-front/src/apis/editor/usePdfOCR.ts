@@ -1,5 +1,5 @@
 import { closeWholePdfModal } from "@/stores/editor/editorModal";
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
@@ -36,6 +36,7 @@ const fetcher = (payload: IPayload) =>
 
 const usePdfOCR = () => {
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   const dispatch = useDispatch();
   return useMutation(fetcher, {
@@ -62,6 +63,7 @@ const usePdfOCR = () => {
       });
 
       dispatch(setQuestions(newQuestions));
+      dispatch(setCurQuestion(curQuestion + 1));
       dispatch(closeWholePdfModal());
     },
   });
