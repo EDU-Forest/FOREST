@@ -152,7 +152,7 @@ public class StudyService {
 
         List<Study> studyList = new ArrayList<>();
 
-        if(user.getRole() == null )
+        if (user.getRole() == null)
             throw new CustomException(StudyErrorCode.AUTH_ROLE_NOT_FOUND);
 
         /* 유저가 선생님이면 */
@@ -770,6 +770,9 @@ public class StudyService {
     /* (선생님) 서술형 문제 채점 */
     public ResponseSuccessDto<PatchResponseDto> patchDescription(PatchDescriptionListRequestDto patchDescriptionListRequestDto) {
 
+        if(patchDescriptionListRequestDto == null)
+            throw new CustomException(StudyErrorCode.STUDY_DESCRIPT_NULL);
+
         /* 존재하지 않는 스터디 ID 체크 */
         Study study = studyRepository.findById(patchDescriptionListRequestDto.getStudyId())
                 .orElseThrow(() -> new CustomException(StudyErrorCode.STUDY_NOT_FOUND));
@@ -833,12 +836,12 @@ public class StudyService {
                 sumScore += ssr.getScore();
                 correctRate += ssr.getCorrectRate();
             }
-            double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
+            double average = Math.round((sumScore * 1.0 / participateNum) * 100) / 100.0;
             double dis = 0;
             for (StudentStudyResult ssr : studentStudyResults)
                 dis += Math.pow(average - ssr.getScore(), 2);
 
-            double standardDeviation = Math.sqrt(dis / participateNum) * 100 / 100.0;
+            double standardDeviation = Math.round(Math.sqrt(dis / participateNum) * 100) / 100.0;
             int correctAnswerRate = correctRate / participateNum;
 
             ClassStudyResult classStudyResult = classStudyResultRepository.findAllByStudy(study)
@@ -918,17 +921,20 @@ public class StudyService {
         int correctRate = 0;
         for (StudentStudyResult ssr : studentStudyResults) {
             sumScore += ssr.getScore();
+            if (ssr.getExitTime() == null)
+                ssr.updateExitTime(study.getEndTime());
+
             Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
             solvingTime += duration.getSeconds() / 60;
             correctRate += ssr.getCorrectRate();
         }
-        double average = (sumScore * 1.0 / participateNum) * 100 / 100.0;
+        double average = Math.round((sumScore * 1.0 / participateNum) * 100) / 100.0;
         double dis = 0;
         for (StudentStudyResult ssr : studentStudyResults) {
             dis += Math.pow(average - ssr.getScore(), 2);
         }
 
-        double standardDeviation = Math.sqrt(dis / participateNum);
+        double standardDeviation = Math.round(Math.sqrt(dis / participateNum) * 100) / 100.0;
         long averageSolvingTime = solvingTime / participateNum;
         int correctAnswerRate = correctRate / participateNum;
         int ungradedAnswerRate = 0;

@@ -36,6 +36,9 @@ public class AuthService {
         User findUserById = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.AUTH_USER_NOT_FOUND));
 
+        log.info("input refresh token : {}", refreshToken);
+        log.info("db... refresh token : {}", findUserById.getRefreshToken());
+
         if (!refreshToken.equals(findUserById.getRefreshToken())) {
             log.error("refresh token not equal");
             throw new CustomException(ErrorCode.AUTH_REFRESH_NOT_VALID);
