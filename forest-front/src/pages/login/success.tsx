@@ -1,5 +1,4 @@
 import { CSSProperties } from "react";
-import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { setLocalStorage } from "@/utils/localStorage";
@@ -18,8 +17,6 @@ function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { refetch } = useRecentClassIdQuery();
-
   useEffect(() => {
     if (!router.isReady) return;
 
@@ -34,7 +31,6 @@ function LoginSuccess() {
     if (typeof username === "string" && typeof role === "string") {
       dispatch(setUsername(username));
       dispatch(setRole(role));
-      refetch();
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     } else {
       router.push(
