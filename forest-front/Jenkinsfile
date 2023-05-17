@@ -97,8 +97,8 @@ pipeline {
 
         stage('Manifest Update') {
             steps {
-                git credentialsId: '${GITHUB_CREDENTIAL_ID}',
-                    url: '${GITHUB_URL}',
+                git credentialsId: 'choi1087_github',
+                    url: 'https://github.com/choi1087/forest_yaml.git',
                     branch: 'main'
                 
 
