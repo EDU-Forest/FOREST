@@ -60,6 +60,30 @@ const GuideSectionContentWrapper = styled.div<{ noMarginTop?: boolean }>`
   }
 `;
 
+const GuideSearchContentWrapper = styled(GuideSectionContentWrapper)`
+  ${flexBox("row", "top", "center")}
+  gap:48px;
+
+  .search-sub-div {
+    margin-top: 48px;
+  }
+
+  img {
+    width: 55%;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    flex-wrap: wrap;
+    .search-sub-div {
+      margin-top: 32px;
+    }
+
+    img {
+      width: 90%;
+    }
+  }
+`;
+
 const GuideSubContentWrapper = styled.div`
   margin-top: 32px;
 `;
@@ -173,6 +197,7 @@ export {
   GuideContentBox,
   LogoImg,
   GuideSectionContentWrapper,
+  GuideSearchContentWrapper,
   GuideSubContentWrapper,
   GuideHorizonContentWrapper,
   GuideHorizonNoWrap,

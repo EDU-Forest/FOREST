@@ -1,6 +1,7 @@
 import {
   GuideContentBox,
   GuideHorizonContentWrapper,
+  GuideHorizonNoWrap,
   GuideSectionContentWrapper,
 } from "./Guide.style";
 import {
@@ -16,7 +17,7 @@ export default function GuideDashboard() {
     <GuideContentBox>
       <GuideSectionTitle>대시보드</GuideSectionTitle>
       <GuideSectionContentWrapper>
-        <GuideHorizonContentWrapper>
+        <GuideHorizonNoWrap>
           <div className="halt-img-div">
             <img src="/guide/dash_schedule.png" alt="" />
           </div>
@@ -26,8 +27,8 @@ export default function GuideDashboard() {
               포함된 모든 클래스의 최근 3일 간의 일정을 모아볼 수 있습니다.
             </GuideNormalText>
           </div>
-        </GuideHorizonContentWrapper>
-        <GuideHorizonContentWrapper>
+        </GuideHorizonNoWrap>
+        <GuideHorizonNoWrap>
           <div className="half-text-div">
             <GuideTitle>선생님</GuideTitle>
             <GuideGreenText>메모</GuideGreenText>
@@ -39,8 +40,8 @@ export default function GuideDashboard() {
           <div className="halt-img-div">
             <img src="/guide/dash_memo.png" alt="" />
           </div>
-        </GuideHorizonContentWrapper>
-        <GuideHorizonContentWrapper>
+        </GuideHorizonNoWrap>
+        <GuideHorizonNoWrap>
           <div className="halt-img-div">
             <img src="/guide/dash_class.png" alt="" />
           </div>
@@ -49,7 +50,7 @@ export default function GuideDashboard() {
             <GuideGreenText>클래스 바로가기</GuideGreenText>
             <GuideGrayText>학생이 속해 있는 클래스에 바로가기 기능을 제공합니다. </GuideGrayText>
           </div>
-        </GuideHorizonContentWrapper>
+        </GuideHorizonNoWrap>
       </GuideSectionContentWrapper>
     </GuideContentBox>
   );
