@@ -5,7 +5,7 @@ import { getLocalStorage, setLocalStorage } from "../localStorage";
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
 const AxiosConFigure: AxiosRequestConfig = {
-  baseURL: `${NEXT_PUBLIC_SERVER_URL}:9011`,
+  baseURL: `${NEXT_PUBLIC_SERVER_URL}`,
   timeout: 5000,
   withCredentials: true,
 };
