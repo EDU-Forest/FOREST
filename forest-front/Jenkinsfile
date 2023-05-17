@@ -31,7 +31,7 @@ pipeline {
 
         stage('env setting') {
             steps{
-                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/dev-front-pipeline/forest-front'                
+                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/prod-front/forest-front'                
             }            
         }
         
