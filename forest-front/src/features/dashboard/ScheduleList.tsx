@@ -40,7 +40,7 @@ function ScheduleList() {
   };
 
   const STUDY: IStudy = {
-    HOMEWORK: "숙제",
+    HOMEWORK: "과제",
     EXAM: "시험",
     SELF: "자습",
   };
