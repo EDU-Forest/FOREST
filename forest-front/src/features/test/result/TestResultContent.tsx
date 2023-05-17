@@ -24,7 +24,9 @@ export default function TestResultContent() {
   return (
     <TestResultContentBox>
       {!isGraded && isSubmitted ? (
-        <TestResultNotOpenBox>채점 후 공개됩니다.</TestResultNotOpenBox>
+        <TestResultNotOpenBox>
+          <p>채점 후 공개됩니다.</p>
+        </TestResultNotOpenBox>
       ) : !isSubmitted ? (
         <TestResultNotOpenBox>유효하지 않은 접근입니다.</TestResultNotOpenBox>
       ) : (

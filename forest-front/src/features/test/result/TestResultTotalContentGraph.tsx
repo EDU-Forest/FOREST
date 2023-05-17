@@ -1,5 +1,7 @@
 import CorrectRateDonut from "@/features/class/analysis/CorrectRateDonut";
 import { TestResultTotalContentGraphBox } from "./TextResult.style";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/store";
 
 interface Iprops {
   volume: number;
@@ -7,13 +9,13 @@ interface Iprops {
 }
 
 export default function TestResultTotalContentGraph({ volume, correctNum }: Iprops) {
+  const { isGraded } = useSelector((state: RootState) => state.exam);
   return (
-    <TestResultTotalContentGraphBox>
+    <TestResultTotalContentGraphBox className="blur-result">
       <CorrectRateDonut
-        // 부모에서 비율 받아서 DummyData 교체하기
         answerRate={{
-          correctAnswerRate: Math.floor((correctNum / volume) * 100),
-          incorrectAnswerRate: Math.floor(((volume - correctNum) / volume) * 100),
+          correctAnswerRate: isGraded ? Math.floor((correctNum / volume) * 100) : 0,
+          incorrectAnswerRate: isGraded ? Math.floor(((volume - correctNum) / volume) * 100) : 0,
           ungradedAnswerRate: 0,
         }}
         page={"studyResult"}

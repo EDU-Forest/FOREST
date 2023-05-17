@@ -1,5 +1,4 @@
 import { CSSProperties } from "react";
-import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { setLocalStorage } from "@/utils/localStorage";
@@ -8,6 +7,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 
 // interface IServerSideprops {
 //   query: {
@@ -28,6 +28,7 @@ import treeJson from "../../../public/lottieJson/tree.json";
 function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { refetch } = useRecentClassIdQuery();
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -42,6 +43,7 @@ function LoginSuccess() {
     const email = router.query?.email;
 
     if (typeof name === "string" && typeof role === "string") {
+      refetch();
       dispatch(setUsername(name));
       dispatch(setRole(role));
       router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
