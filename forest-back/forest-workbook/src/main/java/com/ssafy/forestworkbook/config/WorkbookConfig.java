@@ -9,12 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WorkbookConfig implements WebMvcConfigurer {
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/workbook/", "/workbook");
-    }
-
-    @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
         configurer.setUseTrailingSlashMatch(false);
     }
+
 }
