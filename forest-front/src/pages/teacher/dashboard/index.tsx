@@ -8,7 +8,6 @@ import Schedule from "@/features/dashboard/Schedule";
 import Memo from "@/features/dashboard/teacher/Memo";
 import { FullScreen } from "@/styles/container";
 import withAuth from "@/utils/auth/withAuth";
-import { useEffect } from "react";
 
 function TeacherDashBoard() {
   return (

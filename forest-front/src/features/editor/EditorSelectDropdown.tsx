@@ -78,7 +78,7 @@ export default function EditorSelectDropdown({
             <ClassSelectDropdownEach>
               {workbooksBySelf?.map((item, idx) => (
                 <ClassSelectDropdownEachItem
-                  key={`workbook-${idx}`}
+                  key={`class-select-dropdown-item-${idx}`}
                   onClick={() => selectWorkbookHandler(item.workbookId, item.title)}
                 >
                   {item.workbookId === curWorkbookId && <ClassSelectCircle />}{" "}
