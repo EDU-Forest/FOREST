@@ -37,7 +37,7 @@ function LoginSuccess() {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
 
-    const username = router.query?.name;
+    const name = router.query?.name;
     const role = router.query?.role;
     const email = router.query?.email;
 
