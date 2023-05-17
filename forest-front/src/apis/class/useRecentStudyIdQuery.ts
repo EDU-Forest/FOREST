@@ -17,6 +17,7 @@ const useRecentStudyIdQuery = (classId: number) => {
     enabled: !!classId,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
+      console.log("recentStudyId", recentStudyId);
       if (recentStudyId) {
         dispatch(setStudy(recentStudyId));
       } else {
