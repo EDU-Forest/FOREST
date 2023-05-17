@@ -1,14 +1,10 @@
 import { CSSProperties } from "react";
 import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
-import Spinner from "@/components/Spinner/Spinner";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
-import { FullScreen } from "@/styles/container";
-import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
 import { setLocalStorage } from "@/utils/localStorage";
-import withAuth from "@/utils/auth/withAuth";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
@@ -16,13 +12,6 @@ import { ParsedUrlQuery } from "querystring";
 
 interface IServerSideprops {
   query: ParsedUrlQuery;
-}
-
-interface Iprops {
-  name: string;
-  role: string;
-  email: string;
-  accessToken: string;
 }
 
 function LoginSuccess() {
@@ -33,7 +22,6 @@ function LoginSuccess() {
 
   useEffect(() => {
     if (!router.isReady) return;
-    const data = router?.query;
 
     const accessToken = router.query?.accessToken;
     if (typeof accessToken === "string") {

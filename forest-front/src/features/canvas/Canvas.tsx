@@ -7,9 +7,8 @@ import {
 } from "react-sketch-canvas";
 import CanvasBar from "./CanvasBar";
 import { CanvasDrawSection } from "./Canvas.style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { controlCanvas, setPaths } from "@/stores/exam/canvas";
-import { useSelector } from "react-redux";
 import { RootState } from "@/stores/store";
 import useCanvasPost from "@/apis/canvas/useCanvasPost";
 import useCanvasRecordQuery from "@/apis/canvas/useCanvasRecordQuery";

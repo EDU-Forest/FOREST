@@ -24,7 +24,7 @@ export const Container = styled.div<{ isEditor?: boolean; padding?: number }>`
   overflow-y: auto;
   box-sizing: border-box;
 
-  padding: ${(props) => props.padding && props.padding}rem;
+  padding: ${(props) => (props.padding ? props.padding : 0)}rem;
 
   @media ${({ theme }) => theme.tablet} {
     width: calc(100% - 5rem);

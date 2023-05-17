@@ -15,7 +15,7 @@ interface DataType {
 }
 
 const fetcher = async (pId: number) =>
-  await workbookAxios.delete(`/api/workbook/problem/${pId}`).then(({ data }) => {
+  await workbookAxios.delete(`/workbook/problem/${pId}`).then(({ data }) => {
     return data;
   });
 

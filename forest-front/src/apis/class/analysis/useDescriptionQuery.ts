@@ -10,7 +10,7 @@ interface Iprops {
 
 const fetcher = (studyId: number) =>
   studyAxios
-    .get(`/api/study/descript/${studyId}`, {
+    .get(`/study/descript/${studyId}`, {
       timeout: 100000,
     })
     .then(({ data }) => {

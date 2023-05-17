@@ -1,10 +1,5 @@
 import SmallBtn from "@/components/Button/SmallBtn";
-import {
-  DescriptiveFormBtn,
-  DescriptiveFormUpperBox,
-  DescriptiveFormWrapper,
-  NoDescription,
-} from "./DescriptiveForm.style";
+import { DescriptiveFormBtn, DescriptiveFormWrapper, NoDescription } from "./DescriptiveForm.style";
 import DescriptiveFormItem from "./DescriptiveFormItem";
 import DescriptiveFormAnswer from "./DescriptiveFormAnswer";
 import { useSelector } from "react-redux";

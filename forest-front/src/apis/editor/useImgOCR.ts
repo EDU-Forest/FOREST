@@ -4,8 +4,7 @@ import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 interface IPayload {
   curWorkbookId: number;
@@ -14,7 +13,7 @@ interface IPayload {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/api/workbook/ocr/img/${payload.curWorkbookId}`, payload.file, {
+    .post(`/workbook/ocr/img/${payload.curWorkbookId}`, payload.file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

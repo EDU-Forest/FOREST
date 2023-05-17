@@ -1,5 +1,4 @@
 import styled, { keyframes } from "styled-components";
-import css from "styled-jsx/css";
 
 const fadeInUp = keyframes`
   0% {
