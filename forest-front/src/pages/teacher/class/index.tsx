@@ -25,7 +25,6 @@ function TeacherClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
   const { data } = useRecentStudyIdQuery(nowClassId);
-  useRecentClassIdQuery();
 
   // 모달 분리
   const { isOpenAddClassModal, isOpenAddStudentModal, isOpenDeleteStudentModal } = useSelector(

@@ -22,7 +22,6 @@ function StudentClass() {
   const dispatch = useDispatch();
   const { nowClassId } = useSelector((state: RootState) => state.class);
   const { data } = useRecentStudyIdQuery(nowClassId);
-  useRecentClassIdQuery();
 
   useEffect(() => {
     dispatch(closeAllModal());
