@@ -21,7 +21,7 @@ pipeline {
         REGION = 'ap-northeast-2'
 
         BUILD_NUM = '$BUILD_NUMBER'
-        PREVIOUS_TAG = ${previousBuildNumber}
+        // PREVIOUS_TAG = ${previousBuildNumber}
 
         TARGET_FILE = 'eks-deploy-react.yml'        
 
