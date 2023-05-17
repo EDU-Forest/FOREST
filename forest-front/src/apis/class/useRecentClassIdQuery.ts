@@ -17,6 +17,7 @@ const useRecentClassIdQuery = () => {
   return useQuery([queryKeys.RECENT_CLASSID], fetcher, {
     enabled: false,
     onSuccess: (recentClass) => {
+      console.log("recentClass", recentClass);
       dispatch(setClass(recentClass));
     },
   });

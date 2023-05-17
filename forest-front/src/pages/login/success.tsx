@@ -11,18 +11,18 @@ import treeJson from "../../../public/lottieJson/tree.json";
 
 interface IServerSideprops {
   query: {
-    name: string;
-    role: string;
-    email: string;
-    accessToken: string;
+    name?: string;
+    role?: string;
+    email?: string;
+    accessToken?: string;
   };
 }
 
 interface Iprops {
-  name: string;
-  role: string;
-  email: string;
-  accessToken: string;
+  name?: string;
+  role?: string;
+  email?: string;
+  accessToken?: string;
 }
 
 function LoginSuccess({ name, role, email, accessToken }: Iprops) {
@@ -42,6 +42,7 @@ function LoginSuccess({ name, role, email, accessToken }: Iprops) {
     // const username = router.query?.name;
     // const role = router.query?.role;
     // const email = router.query?.email;
+    console.log("data", name, role, email, accessToken);
     if (typeof name === "string" && typeof role === "string") {
       dispatch(setUsername(name));
       dispatch(setRole(role));
