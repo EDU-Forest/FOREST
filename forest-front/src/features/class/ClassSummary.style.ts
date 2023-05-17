@@ -49,7 +49,7 @@ const ClassSummaryItemWrapper = styled.div<{
     ${positionCenter()}
   }
 
-  ${({ isFinished, userRole }) =>
+  ${({ isFinished, userRole, isStarted }) =>
     userRole === "TEACHER" &&
     !isFinished &&
     css`
