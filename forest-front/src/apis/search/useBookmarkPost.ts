@@ -13,6 +13,7 @@ const useBookmarkPost = (isWorkbookPage?: boolean) => {
       if (isWorkbookPage) {
         queryClient.invalidateQueries(queryKeys.GET_WORKBOOK_DETAIL);
       } else {
+        console.log("하하");
         queryClient.invalidateQueries(queryKeys.RECENT_WORKBOOK_LIST);
         queryClient.invalidateQueries(queryKeys.POPULAR_WORKBOOK_LIST);
         queryClient.invalidateQueries(queryKeys.SEARCH_LIST);
