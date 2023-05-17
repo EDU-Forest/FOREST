@@ -99,7 +99,7 @@ pipeline {
                 
 
                 echo '${PREVIOUS_TAG}'
-                sh "sed "$(grep -n 'image:' ${TARGET_FILE} | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" ${TARGET_FILE}"
+                sh "sed "$(grep -n 'image:' front/eks-deploy-react.yml | grep -Eo '^[^:]+')s/forest-front:${PREVIOUS_TAG}/forest-front:${BUILD_NUM}/g" front/eks-deploy-react.yml"
                 sh "git add ${TARGET_FILE}"
                 sh "git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'"
                 sh "git push origin main"
