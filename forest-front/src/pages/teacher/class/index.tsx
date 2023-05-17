@@ -26,8 +26,9 @@ function TeacherClass() {
   const { data } = useRecentStudyIdQuery(nowClassId);
 
   // 모달 분리
-  const { isOpenDropdown, isOpenAddClassModal, isOpenAddStudentModal, isOpenDeleteStudentModal } =
-    useSelector((state: RootState) => state.classModal);
+  const { isOpenAddClassModal, isOpenAddStudentModal, isOpenDeleteStudentModal } = useSelector(
+    (state: RootState) => state.classModal,
+  );
 
   useEffect(() => {
     dispatch(closeAllModal());
