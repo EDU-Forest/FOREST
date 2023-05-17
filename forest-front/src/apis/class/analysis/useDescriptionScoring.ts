@@ -27,9 +27,7 @@ const fetcher = (payload: Payload) =>
 
 const useDescriptionScoring = () => {
   return useMutation(fetcher, {
-    onSuccess: (data) => {
-      console.log("채점", data);
-    },
+    onSuccess: (data) => {},
     onMutate(variables) {},
   });
 };

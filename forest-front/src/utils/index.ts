@@ -11,7 +11,7 @@ export const dateToTime = (start: Date, end: Date) => {
   const minutes = dateToMinute(start, end);
 
   if (minutes < 60) {
-    return minutes;
+    return `${minutes} 분`;
   } else {
     return `${Math.floor(minutes / 60)} 시간 ${minutes % 60 ? `${minutes % 60} 분` : ""}`;
   }

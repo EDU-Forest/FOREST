@@ -64,9 +64,9 @@ const classSlice = createSlice({
         state.studyTitle = action.payload.title;
       }
     },
-    // setInitClassInfo(state) {
-    //   Object.assign(state, initialState);
-    // },
+    setInitClassInfo(state) {
+      Object.assign(state, initialState);
+    },
   },
 });
 
@@ -78,7 +78,7 @@ export const {
   setStudyType,
   setDeleteStudentNum,
   setStudentPointList,
-  // setInitClassInfo,
+  setInitClassInfo,
   setSelectedStudy,
 } = classSlice.actions;
 
