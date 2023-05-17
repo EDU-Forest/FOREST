@@ -30,6 +30,7 @@ authAxios.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
@@ -47,6 +48,7 @@ authAxios.interceptors.response.use(
       (error?.response?.status === 401 &&
         error?.response?.data?.error?.message === "Refresh Token이 유효하지 않습니다.")
     ) {
+      console.log("여기 들어옴!");
       removeItemLocalStorage("forest_access_token");
       // if (typeof window !== "undefined") {
       //   window.location.href = "/";

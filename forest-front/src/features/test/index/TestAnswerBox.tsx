@@ -10,7 +10,7 @@ import { closeCanvas } from "@/stores/exam/canvas";
 export default function TestAnswerBox() {
   const dispatch = useDispatch();
   const { username } = useSelector((state: RootState) => state.user);
-  const { isSubmitted } = useSelector((state: RootState) => state.exam);
+  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
 
   const router = useRouter();
 

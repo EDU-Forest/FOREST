@@ -14,7 +14,6 @@ const fetcher = () =>
 // 최근 클래스 조회 (로그인 시) - OK
 const useRecentClassIdQuery = () => {
   const dispatch = useDispatch();
-  // const { nowClassId } = useSelector((state: RootState) => state.class);
   return useQuery([queryKeys.RECENT_CLASSID], fetcher, {
     enabled: false,
     onSuccess: (recentClass) => {

@@ -75,6 +75,7 @@ export default function AddStudentModal() {
   };
 
   const closeDropdown = () => {
+    console.log("하하");
     setIsDropdown(false);
   };
 
