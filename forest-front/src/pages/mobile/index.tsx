@@ -1,13 +1,23 @@
 import Lottie from "react-lottie-player";
 import sorryFolksJson from "../../../public/lottieJson/sorryFolks.json";
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect } from "react";
 import { MobileBox, MobileLayout } from "../../features/mobile/Mobile.style";
+import { useRouter } from "next/router";
 
 export default function Mobile() {
+  const router = useRouter();
+
   const sorryFolksStyle: CSSProperties = {
     width: "50%",
     height: "50%",
   };
+
+  useEffect(() => {
+    if (typeof window !== undefined && window.innerWidth >= 768) {
+      router.push("/", undefined, { shallow: true });
+    }
+  }, []);
+
   return (
     <MobileLayout>
       <img src={"/images/Forest_Logo.png"} />
