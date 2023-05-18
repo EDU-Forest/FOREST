@@ -6,6 +6,7 @@ const fetcher = (type: string, page: number, size: number) =>
   workbookAxios
     .get("/workbook/teacher", { params: { search: type, page: page, size: size } })
     .then(({ data }) => {
+      console.log(data);
       return data.data;
     });
 
