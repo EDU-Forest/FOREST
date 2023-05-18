@@ -12,6 +12,7 @@ const fetcher = (type: string, page: number, size: number) =>
 
 const useWorkbookListQuery = (type: string, page: number, size: number) => {
   return useQuery([queryKeys.GET_WORKBOOK_LIST], () => fetcher(type, page, size), {
+    enabled: (type === "like" || type === "use" || type === "own") && !!page && !!size,
     refetchOnWindowFocus: false,
   });
 };
