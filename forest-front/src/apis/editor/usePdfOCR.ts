@@ -64,9 +64,9 @@ const usePdfOCR = () => {
 
       dispatch(setQuestions(newQuestions));
       dispatch(closeWholePdfModal());
-      // 비어있는 문제집이 아닐 때만 다음 번호를 현재로
+      // 비어있는 문제집이 아닐 때 추가되는 마지막 문제를 현재로
       if (questions.length !== 0) {
-        dispatch(setCurQuestion(curQuestion + 1));
+        dispatch(setCurQuestion(questions.length + 1));
       }
     },
   });
