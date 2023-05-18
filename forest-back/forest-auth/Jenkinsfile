@@ -85,5 +85,32 @@ pipeline {
                 }
             }
         }
+
+        stage('Manifest Update') {
+            steps {
+                git credentialsId: 'my-key',
+                    url: 'git@github.com:choi1087/forest_yaml.git',
+                    branch: 'main'
+                
+                
+                dir('back') {
+                    sh """
+                    ls -al                    
+
+                    cat eks-deploy-auth.yml | grep image
+
+                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-auth.yml
+
+                    cat eks-deploy-auth.yml | grep image
+                    
+                    git status
+                    git add eks-deploy-auth.yml
+                    git commit -m '[UPDATE] forest-back-auth ${currentBuild.number} image versioning'
+                    git push origin main
+                    """
+                }
+            }
+        }
+
     }
 }
