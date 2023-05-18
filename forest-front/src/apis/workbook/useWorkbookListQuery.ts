@@ -4,8 +4,7 @@ import { useQuery } from "react-query";
 
 const fetcher = (type: string, page: number, size: number) =>
   workbookAxios
-    // 예외적으로 "/" 포함
-    .get("/workbook/", { params: { search: type, page: page, size: size } })
+    .get("/workbook/teacher", { params: { search: type, page: page, size: size } })
     .then(({ data }) => {
       return data.data;
     });
