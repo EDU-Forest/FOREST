@@ -5,19 +5,8 @@ pipeline {
     }
     environment {
         DOCKER = 'sudo docker'
-
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
-        
-        // REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
-        // REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
-        // TARGET_BRANCH = 'production-auth'
-        
-        // CONTAINER_NAME = 'prod-auth-container'
-        
-        // AWS_CREDENTIAL_NAME = 'choi1087'
-        // ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
-        // IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
         REGION = 'ap-northeast-2'
     }
     stages{
@@ -108,6 +97,5 @@ pipeline {
                 }
             }
         }
-
     }
 }
