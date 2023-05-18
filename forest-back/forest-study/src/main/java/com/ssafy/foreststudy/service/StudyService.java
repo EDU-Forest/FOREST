@@ -934,6 +934,33 @@ public class StudyService {
             Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
             solvingTime += duration.getSeconds() / 60;
             correctRate += ssr.getCorrectRate();
+
+            List<StudentStudyProblemResult> spr = studentStudyProblemResultRepository.findAllByStudyAndUser(study,ssr.getUser());
+
+            int correctNum = 0;
+            int scoreSum = 0;
+            int studentCorrectRate = 0;
+            boolean check = true;
+
+            for (StudentStudyProblemResult ssp : spr) {
+                if (ssp.getIsCorrected())
+                    correctNum++;
+
+                if (!ssp.getIsGraded()) {
+                    if (ssp.getProblemList().getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
+                        check = false;
+                    else
+                        ssp.updateisGraded();
+                }
+
+                scoreSum += ssp.getPartPoint();
+            }
+
+            if (spr.size() != 0)
+                studentCorrectRate = correctNum * 100 / spr.size();
+
+            ssr.updateStudentStudyResult(correctNum, scoreSum, studentCorrectRate, check);
+
         }
         double average = Math.round((sumScore * 1.0 / participateNum) * 100) / 100.0;
         double dis = 0;
@@ -950,9 +977,10 @@ public class StudyService {
         for (StudentStudyProblemResult studentStudyProblemResult : ssp) {
             if (!studentStudyProblemResult.getIsGraded())
                 ungradedAnswerRate++;
-        }
-        ungradedAnswerRate = ungradedAnswerRate * 100 / ssp.size();
 
+        }
+
+        ungradedAnswerRate = ungradedAnswerRate * 100 / ssp.size();
 
         classStudyResult.createClassStudyResult(study, takeRate, average, standardDeviation, averageSolvingTime, correctAnswerRate, ungradedAnswerRate, classUser.size(), participateNum);
 
