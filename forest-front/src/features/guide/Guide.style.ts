@@ -97,6 +97,28 @@ const GuideSectionContentWrapper = styled.div<{ noMarginTop?: boolean }>`
   .marginBtm-div {
     margin-bottom: 80px;
   }
+
+  .class-summary1 {
+    width: 100%;
+    margin: auto;
+  }
+  .class-summary-img-div {
+    margin: auto;
+    margin-top: 32px;
+    width: 90%;
+    ${flexBox("row", "center", "center")};
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .class-summary-half {
+    width: calc(50% - 20px);
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    .class-summary-half {
+      width: 80%;
+    }
+  }
 `;
 
 const GuideSearchContentWrapper = styled(GuideSectionContentWrapper)`
@@ -123,14 +145,53 @@ const GuideSearchContentWrapper = styled(GuideSectionContentWrapper)`
   }
 `;
 
-const GuideSubContentWrapper = styled.div`
+const GuideSubContentWrapper = styled.div<{ mb?: boolean }>`
   margin-top: 32px;
+  margin-bottom: ${({ mb }) => mb && "48px"};
 `;
 
 const GuideHorizonContentWrapper = styled.div<{ wrapReverse?: boolean }>`
   ${flexBox("row", "top", "space-around")}
   width: 100%;
   margin-bottom: 48px;
+
+  .class-text-div {
+    width: calc(60% - 40px);
+    ${flexBox("column", "start", "center")}
+    gap: 48px;
+    margin-right: 40px;
+  }
+
+  .class-text-result {
+    width: calc(35% - 40px);
+    margin-right: 40px;
+  }
+
+  .class-make-img {
+    width: 100%;
+  }
+
+  .class-result-img {
+    width: 65%;
+  }
+
+  @media ${({ theme }) => theme.tablet} {
+    .class-make-img {
+      width: 60%;
+    }
+    .class-result-img {
+      width: 80%;
+    }
+
+    .class-text-result {
+      width: 100%;
+    }
+
+    .class-result-img {
+      width: 100%;
+      margin-bottom: 32px;
+    }
+  }
 
   .problem-text-div {
     width: calc(60% - 40px);

@@ -3,8 +3,9 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useQuery } from "react-query";
 
 const fetcher = (type: string, page: number, size: number) =>
+  // 용량 에러였다..
   workbookAxios
-    .get("/workbook/teacher", { params: { search: type, page: page, size: size } })
+    .get("/wb/teacher", { params: { search: type, page: page, size: size } })
     .then(({ data }) => {
       return data.data;
     });
