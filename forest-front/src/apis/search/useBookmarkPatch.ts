@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 
 const fetcher = (workbookId: number) =>
-  workbookAxios.patch(`/workbook/bookmark/${workbookId}`).then(({ data }) => data);
+  workbookAxios.patch(`/wb/bookmark/${workbookId}`).then(({ data }) => data);
 
 // 문제집 북마크 (최초 이후) - OK
 const useBookmarkPatch = () => {

@@ -2,7 +2,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
 
 const fetcher = async (wId: number) =>
-  await workbookAxios.delete(`/workbook/${wId}`).then(({ data }) => {
+  await workbookAxios.delete(`/wb/${wId}`).then(({ data }) => {
     return data;
   });
 
