@@ -63,8 +63,11 @@ const usePdfOCR = () => {
       });
 
       dispatch(setQuestions(newQuestions));
-      dispatch(setCurQuestion(curQuestion + 1));
       dispatch(closeWholePdfModal());
+      // 비어있는 문제집이 아닐 때만 다음 번호를 현재로
+      if (questions.length !== 0) {
+        dispatch(setCurQuestion(curQuestion + 1));
+      }
     },
   });
 };
