@@ -27,7 +27,7 @@ const config = {
       },
       {
         source: "/workbook/:path*",
-        destination: "/workbook",
+        destination: "/teacher/dashboard",
         permanent: false,
       },
     ];
