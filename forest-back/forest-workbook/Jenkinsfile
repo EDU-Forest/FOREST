@@ -90,7 +90,7 @@ pipeline {
 
                     cat ${EKS_DEPLOY_WORKBOOK_YML} | grep image
 
-                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' ${EKS_DEPLOY_WORKBOOK_YML}
+                    sed -i 's|image: .*|image: "${IMAGE_NAME_WORKBOOK}:${currentBuild.number}"|' ${EKS_DEPLOY_WORKBOOK_YML}
 
                     cat ${EKS_DEPLOY_WORKBOOK_YML} | grep image
                     
