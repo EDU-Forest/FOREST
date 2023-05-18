@@ -22,9 +22,9 @@
 
 ![캡처_2023_05_17_13_03_10_297](/uploads/b0bcfada1c2b0513bf6fbd68f2c2ae8e/캡처_2023_05_17_13_03_10_297.png)
 
-![캡처_2023_05_17_13_03_18_261](/uploads/5baf53c5d0487db2573de631ccdc9ede/캡처_2023_05_17_13_03_18_261.png)
-
 ![캡처_2023_05_17_13_03_25_173](/uploads/b1ee8fae3f84bebdcb499a895ee1a197/캡처_2023_05_17_13_03_25_173.png)
+
+![캡처_2023_05_18_23_51_52_952](/uploads/9ed41825c2723be722960804ce043683/캡처_2023_05_18_23_51_52_952.png)
 
 현대 교육은 디지털 기술의 발전과 함께 많은 변화를 겪고 있습니다.
 
@@ -64,6 +64,20 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 - 시험을 보면서 실시간으로 **필기 가능한 캔버스** 기능을 제공합니다.
 - 시험 종료 시 **자동 채점**이 이루어 집니다.
 - **나의 학습 결과 분석표**를 확인해 보세요!
+
+# 🌳 사용 기술
+
+![캡처_2023_05_18_23_51_10_440](/uploads/81a2ccebf4587de25d78e21ec99c1c1a/캡처_2023_05_18_23_51_10_440.png)
+
+![캡처_2023_05_18_23_51_14_426](/uploads/3ace25c41846c932b03a47cd2e772c9e/캡처_2023_05_18_23_51_14_426.png)
+
+![캡처_2023_05_18_23_51_21_631](/uploads/ffefbb4e7425c81fb0694e337be079e5/캡처_2023_05_18_23_51_21_631.png)
+
+![캡처_2023_05_18_23_51_24_841](/uploads/54d477d929e06181d0f6ca536311fca7/캡처_2023_05_18_23_51_24_841.png)
+
+![캡처_2023_05_18_23_51_27_949](/uploads/f962ac9a95852866de52d95129bf2211/캡처_2023_05_18_23_51_27_949.png)
+
+![캡처_2023_05_18_23_51_30_554](/uploads/d37f533d2b10891e58733569117fbd98/캡처_2023_05_18_23_51_30_554.png)
 
 # 🌳 개발 환경
 
@@ -115,24 +129,33 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 ## ERD
 
-- ERD
-    
+<details>
+    <summary>
+        ERD
+    </summary>
     ![Forest_ERD](/uploads/ec4ac021c2e90ab56dd4cf7b51539587/Forest_ERD.png)
+</details>
     
 
 ## 기능 명세서
 
-- 기능 명세
-    
+<details>
+    <summary>
+        기능 명세
+    </summary>
     ![기능명세](/uploads/fc95fa72e365281afe64ddd9c48c1546/기능명세.png)
+</details>
+
     
 
 ## API 명세서
 
-- API 명세서
-    
+<details>
+    <summary>
+        API 명세서
+    </summary>
     ![api](/uploads/4c97586e3be8aeb4fe25ffdf81556234/api.png)
-    
+</details>
 
 # 📁 프로젝트 구조
 
@@ -352,97 +375,153 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 ### 대시보드
 
-- 학생 대시보드
-    
+<details>
+    <summary>
+        학생 대시보드
+    </summary>
     ![대시보드_학생](/uploads/aeb21d28beb5d79877e2aee189fa116b/대시보드_학생.gif)
-    
-- 선생님 대시보드
-    
+</details>
+
+<details>
+    <summary>
+        선생님 대시보드
+    </summary>
     ![대시보드_선생님](/uploads/27204426bb73d1df4174c3093a6b1150/대시보드_선생님.gif)
-    
+</details>
 
 ### 클래스
 
-- 선생님 클래스
-    
+<details>
+    <summary>
+        선생님 클래스
+    </summary>
     ![클래스_선생님_클래스전환](/uploads/9ed09195a1eea6cf5723bf182fec7169/클래스_선생님_클래스전환.gif)
+</details>    
     
-- 클래스 생성 및 학생 초대
-    
+<details>
+    <summary>
+        클래스 생성 및 학생 초대
+    </summary>
     ![클래스_선생님_클래스추가](/uploads/7b15a3acbf8a82124f5def8341b78ec6/클래스_선생님_클래스추가.gif)
-    
-- 학생 클래스
-    
+</details>  
+
+<details>
+    <summary>
+        학생 클래스
+    </summary>
     ![클래스_학생](/uploads/ec56a833b13e3776523cfb159114137d/클래스_학생.gif)
-    
+</details>  
+
 
 ### 탐색
 
-- 탐색 페이지
-    
+<details>
+    <summary>
+        탐색 페이지
+    </summary>
     ![탐색](/uploads/5a6316f5b2a8bb31076ef27089b8ddc8/탐색.gif)
-    
+</details>  
 
 ### 에디터
 
-- 문제집 전환 및 추가
-    
+<details>
+    <summary>
+        문제집 전환 및 추가
+    </summary>
     ![에디터_문제집전환](/uploads/9b7d72f4a7b5b5bc635515160a74b5b0/에디터_문제집전환.gif)
-    
-- 객관식 생성
-    
+</details> 
+
+<details>
+    <summary>
+        객관식 생성
+    </summary>
     ![에디터_객관식_추가_2_](/uploads/4417192ce09c5bb2a95b561b68f33654/에디터_객관식_추가_2_.gif)
-    
-- OX 선택 생성
-    
+</details>  
+
+<details>
+    <summary>
+        OX 선택 생성
+    </summary>
     ![에디터_OX_추가](/uploads/efd84c3f6b9250ed01c41023fc5dd024/에디터_OX_추가.gif)
-    
-- 단답식 생성
-    
+</details>  
+
+<details>
+    <summary>
+        단답식 생성
+    </summary>
     ![에디터_단답식_추가](/uploads/bc630a9bb1dfece617004f6f730eb35d/에디터_단답식_추가.gif)
-    
-- 서술형 생성
-    
+</details>    
+ 
+<details>
+    <summary>
+        서술형 생성
+    </summary>
     ![에디터_서술형_추가](/uploads/febe893e453e8aea7bed187695bd09f8/에디터_서술형_추가.gif)
-    
-- 이미지 삽입
-    
+</details>  
+
+<details>
+    <summary>
+        이미지 삽입
+    </summary>
     ![에디터_이미지추가](/uploads/fca8ab15ef17df6f7e962369b07086df/에디터_이미지추가.gif)
-    
-- 지문 삽입
-    
+</details> 
+
+<details>
+    <summary>
+        지문 삽입
+    </summary>
     ![에디터_지문_추가](/uploads/8304ea3960d50d1817dd199a0359d877/에디터_지문_추가.gif)
-    
+</details>  
 
 ### 문제
 
-- 문제 순서 수정, 삭제
-    
+<details>
+    <summary>
+        문제 순서 수정, 삭제
+    </summary>
     ![문제집상세_문항수정](/uploads/0e29ecc6aab1653e0b6352f58c73bee4/문제집상세_문항수정.gif)
-    
-- PDF 다운로드
-    
+</details>  
+  
+<details>
+    <summary>
+        PDF 다운로드
+    </summary>
     ![문제집상세_PDF다운](/uploads/f668623d474d6b97dfbf46b1afc49c31/문제집상세_PDF다운.gif)
-    
-- 문제집 출제
-    
+</details>  
+
+<details>
+    <summary>
+        문제집 출제
+    </summary>
     ![문제집상세_출제](/uploads/a3b2e6d90b475c02a5e7faf8d79093ae/문제집상세_출제.gif)
-    
-- 문제집 배포
-    
+</details>  
+
+<details>
+    <summary>
+        문제집 배포
+    </summary>
     ![문제집상세_배포](/uploads/0cea4c417d354939d81066aa596431d9/문제집상세_배포.gif)
-    
-- 문제집 사본 생성
-    
+</details>  
+
+<details>
+    <summary>
+        문제집 사본 생성
+    </summary>
     ![문제집상세_사본](/uploads/2df8f652d3cddcb935d97c7171de8f76/문제집상세_사본.gif)
-    
+</details>  
 
 ### 분석
 
-- 학생 문제 풀이 및 결과 확인
-    
+<details>
+    <summary>
+        학생 문제 풀이 및 결과 확인
+    </summary>
     ![문제풀이](/uploads/7b075536400d41a749989a036c124b6e/문제풀이.gif)
-    
-- 선생님 시험 종료 및 결과 확인
-    
+</details>  
+
+<details>
+    <summary>
+        선생님 시험 종료 및 결과 확인
+    </summary>
     ![클래스_선생님_결과](/uploads/81fb5b9a7ff361a2b2763be79af921f1/클래스_선생님_결과.gif)
+</details>  
