@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 const fetcher = (title: string) =>
   // 예외적으로 "/" 포함
-  workbookAxios.post("/wb", { title }).then(({ data }) => data);
+  workbookAxios.post("/wb/", { title }).then(({ data }) => data);
 
 const useAddWorkBook = () => {
   const dispatch = useDispatch();
