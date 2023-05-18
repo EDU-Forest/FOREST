@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@Api("Workbook Controller")
+@Api("WORKBOOK Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
