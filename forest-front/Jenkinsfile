@@ -7,23 +7,9 @@ pipeline {
     }
     environment {
         DOCKER = 'sudo docker'
-
         TIME_ZONE = 'Asia/Seoul'
-        PROFILE = 'local'
-        
-        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
-        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
-        TARGET_BRANCH = 'production-front'
-        
-        CONTAINER_NAME = 'prod-front-container'
-        
-        AWS_CREDENTIAL_NAME = 'choi1087'
-        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
-        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
+        PROFILE = 'local'        
         REGION = 'ap-northeast-2'
-        
-        TARGET_FILE = 'eks-deploy-react.yml'        
-
     }
     stages{
 
@@ -47,8 +33,8 @@ pipeline {
                 ls -al
                 npm -v
                 node -v
-                 docker build -t $IMAGE_NAME:$BUILD_NUMBER .
-                 docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest
+                 docker build -t ${IMAGE_NAME_FRONT}:$BUILD_NUMBER .
+                 docker tag ${IMAGE_NAME_FRONT}:$BUILD_NUMBER ${IMAGE_NAME_FRONT}:latest
 
                  '''
                 }                
@@ -68,13 +54,13 @@ pipeline {
                     // cleanup current user docker credentials
                     sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
                     
-                    sh 'echo ${ECR_PATH}'
+                    sh 'echo ${ECR_PATH_FRONT}'
                     sh 'echo ${REGION}'
                     sh 'echo ${AWS_CREDENTIAL_NAME}'
                    
-                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
-                      docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
-                      docker.image("${IMAGE_NAME}:latest").push()
+                    docker.withRegistry("https://${ECR_PATH_FRONT}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
+                      docker.image("${IMAGE_NAME_FRONT}:${BUILD_NUMBER}").push()
+                      docker.image("${IMAGE_NAME_FRONT}:latest").push()
 
                       sleep 10
                     }
@@ -84,21 +70,21 @@ pipeline {
             post {
                 success {
                     echo 'success upload image'
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                    sh 'docker rmi ${IMAGE_NAME_FRONT}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME_FRONT}:latest'
                 }
                 failure {
                     error 'fail upload image' // exit pipeline
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                    sh 'docker rmi ${IMAGE_NAME_FRONT}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME_FRONT}:latest'
                 }
             }
         }
 
         stage('Manifest Update') {
             steps {
-                git credentialsId: 'my-key',
-                    url: 'git@github.com:choi1087/forest_yaml.git',
+                git credentialsId: '${GIT_CREDENTIALS_ID}',
+                    url: '${GIT_URL}',
                     branch: 'main'
                 
                 
@@ -106,14 +92,14 @@ pipeline {
                     sh """
                     ls -al                    
 
-                    cat eks-deploy-react.yml | grep image
+                    cat ${EKS_DEPLOY_REACT_YML} | grep image
 
-                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-react.yml
+                    sed -i 's|image: .*|image: "${IMAGE_NAME_FRONT}:${currentBuild.number}"|' ${EKS_DEPLOY_REACT_YML}
 
-                    cat eks-deploy-react.yml | grep image
+                    cat ${EKS_DEPLOY_REACT_YML} | grep image
                     
                     git status
-                    git add eks-deploy-react.yml
+                    git add ${EKS_DEPLOY_REACT_YML}
                     git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'
                     git push origin main
                     """
