@@ -14,7 +14,7 @@ const fetcher = (classId: number) =>
 const useRecentStudyIdQuery = (classId: number) => {
   const dispatch = useDispatch();
   return useQuery([queryKeys.RECENT_CLASSID, classId], () => fetcher(classId), {
-    enabled: !!classId,
+    enabled: !!classId && classId !== -1,
     refetchOnWindowFocus: false,
     onSuccess: (recentStudyId) => {
       if (recentStudyId) {

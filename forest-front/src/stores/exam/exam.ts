@@ -20,6 +20,7 @@ const initialState: examState = {
       type: "",
       title: "",
       text: "",
+      point: 0,
       problemImgPath: "",
       userAnswer: "",
       problemAnswer: "",
