@@ -43,8 +43,11 @@ const useImgOCR = () => {
       const newQuestions = [...questions, question];
 
       dispatch(setQuestions(newQuestions));
-      dispatch(setCurQuestion(curQuestion + 1));
       dispatch(closePartPdfModal());
+      // 비어있는 문제집이 아닐 때만 다음 번호를 현재로
+      if (questions.length !== 0) {
+        dispatch(setCurQuestion(curQuestion + 1));
+      }
     },
   });
 };
