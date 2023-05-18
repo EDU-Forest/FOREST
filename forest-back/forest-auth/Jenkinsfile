@@ -87,8 +87,8 @@ pipeline {
 
         stage('Manifest Update') {
             steps {
-                git credentialsId: "${GIT_CREDENTIALS_ID}",
-                    url: "${GIT_URL}",
+                git credentialsId: '${GIT_CREDENTIALS_ID}',
+                    url: '${GIT_URL}',
                     branch: 'main'                
                 
                 dir('back') {
