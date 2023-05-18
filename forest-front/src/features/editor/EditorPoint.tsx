@@ -22,12 +22,15 @@ function EditorPoint({ curQuestion }: IProps) {
   }, [questions, curQuestion]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPoint(Number(e.target.value));
+    const { value } = e.target;
+    let numberScore = parseInt(value.replace(/[^0-9]/g, ""));
+
+    setPoint(numberScore);
 
     const copyArr = [...questions];
     copyArr.splice(curQuestion - 1, 1, {
       ...questions[curQuestion - 1],
-      point: Number(e.target.value),
+      point: isNaN(numberScore) ? 0 : numberScore,
     });
 
     dispatch(setQuestions([...copyArr]));
