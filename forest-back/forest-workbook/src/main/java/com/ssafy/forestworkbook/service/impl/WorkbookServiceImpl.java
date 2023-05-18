@@ -1306,8 +1306,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         // 문항 별 반복
                         for (String temp : splitFull) {
-                            System.out.println(temp);
-                            System.out.println("================");
+//                            System.out.println(temp);
+//                            System.out.println("================");
 
                             List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
