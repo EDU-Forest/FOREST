@@ -6,6 +6,7 @@ const ClassWorkbookWrapper = styled.div`
   border-radius: 1.5rem;
   padding: 2rem;
   margin-bottom: 2.25rem;
+  background-color: white;
 `;
 
 const CheckIconWrapper = styled.div`

@@ -67,7 +67,7 @@ export default function TestEndModal() {
 
   useEffect(() => {
     if (endSuccess) {
-      router.push(`/test/${router.query.studyId}/result`, undefined, { shallow: true });
+      router.push(`/test/${router.query.studyId}/result`);
     }
   }, [endSuccess]);
 

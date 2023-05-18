@@ -4,6 +4,7 @@ const CorrectRateWrapper = styled.div`
   box-shadow: 0rem 0rem 1.25rem 0.125rem rgba(0, 0, 0, 0.1);
   border-radius: 1.5rem;
   width: 100%;
+  background-color: white;
 
   padding: 1.5rem;
 `;

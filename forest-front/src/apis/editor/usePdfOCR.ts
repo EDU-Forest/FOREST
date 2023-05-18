@@ -1,5 +1,5 @@
 import { closeWholePdfModal } from "@/stores/editor/editorModal";
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
@@ -24,7 +24,7 @@ interface ProblemList {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/workbook/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
+    .post(`/wb/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
       timeout: 100000,
       headers: {
         "Content-Type": "multipart/form-data",
@@ -36,6 +36,7 @@ const fetcher = (payload: IPayload) =>
 
 const usePdfOCR = () => {
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
 
   const dispatch = useDispatch();
   return useMutation(fetcher, {
@@ -63,6 +64,10 @@ const usePdfOCR = () => {
 
       dispatch(setQuestions(newQuestions));
       dispatch(closeWholePdfModal());
+      // 비어있는 문제집이 아닐 때 추가되는 마지막 문제를 현재로
+      if (questions.length !== 0) {
+        dispatch(setCurQuestion(questions.length + 1));
+      }
     },
   });
 };

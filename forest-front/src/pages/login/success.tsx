@@ -1,14 +1,15 @@
 import { CSSProperties } from "react";
-import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
 import { LoginSuccessLayout } from "@/features/login/Login.style";
 import { setRole, setUsername } from "@/stores/user/user";
 import { setLocalStorage } from "@/utils/localStorage";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Lottie from "react-lottie-player";
 import treeJson from "../../../public/lottieJson/tree.json";
 import { ParsedUrlQuery } from "querystring";
+import useRecentClassIdQuery from "@/apis/class/useRecentClassIdQuery";
+import { RootState } from "@/stores/store";
 
 interface IServerSideprops {
   query: ParsedUrlQuery;
@@ -17,8 +18,8 @@ interface IServerSideprops {
 function LoginSuccess() {
   const router = useRouter();
   const dispatch = useDispatch();
-
-  const { refetch } = useRecentClassIdQuery();
+  const { username, role } = useSelector((state: RootState) => state.user);
+  const { refetch } = useRecentClassIdQuery(username, role);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -28,14 +29,11 @@ function LoginSuccess() {
       setLocalStorage("forest_access_token", accessToken);
     } else return;
 
-    const username = router.query?.name;
-    const role = router.query?.role;
     const email = router.query?.email;
-    if (typeof username === "string" && typeof role === "string") {
-      dispatch(setUsername(username));
-      dispatch(setRole(role));
+    if (typeof router.query?.name === "string" && typeof router.query?.role === "string") {
+      dispatch(setUsername(router.query?.name));
+      dispatch(setRole(router.query?.role));
       refetch();
-      router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     } else {
       router.push(
         {

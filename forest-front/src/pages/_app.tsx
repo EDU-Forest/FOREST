@@ -12,6 +12,7 @@ import { theme } from "../styles/theme";
 import Script from "next/script";
 import * as gtag from "../lib/gtag";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -55,6 +56,10 @@ export default function App({ Component, pageProps }: AppProps) {
             <PersistGate loading={null} persistor={persistStore(store)}>
               <ThemeProvider theme={theme}>
                 <GlobalStyle />
+                <Head>
+                  <title>Forest</title>
+                  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+                </Head>
                 <Component {...pageProps} />
               </ThemeProvider>
             </PersistGate>

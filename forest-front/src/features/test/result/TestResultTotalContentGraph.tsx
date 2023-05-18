@@ -4,6 +4,7 @@ import { TestResultTotalContentGraphBox } from "./TextResult.style";
 interface Iprops {
   volume: number;
   correctNum: number;
+  userRole?: string;
 }
 
 export default function TestResultTotalContentGraph({ volume, correctNum }: Iprops) {

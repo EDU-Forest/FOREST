@@ -5,7 +5,7 @@ import { removeItemLocalStorage } from "../localStorage";
 const { NEXT_PUBLIC_SERVER_URL } = process.env;
 
 const AxiosConFigure: AxiosRequestConfig = {
-  baseURL: `${NEXT_PUBLIC_SERVER_URL}:9010`,
+  baseURL: `${NEXT_PUBLIC_SERVER_URL}`,
   timeout: 5000,
   withCredentials: true,
 };
@@ -30,7 +30,6 @@ authAxios.interceptors.response.use(
     return response;
   },
   async (error) => {
-    console.log("error", error);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
@@ -48,7 +47,6 @@ authAxios.interceptors.response.use(
       (error?.response?.status === 401 &&
         error?.response?.data?.error?.message === "Refresh Token이 유효하지 않습니다.")
     ) {
-      console.log("여기 들어옴!");
       removeItemLocalStorage("forest_access_token");
       // if (typeof window !== "undefined") {
       //   window.location.href = "/";

@@ -28,7 +28,7 @@ export default function SearchDefaultList() {
   const { data: recentList, isLoading: recentLoading } = useRecentWorkbookListQuery();
 
   const goToDetail = (id: number) => {
-    router.push(`/workbook/${id}`, undefined, { shallow: true });
+    router.push(`/workbook/${id}`);
   };
 
   return (

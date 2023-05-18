@@ -9,7 +9,7 @@ interface Payload {
 }
 
 const fetcher = ({ classId, type }: Payload) =>
-  workbookAxios.get(`/workbook/class/${classId}`, { params: { search: type } }).then(({ data }) => {
+  workbookAxios.get(`/wb/class/${classId}`, { params: { search: type } }).then(({ data }) => {
     const workbookList: IClassWorkbooks[] = data.data.workbookList;
     return workbookList;
   });

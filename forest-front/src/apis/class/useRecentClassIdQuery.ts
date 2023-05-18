@@ -4,6 +4,7 @@ import authAxios from "@/utils/customAxios/authAxios";
 import { useDispatch } from "react-redux";
 import { setClass } from "@/stores/class/classInfo";
 import { IClassList } from "@/types/ClassList";
+import { useRouter } from "next/router";
 
 const fetcher = () =>
   authAxios.get("/api/class/recent").then(({ data }) => {
@@ -12,12 +13,14 @@ const fetcher = () =>
   });
 
 // 최근 클래스 조회 (로그인 시) - OK
-const useRecentClassIdQuery = () => {
+const useRecentClassIdQuery = (username: string, role: string) => {
+  const router = useRouter();
   const dispatch = useDispatch();
   return useQuery([queryKeys.RECENT_CLASSID], fetcher, {
-    enabled: false,
+    enabled: username !== "" && role !== "",
     onSuccess: (recentClass) => {
       dispatch(setClass(recentClass));
+      router.push(`/${role.toLowerCase()}/dashboard`, undefined, { shallow: true });
     },
   });
 };

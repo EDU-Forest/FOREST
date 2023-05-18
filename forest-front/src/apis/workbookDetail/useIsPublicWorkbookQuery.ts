@@ -4,7 +4,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
 
 const fetcher = (workbookId: number) =>
-  workbookAxios.patch(`/workbook/public/${workbookId}`).then(({ data }) => {
+  workbookAxios.patch(`/wb/public/${workbookId}`).then(({ data }) => {
     return data;
   });
 

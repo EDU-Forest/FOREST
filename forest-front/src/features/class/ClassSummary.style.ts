@@ -18,6 +18,7 @@ const ClassSummaryWrapper = styled.div<{ small?: boolean }>`
   padding: 2rem;
   margin-bottom: 2.25rem;
   position: relative;
+  background-color: white;
 
   @media ${({ theme }) => theme.tablet} {
     height: 41rem;

@@ -13,18 +13,18 @@ function MemoUploadInput() {
     return memo.length;
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
     e.target.value.length > maxLen
       ? setMemo(e.target.value.slice(0, maxLen))
       : setMemo(e.target.value);
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     // 엔터 키 눌리면 메모 등록
-    if (memo.trim() && e.key === "Enter") {
-      mutate(memo);
-      setMemo("");
-    }
+    // if (memo.trim() && e.key === "Enter") {
+    //   mutate(memo);
+    //   setMemo("");
+    // }
   };
 
   const handleClick = () => {
@@ -37,12 +37,13 @@ function MemoUploadInput() {
   return (
     <>
       <StyledMemoUploadInputBox>
-        <input
-          type="text"
+        <textarea
+          // type="text"
+          rows={2}
           value={memo}
           maxLength={maxLen}
-          onChange={handleChange}
-          onKeyDown={handleKeyPress}
+          onChange={(e) => handleChange(e)}
+          onKeyDown={(e) => handleKeyPress(e)}
         />
         <MemoUploadBtn onClick={handleClick} />
       </StyledMemoUploadInputBox>

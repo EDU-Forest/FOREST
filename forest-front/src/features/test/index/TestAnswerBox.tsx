@@ -10,7 +10,7 @@ import { closeCanvas } from "@/stores/exam/canvas";
 export default function TestAnswerBox() {
   const dispatch = useDispatch();
   const { username } = useSelector((state: RootState) => state.user);
-  const { problem, curProblemNum, isSubmitted } = useSelector((state: RootState) => state.exam);
+  const { isSubmitted } = useSelector((state: RootState) => state.exam);
 
   const router = useRouter();
 
@@ -21,7 +21,7 @@ export default function TestAnswerBox() {
   const goToResultHandler = () => {
     dispatch(closeCanvas());
 
-    router.push(`/test/${router.query.studyId}/result`, undefined, { shallow: true });
+    router.push(`/test/${router.query.studyId}/result`);
   };
 
   return (

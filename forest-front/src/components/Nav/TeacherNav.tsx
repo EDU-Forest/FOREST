@@ -12,6 +12,7 @@ import { setLogout } from "@/stores/user/user";
 import { removeItemLocalStorage } from "@/utils/localStorage";
 import useAuth from "@/hooks/useAuth";
 import { BsQuestionCircle } from "react-icons/bs";
+import GuideIcon from "@/features/guide/GuideIcon";
 
 interface Iprops {
   nowLocation: string;
@@ -23,7 +24,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
 
   // 페이지 이동
   const movePage = (path: string) => {
-    router.push(`/${path}`, undefined, { shallow: true });
+    router.push(`/${path}`);
   };
 
   // 현재 위치 네비바 css 스타일 true
@@ -43,10 +44,6 @@ export default function TeacherNav({ nowLocation }: Iprops) {
   // 홈으로 이동
   const goToDashBoard = () => {
     router.push(`/teacher/dashboard`, undefined, { shallow: true });
-  };
-
-  const goToGuide = () => {
-    router.push("/guide", undefined, { shallow: true });
   };
 
   return (
@@ -78,7 +75,7 @@ export default function TeacherNav({ nowLocation }: Iprops) {
         </NavInner>
       </TeacherNavDiv>
       <NavBottom>
-        <BsQuestionCircle onClick={goToGuide} />
+        <GuideIcon />
         <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
       </NavBottom>
     </StyledNav>
