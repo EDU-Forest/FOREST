@@ -16,6 +16,7 @@ export interface examState {
     type: string;
     title: string;
     text: string;
+    point: number;
     problemImgPath?: string;
     userAnswer: string;
     problemAnswer: string;

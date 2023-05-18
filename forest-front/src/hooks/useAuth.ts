@@ -1,4 +1,4 @@
-// import { setInitClassInfo } from "@/stores/class/classInfo";
+import { setInitClassInfo } from "@/stores/class/classInfo";
 import { setInitEditorQuestions } from "@/stores/editor/editorQuestions";
 import { setInitEditorWorkbook } from "@/stores/editor/editorWorkbook";
 import { setInitCanvas } from "@/stores/exam/canvas";
@@ -15,7 +15,7 @@ function useAuth() {
 
   const logout = () => {
     dispatch(setLogout());
-    // dispatch(setInitClassInfo());
+    dispatch(setInitClassInfo());
     dispatch(setInitEditorQuestions());
     dispatch(setInitEditorWorkbook());
     dispatch(setInitCanvas());
