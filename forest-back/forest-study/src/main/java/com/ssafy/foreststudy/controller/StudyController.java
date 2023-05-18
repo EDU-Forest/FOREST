@@ -24,7 +24,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@RequestMapping("/study")
+@RequestMapping("")
 public class StudyController {
 
     private final StudyService studyService;
@@ -36,6 +36,7 @@ public class StudyController {
         Long userId = jwtDecoder.verifyJWT(request);
         return ResponseEntity.ok(studyService.getScheduleList(userId));
     }
+
 
     @ApiOperation(value = "최근 진행한 클래스 시험 결과 조회", notes = "최근 진행한 클래스 시험 결과를 조회합니다.")
     @GetMapping("/recent/{classId}")
