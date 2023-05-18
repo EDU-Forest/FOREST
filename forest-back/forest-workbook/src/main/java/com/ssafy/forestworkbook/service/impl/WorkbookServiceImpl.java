@@ -90,7 +90,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             Page<Study> studyList = studyRepository.findAllByUserGroupByWorkbookId(userId, pageable);
             Page<TeacherWorkbookDto> workbookList = studyList.map(s -> TeacherWorkbookDto.builder()
                     .workbookId(s.getWorkbook().getId())
-                    .isOriginal(s.getWorkbook().getCreator().getId() == userId)
+                    .isOriginal(s.getWorkbook().getCreator().getId().equals(userId))
                     .isPublic(s.getWorkbook().getIsPublic())
                     .isBookmarked(userWorkbookRepository.findByUserIdAndWorkbookIdAndIsBookmarkedIsTrue(userId, s.getWorkbook().getId())
                             .orElse(null) != null)
@@ -872,7 +872,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             // 한 줄씩 확인
             for (int i = 0; i < txt.length; i++) {
                 String temp = txt[i];
-                log.info(txt[i]);
+//                log.info(txt[i]);
 
                 // title 확인
                 if (!checkTitle && !checkText & !checkNum) {
@@ -903,7 +903,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         // title
                         else if (temp.substring(endIndex).trim().substring(0, 1).matches("^[가-힣]*$")) {
-                            title.append(temp.substring(endIndex).trim().substring(0)).append(" ");
+                            title.append(temp.substring(endIndex).trim()).append(" ");
 
                             // 문제 유형 확인
                             if (temp.contains("?") || temp.contains("고르시오") || temp.contains("것은")) {
@@ -1010,7 +1010,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         checkPoint = true;
 //                        checkText = true;
                         temp = temp.substring(0, start).trim();
-                        System.out.println(temp);
+//                        System.out.println(temp);
                     }
 
                     if (!checkDelete) text.append(temp).append(" ");
@@ -1302,7 +1302,7 @@ public class WorkbookServiceImpl implements WorkbookService {
 //                        System.out.println(fullText);
 
                         // 문항 별로 자르기
-                        String[] splitFull = fullText.split("^*[0-9]{1,2}[.]");
+                        String[] splitFull = fullText.split("[0-9]{1,2}[.]");
 
                         // 문항 별 반복
                         for (String temp : splitFull) {
@@ -1461,7 +1461,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                                         .problemImgPath(null)
                                         .imgIsEmpty(true)
                                         .text(text.toString())
-                                        .textIsEmpty(text.toString() == null || text.equals(""))
+                                        .textIsEmpty(text.toString() == null || text.toString().equals(""))
                                         .itemList(itemResExceptIdDtoList)
                                         .point(ocrPoint)
                                         .build();
