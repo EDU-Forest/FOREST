@@ -50,7 +50,6 @@ export default function DescriptiveForm() {
       isLast,
       studentPointList: newStudentPointList,
     };
-    console.log("payload", payload);
     scoringMutate(payload);
 
     if (!isLast) {
