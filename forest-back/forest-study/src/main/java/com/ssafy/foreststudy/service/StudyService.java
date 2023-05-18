@@ -516,6 +516,7 @@ public class StudyService {
                     .problemNum(pl.getProblemNum())
                     .type(pl.getProblem().getType())
                     .title(pl.getProblem().getTitle())
+                    .point(pl.getProblem().getPoint())
                     .text(pl.getProblem().getText())
                     .problemImgPath(pl.getProblem().getPath())
                     .userAnswer(spr.getUserAnswer())
