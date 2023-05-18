@@ -42,8 +42,8 @@ pipeline {
                 ls -al
                 chmod +x ./gradlew
                 ./gradlew build
-        		 docker build -t ${IMAGE_NAME}:$BUILD_NUMBER .
-        		 docker tag ${IMAGE_NAME}:$BUILD_NUMBER ${IMAGE_NAME}:latest
+        		 docker build -t ${IMAGE_NAME_AUTH}:$BUILD_NUMBER .
+        		 docker tag ${IMAGE_NAME_AUTH}:$BUILD_NUMBER ${IMAGE_NAME_AUTH}:latest
         		 '''
                 }                
             }
@@ -74,13 +74,13 @@ pipeline {
             post {
                 success {
                     echo 'success upload image'
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                    sh 'docker rmi ${IMAGE_NAME_AUTH}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME_AUTH}:latest'
                 }
                 failure {
                     error 'fail upload image'
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
+                    sh 'docker rmi ${IMAGE_NAME_AUTH}:${BUILD_NUMBER}'
+                    sh 'docker rmi ${IMAGE_NAME_AUTH}:latest'
                 }
             }
         }
