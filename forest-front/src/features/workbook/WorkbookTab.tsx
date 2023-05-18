@@ -2,7 +2,8 @@ import { StyledWorkbookTab, StyledWorkbookTabItem } from "./Workbook.style";
 
 interface IProps {
   selectedType: string;
-  setSelectedType: React.Dispatch<React.SetStateAction<string>>;
+  // setSelectedType: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedType: (selectedType: string) => void;
 }
 
 function WorkbookTab({ selectedType, setSelectedType }: IProps) {

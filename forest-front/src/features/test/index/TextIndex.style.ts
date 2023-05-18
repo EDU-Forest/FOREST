@@ -163,6 +163,10 @@ const StyledTestNumberText = styled.div`
 
 const StyledUsername = styled(Title)`
   margin-bottom: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const StyledTestAnswerTable = styled.table`
