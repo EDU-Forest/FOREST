@@ -1,32 +1,10 @@
-def previousBuildNumber = currentBuild.previousBuild?.number
-
 pipeline {
     agent any
-    options {
-        timeout(time: 1, unit: 'HOURS') // set timeout 1 hour
-    }
     environment {
         DOCKER = 'sudo docker'
-
-        TIME_ZONE = 'Asia/Seoul'
-        PROFILE = 'local'
-        
-        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
-        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
-        TARGET_BRANCH = 'production-front'
-        
-        CONTAINER_NAME = 'prod-front-container'
-        
-        AWS_CREDENTIAL_NAME = 'choi1087'
-        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
-        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-front'
-        REGION = 'ap-northeast-2'
-        
-        TARGET_FILE = 'eks-deploy-react.yml'        
-
     }
-    stages{
-
+   
+    stages {
         stage('Clone Repository') {
             steps {
                 checkout scm
@@ -36,88 +14,61 @@ pipeline {
 
         stage('env setting') {
             steps{
-                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/prod-front/forest-front'                
+                sh 'cp /var/jenkins_home/env/.env /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/ca.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.crt /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
+                sh 'cp /var/jenkins_home/env/cert.key /var/jenkins_home/workspace/dev-front-pipeline/forest-front'
             }            
         }
         
-        stage('dockerizing project by dockerfile') {
-            steps {
-                dir('forest-front') {
-                    sh '''
-                ls -al
-                npm -v
-                node -v
-                 docker build -t $IMAGE_NAME:$BUILD_NUMBER .
-                 docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest
+        stage('Build image') {
+            steps {         
+                sh 'ls -al'       
+                sh 'npm -v'
+                sh 'node -v'
+                dir('forest-front'){
+                    sh 'ls -al'
+                    sh 'docker build -t ${FOREST_FRONT_IMAGE} .'    
+                }                                                
+                echo 'Build image...'
+            }
+        }
 
-                 '''
+        stage('Remove Previous image') {        
+            steps {
+                script {
+                    try {
+                        sh 'docker stop ${FOREST_FRONT_CONTAINER}'
+                        sh 'docker rm ${FOREST_FRONT_CONTAINER}'                        
+                    } catch (e) {
+                        echo 'fail to stop and remove container'
+                    }    
                 }                
             }
-            post {
-                success {
-                    echo 'success dockerizing project'
-                }
-                failure {
-                    error 'fail dockerizing project' // exit pipeline
-                }
+            
+        }
+        stage('Run New image') {
+            steps {
+                dir('forest-front'){
+                    sh 'ls -al'
+                    sh 'docker run --name ${FOREST_FRONT_CONTAINER} -d -p 3000:3000 ${FOREST_FRONT_IMAGE}'
+                    echo 'Run New image'
+                }                
+            }
+        }        
+    }
+
+    post {
+        success{
+            script{
+                mattermostSend color: 'good', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Success'
             }
         }
-        stage('upload aws ECR') {
-            steps {
-                script{
-                    // cleanup current user docker credentials
-                    sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
-                    
-                    sh 'echo ${ECR_PATH}'
-                    sh 'echo ${REGION}'
-                    sh 'echo ${AWS_CREDENTIAL_NAME}'
-                   
-                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
-                      docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
-                      docker.image("${IMAGE_NAME}:latest").push()
-
-                      sleep 10
-                    }
-
-                }
-            }
-            post {
-                success {
-                    echo 'success upload image'
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
-                }
-                failure {
-                    error 'fail upload image' // exit pipeline
-                    sh 'docker rmi ${IMAGE_NAME}:${BUILD_NUMBER}'
-                    sh 'docker rmi ${IMAGE_NAME}:latest'
-                }
-            }
-        }
-
-        stage('Manifest Update') {
-            steps {
-                git credentialsId: 'my-key',
-                    url: 'git@github.com:choi1087/forest_yaml.git',
-                    branch: 'main'
-                
-                
-                dir('front') {
-                    sh """
-                    ls -al                    
-
-                    cat eks-deploy-react.yml | grep image
-
-                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-react.yml
-
-                    cat eks-deploy-react.yml | grep image
-                    
-                    git status
-                    git add eks-deploy-react.yml
-                    git commit -m '[UPDATE] forest-front ${currentBuild.number} image versioning'
-                    git push origin main
-                    """
-                }
+        failure
+        {
+            script{
+                mattermostSend color: 'danger', message:  " ${env.JOB_NAME} # ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", text: 'Build Failed'
             }
         }
     }
