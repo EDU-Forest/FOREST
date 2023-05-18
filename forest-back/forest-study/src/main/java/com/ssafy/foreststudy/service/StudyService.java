@@ -898,6 +898,10 @@ public class StudyService {
             int ungradeNum = 0;
             List<StudentStudyProblemResult> studentStudyProblemResult = studentStudyProblemResultRepository.findAllByStudyAndProblemListOrderByIdAsc(study, list);
             for (StudentStudyProblemResult studyProblemResult : studentStudyProblemResult) {
+                /* 서술형이 아니고 미채점되어 있으면 */
+                if(!studyProblemResult.getProblemList().getProblem().getType().equals(EnumProblemTypeStatus.DESCRIPT))
+                    studyProblemResult.updateisGraded();
+
                 if (studyProblemResult.getIsCorrected())
                     correctNum++;
                 if (!studyProblemResult.getIsGraded())
