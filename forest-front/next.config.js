@@ -25,11 +25,11 @@ const config = {
         destination: "/student/dashboard",
         permanent: false,
       },
-      // {
-      //   source: "/workbook/:path",
-      //   destination: "/workbook",
-      //   permanent: false,
-      // },
+      {
+        source: "/workbook/:path",
+        destination: "/workbook",
+        permanent: false,
+      },
     ];
   },
 };
