@@ -89,8 +89,7 @@ pipeline {
             steps {
                 git credentialsId: '${GIT_CREDENTIALS_ID}',
                     url: '${GIT_URL}',
-                    branch: 'main'
-                
+                    branch: 'main'                
                 
                 dir('back') {
                     sh """
