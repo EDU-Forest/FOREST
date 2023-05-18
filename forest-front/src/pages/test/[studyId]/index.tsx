@@ -17,6 +17,21 @@ interface Iprops {
 }
 
 function Test({ studyId }: Iprops) {
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = "페이지를 나가면 시험이 자동으로 종료됩니다.";
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  });
+
   const { isSubmitted, toggleModal, isGraded, endTime, isEnded } = useSelector(
     (state: RootState) => state.exam,
   );

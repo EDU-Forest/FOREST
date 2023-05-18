@@ -32,7 +32,6 @@ export default function StudyAnalysisSummary() {
         },
       },
       `/teacher/class/study/${nowStudyId}/student`,
-      { shallow: true },
     );
   };
 

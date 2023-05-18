@@ -13,6 +13,7 @@ public class GetProblemListResponseDto {
     private int problemNum;
     private EnumProblemTypeStatus type;
     private String title;
+    private int point;
     private String text;
     private String problemImgPath;
     private String userAnswer;

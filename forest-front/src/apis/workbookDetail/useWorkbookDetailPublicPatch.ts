@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 
 const fetcher = async (wId: number) =>
-  await workbookAxios.patch(`/workbook/public/${wId}`).then(({ data }) => {
+  await workbookAxios.patch(`/wb/public/${wId}`).then(({ data }) => {
     return data;
   });
 

@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-@Api("Workbook Controller")
+@Api("WORKBOOK Controller")
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -29,11 +29,11 @@ public class WorkbookController {
     private final WorkbookService workbookService;
     private final JwtDecoder jwtDecoder;
 
-    @GetMapping
+    @GetMapping("/teacher")
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList (
             HttpServletRequest request,
-            @RequestParam String search, Pageable pageable) throws UnsupportedEncodingException {
+            @RequestParam(required = false) String search, Pageable pageable) throws UnsupportedEncodingException {
         Long userId = jwtDecoder.verifyJWT(request);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }

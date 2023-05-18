@@ -15,7 +15,7 @@ interface DataType {
 }
 
 const fetcher = async (data: DataType) =>
-  await workbookAxios.patch(`/workbook`, data).then(({ data }) => {
+  await workbookAxios.patch(`/wb`, data).then(({ data }) => {
     return data.data;
   });
 

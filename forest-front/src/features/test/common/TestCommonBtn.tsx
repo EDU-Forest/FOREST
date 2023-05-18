@@ -17,7 +17,7 @@ export default function TestInfoBtn() {
   const startTestHandler = () => {
     if (!endTime || new Date(endTime).getTime() >= new Date().getTime()) {
       mutate(typeof studyId === "string" ? parseInt(studyId) : -1);
-      router.push(`/test/${studyId}`, undefined, { shallow: true });
+      router.push(`/test/${studyId}`);
       dispatch(setResult({ isSubmitted: false, isGraded: false }));
     } else {
       alert("종료된 시험입니다.");
@@ -26,7 +26,7 @@ export default function TestInfoBtn() {
   };
 
   const goToResultHandler = () => {
-    router.push(`/test/${studyId}/result`, undefined, { shallow: true });
+    router.push(`/test/${studyId}/result`);
   };
 
   return (

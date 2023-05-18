@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { StyledNav, StudentNavDiv, NavInner, LogoutParagraph, NavBottom } from "./Nav.style";
 import useAuth from "@/hooks/useAuth";
 import { BsQuestionCircle } from "react-icons/bs";
+import GuideIcon from "@/features/guide/GuideIcon";
 
 interface Iprops {
   nowLocation: string;
@@ -14,7 +15,7 @@ export default function StudentNav({ nowLocation }: Iprops) {
 
   // 페이지 이동
   const movePage = (path: string) => {
-    router.push(`/${path}`, undefined, { shallow: true });
+    router.push(`/${path}`);
   };
 
   // 현재 위치 네비바 css 스타일 true
@@ -36,10 +37,6 @@ export default function StudentNav({ nowLocation }: Iprops) {
     router.push(`/student/dashboard`, undefined, { shallow: true });
   };
 
-  const goToGuide = () => {
-    router.push("/guide", undefined, { shallow: true });
-  };
-
   return (
     <StyledNav>
       <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goToDashBoard} />
@@ -58,7 +55,7 @@ export default function StudentNav({ nowLocation }: Iprops) {
       </StudentNavDiv>
 
       <NavBottom>
-        <BsQuestionCircle onClick={goToGuide} />
+        <GuideIcon />
         <LogoutParagraph onClick={logoutHandler}>로그아웃</LogoutParagraph>
       </NavBottom>
     </StyledNav>

@@ -185,13 +185,6 @@ const NavBottom = styled.div`
   cursor: pointer;
   color: ${({ theme }) => theme.colors.Gray[500]};
 
-  svg {
-    font-size: 1.25rem;
-    &:hover {
-      color: ${({ theme }) => theme.colors.Orange[700]};
-    }
-  }
-
   @media ${({ theme }) => theme.desktop} {
     left: 50%;
     width: 80%;

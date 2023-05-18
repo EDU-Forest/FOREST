@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import EmailAuth from "@/features/home/EmailAuth";
 import avoidDuplicateLoginAuth from "@/utils/auth/AvoidDuplicateLoginAuth";
 import { useEffect } from "react";
+import GuideIcon from "@/features/guide/GuideIcon";
 
 function Home() {
   const router = useRouter();
@@ -17,7 +18,7 @@ function Home() {
 
   const handleModal = (text: string) => {
     // setModalState(text);
-    router.push(`/${text}`, undefined, { shallow: true });
+    router.push(`/${text}`);
   };
 
   const goToDash = () => {
@@ -27,7 +28,10 @@ function Home() {
   return (
     <FullScreen isColumn={true}>
       <AuthSection>
-        <ForestLargeLogo onClick={goToDash} src={"/images/Forest_Logo.png"} />
+        <div style={{ position: "relative", textAlign: "right" }}>
+          <GuideIcon />
+          <ForestLargeLogo onClick={goToDash} src={"/images/Forest_Logo.png"} />
+        </div>
         <KakaoLogin />
         <EmailAuth handleModal={handleModal} />
       </AuthSection>

@@ -36,11 +36,11 @@ function ScheduleList() {
     if (!isClickable(scheduleType)) {
       return;
     }
-    router.push(`/test/${studyId}/info`, undefined, { shallow: true });
+    router.push(`/test/${studyId}/info`);
   };
 
   const STUDY: IStudy = {
-    HOMEWORK: "숙제",
+    HOMEWORK: "과제",
     EXAM: "시험",
     SELF: "자습",
   };

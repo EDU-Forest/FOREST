@@ -60,9 +60,7 @@ const classSlice = createSlice({
     },
     setSelectedStudy(state, action) {
       state.isDescript = action.payload.isDescript;
-      if (!action.payload.title) {
-        state.studyTitle = state.studyTitle;
-      } else {
+      if (action.payload.title) {
         state.studyTitle = action.payload.title;
       }
     },

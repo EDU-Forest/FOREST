@@ -4,7 +4,9 @@ import {
   GuideNavItemContainer,
   GuideNavSubItem,
   GuideNavWrapper,
-} from "./Guide.style";
+} from "./GuideNav.style";
+import ArrowLeft from "@/components/Arrow/ArrowLeft";
+import { ArrowDiv } from "@/components/Nav/Nav.style";
 
 interface Iprops {
   guideTab: string;
@@ -27,7 +29,9 @@ export default function GuideNav({ guideTab, setGuideTab }: Iprops) {
 
   return (
     <GuideNavWrapper>
-      <img src={"/images/Forest_Logo.png"} className="logo-img" onClick={goBack} />
+      <ArrowDiv>
+        <ArrowLeft onClick={goBack} />
+      </ArrowDiv>
       <GuideNavItemContainer>
         <GuideNavItem selected={selectTab("intro")} onClick={() => clickHandler("intro")}>
           포레스트 소개
@@ -35,8 +39,6 @@ export default function GuideNav({ guideTab, setGuideTab }: Iprops) {
         <GuideNavItem selected={selectTab("role")} onClick={() => clickHandler("role")}>
           역할
         </GuideNavItem>
-        <GuideNavSubItem>▪ 선생님</GuideNavSubItem>
-        <GuideNavSubItem>▪ 학생</GuideNavSubItem>
         <GuideNavItem selected={selectTab("dashboard")} onClick={() => clickHandler("dashboard")}>
           대시보드
         </GuideNavItem>

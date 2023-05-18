@@ -1,10 +1,10 @@
 import { closePartPdfModal } from "@/stores/editor/editorModal";
-import { setQuestions } from "@/stores/editor/editorQuestions";
+import { setCurQuestion, setQuestions } from "@/stores/editor/editorQuestions";
 import { RootState } from "@/stores/store";
 import { QuestionType } from "@/types/Workbook";
 import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation } from "react-query";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 interface IPayload {
   curWorkbookId: number;
@@ -13,7 +13,7 @@ interface IPayload {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/workbook/ocr/img/${payload.curWorkbookId}`, payload.file, {
+    .post(`/wb/ocr/img/${payload.curWorkbookId}`, payload.file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -22,6 +22,7 @@ const fetcher = (payload: IPayload) =>
 
 const useImgOCR = () => {
   const { questions } = useSelector((state: RootState) => state.editorQuestions);
+  const { curQuestion } = useSelector((state: RootState) => state.editorQuestions);
   const dispatch = useDispatch();
   return useMutation(fetcher, {
     onSuccess: (data) => {
@@ -43,6 +44,10 @@ const useImgOCR = () => {
 
       dispatch(setQuestions(newQuestions));
       dispatch(closePartPdfModal());
+      // 비어있는 문제집이 아닐 때 추가되는 마지막 문제를 현재로
+      if (questions.length !== 0) {
+        dispatch(setCurQuestion(questions.length + 1));
+      }
     },
   });
 };

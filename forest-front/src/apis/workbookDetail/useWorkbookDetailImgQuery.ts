@@ -3,7 +3,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useQuery } from "react-query";
 
 const fetcher = async () =>
-  await workbookAxios.get(`/workbook/img`).then(({ data }) => {
+  await workbookAxios.get(`/wb/img`).then(({ data }) => {
     return data.data;
   });
 
