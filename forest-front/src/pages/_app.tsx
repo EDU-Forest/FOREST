@@ -58,6 +58,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <GlobalStyle />
                 <Head>
                   <title>Forest</title>
+                  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
                 </Head>
                 <Component {...pageProps} />
               </ThemeProvider>
