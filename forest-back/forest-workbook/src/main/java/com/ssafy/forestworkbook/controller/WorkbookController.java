@@ -33,7 +33,7 @@ public class WorkbookController {
     @ApiOperation(value = "선생님 문제 페이지 문제집 목록 조회", notes = "문제집 목록을 조회합니다.")
     public ResponseSuccessDto<?> getTeacherWorkbookList (
             HttpServletRequest request,
-            @RequestParam(required = false) String search, @RequestParam Pageable pageable) throws UnsupportedEncodingException {
+            @RequestParam(required = false) String search, Pageable pageable) throws UnsupportedEncodingException {
         Long userId = jwtDecoder.verifyJWT(request);
         return workbookService.getTeacherWorkbookList(userId, search, pageable);
     }
