@@ -128,34 +128,14 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 ![학생.PNG](/uploads/869da84f47bec8807adf313c93b677d6/학생.PNG.png)
 
 ## ERD
-
-<details>
-    <summary>
-        ERD
-    </summary>
-    ![Forest_ERD](/uploads/ec4ac021c2e90ab56dd4cf7b51539587/Forest_ERD.png)
-</details>
-    
+![캡처_2023_05_19_00_04_12_637](/uploads/18f0c18320d95d1037cfe186263d47f6/캡처_2023_05_19_00_04_12_637.png)
 
 ## 기능 명세서
-
-<details>
-    <summary>
-        기능 명세
-    </summary>
-    ![기능명세](/uploads/fc95fa72e365281afe64ddd9c48c1546/기능명세.png)
-</details>
-
-    
+![캡처_2023_05_19_00_04_16_465](/uploads/93a12d5ba77bc4bdea3781416986c59e/캡처_2023_05_19_00_04_16_465.png)
 
 ## API 명세서
-
-<details>
-    <summary>
-        API 명세서
-    </summary>
-    ![api](/uploads/4c97586e3be8aeb4fe25ffdf81556234/api.png)
-</details>
+![캡처_2023_05_19_00_04_21_199](/uploads/07961ea59073949b94b7ea22acf2f38a/캡처_2023_05_19_00_04_21_199.png)
+    
 
 # 📁 프로젝트 구조
 
