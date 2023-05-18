@@ -9,15 +9,15 @@ pipeline {
         TIME_ZONE = 'Asia/Seoul'
         PROFILE = 'local'
         
-        REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
-        REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
-        TARGET_BRANCH = 'production-auth'
+        // REPOSITORY_CREDENTIAL_ID = 'adcdm77@naver.com'
+        // REPOSITORY_URL = 'git@lab.ssafy.com:s08-final/S08P31B105.git'
+        // TARGET_BRANCH = 'production-auth'
         
-        CONTAINER_NAME = 'prod-auth-container'
+        // CONTAINER_NAME = 'prod-auth-container'
         
-        AWS_CREDENTIAL_NAME = 'choi1087'
-        ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
-        IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
+        // AWS_CREDENTIAL_NAME = 'choi1087'
+        // ECR_PATH = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
+        // IMAGE_NAME = '240177199888.dkr.ecr.ap-northeast-2.amazonaws.com/forest-back-auth'
         REGION = 'ap-northeast-2'
     }
     stages{
@@ -62,9 +62,9 @@ pipeline {
                     // cleanup current user docker credentials
                     sh 'rm -f ~/.dockercfg ~/.docker/config.json || true'
                                        
-                    docker.withRegistry("https://${ECR_PATH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
-                      docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
-                      docker.image("${IMAGE_NAME}:latest").push()
+                    docker.withRegistry("https://${ECR_PATH_AUTH}", "ecr:${REGION}:${AWS_CREDENTIAL_NAME}") {
+                      docker.image("${IMAGE_NAME_AUTH}:${BUILD_NUMBER}").push()
+                      docker.image("${IMAGE_NAME_AUTH}:latest").push()
 
                       sleep 10
                     }
@@ -87,8 +87,8 @@ pipeline {
 
         stage('Manifest Update') {
             steps {
-                git credentialsId: 'my-key',
-                    url: 'git@github.com:choi1087/forest_yaml.git',
+                git credentialsId: '${GIT_CREDENTIALS_ID}',
+                    url: '${GIT_URL}',
                     branch: 'main'
                 
                 
@@ -96,14 +96,13 @@ pipeline {
                     sh """
                     ls -al                    
 
-                    cat eks-deploy-auth.yml | grep image
+                    cat ${EKS_DEPLOY_AUTH_YML} | grep image
 
-                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' eks-deploy-auth.yml
-
-                    cat eks-deploy-auth.yml | grep image
+                    sed -i 's|image: .*|image: "${IMAGE_NAME}:${currentBuild.number}"|' ${EKS_DEPLOY_AUTH_YML}
+                    cat ${EKS_DEPLOY_AUTH_YML} | grep image
                     
                     git status
-                    git add eks-deploy-auth.yml
+                    git add ${EKS_DEPLOY_AUTH_YML}
                     git commit -m '[UPDATE] forest-back-auth ${currentBuild.number} image versioning'
                     git push origin main
                     """
