@@ -1,5 +1,11 @@
 server:
   port: 9011
+  servlet:
+    context-path: /wb
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   ssl:
     enabled: true
     key-store: ${KEY_STORE}

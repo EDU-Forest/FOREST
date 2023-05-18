@@ -872,7 +872,7 @@ public class WorkbookServiceImpl implements WorkbookService {
             // 한 줄씩 확인
             for (int i = 0; i < txt.length; i++) {
                 String temp = txt[i];
-                log.info(txt[i]);
+//                log.info(txt[i]);
 
                 // title 확인
                 if (!checkTitle && !checkText & !checkNum) {
@@ -1010,7 +1010,7 @@ public class WorkbookServiceImpl implements WorkbookService {
                         checkPoint = true;
 //                        checkText = true;
                         temp = temp.substring(0, start).trim();
-                        System.out.println(temp);
+//                        System.out.println(temp);
                     }
 
                     if (!checkDelete) text.append(temp).append(" ");
@@ -1306,8 +1306,8 @@ public class WorkbookServiceImpl implements WorkbookService {
 
                         // 문항 별 반복
                         for (String temp : splitFull) {
-                            System.out.println(temp);
-                            System.out.println("================");
+//                            System.out.println(temp);
+//                            System.out.println("================");
 
                             List<ItemResExceptIdDto> itemResExceptIdDtoList = new ArrayList<>();
 
