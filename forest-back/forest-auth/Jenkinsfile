@@ -42,8 +42,8 @@ pipeline {
                 ls -al
                 chmod +x ./gradlew
                 ./gradlew build
-        		 docker build -t $IMAGE_NAME:$BUILD_NUMBER .
-        		 docker tag $IMAGE_NAME:$BUILD_NUMBER $IMAGE_NAME:latest
+        		 docker build -t ${IMAGE_NAME}:$BUILD_NUMBER .
+        		 docker tag ${IMAGE_NAME}:$BUILD_NUMBER ${IMAGE_NAME}:latest
         		 '''
                 }                
             }
