@@ -2,7 +2,7 @@ import workbookAxios from "@/utils/customAxios/workbookAxios";
 import { useMutation, useQueryClient } from "react-query";
 import * as queryKeys from "@/constants/queryKeys";
 
-const fetcher = (workbookId: number) => workbookAxios.delete(`/workbook/bookmark/${workbookId}`);
+const fetcher = (workbookId: number) => workbookAxios.delete(`/wb/bookmark/${workbookId}`);
 
 // 문제집 북마크 해제 - OK
 const useBookmarkDelete = (isWorkbookPage?: boolean) => {

@@ -24,7 +24,7 @@ interface ProblemList {
 
 const fetcher = (payload: IPayload) =>
   workbookAxios
-    .post(`/workbook/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
+    .post(`/wb/ocr/pdf/${payload.curWorkbookId}`, payload.file, {
       timeout: 100000,
       headers: {
         "Content-Type": "multipart/form-data",
