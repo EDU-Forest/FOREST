@@ -112,6 +112,8 @@ public class StudyService {
         if (totalScore != 0) {
             percentage = ssr.getScore() * 100 / totalScore;
         }
+        if (ssr.getExitTime() == null)
+            ssr.updateExitTime(cs.getStudy().getEndTime());
 
         Duration duration = Duration.between(ssr.getEnterTime(), ssr.getExitTime());
         GetStudentScoreResponseDto student = GetStudentScoreResponseDto.builder()
@@ -516,6 +518,7 @@ public class StudyService {
                     .problemNum(pl.getProblemNum())
                     .type(pl.getProblem().getType())
                     .title(pl.getProblem().getTitle())
+                    .point(pl.getProblem().getPoint())
                     .text(pl.getProblem().getText())
                     .problemImgPath(pl.getProblem().getPath())
                     .userAnswer(spr.getUserAnswer())
