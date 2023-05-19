@@ -120,11 +120,11 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 ## CI/CD
 
-![Untitled__8_](/uploads/3412b9b0e230d443a712277081b7a7a5/Untitled__8_.png)
+![cicd](/uploads/0f2db5de9dbbba5d9804b717909e50cf/cicd.png)
 
 ## 아키텍처
 
-![Untitled_2](/uploads/dac28a2f230142ce96173cd0d9aa9f43/Untitled_2.png)
+![architecture](/uploads/2651b755bae8ecf881f8e6cfe4d430f0/architecture.png)
 
 ## 와이어프레임
 
