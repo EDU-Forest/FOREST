@@ -433,6 +433,20 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 <details>
     <summary>
+        PDF 및 이미지 문제 전체 영역 변환
+    </summary>
+    ![에디터_OCR_전체영역](/uploads/e8e289b713b4064da154816cc9e98769/에디터_OCR_전체영역.gif)
+</details>
+
+<details>
+    <summary>
+        PDF 및 이미지 문제 일부 영역 변환
+    </summary>
+    ![에디터_OCR_일부영역](/uploads/7ec1bdd3d1c0cad5d1c7970a5c8add22/에디터_OCR_일부영역.gif).gif)
+</details>
+
+<details>
+    <summary>
         이미지 삽입
     </summary>
     ![에디터_이미지추가](/uploads/fca8ab15ef17df6f7e962369b07086df/에디터_이미지추가.gif)
