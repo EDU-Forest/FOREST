@@ -338,19 +338,6 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     ![Untitled_3](/uploads/0fe83e17d6b1d57600b6e0e29e276c41/Untitled_3.png)
     
 
-# 🌳 최적화
-
-- 정적 코드 분석 Sonarqube를 이용한 코드 리팩토링
-
-### BEFORE
-
-![workbook-before](/uploads/df9441f54dad7db8c47e0191276264a9/workbook-before.png)
-
-### AFTER
-
-![study-after](/uploads/1fe36100d7bd9a4c69c4f785aec63625/study-after.png)
-
-![Image_Pasted_at_2023-5-18_13-43](/uploads/8a2c9608eaebe693df13532d26fbf09e/Image_Pasted_at_2023-5-18_13-43.png)
 
 # 🌳 팀 소개
 
