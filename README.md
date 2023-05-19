@@ -8,9 +8,9 @@
 
 [](https://edu-forest.com/)
 
-## 🎥 소개 영상 보기 : UCC 링크
+## [🎥 소개 영상 보기 : UCC 링크](https://youtu.be/B5lK-LFDon4)
 
-# 🌳 실행 (포팅매뉴얼 링크)
+## [🌳 실행 : 포팅매뉴얼 링크](https://lab.ssafy.com/s08-final/S08P31B105/-/blob/main/exec/FOREST_%ED%8F%AC%ED%8C%85%EB%A7%A4%EB%89%B4%EC%96%BC_%EC%99%B8%EB%B6%80%EC%84%9C%EB%B9%84%EC%8A%A4.pdf)
 
 # 🌳 **프로젝트 일정**
 
