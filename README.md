@@ -351,14 +351,14 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         학생 대시보드
     </summary>
-    ![대시보드_학생](/uploads/aeb21d28beb5d79877e2aee189fa116b/대시보드_학생.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C_%ED%95%99%EC%83%9D.gif">
 </details>
 
 <details>
     <summary>
         선생님 대시보드
     </summary>
-    ![대시보드_선생님](/uploads/27204426bb73d1df4174c3093a6b1150/대시보드_선생님.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C_%EC%84%A0%EC%83%9D%EB%8B%98.gif">
 </details>
 
 ### 클래스
@@ -367,21 +367,21 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         선생님 클래스
     </summary>
-    ![클래스_선생님_클래스전환](/uploads/9ed09195a1eea6cf5723bf182fec7169/클래스_선생님_클래스전환.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%ED%81%B4%EB%9E%98%EC%8A%A4_%EC%84%A0%EC%83%9D%EB%8B%98_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%A0%84%ED%99%98.gif">
 </details>    
     
 <details>
     <summary>
         클래스 생성 및 학생 초대
     </summary>
-    ![클래스_선생님_클래스추가](/uploads/7b15a3acbf8a82124f5def8341b78ec6/클래스_선생님_클래스추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%ED%81%B4%EB%9E%98%EC%8A%A4_%EC%84%A0%EC%83%9D%EB%8B%98_%ED%81%B4%EB%9E%98%EC%8A%A4%EC%B6%94%EA%B0%80.gif">
 </details>  
 
 <details>
     <summary>
         학생 클래스
     </summary>
-    ![클래스_학생](/uploads/ec56a833b13e3776523cfb159114137d/클래스_학생.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%ED%81%B4%EB%9E%98%EC%8A%A4_%ED%95%99%EC%83%9D.gif">
 </details>  
 
 
@@ -391,7 +391,7 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         탐색 페이지
     </summary>
-    ![탐색](/uploads/5a6316f5b2a8bb31076ef27089b8ddc8/탐색.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%ED%83%90%EC%83%89.gif">
 </details>  
 
 ### 에디터
@@ -400,63 +400,63 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         문제집 전환 및 추가
     </summary>
-    ![에디터_문제집전환](/uploads/9b7d72f4a7b5b5bc635515160a74b5b0/에디터_문제집전환.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%A0%84%ED%99%98.gif">
 </details> 
 
 <details>
     <summary>
         객관식 생성
     </summary>
-    ![에디터_객관식_추가_2_](/uploads/4417192ce09c5bb2a95b561b68f33654/에디터_객관식_추가_2_.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EA%B0%9D%EA%B4%80%EC%8B%9D_%EC%B6%94%EA%B0%80(2).gif">
 </details>  
 
 <details>
     <summary>
         OX 선택 생성
     </summary>
-    ![에디터_OX_추가](/uploads/efd84c3f6b9250ed01c41023fc5dd024/에디터_OX_추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_OX_%EC%B6%94%EA%B0%80.gif">
 </details>  
 
 <details>
     <summary>
         단답식 생성
     </summary>
-    ![에디터_단답식_추가](/uploads/bc630a9bb1dfece617004f6f730eb35d/에디터_단답식_추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EB%8B%A8%EB%8B%B5%EC%8B%9D_%EC%B6%94%EA%B0%80.gif">
 </details>    
  
 <details>
     <summary>
         서술형 생성
     </summary>
-    ![에디터_서술형_추가](/uploads/febe893e453e8aea7bed187695bd09f8/에디터_서술형_추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EC%84%9C%EC%88%A0%ED%98%95_%EC%B6%94%EA%B0%80.gif">
 </details>  
 
 <details>
     <summary>
         PDF 및 이미지 문제 전체 영역 변환
     </summary>
-    ![에디터_OCR_전체영역](/uploads/e8e289b713b4064da154816cc9e98769/에디터_OCR_전체영역.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_OCR_%EC%A0%84%EC%B2%B4%EC%98%81%EC%97%AD.gif">
 </details>
 
 <details>
     <summary>
         PDF 및 이미지 문제 일부 영역 변환
     </summary>
-    ![에디터_OCR_일부영역](/uploads/7ec1bdd3d1c0cad5d1c7970a5c8add22/에디터_OCR_일부영역.gif).gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_OCR_%EC%9D%BC%EB%B6%80%EC%98%81%EC%97%AD.gif">
 </details>
 
 <details>
     <summary>
         이미지 삽입
     </summary>
-    ![에디터_이미지추가](/uploads/fca8ab15ef17df6f7e962369b07086df/에디터_이미지추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EC%9D%B4%EB%AF%B8%EC%A7%80%EC%B6%94%EA%B0%80.gif">
 </details> 
 
 <details>
     <summary>
         지문 삽입
     </summary>
-    ![에디터_지문_추가](/uploads/8304ea3960d50d1817dd199a0359d877/에디터_지문_추가.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EC%97%90%EB%94%94%ED%84%B0_%EC%A7%80%EB%AC%B8%20%EC%B6%94%EA%B0%80.gif">
 </details>  
 
 ### 문제
@@ -465,35 +465,35 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         문제 순서 수정, 삭제
     </summary>
-    ![문제집상세_문항수정](/uploads/0e29ecc6aab1653e0b6352f58c73bee4/문제집상세_문항수정.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%83%81%EC%84%B8_%EB%AC%B8%ED%95%AD%EC%88%98%EC%A0%95.gif">
 </details>  
   
 <details>
     <summary>
         PDF 다운로드
     </summary>
-    ![문제집상세_PDF다운](/uploads/f668623d474d6b97dfbf46b1afc49c31/문제집상세_PDF다운.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%83%81%EC%84%B8_PDF%EB%8B%A4%EC%9A%B4.gif">
 </details>  
 
 <details>
     <summary>
         문제집 출제
     </summary>
-    ![문제집상세_출제](/uploads/a3b2e6d90b475c02a5e7faf8d79093ae/문제집상세_출제.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%83%81%EC%84%B8_%EC%B6%9C%EC%A0%9C.gif">
 </details>  
 
 <details>
     <summary>
         문제집 배포
     </summary>
-    ![문제집상세_배포](/uploads/0cea4c417d354939d81066aa596431d9/문제집상세_배포.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%83%81%EC%84%B8_%EB%B0%B0%ED%8F%AC.gif">
 </details>  
 
 <details>
     <summary>
         문제집 사본 생성
     </summary>
-    ![문제집상세_사본](/uploads/2df8f652d3cddcb935d97c7171de8f76/문제집상세_사본.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%EC%A7%91%EC%83%81%EC%84%B8_%EC%82%AC%EB%B3%B8.gif">
 </details>  
 
 ### 분석
@@ -502,6 +502,7 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         학생 문제 풀이 및 결과 확인
     </summary>
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C_%EC%84%A0%EC%83%9D%EB%8B%98.gif">
     ![문제풀이](/uploads/7b075536400d41a749989a036c124b6e/문제풀이.gif)
 </details>  
 
@@ -509,5 +510,5 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         선생님 시험 종료 및 결과 확인
     </summary>
-    ![클래스_선생님_결과](/uploads/81fb5b9a7ff361a2b2763be79af921f1/클래스_선생님_결과.gif)
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%ED%81%B4%EB%9E%98%EC%8A%A4_%EC%84%A0%EC%83%9D%EB%8B%98_%EA%B2%B0%EA%B3%BC.gif">
 </details>  
