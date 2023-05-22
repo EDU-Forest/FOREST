@@ -2,7 +2,7 @@
 
 # 🌳 Forest - 온라인 학습지 통합 관리 서비스 🌲
 
-![Untitled](/uploads/c4a7728a6eda9a17b7f1c578366898cb/Untitled.png)
+![Untitled](https://github.com/EDU-Forest/FOREST/assets/40704078/8a8c8755-cc55-4c1a-9497-a59439be352b)
 
 ## 🌳 지금 체험하기 : [https://edu-forest.com](https://edu-forest.com/)
 
@@ -10,7 +10,7 @@
 
 ## [🎥 소개 영상 보기 : UCC 링크](https://youtu.be/B5lK-LFDon4)
 
-## [🌳 실행 : 포팅매뉴얼 링크](https://lab.ssafy.com/s08-final/S08P31B105/-/blob/main/exec/FOREST_%ED%8F%AC%ED%8C%85%EB%A7%A4%EB%89%B4%EC%96%BC_%EC%99%B8%EB%B6%80%EC%84%9C%EB%B9%84%EC%8A%A4.pdf)
+## [🌳 실행 : 포팅매뉴얼 링크](https://github.com/EDU-Forest/FOREST/blob/main/exec/FOREST_%ED%8F%AC%ED%8C%85%EB%A7%A4%EB%89%B4%EC%96%BC_%EC%99%B8%EB%B6%80%EC%84%9C%EB%B9%84%EC%8A%A4.pdf)
 
 # 🌳 **프로젝트 일정**
 
@@ -18,13 +18,13 @@
 
 # 🌳 소개
 
-![캡처_2023_05_17_13_03_04_157](/uploads/60968e581529712ec0ccb4f69f6542fa/캡처_2023_05_17_13_03_04_157.png)
+![캡처_2023_05_17_13_03_04_157](https://github.com/EDU-Forest/FOREST/assets/40704078/813f2aba-c0b4-4581-9f76-2157822b3419)
 
-![캡처_2023_05_17_13_03_10_297](/uploads/b0bcfada1c2b0513bf6fbd68f2c2ae8e/캡처_2023_05_17_13_03_10_297.png)
+![캡처_2023_05_17_13_03_10_297](https://github.com/EDU-Forest/FOREST/assets/40704078/4ffd3ca5-cc94-417c-b3d4-bdbd120d6b1b)
 
-![캡처_2023_05_17_13_03_25_173](/uploads/b1ee8fae3f84bebdcb499a895ee1a197/캡처_2023_05_17_13_03_25_173.png)
+![캡처_2023_05_17_13_03_25_173](https://github.com/EDU-Forest/FOREST/assets/40704078/4ed277c4-1722-44e5-9fdd-4de59ce244ad)
 
-![캡처_2023_05_18_23_51_52_952](/uploads/9ed41825c2723be722960804ce043683/캡처_2023_05_18_23_51_52_952.png)
+![캡처_2023_05_18_23_51_52_952](https://github.com/EDU-Forest/FOREST/assets/40704078/51d0ad79-d950-4784-8441-5f28b08ca6f7)
 
 현대 교육은 디지털 기술의 발전과 함께 많은 변화를 겪고 있습니다.
 
@@ -42,7 +42,7 @@ Forest는 이러한 변화에 발맞춰 개발된 온라인 학습 플랫폼입�
 
 ### 🎁 기대효과
 
-![캡처_2023_05_17_13_07_07_653](/uploads/5eddc80915707701f203fc1afe3bf8b8/캡처_2023_05_17_13_07_07_653.png)
+![캡처_2023_05_17_13_07_07_653](https://github.com/EDU-Forest/FOREST/assets/40704078/b239cba3-a3eb-44c5-90d7-c4833cc2ac31)
 
 
 # 🌳 Forest 기능
@@ -67,17 +67,17 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 # 🌳 사용 기술
 
-![캡처_2023_05_18_23_51_10_440](/uploads/81a2ccebf4587de25d78e21ec99c1c1a/캡처_2023_05_18_23_51_10_440.png)
+![캡처_2023_05_18_23_51_10_440](https://github.com/EDU-Forest/FOREST/assets/40704078/9409f7f7-c963-49b7-80f7-25713ce8e958)
 
-![캡처_2023_05_18_23_51_14_426](/uploads/3ace25c41846c932b03a47cd2e772c9e/캡처_2023_05_18_23_51_14_426.png)
+![캡처_2023_05_18_23_51_14_426](https://github.com/EDU-Forest/FOREST/assets/40704078/74ddbc77-89e6-4eb1-90b2-5d6c648f02ea)
 
-![캡처_2023_05_18_23_51_21_631](/uploads/ffefbb4e7425c81fb0694e337be079e5/캡처_2023_05_18_23_51_21_631.png)
+![캡처_2023_05_18_23_51_21_631](https://github.com/EDU-Forest/FOREST/assets/40704078/a8469623-39f0-4f02-94f4-86cf7474d27a)
 
-![캡처_2023_05_18_23_51_24_841](/uploads/54d477d929e06181d0f6ca536311fca7/캡처_2023_05_18_23_51_24_841.png)
+![캡처_2023_05_18_23_51_24_841](https://github.com/EDU-Forest/FOREST/assets/40704078/6e939fe8-e832-43bd-9a73-6fce676cd855)
 
-![캡처_2023_05_18_23_51_27_949](/uploads/f962ac9a95852866de52d95129bf2211/캡처_2023_05_18_23_51_27_949.png)
+![캡처_2023_05_18_23_51_27_949](https://github.com/EDU-Forest/FOREST/assets/40704078/64be5c56-38ae-4f55-88f7-a1362e3af80c)
 
-![캡처_2023_05_18_23_51_30_554](/uploads/d37f533d2b10891e58733569117fbd98/캡처_2023_05_18_23_51_30_554.png)
+![캡처_2023_05_18_23_51_30_554](https://github.com/EDU-Forest/FOREST/assets/40704078/8e1e968b-5834-478b-9009-fce9bbbf2c56)
 
 # 🌳 개발 환경
 
@@ -120,26 +120,26 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
 
 ## CI/CD
 
-![cicd](/uploads/0f2db5de9dbbba5d9804b717909e50cf/cicd.png)
+![cicd](https://github.com/EDU-Forest/FOREST/assets/40704078/e5b25877-dee7-45a6-bf60-2435610a8470)
 
 ## 아키텍처
 
-![architecture](/uploads/2651b755bae8ecf881f8e6cfe4d430f0/architecture.png)
+![architecture](https://github.com/EDU-Forest/FOREST/assets/40704078/6c505859-fa68-4aa4-aa2f-1f0d12e269d0)
 
 ## 와이어프레임
 
-![선생님.PNG](/uploads/0f435432f36e1c8e4236fe50213d24a6/선생님.PNG.png)
+![선생님 PNG](https://github.com/EDU-Forest/FOREST/assets/40704078/6d577a29-f263-401c-acc4-ead0850df4dc)
 
-![학생.PNG](/uploads/869da84f47bec8807adf313c93b677d6/학생.PNG.png)
+![학생 PNG](https://github.com/EDU-Forest/FOREST/assets/40704078/88c0ff63-d9d6-4f93-b490-494a2dc95caa)
 
 ## ERD
-![캡처_2023_05_19_00_04_12_637](/uploads/18f0c18320d95d1037cfe186263d47f6/캡처_2023_05_19_00_04_12_637.png)
+![캡처_2023_05_19_00_04_12_637](https://github.com/EDU-Forest/FOREST/assets/40704078/0690609d-57e0-4bc3-a10f-1809968baf5e)
 
 ## 기능 명세서
-![캡처_2023_05_19_00_04_16_465](/uploads/93a12d5ba77bc4bdea3781416986c59e/캡처_2023_05_19_00_04_16_465.png)
+![캡처_2023_05_19_00_04_16_465](https://github.com/EDU-Forest/FOREST/assets/40704078/d7975230-da2e-4aba-a690-c1db1e4969d6)
 
 ## API 명세서
-![캡처_2023_05_19_00_04_21_199](/uploads/07961ea59073949b94b7ea22acf2f38a/캡처_2023_05_19_00_04_21_199.png)
+![캡처_2023_05_19_00_04_21_199](https://github.com/EDU-Forest/FOREST/assets/40704078/a0c0b9d4-385f-4995-b422-f230f8ee0bbb)
     
 
 # 📁 프로젝트 구조
@@ -323,7 +323,7 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     - Mattermost를 이용하여 error log관리
     - 팀원 모두가 편하게 에러 체크 가능
         
-        ![Untitled__7_](/uploads/c8601cb3716f92b508a68a6d101069fc/Untitled__7_.png)
+        ![Untitled_(7)](https://github.com/EDU-Forest/FOREST/assets/40704078/0e01cc23-3832-46e9-a62e-5d012ef66163)
         
 
 - JIRA
@@ -335,13 +335,13 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     - 파트 별 코드 리뷰 진행 (플립 이용)
 - Notion
     
-    ![Untitled_3](/uploads/0fe83e17d6b1d57600b6e0e29e276c41/Untitled_3.png)
+    ![Untitled 1](https://github.com/EDU-Forest/FOREST/assets/40704078/636d406e-601f-4a88-926b-a4d3e3461d96)
     
 
 
 # 🌳 팀 소개
 
-![team](/uploads/ab62c44b6540a56fa59d6f20754039ad/team.png)
+![team](https://github.com/EDU-Forest/FOREST/assets/40704078/7919f6e6-3708-4a36-ad6a-8fbae8cc745c)
 
 # 🌳 서비스 화면
 
