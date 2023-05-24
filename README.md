@@ -2,7 +2,7 @@
 
 # 🌳 Forest - 온라인 학습지 통합 관리 서비스 🌲
 
-![Untitled](https://github.com/EDU-Forest/FOREST/assets/40704078/8a8c8755-cc55-4c1a-9497-a59439be352b)
+![포레스트_썸네일](https://github.com/EDU-Forest/FOREST/assets/40704078/9f25a0a3-431b-4b36-a304-800d0e81b2ea)
 
 ## 🌳 지금 체험하기 : [https://edu-forest.com](https://edu-forest.com/)
 
@@ -502,8 +502,8 @@ Forest는 온라인 학습을 보다 효과적으로 진행할 수 있는 다양
     <summary>
         학생 문제 풀이 및 결과 확인
     </summary>
+    <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%AC%B8%EC%A0%9C%ED%92%80%EC%9D%B4.gif">
     <img src="https://github.com/EDU-Forest/FOREST/blob/main/docs/Forest_gif/%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C_%EC%84%A0%EC%83%9D%EB%8B%98.gif">
-    ![문제풀이](/uploads/7b075536400d41a749989a036c124b6e/문제풀이.gif)
 </details>  
 
 <details>
