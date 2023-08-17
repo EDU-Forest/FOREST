@@ -1,10 +1,12 @@
 ### 🥇 SSAFY 자율 프로젝트 최우수상
+### 🥇 SSAFY 자율 프로젝트 결선 입상
+### 🎞 SSAFY 자율 프로젝트 UCC 특별상
 ---
 # 🌳 Forest - 온라인 학습지 통합 관리 서비스 🌲
 
 ![포레스트_썸네일](https://github.com/EDU-Forest/FOREST/assets/40704078/9f25a0a3-431b-4b36-a304-800d0e81b2ea)
 
-## 🌳 지금 체험하기 : [https://edu-forest.com](https://edu-forest.com/)
+# [🌳 지금 체험하기](https://k8b105.p.ssafy.io/)
 
 [](https://edu-forest.com/)
 
